@@ -5,7 +5,10 @@ import type {
   OccCoreSkillChoiceVoucher,
   OccFinances,
   OccHandToHandRules,
+  OccLevelUpSkillChoice,
   OccRelatedSkills,
+  OccRelatedSkillsOverride,
+  OccSecondarySkills,
   OccClassAbility,
   OccSpecialization,
   OccWpRules,
@@ -193,11 +196,40 @@ function mergeClassAbilities(
   return [...base, ...patch]
 }
 
+function materializeRelatedSkillsOverride(
+  patch: OccRelatedSkillsOverride,
+): OccRelatedSkills {
+  const { replaceBaseline: _replaceBaseline, ...rest } = patch
+  return {
+    initialSlotsCount: rest.initialSlotsCount ?? 0,
+    startingSkillIds: rest.startingSkillIds,
+    categoryRules: rest.categoryRules ?? [],
+    categoryMinimums: rest.categoryMinimums,
+    skillVouchers: rest.skillVouchers,
+  }
+}
+
+function mergeSkillVouchers(
+  base: OccRelatedSkills['skillVouchers'] | undefined,
+  patch: OccRelatedSkills['skillVouchers'] | undefined,
+): OccRelatedSkills['skillVouchers'] | undefined {
+  if (!patch?.length) return base
+  if (!base?.length) return patch
+  const byId = new Map(base.map((v) => [v.id, v]))
+  for (const voucher of patch) {
+    byId.set(voucher.id, voucher)
+  }
+  return [...byId.values()]
+}
+
 function mergeRelatedSkills(
   base: OccRelatedSkills,
   patch: OccSpecialization['occRelatedSkills'],
 ): OccRelatedSkills {
   if (!patch) return base
+  if (patch.replaceBaseline) {
+    return materializeRelatedSkillsOverride(patch)
+  }
   return {
     initialSlotsCount: patch.initialSlotsCount ?? base.initialSlotsCount,
     startingSkillIds: [
@@ -208,6 +240,7 @@ function mergeRelatedSkills(
       base.categoryMinimums,
       patch.categoryMinimums,
     ),
+    skillVouchers: mergeSkillVouchers(base.skillVouchers, patch.skillVouchers),
   }
 }
 
@@ -243,6 +276,8 @@ export function resolveEffectivePalladiumOcc(
     occRelatedSkills: mergeRelatedSkills(occ.occRelatedSkills, spec.occRelatedSkills),
     wpRules: mergeWpRules(occ.wpRules, spec.wpRules),
     handToHandRules: mergeHandToHandRules(occ.handToHandRules, spec.handToHandRules),
+    secondarySkills: spec.secondarySkills ?? occ.secondarySkills,
+    levelUpSkillChoices: spec.levelUpSkillChoices ?? occ.levelUpSkillChoices,
     classAbilities: mergeClassAbilities(occ.classAbilities, spec.classAbilities),
   }
 }

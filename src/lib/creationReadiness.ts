@@ -13,15 +13,22 @@ import {
   assessOccVariableBlockers,
 } from './creationStep'
 import {
-  assessRelatedSkillSlotBlockers,
+  assessRelatedSkillSlotBlockersAtCap,
+  creationRelatedSkillCap,
   resolveCreationPsychicTier,
 } from './creationPsychicSkills'
 import { assessRelatedSkillCategoryMinimumBlockers } from './occRelatedSkillMinimums'
+import {
+  assessRelatedSkillVoucherBlockers,
+  listOccRelatedVoucherTasks,
+  sumRelatedVoucherReservedSlots,
+} from './occRelatedSkillVouchers'
 import {
   assessOccCoreVoucherBlockers,
   resolveOccCoreSkillPicks,
 } from './occCoreSkillVouchers'
 import {
+  creationFreeRelatedSkillCap,
   getCreationRelatedPicks,
   sumRelatedPoolSlotUsage,
 } from './creationSkillPicks'
@@ -111,18 +118,37 @@ export function assessCreationReviewBlockers(
       effectiveOcc,
       character,
     )
+    const relatedVoucherReserved = sumRelatedVoucherReservedSlots(
+      listOccRelatedVoucherTasks(occLib, character.occSpecializationId),
+    )
+    const relatedCap = creationRelatedSkillCap(
+      relatedBase,
+      psychicTier,
+      occLib.occSkillSlotPolicy,
+    )
+    const freeRelatedCap = creationFreeRelatedSkillCap(
+      relatedCap,
+      relatedVoucherReserved,
+    )
     const relatedSelected = sumRelatedPoolSlotUsage(
       relatedPicks,
       occPicks,
       handToHandReserved,
     )
     blockers.push(
-      ...assessRelatedSkillSlotBlockers(
+      ...assessRelatedSkillSlotBlockersAtCap(
         relatedSelected,
-        relatedBase,
-        psychicTier,
-        occLib,
+        freeRelatedCap,
         handToHandReserved,
+        psychicTier,
+      ),
+    )
+    blockers.push(
+      ...assessRelatedSkillVoucherBlockers(
+        occLib,
+        character.creationOccRelatedVoucherPicks,
+        character.creationOccRelatedVoucherClusters,
+        character.occSpecializationId,
       ),
     )
     blockers.push(

@@ -28,8 +28,22 @@ import {
   isOccCoreSkillChoiceVoucher,
   resolveEffectivePalladiumOcc,
 } from './occComposition'
+import type { OccRelatedVoucherTask } from './occRelatedSkillVouchers'
+import {
+  findRelatedVoucherPickForSkillId,
+  flattenRelatedVoucherPicks,
+  isVocationalFocusVoucherTask,
+  listCreationVoucherRelatedTasks,
+  listOccRelatedVoucherTasks,
+  occRelatedVoucherPicksComplete,
+  findOpenRelatedVoucherSlot,
+} from './occRelatedSkillVouchers'
 import { occStartingOccSkillIds } from './occCatalogEngine'
 import { resolveCreationLibrarySkillSelectionTier } from './creationSkillPicks'
+import {
+  applyPsychicOccSkillBonusPercent,
+  type PsychicTier,
+} from './creationPsychicSkills'
 
 export type OccCoreVoucherTask = {
   id: string
@@ -39,14 +53,31 @@ export type OccCoreVoucherTask = {
 
 const WEAPON_PROFICIENCIES_VOUCHER_CATEGORY = 'Weapon Proficiencies'
 
-/** Dropdown picker in the selected panel (W.P. vouchers). Category vouchers use the library + O.C.C. button. */
+/** @deprecated All vouchers use the creation skill library (+ Voucher N). */
 export function voucherUsesDedicatedPickerUi(
-  entry: OccCoreSkillChoiceVoucher,
+  _entry: OccCoreSkillChoiceVoucher,
 ): boolean {
-  return (
+  return false
+}
+
+/** Library filter categories for an O.C.C. core voucher (maps W.P. to WP: Ancient / Modern). */
+export function resolveOccCoreVoucherLibraryBookCategories(
+  entry: OccCoreSkillChoiceVoucher,
+): string[] {
+  if (
     entry.allowedCategories?.length === 1 &&
     entry.allowedCategories[0] === WEAPON_PROFICIENCIES_VOUCHER_CATEGORY
-  )
+  ) {
+    const lockedEra = resolveVoucherWeaponProficiencyEra(entry)
+    if (lockedEra) {
+      return [lockedEra === 'ancient' ? 'WP: Ancient' : 'WP: Modern']
+    }
+    return ['WP: Ancient', 'WP: Modern']
+  }
+  if (entry.allowedCategories?.length) {
+    return [...entry.allowedCategories]
+  }
+  return []
 }
 
 /** O.C.C.-mandated W.P. era when set; undefined means the player may choose ancient or modern. */
@@ -152,10 +183,26 @@ export function resolveCreationLibrarySkillTier(
     resolvedOccPicks: readonly CreationSkillPick[]
     voucherTasks: readonly OccCoreVoucherTask[]
     voucherPicks: Readonly<Record<string, unknown>> | undefined
+    relatedVoucherTasks?: readonly OccRelatedVoucherTask[]
+    relatedVoucherPicks?: Readonly<Record<string, unknown>> | undefined
   },
-): 'occ' | 'related' | 'secondary' | undefined {
+): 'occ' | 'voucher' | 'specialization' | 'related' | 'secondary' | undefined {
   const userTier = resolveCreationLibrarySkillSelectionTier(librarySkillId, opts)
   if (userTier) return userTier
+  if (opts.relatedVoucherTasks?.length) {
+    for (const task of opts.relatedVoucherTasks) {
+      const slots = getOccCoreVoucherSlotPicks(
+        opts.relatedVoucherPicks,
+        task.id,
+        task.entry.choiceCount,
+      )
+      if (slots.some((pick) => pick && catalogSkillIdsMatch(pick.skillId, librarySkillId))) {
+        return isVocationalFocusVoucherTask(task)
+          ? 'specialization'
+          : 'voucher'
+      }
+    }
+  }
   if (
     findOccCoreVoucherPickForSkillId(
       librarySkillId,
@@ -163,7 +210,7 @@ export function resolveCreationLibrarySkillTier(
       opts.voucherPicks,
     )
   ) {
-    return 'occ'
+    return 'voucher'
   }
   if (
     opts.resolvedOccPicks.some((pick) =>
@@ -184,7 +231,6 @@ export function findOpenOccCoreVoucherSlot(
   forbiddenWpIds: readonly string[] = [],
 ): { taskId: string; slot: number; choiceCount: number } | null {
   for (const task of tasks) {
-    if (voucherUsesDedicatedPickerUi(task.entry)) continue
     if (
       !listEligibleVoucherSkillIds(
         task.entry,
@@ -237,6 +283,36 @@ export function canAddSkillViaOccCoreVoucher(
     return false
   }
   return !isCreationSkillIdentityTaken(allPicks, skillId)
+}
+
+export function resolveOccCoreVoucherEntryBonus(
+  entry: OccCoreSkillChoiceVoucher,
+  skillId: string,
+): number {
+  const override = entry.skillSpecificOverrides?.[skillId]
+  if (typeof override === 'number') return override
+  return entry.bonusPercent ?? 0
+}
+
+/** O.C.C. core voucher % for a resolved pick (creation preview + spawn handoff). */
+export function resolveOccCoreVoucherSkillBonus(
+  occ: PalladiumOcc | undefined,
+  specializationId: string | null | undefined,
+  skillId: string,
+  voucherPicks: Readonly<Record<string, unknown>> | undefined,
+  psychicTier: PsychicTier,
+): number {
+  if (!occ) return 0
+  for (const task of listOccCoreVoucherTasks(occ, specializationId)) {
+    const picks = getOccCoreVoucherPicks(voucherPicks, task.id)
+    if (picks.some((pick) => catalogSkillIdsMatch(pick.skillId, skillId))) {
+      return applyPsychicOccSkillBonusPercent(
+        resolveOccCoreVoucherEntryBonus(task.entry, skillId),
+        psychicTier,
+      )
+    }
+  }
+  return 0
 }
 
 export function listOccCoreVoucherTasks(
@@ -376,7 +452,7 @@ export function assessOccCoreVoucherBlockers(
       )
     })
     blockers.push(
-      `Resolve O.C.C. core skill choices (${pending.length} voucher${pending.length === 1 ? '' : 's'} remaining).`,
+      `Resolve voucher skill choices (${pending.length} voucher${pending.length === 1 ? '' : 's'} remaining).`,
     )
   }
   if (!occCoreGrantSpecializationsComplete(occ, specializationId, grantDetails)) {
@@ -451,12 +527,13 @@ export function findOccCoreVoucherSlotForPick(
   return undefined
 }
 
-/** Every skill pick on the character (O.C.C. core + related + secondary). */
+/** Every skill pick on the character (O.C.C. core + related vouchers + related + secondary). */
 export function collectAllCreationSkillPicks(
   character: Pick<
     CharacterRootState,
     | 'creationOccCoreVoucherPicks'
     | 'creationOccGrantPickDetails'
+    | 'creationOccRelatedVoucherPicks'
     | 'creationRelatedSkillPicks'
     | 'creationRelatedSkillIds'
     | 'creationSecondarySkillPicks'
@@ -471,8 +548,13 @@ export function collectAllCreationSkillPicks(
     character.creationOccCoreVoucherPicks,
     character.creationOccGrantPickDetails,
   )
+  const relatedVoucherPicks = flattenRelatedVoucherPicks(
+    listOccRelatedVoucherTasks(occ, character.occSpecializationId),
+    character.creationOccRelatedVoucherPicks,
+  )
   return [
     ...occPicks,
+    ...relatedVoucherPicks,
     ...getCreationRelatedPicks(character),
     ...getCreationSecondaryPicks(character),
   ]
@@ -508,5 +590,88 @@ export function mergeOccSkillIdsWithVouchers(
     specializationId,
     currentOccSkillIds,
     voucherPicks,
+  )
+}
+
+/** True when any O.C.C. core or non-vocational related voucher slots remain open. */
+export function hasIncompleteCreationVoucherPicks(
+  occ: PalladiumOcc | undefined,
+  specializationId: string | null | undefined,
+  occCoreVoucherPicks: Readonly<Record<string, unknown>> | undefined,
+  relatedVoucherPicks: Readonly<Record<string, unknown>> | undefined,
+  relatedVoucherClusters: Readonly<Record<string, string>> | undefined,
+): boolean {
+  const occTasks = listOccCoreVoucherTasks(occ, specializationId)
+  if (
+    occTasks.length > 0 &&
+    !occCoreVoucherPicksComplete(occTasks, occCoreVoucherPicks ?? {})
+  ) {
+    return true
+  }
+  const relatedVoucherTasks = listCreationVoucherRelatedTasks(
+    listOccRelatedVoucherTasks(occ, specializationId),
+  )
+  return (
+    relatedVoucherTasks.length > 0 &&
+    !occRelatedVoucherPicksComplete(
+      relatedVoucherTasks,
+      relatedVoucherPicks,
+      relatedVoucherClusters,
+    )
+  )
+}
+
+export function isSkillInVouchersLibraryScope(
+  skillId: string,
+  occ: PalladiumOcc,
+  specializationId: string | null | undefined,
+  occCoreTasks: readonly OccCoreVoucherTask[],
+  occCoreVoucherPicks: Readonly<Record<string, unknown>> | undefined,
+  relatedVoucherTasks: readonly OccRelatedVoucherTask[],
+  relatedVoucherPicks: Readonly<Record<string, unknown>> | undefined,
+  relatedVoucherClusters: Readonly<Record<string, string>> | undefined,
+  hostGenreId: string,
+  catalogSkillIds: readonly string[],
+  forbiddenWpIds: readonly string[] = [],
+): boolean {
+  if (
+    findOccCoreVoucherPickForSkillId(skillId, occCoreTasks, occCoreVoucherPicks)
+  ) {
+    return true
+  }
+
+  const libraryOccTasks = occCoreTasks
+  if (
+    findOpenOccCoreVoucherSlot(
+      skillId,
+      libraryOccTasks,
+      occCoreVoucherPicks,
+      hostGenreId,
+      catalogSkillIds,
+      forbiddenWpIds,
+    ) != null
+  ) {
+    return true
+  }
+
+  if (
+    findRelatedVoucherPickForSkillId(
+      skillId,
+      relatedVoucherTasks,
+      relatedVoucherPicks,
+    )
+  ) {
+    return true
+  }
+
+  return (
+    findOpenRelatedVoucherSlot(
+      skillId,
+      relatedVoucherTasks,
+      relatedVoucherPicks,
+      occ,
+      specializationId,
+      relatedVoucherClusters,
+    ) != null
   )
 }

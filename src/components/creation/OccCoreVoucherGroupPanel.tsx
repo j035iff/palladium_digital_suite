@@ -2,10 +2,7 @@ import type { ReactNode } from 'react'
 
 import type { CreationSkillPick } from '../../types'
 import type { OccCoreVoucherTask } from '../../lib/occCoreSkillVouchers'
-import {
-  countFilledOccCoreVoucherSlots,
-  formatOccCoreVoucherCategoryScope,
-} from '../../lib/occCoreSkillVouchers'
+import { countFilledOccCoreVoucherSlots } from '../../lib/occCoreSkillVouchers'
 import { getOccCoreVoucherSlotPicks } from '../../lib/creationSkillPicks'
 import { occCategoryRuleToneClass } from '../../lib/occCategoryRuleDisplay'
 
@@ -13,12 +10,18 @@ export function OccCoreVoucherGroupPanel({
   task,
   voucherPicks,
   morphus,
+  voucherLabel,
+  scopeWithProgress,
+  libraryHint,
   renderOccSkillRow,
   onClearSlot,
 }: {
   task: OccCoreVoucherTask
   voucherPicks: Readonly<Record<string, unknown>>
   morphus: boolean
+  voucherLabel?: string
+  scopeWithProgress?: string
+  libraryHint?: string
   renderOccSkillRow: (
     pick: CreationSkillPick,
     onClear?: () => void,
@@ -32,7 +35,6 @@ export function OccCoreVoucherGroupPanel({
   )
   const filled = slots.filter((pick): pick is CreationSkillPick => pick != null)
   const filledCount = countFilledOccCoreVoucherSlots(task, voucherPicks)
-  const scope = formatOccCoreVoucherCategoryScope(task.entry)
 
   return (
     <li
@@ -43,17 +45,34 @@ export function OccCoreVoucherGroupPanel({
       }`}
     >
       <div
-        className={`flex items-baseline justify-between gap-2 border-b px-2 py-1.5 ${
+        className={`border-b px-2 py-1.5 ${
           morphus ? 'border-violet-800' : 'border-slate-200'
         }`}
       >
+        {voucherLabel ? (
+          <p
+            className={`text-sm font-bold leading-snug ${
+              morphus ? 'text-amber-300' : 'text-amber-950'
+            }`}
+          >
+            {voucherLabel}
+          </p>
+        ) : null}
         <p
-          className={`min-w-0 text-sm font-bold leading-snug ${
-            morphus ? 'text-amber-300' : 'text-amber-950'
+          className={`min-w-0 text-sm leading-snug ${
+            voucherLabel
+              ? morphus
+                ? 'text-amber-200/90'
+                : 'text-amber-900/90'
+              : morphus
+                ? 'text-amber-300 font-bold'
+                : 'text-amber-950 font-bold'
           }`}
         >
-          {scope}
-          {task.entry.bonusPercent != null && task.entry.bonusPercent !== 0 ? (
+          {scopeWithProgress ?? `${filledCount}/${task.entry.choiceCount}`}
+          {!scopeWithProgress &&
+          task.entry.bonusPercent != null &&
+          task.entry.bonusPercent !== 0 ? (
             <span
               className={`font-medium ${occCategoryRuleToneClass('bonus', morphus)}`}
             >
@@ -62,13 +81,15 @@ export function OccCoreVoucherGroupPanel({
             </span>
           ) : null}
         </p>
-        <span
-          className={`shrink-0 text-sm font-bold tabular-nums ${
-            morphus ? 'text-amber-300' : 'text-amber-950'
-          }`}
-        >
-          {filledCount}/{task.entry.choiceCount}
-        </span>
+        {!voucherLabel && !scopeWithProgress ? (
+          <span
+            className={`shrink-0 text-sm font-bold tabular-nums ${
+              morphus ? 'text-amber-300' : 'text-amber-950'
+            }`}
+          >
+            {filledCount}/{task.entry.choiceCount}
+          </span>
+        ) : null}
       </div>
 
       {filled.length > 0 ? (
@@ -83,7 +104,7 @@ export function OccCoreVoucherGroupPanel({
         </ul>
       ) : (
         <p className="px-2 py-2 text-xs opacity-60">
-          Choose skills from the library with + O.C.C.
+          {libraryHint ?? 'Choose skills from the library with + Voucher.'}
         </p>
       )}
     </li>

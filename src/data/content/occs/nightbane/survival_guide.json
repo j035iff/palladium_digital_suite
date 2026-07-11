@@ -1,0 +1,3817 @@
+[
+  {
+    "id": "occ_general_citizen",
+    "name": "General Citizen",
+    "description": "Pre-Becoming civilian education and occupation from the Survival Guide Education Modifiers table \u2014 an alternative skill foundation for any playable race that selects an O.C.C. Roll D100 on the table or choose a background with G.M. approval.",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide (WB5)",
+        "pageNumber": 61
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane Survival Guide (WB5)",
+        "pageNumber": 65
+      }
+    ],
+    "occType": "civilian",
+    "tags": [
+      "civilian",
+      "survival_guide",
+      "education"
+    ],
+    "packageNotes": [
+      "Survival Guide pp. 61\u201365: Education Modifiers \u2014 optional alternative to the Basic Nightbane skill package (core p. 89) for skill selection and background.",
+      "Select one education specialization at creation (D100 table bands shown in each branch description). G.M. may allow free choice when appropriate.",
+      "Available to any race with manual O.C.C. selection (`canPickOcc: true`). R.C.C.s with auto-mounted skill programs (Guardian, Wampyr, etc.) do not use this row.",
+      "Vocational cluster picks (Associate's, College, Laborer, etc.): player chooses one category group, then takes the required skills from that group at the listed bonus \u2014 G.M. adjudicates mixed-category edge cases.",
+      "Facade Hand to Hand is included or purchased per branch; upgrade costs vary (see active specialization `handToHandRules`).",
+      "Secondary skills: no O.C.C. percentage bonus; category access matches Related Skills for the active specialization.",
+      "XP progression follows the selected race (`progression.xpTableSource: race`) \u2014 Nightbane uses `nightbane_core_nightbane_guardian`; Human uses `nightbane_core_doppleganger` (core p. 233 human column)."
+    ],
+    "occSkillsCore": [],
+    "occRelatedSkills": {
+      "initialSlotsCount": 0,
+      "categoryRules": []
+    },
+    "secondarySkills": {
+      "initialSlotsCount": 0,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
+    "handToHandRules": {
+      "defaultSkillId": "hth_none",
+      "upgradePaths": []
+    },
+    "progression": {
+      "xpTableSource": "race"
+    },
+    "specializations": [
+      {
+        "id": "street_schooled",
+        "name": "Street Schooled",
+        "description": "01-10% \u2014 Runaway, impoverished, dropout, NSB fugitive, orphan, or other street survivor with no formal education \u2014 skills learned from people and experience on the streets. Life on the streets means scrounging, salvaging, begging, bartering, odd jobs, and petty theft. Typical age 12\u201320 in a big city; any age allowed.",
+        "occSkillsCore": [
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "label": "Bicycling (+16%) or Pilot: Automobile (+4%)",
+            "allowedSkillIds": [
+              "skill_bicycling",
+              "skill_automobile"
+            ],
+            "skillSpecificOverrides": {
+              "skill_bicycling": 16,
+              "skill_automobile": 4
+            }
+          },
+          {
+            "skillId": "skill_barter",
+            "bonusPercent": 12
+          },
+          {
+            "skillId": "skill_begging",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 5
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 25,
+            "label": "Lore: Nightbane or Lore: Nightlands (+25%)",
+            "allowedSkillIds": [
+              "skill_lore_nightbane",
+              "skill_lore_nightlands"
+            ]
+          },
+          {
+            "skillId": "skill_roadwise",
+            "bonusPercent": 12
+          },
+          {
+            "skillId": "skill_salvage",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_streetwise",
+            "bonusPercent": 30
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "label": "W.P. Knife or W.P. Blunt",
+            "allowedSkillIds": [
+              "wp_knife",
+              "wp_blunt"
+            ]
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 6,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_radio_basic"
+              ]
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_basic_electronics"
+              ]
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_detect_ambush",
+                "skill_detect_concealment",
+                "skill_disguise"
+              ]
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_automotive_mechanics",
+                "skill_basic_mechanics"
+              ]
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics",
+                "skill_gymnastics",
+                "skill_scuba"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_boat_motor_and_hydrofoils",
+                "skill_boat_sail_type",
+                "skill_boats_paddle_types",
+                "skill_automobile",
+                "skill_bicycling",
+                "skill_motorcycle",
+                "skill_truck"
+              ],
+              "skillSpecificOverrides": {
+                "skill_automobile": 6,
+                "skill_bicycling": 10,
+                "skill_motorcycle": 10,
+                "skill_truck": 10
+              }
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "except",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_computer_hacking",
+                "skill_computer_programming",
+                "skill_computer_repair",
+                "skill_computer_operation",
+                "skill_netwise",
+                "skill_safe_cracking"
+              ]
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_math_basic"
+              ]
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 0,
+              "skillSpecificOverrides": {
+                "skill_lore_magic": 10,
+                "skill_lore_factions": 10,
+                "skill_lore_nightbane": 10,
+                "skill_lore_nightlands": 10,
+                "skill_lore_demons_and_monsters": 10
+              }
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "none",
+              "bonusPercent": 0
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_rogue",
+              "choiceCount": 1,
+              "label": "One Rogue skill",
+              "allowedCategories": [
+                "Rogue"
+              ]
+            },
+            {
+              "id": "related_domestic",
+              "choiceCount": 1,
+              "label": "One Domestic skill",
+              "allowedCategories": [
+                "Domestic"
+              ]
+            },
+            {
+              "id": "related_technical",
+              "choiceCount": 1,
+              "label": "One Technical skill",
+              "allowedCategories": [
+                "Technical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 3,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 13,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 11,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 13,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "No Formal Education",
+            "description": "Runaway, impoverished, dropout, NSB fugitive, orphan, or other circumstance \u2014 never obtained formal schooling. Skills come from people and street experience (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Street Survival Lifestyle",
+            "description": "Life on the streets means scrounging, salvaging, begging, bartering, odd jobs, and petty theft. Core skills emphasize Barter, Begging, Roadwise, Salvage, and Streetwise (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Young Street Survivor",
+            "description": "Probably age 12\u201320 living on the streets of a big city, but any age is allowed. Consider NSB pursuit, homelessness, and lack of family support when building the background (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 p. 61). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military). Core package includes W.P. Knife or W.P. Blunt (WB5 p. 62)."
+          },
+          {
+            "name": "Technical Lore Bonus",
+            "description": "Technical related skills grant +10% only on Lore-type picks (Lore: Magic, Factions, Nightbane, Nightlands, Demons & Monsters) \u2014 not all Technical skills (WB5 p. 62)."
+          },
+          {
+            "name": "Related Skill Minimums",
+            "description": "At level 1 select one Rogue skill, one Domestic skill, one Technical skill, and three additional picks from the related list. Category access and bonuses match the encoded `occRelatedSkills` program (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Six related skills at creation; gain one additional related skill at levels 3, 6, 9, and 13. All new related picks start at 1st-level proficiency (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Three secondary skills at creation plus one each at levels 3, 5, 7, 9, 11, and 13. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 62)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Impoverished street survivors typically own far less than the core civilian 3D6\u00d7100 baseline \u2014 encoded `finances` uses 2D6\u00d710; G.M. may adjust or substitute scavenged goods for cash (WB5 pp. 61\u201362; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Worn street clothing and personal effects \u2014 often everything the character owns",
+            "Backpack, bedroll, or shopping cart with scavenged odds and ends",
+            "Cheap knife or blunt weapon matching the core W.P. pick",
+            "Bicycle or beat-up automobile per core transport choice (Bicycling +16% or Automobile +4%)",
+            "Begging bottle, litter, or small trade goods as background-dependent street kit",
+            "No military weapons \u2014 civilian street gear only (WB5 pp. 61\u201362)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "2D6*10"
+        }
+      },
+      {
+        "id": "street_thug",
+        "name": "Street Thug",
+        "description": "11-20% \u2014 Runaway, dropout, orphan, or poverty victim with no formal education who grew up on the streets \u2014 fell in with the wrong crowd and survived as small-time criminal and street muscle. Typical age 16\u201330 in a big city; any age allowed.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 10
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 25,
+            "label": "Lore: Nightlands or Lore: Factions (+25%)",
+            "allowedSkillIds": [
+              "skill_lore_nightlands",
+              "skill_lore_factions"
+            ]
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "label": "Body Building, Wrestling, or Boxing",
+            "allowedSkillIds": [
+              "skill_body_building_weight_lifting",
+              "skill_wrestling",
+              "skill_boxing"
+            ]
+          },
+          {
+            "skillId": "skill_roadwise",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_streetwise",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_streetwise_drugs",
+            "bonusPercent": 25
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "label": "W.P. Knife or W.P. Blunt",
+            "allowedSkillIds": [
+              "wp_knife",
+              "wp_blunt"
+            ]
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 7,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_radio_basic"
+              ]
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_basic_electronics"
+              ]
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "except",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_sniper",
+                "skill_tracking",
+                "skill_wilderness_survival"
+              ]
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_automotive_mechanics",
+                "skill_basic_mechanics"
+              ]
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_first_aid"
+              ]
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_recognize_weapon_quality"
+              ]
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics",
+                "skill_gymnastics",
+                "skill_scuba"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_boat_motor_and_hydrofoils",
+                "skill_boat_sail_type",
+                "skill_boats_paddle_types",
+                "skill_automobile",
+                "skill_bicycling",
+                "skill_motorcycle",
+                "skill_truck",
+                "skill_combat_driving"
+              ],
+              "skillSpecificOverrides": {
+                "skill_automobile": 6,
+                "skill_bicycling": 10,
+                "skill_motorcycle": 10,
+                "skill_truck": 10
+              }
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_math_basic"
+              ]
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "none",
+              "bonusPercent": 0
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_espionage",
+              "choiceCount": 2,
+              "label": "Two Espionage skills",
+              "allowedCategories": [
+                "Espionage"
+              ]
+            },
+            {
+              "id": "related_rogue",
+              "choiceCount": 2,
+              "label": "Two Rogue skills",
+              "allowedCategories": [
+                "Rogue"
+              ]
+            },
+            {
+              "id": "related_physical",
+              "choiceCount": 1,
+              "label": "One Physical skill",
+              "allowedCategories": [
+                "Physical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 3,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 2,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 2,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 2,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 2,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 2,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 4,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 8,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 14,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_expert",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 1
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [
+            "wp_automatic_pistol"
+          ],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "No Formal Education",
+            "description": "Runaway, dropout, orphan, or poverty victim who never obtained formal schooling \u2014 skills learned on the streets and from criminal associates (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Small-Time Criminal Background",
+            "description": "Fell in with the wrong crowd and survived as small-time criminal and street muscle \u2014 not a trained soldier or faction operative, but hardened by street violence and petty crime (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Young Street Criminal",
+            "description": "Probably age 16\u201330 growing up on the streets of a big city, but any age is allowed. Gang ties, drug trade exposure, and NSB attention are common background hooks (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Expert is included. Upgrade to Martial Arts for one related-skill selection (WB5 p. 62). Applies to the Facade only \u2014 see Morphus Innate Combat for Nightbane (`handToHandRules`)."
+          },
+          {
+            "name": "Street Weapon Proficiencies",
+            "description": "Core package includes W.P. Knife or W.P. Blunt plus W.P. Automatic Pistol. Related W.P. selections exclude Pole Arm, Whip, and Heavy (Military) only \u2014 automatic rifles are not listed among exclusions (WB5 p. 62)."
+          },
+          {
+            "name": "Street Muscle Training",
+            "description": "Core emphasizes brawling (Body Building, Wrestling, or Boxing), Roadwise (+10%), Streetwise (+30%), and Streetwise: Drugs (+25%). Literacy (+10%) is included in the core package (WB5 p. 62)."
+          },
+          {
+            "name": "Related Skill Minimums",
+            "description": "At level 1 select two Espionage skills, two Rogue skills, one Physical skill, and two additional picks from the related list. Category access and bonuses match the encoded `occRelatedSkills` program (WB5 p. 62)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Seven related skills at creation (minimums above); gain two additional related skills at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 p. 62)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Three secondary skills at creation plus one each at levels 2, 4, 6, 8, 10, 12, and 14. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 62)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Small-time criminals may carry modest stolen proceeds or drug-trade cash \u2014 encoded `finances` uses 2D6\u00d7100 (below core civilian 3D6\u00d7100; above impoverished Street Schooled). G.M. may adjust or add gang-supplied gear (WB5 pp. 61\u201362; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Handgun matching W.P. Automatic Pistol (owned, stolen, or gang-supplied)",
+            "Knife or blunt weapon matching the core W.P. pick",
+            "Street or gang clothing, personal effects, and identifiers as background-dependent",
+            "Automobile, motorcycle, or bicycle \u2014 pilot skills include Combat Driving (WB5 p. 62)",
+            "Drug paraphernalia, contraband, or petty-theft goods when background-appropriate",
+            "Radios or cheap electronics on a case-by-case basis \u2014 small-time street gear, not military loadout"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "2D6*100"
+        }
+      },
+      {
+        "id": "high_school_educated",
+        "name": "High School Educated",
+        "description": "21-25% \u2014 Finished high school before going out to find work or being forced underground after the Becoming. Typical age 17\u201321 with little work experience; any age allowed.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_bicycling",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_automobile",
+            "bonusPercent": 4
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 9,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_radio_basic",
+                "skill_tv_video"
+              ]
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_basic_electronics"
+              ]
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_automotive_mechanics",
+                "skill_basic_mechanics"
+              ]
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_first_aid"
+              ]
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_helicopter",
+                "skill_jet_aircraft",
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_computer_hacking",
+                "skill_netwise"
+              ]
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "none",
+              "bonusPercent": 0
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_domestic",
+              "choiceCount": 3,
+              "label": "Three Domestic skills",
+              "allowedCategories": [
+                "Domestic"
+              ]
+            },
+            {
+              "id": "related_technical",
+              "choiceCount": 1,
+              "label": "One Technical skill",
+              "allowedCategories": [
+                "Technical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 3,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "High School Graduate Background",
+            "description": "Finished high school before seeking work or being forced underground after the Becoming \u2014 typical educated civilian with computer literacy and basic academics (WB5 pp. 61\u201362)."
+          },
+          {
+            "name": "Young Adult at the Becoming",
+            "description": "Probably age 17\u201321 with little work experience, but any age is allowed. Matches the core Basic Nightbane skill-package demographic (core p. 89; WB5 p. 62)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 p. 62). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military) \u2014 civilian arms only (WB5 p. 62)."
+          },
+          {
+            "name": "Computer-Literate Core",
+            "description": "Core package includes Computer Operation (+15%), Literacy (+20%), and Math: Basic (+20%) \u2014 reflects a modern high-school education before the Becoming (WB5 p. 62)."
+          },
+          {
+            "name": "Limited Rogue Access",
+            "description": "Rogue related skills are limited to Computer Hacking and Netwise only \u2014 no full criminal skill program (WB5 p. 62)."
+          },
+          {
+            "name": "Related Skill Minimums",
+            "description": "At level 1 select three Domestic skills, one Technical skill, and five additional picks from the related list. Domestic (+5%), Technical (+10%), and Science (+5%) bonuses apply per category rules (WB5 p. 62)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Nine related skills at creation (minimums above); gain one additional related skill at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 p. 62)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Three secondary skills at creation plus one each at levels 3, 6, 9, and 12. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 62)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. High-school graduates align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100 (core pp. 89\u201390). Likely owns a bicycle or car, personal computer or handheld device, clothing, and school-era personal effects."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Bicycle or automobile per core pilot skills (Bicycling +10% or Automobile +4%)",
+            "Clothing and personal effects \u2014 school-era wardrobe and everyday civilian gear",
+            "Home computer, laptop, or handheld device (Computer Operation +15% in core)",
+            "Books, school supplies, and high-school memorabilia as background-dependent",
+            "Radio, music player, camera, or other typical young-adult odds and ends",
+            "No military weapons \u2014 civilian gear only (WB5 pp. 61\u201362; core pp. 89\u201390)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "associates_vocational",
+        "name": "Associate's Degree or Vocational Training",
+        "description": "26-30% \u2014 Associate's degree or equivalent two-year college/vocational education. Typical age 19\u201325 with little work experience; any age allowed.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_bicycling",
+            "bonusPercent": 6
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_automobile",
+            "bonusPercent": 10
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 10,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_helicopter",
+                "skill_jet_aircraft",
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_netwise"
+              ]
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 0
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_domestic_or_pilot",
+              "choiceCount": 2,
+              "label": "Two Domestic or Pilot skills",
+              "orCategoryBranches": [
+                "Domestic",
+                "Pilot"
+              ]
+            },
+            {
+              "id": "related_vocational_cluster",
+              "choiceCount": 3,
+              "label": "Three skills from one special-training category (Communications, Electrical, Medical, Mechanical, or Science) at +10%",
+              "clusterBonusPercent": 10,
+              "clusterCategoryOptions": [
+                "Communications",
+                "Electrical",
+                "Medical",
+                "Mechanical",
+                "Science"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 4,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 13,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "Associate's or Vocational Training Background",
+            "description": "Two-year college associate's degree or equivalent vocational/trade-school education \u2014 broader technical foundation than high school alone (WB5 pp. 62\u201363)."
+          },
+          {
+            "name": "Young Adult with Trade Education",
+            "description": "Probably age 19\u201325 with little work experience, but any age is allowed. Vocational specialty should inform the +10% cluster pick and starting gear (WB5 pp. 62\u201363)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 pp. 62\u201363). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military) \u2014 civilian arms only (WB5 p. 63)."
+          },
+          {
+            "name": "Vocational Cluster (+10%)",
+            "description": "Select three related skills from one special-training category \u2014 Communications, Electrical, Medical, Mechanical, or Science \u2014 all three at +10%. Communications and Medical are otherwise unavailable except through this cluster. G.M. adjudicates mixed-category edge cases (WB5 p. 63; parent `packageNotes`)."
+          },
+          {
+            "name": "Domestic or Pilot Foundation",
+            "description": "At level 1 select two Domestic skills or Pilot skills (Pilot includes boats except Ships, automobiles, bicycles, motorcycles, and trucks per related list). Domestic related skills gain +10% (WB5 p. 63)."
+          },
+          {
+            "name": "Expanded Related Access",
+            "description": "Broader pool than High School Educated \u2014 Wilderness any, Pilot Related any, full Mechanical (+5%) and Electrical (+5%) access, and Netwise-only Rogue (+5%). Physical any except Acrobatics (WB5 p. 63)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Ten related skills at creation (two Domestic/Pilot + three vocational cluster + five choice); gain one additional related skill at levels 3, 5, 7, 10, and 12. All new related picks start at 1st-level proficiency (WB5 p. 63)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Four secondary skills at creation plus one each at levels 3, 5, 7, 10, and 13. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 63)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Vocational graduates align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Likely owns an automobile (+10%), computer, trade-school textbooks, and tools for the chosen vocational specialty (WB5 pp. 62\u201363; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Automobile per core pilot skill (Automobile +10%)",
+            "Computer, laptop, or handheld device (Computer Operation +20% in core)",
+            "Trade-school textbooks, certificates, and vocational reference materials",
+            "Basic tool kit or specialty equipment for the chosen vocational cluster (Communications, Electrical, Medical, Mechanical, or Science)",
+            "Clothing and personal effects \u2014 young adult civilian or trade-school graduate gear",
+            "Bicycle as secondary transport when background-appropriate (Bicycling +6% in core)",
+            "No military weapons \u2014 civilian gear only (WB5 pp. 62\u201363)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "college_graduate",
+        "name": "College Graduate (Bachelor's Degree)",
+        "description": "31-35% \u2014 Four-year university graduate or equivalent vocational education in some field. Typical age 22\u201328 with minimal work experience; any age allowed.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_bicycling",
+            "bonusPercent": 6
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 40
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_automobile",
+            "bonusPercent": 10
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 12,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_helicopter",
+                "skill_jet_aircraft",
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_netwise"
+              ]
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "any",
+              "bonusPercent": 15
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 5
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_vocational_cluster",
+              "choiceCount": 3,
+              "label": "Three skills from one special-training category (Communications, Electrical, Medical, Mechanical, Science, or Technical) at +20%",
+              "clusterBonusPercent": 20,
+              "clusterCategoryOptions": [
+                "Communications",
+                "Electrical",
+                "Medical",
+                "Mechanical",
+                "Science",
+                "Technical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 5,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "Bachelor's Degree Background",
+            "description": "Four-year university graduate or equivalent vocational education in some field \u2014 broad scholastic and technical foundation with high literacy and computer proficiency (WB5 p. 63)."
+          },
+          {
+            "name": "Young Professional at the Becoming",
+            "description": "Probably age 22\u201328 with minimal work experience, but any age is allowed. Degree major should inform the +20% special-training cluster and starting gear (WB5 p. 63)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 p. 63). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military) \u2014 civilian arms only (WB5 p. 63)."
+          },
+          {
+            "name": "Special-Training Cluster (+20%)",
+            "description": "Select three related skills from one category \u2014 Communications, Electrical, Medical, Mechanical, Science, or Technical \u2014 all three at +20%. Communications and Medical are otherwise unavailable except through this cluster. G.M. adjudicates mixed-category edge cases (WB5 p. 63; parent `packageNotes`)."
+          },
+          {
+            "name": "Scholastic Core Skills",
+            "description": "Core package includes Computer Operation (+25%), Language (+30%), Literacy (+40%), and Math: Basic (+30%) \u2014 reflects a completed university education (WB5 p. 63)."
+          },
+          {
+            "name": "Broad Related Access",
+            "description": "Twelve related slots at creation (three cluster + nine choice) with full Domestic (+10%), Electrical/Mechanical/Technical (+10%), Science (+15%), Pilot Related (+10%), Wilderness (+5%), and Netwise-only Rogue (+10%). Physical any except Acrobatics (WB5 p. 63)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Twelve related skills at creation; gain one additional related skill at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 p. 63)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Five secondary skills at creation plus one each at levels 3, 6, 9, and 12. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 63)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. College graduates align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Likely owns an automobile (+10%), computer/laptop, books, and degree-related materials; may operate as specialists or consultants (WB5 p. 63; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Automobile per core pilot skill (Automobile +10%)",
+            "Home computer, laptop, or handheld device (Computer Operation +25% in core)",
+            "University textbooks, degree materials, and academic or professional reference library",
+            "Clothing, dress clothes, and personal effects \u2014 educated civilian gear",
+            "Camera, research notes, and specialty equipment for the chosen +20% training cluster",
+            "Bicycle as secondary transport when background-appropriate (Bicycling +6% in core)",
+            "No military weapons \u2014 civilian gear only (WB5 p. 63; core pp. 89\u201390)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "rescue_first_responder",
+        "name": "Rescue / First Responder or Law",
+        "description": "36-40% \u2014 High school graduate with up to 1D4 years of college and special training \u2014 firefighter, paramedic, law enforcement (any branch), disaster relief, or similar; select skills to fit the desired occupation. Age 22+. Law enforcement may take Espionage skills (+10%) and any Modern W.P. despite general restrictions.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_climbing",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_combat_driving",
+            "bonusPercent": 0
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_paramedic",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 30
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 0,
+            "label": "Pilot: Automobile (+12%) or Pilot: Truck (+16%)",
+            "allowedSkillIds": [
+              "skill_automobile",
+              "skill_truck"
+            ],
+            "skillSpecificOverrides": {
+              "skill_automobile": 12,
+              "skill_truck": 16
+            }
+          },
+          {
+            "skillId": "skill_radio_basic",
+            "bonusPercent": 20
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 10,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "any",
+              "bonusPercent": 15
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_find_contraband",
+                "skill_netwise",
+                "skill_roadwise",
+                "skill_streetwise"
+              ]
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 10
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_pilot_or_pilot_related",
+              "choiceCount": 2,
+              "label": "Two Pilot or Pilot Related skills",
+              "orCategoryBranches": [
+                "Pilot",
+                "Pilot Related"
+              ]
+            },
+            {
+              "id": "related_first_responder",
+              "choiceCount": 2,
+              "label": "Two Medical or Technical skills for first-responder role (e.g. Excavation, Firefighting, Law, Rope Works; +20%)",
+              "clusterBonusPercent": 20,
+              "orCategoryBranches": [
+                "Medical",
+                "Technical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 5,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 1
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 2
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "First Responder or Law Enforcement Background",
+            "description": "High school graduate with up to 1D4 years of college and special training \u2014 firefighter, paramedic, law enforcement (any branch), disaster relief, or similar. Select skills to fit the desired occupation (WB5 pp. 63\u201364)."
+          },
+          {
+            "name": "Age 22+ with Occupational Training",
+            "description": "Can be age 22 and older. Occupation (fire, EMS, police, disaster relief) should drive the +20% Medical/Technical specialty picks and starting gear (WB5 pp. 63\u201364)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for one related-skill selection, or Martial Arts for two (WB5 pp. 63\u201364). Applies to the Facade only \u2014 see Morphus Innate Combat for Nightbane (`handToHandRules`)."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies (Law Enforcement Exception)",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military) for most occupations. Law enforcement may select any Modern W.P. despite the general restriction \u2014 G.M. confirms police/military branch background (WB5 pp. 63\u201364; encoded `wpRules` uses civilian forbidden list; exception documented here)."
+          },
+          {
+            "name": "First Responder Core Skills",
+            "description": "Core package includes Climbing (+20%), Combat Driving, Computer Operation (+20%), Paramedic (+20%), Radio: Basic (+20%), and Automobile (+12%) or Truck (+16%) \u2014 reflects rescue/response training (WB5 pp. 63\u201364)."
+          },
+          {
+            "name": "First Responder Specialty (+20%)",
+            "description": "Select two Medical or Technical skills that relate to the character's first-responder role (e.g. Excavation, Firefighting, Law, Rope Works) at +20%. Medical category is otherwise unavailable except through this vocational pick (WB5 pp. 63\u201364; parent `packageNotes`)."
+          },
+          {
+            "name": "Pilot or Pilot Related Foundation",
+            "description": "At level 1 select two Pilot or Pilot Related skills. Pilot any except Jet Fighters, Jet Packs, Ships, and Tanks; Pilot Related any (+10%) (WB5 pp. 63\u201364)."
+          },
+          {
+            "name": "Law Enforcement Espionage Exception",
+            "description": "Espionage is none for most occupations. Law enforcement characters may take Espionage related skills (+10%) \u2014 engine encodes `accessType: none` with exception documented here; G.M. enables picks for police backgrounds (WB5 p. 63)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Ten related skills at creation (two Pilot/Pilot Related + two specialty + six choice); gain one additional related skill at levels 3, 5, 7, 10, and 12. All new related picks start at 1st-level proficiency (WB5 pp. 63\u201364)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Five secondary skills at creation plus one each at levels 3, 5, 7, 10, and 12. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 64)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing occupation-specific reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Professional first responders align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Department-issued or personally owned service gear varies by occupation; law enforcement may include duty sidearm (WB5 pp. 63\u201364; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Service vehicle \u2014 automobile (+12%) or truck (+16%) per core pilot pick",
+            "Radio and communications gear (Radio: Basic +20% in core)",
+            "First-aid / paramedic kit, climbing rope, or firefighting tools per occupation",
+            "Work uniform, turnout gear, or law-enforcement duty belt as background-dependent",
+            "Computer or dispatch equipment (Computer Operation +20% in core)",
+            "Law enforcement: duty sidearm and any Modern W.P. the G.M. allows despite civilian restrictions",
+            "Disaster-relief or agency identifiers when affiliated with a department or volunteer unit"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "laborer_light",
+        "name": "Laborer / Worker: Light",
+        "description": "41-50% \u2014 Unskilled or semi-skilled laborer \u2014 probably finished high school and possibly one or two years of college or vocational education. Age 17+.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_aerobic_athletics",
+            "bonusPercent": 0
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_general_repair_and_maintenance",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 20
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 10,
+            "label": "Pilot: Automobile or Pilot: Truck (+10%)",
+            "allowedSkillIds": [
+              "skill_automobile",
+              "skill_truck"
+            ]
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 8,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_first_aid"
+              ]
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_jet_aircraft",
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_netwise"
+              ]
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 0
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_work_cluster",
+              "choiceCount": 3,
+              "label": "Three skills from one work area (Communications, Domestic, Mechanical, Science, or Technical) at +15%",
+              "clusterBonusPercent": 15,
+              "clusterCategoryOptions": [
+                "Communications",
+                "Domestic",
+                "Mechanical",
+                "Science",
+                "Technical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 4,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 13,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "Unskilled or Semi-Skilled Laborer Background",
+            "description": "Unskilled or semi-skilled worker \u2014 probably finished high school and possibly one or two years of college or vocational education. Practical hands-on skills over professional credentials (WB5 p. 64)."
+          },
+          {
+            "name": "Age 17+ Worker",
+            "description": "Can be age 17 and older. Work specialty (warehouse, maintenance, domestic services, light trades, etc.) should inform the +15% cluster pick and starting gear (WB5 p. 64)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 p. 64). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military) \u2014 civilian arms only (WB5 p. 64)."
+          },
+          {
+            "name": "Work Specialty Cluster (+15%)",
+            "description": "Select three related skills from one work area \u2014 Communications, Domestic, Mechanical, Science, or Technical \u2014 all three at +15%. Communications is otherwise unavailable except through this cluster. G.M. adjudicates mixed-category edge cases (WB5 p. 64; parent `packageNotes`)."
+          },
+          {
+            "name": "Practical Core Skills",
+            "description": "Core package includes Aerobic Athletics, Computer Operation (+20%), General Repair & Maintenance (+15%), and Automobile or Truck (+10%) \u2014 reflects a working-class job before the Becoming (WB5 p. 64)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Eight related skills at creation (three work-cluster + five choice); gain one additional related skill at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 p. 64)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Four secondary skills at creation plus one each at levels 3, 5, 7, 10, and 13. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 64)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing work-background reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Working laborers align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Likely owns work clothes, basic tools, and an automobile or truck (+10%) (WB5 p. 64; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Work clothes, boots, gloves, and personal effects",
+            "Basic hand tools or job-specific kit for the chosen +15% work cluster",
+            "Automobile or truck per core pilot pick (+10%)",
+            "Lunch box, water bottle, and everyday worker odds and ends",
+            "Hard hat or safety gear when the work specialty warrants it (background-dependent)",
+            "No military weapons \u2014 civilian work gear only (WB5 p. 64)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "laborer_heavy_construction",
+        "name": "Heavy Laborer / Construction",
+        "description": "51-60% \u2014 Skilled laborer with high school, 1D6 years of college or trade-school/vocational training for the job \u2014 construction, carpentry, crane operator, mechanical engineering, and similar. Age 21+.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_barter",
+            "bonusPercent": 16
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_general_repair_and_maintenance",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_jury_rig",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_physical_labor",
+            "bonusPercent": 0
+          },
+          {
+            "choiceCount": 1,
+            "bonusPercent": 10,
+            "label": "Pilot: Automobile or Pilot: Truck (+10%)",
+            "allowedSkillIds": [
+              "skill_automobile",
+              "skill_truck"
+            ]
+          },
+          {
+            "skillId": "skill_radio_basic",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_salvage",
+            "bonusPercent": 15
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 10,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "any",
+              "bonusPercent": 15
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_first_aid"
+              ]
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "only",
+              "bonusPercent": 20,
+              "exceptions": [
+                "skill_demolitions",
+                "skill_demolitions_disposal",
+                "skill_demolitions_underwater"
+              ]
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_jet_aircraft",
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "any",
+              "bonusPercent": 5,
+              "skillSpecificOverrides": {
+                "skill_chemistry": 10,
+                "skill_chemistry_analytical": 10,
+                "skill_math_advanced": 10
+              }
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 10
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_work_specialty_cluster",
+              "choiceCount": 3,
+              "label": "Three skills from one work specialty (Electrical, Mechanical, Pilot, or Technical) at +20% \u2014 e.g. Boat Building, Carpentry, Construction, Excavation",
+              "clusterBonusPercent": 20,
+              "clusterCategoryOptions": [
+                "Electrical",
+                "Mechanical",
+                "Pilot",
+                "Technical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 6,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 13,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "Skilled Construction Laborer Background",
+            "description": "Skilled laborer with high school plus 1D6 years of college or trade-school/vocational training \u2014 construction, carpentry, crane operator, mechanical engineering, and similar trades (WB5 p. 64)."
+          },
+          {
+            "name": "Age 21+ Tradesworker",
+            "description": "Can be age 21 and older. Trade specialty should inform the +20% cluster pick (Electrical, Mechanical, Pilot, or Technical) and starting gear \u2014 e.g. Boat Building, Carpentry, Construction, Excavation (WB5 p. 64)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 p. 64). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Construction Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, and Heavy (Military) only \u2014 automatic rifles are not listed among exclusions (WB5 p. 64)."
+          },
+          {
+            "name": "Work Specialty Cluster (+20%)",
+            "description": "Select three related skills from one work specialty \u2014 Electrical, Mechanical, Pilot, or Technical \u2014 all three at +20%. G.M. adjudicates mixed-category edge cases (WB5 p. 64; parent `packageNotes`)."
+          },
+          {
+            "name": "Construction Core Skills",
+            "description": "Core package includes Barter (+16%), Computer Operation (+30%), General Repair & Maintenance (+20%), Jury-Rig (+15%), Physical Labor, Radio: Basic (+10%), Salvage (+15%), and Automobile or Truck (+10%) (WB5 p. 64)."
+          },
+          {
+            "name": "Demolition Military Access",
+            "description": "Military related skills are limited to Demolitions skills only (+20%) \u2014 reflects construction/demolition trade training, not full military program (WB5 p. 64)."
+          },
+          {
+            "name": "Science Chemistry and Math Bonus",
+            "description": "Science related skills gain +5% generally; Chemistry and Math: Advanced gain +10% when taken from the Science category (`skillSpecificOverrides` on related rules) (WB5 p. 64)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Ten related skills at creation (three specialty cluster + seven choice); gain one additional related skill at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 p. 64)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Six secondary skills at creation plus one each at levels 3, 6, 9, and 13. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 64)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing trade-background reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Skilled tradesworkers align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Likely owns trade tools, safety gear, truck, and job-site equipment (WB5 p. 64; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Hard hat, safety vest, steel-toe boots, and work clothing",
+            "Heavy tool belt, hand tools, and power tools for the chosen trade specialty",
+            "Automobile or truck per core pilot pick (+10%)",
+            "Two-way radio (Radio: Basic +10% in core)",
+            "Blueprints, measuring tape, and construction-site odds and ends",
+            "Demolition or salvage gear when the work specialty warrants it (background-dependent)",
+            "W.P. gear per related picks \u2014 pole arm, whip, and heavy military excluded (WB5 p. 64)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "mechanic_repair",
+        "name": "Mechanic & Repair",
+        "description": "61-70% \u2014 Skilled mechanic \u2014 high school dropout with on-the-job/vocational training or a college graduate. Age 18+.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_basic_electronics",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_general_repair_and_maintenance",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_jury_rig",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_automobile",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_salvage",
+            "bonusPercent": 15
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 9,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_radio_basic"
+              ]
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_first_aid"
+              ]
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_jet_aircraft",
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_find_contraband",
+                "skill_netwise",
+                "skill_palming",
+                "skill_roadwise"
+              ]
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_chemistry",
+                "skill_chemistry_analytical",
+                "skill_math_basic",
+                "skill_math_advanced"
+              ]
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 5
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_mechanical_specialty",
+              "choiceCount": 4,
+              "label": "Four Mechanical specialty skills (+15% each)",
+              "clusterBonusPercent": 15,
+              "allowedCategories": [
+                "Mechanical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 4,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 13,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "Skilled Mechanic Background",
+            "description": "Skilled mechanic \u2014 may be a high school dropout with on-the-job/vocational training or a college graduate. Repair, salvage, and jury-rig expertise over combat training (WB5 pp. 64\u201365)."
+          },
+          {
+            "name": "Age 18+ Tradesperson",
+            "description": "Can be age 18 and older. Specialty (automotive, aircraft, general repair, etc.) should inform the four Mechanical picks at +15% and starting gear (WB5 pp. 64\u201365)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 pp. 64\u201365). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military) \u2014 civilian arms only (WB5 p. 65)."
+          },
+          {
+            "name": "Mechanical Specialty (+15%)",
+            "description": "Select four Mechanical related skills as the character's area of specialty \u2014 each at +15%. Mechanical category also grants +10% on other Mechanical picks per related rules (WB5 pp. 64\u201365; parent `packageNotes`)."
+          },
+          {
+            "name": "Mechanic Core Skills",
+            "description": "Core package includes Basic Electronics (+15%), Computer Operation (+25%), General Repair & Maintenance (+20%), Jury-Rig (+10%), Salvage (+15%), and Pilot: Automobile (+10%) \u2014 hands-on repair foundation (WB5 pp. 64\u201365)."
+          },
+          {
+            "name": "Limited Rogue Access",
+            "description": "Rogue related skills are limited to Find Contraband, Netwise, Palming, and Roadwise (+5%) \u2014 scrounging and street-smart picks for salvage mechanics, not full criminal program (WB5 p. 65)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Nine related skills at creation (four Mechanical specialty + five choice); gain one additional related skill at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 pp. 64\u201365)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Four secondary skills at creation plus one each at levels 3, 5, 7, 10, and 13. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 65)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing mechanic-background reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Skilled mechanics align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Likely owns tool chest, diagnostic gear, automobile, and salvaged parts (WB5 pp. 64\u201365; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Tool chest, wrenches, sockets, and mechanic hand tools",
+            "Diagnostic equipment, multimeter, and Basic Electronics kit (+15% in core)",
+            "Automobile per core pilot skill (+10%)",
+            "Coveralls or shop clothing and work gloves",
+            "Salvaged parts, scrap metal, and jury-rig materials (Salvage +15% in core)",
+            "Two-way radio when background-appropriate (Radio: Basic available in related list)",
+            "No military weapons \u2014 civilian shop gear only (WB5 pp. 64\u201365)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "computer_electronics",
+        "name": "Computer / Electronics",
+        "description": "71-80% \u2014 High school dropout with self-taught computer/electronics talent, or graduate of high school, trade school, or college. Age 16+.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_bicycling",
+            "bonusPercent": 4
+          },
+          {
+            "skillId": "skill_computer_hacking",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_computer_programming",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_computer_repair",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 40
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_netwise",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_automobile",
+            "bonusPercent": 6
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 10,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_basic_mechanics"
+              ]
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics",
+                "skill_boxing"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_helicopter",
+                "skill_jet_aircraft",
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 0,
+              "skillSpecificOverrides": {
+                "skill_lore_magic": 10,
+                "skill_lore_factions": 10,
+                "skill_lore_nightbane": 10,
+                "skill_lore_nightlands": 10,
+                "skill_lore_demons_and_monsters": 10,
+                "skill_mythology": 10,
+                "skill_philosophy": 10,
+                "skill_photography": 10,
+                "skill_research": 10,
+                "skill_creative_writing": 10
+              }
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "none",
+              "bonusPercent": 0
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_communications",
+              "choiceCount": 2,
+              "label": "Two Communications skills (+15%)",
+              "clusterBonusPercent": 15,
+              "allowedCategories": [
+                "Communications"
+              ]
+            },
+            {
+              "id": "related_technical",
+              "choiceCount": 2,
+              "label": "Two Technical skills (+15%)",
+              "clusterBonusPercent": 15,
+              "allowedCategories": [
+                "Technical"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 5,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_automatic_and_semiautomatic_rifles",
+            "wp_heavy"
+          ]
+        },
+        "classAbilities": [
+          {
+            "name": "Computer and Electronics Expert Background",
+            "description": "High school dropout with self-taught computer/electronics talent, or graduate of high school, trade school, or college \u2014 deep digital skill stack over physical or wilderness training (WB5 p. 65)."
+          },
+          {
+            "name": "Age 16+ Tech Specialist",
+            "description": "Can be age 16 and older. Education path (self-taught hacker, trade-school technician, or CS graduate) should inform Communications/Technical +15% picks and starting gear (WB5 p. 65)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for two related-skill selections, or Martial Arts for three (WB5 p. 65). Assassin remains available per civilian upgrade table when alignment permits (`handToHandRules`). Facade only \u2014 see Morphus Innate Combat for Nightbane."
+          },
+          {
+            "name": "Civilian Weapon Proficiencies",
+            "description": "Related W.P. selections exclude Pole Arm, Whip, Automatic Rifle, and Heavy (Military) \u2014 civilian arms only (WB5 p. 65)."
+          },
+          {
+            "name": "Digital Core Skills",
+            "description": "Core package includes Computer Hacking (+25%), Computer Operation (+30%), Computer Programming (+30%), Computer Repair (+20%), Netwise (+25%), Literacy (+40%), and Math: Basic (+30%) \u2014 allotted R.C.C. Rogue skills are in core; no additional Rogue related picks (WB5 p. 65)."
+          },
+          {
+            "name": "Communications and Technical Minimums (+15%)",
+            "description": "At level 1 select two Communications skills and two Technical skills \u2014 each at +15%. Plus six additional related picks from the list below (WB5 p. 65)."
+          },
+          {
+            "name": "Technical Lore Bonus",
+            "description": "Technical related skills grant +10% only on Lore-type picks plus Mythology, Philosophy, Photography, Research, and Creative Writing \u2014 not all Technical skills (`skillSpecificOverrides` on related rules) (WB5 p. 65)."
+          },
+          {
+            "name": "Limited Physical and No Wilderness",
+            "description": "Physical related skills any except Acrobatics and Boxing. Wilderness unavailable \u2014 urban/digital specialist, not outdoors survivalist (WB5 p. 65)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Ten related skills at creation (two Communications + two Technical + six choice); gain one additional related skill at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 p. 65)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Five secondary skills at creation plus one each at levels 3, 6, 9, and 12. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 65)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing tech-background reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Tech specialists align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Likely owns multiple computers, networking gear, and electronics bench equipment (WB5 p. 65; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Desktop PC, laptop, handheld devices, and networking hardware",
+            "Coding manuals, electronics references, and tech textbooks",
+            "Electronics bench tools, soldering kit, and spare components",
+            "Automobile or bicycle per core pilot skills (Automobile +6% or Bicycling +4%)",
+            "Modems, cables, and hacker/technician odds and ends as background-dependent",
+            "No military weapons \u2014 civilian tech gear only (WB5 p. 65)"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "military_soldier",
+        "name": "Military / Soldier",
+        "description": "81-90% \u2014 May have finished high school and some college, or be a dropout who joined the military \u2014 likely ex-Army, Air Force, Navy, or Marine, honorably discharged or AWOL after the Becoming. Age 20+.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_climbing",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 35
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_military_etiquette",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_automobile",
+            "bonusPercent": 10
+          },
+          {
+            "skillId": "skill_radio_basic",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_running",
+            "bonusPercent": 0
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 14,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "any",
+              "bonusPercent": 15
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "any",
+              "bonusPercent": 15
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_astronomy",
+                "skill_math_advanced"
+              ]
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 5
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 10
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_military",
+              "choiceCount": 3,
+              "label": "Three Military skills (+20%; not applicable to Physical skills)",
+              "clusterBonusPercent": 20,
+              "allowedCategories": [
+                "Military"
+              ]
+            },
+            {
+              "id": "related_physical",
+              "choiceCount": 2,
+              "label": "Two Physical skills",
+              "allowedCategories": [
+                "Physical"
+              ]
+            },
+            {
+              "id": "related_comm_or_espionage",
+              "choiceCount": 2,
+              "label": "Two Communications or Espionage skills (+20%)",
+              "clusterBonusPercent": 20,
+              "orCategoryBranches": [
+                "Communications",
+                "Espionage"
+              ]
+            },
+            {
+              "id": "related_wp_choice",
+              "choiceCount": 2,
+              "label": "Two W.P.s of choice",
+              "allowedCategories": [
+                "Weapon Proficiencies"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 5,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 1
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 2
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [
+            "wp_knife",
+            "wp_automatic_and_semiautomatic_rifles"
+          ],
+          "forbiddenWps": []
+        },
+        "classAbilities": [
+          {
+            "name": "Ex-Military Service Background",
+            "description": "Completed high school (and possibly some college) or dropped out before joining the military \u2014 likely ex-Army, Air Force, Navy, or Marine, honorably discharged or AWOL after the Becoming (WB5 p. 65)."
+          },
+          {
+            "name": "Age 20+ Veteran",
+            "description": "Age 20 and older. Branch, MOS, and discharge status (honorable vs AWOL) should inform skill picks and starting gear (WB5 p. 65)."
+          },
+          {
+            "name": "Facade Hand to Hand",
+            "description": "Hand to Hand: Basic is included. Upgrade to Expert for one related-skill selection, or Martial Arts for two (WB5 p. 65). Applies to the Facade only \u2014 see Morphus Innate Combat for Nightbane (`handToHandRules`)."
+          },
+          {
+            "name": "Any Weapon Proficiencies",
+            "description": "Core package includes W.P. Knife and W.P. Automatic Rifle; related W.P. selections include any weapon proficiency \u2014 military arms and heavy weapons allowed (WB5 p. 65)."
+          },
+          {
+            "name": "Military Core Skills",
+            "description": "Core package includes Climbing (+20%), Military Etiquette (+20%), Radio: Basic (+20%), Running, and service-oriented academics \u2014 reflects formal military training (WB5 p. 65)."
+          },
+          {
+            "name": "Military and Communications Minimums (+20%)",
+            "description": "At level 1 select three Military skills, two Physical skills, two Communications or Espionage skills, and two W.P.s \u2014 Military and Communications/Espionage minimum picks gain +20% (not applicable to Physical skills). Plus five additional related choices (WB5 p. 65; parent `packageNotes`)."
+          },
+          {
+            "name": "Broad Military Related Access",
+            "description": "Full related pool \u2014 Communications (+15%), Military (+15%), Medical (+10%), Pilot/Pilot Related (+10%), Wilderness (+10%), Rogue any, and W.P. any. Science limited to Astronomy and Math: Advanced (+10%) (WB5 p. 65)."
+          },
+          {
+            "name": "Related Skill Advancement",
+            "description": "Fourteen related skills at creation (minimums above + five choice); gain one additional related skill at levels 3, 6, 9, and 12. All new related picks start at 1st-level proficiency (WB5 p. 65)."
+          },
+          {
+            "name": "Secondary Skill Program",
+            "description": "Five secondary skills at creation plus one each at levels 3, 6, 9, and 12. Secondary pool matches the related list above; no O.C.C. percentage bonus (WB5 p. 65)."
+          },
+          {
+            "name": "Education Modifiers Option",
+            "description": "Survival Guide Education Modifiers alternative to the Basic Nightbane skill package (core p. 89). Suitable for Wampyrs and NPCs; G.M. may allow free choice of background when appropriate (WB5 p. 61)."
+          },
+          {
+            "name": "GM Skill Flexibility",
+            "description": "Education backgrounds are guidelines \u2014 the G.M. may approve related skills outside the listed groupings when the player provides a convincing service-background reason (WB5 p. 61; parent `packageNotes`)."
+          },
+          {
+            "name": "Morphus Innate Combat",
+            "description": "When the character is a Nightbane (`race_nightbane`), Morphus form uses innate Hand to Hand: Martial Arts (+1 melee action and Morphus combat bonuses on the race row) \u2014 independent of Facade H2H included here (core pp. 88\u201389)."
+          },
+          {
+            "name": "Starting Resources",
+            "description": "WB5 does not list starting cash for Education Modifiers rows. Ex-military characters align with the core civilian baseline \u2014 encoded `finances` uses 3D6\u00d7100. Likely retains service rifle, knife, radio, uniform or civvies, and personal vehicle (WB5 p. 65; core pp. 89\u201390)."
+          }
+        ],
+        "startingEquipment": {
+          "miscellaneous": [
+            "Service rifle and knife matching core W.P.s (Automatic Rifle and Knife)",
+            "Two additional W.P. weapons per related minimum picks",
+            "Military uniform, BDUs, or civilian clothes post-discharge",
+            "Two-way radio (Radio: Basic +20% in core)",
+            "Automobile per core pilot skill (+10%)",
+            "Field pack, canteen, and basic survival gear from service issue",
+            "Dog tags, discharge papers, or AWOL fugitive status items as background-dependent"
+          ]
+        },
+        "finances": {
+          "startingCashFormula": "3D6*100"
+        }
+      },
+      {
+        "id": "driver_delivery_trucker",
+        "name": "Driver / Delivery / Trucker",
+        "description": "91-00% \u2014 High school graduate with optional year or two of college or trade-school education \u2014 professional driver. Age 20+.",
+        "occSkillsCore": [
+          {
+            "skillId": "skill_combat_driving",
+            "bonusPercent": 0
+          },
+          {
+            "skillId": "skill_computer_operation",
+            "bonusPercent": 15
+          },
+          {
+            "skillId": "skill_land_navigation",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_language",
+            "bonusPercent": 25
+          },
+          {
+            "skillId": "skill_literacy",
+            "bonusPercent": 30
+          },
+          {
+            "skillId": "skill_math_basic",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_automobile",
+            "bonusPercent": 12
+          },
+          {
+            "skillId": "skill_truck",
+            "bonusPercent": 20
+          },
+          {
+            "skillId": "skill_roadwise",
+            "bonusPercent": 30
+          }
+        ],
+        "occRelatedSkills": {
+          "replaceBaseline": true,
+          "initialSlotsCount": 8,
+          "categoryRules": [
+            {
+              "categoryName": "Communications",
+              "accessType": "only",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_radio_basic"
+              ]
+            },
+            {
+              "categoryName": "Domestic",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Electrical",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_basic_electronics"
+              ]
+            },
+            {
+              "categoryName": "Espionage",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Mechanical",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_aircraft_mechanics",
+                "skill_automotive_mechanics",
+                "skill_basic_mechanics"
+              ]
+            },
+            {
+              "categoryName": "Medical",
+              "accessType": "only",
+              "bonusPercent": 5,
+              "exceptions": [
+                "skill_first_aid"
+              ]
+            },
+            {
+              "categoryName": "Military",
+              "accessType": "none",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Physical",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_acrobatics"
+              ]
+            },
+            {
+              "categoryName": "Pilot",
+              "accessType": "except",
+              "bonusPercent": 0,
+              "exceptions": [
+                "skill_jet_fighters",
+                "skill_jet_packs",
+                "skill_boat_ships",
+                "skill_tanks_and_apcs"
+              ]
+            },
+            {
+              "categoryName": "Pilot Related",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Rogue",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Science",
+              "accessType": "only",
+              "bonusPercent": 10,
+              "exceptions": [
+                "skill_astronomy",
+                "skill_math_basic",
+                "skill_math_advanced"
+              ]
+            },
+            {
+              "categoryName": "Technical",
+              "accessType": "any",
+              "bonusPercent": 10
+            },
+            {
+              "categoryName": "Weapon Proficiencies",
+              "accessType": "any",
+              "bonusPercent": 0
+            },
+            {
+              "categoryName": "Wilderness",
+              "accessType": "any",
+              "bonusPercent": 5
+            }
+          ],
+          "skillVouchers": [
+            {
+              "id": "related_driving_expertise",
+              "choiceCount": 3,
+              "label": "Three Technical (+15%) or Pilot (+20%) skills for driving expertise (any except military vehicles)",
+              "orCategoryBranches": [
+                "Technical",
+                "Pilot"
+              ]
+            }
+          ]
+        },
+        "secondarySkills": {
+          "initialSlotsCount": 4,
+          "forbiddenCategories": []
+        },
+        "levelUpSkillChoices": [
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 5,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 7,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 10,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "related"
+          },
+          {
+            "levelUnlocked": 3,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 6,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 9,
+            "quantity": 1,
+            "poolSource": "secondary"
+          },
+          {
+            "levelUnlocked": 12,
+            "quantity": 1,
+            "poolSource": "secondary"
+          }
+        ],
+        "handToHandRules": {
+          "defaultSkillId": "hth_basic",
+          "upgradePaths": [
+            {
+              "targetSkillId": "hth_expert",
+              "electiveSlotCost": 2
+            },
+            {
+              "targetSkillId": "hth_martial_arts",
+              "electiveSlotCost": 3
+            },
+            {
+              "targetSkillId": "hth_assassin",
+              "electiveSlotCost": 3,
+              "alignmentRestrictions": {
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
+              }
+            }
+          ]
+        },
+        "wpRules": {
+          "coreWps": [],
+          "forbiddenWps": [
+            "wp_polearm",
+            "wp_whip",
+            "wp_heavy"
+          ]
+        }
+      }
+    ]
+  }
+]

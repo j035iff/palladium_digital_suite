@@ -81,9 +81,9 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ### Tab 4: Skill Selection
 
-- **Engine Action:** O.C.C. core skills, related skill slots, and core-skill voucher picks per genre whitelist.
+- **Engine Action:** O.C.C. core skills (grants), **Vocational Focus** cluster vouchers, **Vouchers** (numbered **Voucher 1**, **Voucher 2**, … — O.C.C. core + category voucher picks including weapon proficiencies), related skill slots, and secondary slots per genre whitelist. All vouchers — including W.P. — are filled from the skill library (**WP: Ancient** / **WP: Modern** categories) via **+ Voucher N**, not inline dropdowns in the selected panel. While vouchers are incomplete, the library shows the normal book category list; categories without an open voucher slot are greyed out. Vocational focus locks first; then voucher completion locks general related/secondary browsing.
 - **Black (N/A) Condition:** Never.
-- **Completion Criteria (Turns Green):** Mandatory core skills and vouchers satisfied, related slots filled per budget (including psychic slot multipliers), no prerequisite blockers. User clicks **Continue**.
+- **Completion Criteria (Turns Green):** Mandatory core skills and vouchers satisfied, vocational focus vouchers complete (cluster + slots), all O.C.C. related slots filled per budget (including psychic slot multipliers). Vocational Focus picks use a separate counter; **O.C.C. Related** `used/cap` counts related skill picks, Hand-to-Hand upgrade slot costs, and O.C.C. core professional-quality surcharges against the pool left after vocational focus vouchers (e.g. Laborer Light: `3/3` vocational focus + `2/5` related when Expert H2H is selected with no other picks). User clicks **Continue**.
 
 ### Tab 5: Roll Pending
 

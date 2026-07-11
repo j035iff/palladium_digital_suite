@@ -14,10 +14,10 @@ import { initialInventoryItems } from '../data/inventoryFixture'
 import {
   getFeatureById,
   getRaceById,
+  getLibraryOccById,
   raceAllowedInCharacterCreation,
   raceCatalogGenreId,
 } from '../data/library/registry'
-import { getLibraryOccById } from '../data/occDefinitions'
 import { aggregateAllPassiveModifiers, featureBudgetCategory } from '../lib/featureEngine'
 import { effectiveStructuralPool } from '../lib/effectiveVitality'
 import { resolveSkillSlotMultiplier } from '../data/library/types'
@@ -243,6 +243,7 @@ import {
   applyOccSelectionToCharacterState,
   clearOccSelectionState,
   raceForcedOccId,
+  refreshCharacterOccXpTable,
   shadowOccMountMessage,
 } from '../lib/shadowOcc'
 
@@ -441,6 +442,14 @@ type CharacterContextValue = {
     voucherId: string,
     picks: readonly (CreationSkillPick | null)[],
   ) => void
+  setCreationOccRelatedVoucherPick: (
+    voucherId: string,
+    picks: readonly (CreationSkillPick | null)[],
+  ) => void
+  setCreationOccRelatedVoucherCluster: (
+    voucherId: string,
+    category: string,
+  ) => void
   setCreationOccGrantPickDetail: (
     skillId: string,
     pick: CreationSkillPick | null,
@@ -580,9 +589,9 @@ function morphusTraitPickWouldDuplicate(
 
 function ensureCharacterOcc(c: CharacterRootState): CharacterRootState {
   if (c.occ?.xpTable?.floors?.length) return c
-  const def = getOccById('occ_ex_government_agent')
-  if (!def) return c
-  return { ...c, occ: snapshotOccForCharacter(def) }
+  const lib = getLibraryOccById('occ_ex_government_agent')
+  if (!lib) return c
+  return { ...c, occ: snapshotOccForCharacter(lib) }
 }
 
 function hydrateCharacterFromStorage(base: CharacterRootState): CharacterRootState {
@@ -1991,7 +2000,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       if (raceAllowsOccPick(race)) {
         const occRow = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
         if (occRow && isOccAllowedForRace(race, occRow)) {
-          next = syncCreationAttributeBranches(withRace, occRow)
+          next = refreshCharacterOccXpTable(
+            syncCreationAttributeBranches(withRace, occRow),
+            race,
+            occRow,
+          )
         } else {
           next = clearOccSelectionState(withRace, activeForm)
         }
@@ -2624,6 +2637,47 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [],
   )
 
+  const setCreationOccRelatedVoucherPick = useCallback(
+    (voucherId: string, picks: readonly (CreationSkillPick | null)[]) => {
+      setRawCharacter((prev) => ({
+        ...prev,
+        creationOccRelatedVoucherPicks: {
+          ...(prev.creationOccRelatedVoucherPicks ?? {}),
+          [voucherId]: picks,
+        },
+      }))
+    },
+    [],
+  )
+
+  const setCreationOccRelatedVoucherCluster = useCallback(
+    (voucherId: string, category: string) => {
+      setRawCharacter((prev) => {
+        const nextClusters = {
+          ...(prev.creationOccRelatedVoucherClusters ?? {}),
+          [voucherId]: category,
+        }
+        const existingPicks = prev.creationOccRelatedVoucherPicks?.[voucherId]
+        if (!existingPicks?.length) {
+          return {
+            ...prev,
+            creationOccRelatedVoucherClusters: nextClusters,
+          }
+        }
+        const cleared = existingPicks.map(() => null)
+        return {
+          ...prev,
+          creationOccRelatedVoucherClusters: nextClusters,
+          creationOccRelatedVoucherPicks: {
+            ...(prev.creationOccRelatedVoucherPicks ?? {}),
+            [voucherId]: cleared,
+          },
+        }
+      })
+    },
+    [],
+  )
+
   const setCreationOccGrantPickDetail = useCallback(
     (skillId: string, pick: CreationSkillPick | null) => {
       setRawCharacter((prev) => {
@@ -2940,6 +2994,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         : undefined,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
+      setCreationOccRelatedVoucherPick,
+      setCreationOccRelatedVoucherCluster,
       setCreationOccGrantPickDetail,
       setCreationPendingDiceResolution,
       setAlignment,
@@ -3078,6 +3134,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devSkipToMorphusCreation,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
+      setCreationOccRelatedVoucherPick,
+      setCreationOccRelatedVoucherCluster,
       setCreationOccGrantPickDetail,
       setCreationPendingDiceResolution,
       setAlignment,

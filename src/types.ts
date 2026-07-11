@@ -349,6 +349,11 @@ export type OccCoreSkillChoiceVoucher = {
   allowedSkillTraits?: readonly string[]
   label?: string
   /**
+   * Per-skill % that supersedes {@link OccCoreSkillChoiceVoucher.bonusPercent} for listed ids
+   * (e.g. Bicycling +16% or Automobile +4% on one pick-one voucher).
+   */
+  skillSpecificOverrides?: Readonly<Record<string, number>>
+  /**
    * When set on a Weapon Proficiencies voucher, restricts picks to that era
    * (e.g. "Select any Modern Weapon Proficiency"). Omit to let the player choose.
    */
@@ -378,11 +383,36 @@ export type OccRelatedSkillCategoryMinimum = {
   label?: string
 }
 
+/**
+ * Related-skill choice voucher — cluster, OR-branch, or fixed-category picks that
+ * consume related slots at creation (see `occRelatedSkills.skillVouchers`).
+ */
+export type OccRelatedSkillChoiceVoucher = {
+  id: string
+  choiceCount: number
+  label?: string
+  /**
+   * Bonus % applied to every pick in this voucher (supersedes category-rule bonus
+   * for those picks when set).
+   */
+  clusterBonusPercent?: number
+  /** Player selects one category before filling slots (vocational cluster). */
+  clusterCategoryOptions?: readonly string[]
+  /** Picks may come from any listed category (OR union, e.g. Domestic or Pilot). */
+  orCategoryBranches?: readonly string[]
+  /** Fixed category scope when cluster/OR modes are not used. */
+  allowedCategories?: readonly string[]
+  allowedSkillIds?: readonly string[]
+}
+
 export type OccRelatedSkillsOverride = {
   initialSlotsCount?: number
   startingSkillIds?: readonly string[]
   categoryRules?: readonly OccCategoryAccessRule[]
   categoryMinimums?: readonly OccRelatedSkillCategoryMinimum[]
+  skillVouchers?: readonly OccRelatedSkillChoiceVoucher[]
+  /** When true, specialization related-skill block replaces baseline instead of merging. */
+  replaceBaseline?: boolean
 }
 
 /** Flat additive bonus or dice/formula string (e.g. `4D6+25`, `1D4`). */
@@ -421,6 +451,10 @@ export type OccSpecialization = {
   occRelatedSkills?: OccRelatedSkillsOverride
   wpRules?: OccWpRules
   handToHandRules?: OccHandToHandRules
+  /** When set, replaces baseline {@link PalladiumOcc.secondarySkills} for this branch. */
+  secondarySkills?: OccSecondarySkills
+  /** When set, replaces baseline {@link PalladiumOcc.levelUpSkillChoices} for this branch. */
+  levelUpSkillChoices?: readonly OccLevelUpSkillChoice[]
 }
 
 export type OccRelatedSkills = {
@@ -429,6 +463,8 @@ export type OccRelatedSkills = {
   categoryRules: readonly OccCategoryAccessRule[]
   /** Mandatory related-skill picks from specific categories (e.g. two Science). */
   categoryMinimums?: readonly OccRelatedSkillCategoryMinimum[]
+  /** Structured related-skill vouchers (cluster / OR / fixed category). */
+  skillVouchers?: readonly OccRelatedSkillChoiceVoucher[]
 }
 
 export type OccSecondarySkills = {
@@ -2159,6 +2195,8 @@ export type OccSkillSlotPolicy =
 
 export type OccProgressionHooks = {
   xpTableId?: OccXpTableId
+  /** When `race`, character XP floors come from the selected race — not `xpTableId` on this O.C.C. */
+  xpTableSource?: 'occ' | 'race'
   characterOccCategory?: 'psychic' | 'standard'
   psychicGateBypassed?: boolean
   relatedSkillSlotPolicy?: OccSkillSlotPolicy
@@ -2452,6 +2490,15 @@ export type Character = {
   creationOccCoreVoucherPicks?: Readonly<
     Record<string, readonly (CreationSkillPick | string | null)[]>
   >
+  /**
+   * Phase II — related-skill voucher slot picks (voucher id → slot picks).
+   * Counts against `initialSlotsCount`; legacy flat strings migrated on read.
+   */
+  creationOccRelatedVoucherPicks?: Readonly<
+    Record<string, readonly (CreationSkillPick | string | null)[]>
+  >
+  /** Selected cluster category per related voucher (`clusterCategoryOptions`). */
+  creationOccRelatedVoucherClusters?: Readonly<Record<string, string>>
   /** Parameterized fixed O.C.C. core grants (skill id → pick with specialization). */
   creationOccGrantPickDetails?: Readonly<Record<string, CreationSkillPick>>
   /** Phase IV — manual dice results keyed by pending-dice id. */

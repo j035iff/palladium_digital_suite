@@ -1,8 +1,10 @@
 import { resolveGenresAvailable } from './genreGating'
+import { raceXpTableId } from './raceXpTable'
 import type {
   OccSkillSlotPolicy,
   OccXpTableId,
   PalladiumOcc,
+  Race,
 } from '../types'
 import {
   isOccCoreSkillGrant,
@@ -15,8 +17,11 @@ const DEFAULT_H2H = { defaultSkillId: 'hth_none', upgradePaths: [] }
 const DEFAULT_SECONDARY = { initialSlotsCount: 0, forbiddenCategories: [] as string[] }
 const DEFAULT_RELATED = { initialSlotsCount: 0, categoryRules: [] }
 
-/** Resolve XP catalog id from progression hooks or occType heuristics. */
-export function occXpTableId(occ: PalladiumOcc): OccXpTableId {
+/** Resolve XP catalog id from progression hooks, race pairing, or occType heuristics. */
+export function occXpTableId(occ: PalladiumOcc, race?: Race): OccXpTableId {
+  if (occ.progression?.xpTableSource === 'race') {
+    return raceXpTableId(race)
+  }
   if (occ.progression?.xpTableId) return occ.progression.xpTableId
   if (occ.tags?.includes('spook_squad')) {
     if (occ.id === 'occ_pab_psychic_agent') return 'between_shadows_arcane_detective'

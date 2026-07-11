@@ -32,10 +32,10 @@ export function SkillSelectedPercentBlock({
     : 'border-amber-200 bg-amber-50 text-slate-900'
 
   return (
-    <div className="shrink-0 text-right">
+    <div className="max-w-full self-end text-right">
       <button
         type="button"
-        className="inline-flex items-baseline gap-1 text-right disabled:cursor-default"
+        className="inline-flex max-w-full flex-wrap items-baseline justify-end gap-x-1 gap-y-0.5 text-right disabled:cursor-default"
         disabled={!hasTooltip || impossibleInMorphus}
         aria-expanded={open}
         aria-controls={hasTooltip ? tooltipId : undefined}

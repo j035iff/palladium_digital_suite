@@ -55,7 +55,8 @@
         "occ_nightbane_nocturne_seeker_lightbringer",
         "occ_nightbane_warlord",
         "occ_nightbane_sorcerer",
-        "occ_nightbane_mystic"
+        "occ_nightbane_mystic",
+        "occ_general_citizen"
       ]
     },
     "innateSkills": [],
@@ -162,7 +163,8 @@
           "occ_nightbane_nocturne_seeker_lightbringer",
           "occ_nightbane_warlord",
           "occ_nightbane_sorcerer",
-          "occ_nightbane_mystic"
+          "occ_nightbane_mystic",
+          "occ_general_citizen"
         ]
       }
     },
@@ -532,7 +534,10 @@
     },
     "innateSkills": [],
     "innateBonuses": {
-      "modifiers": {}
+      "modifiers": {},
+      "metadata": {
+        "xpTableId": "nightbane_core_doppleganger"
+      }
     },
     "demographics": {
       "averageLifespan": "70-90 years",

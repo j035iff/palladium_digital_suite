@@ -24,8 +24,7 @@ import {
   applyPsychicOccSkillBonusPercent,
   resolveOccSkillBonusPercent,
 } from './creationPsychicSkills'
-import { listOccCoreVoucherTasks } from './occCoreSkillVouchers'
-import { getOccCoreVoucherPicks } from './creationSkillPicks'
+import { resolveOccCoreVoucherSkillBonus } from './occCoreSkillVouchers'
 import {
   resolveSkillCatalogDisplayDetails,
   type SkillCatalogDisplayDetails,
@@ -33,9 +32,13 @@ import {
 
 export type SkillPickDisplayTier =
   | 'occ'
+  | 'voucher'
+  | 'specialization'
   | 'related'
   | 'secondary'
   | 'preview_occ'
+  | 'preview_voucher'
+  | 'preview_specialization'
   | 'preview_related'
   | 'preview_secondary'
 
@@ -296,6 +299,11 @@ function occBonusLabel(tier: SkillPickDisplayTier): string {
   switch (tier) {
     case 'occ':
       return 'O.C.C. core'
+    case 'voucher':
+    case 'preview_voucher':
+      return 'Voucher'
+    case 'specialization':
+    case 'preview_specialization':
     case 'related':
     case 'preview_related':
       return 'O.C.C. related'
@@ -343,17 +351,13 @@ function resolveVoucherOccBonus(
   voucherPicks: Readonly<Record<string, unknown>> | undefined,
   psychicTier: PsychicTier,
 ): number {
-  if (!occ) return 0
-  for (const task of listOccCoreVoucherTasks(occ, specializationId)) {
-    const picks = getOccCoreVoucherPicks(voucherPicks, task.id)
-    if (picks.some((pick) => pick.skillId === skillId)) {
-      return applyPsychicOccSkillBonusPercent(
-        task.entry.bonusPercent ?? 0,
-        psychicTier,
-      )
-    }
-  }
-  return 0
+  return resolveOccCoreVoucherSkillBonus(
+    occ,
+    specializationId,
+    skillId,
+    voucherPicks,
+    psychicTier,
+  )
 }
 
 function resolveOccBonusForTier(
@@ -364,15 +368,17 @@ function resolveOccBonusForTier(
   psychicTier: PsychicTier,
   specializationId: string | null | undefined,
   voucherPicks: Readonly<Record<string, unknown>> | undefined,
+  relatedVoucherPicks?: Readonly<Record<string, unknown>>,
 ): number {
   if (tier === 'secondary' || tier === 'preview_secondary') return 0
-  if (tier === 'occ') {
+  if (tier === 'occ' || tier === 'voucher' || tier === 'preview_voucher') {
     const grantBonus = resolveOccSkillBonusPercent(
       occ,
       skillId,
       relatedIds,
       psychicTier,
       specializationId,
+      relatedVoucherPicks,
     )
     if (grantBonus !== 0) return grantBonus
     return resolveVoucherOccBonus(
@@ -384,16 +390,25 @@ function resolveOccBonusForTier(
     )
   }
   const relatedForBonus =
-    tier === 'preview_related'
+    tier === 'preview_related' || tier === 'preview_specialization'
       ? new Set([...relatedIds, skillId])
       : relatedIds
-  return resolveOccSkillBonusPercent(
-    occ,
-    skillId,
-    relatedForBonus,
-    psychicTier,
-    specializationId,
-  )
+  if (
+    tier === 'related' ||
+    tier === 'preview_related' ||
+    tier === 'specialization' ||
+    tier === 'preview_specialization'
+  ) {
+    return resolveOccSkillBonusPercent(
+      occ,
+      skillId,
+      relatedForBonus,
+      psychicTier,
+      specializationId,
+      relatedVoucherPicks,
+    )
+  }
+  return 0
 }
 
 export function resolveSkillCreationDisplay(
@@ -406,6 +421,7 @@ export function resolveSkillCreationDisplay(
     psychicTier: PsychicTier
     specializationId?: string | null
     voucherPicks: Readonly<Record<string, unknown>> | undefined
+    relatedVoucherPicks?: Readonly<Record<string, unknown>>
     skillPercentCtx: SkillPercentResolutionContext
     iqBonus: number
     maPbBonus: number
@@ -423,6 +439,7 @@ export function resolveSkillCreationDisplay(
     opts.psychicTier,
     opts.specializationId,
     opts.voucherPicks,
+    opts.relatedVoucherPicks,
   )
   const { synergyLines, input, baseAtLevel } = buildEquationInput(
     def,

@@ -365,6 +365,13 @@
           "minLength": 1,
           "description": "Player-facing summary for creation UI (e.g. \"W.P. of choice\", \"Two Medical, Science, or Technical skills\")."
         },
+        "skillSpecificOverrides": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Per-skill % that supersedes bonusPercent for listed catalog ids (e.g. Bicycling +16% vs Automobile +4% on one pick-one voucher)."
+        },
         "weaponProficiencyEra": {
           "type": "string",
           "enum": ["ancient", "modern"],
@@ -424,6 +431,63 @@
           "type": "string",
           "minLength": 1,
           "description": "Player-facing summary (e.g. \"Two must be from Science\")."
+        }
+      }
+    },
+    "occRelatedSkillChoiceVoucher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "choiceCount"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Stable voucher slug within the O.C.C. or specialization."
+        },
+        "choiceCount": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Related skill slots consumed by this voucher (reserved against initialSlotsCount)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player-facing summary (e.g. vocational cluster, OR-branch minimum)."
+        },
+        "clusterBonusPercent": {
+          "type": "integer",
+          "description": "Additive % for every pick in this voucher (supersedes category-rule bonus for those picks)."
+        },
+        "clusterCategoryOptions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Player selects one category before filling slots (vocational cluster)."
+        },
+        "orCategoryBranches": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Picks may come from any listed category (OR union, e.g. Domestic or Pilot)."
+        },
+        "allowedCategories": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Fixed category scope when cluster/OR modes are not used."
+        },
+        "allowedSkillIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "uniqueItems": true,
+          "description": "Explicit allow-list (e.g. W.P. of choice voucher)."
         }
       }
     },
@@ -524,6 +588,15 @@
         "categoryMinimums": {
           "type": "array",
           "items": { "$ref": "#/$defs/occRelatedSkillCategoryMinimum" }
+        },
+        "skillVouchers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/occRelatedSkillChoiceVoucher" },
+          "description": "Structured related-skill vouchers (cluster / OR / fixed category). Supersedes passive categoryMinimums when present."
+        },
+        "replaceBaseline": {
+          "type": "boolean",
+          "description": "When true, the specialization related-skill block **replaces** baseline occRelatedSkills instead of merging category rules."
         }
       }
     },
@@ -567,6 +640,15 @@
         "handToHandRules": {
           "$ref": "#/$defs/handToHandRules",
           "description": "Overrides baseline hand-to-hand when present (e.g. ADA Spy → Martial Arts, Assassin → Assassin)."
+        },
+        "secondarySkills": {
+          "$ref": "#/$defs/secondarySkills",
+          "description": "When present, **replaces** baseline secondarySkills for this branch."
+        },
+        "levelUpSkillChoices": {
+          "type": "array",
+          "description": "When present, **replaces** baseline levelUpSkillChoices for this branch.",
+          "items": { "$ref": "#/$defs/levelUpSkillChoice" }
         },
         "classAbilities": {
           "type": "array",
@@ -623,6 +705,11 @@
           "type": "array",
           "items": { "$ref": "#/$defs/occRelatedSkillCategoryMinimum" },
           "description": "Mandatory related-skill category quotas at creation (e.g. two Science skills)."
+        },
+        "skillVouchers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/occRelatedSkillChoiceVoucher" },
+          "description": "Structured related-skill vouchers (cluster / OR / fixed category)."
         }
       }
     },
@@ -1178,6 +1265,11 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9_]*$",
           "description": "Catalog id in content/progression/xp_tables/<genre>/ (e.g. between_shadows_arcane_detective)."
+        },
+        "xpTableSource": {
+          "type": "string",
+          "enum": ["occ", "race"],
+          "description": "When `race`, XP floors resolve from the character's race (`raceXpTableId`) — omit `xpTableId` on the O.C.C."
         },
         "characterOccCategory": {
           "type": "string",

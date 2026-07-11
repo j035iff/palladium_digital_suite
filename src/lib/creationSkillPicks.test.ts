@@ -3,7 +3,10 @@ import { describe, expect, it } from 'vitest'
 import {
   additionalSlotsForSkillAdd,
   buildCreationSkillPick,
+  creationFreeRelatedSkillCap,
   creationLibrarySkillAddState,
+  creationLibrarySkillVoucherAddAllowed,
+  resolveCreationLibrarySkillVoucherBlockReason,
   creationSkillPickHasEditableSpecialization,
   creationSkillPickSlotWeight,
   downgradePickToStandard,
@@ -20,6 +23,7 @@ import {
   skillSupportsProfessionalQuality,
   sumCreationSkillPickSlots,
   sumOccCoreProfessionalRelatedSlotSurcharges,
+  sumFreeRelatedSkillSlotUsage,
   sumRelatedPoolSlotUsage,
   upgradePickToProfessional,
   validateSpecializationInput,
@@ -27,6 +31,7 @@ import {
 import type { CreationSkillPick, PalladiumOcc } from '../types'
 import { getSkillById } from '../data/skillLibrary'
 import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
+import { WP_PAIRED_WEAPONS_SKILL_ID } from './pairedWeaponSupport'
 import type { CreationLibrarySkillContext } from './creationSkillPicks'
 
 describe('creationSkillPicks', () => {
@@ -234,15 +239,30 @@ describe('creationSkillPicks', () => {
     expect(state.canAddSecondary).toBe(false)
   })
 
-  it('counts hand-to-hand upgrade cost only in pool usage, not by shrinking the cap', () => {
+  it('counts H2H and pro surcharges in related usage while cap only reserves specialization vouchers', () => {
     const relatedCap = 8
+    const voucherReserved = 3
+    const handToHandReserved = 2
+    const related: CreationSkillPick[] = []
+    const occCore: CreationSkillPick[] = []
+
+    const freeCap = creationFreeRelatedSkillCap(relatedCap, voucherReserved)
+    expect(freeCap).toBe(5)
+    expect(sumRelatedPoolSlotUsage(related, occCore, handToHandReserved)).toBe(2)
+    expect(sumFreeRelatedSkillSlotUsage(related)).toBe(0)
+  })
+
+  it('counts hand-to-hand upgrade cost in pool usage against the free related cap', () => {
+    const relatedCap = 8
+    const voucherReserved = 0
+    const freeCap = creationFreeRelatedSkillCap(relatedCap, voucherReserved)
     const handToHandReserved = 2
     const related: CreationSkillPick[] = []
     const occCore: CreationSkillPick[] = []
 
     const used = sumRelatedPoolSlotUsage(related, occCore, handToHandReserved)
     expect(used).toBe(2)
-    expect(relatedCap - used).toBe(6)
+    expect(freeCap - used).toBe(6)
 
     const withSixSkills = Array.from({ length: 6 }, () =>
       buildCreationSkillPick('skill_detect_concealment', {}),
@@ -253,6 +273,69 @@ describe('creationSkillPicks', () => {
       handToHandReserved,
     )
     expect(usedAfterSkills).toBe(8)
-    expect(relatedCap - usedAfterSkills).toBe(0)
+    expect(freeCap - usedAfterSkills).toBe(0)
+  })
+
+  it('blocks voucher picks that fail catalog prerequisites', () => {
+    const electrical = getEngineSkillDefFromCatalog('skill_electrical_engineer')!
+    const withoutPrereqs = creationLibrarySkillVoucherAddAllowed(electrical, {
+      effectiveOcc: null,
+      specializationId: null,
+      allPicks: [],
+    })
+    expect(withoutPrereqs).toBe(false)
+    expect(
+      resolveCreationLibrarySkillVoucherBlockReason(electrical, {
+        effectiveOcc: null,
+        specializationId: null,
+        allPicks: [],
+      }),
+    ).toContain('Math: Advanced')
+
+    const withPrereqs = creationLibrarySkillVoucherAddAllowed(electrical, {
+      effectiveOcc: null,
+      specializationId: null,
+      allPicks: [
+        buildCreationSkillPick('skill_math_advanced', {}),
+        buildCreationSkillPick('skill_literacy', {}),
+      ],
+    })
+    expect(withPrereqs).toBe(true)
+  })
+
+  it('blocks voucher W.P. Paired Weapons without a supporting ancient W.P.', () => {
+    const paired = getEngineSkillDefFromCatalog(WP_PAIRED_WEAPONS_SKILL_ID)!
+    expect(
+      creationLibrarySkillVoucherAddAllowed(paired, {
+        effectiveOcc: null,
+        specializationId: null,
+        allPicks: [],
+      }),
+    ).toBe(false)
+    expect(
+      creationLibrarySkillVoucherAddAllowed(paired, {
+        effectiveOcc: null,
+        specializationId: null,
+        allPicks: [buildCreationSkillPick('wp_sword', {})],
+      }),
+    ).toBe(true)
+  })
+
+  it('counts voucher picks toward paired-weapon support in the related library', () => {
+    const paired = getEngineSkillDefFromCatalog(WP_PAIRED_WEAPONS_SKILL_ID)!
+    const ctx: CreationLibrarySkillContext = {
+      effectiveOcc: null,
+      specializationId: null,
+      relatedSlotsUsed: 0,
+      relatedSkillCap: 4,
+      secondaryPickSlots: 0,
+      secondaryCap: 4,
+      occPicks: [],
+      relatedPicks: [],
+      secondaryPicks: [],
+      allPicks: [buildCreationSkillPick('wp_knife', {})],
+    }
+    const state = creationLibrarySkillAddState(paired, ctx)
+    expect(state.canAddRelated).toBe(true)
   })
 })

@@ -17,6 +17,7 @@ import {
   isPairedWeaponsSkillId,
   pairedWeaponsSupportBlockReason,
 } from './pairedWeaponSupport'
+import { prerequisiteSatisfied, missingPrerequisiteMessage } from './skillPrerequisites'
 
 /** May be taken as an O.C.C. related pick when category rules allow. */
 export function skillEligibleAsRelatedPick(def: EngineSkillDef): boolean {
@@ -449,6 +450,32 @@ export function sumRelatedPoolSlotUsage(
   )
 }
 
+/** Related skill pick slots only (excludes H2H — use when testing a new H2H tier cost against the pool). */
+export function sumFreeRelatedSkillSlotUsage(
+  relatedPicks: readonly CreationSkillPick[],
+  slotWeightOpts?: CreationSkillPickSlotWeightOpts,
+): number {
+  return sumCreationSkillPickSlots(relatedPicks, slotWeightOpts)
+}
+
+export function sumRelatedPoolUsageExcludingHandToHand(
+  relatedPicks: readonly CreationSkillPick[],
+  occPicks: readonly CreationSkillPick[],
+  slotWeightOpts?: CreationSkillPickSlotWeightOpts,
+): number {
+  return (
+    sumCreationSkillPickSlots(relatedPicks, slotWeightOpts) +
+    sumOccCoreProfessionalRelatedSlotSurcharges(occPicks)
+  )
+}
+
+export function creationFreeRelatedSkillCap(
+  relatedCap: number,
+  relatedVoucherReserved: number,
+): number {
+  return Math.max(0, relatedCap - relatedVoucherReserved)
+}
+
 /** Stable identity for duplicate detection (skill + specialization, case-insensitive). */
 export function creationSkillPickIdentityKey(pick: CreationSkillPick): string {
   const spec = pick.specialization?.trim().toLowerCase() ?? ''
@@ -509,11 +536,15 @@ export type CreationLibrarySkillContext = {
   specializationId: string | null | undefined
   relatedSlotsUsed: number
   relatedSkillCap: number
+  /** Remaining free-pool related slots after voucher reservations. */
+  freeRelatedCap?: number
   secondaryPickSlots: number
   secondaryCap: number
   occPicks: readonly CreationSkillPick[]
   relatedPicks: readonly CreationSkillPick[]
   secondaryPicks: readonly CreationSkillPick[]
+  /** Full creation pick list — used for prerequisites and paired-weapon support. */
+  allPicks?: readonly CreationSkillPick[]
   /** Active library category filter — gates availability per category. */
   activeFilterCategory?: string
   /** When set, skills blocked for the active race surface this reason. */
@@ -521,11 +552,73 @@ export type CreationLibrarySkillContext = {
 }
 
 function librarySelectedSkillIds(opts: CreationLibrarySkillContext): string[] {
+  if (opts.allPicks?.length) {
+    return opts.allPicks.map((pick) => pick.skillId)
+  }
   return [
     ...opts.occPicks.map((p) => p.skillId),
     ...opts.relatedPicks.map((p) => p.skillId),
     ...opts.secondaryPicks.map((p) => p.skillId),
   ]
+}
+
+export function creationSelectedSkillIdSet(
+  picks: readonly CreationSkillPick[],
+): Set<string> {
+  return new Set(picks.map((pick) => pick.skillId))
+}
+
+/** Shared catalog restrictions for voucher picks (prerequisites, paired W.P., race, forbidden W.P.). */
+export function creationLibrarySkillVoucherAddAllowed(
+  def: EngineSkillDef,
+  opts: Pick<
+    CreationLibrarySkillContext,
+    'effectiveOcc' | 'specializationId' | 'raceBlocked' | 'allPicks'
+  >,
+): boolean {
+  if (opts.raceBlocked) return false
+  if (
+    opts.effectiveOcc != null &&
+    isOccWeaponProficiencyForbidden(
+      opts.effectiveOcc,
+      def.id,
+      opts.specializationId,
+    )
+  ) {
+    return false
+  }
+  const selectedIds = creationSelectedSkillIdSet(opts.allPicks ?? [])
+  if (!prerequisiteSatisfied(def.prerequisite, selectedIds)) return false
+  if (isPairedWeaponsSkillId(def.id) && !hasPairedWeaponSupportWp(selectedIds)) {
+    return false
+  }
+  return true
+}
+
+export function resolveCreationLibrarySkillVoucherBlockReason(
+  def: EngineSkillDef,
+  opts: Pick<
+    CreationLibrarySkillContext,
+    'effectiveOcc' | 'specializationId' | 'raceBlocked' | 'allPicks'
+  >,
+): string {
+  if (opts.raceBlocked) return 'Not available to Race'
+  if (
+    opts.effectiveOcc != null &&
+    isOccWeaponProficiencyForbidden(
+      opts.effectiveOcc,
+      def.id,
+      opts.specializationId,
+    )
+  ) {
+    return 'Forbidden weapon proficiency for this O.C.C.'
+  }
+  const selectedIds = creationSelectedSkillIdSet(opts.allPicks ?? [])
+  const prereqMessage = missingPrerequisiteMessage(def.prerequisite, selectedIds)
+  if (prereqMessage) return prereqMessage
+  const pairedReason = pairedWeaponsSupportBlockReason(selectedIds)
+  if (isPairedWeaponsSkillId(def.id) && pairedReason) return pairedReason
+  return ''
 }
 
 function pairedWeaponsSupportBlocked(
@@ -550,7 +643,12 @@ export function creationLibrarySkillAddState(
     opts.relatedPicks,
     opts.secondaryPicks,
   )
-  const relFull = opts.relatedSlotsUsed >= opts.relatedSkillCap
+  const totalRelFull = opts.relatedSlotsUsed >= opts.relatedSkillCap
+  const freeRelatedUsed = sumCreationSkillPickSlots(opts.relatedPicks)
+  const freeRelFull =
+    opts.freeRelatedCap != null
+      ? freeRelatedUsed >= opts.freeRelatedCap
+      : totalRelFull
   const secFull = opts.secondaryPickSlots >= opts.secondaryCap
   const relatedBlocked =
     skillEligibleAsRelatedPick(def) &&
@@ -577,7 +675,8 @@ export function creationLibrarySkillAddState(
   const canAddRelated =
     skillEligibleAsRelatedPick(def) &&
     !picked &&
-    !relFull &&
+    !totalRelFull &&
+    !freeRelFull &&
     !relatedBlocked &&
     !raceBlocked &&
     !pairedBlocked

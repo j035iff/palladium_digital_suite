@@ -7,6 +7,7 @@ import {
   pendingDiceBlocksResolutionComplete,
 } from '../../lib/pendingDiceLedger'
 import {
+  creationFreeRelatedSkillCap,
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
   sumCreationSkillPickSlots,
@@ -18,6 +19,10 @@ import {
 import {
   resolveOccCoreSkillPicks,
 } from '../../lib/occCoreSkillVouchers'
+import {
+  listOccRelatedVoucherTasks,
+  sumRelatedVoucherReservedSlots,
+} from '../../lib/occRelatedSkillVouchers'
 import { CreationForgePanelChrome } from './CreationForgePanelChrome'
 function ContextRow({ label, value }: { label: string; value: string }) {
   return (
@@ -106,6 +111,13 @@ export function CreationForgeBuildContextPanel({ morphus }: { morphus: boolean }
   const handToHandReserved = effectiveOcc
     ? creationHandToHandReservedRelatedSlots(effectiveOcc, character)
     : 0
+  const relatedVoucherReserved = sumRelatedVoucherReservedSlots(
+    listOccRelatedVoucherTasks(effectiveOcc, character.occSpecializationId),
+  )
+  const freeRelatedCap = creationFreeRelatedSkillCap(
+    relatedCap,
+    relatedVoucherReserved,
+  )
   const relatedUsed = sumRelatedPoolSlotUsage(
     relatedSelected,
     resolvedOccPicks,
@@ -179,10 +191,10 @@ export function CreationForgeBuildContextPanel({ morphus }: { morphus: boolean }
           <ContextRow label="Spec" value={specialization.name} />
         ) : null}
         <ContextRow label="Psychic" value={psychicLabel} />
-        {relatedCap > 0 ? (
+        {freeRelatedCap > 0 || relatedVoucherReserved > 0 ? (
           <ContextRow
             label="Related"
-            value={`${relatedUsed} / ${relatedCap} slots`}
+            value={`${relatedUsed} / ${freeRelatedCap} slots`}
           />
         ) : null}
         {secondaryCap > 0 ? (

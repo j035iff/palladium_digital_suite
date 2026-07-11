@@ -105,13 +105,13 @@ export function formatOccCategoryRuleHeader(
   return resolveOccCategoryRuleDisplay(rule)
 }
 
-/** Short rule text for the category dropdown (exceptions collapse to "Exception"). */
+/** Short rule text for the category dropdown (exceptions collapse to "Restrictions"). */
 export function formatOccCategoryRuleDropdown(
   rule: OccCategoryAccessRule | undefined,
 ): OccCategoryRuleDisplay {
   const display = resolveOccCategoryRuleDisplay(rule)
   if (display.tone === 'exception') {
-    return { label: 'Exception', tone: 'exception' }
+    return { label: 'Restrictions', tone: 'exception' }
   }
   return display
 }

@@ -100,7 +100,7 @@ describe('formatOccCategoryRuleHeader', () => {
 })
 
 describe('formatOccCategoryRuleDropdown', () => {
-  it('collapses exception rules to Exception', () => {
+  it('collapses exception rules to Restrictions', () => {
     const rule: OccCategoryAccessRule = {
       categoryName: 'Physical',
       accessType: 'except',
@@ -108,7 +108,7 @@ describe('formatOccCategoryRuleDropdown', () => {
       bonusPercent: 0,
     }
     expect(formatOccCategoryRuleDropdown(rule)).toEqual({
-      label: 'Exception',
+      label: 'Restrictions',
       tone: 'exception',
     })
   })

@@ -241,11 +241,18 @@ export function skillPickRowSurfaceClass(
   morphus: boolean,
 ): string {
   switch (tier) {
+    case 'specialization':
+    case 'preview_specialization':
+      return morphus
+        ? 'border-sky-600/70 bg-sky-950/35'
+        : 'border-sky-300 bg-sky-50'
     case 'related':
     case 'preview_related':
       return morphus
         ? 'border-violet-600/70 bg-violet-950/35'
         : 'border-violet-300 bg-violet-50'
+    case 'voucher':
+    case 'preview_voucher':
     case 'occ':
     case 'preview_occ':
       return morphus

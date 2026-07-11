@@ -1,4 +1,6 @@
 import { getOccById, getLibraryOccById, snapshotOccForCharacter } from '../data/occDefinitions'
+import { getRaceById } from '../data/library/registry'
+import { raceCatalogGenreId } from './raceCatalog'
 import { CREATION_PLACEHOLDER_OCC, retainCharacterRoot } from './characterRoot'
 import { syncCreationAttributeBranches } from './creationAttributeSync'
 import { creationInvalidationPatch } from './creationInvalidate'
@@ -67,6 +69,18 @@ export type OccSelectionMountOptions = {
   autoMountFromRace?: Pick<Race, 'name'>
 }
 
+export function refreshCharacterOccXpTable(
+  prev: CharacterRootState,
+  race: Race | undefined,
+  lib: PalladiumOcc,
+): CharacterRootState {
+  if (lib.progression?.xpTableSource !== 'race' || !prev.occ?.id) return prev
+  return {
+    ...prev,
+    occ: snapshotOccForCharacter(lib, race),
+  }
+}
+
 export function applyOccSelectionToCharacterState(
   prev: CharacterRootState,
   occId: string,
@@ -75,6 +89,10 @@ export function applyOccSelectionToCharacterState(
   const def = getOccById(occId)
   const lib = getLibraryOccById(occId)
   if (!def || !lib) return prev
+
+  const race = prev.raceId?.trim()
+    ? getRaceById(prev.raceId, raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId))
+    : undefined
 
   const form: ActiveForm = characterHasDualForms(prev) ? options.activeForm : 'primary'
   const isPsychicOcc = def.category === 'psychic'
@@ -91,7 +109,7 @@ export function applyOccSelectionToCharacterState(
     ...prev,
     ...creationInvalidationPatch(prev, options.invalidateScope ?? 'occ'),
     [form]: nextBranch,
-    occ: snapshotOccForCharacter(def),
+    occ: snapshotOccForCharacter(lib, race),
     occSpecializationId: undefined,
     creationPsychicTier: tier,
     creationPsychicTierChosen: isPsychicOcc && !gateBypassed,

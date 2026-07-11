@@ -40,13 +40,40 @@ import {
   collectAllCreationSkillPicks,
   findOccCoreVoucherSlotForPick,
   findOpenOccCoreVoucherSlot,
+  hasIncompleteCreationVoucherPicks,
   isOccCoreGrantSkillPick,
+  isSkillInVouchersLibraryScope,
   listOccCoreVoucherTasks,
   resolveCreationLibrarySkillTier,
   resolveCreationOccSkillIds,
   resolveOccCoreSkillPicks,
-  voucherUsesDedicatedPickerUi,
 } from '../../lib/occCoreSkillVouchers'
+
+import {
+  canAddSkillViaRelatedVoucher,
+  countAllFilledRelatedVoucherSlots,
+  CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
+  CREATION_VOUCHERS_LIBRARY_CATEGORY,
+  collectVocationalFocusBookCategories,
+  findOpenRelatedVoucherSlot,
+  findRelatedVoucherSlotForPick,
+  flattenRelatedVoucherPicks,
+  getRelatedVoucherSlotPicks,
+  hasIncompleteVocationalFocusVouchers,
+  isSkillInVocationalFocusLibraryScope,
+  listCreationVoucherRelatedTasks,
+  listVocationalFocusVoucherTasks,
+  listOccRelatedVoucherTasks,
+  sumRelatedVoucherReservedSlots,
+} from '../../lib/occRelatedSkillVouchers'
+
+import {
+  collectOpenCreationVoucherBookCategories,
+  creationVoucherDisplayName,
+  listLibraryCreationVoucherTaskRefs,
+  listOpenCreationVoucherAddTargets,
+  type CreationVoucherAddTarget,
+} from '../../lib/creationVoucherSlots'
 
 import {
   canAffordHandToHandTier,
@@ -75,7 +102,11 @@ import { SkillPrerequisiteMeta, SkillSynergyMeta } from './SkillSelectionMeta'
 
 import {
   buildCreationSkillPick,
+  creationFreeRelatedSkillCap,
   creationLibrarySkillAddState,
+  creationLibrarySkillVoucherAddAllowed,
+  creationSelectedSkillIdSet,
+  resolveCreationLibrarySkillVoucherBlockReason,
   creationSkillIdsSet,
   creationSkillPickHasEditableSpecialization,
   downgradePickToStandard,
@@ -92,7 +123,10 @@ import {
   skillRequiresSpecialization,
   skillSupportsProfessionalQuality,
   sumCreationSkillPickSlots,
+  sumFreeRelatedSkillSlotUsage,
+  sumOccCoreProfessionalRelatedSlotSurcharges,
   sumRelatedPoolSlotUsage,
+  sumRelatedPoolUsageExcludingHandToHand,
   upgradePickToProfessional,
 } from '../../lib/creationSkillPicks'
 
@@ -141,6 +175,10 @@ export function SkillEngine() {
 
     setCreationOccCoreVoucherPick,
 
+    setCreationOccRelatedVoucherPick,
+
+    setCreationOccRelatedVoucherCluster,
+
     setCreationOccGrantPickDetail,
 
     setCreationHandToHandTier,
@@ -164,6 +202,13 @@ export function SkillEngine() {
   const [pickDialog, setPickDialog] = useState<SkillPickAddDialogState | null>(null)
 
   const [pendingOccVoucherSlot, setPendingOccVoucherSlot] = useState<{
+    taskId: string
+    slot: number
+    choiceCount: number
+    skillId: string
+  } | null>(null)
+
+  const [pendingRelatedVoucherSlot, setPendingRelatedVoucherSlot] = useState<{
     taskId: string
     slot: number
     choiceCount: number
@@ -197,6 +242,30 @@ export function SkillEngine() {
     [character.creationOccCoreVoucherPicks],
   )
 
+  const relatedVoucherPicks = useMemo(
+    () => character.creationOccRelatedVoucherPicks ?? {},
+    [character.creationOccRelatedVoucherPicks],
+  )
+
+  const relatedVoucherClusters = useMemo(
+    () => character.creationOccRelatedVoucherClusters ?? {},
+    [character.creationOccRelatedVoucherClusters],
+  )
+
+  const relatedVoucherTasks = useMemo(
+    () => listOccRelatedVoucherTasks(effectiveOcc, character.occSpecializationId),
+    [effectiveOcc, character.occSpecializationId],
+  )
+
+  const vocationalFocusTasks = useMemo(
+    () => listVocationalFocusVoucherTasks(relatedVoucherTasks),
+    [relatedVoucherTasks],
+  )
+
+  const creationVoucherRelatedTasks = useMemo(
+    () => listCreationVoucherRelatedTasks(relatedVoucherTasks),
+    [relatedVoucherTasks],
+  )
 
 
   const resolvedOccSkillIds = useMemo(
@@ -254,6 +323,11 @@ export function SkillEngine() {
     [character, effectiveOcc],
   )
 
+  const allSelected = useMemo(
+    () => creationSelectedSkillIdSet(allCreationPicks),
+    [allCreationPicks],
+  )
+
 
 
   const setRelatedSelected = (next: CreationSkillPick[]) => {
@@ -284,16 +358,47 @@ export function SkillEngine() {
     ? creationHandToHandReservedRelatedSlots(effectiveOcc, character)
     : 0
 
-  const relatedSkillCap = relatedCap
+  const relatedVoucherReserved = useMemo(
+    () => sumRelatedVoucherReservedSlots(vocationalFocusTasks),
+    [vocationalFocusTasks],
+  )
+
+  const freeRelatedCap = useMemo(
+    () => creationFreeRelatedSkillCap(relatedCap, relatedVoucherReserved),
+    [relatedCap, relatedVoucherReserved],
+  )
+
+  const relatedSkillCap = freeRelatedCap
+
+  const slotWeightOpts = {
+    occ: effectiveOcc ?? undefined,
+    specializationId: character.occSpecializationId,
+  }
 
   const relatedSlotsUsed = sumRelatedPoolSlotUsage(
     relatedSelected,
     resolvedOccPicks,
     handToHandReserved,
-    {
-      occ: effectiveOcc ?? undefined,
-      specializationId: character.occSpecializationId,
-    },
+    slotWeightOpts,
+  )
+
+  const relatedSkillPoolUsed = sumRelatedPoolUsageExcludingHandToHand(
+    relatedSelected,
+    resolvedOccPicks,
+    slotWeightOpts,
+  )
+
+  const relatedSkillPoolCap = freeRelatedCap
+
+  const specializationSlotsCap = relatedVoucherReserved
+
+  const specializationSlotsUsed = useMemo(
+    () =>
+      countAllFilledRelatedVoucherSlots(
+        vocationalFocusTasks,
+        relatedVoucherPicks,
+      ),
+    [vocationalFocusTasks, relatedVoucherPicks],
   )
 
   const secondaryPickSlots = sumCreationSkillPickSlots(secondarySelected, {
@@ -320,17 +425,64 @@ export function SkillEngine() {
     : 'border-slate-300 bg-white text-slate-900'
 
   const occSectionClass = morphus ? 'text-amber-300' : 'text-amber-950'
+  const voucherSectionClass = morphus ? 'text-amber-300' : 'text-amber-950'
+  const specializationSectionClass = morphus ? 'text-sky-300' : 'text-sky-700'
   const relatedSectionClass = morphus ? 'text-violet-400' : 'text-violet-600'
   const secondarySectionClass = morphus ? 'text-emerald-400' : 'text-emerald-700'
 
+  const vocationalFocusLock = useMemo(
+    () =>
+      hasIncompleteVocationalFocusVouchers(
+        relatedVoucherTasks,
+        relatedVoucherPicks,
+        relatedVoucherClusters,
+      ),
+    [relatedVoucherTasks, relatedVoucherPicks, relatedVoucherClusters],
+  )
 
+  const creationVoucherLock = useMemo(
+    () =>
+      !vocationalFocusLock &&
+      hasIncompleteCreationVoucherPicks(
+        effectiveOcc ?? undefined,
+        character.occSpecializationId,
+        voucherPicks,
+        relatedVoucherPicks,
+        relatedVoucherClusters,
+      ),
+    [
+      vocationalFocusLock,
+      effectiveOcc,
+      character.occSpecializationId,
+      voucherPicks,
+      relatedVoucherPicks,
+      relatedVoucherClusters,
+    ],
+  )
+
+  const voucherBrowseLock = vocationalFocusLock || creationVoucherLock
+
+  const vocationalFocusBookCategories = useMemo(
+    () =>
+      collectVocationalFocusBookCategories(
+        relatedVoucherTasks,
+        relatedVoucherClusters,
+      ),
+    [relatedVoucherTasks, relatedVoucherClusters],
+  )
+
+  useEffect(() => {
+    if (
+      vocationalFocusLock &&
+      category !== CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+    ) {
+      setCategory(CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY)
+    }
+  }, [vocationalFocusLock, category])
 
   const bookCategories = useMemo(
-
     () => listCreationSkillBookCategories(hostGenreId),
-
     [hostGenreId],
-
   )
 
   const occCategoryRules = useMemo(
@@ -363,25 +515,18 @@ export function SkillEngine() {
   }, [categoryOpen])
 
 
-
-  const allSelected = useMemo(
-
-    () =>
-
-      creationSkillIdsSet(resolvedOccSkillIds, relatedSelected, secondarySelected),
-
-    [resolvedOccSkillIds, relatedSelected, secondarySelected],
-
-  )
-
-
-
   const relatedSet = useMemo(
-
-    () => new Set(relatedSelected.map((p) => p.skillId)),
-
-    [relatedSelected],
-
+    () => {
+      const voucherSkillIds = flattenRelatedVoucherPicks(
+        relatedVoucherTasks,
+        relatedVoucherPicks,
+      ).map((p) => p.skillId)
+      return new Set([
+        ...relatedSelected.map((p) => p.skillId),
+        ...voucherSkillIds,
+      ])
+    },
+    [relatedSelected, relatedVoucherTasks, relatedVoucherPicks],
   )
 
 
@@ -421,6 +566,8 @@ export function SkillEngine() {
 
       voucherPicks,
 
+      relatedVoucherPicks,
+
       skillPercentCtx,
 
       iqBonus,
@@ -446,6 +593,8 @@ export function SkillEngine() {
       character.occSpecializationId,
 
       voucherPicks,
+
+      relatedVoucherPicks,
 
       skillPercentCtx,
 
@@ -476,17 +625,88 @@ export function SkillEngine() {
     [skillLibrary],
   )
 
+  const libraryCreationVoucherRefs = useMemo(
+    () =>
+      listLibraryCreationVoucherTaskRefs(
+        effectiveOcc ?? undefined,
+        character.occSpecializationId,
+      ),
+    [effectiveOcc, character.occSpecializationId],
+  )
+
+  const openVoucherBookCategories = useMemo(
+    () =>
+      collectOpenCreationVoucherBookCategories(
+        libraryCreationVoucherRefs,
+        voucherPicks,
+        relatedVoucherPicks,
+        relatedVoucherClusters,
+        hostGenreId,
+        catalogSkillIds,
+        effectiveOcc?.wpRules?.forbiddenWps ?? [],
+      ),
+    [
+      libraryCreationVoucherRefs,
+      voucherPicks,
+      relatedVoucherPicks,
+      relatedVoucherClusters,
+      hostGenreId,
+      catalogSkillIds,
+      effectiveOcc?.wpRules?.forbiddenWps,
+    ],
+  )
+
+  const isBrowsingVoucherBookCategory =
+    creationVoucherLock &&
+    category !== '' &&
+    category !== 'All' &&
+    category !== CREATION_VOUCHERS_LIBRARY_CATEGORY &&
+    category !== CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY &&
+    bookCategories.includes(category)
+
+  useEffect(() => {
+    if (!creationVoucherLock) return
+    if (openVoucherBookCategories.size === 0) return
+    if (
+      category !== '' &&
+      category !== 'All' &&
+      category !== CREATION_VOUCHERS_LIBRARY_CATEGORY &&
+      category !== CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY &&
+      openVoucherBookCategories.has(category)
+    ) {
+      return
+    }
+    const first = bookCategories.find((c) => openVoucherBookCategories.has(c))
+    if (first) setCategory(first)
+  }, [
+    creationVoucherLock,
+    category,
+    bookCategories,
+    openVoucherBookCategories,
+  ])
+
+  const voucherBrowseCategory =
+    category === CREATION_VOUCHERS_LIBRARY_CATEGORY
+      ? undefined
+      : isBrowsingVoucherBookCategory
+        ? category
+        : category
+
   const voucherTasks = useMemo(
     () => listOccCoreVoucherTasks(effectiveOcc, character.occSpecializationId),
     [effectiveOcc, character.occSpecializationId],
   )
 
-  const hasLibraryOccVouchers = useMemo(
-    () => voucherTasks.some((task) => !voucherUsesDedicatedPickerUi(task.entry)),
-    [voucherTasks],
+  const hasLibraryCreationVouchers = useMemo(
+    () => voucherTasks.length > 0 || creationVoucherRelatedTasks.length > 0,
+    [voucherTasks, creationVoucherRelatedTasks],
   )
 
-  const libraryPopulated = category === 'All' ? search.trim().length > 0 : category !== ''
+  const libraryPopulated =
+    category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY ||
+    category === CREATION_VOUCHERS_LIBRARY_CATEGORY ||
+    isBrowsingVoucherBookCategory ||
+    (category === 'All' ? search.trim().length > 0 : category !== '')
 
   const libraryContext = useMemo(
     () => ({
@@ -494,11 +714,13 @@ export function SkillEngine() {
       specializationId: character.occSpecializationId,
       relatedSlotsUsed,
       relatedSkillCap,
+      freeRelatedCap,
       secondaryPickSlots,
       secondaryCap,
       occPicks: resolvedOccPicks,
       relatedPicks: relatedSelected,
       secondaryPicks: secondarySelected,
+      allPicks: allCreationPicks,
       activeFilterCategory: category,
     }),
     [
@@ -506,12 +728,14 @@ export function SkillEngine() {
       character.occSpecializationId,
       relatedSlotsUsed,
       relatedSkillCap,
+      freeRelatedCap,
       secondaryPickSlots,
       secondaryCap,
       resolvedOccPicks,
       relatedSelected,
       secondarySelected,
       category,
+      allCreationPicks,
     ],
   )
 
@@ -520,43 +744,116 @@ export function SkillEngine() {
       return { selected: [] as EngineSkillDef[], browse: [] as EngineSkillDef[] }
     }
 
-    const q = search.trim().toLowerCase()
-
     const libraryTierOpts = {
       relatedPicks: relatedSelected,
       secondaryPicks: secondarySelected,
       resolvedOccPicks,
       voucherTasks,
       voucherPicks,
+      relatedVoucherTasks,
+      relatedVoucherPicks,
     }
 
     const librarySelectionTier = (skillId: string) =>
       resolveCreationLibrarySkillTier(skillId, libraryTierOpts)
 
     const matchesLibraryQuery = (s: EngineSkillDef) => {
-      const catOk = matchesSkillBookCategoryFilter(s, category)
+      const q = search.trim().toLowerCase()
       const nameOk =
         q === '' ||
         s.name.toLowerCase().includes(q) ||
         s.id.toLowerCase().includes(q)
+
+      if (category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY) {
+        if (!effectiveOcc) return false
+        if (
+          !isSkillInVocationalFocusLibraryScope(
+            s.id,
+            relatedVoucherTasks,
+            relatedVoucherPicks,
+            effectiveOcc,
+            character.occSpecializationId,
+            relatedVoucherClusters,
+          )
+        ) {
+          return false
+        }
+        return nameOk
+      }
+
+      if (category === CREATION_VOUCHERS_LIBRARY_CATEGORY) {
+        if (!effectiveOcc) return false
+        if (
+          !isSkillInVouchersLibraryScope(
+            s.id,
+            effectiveOcc,
+            character.occSpecializationId,
+            voucherTasks,
+            voucherPicks,
+            creationVoucherRelatedTasks,
+            relatedVoucherPicks,
+            relatedVoucherClusters,
+            hostGenreId,
+            catalogSkillIds,
+            effectiveOcc.wpRules?.forbiddenWps ?? [],
+          )
+        ) {
+          return false
+        }
+        return nameOk
+      }
+
+      if (isBrowsingVoucherBookCategory) {
+        if (!effectiveOcc) return false
+        if (!matchesSkillBookCategoryFilter(s, category)) return false
+        return (
+          listOpenCreationVoucherAddTargets(
+            s.id,
+            libraryCreationVoucherRefs,
+            voucherPicks,
+            relatedVoucherPicks,
+            relatedVoucherClusters,
+            effectiveOcc,
+            character.occSpecializationId,
+            hostGenreId,
+            catalogSkillIds,
+            effectiveOcc.wpRules?.forbiddenWps ?? [],
+            category,
+          ).length > 0 && nameOk
+        )
+      }
+
+      const catOk = matchesSkillBookCategoryFilter(s, category)
       return catOk && nameOk
     }
 
     const filtered = skillLibrary.filter((s) => matchesLibraryQuery(s))
 
     const filteredIds = new Set(filtered.map((s) => s.id))
-    const occPinnedExtras = skillLibrary.filter(
+    const voucherPinnedExtras = skillLibrary.filter(
       (s) =>
         !filteredIds.has(s.id) &&
         matchesLibraryQuery(s) &&
-        librarySelectionTier(s.id) === 'occ',
+        librarySelectionTier(s.id) === 'voucher',
     )
 
     return partitionCreationSkillLibrary(
-      [...filtered, ...occPinnedExtras],
+      [...filtered, ...voucherPinnedExtras],
       category,
       (s) => isCreationLibrarySkillUnconditionallyExcluded(s, libraryContext),
-      (s) => librarySelectionTier(s.id) != null,
+      (s) => {
+        const tier = librarySelectionTier(s.id)
+        if (
+          category === CREATION_VOUCHERS_LIBRARY_CATEGORY ||
+          isBrowsingVoucherBookCategory
+        ) {
+          return tier === 'voucher'
+        }
+        if (category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY) {
+          return tier === 'specialization'
+        }
+        return tier != null
+      },
       librarySelectionTier,
     )
   }, [
@@ -570,6 +867,16 @@ export function SkillEngine() {
     resolvedOccPicks,
     relatedSelected,
     secondarySelected,
+    relatedVoucherTasks,
+    relatedVoucherPicks,
+    relatedVoucherClusters,
+    effectiveOcc,
+    character.occSpecializationId,
+    creationVoucherRelatedTasks,
+    hostGenreId,
+    catalogSkillIds,
+    libraryCreationVoucherRefs,
+    isBrowsingVoucherBookCategory,
   ])
 
 
@@ -603,12 +910,10 @@ export function SkillEngine() {
   ) {
     const updated: CreationSkillPick = { ...pick, specialization }
 
-    if (tier === 'related') {
-      setRelatedSelected(
-        relatedSelected.map((p) =>
-          p.instanceId === pick.instanceId ? updated : p,
-        ),
-      )
+    if (tier === 'specialization') {
+      persistSpecializationVoucherPickUpdate(pick, updated)
+    } else if (tier === 'related') {
+      persistRelatedPickUpdate(pick, updated)
     } else if (tier === 'secondary') {
       setSecondarySelected(
         secondarySelected.map((p) =>
@@ -618,6 +923,36 @@ export function SkillEngine() {
     } else {
       persistOccCorePickUpdate(pick, updated)
     }
+  }
+
+  function persistSpecializationVoucherPickUpdate(
+    pick: CreationSkillPick,
+    updated: CreationSkillPick,
+  ) {
+    const slot = findRelatedVoucherSlotForPick(
+      vocationalFocusTasks,
+      relatedVoucherPicks,
+      pick.instanceId,
+    )
+    if (!slot) return
+    const slots = getRelatedVoucherSlotPicks(
+      relatedVoucherPicks,
+      slot.taskId,
+      slot.choiceCount,
+    )
+    slots[slot.slot] = updated
+    setCreationOccRelatedVoucherPick(slot.taskId, slots)
+  }
+
+  function persistRelatedPickUpdate(
+    pick: CreationSkillPick,
+    updated: CreationSkillPick,
+  ) {
+    setRelatedSelected(
+      relatedSelected.map((p) =>
+        p.instanceId === pick.instanceId ? updated : p,
+      ),
+    )
   }
 
   function persistOccCorePickUpdate(
@@ -650,6 +985,41 @@ export function SkillEngine() {
     setCreationOccCoreVoucherPick(slot.taskId, slots)
   }
 
+  function persistCreationVoucherPickUpdate(
+    pick: CreationSkillPick,
+    updated: CreationSkillPick,
+  ) {
+    const occSlot = findOccCoreVoucherSlotForPick(
+      effectiveOcc,
+      character.occSpecializationId,
+      voucherPicks,
+      pick.instanceId,
+    )
+    if (occSlot) {
+      const slots = getOccCoreVoucherSlotPicks(
+        voucherPicks,
+        occSlot.taskId,
+        occSlot.choiceCount,
+      )
+      slots[occSlot.slot] = updated
+      setCreationOccCoreVoucherPick(occSlot.taskId, slots)
+      return
+    }
+    const relatedSlot = findRelatedVoucherSlotForPick(
+      creationVoucherRelatedTasks,
+      relatedVoucherPicks,
+      pick.instanceId,
+    )
+    if (!relatedSlot) return
+    const slots = getRelatedVoucherSlotPicks(
+      relatedVoucherPicks,
+      relatedSlot.taskId,
+      relatedSlot.choiceCount,
+    )
+    slots[relatedSlot.slot] = updated
+    setCreationOccRelatedVoucherPick(relatedSlot.taskId, slots)
+  }
+
   function togglePickProfessionalQuality(
     pick: CreationSkillPick,
     tier: SkillPickDisplayTier,
@@ -670,9 +1040,31 @@ export function SkillEngine() {
       return
     }
 
+    if (tier === 'voucher') {
+      if (!pick.professionalQuality && slotsRemaining < 1) return
+      persistCreationVoucherPickUpdate(
+        pick,
+        pick.professionalQuality
+          ? downgradePickToStandard(pick)
+          : upgradePickToProfessional(pick),
+      )
+      return
+    }
+
     const setTarget =
       tier === 'related' ? setRelatedSelected : setSecondarySelected
     const target = tier === 'related' ? relatedSelected : secondarySelected
+
+    if (tier === 'specialization') {
+      if (!pick.professionalQuality && slotsRemaining < 1) return
+      persistSpecializationVoucherPickUpdate(
+        pick,
+        pick.professionalQuality
+          ? downgradePickToStandard(pick)
+          : upgradePickToProfessional(pick),
+      )
+      return
+    }
 
     if (pick.professionalQuality) {
       setTarget(
@@ -718,8 +1110,8 @@ export function SkillEngine() {
                 const affordable = canAffordHandToHandTier(
                   effectiveOcc,
                   opt.tier,
-                  relatedCap,
-                  relatedSlotsUsed - handToHandReserved,
+                  relatedSkillPoolCap,
+                  relatedSkillPoolUsed,
                 )
                 const isCurrent = opt.tier === handToHandTier
                 const blocked = opt.disabled || (!affordable && !isCurrent)
@@ -814,136 +1206,132 @@ export function SkillEngine() {
 
       >
 
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-col gap-1.5">
 
-          <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-2">
 
-            <div className="flex items-start justify-between gap-3">
+            <p className="min-w-0 flex-1 break-words font-bold text-slate-900">
 
-              <p className="font-bold text-slate-900">
+              {formatCreationSkillPickLabel(pick, def.name)}
 
-                {formatCreationSkillPickLabel(pick, def.name)}
+              {bad ? (
 
-                {bad ? (
+                <span
 
-                  <span
+                  className="ml-1 text-red-800 dark:text-red-300"
 
-                    className="ml-1 text-red-800 dark:text-red-300"
+                  title={
 
-                    title={
+                    missingPrerequisiteMessage(def.prerequisite, allSelected) ?? ''
 
-                      missingPrerequisiteMessage(def.prerequisite, allSelected) ?? ''
+                  }
 
-                    }
+                >
 
+                  ⚠
+
+                </span>
+
+              ) : null}
+
+            </p>
+
+            <div className="flex shrink-0 flex-col items-end gap-1">
+
+              {canEdit ? (
+
+                <button
+
+                  type="button"
+
+                  className="text-xs text-violet-500 hover:underline"
+
+                  onClick={() => setEditPick({ pick, tier })}
+
+                >
+
+                  Edit
+
+                </button>
+
+              ) : null}
+
+              {canTogglePro ? (
+                pick.professionalQuality ? (
+                  <button
+                    type="button"
+                    className="text-xs text-sky-500 hover:underline"
+                    onClick={() => togglePickProfessionalQuality(pick, tier)}
                   >
+                    Set to standard quality
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={!canUpgradeToPro}
+                    title={canUpgradeToPro ? undefined : proUpgradeBlockedTitle}
+                    className="text-xs text-sky-500 hover:underline disabled:cursor-not-allowed disabled:opacity-40 disabled:no-underline"
+                    onClick={() => togglePickProfessionalQuality(pick, tier)}
+                  >
+                    Set to {professionalQualityLabel(pick.skillId).toLowerCase()}
+                  </button>
+                )
+              ) : null}
 
-                    ⚠
+              {onRemove && !pick.grantedBySkillId ? (
 
-                  </span>
+                <button
 
-                ) : null}
+                  type="button"
 
-              </p>
+                  className="text-xs text-rose-400 hover:underline"
 
-              {display.percentSummary ? (
-                <SkillSelectedPercentBlock
-                  summary={display.percentSummary}
-                  impossibleInMorphus={display.impossibleInMorphus}
-                  morphus={morphus}
-                />
+                  onClick={() => onRemove(pick.instanceId)}
+
+                >
+
+                  {removeLabel}
+
+                </button>
+
               ) : null}
 
             </div>
 
-            {grantSource ? (
-              <p className="mt-0.5 text-xs italic text-slate-500">
-                Provided by {grantSource}
-              </p>
-            ) : null}
+          </div>
 
-            {prerequisiteSummary ? (
-              <SkillPrerequisiteMeta
-                summary={prerequisiteSummary}
-                satisfied={!bad}
-              />
-            ) : null}
-
-            <SkillSynergyMeta
-              hints={displayedSynergyHints}
-              activeLines={activeSynergyLines}
+          {display.percentSummary ? (
+            <SkillSelectedPercentBlock
+              summary={display.percentSummary}
+              impossibleInMorphus={display.impossibleInMorphus}
+              morphus={morphus}
             />
+          ) : null}
 
-            {display.isWeaponProficiency || !display.percentSummary ? (
-              <SkillStatLines display={display} />
-            ) : display.physicalBonusSummary ||
-              display.subPercentLines.length > 0 ? (
-              <SkillStatLines display={display} />
-            ) : null}
+          {grantSource ? (
+            <p className="text-xs italic text-slate-500">
+              Provided by {grantSource}
+            </p>
+          ) : null}
 
-          </div>
+          {prerequisiteSummary ? (
+            <SkillPrerequisiteMeta
+              summary={prerequisiteSummary}
+              satisfied={!bad}
+            />
+          ) : null}
 
-          <div className="flex shrink-0 flex-col items-end gap-1">
+          <SkillSynergyMeta
+            hints={displayedSynergyHints}
+            activeLines={activeSynergyLines}
+          />
 
-            {canEdit ? (
-
-              <button
-
-                type="button"
-
-                className="text-xs text-violet-500 hover:underline"
-
-                onClick={() => setEditPick({ pick, tier })}
-
-              >
-
-                Edit
-
-              </button>
-
-            ) : null}
-
-            {canTogglePro ? (
-              pick.professionalQuality ? (
-                <button
-                  type="button"
-                  className="text-xs text-sky-500 hover:underline"
-                  onClick={() => togglePickProfessionalQuality(pick, tier)}
-                >
-                  Set to standard quality
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  disabled={!canUpgradeToPro}
-                  title={canUpgradeToPro ? undefined : proUpgradeBlockedTitle}
-                  className="text-xs text-sky-500 hover:underline disabled:cursor-not-allowed disabled:opacity-40 disabled:no-underline"
-                  onClick={() => togglePickProfessionalQuality(pick, tier)}
-                >
-                  Set to {professionalQualityLabel(pick.skillId).toLowerCase()}
-                </button>
-              )
-            ) : null}
-
-            {onRemove && !pick.grantedBySkillId ? (
-
-              <button
-
-                type="button"
-
-                className="text-xs text-rose-400 hover:underline"
-
-                onClick={() => onRemove(pick.instanceId)}
-
-              >
-
-                {removeLabel}
-
-              </button>
-
-            ) : null}
-
-          </div>
+          {display.isWeaponProficiency || !display.percentSummary ? (
+            <SkillStatLines display={display} />
+          ) : display.physicalBonusSummary ||
+            display.subPercentLines.length > 0 ? (
+            <SkillStatLines display={display} />
+          ) : null}
 
         </div>
 
@@ -1046,31 +1434,186 @@ export function SkillEngine() {
     )
   }
 
-  function handleOccVoucherAdd(skillId: string) {
-    const def = getSkillById(skillId)
-    if (def && !prerequisiteSatisfied(def.prerequisite, allSelected)) return
+  function setRelatedVoucherSlotPick(
+    taskId: string,
+    slot: number,
+    pick: CreationSkillPick | null,
+    choiceCount: number,
+  ) {
+    const next = getRelatedVoucherSlotPicks(
+      relatedVoucherPicks,
+      taskId,
+      choiceCount,
+    )
+    next[slot] = pick
+    setCreationOccRelatedVoucherPick(taskId, next)
+  }
 
-    const openSlot = findOpenOccCoreVoucherSlot(
+  function commitRelatedVoucherPick(
+    taskId: string,
+    slot: number,
+    skillId: string,
+    choiceCount: number,
+    specialization?: string,
+  ) {
+    if (
+      isCreationSkillIdentityTaken(allCreationPicks, skillId, specialization)
+    ) {
+      return
+    }
+    setRelatedVoucherSlotPick(
+      taskId,
+      slot,
+      buildCreationSkillPick(skillId, { specialization }),
+      choiceCount,
+    )
+  }
+
+  function handleSpecializationVoucherAdd(skillId: string) {
+    const def = getSkillById(skillId)
+    if (
+      def &&
+      !creationLibrarySkillVoucherAddAllowed(def, {
+        effectiveOcc,
+        specializationId: character.occSpecializationId,
+        allPicks: allCreationPicks,
+      })
+    ) {
+      return
+    }
+    if (!effectiveOcc) return
+
+    const openSlot = findOpenRelatedVoucherSlot(
       skillId,
-      voucherTasks,
-      voucherPicks,
-      hostGenreId,
-      catalogSkillIds,
-      effectiveOcc?.wpRules?.forbiddenWps ?? [],
+      vocationalFocusTasks,
+      relatedVoucherPicks,
+      effectiveOcc,
+      character.occSpecializationId,
+      relatedVoucherClusters,
+      category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+        ? undefined
+        : category,
     )
     if (!openSlot) return
 
     if (skillNeedsVoucherPickDialog(skillId)) {
-      setPendingOccVoucherSlot({ ...openSlot, skillId })
+      setPendingRelatedVoucherSlot({ ...openSlot, skillId })
       return
     }
 
-    commitOccVoucherPick(
+    commitRelatedVoucherPick(
       openSlot.taskId,
       openSlot.slot,
       skillId,
       openSlot.choiceCount,
     )
+  }
+
+  function handleCreationVoucherAdd(
+    skillId: string,
+    target?: CreationVoucherAddTarget,
+  ) {
+    const def = getSkillById(skillId)
+    if (
+      def &&
+      !creationLibrarySkillVoucherAddAllowed(def, {
+        effectiveOcc,
+        specializationId: character.occSpecializationId,
+        allPicks: allCreationPicks,
+      })
+    ) {
+      return
+    }
+    if (!effectiveOcc) return
+
+    if (target) {
+      if (target.kind === 'occ_core') {
+        if (skillNeedsVoucherPickDialog(skillId)) {
+          setPendingOccVoucherSlot({
+            taskId: target.taskId,
+            slot: target.slot,
+            choiceCount: target.choiceCount,
+            skillId,
+          })
+          return
+        }
+        commitOccVoucherPick(
+          target.taskId,
+          target.slot,
+          skillId,
+          target.choiceCount,
+        )
+        return
+      }
+      if (skillNeedsVoucherPickDialog(skillId)) {
+        setPendingRelatedVoucherSlot({
+          taskId: target.taskId,
+          slot: target.slot,
+          choiceCount: target.choiceCount,
+          skillId,
+        })
+        return
+      }
+      commitRelatedVoucherPick(
+        target.taskId,
+        target.slot,
+        skillId,
+        target.choiceCount,
+      )
+      return
+    }
+
+    const occOpenSlot = findOpenOccCoreVoucherSlot(
+      skillId,
+      voucherTasks,
+      voucherPicks,
+      hostGenreId,
+      catalogSkillIds,
+      effectiveOcc.wpRules?.forbiddenWps ?? [],
+    )
+    if (occOpenSlot) {
+      if (skillNeedsVoucherPickDialog(skillId)) {
+        setPendingOccVoucherSlot({ ...occOpenSlot, skillId })
+        return
+      }
+      commitOccVoucherPick(
+        occOpenSlot.taskId,
+        occOpenSlot.slot,
+        skillId,
+        occOpenSlot.choiceCount,
+      )
+      return
+    }
+
+    const relatedOpenSlot = findOpenRelatedVoucherSlot(
+      skillId,
+      creationVoucherRelatedTasks,
+      relatedVoucherPicks,
+      effectiveOcc,
+      character.occSpecializationId,
+      relatedVoucherClusters,
+      voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
+        ? undefined
+        : voucherBrowseCategory,
+    )
+    if (!relatedOpenSlot) return
+
+    if (skillNeedsVoucherPickDialog(skillId)) {
+      setPendingRelatedVoucherSlot({ ...relatedOpenSlot, skillId })
+      return
+    }
+
+    commitRelatedVoucherPick(
+      relatedOpenSlot.taskId,
+      relatedOpenSlot.slot,
+      skillId,
+      relatedOpenSlot.choiceCount,
+    )
+  }
+
+  /** @deprecated Use {@link handleCreationVoucherAdd}. */
+  function handleOccVoucherAdd(skillId: string) {
+    handleCreationVoucherAdd(skillId)
   }
 
   function handleSkillAdd(skillId: string, action: 'related' | 'secondary') {
@@ -1184,35 +1727,153 @@ export function SkillEngine() {
       resolvedOccPicks,
       voucherTasks,
       voucherPicks,
+      relatedVoucherTasks,
+      relatedVoucherPicks,
     })
     const alreadyChosen = selectionTier != null || picked
     const identityTaken = isCreationSkillIdentityTaken(allCreationPicks, s.id)
     const prereqOk = prerequisiteSatisfied(s.prerequisite, allSelected)
-    const canAddOcc =
-      hasLibraryOccVouchers &&
-      canAddSkillViaOccCoreVoucher(
+    const hasOpenCreationVoucherSlot =
+      !vocationalFocusLock &&
+      hasLibraryCreationVouchers &&
+      effectiveOcc != null &&
+      !identityTaken &&
+      (canAddSkillViaOccCoreVoucher(
         s.id,
         voucherTasks,
         voucherPicks,
         hostGenreId,
         catalogSkillIds,
         allCreationPicks,
-        effectiveOcc?.wpRules?.forbiddenWps ?? [],
-      ) &&
-      prereqOk
+        effectiveOcc.wpRules?.forbiddenWps ?? [],
+      ) ||
+        canAddSkillViaRelatedVoucher(
+          s.id,
+          creationVoucherRelatedTasks,
+          relatedVoucherPicks,
+          effectiveOcc,
+          character.occSpecializationId,
+          relatedVoucherClusters,
+          allCreationPicks,
+          voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
+            ? undefined
+            : voucherBrowseCategory,
+        ))
+    const hasOpenVocationalFocusSlot =
+      effectiveOcc != null &&
+      !identityTaken &&
+      canAddSkillViaRelatedVoucher(
+        s.id,
+        vocationalFocusTasks,
+        relatedVoucherPicks,
+        effectiveOcc,
+        character.occSpecializationId,
+        relatedVoucherClusters,
+        allCreationPicks,
+        category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+          ? undefined
+          : category,
+      )
+    const voucherLibraryOpts = {
+      effectiveOcc,
+      specializationId: character.occSpecializationId,
+      raceBlocked: libraryContext.raceBlocked,
+      allPicks: allCreationPicks,
+    }
+    const voucherLibraryAllowed = creationLibrarySkillVoucherAddAllowed(
+      s,
+      voucherLibraryOpts,
+    )
+    const canAddViaCreationVoucher =
+      !vocationalFocusLock &&
+      hasLibraryCreationVouchers &&
+      voucherLibraryAllowed &&
+      !identityTaken &&
+      effectiveOcc != null &&
+      (canAddSkillViaOccCoreVoucher(
+        s.id,
+        voucherTasks,
+        voucherPicks,
+        hostGenreId,
+        catalogSkillIds,
+        allCreationPicks,
+        effectiveOcc.wpRules?.forbiddenWps ?? [],
+      ) ||
+        canAddSkillViaRelatedVoucher(
+          s.id,
+          creationVoucherRelatedTasks,
+          relatedVoucherPicks,
+          effectiveOcc,
+          character.occSpecializationId,
+          relatedVoucherClusters,
+          allCreationPicks,
+          voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
+            ? undefined
+            : voucherBrowseCategory,
+        ))
+    const voucherAddTargets =
+      !vocationalFocusLock &&
+      hasLibraryCreationVouchers &&
+      voucherLibraryAllowed &&
+      !identityTaken &&
+      effectiveOcc != null
+        ? listOpenCreationVoucherAddTargets(
+            s.id,
+            libraryCreationVoucherRefs,
+            voucherPicks,
+            relatedVoucherPicks,
+            relatedVoucherClusters,
+            effectiveOcc,
+            character.occSpecializationId,
+            hostGenreId,
+            catalogSkillIds,
+            effectiveOcc.wpRules?.forbiddenWps ?? [],
+            voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
+              ? undefined
+              : voucherBrowseCategory,
+          )
+        : []
+    const canAddViaVocationalFocusVoucher =
+      effectiveOcc != null &&
+      voucherLibraryAllowed &&
+      canAddSkillViaRelatedVoucher(
+        s.id,
+        vocationalFocusTasks,
+        relatedVoucherPicks,
+        effectiveOcc,
+        character.occSpecializationId,
+        relatedVoucherClusters,
+        allCreationPicks,
+        category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+          ? undefined
+          : category,
+      )
     const prereqBlocked =
       !unconditionallyExcluded &&
-      !prereqOk &&
-      (canAddRelated || canAddSecondary || canAddOcc) &&
       !identityTaken &&
-      !picked
+      !picked &&
+      (((canAddRelated || canAddSecondary) && !prereqOk) ||
+        ((hasOpenCreationVoucherSlot || hasOpenVocationalFocusSlot) &&
+          !voucherLibraryAllowed))
 
-    const showOccButton =
-      hasLibraryOccVouchers && canAddOcc && !identityTaken
-    const showRelatedButton = canAddRelated && prereqOk && !identityTaken
-    const showSecondaryButton = canAddSecondary && prereqOk && !identityTaken
+    const showVoucherButton = voucherAddTargets.length > 0 || canAddViaCreationVoucher
+    const showVocationalFocusButton =
+      canAddViaVocationalFocusVoucher && !identityTaken
+    const showRelatedButton =
+      !voucherBrowseLock &&
+      canAddRelated &&
+      prereqOk &&
+      !identityTaken
+    const showSecondaryButton =
+      !voucherBrowseLock &&
+      canAddSecondary &&
+      prereqOk &&
+      !identityTaken
     const showAddButtons =
-      showOccButton || showRelatedButton || showSecondaryButton
+      showVoucherButton ||
+      showVocationalFocusButton ||
+      showRelatedButton ||
+      showSecondaryButton
 
     const showMeta = !unconditionallyExcluded
     const prerequisiteSummary = showMeta
@@ -1228,14 +1889,33 @@ export function SkillEngine() {
     } else if (alreadyChosen || picked) {
       statusLabel = 'Already selected'
     } else if (!prereqBlocked && !showAddButtons) {
-      statusLabel = resolveCreationLibrarySkillBlockReason(s, libraryContext)
+      const voucherBlockReason = resolveCreationLibrarySkillVoucherBlockReason(
+        s,
+        voucherLibraryOpts,
+      )
+      if (
+        (canAddViaCreationVoucher ||
+          canAddViaVocationalFocusVoucher ||
+          voucherAddTargets.length > 0) &&
+        voucherBlockReason
+      ) {
+        statusLabel = voucherBlockReason
+      } else {
+        statusLabel = resolveCreationLibrarySkillBlockReason(s, libraryContext)
+      }
     }
 
     const rowSurface = unconditionallyExcluded
       ? `${subStyle} opacity-60`
       : selectionTier
         ? skillPickRowSurfaceClass(
-            selectionTier === 'occ' ? 'preview_occ' : selectionTier,
+            selectionTier === 'occ' || selectionTier === 'voucher'
+              ? selectionTier === 'voucher'
+                ? 'preview_voucher'
+                : 'preview_occ'
+              : selectionTier === 'specialization'
+                ? 'preview_specialization'
+                : selectionTier,
             morphus,
           )
         : subStyle
@@ -1255,7 +1935,11 @@ export function SkillEngine() {
           {prereqBlocked ? (
             <span
               className="text-red-800 dark:text-red-300"
-              title={missingPrerequisiteMessage(s.prerequisite, allSelected) ?? ''}
+              title={
+                resolveCreationLibrarySkillVoucherBlockReason(s, voucherLibraryOpts) ||
+                missingPrerequisiteMessage(s.prerequisite, allSelected) ||
+                ''
+              }
             >
               ⚠
             </span>
@@ -1292,13 +1976,33 @@ export function SkillEngine() {
         ) : null}
         {showAddButtons ? (
           <div className="mt-2 flex flex-wrap gap-1">
-            {showOccButton ? (
+            {voucherAddTargets.length > 0
+              ? voucherAddTargets.map((target) => (
+                  <button
+                    key={`${target.taskId}:${target.slot}`}
+                    type="button"
+                    className="rounded bg-amber-900 px-2 py-1 text-xs font-semibold text-white hover:bg-amber-950"
+                    onClick={() => handleCreationVoucherAdd(s.id, target)}
+                  >
+                    + {creationVoucherDisplayName(target.displayNumber)}
+                  </button>
+                ))
+              : showVoucherButton ? (
+                  <button
+                    type="button"
+                    className="rounded bg-amber-900 px-2 py-1 text-xs font-semibold text-white hover:bg-amber-950"
+                    onClick={() => handleCreationVoucherAdd(s.id)}
+                  >
+                    + Voucher
+                  </button>
+                ) : null}
+            {showVocationalFocusButton ? (
               <button
                 type="button"
-                className="rounded bg-amber-900 px-2 py-1 text-xs font-semibold text-white hover:bg-amber-950"
-                onClick={() => handleOccVoucherAdd(s.id)}
+                className="rounded bg-sky-600 px-2 py-1 text-xs font-semibold text-white hover:bg-sky-700"
+                onClick={() => handleSpecializationVoucherAdd(s.id)}
               >
-                + O.C.C.
+                + Vocational Focus
               </button>
             ) : null}
             {showRelatedButton ? (
@@ -1329,6 +2033,12 @@ export function SkillEngine() {
 
   const registerLeftSlot = useCreationForgeLeftSlotRegistrar()
 
+  const showVouchersSection = useMemo(
+    () =>
+      voucherTasks.length > 0 || creationVoucherRelatedTasks.length > 0,
+    [voucherTasks, creationVoucherRelatedTasks],
+  )
+
   const selectedSkillsPanel = useMemo(
     () => (
       <CreationSelectedSkillsPanel
@@ -1337,14 +2047,19 @@ export function SkillEngine() {
         subStyle={subStyle}
         handToHandInputClass={handToHandInputClass}
         occSectionClass={occSectionClass}
+        voucherSectionClass={voucherSectionClass}
+        specializationSectionClass={specializationSectionClass}
         relatedSectionClass={relatedSectionClass}
         secondarySectionClass={secondarySectionClass}
-        relatedCap={relatedCap}
+        relatedCap={freeRelatedCap}
         relatedSlotsUsed={relatedSlotsUsed}
+        specializationSlotsCap={specializationSlotsCap}
+        specializationSlotsUsed={specializationSlotsUsed}
         secondaryCap={secondaryCap}
         secondaryPickSlots={secondaryPickSlots}
         relatedSelected={relatedSelected}
         secondarySelected={secondarySelected}
+        showVouchersSection={showVouchersSection}
         hasHandToHandOptions={handToHandOptions.length > 0}
         onEditOccPick={(pick) => setEditPick({ pick, tier: 'occ' })}
         renderOccSkillRow={(pick, onClear) => {
@@ -1361,7 +2076,62 @@ export function SkillEngine() {
             'Clear',
           )
         }}
+        renderVoucherRow={(pick, onClear) => {
+          const occVoucherSlot = findOccCoreVoucherSlotForPick(
+            effectiveOcc,
+            character.occSpecializationId,
+            voucherPicks,
+            pick.instanceId,
+          )
+          const relatedVoucherSlot = findRelatedVoucherSlotForPick(
+            creationVoucherRelatedTasks,
+            relatedVoucherPicks,
+            pick.instanceId,
+          )
+          return renderSelectedRow(
+            pick,
+            'voucher',
+            occVoucherSlot
+              ? () =>
+                  setOccVoucherSlotPick(
+                    occVoucherSlot.taskId,
+                    occVoucherSlot.slot,
+                    null,
+                    occVoucherSlot.choiceCount,
+                  )
+              : relatedVoucherSlot
+                ? () =>
+                    setRelatedVoucherSlotPick(
+                      relatedVoucherSlot.taskId,
+                      relatedVoucherSlot.slot,
+                      null,
+                      relatedVoucherSlot.choiceCount,
+                    )
+                : onClear,
+            'Remove',
+          )
+        }}
         renderHandToHandRow={renderHandToHandRow}
+        renderSpecializationRow={(pick) => {
+          const voucherSlot = findRelatedVoucherSlotForPick(
+            vocationalFocusTasks,
+            relatedVoucherPicks,
+            pick.instanceId,
+          )
+          return renderSelectedRow(
+            pick,
+            'specialization',
+            voucherSlot
+              ? () =>
+                  setRelatedVoucherSlotPick(
+                    voucherSlot.taskId,
+                    voucherSlot.slot,
+                    null,
+                    voucherSlot.choiceCount,
+                  )
+              : undefined,
+          )
+        }}
         renderRelatedRow={(pick) =>
           renderSelectedRow(pick, 'related', (instanceId) =>
             setCreationSkillPicks(
@@ -1373,6 +2143,16 @@ export function SkillEngine() {
               secondarySelected,
             ),
           )
+        }
+        specializationVoucherTasks={vocationalFocusTasks}
+        creationVoucherRelatedTasks={creationVoucherRelatedTasks}
+        specializationVoucherPicks={relatedVoucherPicks}
+        specializationVoucherClusters={relatedVoucherClusters}
+        onSpecializationVoucherClearSlot={(taskId, slot, choiceCount) =>
+          setRelatedVoucherSlotPick(taskId, slot, null, choiceCount)
+        }
+        onSpecializationVoucherClusterChange={(voucherId, categoryName) =>
+          setCreationOccRelatedVoucherCluster(voucherId, categoryName)
         }
         renderSecondaryRow={(pick) =>
           renderSelectedRow(pick, 'secondary', (instanceId) =>
@@ -1395,14 +2175,19 @@ export function SkillEngine() {
       subStyle,
       handToHandInputClass,
       occSectionClass,
+      voucherSectionClass,
+      specializationSectionClass,
       relatedSectionClass,
       secondarySectionClass,
-      relatedCap,
+      freeRelatedCap,
       relatedSlotsUsed,
+      specializationSlotsCap,
+      specializationSlotsUsed,
       secondaryCap,
       secondaryPickSlots,
       relatedSelected,
       secondarySelected,
+      showVouchersSection,
       handToHandOptions.length,
       effectiveOcc,
       character.occSpecializationId,
@@ -1410,6 +2195,12 @@ export function SkillEngine() {
       handToHandTier,
       handToHandReserved,
       handToHandOptions,
+      vocationalFocusTasks,
+      creationVoucherRelatedTasks,
+      relatedVoucherPicks,
+      relatedVoucherClusters,
+      voucherTasks,
+      voucherPicks,
     ],
   )
 
@@ -1438,13 +2229,21 @@ export function SkillEngine() {
 
       >
 
-        Use <strong>+ O.C.C.</strong> in the library for category voucher picks; filled
+        While vouchers are open, browse by book category (Domestic, Technical, etc.);
 
-        choices appear grouped in the selected panel. Language, literacy, and weapon
+        only categories with an open voucher slot are selectable. Use{' '}
 
-        proficiencies stay in the panel. Pick <strong>related</strong> and{' '}
+        <strong>+ Voucher 1</strong>, <strong>+ Voucher 2</strong>, … in the library for
 
-        <strong>secondary</strong> skills with the matching buttons.
+        each slot; filled choices appear under{' '}
+
+        <strong className="text-amber-950">Vouchers</strong> in the selected panel.
+
+        Complete <strong className="text-sky-700">Vocational Focus</strong>, then all{' '}
+
+        <strong className="text-amber-950">Vouchers</strong>, before picking general{' '}
+
+        <strong>related</strong> and <strong>secondary</strong> skills.
 
       </p>
 
@@ -1489,7 +2288,15 @@ export function SkillEngine() {
 
                     ? 'All (search only)'
 
-                    : category}
+                    : category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+
+                      ? CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+
+                      : category === CREATION_VOUCHERS_LIBRARY_CATEGORY
+
+                        ? CREATION_VOUCHERS_LIBRARY_CATEGORY
+
+                        : category}
 
               </span>
 
@@ -1521,23 +2328,97 @@ export function SkillEngine() {
 
                 {[
 
-                  { value: '', label: '— select category —', rule: null },
+                  ...(vocationalFocusLock
 
-                  { value: 'All', label: 'All (search only)', rule: null },
+                    ? [
 
-                  ...bookCategories.map((c) => ({
+                        {
 
-                    value: c,
+                          value: CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
 
-                    label: c,
+                          label: CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
 
-                    rule: formatOccCategoryRuleDropdown(
+                          rule: null,
 
-                      resolveOccCategoryRuleForFilter(c, occCategoryRules),
+                        },
 
-                    ),
+                      ]
 
-                  })),
+                    : creationVoucherLock
+
+                      ? bookCategories.map((c) => ({
+
+                          value: c,
+
+                          label: c,
+
+                          rule: null,
+
+                          disabled: !openVoucherBookCategories.has(c),
+
+                          title: !openVoucherBookCategories.has(c)
+                            ? 'Not available for Voucher selection'
+                            : undefined,
+
+                        }))
+
+                      : [
+
+                        { value: '', label: '— select category —', rule: null },
+
+                        { value: 'All', label: 'All (search only)', rule: null },
+
+                        ...(vocationalFocusTasks.length > 0
+
+                          ? [
+
+                              {
+
+                                value: CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
+
+                                label: CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
+
+                                rule: null,
+
+                              },
+
+                            ]
+
+                          : []),
+
+                        ...(showVouchersSection
+
+                          ? [
+
+                              {
+
+                                value: CREATION_VOUCHERS_LIBRARY_CATEGORY,
+
+                                label: CREATION_VOUCHERS_LIBRARY_CATEGORY,
+
+                                rule: null,
+
+                              },
+
+                            ]
+
+                          : []),
+
+                        ...bookCategories.map((c) => ({
+
+                          value: c,
+
+                          label: c,
+
+                          rule: formatOccCategoryRuleDropdown(
+
+                            resolveOccCategoryRuleForFilter(c, occCategoryRules),
+
+                          ),
+
+                        })),
+
+                      ]),
 
                 ].map((item) => (
 
@@ -1547,13 +2428,27 @@ export function SkillEngine() {
 
                       type="button"
 
+                      disabled={'disabled' in item ? Boolean(item.disabled) : false}
+
+                      title={'title' in item ? item.title : undefined}
+
                       className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm hover:bg-slate-100 ${
 
                         morphus ? 'hover:bg-violet-950' : ''
 
-                      } ${category === item.value ? (morphus ? 'bg-violet-950' : 'bg-sky-50') : ''}`}
+                      } ${category === item.value ? (morphus ? 'bg-violet-950' : 'bg-sky-50') : ''} ${
+
+                        'disabled' in item && item.disabled
+
+                          ? 'cursor-not-allowed opacity-40 hover:bg-transparent'
+
+                          : ''
+
+                      }`}
 
                       onClick={() => {
+
+                        if ('disabled' in item && item.disabled) return
 
                         setCategory(item.value)
 
@@ -1629,19 +2524,43 @@ export function SkillEngine() {
 
             <h3 className="text-sm font-bold uppercase tracking-wide">
 
-              {category}
+              {category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+
+                ? CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
+
+                : category === CREATION_VOUCHERS_LIBRARY_CATEGORY
+
+                  ? CREATION_VOUCHERS_LIBRARY_CATEGORY
+
+                  : category}
 
             </h3>
 
-            <span
+            {category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY ? (
 
-              className={`text-sm font-medium ${occCategoryRuleToneClass(selectedCategoryRuleDisplay.tone, morphus)}`}
+              <span className="text-sm font-medium text-sky-700">
 
-            >
+                {vocationalFocusBookCategories.length > 0
 
-              {selectedCategoryRuleDisplay.label}
+                  ? vocationalFocusBookCategories.join(', ')
 
-            </span>
+                  : 'Choose a vocational focus category'}
+
+              </span>
+
+            ) : category === CREATION_VOUCHERS_LIBRARY_CATEGORY ? null : (
+
+              <span
+
+                className={`text-sm font-medium ${occCategoryRuleToneClass(selectedCategoryRuleDisplay.tone, morphus)}`}
+
+              >
+
+                {selectedCategoryRuleDisplay.label}
+
+              </span>
+
+            )}
 
           </div>
 
@@ -1759,6 +2678,32 @@ export function SkillEngine() {
             result.specialization,
           )
           setPendingOccVoucherSlot(null)
+        }}
+      />
+
+      <SkillPickAddDialog
+        state={
+          pendingRelatedVoucherSlot
+            ? {
+                skillId: pendingRelatedVoucherSlot.skillId,
+                variant: 'voucher',
+                existingPicks: allCreationPicks,
+              }
+            : null
+        }
+        morphus={morphus}
+        onCancel={() => setPendingRelatedVoucherSlot(null)}
+        onConfirm={(result) => {
+          if (!pendingRelatedVoucherSlot) return
+          const { taskId, slot, choiceCount, skillId } = pendingRelatedVoucherSlot
+          commitRelatedVoucherPick(
+            taskId,
+            slot,
+            skillId,
+            choiceCount,
+            result.specialization,
+          )
+          setPendingRelatedVoucherSlot(null)
         }}
       />
 

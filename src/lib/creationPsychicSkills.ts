@@ -7,6 +7,7 @@ import {
   occRelatedSkillBonusPercent,
   resolveEffectivePalladiumOcc,
 } from './occComposition'
+import { resolveRelatedVoucherSkillBonus } from './occRelatedSkillVouchers'
 import { occSkillSlotPolicy } from './occCatalogEngine'
 import { skillSlotMultiplierForTier } from './psychicGate'
 
@@ -29,10 +30,18 @@ export function rawOccSkillBonusPercent(
   skillId: string,
   relatedIds: ReadonlySet<string>,
   specializationId?: string | null,
+  relatedVoucherPicks?: Readonly<Record<string, unknown>>,
 ): number {
   if (!occ) return 0
   const effective = resolveEffectivePalladiumOcc(occ, specializationId)
   if (relatedIds.has(skillId)) {
+    const voucherBonus = resolveRelatedVoucherSkillBonus(
+      occ,
+      specializationId,
+      skillId,
+      relatedVoucherPicks,
+    )
+    if (voucherBonus !== 0) return voucherBonus
     const catalog = getPalladiumSkillCatalogEntryById(skillId)
     return occRelatedSkillBonusPercent(
       effective,
@@ -55,12 +64,14 @@ export function resolveOccSkillBonusPercent(
   relatedIds: ReadonlySet<string>,
   psychicTier: PsychicTier,
   specializationId?: string | null,
+  relatedVoucherPicks?: Readonly<Record<string, unknown>>,
 ): number {
   const raw = rawOccSkillBonusPercent(
     occ,
     skillId,
     relatedIds,
     specializationId,
+    relatedVoucherPicks,
   )
   return applyPsychicOccSkillBonusPercent(raw, psychicTier)
 }
@@ -115,13 +126,23 @@ export function assessRelatedSkillSlotBlockers(
     psychicTier,
     occSkillSlotPolicy(occ),
   )
+  return assessRelatedSkillSlotBlockersAtCap(
+    relatedSelectedCount,
+    cap,
+    handToHandReservedSlots,
+    psychicTier,
+  )
+}
+
+export function assessRelatedSkillSlotBlockersAtCap(
+  relatedSelectedCount: number,
+  cap: number,
+  handToHandReservedSlots = 0,
+  psychicTier: PsychicTier = 'none',
+): string[] {
   if (cap <= 0) return []
   if (relatedSelectedCount >= cap) return []
-  const hthNote =
-    handToHandReservedSlots > 0
-      ? ` — ${handToHandReservedSlots} reserved for Hand-to-Hand`
-      : ''
   return [
-    `Fill all O.C.C. related skill slots (${relatedSelectedCount} / ${cap}${hthNote}${psychicTier === 'major' ? ' — Major psychic halved budget' : ''}).`,
+    `Fill all O.C.C. related skill slots (${relatedSelectedCount} / ${cap}${psychicTier === 'major' ? ' — Major psychic halved budget' : ''}).`,
   ]
 }

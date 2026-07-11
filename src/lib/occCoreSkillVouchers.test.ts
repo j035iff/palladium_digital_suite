@@ -10,6 +10,8 @@ import {
   occCoreVoucherPicksComplete,
   resolveCreationLibrarySkillTier,
   resolveCreationOccSkillIds,
+  resolveOccCoreVoucherEntryBonus,
+  resolveOccCoreVoucherLibraryBookCategories,
   resolveVoucherWeaponProficiencyEra,
   voucherUsesDedicatedPickerUi,
 } from './occCoreSkillVouchers'
@@ -121,7 +123,23 @@ describe('occCoreSkillVouchers', () => {
     expect(eligible).toContain('wp_revolver')
   })
 
-  it('routes category vouchers to the library picker, not the dropdown', () => {
+  it('maps W.P. vouchers to WP: Ancient / Modern library categories', () => {
+    expect(
+      resolveOccCoreVoucherLibraryBookCategories({
+        choiceCount: 1,
+        allowedCategories: ['Weapon Proficiencies'],
+        weaponProficiencyEra: 'ancient',
+      }),
+    ).toEqual(['WP: Ancient'])
+    expect(
+      resolveOccCoreVoucherLibraryBookCategories({
+        choiceCount: 1,
+        allowedCategories: ['Weapon Proficiencies'],
+      }),
+    ).toEqual(['WP: Ancient', 'WP: Modern'])
+  })
+
+  it('routes all vouchers through the creation skill library', () => {
     expect(
       voucherUsesDedicatedPickerUi({
         choiceCount: 2,
@@ -135,7 +153,7 @@ describe('occCoreSkillVouchers', () => {
         bonusPercent: 0,
         allowedCategories: ['Weapon Proficiencies'],
       }),
-    ).toBe(true)
+    ).toBe(false)
   })
 
   it('finds an open voucher slot for eligible skills', () => {
@@ -168,6 +186,33 @@ describe('occCoreSkillVouchers', () => {
         voucherPicks: {},
       }),
     ).toBe('occ')
+  })
+
+  it('resolves per-skill voucher overrides when bonusPercent is zero', () => {
+    expect(
+      resolveOccCoreVoucherEntryBonus(
+        {
+          choiceCount: 1,
+          bonusPercent: 0,
+          allowedSkillIds: ['skill_bicycling', 'skill_automobile'],
+          skillSpecificOverrides: {
+            skill_bicycling: 16,
+            skill_automobile: 4,
+          },
+        },
+        'skill_automobile',
+      ),
+    ).toBe(4)
+    expect(
+      resolveOccCoreVoucherEntryBonus(
+        {
+          choiceCount: 1,
+          bonusPercent: 25,
+          allowedSkillIds: ['skill_lore_nightbane', 'skill_lore_nightlands'],
+        },
+        'skill_lore_nightbane',
+      ),
+    ).toBe(25)
   })
 
   it('blocks duplicate voucher picks', () => {

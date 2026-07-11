@@ -1,7 +1,9 @@
 import type { Character } from '../types'
-import { getOccById, snapshotOccForCharacter } from './occDefinitions'
+import { getLibraryOccById } from './library/registry'
+import { snapshotOccForCharacter } from './occDefinitions'
 
-const demoOcc = snapshotOccForCharacter(getOccById('occ_ex_government_agent')!)
+const demoLib = getLibraryOccById('occ_ex_government_agent')!
+const demoOcc = snapshotOccForCharacter(demoLib)
 
 /**
  * Demo sheet — structure must satisfy {@link Character}.

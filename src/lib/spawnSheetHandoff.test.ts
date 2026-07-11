@@ -17,7 +17,7 @@ describe('spawnSheetHandoff', () => {
     let root = createBlankCharacterForGenre('nightbane')
     root = {
       ...root,
-      occ: snapshotOccForCharacter(occView!),
+      occ: snapshotOccForCharacter(occLib!),
     }
     root = applyOccStartingSkillPicks(
       patchCharacterCreationFromOcc(root, occLib!),
@@ -43,7 +43,7 @@ describe('spawnSheetHandoff', () => {
     let root = createBlankCharacterForGenre('nightbane')
     root = {
       ...root,
-      occ: snapshotOccForCharacter(occView!),
+      occ: snapshotOccForCharacter(occLib!),
       creationVitalityCommitted: true,
     }
     root = applyOccStartingSkillPicks(
@@ -66,7 +66,7 @@ describe('spawnSheetHandoff', () => {
     let root = createBlankCharacterForGenre('nightbane')
     root = {
       ...root,
-      occ: snapshotOccForCharacter(occView!),
+      occ: snapshotOccForCharacter(occLib!),
       creationPsychicTier: 'major',
     }
     root = applyOccStartingSkillPicks(

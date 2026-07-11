@@ -25,16 +25,23 @@ import {
   resolvePsychicGateBypassed,
 } from '../creationPhases'
 import {
-  assessRelatedSkillSlotBlockers,
+  assessRelatedSkillSlotBlockersAtCap,
   assessSecondarySkillSlotBlockers,
+  creationRelatedSkillCap,
 } from '../creationPsychicSkills'
 import {
   assessOccCoreVoucherBlockers,
   resolveOccCoreSkillPicks,
 } from '../occCoreSkillVouchers'
 import { resolveEffectivePalladiumOcc } from '../occComposition'
+import {
+  assessRelatedSkillVoucherBlockers,
+  listOccRelatedVoucherTasks,
+  sumRelatedVoucherReservedSlots,
+} from '../occRelatedSkillVouchers'
 import { creationHandToHandReservedRelatedSlots } from '../creationHandToHandChoice'
 import {
+  creationFreeRelatedSkillCap,
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
   sumCreationSkillPickSlots,
@@ -419,18 +426,37 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
       effectiveOcc,
       character,
     )
+    const relatedVoucherReserved = sumRelatedVoucherReservedSlots(
+      listOccRelatedVoucherTasks(occ, character.occSpecializationId),
+    )
+    const relatedCap = creationRelatedSkillCap(
+      relatedBase,
+      ctx.psychicTier,
+      occ.occSkillSlotPolicy,
+    )
+    const freeRelatedCap = creationFreeRelatedSkillCap(
+      relatedCap,
+      relatedVoucherReserved,
+    )
     const relatedSelected = sumRelatedPoolSlotUsage(
       relatedPicks,
       occPicks,
       handToHandReserved,
     )
     blockers.push(
-      ...assessRelatedSkillSlotBlockers(
+      ...assessRelatedSkillSlotBlockersAtCap(
         relatedSelected,
-        relatedBase,
-        ctx.psychicTier,
-        occ,
+        freeRelatedCap,
         handToHandReserved,
+        ctx.psychicTier,
+      ),
+    )
+    blockers.push(
+      ...assessRelatedSkillVoucherBlockers(
+        occ,
+        character.creationOccRelatedVoucherPicks,
+        character.creationOccRelatedVoucherClusters,
+        character.occSpecializationId,
       ),
     )
     const secondaryBase = occSecondarySkillSlots(occ)

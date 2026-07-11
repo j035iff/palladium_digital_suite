@@ -3,6 +3,12 @@ import type { ReactNode } from 'react'
 import type { CreationSkillPick } from '../../types'
 
 import { SelectedOccCoreSkills } from './SelectedOccCoreSkills'
+import { OccRelatedVoucherGroupPanel } from './OccRelatedVoucherGroupPanel'
+import {
+  CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
+  CREATION_VOUCHERS_LIBRARY_CATEGORY,
+  type OccRelatedVoucherTask,
+} from '../../lib/occRelatedSkillVouchers'
 
 export type CreationSelectedSkillsPanelProps = {
   morphus: boolean
@@ -10,21 +16,44 @@ export type CreationSelectedSkillsPanelProps = {
   subStyle: string
   handToHandInputClass: string
   occSectionClass: string
+  voucherSectionClass: string
+  specializationSectionClass: string
   relatedSectionClass: string
   secondarySectionClass: string
   relatedCap: number
   relatedSlotsUsed: number
+  specializationSlotsCap?: number
+  specializationSlotsUsed?: number
   secondaryCap: number
   secondaryPickSlots: number
   relatedSelected: readonly CreationSkillPick[]
   secondarySelected: readonly CreationSkillPick[]
+  specializationVoucherTasks?: readonly OccRelatedVoucherTask[]
+  creationVoucherRelatedTasks?: readonly OccRelatedVoucherTask[]
+  showVouchersSection?: boolean
+  specializationVoucherPicks?: Readonly<Record<string, unknown>>
+  specializationVoucherClusters?: Readonly<Record<string, string>>
+  onSpecializationVoucherClearSlot?: (
+    taskId: string,
+    slot: number,
+    choiceCount: number,
+  ) => void
+  onSpecializationVoucherClusterChange?: (
+    voucherId: string,
+    category: string,
+  ) => void
   hasHandToHandOptions: boolean
   onEditOccPick: (pick: CreationSkillPick) => void
   renderOccSkillRow: (
     pick: CreationSkillPick,
     onClear?: () => void,
   ) => ReactNode
+  renderVoucherRow?: (
+    pick: CreationSkillPick,
+    onClear?: () => void,
+  ) => ReactNode
   renderHandToHandRow: () => ReactNode
+  renderSpecializationRow: (pick: CreationSkillPick) => ReactNode
   renderRelatedRow: (pick: CreationSkillPick) => ReactNode
   renderSecondaryRow: (pick: CreationSkillPick) => ReactNode
   shellMode?: boolean
@@ -36,18 +65,31 @@ export function CreationSelectedSkillsPanel({
   subStyle,
   handToHandInputClass,
   occSectionClass,
+  voucherSectionClass,
+  specializationSectionClass,
   relatedSectionClass,
   secondarySectionClass,
   relatedCap,
   relatedSlotsUsed,
+  specializationSlotsCap = 0,
+  specializationSlotsUsed = 0,
   secondaryCap,
   secondaryPickSlots,
   relatedSelected,
   secondarySelected,
+  specializationVoucherTasks = [],
+  creationVoucherRelatedTasks = [],
+  showVouchersSection = false,
+  specializationVoucherPicks = {},
+  specializationVoucherClusters = {},
+  onSpecializationVoucherClearSlot,
+  onSpecializationVoucherClusterChange,
   hasHandToHandOptions,
   onEditOccPick,
   renderOccSkillRow,
+  renderVoucherRow,
   renderHandToHandRow,
+  renderSpecializationRow,
   renderRelatedRow,
   renderSecondaryRow,
   shellMode = false,
@@ -95,6 +137,72 @@ export function CreationSelectedSkillsPanel({
               />
             </ul>
           </div>
+
+          {specializationVoucherTasks.length > 0 ? (
+            <div>
+              <p
+                className={`mb-1 text-sm font-bold ${specializationSectionClass}`}
+              >
+                {CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY}{' '}
+                {specializationSlotsCap > 0 ? (
+                  <span className="tabular-nums">
+                    {specializationSlotsUsed}/{specializationSlotsCap}
+                  </span>
+                ) : null}
+              </p>
+              <ul className="space-y-1">
+                {specializationVoucherTasks.map((task) => (
+                  <OccRelatedVoucherGroupPanel
+                    key={task.id}
+                    task={task}
+                    voucherPicks={specializationVoucherPicks}
+                    clusterSelections={specializationVoucherClusters}
+                    morphus={morphus}
+                    inputClass={handToHandInputClass}
+                    renderSpecializationSkillRow={renderSpecializationRow}
+                    onClearSlot={(slot) =>
+                      onSpecializationVoucherClearSlot?.(
+                        task.id,
+                        slot,
+                        task.entry.choiceCount,
+                      )
+                    }
+                    onClusterChange={(voucherId, category) =>
+                      onSpecializationVoucherClusterChange?.(
+                        voucherId,
+                        category,
+                      )
+                    }
+                  />
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {showVouchersSection ? (
+            <div>
+              <p className={`mb-1 text-sm font-bold ${voucherSectionClass}`}>
+                {CREATION_VOUCHERS_LIBRARY_CATEGORY}
+              </p>
+              <ul className="space-y-1">
+                <SelectedOccCoreSkills
+                  section="vouchers"
+                  subStyle={subStyle}
+                  inputClass={handToHandInputClass}
+                  morphus={morphus}
+                  onEditPick={onEditOccPick}
+                  renderOccSkillRow={renderVoucherRow ?? renderOccSkillRow}
+                  relatedVoucherTasks={creationVoucherRelatedTasks}
+                  relatedVoucherPicks={specializationVoucherPicks}
+                  relatedVoucherClusters={specializationVoucherClusters}
+                  onRelatedVoucherClearSlot={onSpecializationVoucherClearSlot}
+                  onRelatedVoucherClusterChange={
+                    onSpecializationVoucherClusterChange
+                  }
+                />
+              </ul>
+            </div>
+          ) : null}
 
           <div>
             <p className={`mb-1 text-sm font-bold ${relatedSectionClass}`}>

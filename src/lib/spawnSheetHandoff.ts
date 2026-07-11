@@ -27,6 +27,7 @@ import {
 import {
   resolveCreationOccSkillIds,
   resolveOccCoreSkillPicks,
+  resolveOccCoreVoucherSkillBonus,
 } from './occCoreSkillVouchers'
 import { sheetSkillIdForCreationHandToHandTier } from './creationHandToHandChoice'
 import {
@@ -118,13 +119,22 @@ export function projectCreationSkillsToSheet(
       pickTier === 'related'
         ? new Set([...relatedSet, pick.skillId])
         : relatedSet
-    const occBonus = resolveOccSkillBonusPercent(
+    let occBonus = resolveOccSkillBonusPercent(
       occ,
       pick.skillId,
       relatedForBonus,
       tier,
       character.occSpecializationId,
     )
+    if (pickTier === 'occ' && occBonus === 0) {
+      occBonus = resolveOccCoreVoucherSkillBonus(
+        occ,
+        character.occSpecializationId,
+        pick.skillId,
+        voucherPicks,
+        tier,
+      )
+    }
     const equation = buildSkillEquationInput(def, selectedSet, occBonus, pick)
     const resolved = resolveLiveSkillPercent(
       { ...equation, id: def.id },

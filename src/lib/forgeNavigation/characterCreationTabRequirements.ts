@@ -30,11 +30,16 @@ import {
   isCreationPsychicTierComplete,
 } from '../creationPhases'
 import {
-  assessRelatedSkillSlotBlockers,
+  assessRelatedSkillSlotBlockersAtCap,
   assessSecondarySkillSlotBlockers,
   creationRelatedSkillCap,
 } from '../creationPsychicSkills'
 import { assessRelatedSkillCategoryMinimumBlockers } from '../occRelatedSkillMinimums'
+import {
+  assessRelatedSkillVoucherBlockers,
+  listOccRelatedVoucherTasks,
+  sumRelatedVoucherReservedSlots,
+} from '../occRelatedSkillVouchers'
 import { occSupernaturalGrantedAbilityIds } from '../occSupernaturalGrants'
 import { occSkillSlotPolicy } from '../occCatalogEngine'
 import {
@@ -52,6 +57,7 @@ import { resolveEffectivePalladiumOcc } from '../occComposition'
 import { occStartingOccSkillIds } from '../occCatalogEngine'
 import { skillRequiresSpecialization } from '../creationSkillPicks'
 import {
+  creationFreeRelatedSkillCap,
   findDuplicateSkillIdentityKeys,
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
@@ -229,6 +235,17 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     effectiveOcc,
     character,
   )
+  const relatedVoucherTasks = listOccRelatedVoucherTasks(
+    occ,
+    character.occSpecializationId,
+  )
+  const relatedVoucherReserved = sumRelatedVoucherReservedSlots(relatedVoucherTasks)
+  const relatedVoucherPicks = character.creationOccRelatedVoucherPicks ?? {}
+  const relatedVoucherClusters = character.creationOccRelatedVoucherClusters ?? {}
+  const freeRelatedCap = creationFreeRelatedSkillCap(
+    relatedCap,
+    relatedVoucherReserved,
+  )
   const relatedSelected = sumRelatedPoolSlotUsage(
     relatedPicks,
     occPicks,
@@ -266,36 +283,42 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     })
   }
 
-  if (relatedCap > 0) {
-    const relatedBlockers = assessRelatedSkillSlotBlockers(
+  if (freeRelatedCap > 0 || relatedVoucherTasks.length > 0) {
+    const relatedBlockers = assessRelatedSkillSlotBlockersAtCap(
       relatedSelected,
-      relatedBase,
-      ctx.psychicTier,
-      occ,
+      freeRelatedCap,
       handToHandReserved,
+      ctx.psychicTier,
+    )
+    const voucherBlockers = assessRelatedSkillVoucherBlockers(
+      occ,
+      relatedVoucherPicks,
+      relatedVoucherClusters,
+      character.occSpecializationId,
     )
     const categoryMinimumBlockers = assessRelatedSkillCategoryMinimumBlockers(
       occ,
       relatedPicks,
       character.occSpecializationId,
     )
+    const allRelatedBlockers = [
+      ...relatedBlockers,
+      ...voucherBlockers,
+      ...categoryMinimumBlockers,
+    ]
     requirements.push({
       id: 'related-slots',
       label:
-        relatedBlockers[0] ??
-        categoryMinimumBlockers[0] ??
-        `Fill all O.C.C. related skill slots (${relatedSelected} / ${relatedCap})`,
-      satisfied:
-        relatedBlockers.length === 0 && categoryMinimumBlockers.length === 0,
+        allRelatedBlockers[0] ??
+        `Fill all O.C.C. related skill slots (${relatedSelected} / ${freeRelatedCap})`,
+      satisfied: allRelatedBlockers.length === 0,
     })
-    if (categoryMinimumBlockers.length > 1) {
-      for (const [index, blocker] of categoryMinimumBlockers.slice(1).entries()) {
-        requirements.push({
-          id: `related-category-min-${index}`,
-          label: blocker,
-          satisfied: false,
-        })
-      }
+    for (const [index, blocker] of allRelatedBlockers.slice(1).entries()) {
+      requirements.push({
+        id: `related-extra-${index}`,
+        label: blocker,
+        satisfied: false,
+      })
     }
   }
 

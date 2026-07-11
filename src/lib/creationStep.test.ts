@@ -10,7 +10,7 @@ import { diceNotationBounds, diceCoreBounds, isDiceNotation } from './diceNotati
 import { createBlankCharacterForGenre } from './characterRoot'
 import { getRaceById } from '../data/library/registry'
 import { getPalladiumOccById } from '../data/library/occCatalogLoader'
-import { getOccById, snapshotOccForCharacter } from '../data/occDefinitions'
+import { getOccById, getLibraryOccById, snapshotOccForCharacter } from '../data/occDefinitions'
 
 describe('creationStep', () => {
   it('orders phases with psychic gate before skills when latent psionics apply', () => {
@@ -89,7 +89,7 @@ describe('creationStep', () => {
     const withOcc = {
       ...character,
       raceId: 'race_human',
-      occ: snapshotOccForCharacter(occ),
+      occ: snapshotOccForCharacter(occLib, race),
     }
     const blockers = assessConfiguratorBlockers(withOcc, race, occLib)
     expect(blockers).toHaveLength(0)

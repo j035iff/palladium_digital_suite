@@ -1,4 +1,4 @@
-import type { CharacterOcc, XPTable } from '../types'
+import type { CharacterOcc, PalladiumOcc, Race, XPTable } from '../types'
 import {
   occBaseStatsDice,
   occCharacterCategory,
@@ -28,12 +28,15 @@ export interface OCC {
   startingRelatedSkillIds: string[]
 }
 
-export function snapshotOccForCharacter(def: OCC): CharacterOcc {
+export function snapshotOccForCharacter(
+  lib: PalladiumOcc,
+  race?: Race,
+): CharacterOcc {
   return {
-    id: def.id,
-    name: def.name,
-    category: def.category,
-    xpTable: { floors: [...def.xpTable.floors] },
+    id: lib.id,
+    name: lib.name,
+    category: occCharacterCategory(lib),
+    xpTable: resolveOccXpTable(lib, race),
   }
 }
 

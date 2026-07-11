@@ -26,8 +26,8 @@ export const FEATURE_REGISTRY: Feature[] = [
 export const RACE_REGISTRY: Race[] = loadRacesFromJson()
 export const OCC_REGISTRY: readonly PalladiumOcc[] = PALLADIUM_OCC_CATALOG
 
-export function resolveOccXpTable(def: PalladiumOcc): XPTable {
-  const id = occXpTableId(def)
+export function resolveOccXpTable(def: PalladiumOcc, race?: Race): XPTable {
+  const id = occXpTableId(def, race)
   const row = getXpTableById(id)
   if (!row) {
     const fallback = getXpTableById('nightbane_core_doppleganger')
@@ -39,9 +39,9 @@ export function resolveOccXpTable(def: PalladiumOcc): XPTable {
   return toXpTable(row)
 }
 
-export function getOccXpTableDisplayName(def: PalladiumOcc): string {
-  const row = getXpTableById(occXpTableId(def))
-  return row?.name ?? occXpTableId(def)
+export function getOccXpTableDisplayName(def: PalladiumOcc, race?: Race): string {
+  const row = getXpTableById(occXpTableId(def, race))
+  return row?.name ?? occXpTableId(def, race)
 }
 
 export function getFeatureById(id: string): Feature | undefined {

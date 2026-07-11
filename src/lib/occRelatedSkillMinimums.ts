@@ -29,6 +29,7 @@ export function assessRelatedSkillCategoryMinimumBlockers(
 ): string[] {
   if (!occ) return []
   const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  if (effective.occRelatedSkills.skillVouchers?.length) return []
   const minimums = effective.occRelatedSkills.categoryMinimums
   if (!minimums?.length) return []
 
