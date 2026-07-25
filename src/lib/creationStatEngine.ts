@@ -550,6 +550,13 @@ export type HorrorFactorFlatStatInput = {
 export type NaturalArmorStatInput = {
   kind: 'natural_armor'
   passive: FeatureModifiers
+  /**
+   * Absolute Natural A.R. from Morphus traits (`stackNaturalArmorFromTraits`).
+   * Distinct from relative `statModifiers.ar` shifts.
+   */
+  absoluteNaturalAr?: number
+  /** Relative A.R. shifts from trait `statModifiers.ar` flats. */
+  relativeArShift?: number
 }
 
 export function pushStatTerm(
@@ -704,6 +711,12 @@ export function buildCreationStatStack(input: CreationStatInput): StatStackTerm[
     }
 
     case 'natural_armor': {
+      if (input.absoluteNaturalAr != null && input.absoluteNaturalAr > 0) {
+        pushStatTerm(terms, 'traits', 'Traits', input.absoluteNaturalAr)
+      }
+      if (input.relativeArShift) {
+        pushStatTerm(terms, 'traits', 'Trait A.R. shift', input.relativeArShift)
+      }
       const ar = passiveSumKeys(input.passive, [
         'ar',
         'natural_armor',

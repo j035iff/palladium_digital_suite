@@ -213,6 +213,7 @@
         }
       ],
       "description": "The Nightbane is covered with bone-like plates or large scales, often with horn-like protrusions and short spikes.",
+      "naturalAr": 13,
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10"
@@ -392,6 +393,7 @@
         }
       ],
       "description": "The character looks predominately human, but has crystals that resemble quartz or diamonds growing out of his skin along the fingers, the bones of the hands, along the back of the arms up and down the spine and at the elbow, shoulders and knees. The head can look completely human or the hair can be replaced with a cap of crystals or a crown of tall, jutting crystal.",
+      "naturalAr": 11,
       "statModifiers": {
         "sdc": {
           "dice": "2D4x10"

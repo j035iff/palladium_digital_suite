@@ -20,6 +20,7 @@
         }
       ],
       "description": "Pieces of archaic body armor (helmets, breastplates, gauntlets, chain mail, segmented mail) are fused with the Nightbane's skin.",
+      "naturalAr": 12,
       "statModifiers": {
         "sdc": {
           "dice": "1D6x10"
@@ -407,6 +408,7 @@
         }
       ],
       "description": "The character is covered in mechanical armor that can look hard and bulky with rivets and seams, or smooth and chrome-like.",
+      "naturalAr": 14,
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -512,6 +514,7 @@
         }
       ],
       "description": "Instead of legs, the Nightbane is a two-wheeled man-machine hybrid. The upper body looks human or half cyborg, while the lower body is a machine vehicle like a motorcycle, ATV, or miniature tank with treads.",
+      "naturalAr": 8,
       "statModifiers": {
         "ps": {
           "flat": 3

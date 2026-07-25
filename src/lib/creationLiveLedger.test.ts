@@ -7,6 +7,7 @@ import {
   buildCreationExceptionalSuperGroups,
   buildCreationPhysicalStaging,
   buildCreationSavesBlock,
+  buildCreationVitalsBlock,
   LEDGER_NA,
   LEDGER_UNASSIGNED,
   resolveLedgerEffectiveAttributes,
@@ -14,6 +15,8 @@ import {
 import { characterFixture } from '../data/characterFixture'
 import { getRaceById } from '../data/library/registry'
 import { getLibraryOccById } from '../data/library/registry'
+import { createBlankCharacterForGenre } from './characterRoot'
+import { computeHorrorFactorAura } from './saveProfile'
 import {
   accumulateHandToHandBonuses,
   createEmptyAccumulatedHandToHandBonuses,
@@ -415,5 +418,39 @@ describe('creationLiveLedger', () => {
     expect(groups.some((g) => g.title === 'I.Q. (31+)')).toBe(true)
     expect(groups.some((g) => g.title === 'M.E. (31+)')).toBe(false)
     expect(groups.some((g) => g.title === 'P.E. (31+)')).toBe(false)
+  })
+
+  it('shows Morphus Natural A.R. from trait naturalAr (Cyclops/Giant = 10)', () => {
+    const race = getRaceById('race_nightbane')
+    const occ = getLibraryOccById('occ_nightbane_basic')
+    const character = {
+      ...createBlankCharacterForGenre('nightbane'),
+      creationAttributeAssignments: { pe: 12 },
+      morphusTraitSlotResolutions: [
+        { slotId: 'plan:0', catalogEntryId: 'mythical_creature_cyclops' },
+      ],
+    }
+    const horrorFactorProfile = computeHorrorFactorAura(
+      character,
+      'morphus',
+      {},
+      true,
+      race,
+    )
+    const vitals = buildCreationVitalsBlock({
+      character,
+      attrs: character.morphus.attributes,
+      race,
+      occ,
+      supportsDualForm: true,
+      psychicTier: 'none',
+      activeForm: 'morphus',
+      passive: {},
+      horrorFactorProfile,
+      skillIds: [],
+    })
+    const arLine = vitals.find((line) => line.label === 'Natural A.R.')
+    expect(arLine?.value).toBe('10')
+    expect(arLine?.valueTooltip).toContain('Traits')
   })
 })

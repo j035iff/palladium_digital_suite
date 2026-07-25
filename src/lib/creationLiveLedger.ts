@@ -115,7 +115,14 @@ import {
   strengthCapacitiesFromAttributes,
   effectiveLedgerHandToHandTier,
 } from './morphusCreationLedger'
-import { buildMorphusPassiveBundle } from './morphusPassiveBridge'
+import {
+  buildMorphusPassiveBundle,
+  resolveActiveMorphusTraits,
+} from './morphusPassiveBridge'
+import {
+  stackNaturalArmorFromTraits,
+  sumRelativeArShiftFromTraits,
+} from './morphusCharacteristicAggregation'
 import {
   MORPHUS_HIT_POINTS_FORMULA,
   MORPHUS_HIT_POINTS_PER_LEVEL_FORMULA,
@@ -998,6 +1005,15 @@ export function buildCreationVitalsBlock(opts: {
       )
 
   const morphusLedger = opts.supportsDualForm && opts.activeForm === 'morphus'
+  const morphusTraits = morphusLedger
+    ? resolveActiveMorphusTraits(opts.character)
+    : []
+  const morphusAbsoluteNaturalAr = morphusLedger
+    ? stackNaturalArmorFromTraits(morphusTraits)
+    : undefined
+  const morphusRelativeArShift = morphusLedger
+    ? sumRelativeArShiftFromTraits(morphusTraits)
+    : 0
   const traitSdc = morphusLedger
     ? buildMorphusTraitSdcBonusDetails(opts.character)
     : { flatTotal: 0, flatBreakdown: [], diceContributions: [] }
@@ -1096,7 +1112,12 @@ export function buildCreationVitalsBlock(opts: {
     }),
     buildNaturalArmorLedgerLine(
       'Natural A.R.',
-      buildCreationStatStack({ kind: 'natural_armor', passive: opts.passive }),
+      buildCreationStatStack({
+        kind: 'natural_armor',
+        passive: opts.passive,
+        absoluteNaturalAr: morphusAbsoluteNaturalAr,
+        relativeArShift: morphusRelativeArShift,
+      }),
     ),
   ]
 

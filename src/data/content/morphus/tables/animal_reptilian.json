@@ -25,6 +25,7 @@
         }
       ],
       "description": "Giant lizard over seven feet (2.1 m) tall counting the tail; add 1D6 feet (0.3 to 1.8 m) to the character's Facade height for total Morphus length. May be mistaken for Komodo dragons, crocodiles, and similar large reptilians.",
+      "naturalAr": 8,
       "playerChoices": [
         {
           "label": "Reptile species",
@@ -125,6 +126,7 @@
         }
       ],
       "description": "Bipedal mixture of man and reptile with reptilian features predominating; fully animal-like head with incredibly strong, razor-sharp claws on underdeveloped arms and legs.",
+      "naturalAr": 7,
       "playerChoices": [
         {
           "label": "Reptile species",
@@ -397,6 +399,7 @@
         }
       ],
       "description": "Lower body of a four-legged reptile with tail; upper body is a scale-covered humanoid torso with a human-like head. Hard-pressed to fit in a vehicle or small room.",
+      "naturalAr": 7,
       "playerChoices": [
         {
           "label": "Reptile species",

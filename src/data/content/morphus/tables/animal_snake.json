@@ -25,6 +25,7 @@
         }
       ],
       "description": "Giant snake at least six feet (1.8 m) long; typically add 1D6 feet (0.3 to 1.8 m) to the Nightbane's Facade height/length.",
+      "naturalAr": 7,
       "playerChoices": [
         {
           "label": "Snake type",
@@ -144,6 +145,7 @@
         }
       ],
       "description": "Scaly human-like arms, hands, and legs on a long snake-like body with an overlong neck and snake's head. Torso bends with serpent flexibility; limbs are double-jointed and ambidextrous.",
+      "naturalAr": 6,
       "playerChoices": [
         {
           "label": "Snake type",
@@ -258,6 +260,7 @@
         }
       ],
       "description": "Basic human build with colorful scales, snake head and neck, long prehensile tail, sharp fangs, and clawed hands and feet.",
+      "naturalAr": 6,
       "playerChoices": [
         {
           "label": "Snake type",

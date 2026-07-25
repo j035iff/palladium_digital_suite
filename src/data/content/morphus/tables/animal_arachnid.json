@@ -25,6 +25,7 @@
         }
       ],
       "description": "The Nightbane's Morphus is a giant spider or scorpion.",
+      "naturalAr": 10,
       "playerChoices": [
         {
           "label": "Arachnid type",
@@ -162,6 +163,7 @@
         }
       ],
       "description": "A vaguely humanoid creature-two legs and six arms if a spider, or two legs, two arms, two pincer arms, and a tail/stinger if a scorpion. Inhuman head with four to six eyes, pincer-mouth, and chitin or spider-fur instead of skin.",
+      "naturalAr": 8,
       "playerChoices": [
         {
           "label": "Arachnid type",
@@ -296,6 +298,7 @@
         }
       ],
       "description": "A man-spider or man-scorpion with a mostly humanoid shape, chitin or hair-covered skin, clawed hands, and either two additional spider arms or a scorpion stinger.",
+      "naturalAr": 7,
       "playerChoices": [
         {
           "label": "Arachnid type",
@@ -532,6 +535,7 @@
         }
       ],
       "description": "Lower body of a spider or scorpion and upper body of a humanoid-arachnid. Much taller and heavier than a normal human; difficult to fit into vehicles and enclosed spaces.",
+      "naturalAr": 9,
       "playerChoices": [
         {
           "label": "Arachnid type",

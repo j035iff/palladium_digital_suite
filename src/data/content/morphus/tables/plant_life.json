@@ -10,6 +10,7 @@
       "name": "Humanoid Tree",
       "tableCategory": "Plant Life",
       "description": "The Nightbane looks like a tree that has come to life. The strength and resilience of the character is incredible, but he is very slow and cumbersome. He has a tree trunk instead of a torso and two long branches with leaves instead of arms (if an Unnatural Limbs characteristic, adding extra limbs is also taken, the tree shape would have additional branches). His head is sunken at the top of the trunk and between the two arms/ branches. It is leaf-covered and misshapen. Instead of legs, several root-like limbs allow some very slow movement. The character could pass for a strangely-shaped tree if he does not move; he can even make his “roots” sink into the ground, completing the illusion. Add 3D4x10 to S.D.C., +6 to P.S., +1D4 to Horror Factor, can heal 2D6 S.D.C./Hit Points every 24 hours, but reduce speed by half.",
+      "naturalAr": 10,
       "statModifiers": {
         "ps": {
           "flat": 6
@@ -137,6 +138,7 @@
       "name": "Thorn Skin",
       "tableCategory": "Plant Life",
       "description": "The character’s skin is dark brown and his body is coiled in brown vines covered with thorns! Bonuses: +5D6x3 to S.D.C., 1D6 to damage in addition to Supernatural P.S. punches, attackers cannot grab or wrestle with the character without taking 3D6 damage per each attack/grab, and +3 to Horror Factor.",
+      "naturalAr": 9,
       "statModifiers": {
         "hf": {
           "flat": 3
@@ -301,6 +303,7 @@
       "name": "Bark Skin",
       "tableCategory": "Plant Life",
       "description": "The character’s skin is hard and looks and feels like rough tree bark. Bonuses: +4D6x20 to S.D.C., +1 to A.R. and +2 to Horror Factor.",
+      "naturalAr": 9,
       "statModifiers": {
         "hf": {
           "flat": 2

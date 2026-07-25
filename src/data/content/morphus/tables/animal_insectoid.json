@@ -25,6 +25,7 @@
         }
       ],
       "description": "The Nightbane becomes a giant insect at least six feet (1.8 m) in length. Ants, bees, wasps, flies, dragonflies, mosquitoes, beetles, praying mantis, butterflies, and moths are common types; spiders and scorpions are not insects.",
+      "naturalAr": 10,
       "playerChoices": [
         {
           "label": "Insect species",
@@ -222,6 +223,7 @@
         }
       ],
       "description": "A bipedal combination of human and insect, with two pairs of clawed, spindly arms, hands and legs, vaguely humanoid shape, and insectoid head complete with antennae, pincer-like mandibles, and multi-faceted eyes.",
+      "naturalAr": 8,
       "playerChoices": [
         {
           "label": "Insect species",
@@ -391,6 +393,7 @@
         }
       ],
       "description": "Basically human-like, with an extra pair of arms and insectoid characteristics. The head is human except for large, round, multi-faceted eyes and antennae. Skin is covered with a chitinous exoskeleton. The character may have insect wings but otherwise has no other unusual limbs.",
+      "naturalAr": 7,
       "playerChoices": [
         {
           "label": "Body type",
@@ -766,6 +769,7 @@
         }
       ],
       "description": "The upper body of an insect-like humanoid with insect mandibles, eyes, and antennae, and the lower body of a six-legged giant insect; the insect body may also have wings.",
+      "naturalAr": 9,
       "statModifiers": {
         "ps": {
           "flat": 6

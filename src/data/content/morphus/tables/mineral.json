@@ -20,6 +20,7 @@
         }
       ],
       "description": "The Nightbane looks as if he was made from lumps/clusters of metal or molten metal that cooled in lumps and streams like the surface of a partially melted candle[cite: 39]. Or he may look like crude, unprocessed metal ore with a rough surface dotted with tiny crystals and discoloration[cite: 40].",
+      "naturalAr": 14,
       "statModifiers": {
         "ps": {
           "flat": 6
@@ -70,6 +71,7 @@
         }
       ],
       "description": "The Nightbane is shaped like a well-sculpted metallic humanoid[cite: 44]. The form is not unattractive, but unsettlingly inhuman[cite: 45].",
+      "naturalAr": 14,
       "statModifiers": {
         "ps": {
           "flat": 3
@@ -123,6 +125,7 @@
         }
       ],
       "description": "The Nightbane looks like he is made of roughly hewn blocks of stone[cite: 48].",
+      "naturalAr": 13,
       "statModifiers": {
         "ps": {
           "flat": 4
@@ -175,6 +178,7 @@
         }
       ],
       "description": "A finely sculpted and detailed humanoid figure that looks normal except it is made of inorganic material (crystal, marble, ebony or stone)[cite: 51].",
+      "naturalAr": 13,
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -228,6 +232,7 @@
         }
       ],
       "description": "The character has the hands and arms or chest and head of stone, crystal or metal, rough or highly polished[cite: 55]. In the alternative, large patches all over the body are made of crystals, stone or metal and look as if they are protruding through a thin covering of skin[cite: 56].",
+      "naturalAr": 11,
       "statModifiers": {
         "ps": {
           "flat": 2
@@ -262,6 +267,7 @@
         }
       ],
       "description": "The Nightbane's forearms and hands turn into stone, crystal or metal with a hand that is a sword or axe-like weapon or a hand that has long inorganic claws or knuckle spikes[cite: 58].",
+      "naturalAr": 11,
       "statModifiers": {
         "hf": {
           "flat": 1
@@ -338,6 +344,7 @@
         }
       ],
       "description": "The body looks like it is made of crystal. The shape is not unattractive but very inhuman.",
+      "naturalAr": 12,
       "statModifiers": {
         "sdc": {
           "dice": "2D4x10"

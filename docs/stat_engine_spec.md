@@ -176,7 +176,7 @@ All vitality pools use the same Tier-2 pipeline as combat and saves. Schema form
 | **P.P.E.** | Race P.P.E. + `occ.ppeEngine` | `(AggregatedPE × constant1) + flats + dice`; Facade P.E. in dual-form |
 | **I.S.P.** | `occ.ispEngine` | `(AggregatedME × constant1) + dice` |
 | **H.F.** | Race/OCC/traits | `buildCreationStatStack({ kind: 'horror_factor_flat' })` |
-| **Natural A.R.** | Passive modifiers | `buildCreationStatStack({ kind: 'natural_armor' })` |
+| **Natural A.R.** | Passive modifiers (Facade); Morphus uses `stackNaturalArmorFromTraits()` + relative `statModifiers.ar` | `buildCreationStatStack({ kind: 'natural_armor' })` |
 
 **Implementation:** `vitalStatEngine.ts` (compute), `ledgerVitalFormula.ts` (schema parse + display), `buildPendingDiceBlocks()`, `buildCreationVitalsBlock()`, `computeSpawnVitalityFromResolutions()`.
 
