@@ -253,8 +253,6 @@ export function CombatHUD() {
     attacksPerMelee,
     spendCombatAction,
     resetMeleeRound,
-    activeMeleeDurations,
-    registerActiveMeleeDuration,
     applySdcPriorityVitality,
     durationCheckPulse,
     equippedArmor,
@@ -621,23 +619,6 @@ export function CombatHUD() {
               New melee round
             </button>
           </div>
-          {activeMeleeDurations.length > 0 ? (
-            <ul className="mt-2 space-y-1 text-[11px]">
-              {activeMeleeDurations.map((d) => (
-                <li key={d.abilityId} className="font-mono opacity-90">
-                  {getFeatureById(d.abilityId)?.identity.name ?? d.abilityId}:{' '}
-                  <strong>{d.roundsRemaining}</strong> melee
-                </li>
-              ))}
-            </ul>
-          ) : null}
-          <button
-            type="button"
-            className={`mt-2 text-[10px] font-semibold underline ${morphus ? 'text-violet-300' : 'text-blue-800'}`}
-            onClick={() => registerActiveMeleeDuration('armor_ithan', 3)}
-          >
-            Demo: Armor of Ithan (3 melees)
-          </button>
         </div>
 
         <div className={`mb-3 rounded-lg border-2 p-3 ${sub}`}>

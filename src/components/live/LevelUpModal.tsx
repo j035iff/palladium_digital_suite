@@ -5,7 +5,6 @@ import {
   supernaturalAlertsForLevel,
 } from '../../data/xpTables'
 import { summarizeSkillImprovementsForLevel } from '../../lib/levelUpSkillSummary'
-import { rollD6 } from '../../lib/meleeDice'
 
 export type LevelUpModalProps = {
   open: boolean
@@ -107,28 +106,50 @@ export function LevelUpModal({
               H.P. growth
             </h3>
             <p className={`text-xs ${morphus ? 'text-violet-200/90' : 'text-slate-600'}`}>
-              Roll 1d6 and add the result to <strong>maximum and current H.P.</strong> on both Facade and
-              Morphus tracks.
+              Enter your physical <strong>1d6</strong> result. It is added to{' '}
+              <strong>maximum and current H.P.</strong> on both Facade and Morphus tracks.
             </p>
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                className={
-                  morphus
-                    ? 'rounded-lg border-2 border-amber-400/90 bg-violet-900 px-4 py-2 text-sm font-black uppercase tracking-wide text-amber-200 hover:bg-violet-800'
-                    : 'rounded-lg border-2 border-blue-700 bg-blue-600 px-4 py-2 text-sm font-black uppercase tracking-wide text-white hover:bg-blue-500'
-                }
-                onClick={() => setHpRoll(rollD6())}
-              >
-                Roll for H.P. (1d6)
-              </button>
+            <div className="flex flex-wrap items-center gap-3">
+              <label className="flex flex-col gap-1">
+                <span
+                  className={`text-[10px] font-black uppercase tracking-wide ${
+                    morphus ? 'text-violet-300' : 'text-slate-600'
+                  }`}
+                >
+                  H.P. die (1–6)
+                </span>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={1}
+                  max={6}
+                  value={hpRoll ?? ''}
+                  onChange={(e) => {
+                    const raw = e.target.value.trim()
+                    if (raw === '') {
+                      setHpRoll(null)
+                      return
+                    }
+                    const n = Number(raw)
+                    if (!Number.isFinite(n)) return
+                    setHpRoll(Math.max(1, Math.min(6, Math.round(n))))
+                  }}
+                  placeholder="—"
+                  aria-label="Enter physical 1d6 H.P. result"
+                  className={
+                    morphus
+                      ? 'w-24 rounded-lg border-2 border-violet-400 bg-slate-950 px-3 py-2 text-center font-mono text-2xl font-black tabular-nums text-violet-50 placeholder:text-violet-700'
+                      : 'w-24 rounded-lg border-2 border-blue-500 bg-white px-3 py-2 text-center font-mono text-2xl font-black tabular-nums text-slate-900 placeholder:text-slate-400'
+                  }
+                />
+              </label>
               {hpRoll != null ? (
                 <span
                   className={`font-mono text-lg font-black tabular-nums ${
                     morphus ? 'text-amber-300' : 'text-blue-800'
                   }`}
                 >
-                  Rolled: {hpRoll}
+                  Entered: {hpRoll}
                 </span>
               ) : null}
             </div>

@@ -12,7 +12,7 @@ import {
   weaponProfileToStrikeBreakdown,
 } from './weaponBonuses'
 
-/** Map W.P. / H2H skill % to a d20 strike bonus (demo curve; scales with level). */
+/** Map W.P. / H2H skill % to a d20 strike bonus (placeholder curve until catalog ladders wire). */
 export function wpStrikeBonusFromSkillPercent(skillTotalPercent: number): number {
   if (!Number.isFinite(skillTotalPercent) || skillTotalPercent <= 0) return 0
   return Math.min(10, Math.max(0, Math.floor(skillTotalPercent / 10) - 2))

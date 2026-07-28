@@ -11,7 +11,7 @@ export function iqSkillBonusPercent(iq: number): number {
   return getIqBonuses(iq).skillBonus
 }
 
-/** Demo: +5% per level after 1st for O.C.C. skills (replace with full skill tables when wired). */
+/** +5% per level after 1st for O.C.C. skills (replace with full skill tables when wired). */
 export { occSkillLevelBonusPercent } from './liveSkillEngine'
 
 const DEFAULT_SKILL_BASE = 28

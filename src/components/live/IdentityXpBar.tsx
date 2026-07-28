@@ -12,7 +12,6 @@ export function IdentityXpBar() {
     supportsDualForm,
     xpProgress,
     xpHistory,
-    grantXp,
     pendingLevelUpTarget,
   } = useCharacter()
   const morphus = supportsDualForm && activeForm === 'morphus'
@@ -144,19 +143,6 @@ export function IdentityXpBar() {
               ))}
             </ul>
           )}
-          {character.isFinalized ? (
-            <button
-              type="button"
-              className={`mt-2 w-full rounded-md border-2 px-2 py-1.5 text-[10px] font-bold uppercase ${
-                morphus
-                  ? 'border-violet-400 text-violet-200 hover:bg-violet-900/80'
-                  : 'border-blue-500 text-blue-800 hover:bg-blue-100'
-              }`}
-              onClick={() => grantXp(100, 'Demo award')}
-            >
-              Log +100 XP (demo)
-            </button>
-          ) : null}
         </div>
       ) : null}
     </div>

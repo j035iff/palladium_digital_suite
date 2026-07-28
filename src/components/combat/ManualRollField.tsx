@@ -1,4 +1,3 @@
-import { rollD20 } from '../../lib/meleeDice'
 import { formatBonus } from '../../lib/combatQuickBonuses'
 
 export type ManualRollFieldProps = {
@@ -7,23 +6,19 @@ export type ManualRollFieldProps = {
   manualValue: string
   onManualValueChange: (value: string) => void
   calculatedBonus: number
-  rollDie?: () => number
-  dieLabel?: string
   onRecord?: () => void
   recordLabel?: string
   recordDisabled?: boolean
   hint?: string
 }
 
-/** Pillar 5 — manual physical die first; digital dice only fills the field. */
+/** Pillar 5 — manual physical die entry only (no digital auto-roll). */
 export function ManualRollField({
   label,
   morphus,
   manualValue,
   onManualValueChange,
   calculatedBonus,
-  rollDie = rollD20,
-  dieLabel = 'd20',
   onRecord,
   recordLabel = 'Record',
   recordDisabled,
@@ -37,10 +32,6 @@ export function ManualRollField({
   const inputCls = morphus
     ? 'border-violet-400 bg-slate-950 text-violet-50 placeholder:text-violet-700'
     : 'border-blue-500 bg-white text-slate-900 placeholder:text-slate-400'
-
-  const diceBtnCls = morphus
-    ? 'border-violet-600 bg-violet-950 text-violet-200 hover:bg-violet-900'
-    : 'border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100'
 
   return (
     <div className="w-full min-w-[10rem]">
@@ -60,26 +51,15 @@ export function ManualRollField({
           {hint}
         </p>
       ) : null}
-      <div className="flex items-stretch gap-1.5">
-        <input
-          type="number"
-          inputMode="numeric"
-          value={manualValue}
-          onChange={(e) => onManualValueChange(e.target.value)}
-          placeholder="Physical die"
-          aria-label={`${label} — enter physical die result`}
-          className={`min-w-0 flex-1 rounded-lg border-2 px-3 py-2.5 text-center font-mono text-2xl font-black tabular-nums ${inputCls}`}
-        />
-        <button
-          type="button"
-          title={`Roll ${dieLabel} and fill field (does not submit)`}
-          aria-label={`Roll ${dieLabel} into ${label}`}
-          onClick={() => onManualValueChange(String(rollDie()))}
-          className={`flex w-10 shrink-0 items-center justify-center rounded-lg border text-lg ${diceBtnCls}`}
-        >
-          🎲
-        </button>
-      </div>
+      <input
+        type="number"
+        inputMode="numeric"
+        value={manualValue}
+        onChange={(e) => onManualValueChange(e.target.value)}
+        placeholder="Physical die"
+        aria-label={`${label} — enter physical die result`}
+        className={`w-full rounded-lg border-2 px-3 py-2.5 text-center font-mono text-2xl font-black tabular-nums ${inputCls}`}
+      />
       <p
         className={`mt-1.5 font-mono text-[10px] leading-snug ${
           morphus ? 'text-violet-300/90' : 'text-slate-600'

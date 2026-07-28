@@ -29,7 +29,7 @@ export const PSYCHIC_XP_FLOORS: readonly number[] = STANDARD_XP_FLOORS.map((x, i
   i === 0 ? 0 : Math.round(x * 1.12),
 )
 
-/** Full-body conversion — demo curve ~8% steeper than standard (past level 1). */
+/** Full-body conversion — ~8% steeper than standard (past level 1). */
 export const BORG_XP_FLOORS: readonly number[] = STANDARD_XP_FLOORS.map((x, i) =>
   i === 0 ? 0 : Math.round(x * 1.08),
 )

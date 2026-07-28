@@ -483,13 +483,6 @@ export function MainLayout() {
           />
         ) : (
           <>
-            <p
-              className="rounded-lg border border-emerald-600/40 bg-emerald-950/20 px-4 py-3 text-sm"
-              style={{ color: morphusActive ? '#a7f3d0' : '#065f46' }}
-            >
-              Character record is finalized — creation tools are hidden. Use the header and
-              pools for play.
-            </p>
             <Armory />
             <Inventory />
           </>

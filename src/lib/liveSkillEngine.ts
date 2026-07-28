@@ -38,7 +38,7 @@ function catalogForSkillId(skillId: string): PalladiumSkillCatalogEntry | undefi
   return getPalladiumSkillCatalogEntryById(skillId)
 }
 
-/** Demo +5% per character level after 1st (quick-roll shortcut until full level tables wire). */
+/** +5% per character level after 1st (quick-roll shortcut until full level tables wire). */
 export function occSkillLevelBonusPercent(level: number): number {
   const lv = Math.max(1, Math.floor(level))
   return Math.max(0, lv - 1) * 5
@@ -119,7 +119,7 @@ export function resolveLiveSkillPercent(
 
 /**
  * Quick d100 target (Pillar 3 — speed): stored base % + level stair + I.Q. via stat engine.
- * Sheet `basePercent` is the spawn-resolved total; level bonus is the demo +5%/level shortcut.
+ * Sheet `basePercent` is the spawn-resolved total; level bonus is the +5%/level shortcut.
  */
 export function resolveLiveSkillRollTarget(opts: {
   character: Character

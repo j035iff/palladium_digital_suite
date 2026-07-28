@@ -9,8 +9,6 @@ import {
   type ReactNode,
 } from 'react'
 import { getAbilityById } from '../data/abilityLibrary'
-import { characterFixture } from '../data/characterFixture'
-import { initialInventoryItems } from '../data/inventoryFixture'
 import {
   getFeatureById,
   getRaceById,
@@ -68,7 +66,6 @@ import {
   ensureReserveCategory,
   type AmmoReservesState,
 } from '../lib/ammoReserves'
-import { initialAmmoReserves } from '../data/ammoFixture'
 import { loadXpHistory, saveXpHistory } from '../lib/xpHistoryPersistence'
 import { getOccById, snapshotOccForCharacter } from '../data/occDefinitions'
 import {
@@ -122,7 +119,6 @@ import {
 import { resolveActiveMorphusTraits } from '../lib/morphusPassiveBridge'
 import type {
   ActiveForm,
-  ActiveMeleeDuration,
   Armor,
   AttacksPerMeleeState,
   Character,
@@ -461,8 +457,6 @@ type CharacterContextValue = {
   attacksPerMelee: AttacksPerMeleeState
   spendCombatAction: (amount?: number) => void
   resetMeleeRound: () => void
-  activeMeleeDurations: ActiveMeleeDuration[]
-  registerActiveMeleeDuration: (abilityId: string, rounds: number) => void
   /** Apply damage or healing to H.P. or S.D.C. on the active form; drives vitality flash. */
   applyCombatVitalityChange: (change: CombatVitalityChange) => void
   /** Carried gear + armor rows (inventory engine). */
@@ -621,10 +615,7 @@ function hydrateCharacterFromStorage(base: CharacterRootState): CharacterRootSta
 
 /** Placeholder root until launcher load/create (not shown while viewport is launcher). */
 const INITIAL_CHARACTER_SNAPSHOT: CharacterRootState = (() => {
-  const root = ensureCharacterRoot(characterFixture, {
-    creationGenreId: 'nightbane',
-    hostGenreId: 'nightbane',
-  })
+  const root = createBlankCharacterForGenre('nightbane')
   const hydrated = hydrateCharacterFromStorage(root)
   return hydrated.creationVitalityCommitted === true
     ? hydrated
@@ -843,22 +834,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     })
   }, [occPsychicLocked, activeForm, rawCharacter.raceId])
 
-  const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(() =>
-    syncArmorAndWeaponFlags(
-      [...initialInventoryItems],
-      'synth_weave',
-      ['vibro_knife', 'ion_pistol'],
-    ),
-  )
-  const [equippedArmorId, setEquippedArmorId] = useState<string | null>(
-    'synth_weave',
-  )
+  const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(() => [])
+  const [equippedArmorId, setEquippedArmorId] = useState<string | null>(null)
   const [readyWeaponIds, setReadyWeaponIds] = useState<
     [string | null, string | null]
-  >(['vibro_knife', 'ion_pistol'])
-  const [ammoReserves, setAmmoReserves] = useState<AmmoReservesState>(() => ({
-    ...initialAmmoReserves,
-  }))
+  >([null, null])
+  const [ammoReserves, setAmmoReserves] = useState<AmmoReservesState>(() => ({}))
   const [combatNarrativeLog, setCombatNarrativeLog] = useState<
     CombatNarrativeEntry[]
   >([])
@@ -893,6 +874,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setPsychicTierState('none')
     setXpHistory([])
     setLevelUpQueue([])
+    setInventoryItems([])
+    setEquippedArmorId(null)
+    setReadyWeaponIds([null, null])
+    setAmmoReserves({})
+    setCombatNarrativeLog([])
     psychicSeedRef.current = false
     prevMorphusLedgerUnlockedRef.current = null
   }, [])
@@ -1391,12 +1377,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     useState<CombatHudDamagePulse>('none')
   const [durationCheckPulse, setDurationCheckPulse] = useState(false)
   const [apmCurrentRaw, setApmCurrentRaw] = useState(() =>
-    computeMaxApm(characterFixture.primary.attributes, characterFixture.level),
+    computeMaxApm(
+      INITIAL_CHARACTER_SNAPSHOT.primary.attributes,
+      INITIAL_CHARACTER_SNAPSHOT.level,
+    ),
   )
-  const [activeMeleeDurations, setActiveMeleeDurations] = useState<
-    ActiveMeleeDuration[]
-  >([])
-
   const maxApm = useMemo(
     () =>
       resolveCharacterMaxApm(
@@ -1467,14 +1452,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const resetMeleeRound = useCallback(() => {
     setApmCurrentRaw(maxApm)
-    setActiveMeleeDurations((prev) =>
-      prev
-        .map((d) => ({
-          ...d,
-          roundsRemaining: d.roundsRemaining - 1,
-        }))
-        .filter((d) => d.roundsRemaining > 0),
-    )
     if (durationPulseTimerRef.current) {
       clearTimeout(durationPulseTimerRef.current)
     }
@@ -1484,19 +1461,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       durationPulseTimerRef.current = null
     }, 5200)
   }, [maxApm])
-
-  const registerActiveMeleeDuration = useCallback(
-    (abilityId: string, rounds: number) => {
-      setActiveMeleeDurations((prev) => {
-        const rest = prev.filter((d) => d.abilityId !== abilityId)
-        return [
-          ...rest,
-          { abilityId, roundsRemaining: Math.max(1, Math.round(rounds)) },
-        ]
-      })
-    },
-    [],
-  )
 
   const equipArmor = useCallback(
     (id: string | null) => {
@@ -3013,8 +2977,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       attacksPerMelee,
       spendCombatAction,
       resetMeleeRound,
-      activeMeleeDurations,
-      registerActiveMeleeDuration,
       applyCombatVitalityChange,
       applySdcPriorityVitality,
       inventoryItems,
@@ -3153,8 +3115,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       attacksPerMelee,
       spendCombatAction,
       resetMeleeRound,
-      activeMeleeDurations,
-      registerActiveMeleeDuration,
       applyCombatVitalityChange,
       applySdcPriorityVitality,
       inventoryItems,

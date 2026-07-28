@@ -55,16 +55,6 @@ type WeaponStrikeCardProps = {
   onRequestReloadShake: () => void
 }
 
-function rollDamageFromNotation(notation: string): number {
-  const m = notation.match(/(\d+)d(\d+)/i)
-  if (!m) return 0
-  const n = Number(m[1])
-  const sides = Number(m[2])
-  let sum = 0
-  for (let i = 0; i < n; i++) sum += 1 + Math.floor(Math.random() * sides)
-  return sum
-}
-
 function WeaponStatChip({
   label,
   profile,
@@ -280,8 +270,6 @@ export function WeaponStrikeCard({
               onManualValueChange={setDamageManual}
               calculatedBonus={0}
               hint={`Notation ${w.damage}`}
-              rollDie={() => rollDamageFromNotation(w.damage)}
-              dieLabel={w.damage}
             />
           </div>
         </div>

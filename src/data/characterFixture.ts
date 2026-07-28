@@ -2,23 +2,24 @@ import type { Character } from '../types'
 import { getLibraryOccById } from './library/registry'
 import { snapshotOccForCharacter } from './occDefinitions'
 
-const demoLib = getLibraryOccById('occ_ex_government_agent')!
-const demoOcc = snapshotOccForCharacter(demoLib)
+const testLib = getLibraryOccById('occ_ex_government_agent')!
+const testOcc = snapshotOccForCharacter(testLib)
 
 /**
- * Demo sheet — structure must satisfy {@link Character}.
+ * Unit-test character snapshot — not used to seed the live app.
+ * Production sessions start from {@link createBlankCharacterForGenre}.
  */
 export const characterFixture: Character = {
   name: 'Alex Mercer',
-  /** Demo defaults — launcher / saves supply authoritative genre stamps. */
+  /** Test defaults — launcher / saves supply authoritative genre stamps. */
   level: 3,
   xp: 4200,
   ppe: { current: 28, maximum: 32 },
-  occ: demoOcc,
+  occ: testOcc,
   raceId: 'race_human',
   occSkillSlotBudget: 8,
   occRelatedSkillSlotBudget: 10,
-  /** Demo human — single Facade form; Nightbane-only UI uses {@link Character.lineage} `nightbane`. */
+  /** Test human — single Facade form; Nightbane-only UI uses {@link Character.lineage} `nightbane`. */
   lineage: 'megaversal',
   psychicGateBypassed: true,
   isFinalized: false,

@@ -49,11 +49,13 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
 1. **Genre menu** — `LAUNCHER_CREATE_OPTIONS` (`src/data/genres.ts`) lists playable genres from `GENRE_MANIFEST` plus roadmap rows (`playable: false`, visible but not selectable).
 2. **Selection** — `startCreation(genreId)` when `isGenreId(genreId)`:
    - `createBlankCharacterForGenre(genreId)` — blank `primary` / `morphus` form branches, placeholder O.C.C., Forge Tab 1 active, `isFinalized: false`.
+   - Clears live session gear: empty inventory, no equipped armor, no ready weapons, empty ammo reserves.
    - Sets **`creationGenreId`** and initial **`hostGenreId`** to the chosen genre (immutable creation stamp vs active host context).
    - Applies `genreSupernaturalAbilitiesDisallowed` from manifest via psychic gate bypass on the blank record.
    - Viewport → `sheet`; creation chrome visible (`MainLayout` shows `CreationFlowShell` while `isFinalized !== true`).
 3. **Downstream** — User completes the [Character Creation Forge](./forge/character_creation.md); spawn is specified in [character_spawn_handoff.md](./character_spawn_handoff.md).
 
+**Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists.
 ### Genre manifest flags
 
 | Field | Effect at creation start |
