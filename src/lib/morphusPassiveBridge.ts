@@ -230,10 +230,19 @@ export function buildMorphusPassiveBundle(
   const form = getFormState(character, activeForm)
   const attrs = form.attributes
   const modifiers: FeatureModifiers = {}
+  /** Spawn / finalize already wrote trait S.D.C./H.P./P.P.E. dice+flats into stored pools. */
+  const vitalityBakedIntoPools =
+    character.creationVitalityCommitted === true || character.isFinalized === true
 
   for (const [statKey, passiveKey] of Object.entries(MORPHUS_STAT_TO_PASSIVE)) {
     const key = statKey as keyof MorphusStatModifiers
     const pk = passiveKey as keyof FeatureModifiers
+    if (
+      vitalityBakedIntoPools &&
+      (key === 'sdc' || key === 'hp' || key === 'ppe')
+    ) {
+      continue
+    }
     const blocks = collectMorphusStatModifierBlocks(
       traits,
       key,
@@ -251,7 +260,7 @@ export function buildMorphusPassiveBundle(
     else if (key in attrs) base = attrs[key as keyof typeof attrs] as number
 
     const resolveOpts = morphusCreationPreviewResolveOptions(
-      character.creationTraitForgeStubComplete === true,
+      character.creationTraitForgeStubComplete === true || vitalityBakedIntoPools,
     )
     const delta = polymorphicDeltaFromBase(base, blocks, resolveOpts)
     if (delta !== 0) modifiers[pk] = (modifiers[pk] ?? 0) + delta

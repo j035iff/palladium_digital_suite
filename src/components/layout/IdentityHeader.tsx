@@ -332,13 +332,18 @@ export function IdentityHeader({
   } = useCharacter()
 
   const isCreation = variant === 'creation'
-  const [identityCollapsed, setIdentityCollapsed] = useState(true)
-  const collapsed = collapsedProp
-  const toggleCollapsed = () => onCollapsedChange?.(!collapsedProp)
+  const [creationDetailsCollapsed, setCreationDetailsCollapsed] = useState(true)
+  const [uncontrolledCollapsed, setUncontrolledCollapsed] = useState(true)
+  const controlled = typeof onCollapsedChange === 'function'
+  const collapsed = controlled ? collapsedProp : uncontrolledCollapsed
+  const toggleCollapsed = () => {
+    if (controlled) onCollapsedChange!(!collapsedProp)
+    else setUncontrolledCollapsed((value) => !value)
+  }
 
   useEffect(() => {
     if (!compactChrome) return
-    setIdentityCollapsed(true)
+    setCreationDetailsCollapsed(true)
   }, [compactChrome])
 
   const profile = normalizeIdentityProfile(character.identityProfile)
@@ -415,15 +420,15 @@ export function IdentityHeader({
           <button
             type="button"
             className={`${expandBtn} ml-1 shrink-0 self-center`}
-            aria-expanded={!identityCollapsed}
+            aria-expanded={!creationDetailsCollapsed}
             aria-controls="creation-identity-details"
-            onClick={() => setIdentityCollapsed((value) => !value)}
+            onClick={() => setCreationDetailsCollapsed((value) => !value)}
           >
-            {identityCollapsed ? 'Expand' : 'Minimize'}
+            {creationDetailsCollapsed ? 'Expand' : 'Minimize'}
           </button>
         </div>
 
-        {!identityCollapsed ? (
+        {!creationDetailsCollapsed ? (
           <div
             id="creation-identity-details"
             className="mt-1.5 inline-flex max-w-full flex-col gap-1.5"

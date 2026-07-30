@@ -238,11 +238,14 @@ function SheetCombatStatTile({
   )
 }
 
+type CombatHudLayout = 'sidebar' | 'panel'
+
 /**
  * Persistent S.D.C.-first tactical HUD (master_flow.md, combat_logic.md, attribute_and_stat.md).
  * Max A.P.M. comes from {@link CharacterContext} (`attacksPerMelee.max`).
+ * `panel` — Active Zone combat mode (ui_wireframe.md §3); `sidebar` — legacy dock.
  */
-export function CombatHUD() {
+export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   const {
     character,
     activeForm,
@@ -319,9 +322,14 @@ export function CombatHUD() {
       .filter((f) => featureAppliesToForm(f, activeForm))
   }, [character.selectedAbilities, activeForm])
 
-  const shell = morphus
-    ? 'border-t-2 border-violet-400 bg-slate-950/96 text-violet-50 max-md:shadow-[0_-10px_40px_rgba(0,0,0,0.55)] md:border-t-0 md:border-l-2 md:border-violet-400 md:shadow-none'
-    : 'border-t-2 border-blue-500 bg-white/96 text-slate-900 max-md:shadow-[0_-6px_24px_rgba(30,64,175,0.14)] md:border-t-0 md:border-l-2 md:border-blue-500 md:shadow-none'
+  const shell =
+    layout === 'panel'
+      ? morphus
+        ? 'rounded-xl border-2 border-violet-400 bg-slate-950/96 text-violet-50 shadow-lg'
+        : 'rounded-xl border-2 border-blue-500 bg-white/96 text-slate-900 shadow-lg'
+      : morphus
+        ? 'border-t-2 border-violet-400 bg-slate-950/96 text-violet-50 max-md:shadow-[0_-10px_40px_rgba(0,0,0,0.55)] md:border-t-0 md:border-l-2 md:border-violet-400 md:shadow-none'
+        : 'border-t-2 border-blue-500 bg-white/96 text-slate-900 max-md:shadow-[0_-6px_24px_rgba(30,64,175,0.14)] md:border-t-0 md:border-l-2 md:border-blue-500 md:shadow-none'
 
   const sub = morphus
     ? 'border border-violet-500/70 bg-violet-950/40'
@@ -398,14 +406,25 @@ export function CombatHUD() {
   const actionsUsed = Math.max(0, maxApm - curApm)
   const attackApmCost = handToHandCombatProfile.attackApmCost
 
+  const frame =
+    layout === 'panel'
+      ? 'w-full backdrop-blur-md'
+      : 'max-md:sticky max-md:bottom-0 max-md:z-40 md:relative md:z-0 md:flex md:h-full md:min-h-0 md:flex-col md:overflow-y-auto shrink-0 backdrop-blur-md'
+
   return (
     <aside
-      className={`max-md:sticky max-md:bottom-0 max-md:z-40 md:relative md:z-0 md:flex md:h-full md:min-h-0 md:flex-col md:overflow-y-auto shrink-0 backdrop-blur-md ${shell} ${
+      className={`${frame} ${shell} ${
         durationCheckPulse ? 'pds-hud-duration-pulse' : ''
       }`}
       aria-label="S.D.C. combat tactical HUD"
     >
-      <div className="mx-auto flex w-full max-w-4xl flex-col px-3 py-3 md:mx-0 md:max-w-none md:flex-1">
+      <div
+        className={
+          layout === 'panel'
+            ? 'mx-auto flex w-full max-w-4xl flex-col px-3 py-3'
+            : 'mx-auto flex w-full max-w-4xl flex-col px-3 py-3 md:mx-0 md:max-w-none md:flex-1'
+        }
+      >
         {durationCheckPulse ? (
           <div
             className={`mb-3 rounded-md border-2 px-3 py-2 text-center text-xs font-bold uppercase tracking-wide ${

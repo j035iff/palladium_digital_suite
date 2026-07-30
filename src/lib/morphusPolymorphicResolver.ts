@@ -14,11 +14,12 @@ export type PolymorphicResolveOptions = {
   applyFloors?: boolean
 }
 
-/** During Trait Forge preview, apply flats/percents but defer dice to Spawn rolls. */
+/** During Trait Forge / live display, apply flats/percents/floors but never auto-roll dice
+ * (Pillar 5 — dice come from pending physical resolutions or are baked into stored pools). */
 export function morphusCreationPreviewResolveOptions(
   finalized: boolean,
 ): PolymorphicResolveOptions {
-  if (finalized) return { applyFloors: true }
+  if (finalized) return { applyFloors: true, rollDice: () => 0 }
   return { applyFloors: false, rollDice: () => 0 }
 }
 

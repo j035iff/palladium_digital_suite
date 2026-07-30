@@ -62,7 +62,7 @@ Per form branch (`finalizeFormBranch`):
 | `isFinalized` | Behavior |
 |---------------|----------|
 | `false` | Renders `CreationFlowShell` (Forge: Identity tab + eight step tabs) at the top of the creation viewport (global header hidden) |
-| `true` | Hides Forge; shows finalized banner, **Armory**, **Inventory**; combat HUD sidebar resizable |
+| `true` | Hides Forge; shows live sheet **Persistent Core** (sticky identity + XP + vitality/defense + forge-style tab bar) and one **Active Zone** tab at a time via `LiveSheetTabBody` (`stats` · `saves` · `skills` · `abilities` · `gear` · `combat`). |
 
 Level-up queue and XP rituals activate when `isFinalized` and O.C.C. XP table floors exist.
 

@@ -105,12 +105,11 @@ function SaveChip({
 }
 
 /**
- * Sheet-first saving throw targets (manual d20) + Horror Factor block.
+ * Sheet-first saving throw targets (manual d20).
  */
 export function SavingThrowsPanel() {
   const { saveProfileDerived: profile, activeForm, supportsDualForm } = useCharacter()
   const morphus = supportsDualForm && activeForm === 'morphus'
-  const hf = profile.horrorFactor
 
   return (
     <section aria-labelledby="saves-heading">
@@ -121,55 +120,6 @@ export function SavingThrowsPanel() {
       >
         Saving throws
       </h2>
-
-      <div
-        className={`relative z-10 mb-4 overflow-visible rounded-xl border-4 px-4 py-4 shadow-lg ${
-          morphus
-            ? 'border-amber-700/80 bg-gradient-to-br from-violet-950 via-slate-950 to-black'
-            : 'border-amber-700/40 bg-gradient-to-br from-amber-50 via-white to-orange-50'
-        }`}
-      >
-        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-          <p
-            className={`text-xs font-black uppercase tracking-[0.2em] ${
-              morphus ? 'text-amber-400' : 'text-amber-950'
-            }`}
-          >
-            Horror factor
-          </p>
-          <span
-            className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase ${
-              morphus ? 'bg-amber-500/25 text-amber-200 ring-1 ring-amber-500/50' : 'bg-orange-200 text-orange-950'
-            }`}
-          >
-            {supportsDualForm ? activeForm : 'character'}
-          </span>
-        </div>
-        <div className="group relative">
-          <p
-            className={`font-mono text-4xl font-black tabular-nums leading-none ${
-              morphus ? 'text-amber-400' : 'text-orange-950'
-            }`}
-          >
-            {hf.total ?? 'N/A'}
-          </p>
-          <p className={`mt-1 text-[11px] font-medium ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-            {hf.total != null
-              ? 'Broadcast aura / presence — Nightbane Morphus baseline and `horror_factor` modifiers.'
-              : 'Most races have no Horror Factor aura — only Nightbane Morphus (and explicit `horror_factor` traits).'}
-          </p>
-          {hf.tooltipEquation ? (
-            <div
-              role="tooltip"
-              className={`pointer-events-none invisible absolute left-0 top-full z-30 mt-2 max-h-40 w-[min(100%,22rem)] overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug opacity-0 shadow-xl transition-opacity group-hover:visible group-hover:opacity-100 ${
-                morphus ? 'border-amber-500/70 bg-black/93 text-amber-100' : 'border-orange-900/40 bg-white text-orange-950'
-              }`}
-            >
-              {hf.tooltipEquation}
-            </div>
-          ) : null}
-        </div>
-      </div>
 
       <p className={`mb-2 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
         The GM calls the save number (e.g. “save vs magic 12”). Roll d20 and add your listed bonus.
