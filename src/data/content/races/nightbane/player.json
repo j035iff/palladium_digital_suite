@@ -179,55 +179,68 @@
     "classAbilities": [
       {
         "name": "Dual Identity",
-        "description": "Facade (human upbringing) vs Morphus (unique monstrous true shape). Identity question — gifted human, alien masquerader, or something else — drives roleplay. Morphus reflects personality/soul per Creating the Nightbane."
+        "description": "Facade (human upbringing) vs Morphus (unique monstrous true shape). Identity question — gifted human, alien masquerader, or something else — drives roleplay. Morphus reflects personality/soul per Creating the Nightbane.",
+        "sheetUsage": "creation"
       },
       {
         "name": "The Becoming",
-        "description": "Shift Facade ↔ Morphus at will after first Becoming — 1 melee round (M.E. save 12+ with +1 at 1st level and +1 per two levels reduces to ~3 seconds). Clothing behavior varies by character (G.M. approval)."
+        "description": "Shift Facade ↔ Morphus at will after first Becoming — 1 melee round (M.E. save 12+ with +1 at 1st level and +1 per two levels reduces to ~3 seconds). Clothing behavior varies by character (G.M. approval).",
+        "sheetUsage": "creation"
       },
       {
         "name": "Supernatural Senses",
-        "description": "Nightvision 200 ft (Facade) or 500 ft (Morphus; trait may reach 1,000 ft). Sense other Nightbane within 300 ft + 30 ft/level — automatic recognition when visible; Perception roll for direction/distance when not."
+        "description": "Nightvision 200 ft (Facade) or 500 ft (Morphus; trait may reach 1,000 ft). Sense other Nightbane within 300 ft + 30 ft/level — automatic recognition when visible; Perception roll for direction/distance when not.",
+        "sheetUsage": "gameplay"
       },
       {
         "name": "Supernatural Attributes & Regeneration",
-        "description": "Morphus: +10 P.S./P.E./Spd, +6 P.P.; supernatural strength damage. Regenerate 10 S.D.C./H.P. per melee (overwhelmed by sustained automatic fire). Not invulnerable — any weapon can harm or kill."
+        "description": "Morphus: +10 P.S./P.E./Spd, +6 P.P.; supernatural strength damage. Regenerate 10 S.D.C./H.P. per melee (overwhelmed by sustained automatic fire). Not invulnerable — any weapon can harm or kill.",
+        "sheetUsage": "creation"
       },
       {
         "name": "P.P.E. Pool",
-        "description": "Facade P.E. + 3D6×10 + 20 at 1st level; +3D6 P.P.E. per level. Resolved from selected skill-package O.C.C. `ppeEngine` (same formula for all Nightbane packages)."
+        "description": "Facade P.E. + 3D6×10 + 20 at 1st level; +3D6 P.P.E. per level. Resolved from selected skill-package O.C.C. `ppeEngine` (same formula for all Nightbane packages).",
+        "sheetUsage": "creation"
       },
       {
         "name": "Horror Factor (Morphus)",
-        "description": "Base H.F. 6 in Morphus (none in Facade). Morphus traits may raise to maximum 18."
+        "description": "Base H.F. 6 in Morphus (none in Facade). Morphus traits may raise to maximum 18.",
+        "sheetUsage": "creation"
       },
       {
         "name": "Mirror Walk",
-        "description": "Morphus only — cross to/from Nightlands through a mirrored counterpart. See innateBonuses.activation. Vehicle mirrors rarely have counterparts."
+        "description": "Morphus only — cross to/from Nightlands through a mirrored counterpart. See innateBonuses.activation. Vehicle mirrors rarely have counterparts.",
+        "sheetUsage": "gameplay"
       },
       {
         "name": "Immunities",
-        "description": "Impervious to mind control (including vampiric), vampire slow-kill bite, and physical transformation magic (metamorphosis, petrification, vampire transformation, curses, wishes, etc.)."
+        "description": "Impervious to mind control (including vampiric), vampire slow-kill bite, and physical transformation magic (metamorphosis, petrification, vampire transformation, curses, wishes, etc.).",
+        "sheetUsage": "creation"
       },
       {
         "name": "Morphus Combat",
-        "description": "Innate Hand to Hand: Martial Arts in Morphus (+1 APM and bonuses in metadata). Facade uses purchased/normal hand to hand only. Track combat bonuses separately per form."
+        "description": "Innate Hand to Hand: Martial Arts in Morphus (+1 APM and bonuses in metadata). Facade uses purchased/normal hand to hand only. Track combat bonuses separately per form.",
+        "sheetUsage": "creation"
       },
       {
         "name": "Talents",
-        "description": "One free Talent at 1st level; additional free Talents at levels 4, 7, 10, and 12. More may be purchased by permanently spending P.P.E. Most Talents are Morphus-only."
+        "description": "One free Talent at 1st level; additional free Talents at levels 4, 7, 10, and 12. More may be purchased by permanently spending P.P.E. Most Talents are Morphus-only.",
+        "sheetUsage": "creation"
       },
       {
         "name": "R.C.C. Skill Packages",
-        "description": "Select one allowed O.C.C. skill package at creation — Basic (student), Resistance/Spook Squad, Nocturne/Seeker/Lightbringer, Warlord, Sorcerer, or Mystic. Facade Hand to Hand purchased per package rules."
+        "description": "Select one allowed O.C.C. skill package at creation — Basic (student), Resistance/Spook Squad, Nocturne/Seeker/Lightbringer, Warlord, Sorcerer, or Mystic. Facade Hand to Hand purchased per package rules.",
+        "sheetUsage": "creation"
       },
       {
         "name": "Alliances & Resources",
-        "description": "Allies vary by faction — humans, Guardians, Wampyrs, other Nightbane. Typical gear: civilian vehicle, clothing, personal effects; militant factions may access arms and surveillance gear. Start 3D6×100 cash."
+        "description": "Allies vary by faction — humans, Guardians, Wampyrs, other Nightbane. Typical gear: civilian vehicle, clothing, personal effects; militant factions may access arms and surveillance gear. Start 3D6×100 cash.",
+        "sheetUsage": "creation"
       },
       {
         "name": "Experience",
-        "description": "Uses Nightbane & Guardian XP table (`nightbane_core_nightbane_guardian`, p. 233)."
+        "description": "Uses Nightbane & Guardian XP table (`nightbane_core_nightbane_guardian`, p. 233).",
+        "sheetUsage": "creation"
       }
     ]
   },

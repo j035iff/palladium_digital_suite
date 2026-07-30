@@ -282,6 +282,8 @@ Flag when you see:
 
 Typical keys: structured `innateBonuses.modifiers`, `defaultTraitIds`, `combatContextModifiers`, detailed `occLimitations.forbiddenOccIds`.
 
+**Live sheet Natural abilities:** set `classAbilities[].sheetUsage` to `gameplay` only for powers usable at the table (ranges, activation costs, etc.). Use `creation` for package/lore notes. Unmarked race abilities are **omitted** from the live sheet (`liveSheetAbilities.ts`). Nightbane example: Supernatural Senses + Mirror Walk only.
+
 ---
 
 ## Psychic Gate (`psionics` block)

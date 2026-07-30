@@ -33,6 +33,7 @@
     {
       "name": "Understand the Principles of Magic",
       "description": "Distinguish authentic occult materials from forgeries; determine general purpose and supernatural forces involved.",
+      "sheetUsage": "gameplay",
       "percentileProfile": {
         "basePercent": 70,
         "perLevelPercent": 2

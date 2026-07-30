@@ -162,7 +162,7 @@ Use `[]` / empty objects where the book grants nothing in a block — schema sti
 
 **Batch size:** **1 O.C.C. or 1 specialization branch**.
 
-Typical keys: `specializations[]`, `classAbilities[]` with `percentileProfile`, `supernaturalRuleOverrides`, `talentEngine`, `attributeRequirements`, `alignmentRestrictions`, `raceRestrictions`, detailed `spellAccessRules` roadmaps.
+Typical keys: `specializations[]`, `classAbilities[]` with `percentileProfile` and optional `sheetUsage` (`gameplay` | `creation` — live sheet **O.C.C.** Abilities pill uses gameplay / heuristics; creation stays forge-only), `supernaturalRuleOverrides`, `talentEngine`, `attributeRequirements`, `alignmentRestrictions`, `raceRestrictions`, detailed `spellAccessRules` roadmaps.
 
 ---
 

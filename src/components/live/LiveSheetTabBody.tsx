@@ -2,6 +2,7 @@ import { useCharacter } from '../../context/CharacterContext'
 import { Armory } from './Armory'
 import { CombatHUD } from './CombatHUD'
 import { Inventory } from './Inventory'
+import { LiveAbilitiesPanel } from './LiveAbilitiesPanel'
 import { MorphusCapabilitiesPanel } from './MorphusCapabilitiesPanel'
 import { MorphusTraitsPanel } from './MorphusTraitsPanel'
 import { PsStrengthPanel } from './PsStrengthPanel'
@@ -65,41 +66,7 @@ export function LiveSheetTabBody({ tabId }: Props) {
   }
 
   if (tabId === 'abilities') {
-    const ids = character.selectedAbilities ?? []
-    return (
-      <section
-        aria-labelledby="abilities-heading"
-        className={`rounded-xl border-2 px-4 py-6 ${
-          morphusActive
-            ? 'border-violet-700 bg-violet-950/40 text-violet-100'
-            : 'border-slate-300 bg-slate-50 text-slate-800'
-        }`}
-      >
-        <h2
-          id="abilities-heading"
-          className="mb-2 text-sm font-black uppercase tracking-wide"
-          style={{ color: morphusActive ? '#c4b5fd' : '#1e40af' }}
-        >
-          Abilities
-        </h2>
-        <p className="text-sm leading-relaxed">
-          Live cast / power browser is not on the sheet yet. Selected spells, psionics, and
-          talents stay on the character record from creation; the tactical cast workflow
-          (duration tracking, energy spend) is still target UX.
-        </p>
-        {ids.length > 0 ? (
-          <ul className="mt-4 list-inside list-disc font-mono text-xs opacity-90">
-            {ids.map((id) => (
-              <li key={id}>{id}</li>
-            ))}
-          </ul>
-        ) : (
-          <p className="mt-3 text-xs font-semibold uppercase tracking-wide opacity-70">
-            No abilities selected on this record.
-          </p>
-        )}
-      </section>
-    )
+    return <LiveAbilitiesPanel />
   }
 
   if (tabId === 'gear') {

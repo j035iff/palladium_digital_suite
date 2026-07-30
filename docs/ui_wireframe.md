@@ -1,6 +1,6 @@
 # UI & Wireframe Specifications
 
-> **Implementation status:** Live sheet uses a **forge-style tab bar** under the sticky Persistent Core (`ForgeNavigationBar` + `LiveSheetTabBody`): **Stats · Saves · Skills · Abilities · Gear · Combat**. Identity, XP, vitality, and defensive chips stay anchored. Abilities tab shows selected ids with a Radical Visibility note until cast workflow ships. Toast system, Destiny-style weapon icons, and tap-to-expand attributes remain **target UX**.
+> **Implementation status:** Live sheet uses a **forge-style tab bar** under the sticky Persistent Core (`ForgeNavigationBar` + `LiveSheetTabBody`): **Stats · Saves · Skills · Abilities · Gear · Combat**. Identity, XP, vitality, and defensive chips stay anchored. **Abilities** nests **Natural · O.C.C. · Magic · Psionics · Talents** (`LiveAbilitiesPanel`); empty categories are omitted. Natural = race gameplay powers + Morphus trait senses/at-wills; O.C.C. = class abilities like Recognize the Supernatural. Cast / duration / pump workflow remains **target UX**. Toast system, Destiny-style weapon icons, and tap-to-expand attributes remain **target UX**.
 
 This document defines the layout, visual hierarchy, and interaction design for the Palladium Digital Suite character sheet. It adheres to the Visual Continuity and Intuitive Depth pillars, ensuring that the interface is robust for power users while remaining clean and anchored to prevent disorientation.
 1. The Persistent Core (Anchored Elements)
@@ -17,7 +17,7 @@ Health/Energy Bars: High-visibility progress bars for H.P., S.D.C., and (if appl
 Defensive Stats: Small, always-visible indicators for Natural Armor Rating (A.R.), Horror Factor (H.F.), and Perception Modifier.
 C. Navigation & Saves (Sides/Bottom)
 Saving Throws panel: Standard saves show **vs N** (GM-called base target) and **(+bonus)** to add to d20; hover reveals full breakdown. A separate **attribute-only saves** block covers P.E./M.E. exceptional rows and Save vs Becoming. Horror Factor is a dedicated aura block. Implementation: `SavingThrowsPanel.tsx` — see `combat_logic.md` §4. On the live sheet, Saves is its own tab (`saves`).
-Navigation: Forge-style pills (`src/lib/liveSheetTabs.ts`, `ForgeNavigationBar`) — Stats, Saves, Skills, Abilities, Gear, Combat. Abilities is always openable; content explains when cast UI is not ready yet (Radical Visibility).
+Navigation: Forge-style pills (`src/lib/liveSheetTabs.ts`, `ForgeNavigationBar`) — Stats, Saves, Skills, Abilities, Gear, Combat. Abilities nests **Natural / O.C.C. / Magic / Psionics / Talents** (`LiveAbilitiesPanel` / `liveSheetAbilities.ts`); empty categories omitted. Natural includes Morphus trait senses and at-will powers (grayed in Facade).
 2. The Active Zone: State 1 (Default / Exploration)
 Tabs **Stats / Saves / Skills / Abilities / Gear** populate the center one at a time (no long scroll of every section).
 A. The Attribute Grid (2x4 Layout)

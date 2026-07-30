@@ -427,12 +427,20 @@ export type OccClassAbilityPercentileProfile = {
   skillId?: string
 }
 
+/** Whether a class ability belongs on the live sheet vs creation-only packages. */
+export type OccClassAbilitySheetUsage = 'gameplay' | 'creation'
+
 /** O.C.C.- or R.C.C.-unique ability not represented as a catalog skill (e.g. Recognize the Supernatural). */
 export type OccClassAbility = {
   name: string
   description: string
   /** Structured percentile ability when the book gives base % + per-level growth. */
   percentileProfile?: OccClassAbilityPercentileProfile
+  /**
+   * Live sheet Natural list: `gameplay` = show; `creation` = hide.
+   * Race abilities omit unless `gameplay`. Unmarked O.C.C. abilities still use live-sheet heuristics.
+   */
+  sheetUsage?: OccClassAbilitySheetUsage
 }
 
 export type OccSpecialization = {

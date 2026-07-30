@@ -60,6 +60,13 @@
   "innateBonuses": {
     "modifiers": {}
   },
+  "classAbilities": [
+    {
+      "name": "Example natural power",
+      "description": "A table-usable racial ability (not a creation package note).",
+      "sheetUsage": "gameplay"
+    }
+  ],
   "demographics": {
     "averageLifespan": "70-90 years",
     "alignmentTendencies": [

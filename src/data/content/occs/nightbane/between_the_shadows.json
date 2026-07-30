@@ -499,11 +499,13 @@
     "classAbilities": [
       {
         "name": "Anti-Supernatural Training",
-        "description": "Secret-camp meditation and targeting drills to resist mental domination and strike weak points on Hounds, Hunters, and other armored supernatural beings. Lore: Demon and Monster may be required for unfamiliar species (pp. 31–33)."
+        "description": "Secret-camp meditation and targeting drills to resist mental domination and strike weak points on Hounds, Hunters, and other armored supernatural beings. Lore: Demon and Monster may be required for unfamiliar species (pp. 31–33).",
+        "sheetUsage": "gameplay"
       },
       {
         "name": "Special Anti-Supernatural Bonuses",
-        "description": "When the species is known, aimed attacks (ranged or hand to hand) bypass supernatural A.R. on a normal strike roll (target may parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies (pp. 32–33)."
+        "description": "When the species is known, aimed attacks (ranged or hand to hand) bypass supernatural A.R. on a normal strike roll (target may parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies (pp. 32–33).",
+        "sheetUsage": "gameplay"
       }
     ],
     "specializations": [
@@ -1346,6 +1348,7 @@
       {
         "name": "Recognize the Supernatural",
         "description": "In-depth supernatural recognition beyond lore skills — mind control/possession, Nightbane Morphus, vampires, magic circles/symbols/portals; Dopplegangers and Ashmedai at half skill. One roll per subject; failure means uncertainty (p. 36).",
+        "sheetUsage": "gameplay",
         "percentileProfile": {
           "basePercent": 30,
           "perLevelPercent": 5
@@ -1353,15 +1356,18 @@
       },
       {
         "name": "R&D and Field Research",
-        "description": "Leading human authorities on the invasion via PAB access; many work Spook Squad R&D while a few field researchers accept combat training. Prejudices can obscure facts (pp. 35–36)."
+        "description": "Leading human authorities on the invasion via PAB access; many work Spook Squad R&D while a few field researchers accept combat training. Prejudices can obscure facts (pp. 35–36).",
+        "sheetUsage": "creation"
       },
       {
         "name": "O.C.C. Bonuses",
-        "description": "+2 perception; +1 initiative only vs supernatural/mystical opponents; +1 save vs magic and psionics; +2 save vs horror factor — `staticBonuses` and `packageNotes` (p. 36)."
+        "description": "+2 perception; +1 initiative only vs supernatural/mystical opponents; +1 save vs magic and psionics; +2 save vs horror factor — `staticBonuses` and `packageNotes` (p. 36).",
+        "sheetUsage": "creation"
       },
       {
         "name": "Scholar Background",
-        "description": "Multi-skilled scientists spanning medicine, physics, chemistry, parapsychology, and occultism — ideal recruits combine broad knowledge with one or two specialties (pp. 35–36)."
+        "description": "Multi-skilled scientists spanning medicine, physics, chemistry, parapsychology, and occultism — ideal recruits combine broad knowledge with one or two specialties (pp. 35–36).",
+        "sheetUsage": "creation"
       }
     ]
   },
@@ -1612,15 +1618,18 @@
     "classAbilities": [
       {
         "name": "Special Anti-Supernatural Bonuses",
-        "description": "When the species is known (Lore: Demon and Monster may be required for unfamiliar creatures), aimed attacks bypass supernatural A.R. on a normal strike roll (target may parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies (pp. 35–36)."
+        "description": "When the species is known (Lore: Demon and Monster may be required for unfamiliar creatures), aimed attacks bypass supernatural A.R. on a normal strike roll (target may parry/dodge); costs two melee actions. Damage applies to S.D.C./H.P.; worn body armor A.R. still applies (pp. 35–36).",
+        "sheetUsage": "gameplay"
       },
       {
         "name": "Paranormal Field Experience",
-        "description": "Most agents have confronted supernatural beings, psychics, and unfathomable mysteries; survivors of Dark Day bring hard-earned PAB knowledge into Spook Squad (pp. 34–35)."
+        "description": "Most agents have confronted supernatural beings, psychics, and unfathomable mysteries; survivors of Dark Day bring hard-earned PAB knowledge into Spook Squad (pp. 34–35).",
+        "sheetUsage": "creation"
       },
       {
         "name": "O.C.C. Bonuses",
-        "description": "+2 perception, +1 initiative, +3 save vs psionics/mind control/possession, +2 save vs magic, +4 save vs horror factor — `staticBonuses` (p. 35)."
+        "description": "+2 perception, +1 initiative, +3 save vs psionics/mind control/possession, +2 save vs magic, +4 save vs horror factor — `staticBonuses` (p. 35).",
+        "sheetUsage": "creation"
       }
     ]
   },

@@ -675,6 +675,11 @@
         "percentileProfile": {
           "$ref": "#/$defs/occClassAbilityPercentileProfile",
           "description": "Structured percentile O.C.C. ability (e.g. Understand the Principles of Magic 70% +2%/level)."
+        },
+        "sheetUsage": {
+          "type": "string",
+          "enum": ["gameplay", "creation"],
+          "description": "Live sheet Natural abilities: gameplay = show; creation = hide. Unmarked O.C.C. abilities still pass through live-sheet skill-program heuristics."
         }
       }
     },

@@ -1,6 +1,6 @@
 # Magic, Psionics, & Abilities — Technical Logic & UI Specification
 
-> **Implementation status:** Target UX specification. Tab 7 creation pickers (`SupernaturalAbilitiesForge`, lane panels) are wired; live **cast workflow**, duration counters on the Combat HUD, pump UI, and energy deduction on use are **not fully implemented** in the current build (melee-round reset still pulses a “review durations” reminder).
+> **Implementation status:** Target UX specification. Tab 7 creation pickers (`SupernaturalAbilitiesForge`, lane panels) are wired; live sheet **Abilities** tab nests **Natural / O.C.C. / Magic / Psionics / Talents** pills (empty categories hidden). Natural = race `sheetUsage: gameplay` + Morphus trait senses/at-wills; O.C.C. = gameplay class abilities — see `liveSheetAbilities.ts`. Live **cast workflow**, duration counters on the Combat HUD, pump UI, and energy deduction on use are **not fully implemented** (melee-round reset still pulses a “review durations” reminder).
 
 This document defines the logic for managing supernatural powers, energy consumption, and event-based effect tracking. It prioritizes tactical speed and provides the flexibility required for the Palladium Megaversal system's complex ability scaling.
 1. Ability Library: Discovery & Filtering
