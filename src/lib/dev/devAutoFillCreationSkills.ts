@@ -18,6 +18,7 @@ import {
   creationSkillIdsSet,
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
+  isCreationSkillIdentityTaken,
   skillRequiresSpecialization,
   sumCreationSkillPickSlots,
   sumRelatedPoolSlotUsage,
@@ -32,20 +33,54 @@ import {
   occSecondarySkillSlots,
 } from '../occCreationDerivation'
 import { resolveEffectivePalladiumOcc } from '../occComposition'
+import {
+  countRelatedPicksInCategory,
+} from '../occRelatedSkillMinimums'
+import { getPalladiumSkillCatalogEntryById } from '../../data/library/skillsCatalogLoader'
+import { mapFilterCategoryToOccCategory } from '../occCategoryRuleDisplay'
 
 const DEV_SPEC = 'Dev Autofill'
 
-function devSpecialization(skillId: string): string | undefined {
-  if (!skillRequiresSpecialization(skillId)) return undefined
+const DEV_LANGUAGE_SPECS = [
+  'English',
+  'Spanish',
+  'French',
+  'German',
+  'Japanese',
+  'Mandarin',
+] as const
+
+function devSpecializationCandidates(skillId: string): readonly string[] {
   if (skillId === 'skill_language' || skillId === 'skill_literacy') {
-    return 'English'
+    return DEV_LANGUAGE_SPECS
   }
-  return DEV_SPEC
+  return [DEV_SPEC, `${DEV_SPEC} B`, `${DEV_SPEC} C`]
 }
 
 function buildDevSkillPick(skillId: string): CreationSkillPick {
-  const spec = devSpecialization(skillId)
-  return buildCreationSkillPick(skillId, spec ? { specialization: spec } : {})
+  if (!skillRequiresSpecialization(skillId)) {
+    return buildCreationSkillPick(skillId, {})
+  }
+  const specialization = devSpecializationCandidates(skillId)[0]!
+  return buildCreationSkillPick(skillId, { specialization })
+}
+
+/** Prefer a specialization that does not collide with already-selected identities. */
+function buildDevSkillPickAvoidingIdentity(
+  skillId: string,
+  existingPicks: readonly CreationSkillPick[],
+): CreationSkillPick | null {
+  if (!skillRequiresSpecialization(skillId)) {
+    if (isCreationSkillIdentityTaken(existingPicks, skillId)) return null
+    return buildCreationSkillPick(skillId, {})
+  }
+  for (const specialization of devSpecializationCandidates(skillId)) {
+    if (isCreationSkillIdentityTaken(existingPicks, skillId, specialization)) {
+      continue
+    }
+    return buildCreationSkillPick(skillId, { specialization })
+  }
+  return null
 }
 
 function resolveHandToHandTier(
@@ -90,6 +125,104 @@ function resolveHandToHandTier(
   }
 
   return options[0]?.tier ?? 'none'
+}
+
+function skillMatchesRelatedCategory(skillId: string, categoryName: string): boolean {
+  const occCategory = mapFilterCategoryToOccCategory(categoryName)
+  const bookCategories = getPalladiumSkillCatalogEntryById(skillId)?.categories ?? []
+  return bookCategories.some(
+    (c) => c === categoryName || mapFilterCategoryToOccCategory(c) === occCategory,
+  )
+}
+
+function tryAddRelatedSkill(
+  def: ReturnType<typeof listCreationSkillLibrary>[number],
+  occ: PalladiumOcc,
+  specializationId: string | null | undefined,
+  occPicks: readonly CreationSkillPick[],
+  related: CreationSkillPick[],
+  secondary: CreationSkillPick[],
+  relatedCap: number,
+  secondaryCap: number,
+  handToHandReserved: number,
+): { related: CreationSkillPick[]; secondary: CreationSkillPick[] } | null {
+  const relatedSlotsUsed = sumRelatedPoolSlotUsage(related, occPicks, handToHandReserved)
+  const secondarySlotsUsed = sumCreationSkillPickSlots(secondary)
+  const state = creationLibrarySkillAddState(def, {
+    effectiveOcc: occ,
+    specializationId,
+    relatedSlotsUsed,
+    relatedSkillCap: relatedCap,
+    secondaryPickSlots: secondarySlotsUsed,
+    secondaryCap,
+    occPicks,
+    relatedPicks: related,
+    secondaryPicks: secondary,
+  })
+  if (!state.canAddRelated) return null
+  const pick = buildDevSkillPick(def.id)
+  const occSkillIds = occStartingOccSkillIds(occ, specializationId)
+  const selectedBefore = creationSkillIdsSet(occSkillIds, related, secondary)
+  return appendCreationSkillPickWithConditionalGrants(
+    pick,
+    'related',
+    selectedBefore,
+    related,
+    secondary,
+  )
+}
+
+/** Satisfy O.C.C. related category minimums before general related autofill. */
+function fillRelatedCategoryMinimums(
+  library: ReturnType<typeof listCreationSkillLibrary>,
+  occ: PalladiumOcc,
+  specializationId: string | null | undefined,
+  occPicks: readonly CreationSkillPick[],
+  relatedPicks: CreationSkillPick[],
+  secondaryPicks: CreationSkillPick[],
+  relatedCap: number,
+  secondaryCap: number,
+  handToHandReserved: number,
+): { related: CreationSkillPick[]; secondary: CreationSkillPick[] } {
+  const effective = resolveEffectivePalladiumOcc(occ, specializationId)
+  if (effective.occRelatedSkills.skillVouchers?.length) {
+    return { related: relatedPicks, secondary: secondaryPicks }
+  }
+  const minimums = effective.occRelatedSkills.categoryMinimums ?? []
+  if (!minimums.length) {
+    return { related: relatedPicks, secondary: secondaryPicks }
+  }
+
+  let related = [...relatedPicks]
+  let secondary = [...secondaryPicks]
+
+  for (const rule of minimums) {
+    while (countRelatedPicksInCategory(related, rule.categoryName) < rule.minimumCount) {
+      let added = false
+      for (const def of library) {
+        if (!skillMatchesRelatedCategory(def.id, rule.categoryName)) continue
+        const next = tryAddRelatedSkill(
+          def,
+          occ,
+          specializationId,
+          occPicks,
+          related,
+          secondary,
+          relatedCap,
+          secondaryCap,
+          handToHandReserved,
+        )
+        if (!next) continue
+        related = next.related
+        secondary = next.secondary
+        added = true
+        break
+      }
+      if (!added) break
+    }
+  }
+
+  return { related, secondary }
 }
 
 function fillTierPicks(
@@ -177,33 +310,44 @@ export function buildDevAutoFillCreationSkillsState(
     )
   }
 
+  const grantDetailsSeed: Record<string, CreationSkillPick> = {
+    ...(prev.creationOccGrantPickDetails ?? {}),
+  }
+  for (const skillId of occStartingOccSkillIds(occ, specializationId)) {
+    if (skillRequiresSpecialization(skillId) && !grantDetailsSeed[skillId]) {
+      grantDetailsSeed[skillId] = buildDevSkillPick(skillId)
+    }
+  }
+
   for (const task of listOccCoreVoucherTasks(occ, specializationId)) {
     const eligible = listEligibleVoucherSkillIds(
       task.entry,
       hostGenreId,
       catalogIds,
     )
-    const chosen = new Set<string>()
     const slots: (CreationSkillPick | null)[] = []
     for (let i = 0; i < task.entry.choiceCount; i++) {
-      const skillId = eligible.find((id) => !chosen.has(id))
-      if (!skillId) {
-        slots.push(null)
-        continue
+      const existingForIdentity = [
+        ...resolveOccCoreSkillPicks(
+          occ,
+          specializationId,
+          voucherPicks,
+          grantDetailsSeed,
+        ),
+        ...slots.filter((p): p is CreationSkillPick => p != null),
+      ]
+      let pick: CreationSkillPick | null = null
+      for (const skillId of eligible) {
+        pick = buildDevSkillPickAvoidingIdentity(skillId, existingForIdentity)
+        if (pick) break
       }
-      chosen.add(skillId)
-      slots.push(buildDevSkillPick(skillId))
+      slots.push(pick)
     }
     voucherPicks[task.id] = [...slots]
   }
 
   const grantDetails: Record<string, CreationSkillPick> = {
-    ...(prev.creationOccGrantPickDetails ?? {}),
-  }
-  for (const skillId of occStartingOccSkillIds(occ, specializationId)) {
-    if (skillRequiresSpecialization(skillId)) {
-      grantDetails[skillId] = buildDevSkillPick(skillId)
-    }
+    ...grantDetailsSeed,
   }
 
   const occPicks = resolveOccCoreSkillPicks(
@@ -225,6 +369,20 @@ export function buildDevAutoFillCreationSkillsState(
     effective,
     handToHandTier,
   )
+
+  const categoryMinFill = fillRelatedCategoryMinimums(
+    library,
+    occ,
+    specializationId,
+    occPicks,
+    relatedPicks,
+    secondaryPicks,
+    relatedCap,
+    secondaryCap,
+    handToHandReserved,
+  )
+  relatedPicks = categoryMinFill.related
+  secondaryPicks = categoryMinFill.secondary
 
   const relatedFill = fillTierPicks(
     library,

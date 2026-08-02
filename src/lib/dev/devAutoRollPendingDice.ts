@@ -40,7 +40,11 @@ export function buildAutoRolledPendingDiceResolutions(
   character: Character,
   race: Race | undefined,
   occ: PalladiumOcc | undefined,
-  opts?: { supportsDualForm?: boolean; psychicTier?: string },
+  opts?: {
+    supportsDualForm?: boolean
+    psychicTier?: string
+    scope?: 'all' | 'primary' | 'morphus'
+  },
 ): Record<string, number> {
   const blocks = listPendingDiceBlocks(character, race, occ, opts)
   return rollAllPendingDiceBlocks(blocks)

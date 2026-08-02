@@ -9,6 +9,14 @@ const DevSkipToMorphusButton = import.meta.env.DEV
     )
   : null
 
+const DevSkipToReviewFromRaceOccButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevSkipToReviewFromRaceOccButton').then((m) => ({
+        default: m.DevSkipToReviewFromRaceOccButton,
+      })),
+    )
+  : null
+
 const DevAutoAssignAttributesButton = import.meta.env.DEV
   ? lazy(() =>
       import('./dev/DevAutoAssignAttributesButton').then((m) => ({
@@ -33,6 +41,14 @@ const DevAutoRollPendingDiceButton = import.meta.env.DEV
     )
   : null
 
+const DevSkipToReviewFromMorphusButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevSkipToReviewFromMorphusButton').then((m) => ({
+        default: m.DevSkipToReviewFromMorphusButton,
+      })),
+    )
+  : null
+
 function DevAction({ children }: { children: ReactNode }) {
   return <Suspense fallback={null}>{children}</Suspense>
 }
@@ -46,11 +62,20 @@ export function ForgeTabDevActions({
 
   switch (activeTabId) {
     case 'tab1_configurator':
-      return DevSkipToMorphusButton ? (
-        <DevAction>
-          <DevSkipToMorphusButton variant="header" />
-        </DevAction>
-      ) : null
+      return (
+        <>
+          {DevSkipToMorphusButton ? (
+            <DevAction>
+              <DevSkipToMorphusButton variant="header" />
+            </DevAction>
+          ) : null}
+          {DevSkipToReviewFromRaceOccButton ? (
+            <DevAction>
+              <DevSkipToReviewFromRaceOccButton variant="header" />
+            </DevAction>
+          ) : null}
+        </>
+      )
     case 'tab2_attributes':
       return DevAutoAssignAttributesButton ? (
         <DevAction>
@@ -67,6 +92,12 @@ export function ForgeTabDevActions({
       return DevAutoRollPendingDiceButton ? (
         <DevAction>
           <DevAutoRollPendingDiceButton variant="header" />
+        </DevAction>
+      ) : null
+    case 'tab6_traits':
+      return DevSkipToReviewFromMorphusButton ? (
+        <DevAction>
+          <DevSkipToReviewFromMorphusButton variant="header" />
         </DevAction>
       ) : null
     default:

@@ -10,13 +10,12 @@ import {
 } from 'react'
 import { getAbilityById } from '../data/abilityLibrary'
 import {
-  getFeatureById,
   getRaceById,
   getLibraryOccById,
   raceAllowedInCharacterCreation,
   raceCatalogGenreId,
 } from '../data/library/registry'
-import { aggregateAllPassiveModifiers, featureBudgetCategory } from '../lib/featureEngine'
+import { aggregateAllPassiveModifiers } from '../lib/featureEngine'
 import { effectiveStructuralPool } from '../lib/effectiveVitality'
 import { resolveSkillSlotMultiplier } from '../data/library/types'
 import {
@@ -155,21 +154,8 @@ import {
 } from '../lib/raceEngine'
 import { occSkillSlotPolicy } from '../lib/occCatalogEngine'
 import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
-import { resolveEffectiveCreationAbilityBudget } from '../lib/creationAbilityBudget'
-import {
-  listGatePsionicSelections,
-  psychicGatePsionicPickAllowed,
-  psychicGatePsionicRulesApply,
-  psychicGateRequiredPickCount,
-} from '../lib/psychicGatePsionicBudget'
-import {
-  occEnginePsionicPickAllowed,
-  occEnginePsionicRulesApply,
-} from '../lib/occSupernaturalSelection'
-import {
-  creationNeedsAbilitySelection,
-  resolvePsychicGateBypassed,
-} from '../lib/creationPhases'
+import { nextCharacterIfAddAbility } from '../lib/creationAbilityPick'
+import { resolvePsychicGateBypassed } from '../lib/creationPhases'
 import { applySpawnSheetHandoff } from '../lib/spawnSheetHandoff'
 import { resolveCreationPsychicTier } from '../lib/creationPsychicSkills'
 import type { CreationPhase } from '../lib/creationStep'
@@ -213,9 +199,7 @@ import { markForgeTabComplete } from '../lib/forgeNavigation/engine'
 import type { MorphusForgeState, MorphusForgeSlotState, MorphusHouseRules, MorphusSlotNode } from '../types'
 import type { SlotActions } from '../components/creation/morphus/MorphusSlotNodeView'
 import {
-  abilityPassesOccSupernaturalRules,
   deriveOccCreation,
-  occStartingSpellLevelCap,
   applyOccStartingSkillPicks,
   patchCharacterCreationFromOcc,
 } from '../lib/occCreationDerivation'
@@ -434,6 +418,10 @@ type CharacterContextValue = {
   devAutoRollAllPendingDice?: () => void
   /** Dev-only — Nightbane Basic through facade dice, then open Morphus Sub-Forge. */
   devSkipToMorphusCreation?: () => void
+  /** Dev-only — fill Morphus traits + talent, roll Morphus dice, jump to Review & Spawn. */
+  devSkipToReviewFromMorphus?: () => void
+  /** Dev-only — current race/O.C.C. through Review & Spawn (Morphus/abilities when needed). */
+  devSkipToReviewFromRaceOcc?: () => void
   setCreationOccVariableResolution: (taskId: string, value: number) => void
   setCreationOccCoreVoucherPick: (
     voucherId: string,
@@ -628,112 +616,6 @@ const INITIAL_CHARACTER_SNAPSHOT: CharacterRootState = (() => {
     ? hydrated
     : syncRaceOccPrimarySdc(hydrated)
 })()
-
-/** Returns updated character if the pick is legal; otherwise null. */
-function nextCharacterIfAddAbility(prev: CharacterRootState, id: string): CharacterRootState | null {
-  if (isGenreSupernaturalAbilitiesDisallowed(prev.creationGenreId)) return null
-  const def = getFeatureById(id)
-  if (!def) return null
-  const selected = prev.selectedAbilities ?? []
-  if (selected.includes(id)) return null
-
-  const occRow = getLibraryOccById(prev.occ.id)
-  const tier = resolveCreationPsychicTier(prev, prev.creationPsychicTier ?? 'none')
-  const abilityBudget = resolveEffectiveCreationAbilityBudget({
-    occ: occRow,
-    raceId: prev.raceId,
-    psychicTier: tier,
-    psychicGateBypassed: prev.psychicGateBypassed === true,
-    majorAllocation: prev.creationPsychicGateMajorAllocation,
-    storedBudget: prev.creationAbilityBudget,
-    creationGenreId: prev.creationGenreId ?? prev.hostGenreId,
-    hostGenreId: prev.hostGenreId,
-  })
-  if (!creationNeedsAbilitySelection(abilityBudget, prev.creationGenreId)) {
-    return null
-  }
-  const spellCap = occRow
-    ? occStartingSpellLevelCap(occRow)
-    : (prev.startingSpellLevelCap ?? 4)
-  const cat = featureBudgetCategory(def)
-  const spellLevel =
-    typeof def.metadata?.level === 'number'
-      ? def.metadata.level
-      : typeof def.metadata?.spellLevel === 'number'
-        ? def.metadata.spellLevel
-        : undefined
-
-  const genreId = prev.creationGenreId ?? prev.hostGenreId
-  if (occRow) {
-    const gate = abilityPassesOccSupernaturalRules(
-      occRow,
-      def,
-      spellCap,
-      genreId,
-    )
-    if (!gate.allowed) return null
-  } else if (cat === 'Spell' && spellLevel != null && spellLevel > spellCap) {
-    return null
-  }
-
-  const grantedIds = new Set(
-    occSupernaturalGrantedAbilityIds(occRow, prev.occSpecializationId),
-  )
-
-  const countCat = (c: 'Spell' | 'Psionic' | 'Talent') =>
-    selected.filter((x) => {
-      if (grantedIds.has(x)) return false
-      const f = getFeatureById(x)
-      return f != null && featureBudgetCategory(f) === c
-    }).length
-
-  if (cat === 'Psionic') {
-    const psychicGate = psychicGatePsionicPickAllowed({
-      tier,
-      majorAllocation: prev.creationPsychicGateMajorAllocation,
-      psychicGateBypassed: prev.psychicGateBypassed === true,
-      occ: occRow,
-      selectedIds: selected,
-      candidateId: id,
-      genreId: genreId ?? 'nightbane',
-    })
-    if (psychicGate && !psychicGate.allowed) return null
-
-    const occEngine = occEnginePsionicPickAllowed({
-      occ: occRow,
-      selectedIds: selected,
-      candidateId: id,
-      genreId: genreId ?? 'nightbane',
-      grantedIds: [...grantedIds],
-    })
-    if (occEngine && !occEngine.allowed) return null
-  }
-
-  if (cat === 'Spell' && countCat('Spell') >= abilityBudget.spellSlots) return null
-  if (cat === 'Psionic') {
-    const gateApplies = psychicGatePsionicRulesApply(
-      occRow,
-      tier,
-      prev.psychicGateBypassed === true,
-    )
-    if (gateApplies) {
-      const required =
-        psychicGateRequiredPickCount(tier, prev.creationPsychicGateMajorAllocation) ??
-        abilityBudget.psionicSlots
-      const gateTotal = listGatePsionicSelections(
-        selected,
-        genreId ?? 'nightbane',
-      ).length
-      if (gateTotal >= required) return null
-    } else if (!occEnginePsionicRulesApply(occRow)) {
-      if (countCat('Psionic') >= abilityBudget.psionicSlots) return null
-    }
-  }
-  if (cat === 'Talent' && countCat('Talent') >= abilityBudget.talentSlots) return null
-  if (!cat) return null
-
-  return { ...prev, selectedAbilities: [...selected, id] }
-}
 
 function bumpAllHitPoints(prev: CharacterRootState, roll: number): CharacterRootState {
   const bump = (branch: FormState) => ({
@@ -2577,6 +2459,36 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     )
   }, [])
 
+  const devSkipToReviewFromMorphus = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devSkipToReviewFromMorphus').then(
+      ({ buildDevSkipToReviewFromMorphusState }) => {
+        setActiveForm('primary')
+        setPsychicTierState('none')
+        setRawCharacter((prev) => buildDevSkipToReviewFromMorphusState(prev))
+      },
+    )
+  }, [])
+
+  const devSkipToReviewFromRaceOcc = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devSkipToReviewFromRaceOcc').then(
+      ({ buildDevSkipToReviewFromRaceOccState }) => {
+        setActiveForm('primary')
+        setRawCharacter((prev) => {
+          const next = buildDevSkipToReviewFromRaceOccState(prev)
+          const tier = resolveCreationPsychicTier(
+            next,
+            next.creationPsychicTier ?? 'none',
+          )
+          // Defer React psychic-tier mirror so we don't nest setState in this updater.
+          queueMicrotask(() => setPsychicTierState(tier))
+          return next
+        })
+      },
+    )
+  }, [])
+
   const setCreationOccVariableResolution = useCallback(
     (taskId: string, value: number) => {
       setRawCharacter((prev) => {
@@ -2974,6 +2886,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devSkipToMorphusCreation: import.meta.env.DEV
         ? devSkipToMorphusCreation
         : undefined,
+      devSkipToReviewFromMorphus: import.meta.env.DEV
+        ? devSkipToReviewFromMorphus
+        : undefined,
+      devSkipToReviewFromRaceOcc: import.meta.env.DEV
+        ? devSkipToReviewFromRaceOcc
+        : undefined,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationOccRelatedVoucherPick,
@@ -3112,6 +3030,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoFillAllSkillSelections,
       devAutoRollAllPendingDice,
       devSkipToMorphusCreation,
+      devSkipToReviewFromMorphus,
+      devSkipToReviewFromRaceOcc,
       setCreationOccVariableResolution,
       setCreationOccCoreVoucherPick,
       setCreationOccRelatedVoucherPick,
