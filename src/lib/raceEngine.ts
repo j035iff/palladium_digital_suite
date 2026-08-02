@@ -60,7 +60,7 @@ export function getRaceIspNotation(race: Race | undefined): string | undefined {
 }
 
 /**
- * Roll Facade H.P. from race `hpFormula` (e.g. "PE + 1D6"); falls back to PE + 1d6.
+ * Roll primary-form H.P. from race `hpFormula` (e.g. "PE + 1D6"); falls back to PE + 1d6.
  */
 export function rollRaceHpMaximum(pe: number, hpFormula?: string): number {
   const f = (hpFormula ?? 'PE + 1D6').trim().toUpperCase()

@@ -140,8 +140,14 @@ export function SavingThrowsPanel() {
           Attribute-only saves
         </h3>
         <p className={`mb-2 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-          Base P.E. and M.E. exceptional bonuses with no racial, O.C.C., or skill save modifiers. Nightbane also track
-          Save vs Becoming (Facade M.E. + level progression) for Facade ↔ Morphus shifts.
+          Base P.E. and M.E. exceptional bonuses with no racial, O.C.C., or skill save modifiers.
+          {supportsDualForm ? (
+            <>
+              {' '}
+              Nightbane also track Save vs Becoming (Facade M.E. + level progression) for Facade ↔
+              Morphus shifts.
+            </>
+          ) : null}
         </p>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {profile.attributeSaves.map((s) => (

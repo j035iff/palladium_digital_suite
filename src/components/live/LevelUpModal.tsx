@@ -5,6 +5,8 @@ import {
   supernaturalAlertsForLevel,
 } from '../../data/xpTables'
 import { summarizeSkillImprovementsForLevel } from '../../lib/levelUpSkillSummary'
+import { characterHasDualForms } from '../../lib/raceFormPolicy'
+import { FACADE_LABEL } from '../../lib/creationFormLabels'
 
 export type LevelUpModalProps = {
   open: boolean
@@ -17,7 +19,7 @@ export type LevelUpModalProps = {
 
 /**
  * Level-up ritual: H.P. die, skill summary, supernatural pending alerts. Theming follows active form
- * (Facade blue vs Morphus void).
+ * (Nightbane: Facade blue vs Morphus void).
  */
 export function LevelUpModal({
   open,
@@ -27,6 +29,7 @@ export function LevelUpModal({
   onConfirm,
 }: LevelUpModalProps) {
   const [hpRoll, setHpRoll] = useState<number | null>(null)
+  const dualForm = characterHasDualForms(character)
 
   const prevLevel = targetLevel - 1
   const skillRows = useMemo(
@@ -39,11 +42,13 @@ export function LevelUpModal({
   )
   const morphSkillRows = useMemo(
     () =>
-      summarizeSkillImprovementsForLevel(character, prevLevel, targetLevel, {
-        maxRows: 4,
-        form: 'morphus',
-      }),
-    [character, prevLevel, targetLevel],
+      dualForm
+        ? summarizeSkillImprovementsForLevel(character, prevLevel, targetLevel, {
+            maxRows: 4,
+            form: 'morphus',
+          })
+        : [],
+    [character, prevLevel, targetLevel, dualForm],
   )
   const alerts = useMemo(
     () => supernaturalAlertsForLevel(character, targetLevel),
@@ -107,7 +112,10 @@ export function LevelUpModal({
             </h3>
             <p className={`text-xs ${morphus ? 'text-violet-200/90' : 'text-slate-600'}`}>
               Enter your physical <strong>1d6</strong> result. It is added to{' '}
-              <strong>maximum and current H.P.</strong> on both Facade and Morphus tracks.
+              <strong>maximum and current H.P.</strong>
+              {dualForm
+                ? ` on both ${FACADE_LABEL} and Morphus tracks.`
+                : '.'}
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <label className="flex flex-col gap-1">
@@ -167,13 +175,15 @@ export function LevelUpModal({
               O.C.C. skill curve gains +5% quick-roll tier from this level (I.Q. bonus unchanged;
               attribute_and_stat.md).
             </p>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className={`grid gap-3 ${dualForm ? 'sm:grid-cols-2' : ''}`}>
               <div
                 className={`rounded-lg border-2 p-2 ${
                   morphus ? 'border-violet-600/80 bg-slate-950/80' : 'border-blue-200 bg-white/90'
                 }`}
               >
-                <p className={`mb-1 text-[10px] font-bold uppercase ${accent}`}>Facade skills</p>
+                <p className={`mb-1 text-[10px] font-bold uppercase ${accent}`}>
+                  {dualForm ? `${FACADE_LABEL} skills` : 'Skills'}
+                </p>
                 <ul className="space-y-1 text-[11px]">
                   {skillRows.length === 0 ? (
                     <li className={morphus ? 'text-violet-400' : 'text-slate-500'}>No tracked % rows.</li>
@@ -192,6 +202,7 @@ export function LevelUpModal({
                   )}
                 </ul>
               </div>
+              {dualForm ? (
               <div
                 className={`rounded-lg border-2 p-2 ${
                   morphus ? 'border-violet-600/80 bg-slate-950/80' : 'border-blue-200 bg-white/90'
@@ -216,6 +227,7 @@ export function LevelUpModal({
                   )}
                 </ul>
               </div>
+              ) : null}
             </div>
           </section>
 

@@ -84,7 +84,7 @@ export type SkillPercentResolutionContext = {
   iqBonus: number
   maPbBonus?: number
   activeForm: ActiveForm
-  /** Facade P.P. for optional low-dexterity / light-touch penalties. */
+  /** Primary-form P.P. for optional low-dexterity / light-touch penalties. */
   primaryPp: number
   activeMorphusCharacteristics?: readonly MorphusCharacteristic[]
   /** Terrain surface for Morphus mobility-isolated skill rows (default hard_flat). */

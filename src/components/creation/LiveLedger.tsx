@@ -7,7 +7,7 @@ import {
   MORPHUS_LEDGER_BORDER_CLASS,
   MORPHUS_LEDGER_SURFACE_CLASS,
 } from './LedgerStatGrid'
-import { FACADE_LABEL } from '../../lib/creationFormLabels'
+import { FACADE_LABEL, liveLedgerDescription } from '../../lib/creationFormLabels'
 
 function LedgerSection({
   title,
@@ -177,14 +177,11 @@ export function LiveLedger({ variant = 'card' }: { variant?: 'card' | 'sidebar' 
     toggleForm()
   }
 
-  const description =
-    variant === 'sidebar'
-      ? morphus
-        ? 'Morphus build mirror — supernatural stats update as you forge.'
-        : 'Facade build mirror — updates as you work through each forge tab.'
-      : morphus
-        ? 'Morphus build mirror — supernatural stats update as you work through each tab.'
-        : 'Build mirror — attributes, vitals, saves, and combat update as you work through each tab below.'
+  const description = liveLedgerDescription({
+    supportsDualForm,
+    morphus,
+    variant,
+  })
 
   if (variant === 'sidebar') {
     return (

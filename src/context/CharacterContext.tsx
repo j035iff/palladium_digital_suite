@@ -91,7 +91,7 @@ import {
   ensureCharacterRoot,
   retainCharacterRoot,
 } from '../lib/characterRoot'
-import { migrateCharacterFromLegacyFacade } from '../lib/characterMigrate'
+import { migrateCharacterSave } from '../lib/characterMigrate'
 import {
   deriveInventoryForHost,
   transformCharacterToHostEnvironment,
@@ -590,10 +590,17 @@ function ensureCharacterOcc(c: CharacterRootState): CharacterRootState {
 }
 
 function hydrateCharacterFromStorage(base: CharacterRootState): CharacterRootState {
-  const migrated = migrateCharacterFromLegacyFacade(base)
+  const { character: migrated, report } = migrateCharacterSave(base)
+  if (
+    report.fieldRenames.length > 0 ||
+    report.catalogRemaps.length > 0 ||
+    report.orphanedCatalogIds.length > 0
+  ) {
+    console.info('[characterMigrate]', report)
+  }
   const rooted = ensureCharacterRoot(migrated, {
-    creationGenreId: base.creationGenreId,
-    hostGenreId: base.hostGenreId,
+    creationGenreId: migrated.creationGenreId ?? base.creationGenreId,
+    hostGenreId: migrated.hostGenreId ?? base.hostGenreId,
   })
   const persisted = loadPersistedAbilityIds(rooted.name)
   const fromFixture = rooted.selectedAbilities ?? []

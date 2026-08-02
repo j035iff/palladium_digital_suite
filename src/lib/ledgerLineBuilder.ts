@@ -25,6 +25,7 @@ import {
 } from './spawnDiceBlocks'
 import type { FacadeAttributeSnapshot } from './creationStatEngine'
 import { resolveLedgerLabelTooltip } from './ledgerStatDescriptions'
+import { FACADE_LABEL } from './creationFormLabels'
 
 /** True when hint text is a numeric modifier breakdown (belongs on value tooltip only). */
 export function isLedgerBreakdownHint(hint?: string): boolean {
@@ -220,7 +221,7 @@ export function formatLedgerTooltip(spec: LedgerTooltipSpec): string | undefined
       return `Restrained ${spec.restrained} · Power ${spec.power}`
     case 'morphus_text_fallback': {
       if (spec.facadeValue === spec.morphusValue) return spec.morphusValue
-      return `Facade ${spec.facadeValue}, Race ${spec.morphusValue}`
+      return `${FACADE_LABEL} ${spec.facadeValue}, Race ${spec.morphusValue}`
     }
     case 'rendered':
       return spec.text?.trim() ? spec.text : undefined

@@ -72,11 +72,26 @@ Level-up queue and XP rituals activate when `isFinalized` and O.C.C. XP table fl
 
 Spawn **does not** auto-write to disk. The player uses header **Save** (`saveCharacter`):
 
-1. `serializeCharacterRootForSave(rawCharacter)` — strips runtime-only flags (`isHostGenreLocked`, etc.) per [master_flow.md](./master_flow.md) §2.
+1. `serializeCharacterRootForSave(rawCharacter)` — strips runtime-only flags (`isHostGenreLocked`, etc.) per [master_flow.md](./master_flow.md) §2; stamps `schemaVersion`.
 2. `saveCharacterToStorage` — writes pristine JSON keyed by character `id`.
 3. Index refresh for launcher **Open Character** list.
 
 **Rule:** The save file stores the character in **`creationGenreId` native layout** without host-derived transforms. Reloading applies `transformCharacterToHostEnvironment` for display.
+
+### Save migration (`characterMigrate.ts`)
+
+On every open/hydrate, `migrateCharacterSave()` runs **before** gameplay hydration:
+
+| Concern | Behavior |
+|---------|----------|
+| Persist-field renames | e.g. `facade` → `primary`, legacy forge tab ids |
+| Catalog ID remaps | `CATALOG_ID_REMAPS` (race / occ / morphusTrait / skill / ability) — always applied (idempotent) |
+| Orphan detection | Unresolvable catalog ids after remap → reported (`console.info`); load continues |
+| Version stamp | `schemaVersion` → `CHARACTER_SAVE_SCHEMA_VERSION` |
+
+**When renaming a catalog id:** add an entry to `CATALOG_ID_REMAPS` (map to new id, or `null` to drop list/slot refs).  
+**When renaming a persisted Character field:** add a versioned step and bump `CHARACTER_SAVE_SCHEMA_VERSION`.  
+Additive catalog fields (e.g. new `naturalAr`) do not need a save migrator — they resolve live by id.
 
 ---
 

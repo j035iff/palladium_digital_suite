@@ -5,6 +5,7 @@ import { resolvePsychicGateBypassed } from './creationPhases'
 import { DEFAULT_RACE_ID } from './raceFormPolicy'
 import { raceLineageFromDefinition } from './raceEngine'
 import type { Character, CharacterOcc, CharacterRootState } from '../types'
+import { CHARACTER_SAVE_SCHEMA_VERSION } from './characterMigrate'
 
 /** Configurator Tab 1 — no O.C.C. chosen (`occ.id` empty). */
 export const CREATION_PLACEHOLDER_OCC: CharacterOcc = {
@@ -55,6 +56,7 @@ export function toCharacterRoot(
     id: meta.id ?? newCharacterId(),
     creationGenreId: meta.creationGenreId,
     hostGenreId: meta.hostGenreId,
+    schemaVersion: CHARACTER_SAVE_SCHEMA_VERSION,
   }
 }
 
@@ -118,6 +120,7 @@ export function retainCharacterRoot(
     id: prev.id,
     creationGenreId: prev.creationGenreId,
     hostGenreId: prev.hostGenreId,
+    schemaVersion: prev.schemaVersion ?? CHARACTER_SAVE_SCHEMA_VERSION,
   }
 }
 

@@ -38,7 +38,7 @@ App Launch
 | 2 | Attribute allocation | Attribute Forge + Live Ledger + O.C.C. variable bonuses |
 | 3 | Psionic determination | Psychic Gate; Black when bypassed |
 | 4 | Skill selection | Core, related, vouchers |
-| 5 | Roll Pending | Facade / single-form physical dice |
+| 5 | Roll Pending | Physical dice (Nightbane: Facade only; Morphus on Traits) |
 | 6 | Character trait forges | Morphus Sub-Forge (Nightbane); Black for non-trait races |
 | 7 | Resource-based abilities | Magic, psionics, talents |
 | 8 | Review & Spawn | Alignment required; spawn handoff — no Continue |

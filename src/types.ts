@@ -2355,6 +2355,11 @@ export type CharacterRootState = {
   readonly creationGenreId: string
   /** Active viewport / GM room host ecosystem. */
   hostGenreId: string
+  /**
+   * Persist-shape version for {@link migrateCharacterSave}.
+   * Missing / `0` = pre-migrator saves (legacy field names, unremapped catalog ids).
+   */
+  schemaVersion?: number
 } & Character
 
 /** Sheet skill row after runtime genre middleware. */

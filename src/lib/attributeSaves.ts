@@ -13,9 +13,10 @@ import {
   formatSaveVsTarget,
   type SaveRollBonusLine,
 } from './saveRollDisplay'
+import { FACADE_LABEL } from './creationFormLabels'
 
 export type AttributeSaveProfileOptions = {
-  /** Facade M.E. for Save vs Becoming — always Facade, never Morphus. */
+  /** Nightbane primary-form M.E. for Save vs Becoming — never Morphus M.E. */
   primaryMe?: number
 }
 
@@ -42,7 +43,7 @@ export type ResolveAttributeOnlySaveInput = {
   displayPe: number
   displayMe: number
   characterLevel: number
-  /** Required for `vs_becoming` — Facade M.E., not Morphus. */
+  /** Required for `vs_becoming` — Nightbane primary-form M.E., not Morphus. */
   primaryMe?: number
 }
 
@@ -101,7 +102,7 @@ export function resolveAttributeOnlySave(
   }
 
   const rollBonuses: SaveRollBonusLine[] = [
-    ...(primaryMeBonus > 0 ? [{ label: 'Facade M.E.', amount: primaryMeBonus }] : []),
+    ...(primaryMeBonus > 0 ? [{ label: `${FACADE_LABEL} M.E.`, amount: primaryMeBonus }] : []),
     ...(becomingBonus > 0 ? [{ label: 'Becoming (level)', amount: becomingBonus }] : []),
   ]
   return {
@@ -164,7 +165,7 @@ export function computeAttributeSaveProfile(
   if (supportsDualForm) {
     const becomingBonus = nightbaneBecomingLevelBonus(characterLevel)
     const rollBonuses: SaveRollBonusLine[] = [
-      ...(primaryMeBonus > 0 ? [{ label: 'Facade M.E.', amount: primaryMeBonus }] : []),
+      ...(primaryMeBonus > 0 ? [{ label: `${FACADE_LABEL} M.E.`, amount: primaryMeBonus }] : []),
       ...(becomingBonus > 0 ? [{ label: 'Becoming (level)', amount: becomingBonus }] : []),
     ]
     const totalRollBonus = primaryMeBonus + becomingBonus
@@ -183,7 +184,7 @@ export function computeAttributeSaveProfile(
         totalRollBonus,
       ),
       notes:
-        'Facade ↔ Morphus shift. Uses Facade M.E. only. Success: one melee action (~3 sec). Failure: one full melee round.',
+        `${FACADE_LABEL} ↔ Morphus shift. Uses ${FACADE_LABEL} M.E. only. Success: one melee action (~3 sec). Failure: one full melee round.`,
     })
   }
 

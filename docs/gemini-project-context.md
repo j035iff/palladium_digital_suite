@@ -418,6 +418,7 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 | Ingest orchestrator, brief format, multi-batch workflow | [`docs/ingest/orchestrator.md`](ingest/orchestrator.md), [`docs/ingest/brief-format.md`](ingest/brief-format.md), `genre-source-reference-order.json` when adding genres, `scripts/lib/ingest-brief-registry.mjs` if content types change |
 | JSON schema shape | `src/data/schemas/examples/*.json`, schema `$description` fields, ingest playbook if authoring rules change |
 | Character Creation Forge tabs, creation phases, spawn handoff | [`docs/forge/character_creation.md`](forge/character_creation.md), [`docs/character_creation.md`](character_creation.md), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) |
+| Character save shape / catalog id renames that saves reference | [`src/lib/characterMigrate.ts`](../src/lib/characterMigrate.ts) (`CATALOG_ID_REMAPS` + version bump), [`docs/character_spawn_handoff.md`](character_spawn_handoff.md) § Save migration |
 | Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |
 | Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md), [`docs/unified_paths.md`](unified_paths.md) when pipeline stages change |
 | Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |

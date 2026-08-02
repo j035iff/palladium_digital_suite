@@ -28,6 +28,7 @@ import {
   type LedgerStatDiceGroup,
 } from './ledgerStatBonuses'
 import { NIGHTBANE_MORPHUS_BASE_PROFILE } from './morphusNightbaneBase'
+import { FACADE_LABEL, primaryFormSdcBreakdownLabel } from './creationFormLabels'
 import type { PendingDiceBlock } from './spawnDiceBlocks'
 import { pendingDiceBlockRunningTotal } from './spawnDiceBlocks'
 import { DEFAULT_HORROR_FACTOR_BY_FORM } from '../data/constants'
@@ -262,7 +263,7 @@ export function resolveMorphusSdcFlatDerivedStat(input: {
     pushAggregateTerm(
       terms,
       'facade_baseline',
-      'Facade S.D.C.',
+      primaryFormSdcBreakdownLabel(),
       input.facadeSdcTotal,
     )
   }
@@ -362,7 +363,7 @@ export function buildMorphusAggregatedAttributeInput(
   pushAggregateTerm(
     terms,
     'facade_baseline',
-    'Facade',
+    FACADE_LABEL,
     input.facadeAggregated,
   )
   if (input.raceBump !== 0) {
@@ -1083,7 +1084,7 @@ export function formatMorphusRelativeStatTooltip(
   deltas: readonly LedgerFlatContribution[],
   pendingRolls = false,
 ): string | undefined {
-  const parts: string[] = [`Facade ${facadeTotal}`]
+  const parts: string[] = [`${FACADE_LABEL} ${facadeTotal}`]
   for (const item of deltas) {
     if (item.amount === 0) continue
     parts.push(`${item.label} ${item.amount >= 0 ? '+' : ''}${item.amount}`)

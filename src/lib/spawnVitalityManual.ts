@@ -93,7 +93,7 @@ export function computeSpawnVitalityFromResolutions(
   }
 }
 
-/** Facade / single-form dice — attributes + H.P./S.D.C./P.P.E./I.S.P. (excludes morphus vitality). */
+/** Primary / single-form dice — attributes + H.P./S.D.C./P.P.E./I.S.P. (excludes morphus vitality). */
 export function applyPrimaryPendingDiceResolutions(
   prev: CharacterRootState,
   race: Race | undefined,

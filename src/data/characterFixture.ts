@@ -19,7 +19,7 @@ export const characterFixture: Character = {
   raceId: 'race_human',
   occSkillSlotBudget: 8,
   occRelatedSkillSlotBudget: 10,
-  /** Test human — single Facade form; Nightbane-only UI uses {@link Character.lineage} `nightbane`. */
+  /** Test human — single primary form; Nightbane dual-form UI uses {@link Character.lineage} `nightbane`. */
   lineage: 'megaversal',
   psychicGateBypassed: true,
   isFinalized: false,

@@ -5,6 +5,7 @@ import type {
   HostGenreRuntimeFlags,
   InventoryItem,
 } from '../types'
+import { CHARACTER_SAVE_SCHEMA_VERSION } from './characterMigrate'
 
 const RUNTIME_STRIP_KEYS: (keyof HostGenreRuntimeFlags)[] = ['isHostGenreLocked']
 
@@ -45,6 +46,7 @@ export function serializeCharacterRootForSave(
 ): CharacterRootState {
   return {
     ...state,
+    schemaVersion: CHARACTER_SAVE_SCHEMA_VERSION,
     primary: stripFormBranch(state.primary),
     morphus: stripFormBranch(state.morphus),
   }

@@ -24,7 +24,6 @@ import {
 import type { StatStackTerm } from './creationStatEngine'
 import type { VitalAttrFlatTerm } from './ledgerVitalFormula'
 import type { PendingDiceBlock } from './spawnDiceBlocks'
-import { FACADE_LABEL } from './creationFormLabels'
 
 export type LedgerFormScope = 'facade' | 'morphus' | 'neutral'
 
