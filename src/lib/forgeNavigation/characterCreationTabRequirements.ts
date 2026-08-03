@@ -218,7 +218,8 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
   const voucherPicks = character.creationOccCoreVoucherPicks ?? {}
   const grantDetails = character.creationOccGrantPickDetails
   const relatedBase =
-    character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occ)
+    character.occRelatedSkillSlotBudget ??
+    occRelatedSkillSlotBudget(effectiveOcc)
   const relatedPicks = getCreationRelatedPicks(character)
   const occPicks = resolveOccCoreSkillPicks(
     occ,
@@ -251,7 +252,7 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     occPicks,
     handToHandReserved,
   )
-  const secondaryBase = occSecondarySkillSlots(occ)
+  const secondaryBase = occSecondarySkillSlots(effectiveOcc)
   const secondarySelected = sumCreationSkillPickSlots(
     getCreationSecondaryPicks(character),
   )

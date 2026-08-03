@@ -14,6 +14,7 @@ import { occSkillSlotPolicy, occStartingOccSkillIds } from '../occCatalogEngine'
 import { creationRelatedSkillCap } from '../creationPsychicSkills'
 import {
   buildCreationSkillPick,
+  creationFreeRelatedSkillCap,
   creationLibrarySkillAddState,
   creationSkillIdsSet,
   getCreationRelatedPicks,
@@ -36,6 +37,13 @@ import { resolveEffectivePalladiumOcc } from '../occComposition'
 import {
   countRelatedPicksInCategory,
 } from '../occRelatedSkillMinimums'
+import {
+  flattenRelatedVoucherPicks,
+  getRelatedVoucherSlotPicks,
+  isSkillEligibleForRelatedVoucher,
+  listOccRelatedVoucherTasks,
+  sumRelatedVoucherReservedSlots,
+} from '../occRelatedSkillVouchers'
 import { getPalladiumSkillCatalogEntryById } from '../../data/library/skillsCatalogLoader'
 import { mapFilterCategoryToOccCategory } from '../occCategoryRuleDisplay'
 
@@ -145,7 +153,16 @@ function tryAddRelatedSkill(
   relatedCap: number,
   secondaryCap: number,
   handToHandReserved: number,
+  extraIdentityPicks: readonly CreationSkillPick[] = [],
 ): { related: CreationSkillPick[]; secondary: CreationSkillPick[] } | null {
+  if (
+    isCreationSkillIdentityTaken(
+      [...occPicks, ...related, ...secondary, ...extraIdentityPicks],
+      def.id,
+    )
+  ) {
+    return null
+  }
   const relatedSlotsUsed = sumRelatedPoolSlotUsage(related, occPicks, handToHandReserved)
   const secondarySlotsUsed = sumCreationSkillPickSlots(secondary)
   const state = creationLibrarySkillAddState(def, {
@@ -183,6 +200,7 @@ function fillRelatedCategoryMinimums(
   relatedCap: number,
   secondaryCap: number,
   handToHandReserved: number,
+  extraIdentityPicks: readonly CreationSkillPick[] = [],
 ): { related: CreationSkillPick[]; secondary: CreationSkillPick[] } {
   const effective = resolveEffectivePalladiumOcc(occ, specializationId)
   if (effective.occRelatedSkills.skillVouchers?.length) {
@@ -211,6 +229,7 @@ function fillRelatedCategoryMinimums(
           relatedCap,
           secondaryCap,
           handToHandReserved,
+          extraIdentityPicks,
         )
         if (!next) continue
         related = next.related
@@ -236,6 +255,7 @@ function fillTierPicks(
   relatedCap: number,
   secondaryCap: number,
   handToHandReserved: number,
+  extraIdentityPicks: readonly CreationSkillPick[] = [],
 ): { related: CreationSkillPick[]; secondary: CreationSkillPick[] } {
   let related = [...relatedPicks]
   let secondary = [...secondaryPicks]
@@ -248,6 +268,14 @@ function fillTierPicks(
     const secondarySlotsUsed = sumCreationSkillPickSlots(secondary)
 
     for (const def of library) {
+      if (
+        isCreationSkillIdentityTaken(
+          [...occPicks, ...related, ...secondary, ...extraIdentityPicks],
+          def.id,
+        )
+      ) {
+        continue
+      }
       const ctx = {
         effectiveOcc: occ,
         specializationId,
@@ -282,6 +310,75 @@ function fillTierPicks(
   return { related, secondary }
 }
 
+function fillRelatedVoucherPicks(
+  library: ReturnType<typeof listCreationSkillLibrary>,
+  occ: PalladiumOcc,
+  specializationId: string | null | undefined,
+  occPicks: readonly CreationSkillPick[],
+  relatedPicks: readonly CreationSkillPick[],
+  secondaryPicks: readonly CreationSkillPick[],
+  prevRelatedVoucherPicks: Readonly<Record<string, unknown>> | undefined,
+  prevClusters: Readonly<Record<string, string>> | undefined,
+): {
+  relatedVoucherPicks: Record<string, (CreationSkillPick | null)[]>
+  relatedVoucherClusters: Record<string, string>
+} {
+  const tasks = listOccRelatedVoucherTasks(occ, specializationId)
+  const relatedVoucherClusters: Record<string, string> = {
+    ...(prevClusters ?? {}),
+  }
+  const relatedVoucherPicks: Record<string, (CreationSkillPick | null)[]> = {}
+
+  for (const task of tasks) {
+    const { entry } = task
+    if (
+      entry.clusterCategoryOptions?.length &&
+      !relatedVoucherClusters[task.id]
+    ) {
+      relatedVoucherClusters[task.id] = entry.clusterCategoryOptions[0]!
+    }
+
+    const existing = getRelatedVoucherSlotPicks(
+      prevRelatedVoucherPicks,
+      task.id,
+      entry.choiceCount,
+    )
+    const slots: (CreationSkillPick | null)[] = [...existing]
+    for (let i = 0; i < entry.choiceCount; i++) {
+      if (slots[i]) continue
+      const identityPool = [
+        ...occPicks,
+        ...relatedPicks,
+        ...secondaryPicks,
+        ...flattenRelatedVoucherPicks(tasks, {
+          ...relatedVoucherPicks,
+          [task.id]: slots,
+        }),
+      ]
+      let pick: CreationSkillPick | null = null
+      for (const def of library) {
+        if (
+          !isSkillEligibleForRelatedVoucher(
+            def.id,
+            task,
+            occ,
+            specializationId,
+            relatedVoucherClusters,
+          )
+        ) {
+          continue
+        }
+        pick = buildDevSkillPickAvoidingIdentity(def.id, identityPool)
+        if (pick) break
+      }
+      slots[i] = pick
+    }
+    relatedVoucherPicks[task.id] = slots
+  }
+
+  return { relatedVoucherPicks, relatedVoucherClusters }
+}
+
 /** Dev-only: fill vouchers, grants, related slots, secondary slots, and Hand-to-Hand. */
 export function buildDevAutoFillCreationSkillsState(
   prev: CharacterRootState,
@@ -295,13 +392,20 @@ export function buildDevAutoFillCreationSkillsState(
   const catalogIds = library.map((d) => d.id)
 
   const relatedBase =
-    prev.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occ)
+    prev.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(effective)
   const relatedCap = creationRelatedSkillCap(
     relatedBase,
     psychicTier,
     occSkillSlotPolicy(occ),
   )
-  const secondaryCap = occSecondarySkillSlots(occ)
+  const relatedVoucherReserved = sumRelatedVoucherReservedSlots(
+    listOccRelatedVoucherTasks(occ, specializationId),
+  )
+  const freeRelatedCap = creationFreeRelatedSkillCap(
+    relatedCap,
+    relatedVoucherReserved,
+  )
+  const secondaryCap = occSecondarySkillSlots(effective)
 
   const voucherPicks: Record<string, (CreationSkillPick | null)[]> = {}
   for (const [key, slots] of Object.entries(prev.creationOccCoreVoucherPicks ?? {})) {
@@ -360,9 +464,24 @@ export function buildDevAutoFillCreationSkillsState(
   let relatedPicks = [...getCreationRelatedPicks(prev)]
   let secondaryPicks = [...getCreationSecondaryPicks(prev)]
 
+  const { relatedVoucherPicks, relatedVoucherClusters } = fillRelatedVoucherPicks(
+    library,
+    occ,
+    specializationId,
+    occPicks,
+    relatedPicks,
+    secondaryPicks,
+    prev.creationOccRelatedVoucherPicks,
+    prev.creationOccRelatedVoucherClusters,
+  )
+  const relatedVoucherIdentity = flattenRelatedVoucherPicks(
+    listOccRelatedVoucherTasks(occ, specializationId),
+    relatedVoucherPicks,
+  )
+
   const handToHandTier = resolveHandToHandTier(
     occ,
-    relatedCap,
+    freeRelatedCap,
     sumCreationSkillPickSlots(relatedPicks),
   )
   const handToHandReserved = creationHandToHandElectiveSlotCost(
@@ -377,9 +496,10 @@ export function buildDevAutoFillCreationSkillsState(
     occPicks,
     relatedPicks,
     secondaryPicks,
-    relatedCap,
+    freeRelatedCap,
     secondaryCap,
     handToHandReserved,
+    relatedVoucherIdentity,
   )
   relatedPicks = categoryMinFill.related
   secondaryPicks = categoryMinFill.secondary
@@ -392,9 +512,10 @@ export function buildDevAutoFillCreationSkillsState(
     occPicks,
     relatedPicks,
     secondaryPicks,
-    relatedCap,
+    freeRelatedCap,
     secondaryCap,
     handToHandReserved,
+    relatedVoucherIdentity,
   )
   relatedPicks = relatedFill.related
   secondaryPicks = relatedFill.secondary
@@ -407,9 +528,10 @@ export function buildDevAutoFillCreationSkillsState(
     occPicks,
     relatedPicks,
     secondaryPicks,
-    relatedCap,
+    freeRelatedCap,
     secondaryCap,
     handToHandReserved,
+    relatedVoucherIdentity,
   )
   relatedPicks = secondaryFill.related
   secondaryPicks = secondaryFill.secondary
@@ -419,6 +541,8 @@ export function buildDevAutoFillCreationSkillsState(
     creationHandToHandTier: handToHandTier,
     creationOccCoreVoucherPicks: voucherPicks,
     creationOccGrantPickDetails: grantDetails,
+    creationOccRelatedVoucherPicks: relatedVoucherPicks,
+    creationOccRelatedVoucherClusters: relatedVoucherClusters,
     creationRelatedSkillPicks: relatedPicks,
     creationRelatedSkillIds: undefined,
     creationSecondarySkillPicks: secondaryPicks,

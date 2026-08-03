@@ -421,7 +421,7 @@ export function assessRelatedSkillVoucherBlockers(
       clusterSelections?.[task.id],
     )
     blockers.push(
-      `Select ${remaining} more vocational focus skill${remaining === 1 ? '' : 's'} for ${header}.`,
+      `Select ${remaining} more related voucher skill${remaining === 1 ? '' : 's'} for ${header}.`,
     )
   }
   return blockers

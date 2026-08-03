@@ -358,9 +358,10 @@ export function SkillEngine() {
     ? creationHandToHandReservedRelatedSlots(effectiveOcc, character)
     : 0
 
+  // Reserve all related vouchers (vocational + creation), matching forge validators.
   const relatedVoucherReserved = useMemo(
-    () => sumRelatedVoucherReservedSlots(vocationalFocusTasks),
-    [vocationalFocusTasks],
+    () => sumRelatedVoucherReservedSlots(relatedVoucherTasks),
+    [relatedVoucherTasks],
   )
 
   const freeRelatedCap = useMemo(
@@ -390,7 +391,10 @@ export function SkillEngine() {
 
   const relatedSkillPoolCap = freeRelatedCap
 
-  const specializationSlotsCap = relatedVoucherReserved
+  const specializationSlotsCap = useMemo(
+    () => sumRelatedVoucherReservedSlots(vocationalFocusTasks),
+    [vocationalFocusTasks],
+  )
 
   const specializationSlotsUsed = useMemo(
     () =>

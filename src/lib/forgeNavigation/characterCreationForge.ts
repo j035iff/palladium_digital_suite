@@ -414,7 +414,8 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
       ),
     )
     const relatedBase =
-      character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occ)
+      character.occRelatedSkillSlotBudget ??
+      occRelatedSkillSlotBudget(effectiveOcc)
     const relatedPicks = getCreationRelatedPicks(character)
     const occPicks = resolveOccCoreSkillPicks(
       occ,
@@ -459,12 +460,12 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
         character.occSpecializationId,
       ),
     )
-    const secondaryBase = occSecondarySkillSlots(occ)
+    const secondaryBase = occSecondarySkillSlots(effectiveOcc)
     blockers.push(
       ...assessSecondarySkillSlotBlockers(
         sumCreationSkillPickSlots(getCreationSecondaryPicks(character)),
         secondaryBase,
-        occ,
+        effectiveOcc,
       ),
     )
   }

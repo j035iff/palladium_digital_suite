@@ -105,7 +105,7 @@ export function assessCreationReviewBlockers(
       character.occSpecializationId,
     )
     const relatedBase =
-      character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(occLib)
+      character.occRelatedSkillSlotBudget ?? occRelatedSkillSlotBudget(effectiveOcc)
     const relatedPicks = getCreationRelatedPicks(character)
     const occPicks = resolveOccCoreSkillPicks(
       occLib,
