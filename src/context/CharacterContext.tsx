@@ -314,6 +314,7 @@ type CharacterContextValue = {
   /** Identity weight in lbs when entered (plus Morphus modifiers when Morphus is active). */
   identityResolvedWeightLbs: number | undefined
   setCharacterName: (name: string) => void
+  setPlayNotes: (notes: string) => void
   patchIdentityProfile: (patch: Partial<CharacterIdentityProfile>) => void
   /** @see getVitalityType — true when active form is on the M.D.C. track (combat_logic.md §1). */
   isMDC: boolean
@@ -2622,6 +2623,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setRawCharacter((prev) => ({ ...prev, name }))
   }, [])
 
+  const setPlayNotes = useCallback(
+    (notes: string) => {
+      const next = { ...rawCharacter, playNotes: notes }
+      setRawCharacter(next)
+      persistCharacterSave(next)
+    },
+    [rawCharacter, persistCharacterSave],
+  )
+
   const patchIdentityProfile = useCallback((patch: Partial<CharacterIdentityProfile>) => {
     setRawCharacter((prev) => ({
       ...prev,
@@ -2835,6 +2845,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       identityResolvedHeightInches,
       identityResolvedWeightLbs,
       setCharacterName,
+      setPlayNotes,
       patchIdentityProfile,
       isMDC,
       psychicTier,
@@ -2989,6 +3000,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       identityResolvedHeightInches,
       identityResolvedWeightLbs,
       setCharacterName,
+      setPlayNotes,
       patchIdentityProfile,
       isMDC,
       psychicTier,

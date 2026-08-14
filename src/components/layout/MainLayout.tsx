@@ -8,7 +8,8 @@ import { getIqBonuses } from '../../lib/attributeBonuses'
 import {
   buildLiveSheetTabViews,
   isLiveSheetTabId,
-  LIVE_SHEET_TAB_TITLES,
+  liveSheetTabTitle,
+  type LiveSheetMode,
   type LiveSheetTabId,
 } from '../../lib/liveSheetTabs'
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
@@ -18,7 +19,8 @@ export function MainLayout() {
   const [spawnSplash, setSpawnSplash] = useState(false)
   /** Default collapsed so the Active Zone has room under the sticky core. */
   const [identityCollapsed, setIdentityCollapsed] = useState(true)
-  const [sheetTabId, setSheetTabId] = useState<LiveSheetTabId>('stats')
+  const [sheetMode, setSheetMode] = useState<LiveSheetMode>('story')
+  const [sheetTabId, setSheetTabId] = useState<LiveSheetTabId>('home')
   const {
     character,
     creationGenreId,
@@ -346,9 +348,44 @@ export function MainLayout() {
                 ? 'border-violet-700/80 bg-slate-950/95'
                 : 'border-blue-200 bg-white/95'
             }`}
-            aria-label="Live sheet tabs"
+            aria-label="Live sheet mode and tabs"
           >
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-1.5">
+              <div
+                className="flex w-fit rounded-lg border-2 p-1"
+                style={{
+                  borderColor: morphusActive ? '#6d28d9' : '#93c5fd',
+                  backgroundColor: morphusActive ? '#0f172a' : '#eff6ff',
+                }}
+                role="group"
+                aria-label="Character sheet mode"
+              >
+                {(['story', 'combat'] as const).map((mode) => {
+                  const active = sheetMode === mode
+                  return (
+                    <button
+                      key={mode}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => {
+                        setSheetMode(mode)
+                        setSheetTabId('home')
+                      }}
+                      className={`rounded-md px-4 py-1.5 text-xs font-black uppercase tracking-wide transition ${
+                        active
+                          ? morphusActive
+                            ? 'bg-violet-700 text-white shadow'
+                            : 'bg-blue-700 text-white shadow'
+                          : morphusActive
+                            ? 'text-violet-300 hover:bg-violet-900/60'
+                            : 'text-blue-900 hover:bg-blue-100'
+                      }`}
+                    >
+                      {mode}
+                    </button>
+                  )
+                })}
+              </div>
               <ForgeNavigationBar
                 tabs={sheetTabs}
                 activeTabId={sheetTabId}
@@ -362,7 +399,7 @@ export function MainLayout() {
                   morphusActive ? 'text-violet-300/90' : 'text-slate-600'
                 }`}
               >
-                {LIVE_SHEET_TAB_TITLES[sheetTabId]}
+                {liveSheetTabTitle(sheetMode, sheetTabId)}
               </p>
             </div>
           </div>
@@ -395,7 +432,7 @@ export function MainLayout() {
           </main>
         ) : (
           <main className="mx-auto flex min-h-0 w-full max-w-6xl min-w-0 flex-1 flex-col overflow-y-auto px-4 py-4 text-left">
-            <LiveSheetTabBody tabId={sheetTabId} />
+            <LiveSheetTabBody mode={sheetMode} tabId={sheetTabId} />
           </main>
         )}
       </div>

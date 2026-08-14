@@ -2390,6 +2390,8 @@ export type CharacterIdentityProfile = {
 
 export type Character = {
   name: string
+  /** Freeform notes captured during live story play. */
+  playNotes?: string
   /** Physical description and anthropometrics for leap/encumbrance and Morphus modifiers. */
   identityProfile?: CharacterIdentityProfile
   /**

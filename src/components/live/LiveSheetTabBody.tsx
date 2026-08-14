@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { Armory } from './Armory'
 import { CombatHUD } from './CombatHUD'
@@ -8,16 +9,17 @@ import { MorphusTraitsPanel } from './MorphusTraitsPanel'
 import { PsStrengthPanel } from './PsStrengthPanel'
 import { SavingThrowsPanel } from './SavingThrowsPanel'
 import { SkillList } from '../SkillList'
-import type { LiveSheetTabId } from '../../lib/liveSheetTabs'
+import type { LiveSheetMode, LiveSheetTabId } from '../../lib/liveSheetTabs'
 
 type Props = {
+  mode: LiveSheetMode
   tabId: LiveSheetTabId
 }
 
 /**
  * Live sheet Active Zone — one forge-style tab at a time.
  */
-export function LiveSheetTabBody({ tabId }: Props) {
+export function LiveSheetTabBody({ mode, tabId }: Props) {
   const {
     character,
     activeForm,
@@ -30,15 +32,26 @@ export function LiveSheetTabBody({ tabId }: Props) {
     toggleMorphusBurst,
     morphusActiveGimmickSwitchKeys,
     toggleMorphusGimmickSwitch,
+    setPlayNotes,
   } = useCharacter()
 
   const morphusActive = supportsDualForm && activeForm === 'morphus'
 
-  if (tabId === 'combat') {
+  if (tabId === 'home' && mode === 'combat') {
     return (
       <section aria-label="Combat active zone" className="min-w-0">
         <CombatHUD layout="panel" />
       </section>
+    )
+  }
+
+  if (tabId === 'home') {
+    return (
+      <StoryNotes
+        notes={character.playNotes ?? ''}
+        onCommit={setPlayNotes}
+        morphus={morphusActive}
+      />
     )
   }
 
@@ -176,6 +189,57 @@ export function LiveSheetTabBody({ tabId }: Props) {
         </>
       ) : null}
     </div>
+  )
+}
+
+function StoryNotes({
+  notes,
+  onCommit,
+  morphus,
+}: {
+  notes: string
+  onCommit: (notes: string) => void
+  morphus: boolean
+}) {
+  const [draft, setDraft] = useState(notes)
+
+  useEffect(() => {
+    setDraft(notes)
+  }, [notes])
+
+  return (
+    <section aria-labelledby="story-notes-heading" className="space-y-3">
+      <div>
+        <h2
+          id="story-notes-heading"
+          className={`text-sm font-semibold uppercase tracking-wide ${
+            morphus ? 'text-violet-200' : 'text-blue-900'
+          }`}
+        >
+          Notes
+        </h2>
+        <p className={`mt-1 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
+          Capture clues, names, objectives, and events during play.
+        </p>
+      </div>
+      <textarea
+        value={draft}
+        onChange={(event) => setDraft(event.target.value)}
+        onBlur={() => {
+          if (draft !== notes) onCommit(draft)
+        }}
+        placeholder="Write story notes…"
+        aria-label="Story notes"
+        className={`min-h-72 w-full resize-y rounded-lg border-2 px-4 py-3 text-sm leading-relaxed outline-none transition focus:ring-2 ${
+          morphus
+            ? 'border-violet-700 bg-slate-950/80 text-violet-50 placeholder:text-violet-400/60 focus:border-violet-500 focus:ring-violet-500/30'
+            : 'border-blue-200 bg-white text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20'
+        }`}
+      />
+      <p className={`text-[11px] ${morphus ? 'text-violet-300/80' : 'text-slate-500'}`}>
+        Notes save when you leave the field.
+      </p>
+    </section>
   )
 }
 
