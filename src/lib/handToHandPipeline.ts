@@ -112,8 +112,68 @@ function emptyProfile(
   }
 }
 
+export type OwnedHandToHandStyle = {
+  catalogId: string
+  name: string
+}
+
+function sortOwnedHandToHandIds(ids: Iterable<string>): string[] {
+  const order = HTH_CATALOG_TIER_ORDER as readonly string[]
+  const unique = [...new Set(ids)]
+  return unique.sort((a, b) => {
+    if (a === HTH_NONE_CATALOG_ID) return 1
+    if (b === HTH_NONE_CATALOG_ID) return -1
+    const ra = order.indexOf(a)
+    const rb = order.indexOf(b)
+    if (ra >= 0 && rb >= 0) return ra - rb
+    if (ra >= 0) return -1
+    if (rb >= 0) return 1
+    return a.localeCompare(b)
+  })
+}
+
 /**
- * Active Hand-to-Hand tier: highest unlocked upgrade path, else O.C.C. default when known.
+ * Hand-to-Hand styles this form actually has — unlocked sheet/HTH skill ids, creation tier,
+ * and a granted O.C.C. default. `hth_none` is listed only when no trained style is owned.
+ * Same list feeds Combat Home Unarmed expand and the Skills tab roster.
+ */
+export function listOwnedHandToHandStyles(
+  character: Character,
+  activeForm: ActiveForm,
+  occ: PalladiumOcc | undefined,
+): OwnedHandToHandStyle[] {
+  const catalogIds = new Set(listHandToHandSkillIds())
+  const owned = new Set<string>()
+
+  const add = (raw: string | null | undefined) => {
+    if (!raw) return
+    const mapped = mapSheetSkillIdToHandToHandCatalogId(raw)
+    if (catalogIds.has(mapped)) owned.add(mapped)
+  }
+
+  for (const id of collectUnlockedSkillIds(character, activeForm)) {
+    add(id)
+  }
+
+  if (character.creationHandToHandTier && character.creationHandToHandTier !== 'none') {
+    add(handToHandCatalogIdForCreationTier(character.creationHandToHandTier))
+  }
+
+  if (occ?.handToHandRules?.defaultSkillId != null && occGrantsDefaultHandToHand(occ)) {
+    add(occ.handToHandRules.defaultSkillId)
+  }
+
+  const trained = [...owned].filter((id) => id !== HTH_NONE_CATALOG_ID)
+  const ids = sortOwnedHandToHandIds(trained.length > 0 ? trained : [HTH_NONE_CATALOG_ID])
+  return ids.map((catalogId) => {
+    const row = getHandToHandSkillById(catalogId)
+    return { catalogId, name: row?.name ?? catalogId }
+  })
+}
+
+/**
+ * Active Hand-to-Hand tier: combat override if owned, else highest unlocked upgrade path,
+ * else O.C.C. default when known.
  */
 export function resolveActiveHandToHandSkillId(
   character: Character,
@@ -162,7 +222,12 @@ export function resolveHandToHandCombatProfile(
   activeForm: ActiveForm,
   occ: PalladiumOcc | undefined,
 ): HandToHandCombatProfile {
-  const trainedId = resolveActiveHandToHandSkillId(character, activeForm, occ)
+  const owned = listOwnedHandToHandStyles(character, activeForm, occ)
+  const override = character.activeCombatHandToHandSkillId
+  const overrideOk = override && owned.some((s) => s.catalogId === override)
+  const trainedId = overrideOk
+    ? override
+    : resolveActiveHandToHandSkillId(character, activeForm, occ)
   const catalogId = trainedId ?? HTH_NONE_CATALOG_ID
   const skill = getHandToHandSkillById(catalogId)
   if (!skill) return emptyProfile(character, activeForm)

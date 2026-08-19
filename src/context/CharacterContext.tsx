@@ -44,8 +44,10 @@ import {
 import type { SpawnVitalityRolls } from '../lib/spawnVitalityTypes'
 import { computeMaxApm, resolveCharacterMaxApm } from '../lib/meleeCombat'
 import {
+  listOwnedHandToHandStyles,
   resolveHandToHandCombatProfile,
   type HandToHandCombatProfile,
+  type OwnedHandToHandStyle,
 } from '../lib/handToHandPipeline'
 import { evaluateStrengthFromPhysicalStat } from '../utils/strengthCalculator'
 import type { StrengthCapacities } from '../types'
@@ -367,6 +369,9 @@ type CharacterContextValue = {
    * Drives A.P.M. ceiling and sheet combat badge lines.
    */
   handToHandCombatProfile: HandToHandCombatProfile
+  /** Owned HtH catalog styles for Combat Home / Skills tab (may be more than one). */
+  ownedHandToHandStyles: readonly OwnedHandToHandStyle[]
+  setActiveCombatHandToHandSkillId: (catalogId: string) => void
   /** False for self-contained R.C.C.s — O.C.C. selection UI is locked. */
   raceCanPickOcc: boolean
   /** Shadow O.C.C. auto-mount notice for R.C.C.s with forcedOccId. */
@@ -955,6 +960,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const handToHandCombatProfile = useMemo(
     () => resolveHandToHandCombatProfile(character, sheetActiveForm, activeOcc),
+    [character, sheetActiveForm, activeOcc],
+  )
+
+  const ownedHandToHandStyles = useMemo(
+    () => listOwnedHandToHandStyles(character, sheetActiveForm, activeOcc),
     [character, sheetActiveForm, activeOcc],
   )
 
@@ -1749,6 +1759,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setCreationHandToHandTier = useCallback((tier: CreationHandToHandTier) => {
     setRawCharacter((prev) => ({ ...prev, creationHandToHandTier: tier }))
+  }, [])
+
+  const setActiveCombatHandToHandSkillId = useCallback((catalogId: string) => {
+    setRawCharacter((prev) => ({ ...prev, activeCombatHandToHandSkillId: catalogId }))
   }, [])
 
   const setSelectedOcc = useCallback(
@@ -2832,6 +2846,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       effectiveOcc,
       occCreationDerived,
       handToHandCombatProfile,
+      ownedHandToHandStyles,
+      setActiveCombatHandToHandSkillId,
       raceCanPickOcc,
       shadowOccMountNotice,
       raceStrengthLabel,
@@ -2987,6 +3003,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       effectiveOcc,
       occCreationDerived,
       handToHandCombatProfile,
+      ownedHandToHandStyles,
+      setActiveCombatHandToHandSkillId,
       raceCanPickOcc,
       shadowOccMountNotice,
       raceStrengthLabel,

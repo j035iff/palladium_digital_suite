@@ -32,4 +32,4 @@ Damage Multipliers: Conditional damage (e.g., x2 vs. Supernatural).
 Quality Modifiers: Pre-calculated bonuses for "Excellent" or "Dwarven" workmanship.
 Ability Triggers: Unique items (like Rune Swords) can house custom sub-abilities with their own P.P.E./I.S.P. costs.
 4. Visual HUD States
-The Combat HUD displays the Active Weapon icon prominently with the Strike/Parry/Dodge bonuses. Stowed Weapons (items in the "Equipped" state but not currently in hand) are shown as smaller silhouettes below the active slot for one-tap switching.
+The Combat HUD shows **Unarmed (Hand-to-Hand name) / Ancient / Modern** category bubbles with a simple W.P. glyph and collapsed Strike/Parry/Damage. Empty slots stay grayed, not hidden. Expand opens the full profile and a picker of carried Gear weapons of that era. Stowed-but-carried weapons appear in that picker (not a Destiny one-tap icon strip — still later).

@@ -41,6 +41,8 @@ Palladium uses a "Melee Round" (15 seconds) divided into individual "Attacks Per
 2. **Spend Action**: Every offensive, defensive (active), or magical action decrements `Current_APM` by 1.
 3. **The "Out of Actions" State**: When `Current_APM` hits 0, the character can no longer Dodge or Strike, character may still Parry as that is a "free" action.
 
+**HUD (Combat Home):** remaining action pips are tappable; each tap spends **1** A.P.M. via `spendCombatAction(1)`. Spent pips cannot be restored — **New melee round** refills to max. Recording a strike does **not** auto-spend. Style `attackApmCost` (e.g. 2 for `hth_none`) and power-punch cost are player-facing hints; the player taps once per action. Initiative sits in the APM header. The Unarmed bubble is labeled with the active Hand-to-Hand style; Ancient / Modern show collapsed weapon totals. Expand holds HtH maneuvers (plus a style picker when more than one HtH skill is owned) or the weapon strike card. Empty weapon bubbles stay grayed, not hidden. A modern weapon carried into a host with no native modern W.P. catalog (`hostGenreOffersModernWeapons` false) still fills the Modern slot (Megaversal rift case).
+
 ---
 
 ## 4. The Save System (Dynamic Targets)

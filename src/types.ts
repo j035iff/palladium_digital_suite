@@ -2488,6 +2488,11 @@ export type Character = {
   creationSecondarySkillPicks?: readonly CreationSkillPick[]
   /** O.C.C. core — Hand-to-Hand fighting style (defaults to none). */
   creationHandToHandTier?: CreationHandToHandTier
+  /**
+   * Combat Home — which owned Hand-to-Hand catalog id (`hth_*`) is active for unarmed.
+   * Omitted → engine picks the highest owned style (`resolveActiveHandToHandSkillId`).
+   */
+  activeCombatHandToHandSkillId?: string
   /** Active creation phase (docs/forge/character_creation.md / Forge engine). */
   creationPhase?: CreationPhase
   /** Phase I — eight manually entered pool values (physical dice). */

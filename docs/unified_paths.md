@@ -168,13 +168,29 @@ Copy this block when registering a new unified path:
 
 ---
 
+### Combat Home category bubbles
+
+**Status:** `partial`  
+**Related spec:** `docs/ui_wireframe.md` §3, `docs/combat_logic.md` §3
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Era / glyph | `src/lib/combatWeaponSlots.ts` | `resolveWeaponCombatEra`, `hostGenreOffersModernWeapons`, `combatWeaponGlyphId` | One classifier for Unarmed / Ancient / Modern |
+| Weapon math | `src/lib/weaponBonuses.ts` | `computeWeaponProfileBonuses` | Same profile as strike cards |
+| Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; Unarmed label = active HtH name |
+| UI | `CombatCategoryBubble` | Collapsed summary + Expand | One shell for all three categories |
+
+**Modes / variants:** Facade/Morphus via existing live stack. Modern bubble is always shown: empty = grayed (Gear explanation); a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand + Skills tab (`HandToHandStylePicker`); `activeCombatHandToHandSkillId` selects among them.
+
+---
+
 ## Planned / partial paths
 
 Track work here until promoted to the registry above.
 
 | Domain | Gap | Target unified entry |
 |--------|-----|----------------------|
-| Live sheet combat HUD | Some strike/damage rows may bypass `creationStatEngine` stacks | Reuse stack + tooltip pattern from Live Ledger where schemas match |
+| Live sheet combat HUD | Strike cards still assemble some fire-mode math in the component | Keep feeding `computeWeaponProfileBonuses` / fire-mode helpers |
 | Skill percent display | Master Equation in `skill_selection.md` | Single `buildSkillPercentLine` when creation sheet gets parity rows |
 
 ---

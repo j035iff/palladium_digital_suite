@@ -9,6 +9,7 @@ import { MorphusTraitsPanel } from './MorphusTraitsPanel'
 import { PsStrengthPanel } from './PsStrengthPanel'
 import { SavingThrowsPanel } from './SavingThrowsPanel'
 import { SkillList } from '../SkillList'
+import { HandToHandStylePicker } from './HandToHandStylePicker'
 import type { LiveSheetMode, LiveSheetTabId } from '../../lib/liveSheetTabs'
 
 type Props = {
@@ -33,6 +34,9 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
     morphusActiveGimmickSwitchKeys,
     toggleMorphusGimmickSwitch,
     setPlayNotes,
+    ownedHandToHandStyles,
+    handToHandCombatProfile,
+    setActiveCombatHandToHandSkillId,
   } = useCharacter()
 
   const morphusActive = supportsDualForm && activeForm === 'morphus'
@@ -69,6 +73,23 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
         >
           Skills
         </h2>
+        <div className="mb-4">
+          <HandToHandStylePicker
+            morphus={morphusActive}
+            styles={ownedHandToHandStyles}
+            activeCatalogId={handToHandCombatProfile.skillId}
+            onSelect={setActiveCombatHandToHandSkillId}
+            heading="Hand-to-Hand"
+            singleStyleHint={`${ownedHandToHandStyles[0]?.name ?? 'Hand-to-Hand: None'} — combat style, not a percentile skill.`}
+          />
+          <p
+            className="mt-1 text-[11px]"
+            style={{ color: morphusActive ? '#a78bfa' : '#64748b' }}
+          >
+            Combat Home uses the active style for the Unarmed bubble. Characters with more than one
+            style can switch here or in that bubble.
+          </p>
+        </div>
         <SkillList
           skills={form.skills}
           morphusActive={morphusActive}
