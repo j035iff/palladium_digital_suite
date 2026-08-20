@@ -959,13 +959,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const sheetActiveForm: ActiveForm = supportsDualForm ? activeForm : 'primary'
 
   const handToHandCombatProfile = useMemo(
-    () => resolveHandToHandCombatProfile(character, sheetActiveForm, activeOcc),
-    [character, sheetActiveForm, activeOcc],
+    () => resolveHandToHandCombatProfile(character, sheetActiveForm, effectiveOcc),
+    [character, sheetActiveForm, effectiveOcc],
   )
 
   const ownedHandToHandStyles = useMemo(
-    () => listOwnedHandToHandStyles(character, sheetActiveForm, activeOcc),
-    [character, sheetActiveForm, activeOcc],
+    () => listOwnedHandToHandStyles(character, sheetActiveForm, effectiveOcc),
+    [character, sheetActiveForm, effectiveOcc],
   )
 
   const activeFormState = useMemo(

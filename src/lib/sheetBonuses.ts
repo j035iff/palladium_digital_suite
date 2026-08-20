@@ -1,15 +1,16 @@
 import type { ActiveForm, Character, FeatureModifiers, PalladiumOcc } from '../types'
-import { getFormState } from '../types'
 import type { AccumulatedHandToHandBonuses } from '../types'
 import { resolveLivePpMeleeNatural } from './liveStatEngine'
 import { getPpBonuses } from './attributeBonuses'
 import {
+  buildDisplayAttributesForLiveEngine,
   buildLiveCombatContext,
   resolveLiveCombatStatDetails,
   resolveLiveRollWithImpactDetails,
   type SheetBonusLine,
   type SheetCombatStatDetails,
 } from './liveStatEngine'
+import { aggregateAllPassiveModifiers } from './featureEngine'
 
 export type { SheetBonusLine, SheetCombatStatDetails }
 
@@ -42,11 +43,11 @@ export function getPpMeleeNaturalForActiveForm(
   return resolveLivePpMeleeNatural(character, activeForm)
 }
 
-/** Display-only attribute totals = base scalar + passive modifier keys matching sheet attributes. */
+/** Display-only attribute totals = base + passive + physical skill flats when not baked. */
 export function computeDisplayScalars(
   character: Character,
   activeForm: ActiveForm,
-  passive: FeatureModifiers,
+  passive?: FeatureModifiers,
 ): {
   iq: number
   me: number
@@ -57,16 +58,22 @@ export function computeDisplayScalars(
   spd: number
   psScore: number
 } {
-  const a = getFormState(character, activeForm).attributes
+  const resolvedPassive =
+    passive ?? aggregateAllPassiveModifiers(character, activeForm)
+  const a = buildDisplayAttributesForLiveEngine(
+    character,
+    activeForm,
+    resolvedPassive,
+  )
   return {
-    iq: a.iq + (passive.iq ?? 0),
-    me: a.me + (passive.me ?? 0),
-    ma: a.ma + (passive.ma ?? 0),
-    pp: a.pp + (passive.pp ?? 0),
-    pe: a.pe + (passive.pe ?? 0),
-    pb: a.pb + (passive.pb ?? 0),
-    spd: a.spd + (passive.spd ?? 0),
-    psScore: a.ps.score + (passive.ps ?? 0),
+    iq: a.iq,
+    me: a.me,
+    ma: a.ma,
+    pp: a.pp,
+    pe: a.pe,
+    pb: a.pb,
+    spd: a.spd,
+    psScore: a.ps.score,
   }
 }
 

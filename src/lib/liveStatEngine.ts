@@ -17,6 +17,7 @@ import {
   type StatStackTerm,
 } from './creationStatEngine'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
+import { mapSheetSkillIdToHandToHandCatalogId } from './handToHandPipeline'
 import { buildMorphusCreationBasePassiveModifiers } from './morphusCreationLedger'
 import { aggregateAllPassiveModifiers } from './featureEngine'
 import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
@@ -90,6 +91,11 @@ export function buildLiveCombatContext(
       : {}
   const unlocked = collectUnlockedSkillIds(character, activeForm)
   for (const id of opts?.extraSkillIds ?? []) unlocked.add(id)
+  for (const id of [...unlocked]) {
+    if (mapSheetSkillIdToHandToHandCatalogId(id).startsWith('hth_')) {
+      unlocked.delete(id)
+    }
+  }
   const skillIds = [...unlocked]
   return {
     character,
@@ -197,22 +203,25 @@ export function resolveLiveCombatStatDetails(
   }
 }
 
-/** Roll w/ impact + pull punch — same engine keys as creation ledger (spec §4.5). */
+/** Roll w/ punch, fall, impact — pull punch is a separate maneuver (creation ledger parity). */
 export function resolveLiveRollWithImpactDetails(
   ctx: LiveCombatContext,
 ): SheetCombatStatDetails {
   const rollStack = buildLiveCombatStack(ctx, 'rollWithImpact')
-  const pullStack = buildLiveCombatStack(ctx, 'pullPunch')
-  const lines = [
-    ...statStackToSheetBonusLines(rollStack),
-    ...statStackToSheetBonusLines(pullStack).map((line) => ({
-      ...line,
-      label: `Pull punch — ${line.label}`,
-    })),
-  ]
   return {
-    total: statStackTotal(rollStack) + statStackTotal(pullStack),
-    lines,
+    total: statStackTotal(rollStack),
+    lines: statStackToSheetBonusLines(rollStack),
+  }
+}
+
+/** Pull punch — separate stack; not folded into {@link resolveLiveRollWithImpactDetails}. */
+export function resolveLivePullPunchDetails(
+  ctx: LiveCombatContext,
+): SheetCombatStatDetails {
+  const pullStack = buildLiveCombatStack(ctx, 'pullPunch')
+  return {
+    total: statStackTotal(pullStack),
+    lines: statStackToSheetBonusLines(pullStack),
   }
 }
 

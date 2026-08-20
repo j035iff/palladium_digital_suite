@@ -2439,6 +2439,8 @@ export type Character = {
   lineage?: 'nightbane' | 'megaversal'
   /** After Spawn — creation chrome hidden; persisted (docs/forge/character_creation.md Tab 7). */
   isFinalized?: boolean
+  /** Set at spawn when physical skill attribute flats are baked into primary.attributes. */
+  physicalSkillModsApplied?: boolean
   /** Psychic Gate tier chosen during creation (psychic_gate.md). */
   creationPsychicTier?: PsychicTier
   /** True after player explicitly picks a tier on Tab 3 (Forge gate). */

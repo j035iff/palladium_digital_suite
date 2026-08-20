@@ -140,7 +140,11 @@ export function UnarmedCombatExpand({
         activeCatalogId={hth.skillId}
         onSelect={onSelectStyle}
         heading="Known Hand-to-Hand"
-        singleStyleHint={`${ownedStyles[0]?.name ?? 'Hand-to-Hand: None'} — listed on the Skills tab. A second style (rare) unlocks a switcher here.`}
+        singleStyleHint={
+          morphus
+            ? `${ownedStyles[0]?.name ?? 'Hand-to-Hand: Martial Arts'} — innate Morphus style (Facade Hand-to-Hand does not apply).`
+            : `${ownedStyles[0]?.name ?? 'Hand-to-Hand: None'} — listed on the Skills tab. A second style (rare) unlocks a switcher here.`
+        }
       />
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">

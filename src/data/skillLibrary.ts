@@ -304,7 +304,7 @@ export function getSkillById(id: string): EngineSkillDef | undefined {
   const prefixed = id.startsWith('skill_') ? id : `skill_${id}`
   const fromCatalog =
     getEngineSkillDefFromCatalog(id) ?? getEngineSkillDefFromCatalog(prefixed)
-  if (fromCatalog) return fromCatalog
+  if (fromCatalog) return withModifiers(fromCatalog)
   const direct = SKILL_LIBRARY.find((s) => s.id === id)
   if (direct) return direct
   if (prefixed !== id) {

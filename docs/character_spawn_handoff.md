@@ -51,6 +51,7 @@ Per form branch (`finalizeFormBranch`):
 ### 3. Root flags
 
 - `creationPsychicTier` — normalized via `resolveCreationPsychicTier`.
+- **`physicalSkillModsApplied: true`** — primary attribute flats from physical skills were baked at spawn; live passive skill staging keys are omitted to avoid double-count.
 - **`isFinalized: true`** — hides creation chrome; enables full play layout (combat sidebar resize, armory, inventory blocks).
 
 **Not cleared on spawn:** Creation-phase fields (`creationForgeCompleted`, pool assignments, `selectedAbilities`, etc.) may remain on the persisted JSON for audit/history unless a future serializer strips them. UI treats finalized records as play sheets only.

@@ -22,6 +22,7 @@ import {
   buildMorphusPassiveBundle,
   mergeMorphusIntoPassive,
 } from './morphusPassiveBridge'
+import { omitBakedPhysicalSkillModifiers } from './skillModifiers'
 export function morphusRequired(feature: Feature): boolean {
   return feature.requirement?.form === 'morphus' || feature.metadata?.morphusOnly === true
 }
@@ -104,7 +105,11 @@ export function aggregateAllPassiveModifiers(
   occ?: PalladiumOcc,
 ): FeatureModifiers {
   const a = aggregateFeatureModifiers(character.selectedAbilities ?? [], activeForm)
-  const sk = aggregateCreationSkillModifiers(character, occ)
+  const sk = omitBakedPhysicalSkillModifiers(
+    aggregateCreationSkillModifiers(character, occ),
+    character,
+    activeForm,
+  )
   const race = racePassiveModifiers(
     getRaceById(
       character.raceId ?? DEFAULT_RACE_ID,

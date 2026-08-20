@@ -12,7 +12,13 @@ import {
 } from '../utils/combatCalculator'
 import { occGrantsDefaultHandToHand } from './occComposition'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
-import { handToHandCatalogIdForCreationTier } from './creationHandToHandChoice'
+import {
+  effectiveCreationHandToHandTier,
+  handToHandCatalogIdForCreationTier,
+  type CreationHandToHandTier,
+} from './creationHandToHandChoice'
+import { NIGHTBANE_MORPHUS_BASE_PROFILE } from './morphusNightbaneBase'
+import { characterHasDualForms } from './raceFormPolicy'
 import { hasPairedWeaponSupportWp } from './pairedWeaponSupport'
 import type { ActiveForm } from '../types'
 
@@ -112,6 +118,54 @@ function emptyProfile(
   }
 }
 
+function unlockedHandToHandCatalogIds(
+  unlocked: ReadonlySet<string>,
+  catalogIds: ReadonlySet<string>,
+): string[] {
+  return [...unlocked]
+    .map((id) => mapSheetSkillIdToHandToHandCatalogId(id))
+    .filter((id) => catalogIds.has(id) && id !== HTH_NONE_CATALOG_ID)
+}
+
+function hasUnlockedHandToHandTarget(
+  unlocked: ReadonlySet<string>,
+  targetSkillId: string,
+): boolean {
+  const targetCatalog = mapSheetSkillIdToHandToHandCatalogId(targetSkillId)
+  for (const id of unlocked) {
+    if (mapSheetSkillIdToHandToHandCatalogId(id) === targetCatalog) return true
+  }
+  return false
+}
+
+/** Nightbane Morphus uses R.C.C. innate Hand-to-Hand — not Facade O.C.C. picks. */
+function usesMorphusInnateHandToHand(
+  character: Character,
+  activeForm: ActiveForm,
+): boolean {
+  return characterHasDualForms(character) && activeForm === 'morphus'
+}
+
+function morphusInnateHandToHandTier(): CreationHandToHandTier {
+  return NIGHTBANE_MORPHUS_BASE_PROFILE.handToHandMorphus as CreationHandToHandTier
+}
+
+function morphusInnateHandToHandCatalogId(): string {
+  return handToHandCatalogIdForCreationTier(morphusInnateHandToHandTier())
+}
+
+/** Same tier source as creation Skill Engine / Morphus ledger — not raw save fields alone. */
+function combatHandToHandTier(
+  character: Character,
+  occ: PalladiumOcc | undefined,
+  activeForm: ActiveForm,
+) {
+  if (usesMorphusInnateHandToHand(character, activeForm)) {
+    return morphusInnateHandToHandTier()
+  }
+  return effectiveCreationHandToHandTier(character, occ)
+}
+
 export type OwnedHandToHandStyle = {
   catalogId: string
   name: string
@@ -142,6 +196,12 @@ export function listOwnedHandToHandStyles(
   activeForm: ActiveForm,
   occ: PalladiumOcc | undefined,
 ): OwnedHandToHandStyle[] {
+  if (usesMorphusInnateHandToHand(character, activeForm)) {
+    const catalogId = morphusInnateHandToHandCatalogId()
+    const row = getHandToHandSkillById(catalogId)
+    return [{ catalogId, name: row?.name ?? catalogId }]
+  }
+
   const catalogIds = new Set(listHandToHandSkillIds())
   const owned = new Set<string>()
 
@@ -155,8 +215,9 @@ export function listOwnedHandToHandStyles(
     add(id)
   }
 
-  if (character.creationHandToHandTier && character.creationHandToHandTier !== 'none') {
-    add(handToHandCatalogIdForCreationTier(character.creationHandToHandTier))
+  const tier = combatHandToHandTier(character, occ, activeForm)
+  if (tier && tier !== 'none') {
+    add(handToHandCatalogIdForCreationTier(tier))
   }
 
   if (occ?.handToHandRules?.defaultSkillId != null && occGrantsDefaultHandToHand(occ)) {
@@ -180,41 +241,47 @@ export function resolveActiveHandToHandSkillId(
   activeForm: ActiveForm,
   occ: PalladiumOcc | undefined,
 ): string | undefined {
+  if (usesMorphusInnateHandToHand(character, activeForm)) {
+    return morphusInnateHandToHandCatalogId()
+  }
+
   const unlocked = collectUnlockedSkillIds(character, activeForm)
   const catalogIds = new Set(listHandToHandSkillIds())
 
   const hasCatalog = (sheetSkillId: string) =>
     catalogIds.has(mapSheetSkillIdToHandToHandCatalogId(sheetSkillId))
 
-  if (
-    !character.isFinalized &&
-    character.creationHandToHandTier &&
-    character.creationHandToHandTier !== 'none'
-  ) {
-    return handToHandCatalogIdForCreationTier(character.creationHandToHandTier)
-  }
-
   if (occ?.handToHandRules) {
     const { defaultSkillId, upgradePaths } = occ.handToHandRules
     for (let i = upgradePaths.length - 1; i >= 0; i--) {
       const target = upgradePaths[i]?.targetSkillId
-      if (target && unlocked.has(target) && hasCatalog(target)) {
+      if (target && hasUnlockedHandToHandTarget(unlocked, target) && hasCatalog(target)) {
         return mapSheetSkillIdToHandToHandCatalogId(target)
       }
     }
+  }
+
+  const ownedTrained = unlockedHandToHandCatalogIds(unlocked, catalogIds)
+  const highestOwned = pickHighestHandToHandCatalogId(ownedTrained)
+  if (highestOwned) return highestOwned
+
+  const tier = combatHandToHandTier(character, occ, activeForm)
+  if (tier && tier !== 'none') {
+    return handToHandCatalogIdForCreationTier(tier)
+  }
+
+  if (occ?.handToHandRules) {
+    const { defaultSkillId } = occ.handToHandRules
     if (defaultSkillId != null && hasCatalog(defaultSkillId)) {
       const defaultGranted =
-        occGrantsDefaultHandToHand(occ) || unlocked.has(defaultSkillId)
+        occGrantsDefaultHandToHand(occ) || hasUnlockedHandToHandTarget(unlocked, defaultSkillId)
       if (defaultGranted) {
         return mapSheetSkillIdToHandToHandCatalogId(defaultSkillId)
       }
     }
   }
 
-  const known = [...unlocked]
-    .map((id) => mapSheetSkillIdToHandToHandCatalogId(id))
-    .filter((id) => catalogIds.has(id))
-  return pickHighestHandToHandCatalogId(known)
+  return undefined
 }
 
 export function resolveHandToHandCombatProfile(

@@ -202,6 +202,7 @@ Save roll bonus = Attr>16 (where applicable) + Race + OCC + Skills + misc
 | **Initiative** | `HtH + Race + OCC + Skills + PP>30 + misc` |
 | **Strike / Parry / Dodge** | `PP>16 + HtH + Race + OCC + Skills + misc` |
 | **Roll w/ impact** | `HtH + Race + OCC + Skills + misc` |
+| **Pull punch** | `HtH + Race + OCC + Skills + misc` (separate maneuver — not added to Roll w/ impact on the live sheet) |
 | **Entangle / Disarm** | `HtH + Race + OCC + Skills + misc` |
 | **HtH damage** | `PS>16 + HtH + Race + OCC + Skills + misc` |
 
@@ -353,7 +354,7 @@ Update this table when closing gaps.
 | Level-up stat bumps | — | Partial | Not creation ledger scope |
 | Live saves / HF | ✅ Creation ledger | ✅ `computeSaveProfile()` + `horror_factor_flat` stack | Attribute-only saves via engine |
 | Weapon / unarmed strike | ✅ Creation ledger | ✅ `weaponBonuses` / `strikeEngine` via `liveStatEngine` | |
-| Legacy auto-roll vitals | — | ✅ `spawnFinalVitality` via `vitalStatEngine` | Manual dice path is primary |
+| Live attribute display (physical skills) | ✅ `skillAttributeFlatBonusTotal` / staging | ✅ `computeDisplayScalars()` + spawn bake | Catalog `physicalSkillBonuses` → `getSkillById().modifiers`; Stats tab uses `sheetDisplayScalars`; `physicalSkillModsApplied` avoids double-count after spawn |
 
 ---
 

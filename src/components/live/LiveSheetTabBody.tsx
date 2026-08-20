@@ -37,6 +37,7 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
     ownedHandToHandStyles,
     handToHandCombatProfile,
     setActiveCombatHandToHandSkillId,
+    sheetDisplayScalars,
   } = useCharacter()
 
   const morphusActive = supportsDualForm && activeForm === 'morphus'
@@ -80,14 +81,19 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
             activeCatalogId={handToHandCombatProfile.skillId}
             onSelect={setActiveCombatHandToHandSkillId}
             heading="Hand-to-Hand"
-            singleStyleHint={`${ownedHandToHandStyles[0]?.name ?? 'Hand-to-Hand: None'} — combat style, not a percentile skill.`}
+            singleStyleHint={
+              morphusActive
+                ? `${ownedHandToHandStyles[0]?.name ?? 'Hand-to-Hand: Martial Arts'} — innate Morphus combat style (independent of Facade).`
+                : `${ownedHandToHandStyles[0]?.name ?? 'Hand-to-Hand: None'} — combat style, not a percentile skill.`
+            }
           />
           <p
             className="mt-1 text-[11px]"
             style={{ color: morphusActive ? '#a78bfa' : '#64748b' }}
           >
-            Combat Home uses the active style for the Unarmed bubble. Characters with more than one
-            style can switch here or in that bubble.
+            {morphusActive
+              ? 'Morphus always uses innate Hand-to-Hand: Martial Arts. Facade styles apply only in human form.'
+              : 'Combat Home uses the active style for the Unarmed bubble. Characters with more than one style can switch here or in that bubble.'}
           </p>
         </div>
         <SkillList
@@ -123,18 +129,18 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
           {supportsDualForm ? 'Active form — attributes' : 'Attributes'}
         </h2>
         <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          <Attr label="I.Q." value={form.attributes.iq} morphus={morphusActive} />
-          <Attr label="M.E." value={form.attributes.me} morphus={morphusActive} />
-          <Attr label="M.A." value={form.attributes.ma} morphus={morphusActive} />
+          <Attr label="I.Q." value={sheetDisplayScalars.iq} morphus={morphusActive} />
+          <Attr label="M.E." value={sheetDisplayScalars.me} morphus={morphusActive} />
+          <Attr label="M.A." value={sheetDisplayScalars.ma} morphus={morphusActive} />
           <Attr
             label="P.S."
-            value={`${form.attributes.ps.score} (${form.attributes.ps.tier})`}
+            value={`${sheetDisplayScalars.psScore} (${form.attributes.ps.tier})`}
             morphus={morphusActive}
           />
-          <Attr label="P.P." value={form.attributes.pp} morphus={morphusActive} />
-          <Attr label="P.E." value={form.attributes.pe} morphus={morphusActive} />
-          <Attr label="P.B." value={form.attributes.pb} morphus={morphusActive} />
-          <Attr label="Spd" value={form.attributes.spd} morphus={morphusActive} />
+          <Attr label="P.P." value={sheetDisplayScalars.pp} morphus={morphusActive} />
+          <Attr label="P.E." value={sheetDisplayScalars.pe} morphus={morphusActive} />
+          <Attr label="P.B." value={sheetDisplayScalars.pb} morphus={morphusActive} />
+          <Attr label="Spd" value={sheetDisplayScalars.spd} morphus={morphusActive} />
         </dl>
         <p
           className="mt-2 text-sm"

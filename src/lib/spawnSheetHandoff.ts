@@ -205,12 +205,15 @@ function finalizeFormBranch(
   branch: FormState,
   skills: SheetSkill[],
   skillIds: readonly string[],
+  opts?: { skipAttributeMods?: boolean },
 ): FormState {
   const mods = aggregateSkillModifiers(skillIds)
   let next: FormState = { ...branch, skills }
-  next = {
-    ...next,
-    attributes: applyAttributeModifiers(next.attributes, mods),
+  if (!opts?.skipAttributeMods) {
+    next = {
+      ...next,
+      attributes: applyAttributeModifiers(next.attributes, mods),
+    }
   }
   return applySdcFromModifiers(next, mods.sdc ?? 0)
 }
@@ -251,7 +254,10 @@ export function applySpawnSheetHandoff(
     ...prev,
     creationPsychicTier: tier,
     primary: finalizeFormBranch(prev.primary, primarySkills, skillIds),
-    morphus: finalizeFormBranch(prev.morphus, morphusSkills, skillIds),
+    morphus: finalizeFormBranch(prev.morphus, morphusSkills, skillIds, {
+      skipAttributeMods: prev.morphusForgeState?.baseStatsApplied === true,
+    }),
     isFinalized: true,
+    physicalSkillModsApplied: true,
   }
 }

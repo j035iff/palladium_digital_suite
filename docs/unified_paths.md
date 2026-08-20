@@ -180,7 +180,7 @@ Copy this block when registering a new unified path:
 | Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; Unarmed label = active HtH name |
 | UI | `CombatCategoryBubble` | Collapsed summary + Expand | One shell for all three categories |
 
-**Modes / variants:** Facade/Morphus via existing live stack. Modern bubble is always shown: empty = grayed (Gear explanation); a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand + Skills tab (`HandToHandStylePicker`); `activeCombatHandToHandSkillId` selects among them.
+**Modes / variants:** Facade/Morphus via existing live stack. Modern bubble is always shown: empty = grayed (Gear explanation); a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand + Skills tab (`HandToHandStylePicker`); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand.
 
 ---
 

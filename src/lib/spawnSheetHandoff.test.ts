@@ -53,9 +53,34 @@ describe('spawnSheetHandoff', () => {
 
     const finalized = applySpawnSheetHandoff(root)
     expect(finalized.isFinalized).toBe(true)
+    expect(finalized.physicalSkillModsApplied).toBe(true)
     expect(finalized.primary.skills.length).toBeGreaterThan(0)
     expect(finalized.morphus.skills.length).toBe(finalized.primary.skills.length)
     expect(finalized.primary.skills[0]?.name).not.toMatch(/^skill_/)
+  })
+
+  it('applySpawnSheetHandoff applies catalog physical skill attribute flats to primary', () => {
+    const occLib = getLibraryOccById('occ_ex_government_agent')
+    let root = createBlankCharacterForGenre('nightbane')
+    root = {
+      ...root,
+      occ: snapshotOccForCharacter(occLib!),
+      creationAttributeAssignments: { ps: 10, pp: 10, pe: 10, spd: 10 },
+    }
+    root = applyOccStartingSkillPicks(
+      patchCharacterCreationFromOcc(root, occLib!),
+      occLib!,
+    )
+    root = {
+      ...root,
+      creationSecondarySkillPicks: [
+        { instanceId: 'boxing', skillId: 'skill_boxing' },
+      ],
+    }
+
+    const beforePs = root.primary.attributes.ps.score
+    const finalized = applySpawnSheetHandoff(root)
+    expect(finalized.primary.attributes.ps.score).toBe(beforePs + 2)
   })
 
   it('halves O.C.C. related skill bonus % for Major psychic on spawn', () => {
