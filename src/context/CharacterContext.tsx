@@ -177,7 +177,7 @@ import {
   applyMorphusPendingDiceResolutions,
   applyPendingDiceResolutionsToCharacter,
 } from '../lib/spawnVitalityManual'
-import { patchPendingDiceResolution } from '../lib/pendingDiceLedger'
+import { clearCreationForgeTabMark, patchPendingDiceResolution } from '../lib/pendingDiceLedger'
 import {
   defaultMorphusForgeState,
   morphusCrossroadsSnapshot,
@@ -2012,11 +2012,26 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const setTraitForgeStubComplete = useCallback((complete: boolean) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      creationTraitForgeStubComplete: complete,
-    }))
-  }, [])
+    setRawCharacter((prev) => {
+      if (!complete) {
+        return { ...prev, creationTraitForgeStubComplete: false }
+      }
+      if (!characterHasDualForms(prev)) {
+        return { ...prev, creationTraitForgeStubComplete: true }
+      }
+      const race = getRaceById(
+        prev.raceId ?? DEFAULT_RACE_ID,
+        raceCatalogGenreId(prev.hostGenreId, prev.creationGenreId),
+      )
+      const occLib = prev.occ?.id ? getLibraryOccById(prev.occ.id) : undefined
+      const tier = resolveCreationPsychicTier(prev, psychicTier)
+      const next = applyMorphusPendingDiceResolutions(prev, race, occLib, {
+        supportsDualForm: true,
+        psychicTier: tier,
+      })
+      return { ...next, creationTraitForgeStubComplete: true }
+    })
+  }, [psychicTier])
 
   const patchMorphusForgeState = useCallback(
     (
@@ -2047,6 +2062,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           ...(pathChanged
             ? {
                 creationTraitForgeStubComplete: false,
+                creationMorphusDiceFinalized: false,
+                ...clearCreationForgeTabMark(prev, 'tab6_traits'),
                 morphusForgeSlotState: clearMorphusForgeSlotState(),
                 morphusTraitSlotResolutions: [],
                 activeMorphusCharacteristicIds: [],
@@ -2054,6 +2071,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             : appearanceChanged
               ? {
                   creationTraitForgeStubComplete: false,
+                  creationMorphusDiceFinalized: false,
+                  ...clearCreationForgeTabMark(prev, 'tab6_traits'),
                   morphusForgeSlotState: clearMorphusForgeSlotState(),
                   morphusTraitSlotResolutions: [],
                   activeMorphusCharacteristicIds: [],

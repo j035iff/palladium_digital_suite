@@ -347,7 +347,7 @@ Update this table when closing gaps.
 | Area | Ledger (Phase A) | Live sheet (Phase E) | Notes |
 |------|------------------|----------------------|-------|
 | APM full stack | ✅ Skills + mBase + traits | ✅ `resolveCharacterMaxApm()` | `CharacterContext.attacksPerMelee.max` |
-| Combat bonuses | ✅ Full hints | ✅ `computeSheetCombatDerived()` via `liveStatEngine` | Strike/parry/dodge on HUD |
+| Combat bonuses | ✅ Full hints | ✅ `computeSheetCombatDerived()` via `liveStatEngine` | Strike/parry/dodge/initiative on HUD; initiative expands per trait/skill/feature via `liveCombatPassiveKeyAttribution` |
 | Morphus passive bundle | ✅ Preview | ✅ `morphusPassiveBridge` | Active play middleware |
 | Perception stat line | ✅ Combat block + exceptional | — | `buildCreationPerceptionLine()` |
 | P.P.E. `+20` flat | ✅ Flat column | Commit uses dice+PE+flat | `parseVitalFormulaFlatIntegerTerm()` |

@@ -228,6 +228,7 @@ function tab5Snapshot(c: Character): string {
     occVar: c.creationOccVariableResolutions,
     psychicTier: c.creationPsychicTier,
     bypassed: c.psychicGateBypassed,
+    primaryDiceFinalized: c.creationPrimaryDiceFinalized === true,
   })
 }
 
@@ -235,6 +236,7 @@ function tab5Snapshot(c: Character): string {
 function tab6Snapshot(c: Character): string {
   return stableJson({
     traitForge: c.creationTraitForgeStubComplete === true,
+    morphusDiceFinalized: c.creationMorphusDiceFinalized === true,
     morphusForge: c.morphusForgeState,
     raceId: c.raceId,
     occId: c.occ.id,

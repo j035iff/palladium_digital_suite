@@ -24,6 +24,10 @@ import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
 import { getIqBonuses, getPpBonuses } from './attributeBonuses'
 import { buildMorphusTraitHorrorFactorDetails } from './morphusCreationLedger'
 import { DEFAULT_HORROR_FACTOR_BY_FORM } from '../data/constants'
+import {
+  expandInitiativeStackWithAttribution,
+  liveCombatPassiveKeyAttribution,
+} from './liveCombatAttribution'
 
 export type SheetBonusLine = { label: string; amount: number }
 
@@ -150,8 +154,6 @@ function buildLiveCombatStack(
       specializationId: ctx.specId,
       occResolutions: ctx.resolutions,
       morphusRaceBonus: ctx.morphusBase.initiative ?? 0,
-      traitMisc: ctx.passive.initiative ?? 0,
-      traitMiscLabel: 'Passive initiative',
       hth: hth?.initiative,
       hthLabel:
         hth?.initiative && hthShort ? `HtH (${hthShort})` : null,
@@ -197,9 +199,22 @@ export function resolveLiveCombatStatDetails(
   combatKey: 'strike' | 'parry' | 'dodge' | 'initiative',
 ): SheetCombatStatDetails {
   const stack = buildLiveCombatStack(ctx, combatKey)
+  if (combatKey !== 'initiative') {
+    return {
+      total: statStackTotal(stack),
+      lines: statStackToSheetBonusLines(stack),
+    }
+  }
+  const attribution = liveCombatPassiveKeyAttribution(
+    ctx.character,
+    ctx.activeForm,
+    'initiative',
+    { supportsDualForm: ctx.supportsDualForm },
+  )
+  const expanded = expandInitiativeStackWithAttribution(stack, attribution)
   return {
-    total: statStackTotal(stack),
-    lines: statStackToSheetBonusLines(stack),
+    total: statStackTotal(expanded),
+    lines: statStackToSheetBonusLines(expanded),
   }
 }
 

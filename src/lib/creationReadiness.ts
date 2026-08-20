@@ -1,4 +1,4 @@
-import type { Character } from '../types'
+import type { Character, PalladiumOcc, Race } from '../types'
 import { getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import {
   assessAbilitiesBudgetBlockers,
@@ -36,6 +36,11 @@ import { resolveEffectivePalladiumOcc } from './occComposition'
 import { creationHandToHandReservedRelatedSlots } from './creationHandToHandChoice'
 import { raceLineageFromDefinition } from './raceEngine'
 import { creationAttributesBlockerLabel } from './creationFormLabels'
+import { isMorphusForgeComplete } from './morphusForgeNavigation'
+import {
+  listPendingDiceBlocks,
+  pendingDiceBlocksResolutionComplete,
+} from './pendingDiceLedger'
 
 function attrsPlausible(attrs: {
   iq: number
@@ -185,6 +190,69 @@ export function assessCreationReviewBlockers(
   return blockers
 }
 
+function assessCreationDiceSpawnBlockers(
+  character: Character,
+  race: Race | undefined,
+  occ: PalladiumOcc | undefined,
+  supportsDualForm: boolean,
+  psychicTier: string,
+): string[] {
+  const blockers: string[] = []
+  const resolutions = character.creationPendingDiceResolutions ?? {}
+
+  const primaryScope = supportsDualForm ? ('primary' as const) : ('all' as const)
+  const primaryBlocks = listPendingDiceBlocks(character, race, occ, {
+    supportsDualForm,
+    psychicTier,
+    scope: primaryScope,
+  })
+  if (
+    primaryBlocks.length > 0 &&
+    !pendingDiceBlocksResolutionComplete(primaryBlocks, resolutions)
+  ) {
+    blockers.push(
+      supportsDualForm
+        ? 'Enter all Facade physical die results on the Roll Pending tab.'
+        : 'Enter all physical die results on the Roll Pending tab.',
+    )
+  }
+
+  if (!supportsDualForm) return blockers
+
+  const morphusCtx = {
+    supportsDualForm: true as const,
+    psychicTier,
+    race,
+    occ,
+  }
+
+  if (character.creationTraitForgeStubComplete !== true) {
+    blockers.push(
+      'Complete the Morphus Sub-Forge and click Finalize Morphus on the Traits tab.',
+    )
+  } else if (!isMorphusForgeComplete(character, morphusCtx)) {
+    blockers.push(
+      'Complete all Morphus Sub-Forge steps (including custom traits and vitality dice).',
+    )
+  }
+
+  const morphusBlocks = listPendingDiceBlocks(character, race, occ, {
+    supportsDualForm: true,
+    psychicTier,
+    scope: 'morphus',
+  })
+  if (
+    morphusBlocks.length > 0 &&
+    !pendingDiceBlocksResolutionComplete(morphusBlocks, resolutions)
+  ) {
+    blockers.push(
+      'Enter all Morphus physical die results on Traits → Review.',
+    )
+  }
+
+  return blockers
+}
+
 /**
  * Pillar 8 — radical visibility: block Spawn until the mirrored build is coherent.
  */
@@ -194,27 +262,28 @@ export function assessCreationSpawnBlockers(
 ): string[] {
   const blockers = assessCreationReviewBlockers(character)
 
+  const raceGenre = raceCatalogGenreId(character.hostGenreId, character.creationGenreId)
+  const race = character.raceId?.trim()
+    ? getRaceById(character.raceId, raceGenre)
+    : undefined
+  const occ = creationUsesOccSkillProgram(race)
+    ? resolveCreationOccLibraryRow(race, character.occ.id)
+    : undefined
   const supportsDualForm =
     opts?.supportsDualForm ??
-    raceLineageFromDefinition(
-      character.raceId?.trim()
-        ? getRaceById(
-            character.raceId,
-            raceCatalogGenreId(character.hostGenreId, character.creationGenreId),
-          )
-        : undefined,
-    ) === 'nightbane'
+    raceLineageFromDefinition(race) === 'nightbane'
+  const psychicTier =
+    opts?.psychicTier ?? resolveCreationPsychicTier(character)
 
-  if (character.creationPrimaryDiceFinalized !== true) {
-    blockers.push(
-      'Complete all pending dice on the Roll Pending tab before Review & Spawn.',
-    )
-  }
-  if (supportsDualForm && character.creationMorphusDiceFinalized !== true) {
-    blockers.push(
-      'Complete Morphus dice on the Traits tab before Review & Spawn.',
-    )
-  }
+  blockers.push(
+    ...assessCreationDiceSpawnBlockers(
+      character,
+      race,
+      occ,
+      supportsDualForm,
+      psychicTier,
+    ),
+  )
 
   return blockers
 }

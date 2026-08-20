@@ -58,6 +58,10 @@ import {
 } from './creationSkillPicks'
 import { isDiceNotation, diceNotationBounds } from './diceNotationBounds'
 import { formatBonus } from './combatQuickBonuses'
+import {
+  expandInitiativeStackWithAttribution,
+  liveCombatPassiveKeyAttribution,
+} from './liveCombatAttribution'
 import { computeMaxApm, resolveAttacksPerMelee } from './meleeCombat'
 import {
   handToHandAttackBonus,
@@ -1527,15 +1531,15 @@ function buildCreationInitiativeLine(
   attrs: CharacterAttributes,
   handToHand: AccumulatedHandToHandBonuses | undefined,
   hthShort: string | null,
-  passive: FeatureModifiers,
   morphusBase: FeatureModifiers,
   character: Character,
   morphusLedger: boolean,
   occ?: PalladiumOcc,
   specializationId?: string | null,
   resolutions: Readonly<Record<string, number>> = {},
+  activeForm: ActiveForm = morphusLedger ? 'morphus' : 'primary',
 ): CreationLedgerLine {
-  const stack = buildCreationStatStack({
+  const stackBase = buildCreationStatStack({
     kind: 'combat',
     combatKey: 'initiative',
     attrs,
@@ -1543,17 +1547,21 @@ function buildCreationInitiativeLine(
     specializationId,
     occResolutions: resolutions,
     morphusRaceBonus: morphusBase.initiative ?? 0,
-    traitMisc: passive.initiative ?? 0,
-    traitMiscLabel: 'Features',
     hth: handToHand?.initiative,
     hthLabel: handToHand?.initiative && hthShort ? `HtH ${hthShort}` : null,
   })
+  const attribution = liveCombatPassiveKeyAttribution(
+    character,
+    activeForm,
+    'initiative',
+    { supportsDualForm: morphusLedger },
+  )
+  const stack = expandInitiativeStackWithAttribution(stackBase, attribution)
   return combatLedgerLineFromParts(
     'Initiative',
     statStackToLedgerLines(stack),
     [],
     stack,
-    perTraitCombatContributions(character, 'initiative', morphusLedger),
   )
 }
 
@@ -1847,13 +1855,13 @@ export function buildCreationCombatBlock(
       attrs,
       handToHand,
       hthShort,
-      passive,
       morphusBase,
       character,
       morphusLedger,
       occ,
       specId,
       occResolutions,
+      activeForm,
     ),
     buildCreationPerceptionLine(attrs, passive, morphusBase, character, morphusLedger),
     buildCreationCombatStatLine(

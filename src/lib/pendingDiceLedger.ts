@@ -86,7 +86,8 @@ function rollIdsForScope(
   )
 }
 
-function clearForgeTabMark(
+/** Re-open Roll Pending / Traits when dice are edited after Continue. */
+export function clearCreationForgeTabMark(
   prev: CharacterRootState,
   tabId: CharacterCreationForgeTabId,
 ): Pick<CharacterRootState, 'creationForgeCompleted' | 'creationForgeSnapshots'> {
@@ -95,6 +96,13 @@ function clearForgeTabMark(
   delete completed[tabId]
   delete snapshots[tabId]
   return { creationForgeCompleted: completed, creationForgeSnapshots: snapshots }
+}
+
+function clearForgeTabMark(
+  prev: CharacterRootState,
+  tabId: CharacterCreationForgeTabId,
+): Pick<CharacterRootState, 'creationForgeCompleted' | 'creationForgeSnapshots'> {
+  return clearCreationForgeTabMark(prev, tabId)
 }
 
 /** Re-open Roll Pending / Traits when dice are edited after Continue. */
