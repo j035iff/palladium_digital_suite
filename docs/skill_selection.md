@@ -33,11 +33,11 @@ This document defines skill synergies, attribute scaling, prerequisites, and the
 **Master skill equation:**
 
 ```
-Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + attr scaling + status
+Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + per-skill attr mods + status
 ```
 
-- **M.A. scaling:** +1% per point above M.A. 20.
-- **P.B. scaling:** +1% per 2 points above P.B. 17.
+- **I.Q. scaling:** exceptional table from 17+ applies to **all** skills (see `attributeBonuses.ts` / stat engine).
+- **M.A. / P.B.:** affect Trust/Intimidate and Charm/Impress attribute rolls — **not** a global skill bump. When a skill lists M.A./P.B. scaling (e.g. Seduction), encode it on that catalog row via `skillPercentAttributeModifiers`.
 - **Status modifiers:** Global signed variable (e.g. −20% Confused, +10% Blessed).
 
 ---

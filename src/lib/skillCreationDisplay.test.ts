@@ -29,7 +29,6 @@ describe('skillCreationDisplay voucher bonuses', () => {
       },
       skillPercentCtx,
       iqBonus: 0,
-      maPbBonus: 0,
       pick: buildCreationSkillPick('skill_biology', {}),
     })
 
@@ -64,7 +63,6 @@ describe('skillCreationDisplay percent summary', () => {
       voucherPicks: {},
       skillPercentCtx,
       iqBonus: 4,
-      maPbBonus: 0,
       pick,
       allPicks: [pick, synergyPick],
     })

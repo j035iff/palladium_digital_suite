@@ -92,6 +92,11 @@ export function PsStrengthPanel({ capacities, morphus, compact = false }: Props)
               <span className="font-mono">{dmg.powerPunch}</span>
               <span className="opacity-80"> — {dmg.powerPunchMeleeActions} APM</span>
             </li>
+            {dmg.attributeDamageBonus > 0 ? (
+              <li className="opacity-80">
+                P.S. +{dmg.attributeDamageBonus} on full / power (not restrained)
+              </li>
+            ) : null}
           </ul>
         ) : (
           <p className={`text-[11px] ${muted}`}>

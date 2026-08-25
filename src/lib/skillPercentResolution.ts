@@ -5,7 +5,6 @@ import {
   resolveLiveIqSkillBonus,
 } from './liveStatEngine'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
-import { maPbScaledBonuses } from './skillEquation'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
@@ -46,7 +45,6 @@ export function buildSkillPercentContext(
   >,
   activeForm: ActiveForm,
   iqBonus?: number,
-  maPbBonus?: number,
   morphusSurfaceType?: MorphusSurfaceType,
 ): SkillPercentResolutionContext {
   const fullCharacter = character as Character
@@ -57,11 +55,9 @@ export function buildSkillPercentContext(
     passive,
   )
   const resolvedIq = resolveLiveIqSkillBonus(fullCharacter, activeForm)
-  const resolvedMaPb = maPbScaledBonuses(displayAttrs.ma, displayAttrs.pb)
   return {
     characterLevel: character.level,
     iqBonus: iqBonus ?? resolvedIq,
-    maPbBonus: maPbBonus ?? resolvedMaPb,
     activeForm,
     primaryPp: character.primary.attributes.pp,
     morphusSurfaceType: morphusSurfaceType ?? 'hard_flat',
@@ -82,7 +78,6 @@ export function buildSkillPercentContext(
 export type SkillPercentResolutionContext = {
   characterLevel: number
   iqBonus: number
-  maPbBonus?: number
   activeForm: ActiveForm
   /** Primary-form P.P. for optional low-dexterity / light-touch penalties. */
   primaryPp: number
@@ -117,16 +112,8 @@ export function resolveSkillPercent(
   catalogEntry?: PalladiumSkillCatalogEntry,
 ): SkillPercentBreakdown {
   const catalog = catalogEntry ?? catalogForSkillId(skill.id)
-  const maPb = ctx.maPbBonus ?? 0
 
-  const equationPercent = calculateSkillPercent(
-    {
-      ...skill,
-      scaledAttBonuses: (skill.scaledAttBonuses ?? 0) + maPb,
-    },
-    ctx.characterLevel,
-    ctx.iqBonus,
-  )
+  const equationPercent = calculateSkillPercent(skill, ctx.characterLevel, ctx.iqBonus)
 
   const lines: SkillPercentBreakdownLine[] = []
 

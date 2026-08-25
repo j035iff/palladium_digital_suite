@@ -1,6 +1,9 @@
 /**
  * Master Skill Equation (skill_selection.md §3).
- * [Base% + (Per Level × (Eff. Level − 1))] + [O.C.C. Bonus] + [I.Q. Bonus] + [Synergy] + [Scaled Att.] + [Status]
+ * [Base% + (Per Level × (Eff. Level − 1))] + [O.C.C. Bonus] + [I.Q. Bonus] + [Synergy] + [Skill attr mods] + [Status]
+ *
+ * M.A. / P.B. affect Trust/Intimidate and Charm/Impress (attribute rolls), not all skills.
+ * Per-skill M.A./P.B. % lives in catalog `skillPercentAttributeModifiers` (e.g. Seduction).
  */
 
 export type SkillEquationSkill = {
@@ -40,7 +43,10 @@ export function calculateSkillPercent(
   )
 }
 
-/** M.A. / P.B. table fragments from skill_selection.md §3 (signed integers). */
+/**
+ * Seduction-style M.A./P.B. scaling (floor on P.B. steps). Prefer catalog
+ * `skillPercentAttributeModifiers` at runtime — not applied globally to every skill.
+ */
 export function maPbScaledBonuses(ma: number, pb: number): number {
   let n = 0
   if (ma > 20) n += ma - 20

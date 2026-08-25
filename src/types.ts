@@ -104,8 +104,13 @@ export type StandardHandToHandDamageProfile = {
 /** Supernatural: dice from damage table (power punch costs {@link powerPunchMeleeActions} APM). */
 export type SupernaturalHandToHandDamageProfile = {
   kind: 'supernatural'
+  /** Exceptional P.S. damage bonus (score − 15 at 17+); applied to full/power only. */
+  attributeDamageBonus: number
+  /** Table dice only — no P.S. attribute damage bonus. */
   restrainedPunch: string
+  /** Table full punch + P.S. attribute damage bonus when exceptional. */
   fullStrengthPunch: string
+  /** Table power punch + P.S. attribute damage bonus when exceptional. */
   powerPunch: string
   powerPunchMeleeActions: 2
 }

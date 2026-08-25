@@ -544,7 +544,6 @@ export function SkillEngine() {
   )
 
   const iqBonus = skillPercentCtx.iqBonus
-  const maPbBonus = skillPercentCtx.maPbBonus
 
   const synergyAvailability = useMemo(
     () => ({
@@ -576,8 +575,6 @@ export function SkillEngine() {
 
       iqBonus,
 
-      maPbBonus,
-
       allPicks: allCreationPicks,
 
       synergyAvailability,
@@ -603,8 +600,6 @@ export function SkillEngine() {
       skillPercentCtx,
 
       iqBonus,
-
-      maPbBonus,
 
       allCreationPicks,
 

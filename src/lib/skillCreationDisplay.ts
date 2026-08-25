@@ -194,7 +194,6 @@ function sumSynergyBonuses(lines: readonly ActiveSynergyBonusLine[]): number {
 function buildPercentBreakdownParts(
   baseAtLevel: number,
   iqBonus: number,
-  maPbBonus: number,
   occBonus: number,
   synergyLines: readonly ActiveSynergyBonusLine[],
   contextBonuses: readonly SkillBonusLine[],
@@ -209,13 +208,6 @@ function buildPercentBreakdownParts(
     parts.push({
       kind: 'iq',
       text: `${iqBonus > 0 ? '+' : ''}${iqBonus} IQ`,
-    })
-  }
-
-  if (maPbBonus !== 0) {
-    parts.push({
-      kind: 'iq',
-      text: `${maPbBonus > 0 ? '+' : ''}${maPbBonus} M.A. / P.B.`,
     })
   }
 
@@ -316,7 +308,6 @@ function collectEquationBonusLines(
   def: EngineSkillDef,
   occBonus: number,
   iqBonus: number,
-  maPbBonus: number,
   tier: SkillPickDisplayTier,
   synergyLines: readonly ActiveSynergyBonusLine[],
 ): SkillBonusLine[] {
@@ -333,9 +324,6 @@ function collectEquationBonusLines(
   const skillScaled = def.scaledAttBonuses ?? 0
   if (skillScaled !== 0) {
     lines.push({ label: 'Attribute (skill)', value: skillScaled })
-  }
-  if (maPbBonus !== 0) {
-    lines.push({ label: 'M.A. / P.B.', value: maPbBonus })
   }
   const status = def.statusModifiers ?? 0
   if (status !== 0) {
@@ -424,7 +412,6 @@ export function resolveSkillCreationDisplay(
     relatedVoucherPicks?: Readonly<Record<string, unknown>>
     skillPercentCtx: SkillPercentResolutionContext
     iqBonus: number
-    maPbBonus: number
     pick?: CreationSkillPick
     allPicks?: readonly CreationSkillPick[]
     synergyAvailability?: CreationSkillAvailabilityContext
@@ -455,7 +442,6 @@ export function resolveSkillCreationDisplay(
     def,
     occBonus,
     opts.iqBonus,
-    opts.maPbBonus,
     tier,
     synergyLines,
   )
@@ -480,7 +466,6 @@ export function resolveSkillCreationDisplay(
           parts: buildPercentBreakdownParts(
             baseAtLevel,
             opts.iqBonus,
-            opts.maPbBonus,
             occBonus,
             synergyLines,
             contextBonuses,

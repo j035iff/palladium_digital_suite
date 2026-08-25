@@ -26,7 +26,7 @@ To satisfy the "Megaversal Bridge," P.S. is not just a number; it has a **Power 
 | **Standard** | Standard P.S. damage bonuses. | P.S. x 10 lbs (Carry). |
 | **Augmented** | Enhanced bonuses; can damage M.D.C. | P.S. x 20 lbs (Carry). |
 | **Robotic** | Fixed damage dice based on P.S. | P.S. x 25 lbs (Carry). |
-| **Supernatural** | Massive M.D.C. punch damage. | P.S. x 50 lbs (Carry). |
+| **Supernatural** | Table dice by P.S. band (restrained / full / power). Exceptional P.S. damage bonus (score − 15 at 17+) applies to **full** and **power** punches only — not restrained. | P.S. x 50 lbs (Carry) ≤17; x 100 above. |
 
 ---
 

@@ -104,27 +104,42 @@ function lookupSupernaturalDamageRow(psScore: number) {
   return row
 }
 
+/** Append exceptional P.S. flat damage to a dice notation (e.g. `4D6` → `4D6+5`). */
+export function appendPsAttributeDamageBonus(
+  notation: string,
+  attributeDamageBonus: number,
+): string {
+  if (attributeDamageBonus <= 0) return notation
+  return `${notation}+${attributeDamageBonus}`
+}
+
 export function getHandToHandDamageProfile(
   psScore: number,
   category: StrengthCategory,
 ): HandToHandDamageProfile {
+  const attributeDamageBonus = psAttributeDamageBonus(psScore)
+
   if (category === 'supernatural') {
     const row = lookupSupernaturalDamageRow(psScore)
     return {
       kind: 'supernatural',
+      attributeDamageBonus,
+      // Restrained punches do not add the exceptional P.S. damage bonus.
       restrainedPunch: row.restrained,
-      fullStrengthPunch: row.full,
-      powerPunch: row.power,
+      fullStrengthPunch: appendPsAttributeDamageBonus(
+        row.full,
+        attributeDamageBonus,
+      ),
+      powerPunch: appendPsAttributeDamageBonus(row.power, attributeDamageBonus),
       powerPunchMeleeActions: 2,
     }
   }
 
-  const attributeDamageBonus = psAttributeDamageBonus(psScore)
-  const bonus = attributeDamageBonus
   return {
     kind: 'standard',
     attributeDamageBonus,
-    unarmedDamageNotation: bonus > 0 ? `1D3+${bonus}` : '1D3',
+    unarmedDamageNotation:
+      attributeDamageBonus > 0 ? `1D3+${attributeDamageBonus}` : '1D3',
   }
 }
 

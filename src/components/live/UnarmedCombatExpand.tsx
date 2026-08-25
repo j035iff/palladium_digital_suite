@@ -18,17 +18,21 @@ function SheetCombatStatTile({
   label,
   detail,
   morphus,
+  locked,
 }: {
   label: string
   detail: SheetCombatDerived['strike']
   morphus: boolean
+  locked?: boolean
 }) {
-  const tip = formatSheetBonusEquation(detail, formatBonus)
+  const tip = locked
+    ? 'Unlock via Hand-to-Hand progression.'
+    : formatSheetBonusEquation(detail, formatBonus)
   return (
     <div
       className={`group relative min-h-[5rem] rounded-md border px-2 py-2 text-center ${
         morphus ? 'border-violet-400/80 bg-slate-950/80' : 'border-blue-200 bg-white'
-      }`}
+      } ${locked ? 'opacity-60' : ''}`}
     >
       <p
         className={`mb-1 text-[9px] font-bold uppercase leading-tight opacity-80 ${
@@ -39,10 +43,16 @@ function SheetCombatStatTile({
       </p>
       <p
         className={`font-mono text-2xl font-black tabular-nums leading-none ${
-          morphus ? 'text-amber-300' : 'text-blue-800'
+          locked
+            ? morphus
+              ? 'text-sm font-bold uppercase tracking-wide text-violet-300/80'
+              : 'text-sm font-bold uppercase tracking-wide text-slate-500'
+            : morphus
+              ? 'text-amber-300'
+              : 'text-blue-800'
         }`}
       >
-        {formatBonus(detail.total)}
+        {locked ? 'Locked' : formatBonus(detail.total)}
       </p>
       <div
         role="tooltip"
@@ -147,11 +157,24 @@ export function UnarmedCombatExpand({
         }
       />
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
         <SheetCombatStatTile label="Strike" detail={combat.strike} morphus={morphus} />
         <SheetCombatStatTile label="Parry" detail={combat.parry} morphus={morphus} />
         <SheetCombatStatTile label="Dodge" detail={combat.dodge} morphus={morphus} />
         <SheetCombatStatTile label="Roll w/ Impact" detail={combat.rollWithImpact} morphus={morphus} />
+        <SheetCombatStatTile label="Pull Punch" detail={combat.pullPunch} morphus={morphus} />
+        <SheetCombatStatTile
+          label="Entangle"
+          detail={combat.entangle}
+          morphus={morphus}
+          locked={!acc.entangleUnlocked}
+        />
+        <SheetCombatStatTile
+          label="Disarm"
+          detail={combat.disarm}
+          morphus={morphus}
+          locked={!acc.disarmUnlocked}
+        />
       </div>
 
       <section className={`rounded-lg border px-3 py-2 text-[11px] ${card}`}>
@@ -199,11 +222,6 @@ export function UnarmedCombatExpand({
           </li>
           <li className={acc.leapAttack ? '' : `opacity-55 ${muted}`}>
             Leap Attack{acc.leapAttack ? ' — automatic critical; uses remaining attacks this melee' : ' — not yet unlocked'}
-          </li>
-          <li>
-            Pull punch {formatBonus(acc.pullPunch)}
-            {acc.entangleUnlocked ? ` · Entangle ${formatBonus(acc.entangle)}` : ' · Entangle locked'}
-            {acc.disarmUnlocked ? ` · Disarm ${formatBonus(acc.disarm)}` : ' · Disarm locked'}
           </li>
           {crit ? <li>Critical strike on {crit}</li> : null}
           {ko ? <li>Knockout / stun on {ko}</li> : null}

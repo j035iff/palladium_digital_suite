@@ -43,10 +43,44 @@ describe('resolveLiveSkillPercent', () => {
         description: '',
       } as unknown as PalladiumSkillCatalogEntry,
     )
-    expect(resolved.equationPercent).toBe(
-      30 + ctx.iqBonus + ctx.maPbBonus,
-    )
+    expect(resolved.equationPercent).toBe(30 + ctx.iqBonus)
     expect(resolved.total).toBe(resolved.equationPercent)
+  })
+
+  it('does not apply global M.A./P.B. scaling to ordinary skills', () => {
+    const highSocial = {
+      ...characterFixture,
+      primary: {
+        ...characterFixture.primary,
+        attributes: {
+          ...characterFixture.primary.attributes,
+          ma: 30,
+          pb: 27,
+        },
+      },
+    }
+    const resolved = resolveLiveSkillPercent(
+      {
+        id: 'skill_pick_locks',
+        basePercent: 30,
+        perLevel: 0,
+        acquisitionLevel: 1,
+        occBonus: 0,
+      },
+      highSocial,
+      'primary',
+      {
+        id: 'skill_pick_locks',
+        name: 'Pick Locks',
+        gameSystems: ['nightbane'],
+        categories: ['Espionage'],
+        skillTraits: ['requires_light_touch'],
+        synergies: [],
+        prerequisites: [],
+        description: '',
+      } as unknown as PalladiumSkillCatalogEntry,
+    )
+    expect(resolved.total).toBe(30 + resolveLiveIqSkillBonus(highSocial, 'primary'))
   })
 })
 

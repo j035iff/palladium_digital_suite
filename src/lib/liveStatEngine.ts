@@ -240,6 +240,45 @@ export function resolveLivePullPunchDetails(
   }
 }
 
+function buildLiveManeuverStack(
+  ctx: LiveCombatContext,
+  maneuver: 'entangle' | 'disarm',
+): StatStackTerm[] {
+  const hth = ctx.handToHand?.accumulated
+  const hthShort = ctx.handToHand?.skillName ?? null
+  const hthAmount = maneuver === 'entangle' ? hth?.entangle : hth?.disarm
+  return buildCreationStatStack({
+    kind: 'maneuver',
+    maneuver,
+    morphusRaceBonus: ctx.morphusBase[maneuver] ?? 0,
+    traitBonus: ctx.passive[maneuver] ?? 0,
+    hth: hthAmount,
+    hthLabel: hthAmount && hthShort ? `HtH (${hthShort})` : null,
+  })
+}
+
+/** Entangle — HtH unlock + race/trait/HtH stack (creation ledger parity). */
+export function resolveLiveEntangleDetails(
+  ctx: LiveCombatContext,
+): SheetCombatStatDetails {
+  const stack = buildLiveManeuverStack(ctx, 'entangle')
+  return {
+    total: statStackTotal(stack),
+    lines: statStackToSheetBonusLines(stack),
+  }
+}
+
+/** Disarm — HtH unlock + race/trait/HtH stack (creation ledger parity). */
+export function resolveLiveDisarmDetails(
+  ctx: LiveCombatContext,
+): SheetCombatStatDetails {
+  const stack = buildLiveManeuverStack(ctx, 'disarm')
+  return {
+    total: statStackTotal(stack),
+    lines: statStackToSheetBonusLines(stack),
+  }
+}
+
 /** Live-play max APM — `2 + statStackTotal(apm_modifiers)` (matches creation ledger). */
 export function resolveLiveCharacterMaxApm(
   character: Character,

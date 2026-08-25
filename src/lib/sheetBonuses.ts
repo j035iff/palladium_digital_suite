@@ -6,6 +6,9 @@ import {
   buildDisplayAttributesForLiveEngine,
   buildLiveCombatContext,
   resolveLiveCombatStatDetails,
+  resolveLiveDisarmDetails,
+  resolveLiveEntangleDetails,
+  resolveLivePullPunchDetails,
   resolveLiveRollWithImpactDetails,
   type SheetBonusLine,
   type SheetCombatStatDetails,
@@ -19,6 +22,9 @@ export type SheetCombatDerived = {
   parry: SheetCombatStatDetails
   dodge: SheetCombatStatDetails
   rollWithImpact: SheetCombatStatDetails
+  pullPunch: SheetCombatStatDetails
+  entangle: SheetCombatStatDetails
+  disarm: SheetCombatStatDetails
   initiative: SheetCombatStatDetails
 }
 
@@ -111,6 +117,9 @@ export function computeSheetCombatDerived(
     parry: resolveLiveCombatStatDetails(ctx, 'parry'),
     dodge: resolveLiveCombatStatDetails(ctx, 'dodge'),
     rollWithImpact: resolveLiveRollWithImpactDetails(ctx),
+    pullPunch: resolveLivePullPunchDetails(ctx),
+    entangle: resolveLiveEntangleDetails(ctx),
+    disarm: resolveLiveDisarmDetails(ctx),
     initiative: resolveLiveCombatStatDetails(ctx, 'initiative'),
   }
 }

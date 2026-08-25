@@ -12,7 +12,7 @@ import {
 } from './liveStatEngine'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
 import type { SkillPercentAttributeScores } from './skillPercentAttributeModifiers'
-import { maPbScaledBonuses, type SkillEquationSkill } from './skillEquation'
+import { type SkillEquationSkill } from './skillEquation'
 import {
   resolveSkillPercent,
   type SkillPercentBreakdown,
@@ -23,7 +23,6 @@ export type { SkillPercentBreakdown, SkillPercentResolutionContext }
 
 export type LiveSkillContext = SkillPercentResolutionContext & {
   iqBonus: number
-  maPbBonus: number
   attributeScores: SkillPercentAttributeScores
 }
 
@@ -48,7 +47,7 @@ const DEFAULT_SKILL_BASE = 28
 
 /**
  * Unified live/creation skill % context: display I.Q. via stat engine,
- * M.A./P.B. scaling, Morphus traits, and catalog attribute modifiers.
+ * Morphus traits, and catalog attribute modifiers.
  */
 export function buildLiveSkillContext(
   character: Pick<
@@ -70,7 +69,6 @@ export function buildLiveSkillContext(
     passive,
   )
   const iqBonus = resolveLiveIqSkillBonus(fullCharacter, activeForm)
-  const maPbBonus = maPbScaledBonuses(displayAttrs.ma, displayAttrs.pb)
   const attributeScores: SkillPercentAttributeScores = {
     iq: displayAttrs.iq,
     me: displayAttrs.me,
@@ -85,7 +83,6 @@ export function buildLiveSkillContext(
   return {
     characterLevel: character.level,
     iqBonus,
-    maPbBonus,
     activeForm,
     primaryPp: character.primary.attributes.pp,
     morphusSurfaceType: opts?.morphusSurfaceType ?? 'hard_flat',

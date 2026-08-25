@@ -8,6 +8,8 @@ import {
   resolveLiveAttributeSaveBonus,
   resolveLiveCharacterMaxApm,
   resolveLiveCombatStatDetails,
+  resolveLiveDisarmDetails,
+  resolveLiveEntangleDetails,
   resolveLiveRollWithImpactDetails,
   resolveLivePullPunchDetails,
 } from './liveStatEngine'
@@ -137,5 +139,48 @@ describe('resolveLiveRollWithImpactDetails', () => {
     expect(roll.total).not.toBe(roll.total + pull.total)
     expect(roll.lines.some((line) => line.label.includes('HtH'))).toBe(true)
     expect(roll.lines.filter((line) => line.label.includes('HtH'))).toHaveLength(1)
+  })
+})
+
+describe('resolveLiveManeuverDetails', () => {
+  it('resolves entangle from HtH when unlocked', () => {
+    const martial = getHandToHandSkillById('hth_martial_arts')
+    expect(martial).toBeDefined()
+    const accumulated = {
+      ...accumulateHandToHandBonuses(martial!, 5),
+      entangle: 3,
+    }
+    expect(accumulated.entangleUnlocked).toBe(true)
+
+    const ctx = buildLiveCombatContext(characterFixture, 'primary', {
+      handToHand: {
+        skillName: martial!.name,
+        accumulated,
+      },
+    })
+
+    const entangle = resolveLiveEntangleDetails(ctx)
+    expect(entangle.total).toBe(3)
+  })
+
+  it('resolves disarm from HtH when unlocked', () => {
+    const martial = getHandToHandSkillById('hth_martial_arts')
+    expect(martial).toBeDefined()
+    const accumulated = {
+      ...accumulateHandToHandBonuses(martial!, 5),
+      disarmUnlocked: true,
+      disarm: 2,
+    }
+
+    const ctx = buildLiveCombatContext(characterFixture, 'primary', {
+      handToHand: {
+        skillName: martial!.name,
+        accumulated,
+      },
+    })
+
+    const disarm = resolveLiveDisarmDetails(ctx)
+    expect(disarm.total).toBe(2)
+    expect(disarm.lines.some((line) => line.label.includes('HtH'))).toBe(true)
   })
 })

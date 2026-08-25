@@ -58,7 +58,7 @@ describe('sumSkillPercentAttributeModifierPercent', () => {
 })
 
 describe('resolveSkillPercent attribute modifiers', () => {
-  it('stacks seduction M.A./P.B. modifiers on top of generic maPb scaling', () => {
+  it('applies seduction M.A./P.B. only via catalog skillPercentAttributeModifiers', () => {
     const resolved = resolveSkillPercent(
       {
         id: 'skill_seduction',
@@ -71,7 +71,6 @@ describe('resolveSkillPercent attribute modifiers', () => {
       {
         characterLevel: 1,
         iqBonus: 0,
-        maPbBonus: 6,
         activeForm: 'primary',
         primaryPp: 10,
         attributeScores: { ma: 24, pb: 23 },
@@ -105,8 +104,8 @@ describe('resolveSkillPercent attribute modifiers', () => {
       } as unknown as import('../data/library/catalogTypes').PalladiumSkillCatalogEntry,
     )
 
-    expect(resolved.equationPercent).toBe(26)
-    expect(resolved.total).toBe(33)
+    expect(resolved.equationPercent).toBe(20)
+    expect(resolved.total).toBe(27)
     expect(resolved.lines).toContainEqual({
       label: 'M.A. bonus per M.A. over 20',
       value: 4,
