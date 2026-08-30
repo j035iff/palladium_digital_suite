@@ -120,6 +120,7 @@ function CharacterPortraitCard({
 export function AppLauncher() {
   const {
     startCreation,
+    enterGmHub,
     loadSavedCharacter,
     savedCharacterRows,
     inProgressCharacterRows,
@@ -328,6 +329,23 @@ export function AppLauncher() {
               </ul>
             ) : null}
           </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <button
+            type="button"
+            onClick={enterGmHub}
+            className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-amber-700/70 bg-slate-900/70 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] text-amber-100 transition hover:border-amber-400 hover:shadow-[0_0_24px_rgba(251,191,36,0.18)]"
+          >
+            <span className="text-xl" aria-hidden>
+              🜂
+            </span>
+            Gamemaster Hub
+          </button>
+          <p className="text-center text-xs text-slate-500">
+            Local table workspace — party snapshots, fodder, combat abacus. Player
+            devices and LAN join come later.
+          </p>
         </div>
 
         {inProgressCharacterRows.length > 0 ? (

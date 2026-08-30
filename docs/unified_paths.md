@@ -168,6 +168,27 @@ Copy this block when registering a new unified path:
 
 ---
 
+### GM Hub — party observer + combat roster
+
+**Status:** `partial` (local GM-only v1; LAN transport not wired)  
+**Related spec:** `docs/gm_hub.md`
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Transform | `src/utils/genreTransformer.ts` | `transformCharacterToHostEnvironment` | Session `hostGenreId`; saves never written |
+| Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder |
+| Fodder | `src/lib/gm/npcInstance.ts` | `createNpcFromArchetype` | Encounter catalog → instance vitals / APM |
+| Roster | `src/lib/gm/combatRoster.ts` | `assembleGmCombatRoster`, `sortCombatRoster` | One sorted list; `kind: pc \| npc` |
+| Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
+| Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope` | v1 JSON shapes for a future LAN server |
+| UI | `src/components/gm/*` | `GmHubShell` | Sessions / Party / Cast / Combat |
+
+**Modes / variants:** Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer.
+
+**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables.
+
+---
+
 ### Combat Home category bubbles
 
 **Status:** `partial`  
@@ -199,6 +220,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-08-30 | GM Hub party observer + combat roster (local v1) |
 | 2026-07-05 | Vitality gather-first via `resolveVitalityLedgerRows`; combat/saves project through `resolveStackLedgerRow` + `projectStackLine` |
 | 2026-07-05 | Vitality pending blocks projected from `ResolvedLedgerRow`; `refreshMorphusAttributeRowsInContext` avoids full bundle rebuild on Morphus ledger |
 | 2026-07-05 | Creation ledger resolution layer: `ResolvedLedgerRow` + projections; vitality rows from pending blocks; `buildCreationLedgerResolutionBundle` |

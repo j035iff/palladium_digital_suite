@@ -40,7 +40,7 @@ The system reads the static, un-mutated JSON save payload from disk or local sto
 The engine captures the target ecosystem via viewport context (`hostGenreId`), set by:
 
 - Launcher genre / host choices, or
-- A future connected GM session payload.
+- The active GM Hub session `hostGenreId` when a character is cached into a table ([gm_hub.md](./gm_hub.md)). Player-device room payloads remain future work.
 
 ### Step C — Centralized middleware (`genreTransformer.ts`)
 

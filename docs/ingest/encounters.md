@@ -70,7 +70,9 @@ When the schema changes, **update the matching example JSON** under `src/data/sc
 | Use `packageNotes` for reinforcements, faction behavior, GM guidance | Hide options — GM module will show all templates with tap-to-expand math |
 | Keep rows **genre-scoped** under `encounters/<genre>/` | Multi-tag one row with several `gameSystems` when genre folders exist |
 
-**Pillar alignment:** Total GM Agency (all values inspectable/overridable), Radical Visibility (templates listed in GM picker when module ships), Megaversal Bridge (same schema works for Nightbane, Rifts, Fantasy minor NPC sections).
+**Pillar alignment:** Total GM Agency (all values inspectable/overridable), Radical Visibility (templates listed in the GM Hub Cast picker), Megaversal Bridge (same schema works for Nightbane, Rifts, Fantasy minor NPC sections).
+
+**Runtime:** GM Hub Cast / Combat consume these rows as Adversary Quick-Blocks (`docs/gm_hub.md`). Do not route fodder through character creation.
 
 ---
 

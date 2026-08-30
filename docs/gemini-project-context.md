@@ -65,7 +65,7 @@ From `docs/vision.md`:
 Character root state always tracks:
 
 - `creationGenreId` — stamped at creation; defines native rules.
-- `hostGenreId` — active environment (launcher choice or future GM room).
+- `hostGenreId` — active environment (launcher choice or GM Hub session).
 
 ---
 
@@ -93,7 +93,8 @@ The UI theme shifts when Morphus is active (dark violet gradient vs light Facade
 ```
 App Launch (AppLauncher) — docs/app_viewport_launcher.md
   ├─ Open Character → load JSON → genreTransformer → CharacterContext → MainLayout
-  └─ Create Character → pick genre → Forge (docs/forge/character_creation.md) → spawn (docs/character_spawn_handoff.md)
+  ├─ Create Character → pick genre → Forge (docs/forge/character_creation.md) → spawn (docs/character_spawn_handoff.md)
+  └─ Gamemaster Hub → GmHubShell (docs/gm_hub.md) — Sessions / Party / Cast / Combat
 
 MainLayout (live sheet)
   ├─ Identity / XP / form toggle
@@ -145,6 +146,8 @@ src/
                                # LiveLedger, PendingDiceResolutionPanel, ability forge panels
     forge/                     # ForgeNavigationBar, tab shells, Continue gate
     live/                      # CombatHUD, SavingThrowsPanel, Inventory, LevelUpModal
+    gm/                        # GmHubShell — Sessions, Party, Cast, Combat
+
     features/FeatureCard.tsx   # Unified ability/feature presentation
   lib/                         # ~273 modules — rules engines (combat, skills, morphus, forge nav, saves)
   utils/genreTransformer.ts    # Host-genre derivation middleware
@@ -370,7 +373,8 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 | `docs/unified_paths.md` | **Unified path registry** — single-pipeline implementations per Pillar 9 |
 | `docs/srs.md` | Master requirements (Nightbane dual-form, Attribute Forge, Psychic Gate, Combat HUD) |
 | `docs/master_flow.md` | Runtime pipeline, save/mutation loop |
-| `docs/app_viewport_launcher.md` | Gate Check — Open vs Create, genre manifest, viewports |
+| `docs/app_viewport_launcher.md` | Gate Check — Open vs Create vs GM Hub, genre manifest, viewports |
+| `docs/gm_hub.md` | Gamemaster Hub v1 — local session, party snapshots, fodder, combat |
 | `docs/forge/character_creation.md` | Character Creation Forge — tab sequence & state (Identity tab + eight step tabs) |
 | `docs/forge/morphus_creation.md` | Morphus Sub-Forge (Tab 6) |
 | `docs/character_spawn_handoff.md` | Spawn modal, sheet handoff, `isFinalized`, saves |
@@ -422,6 +426,7 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 | Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |
 | Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md), [`docs/unified_paths.md`](unified_paths.md) when pipeline stages change |
 | Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |
+| GM Hub session / combat / party observer | [`docs/gm_hub.md`](gm_hub.md), [`docs/unified_paths.md`](unified_paths.md) when observer/roster pipelines change |
 | Product pillars or AI protocol | [`docs/vision.md`](vision.md), [`.cursorrules`](../.cursorrules) |
 | New unified pipeline (Pillar 9) | [`docs/unified_paths.md`](unified_paths.md) — add or extend registry entry |
 | New catalog type or major content scale shift | [`docs/gemini-project-context.md`](gemini-project-context.md) — counts, paths, related doc index |

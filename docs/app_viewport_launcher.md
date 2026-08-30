@@ -2,7 +2,7 @@
 
 ## Overview
 
-This specification covers **application bootstrap and session initialization** — what happens before (and outside) the Character Creation Forge. It is **not** part of character creation proper; it is the top-level **Gate Check** that chooses whether the user loads an existing record or starts a new build.
+**This specification covers application bootstrap and session initialization** — what happens before (and outside) the Character Creation Forge. It is **not** part of character creation proper; it is the top-level **Gate Check** that chooses whether the user loads an existing record, starts a new build, or opens the Gamemaster Hub.
 
 Related docs:
 
@@ -18,10 +18,13 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
 
 | Viewport | UI | Entry |
 |----------|-----|--------|
-| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header |
+| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header or GM Hub |
 | `sheet` | `MainLayout` — live sheet + optional creation chrome | **Open Character** or **Create Character** |
+| `gm` | `GmHubShell` — Sessions / Party / Cast / Combat | **Gamemaster Hub** on the launcher |
 
-`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, otherwise `MainLayout`.
+`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`.
+
+GM Hub sessions are a separate local record (not a character save). Spec: [gm_hub.md](./gm_hub.md).
 
 ---
 
@@ -56,6 +59,7 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
 3. **Downstream** — User completes the [Character Creation Forge](./forge/character_creation.md); spawn is specified in [character_spawn_handoff.md](./character_spawn_handoff.md).
 
 **Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists.
+
 ### Genre manifest flags
 
 | Field | Effect at creation start |
@@ -65,11 +69,21 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
 
 ---
 
+## Vector C: Gamemaster Hub
+
+**Purpose:** Open the local GM table workspace without loading a character sheet.
+
+1. **Gamemaster Hub** on `AppLauncher` calls `enterGmHub()` → `viewport: 'gm'`.
+2. `GmHubShell` + `GmSessionContext` manage session records in local storage.
+3. Full behavior: [gm_hub.md](./gm_hub.md).
+
+---
+
 ## UX Requirements (Pillar alignment)
 
 - **Radical visibility:** Roadmap genres remain visible but clearly non-selectable.
 - **Megaversal bridge:** `creationGenreId` is stamped at creation and preserved in saves; `hostGenreId` may diverge for cross-setting play.
-- **No hidden launcher paths:** Only Open vs Create (GM session host override is future work per master_flow).
+- **No hidden launcher paths:** Open Character, Create Character, and Gamemaster Hub are all on the portal. Roadmap genres stay visible but non-selectable.
 
 ---
 
@@ -78,7 +92,8 @@ The shell uses a binary viewport switch (`CharacterContext.viewport`):
 | Concern | Location |
 |---------|----------|
 | Launcher UI | `src/components/dashboard/AppLauncher.tsx` |
-| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `returnToLauncher`) |
+| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterGmHub`, `returnToLauncher`) |
+| GM Hub | [gm_hub.md](./gm_hub.md) — `src/components/gm/`, `src/context/GmSessionContext.tsx` |
 | Genre manifest | `src/data/genres.ts` — `GENRE_MANIFEST`, `LAUNCHER_CREATE_OPTIONS` |
 | Blank character root | `src/lib/characterRoot.ts` — `createBlankCharacterForGenre` |
 | Save index | `src/lib/characterIndex.ts` |
