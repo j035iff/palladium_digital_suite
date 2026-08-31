@@ -1,12 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
-import { isGenreId, LAUNCHER_CREATE_OPTIONS } from '../../data/genres'
+import { useGmSession } from '../../context/GmSessionContext'
+import {
+  formatGenreSlug,
+  isGenreId,
+  LAUNCHER_CREATE_OPTIONS,
+} from '../../data/genres'
 import {
   formatCharacterIndexLabel,
   listRecentlyEditedCharacters,
   resolveCharacterIndexRowDisplay,
   type CharacterIndexEntry,
 } from '../../lib/characterIndex'
+import type { GmSessionIndexEntry } from '../../lib/gm/sessionTypes'
 
 function CharacterIndexSelectRow({
   row,
@@ -80,6 +86,40 @@ function InProgressCharacterRow({
   )
 }
 
+function CampaignIndexSelectRow({
+  row,
+  selected,
+  onSelect,
+}: {
+  row: GmSessionIndexEntry
+  selected: boolean
+  onSelect: () => void
+}) {
+  const genreLabel = formatGenreSlug(row.hostGenreId)
+  return (
+    <button
+      type="button"
+      role="option"
+      aria-selected={selected}
+      onClick={onSelect}
+      className={`relative w-full px-4 py-2.5 pr-20 text-left text-sm transition ${
+        selected
+          ? 'bg-amber-500/15 font-semibold text-amber-100 ring-1 ring-inset ring-amber-400/50'
+          : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+      }`}
+    >
+      <sup
+        className={`absolute right-3 top-2 text-[9px] font-bold uppercase tracking-wide ${
+          selected ? 'text-amber-300/90' : 'text-slate-500'
+        }`}
+      >
+        {genreLabel}
+      </sup>
+      <span className="block leading-snug">{row.name}</span>
+    </button>
+  )
+}
+
 const GENRE_ACCENT: Record<string, string> = {
   nightbane: 'from-violet-900 to-indigo-950',
   rifts: 'from-amber-900 to-orange-950',
@@ -121,22 +161,40 @@ export function AppLauncher() {
   const {
     startCreation,
     enterGmHub,
+    enterCampaignForge,
     loadSavedCharacter,
     savedCharacterRows,
     inProgressCharacterRows,
     deleteInProgressCharacter,
     refreshSavedCharacterIndex,
   } = useCharacter()
+  const {
+    sessionList,
+    session,
+    refreshSessionList,
+    openSession,
+    resetCampaignForgeDraft,
+  } = useGmSession()
 
   const [openId, setOpenId] = useState('')
+  const [campaignId, setCampaignId] = useState('')
   const [openMenu, setOpenMenu] = useState(false)
   const [createMenu, setCreateMenu] = useState(false)
+  const [campaignMenu, setCampaignMenu] = useState(false)
   const openPanelRef = useRef<HTMLDivElement>(null)
   const createPanelRef = useRef<HTMLDivElement>(null)
+  const campaignPanelRef = useRef<HTMLDivElement>(null)
+
+  const closeMenus = () => {
+    setOpenMenu(false)
+    setCreateMenu(false)
+    setCampaignMenu(false)
+  }
 
   useEffect(() => {
     refreshSavedCharacterIndex()
-  }, [refreshSavedCharacterIndex])
+    refreshSessionList()
+  }, [refreshSavedCharacterIndex, refreshSessionList])
 
   useEffect(() => {
     if (!openId && savedCharacterRows.length > 0) {
@@ -144,39 +202,64 @@ export function AppLauncher() {
     }
   }, [savedCharacterRows, openId])
 
+  useEffect(() => {
+    if (session?.id) {
+      setCampaignId(session.id)
+      return
+    }
+    if (!campaignId && sessionList.length > 0) {
+      setCampaignId(sessionList[0].id)
+    }
+  }, [session?.id, sessionList, campaignId])
+
   const recentRows = listRecentlyEditedCharacters(6)
 
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       const t = e.target as Node
-      if (openMenu && openPanelRef.current && !openPanelRef.current.contains(t)) {
-        setOpenMenu(false)
-      }
-      if (createMenu && createPanelRef.current && !createPanelRef.current.contains(t)) {
-        setCreateMenu(false)
-      }
+      const inside =
+        (openPanelRef.current && openPanelRef.current.contains(t)) ||
+        (createPanelRef.current && createPanelRef.current.contains(t)) ||
+        (campaignPanelRef.current && campaignPanelRef.current.contains(t))
+      if (!inside) closeMenus()
     }
     document.addEventListener('mousedown', onDocClick)
     return () => document.removeEventListener('mousedown', onDocClick)
-  }, [openMenu, createMenu])
+  }, [openMenu, createMenu, campaignMenu])
 
   const onOpen = (id?: string) => {
     const target = id ?? openId
     if (!target) return
     loadSavedCharacter(target)
-    setOpenMenu(false)
+    closeMenus()
   }
 
   const onCreate = (genreId: string) => {
     if (!isGenreId(genreId)) return
     startCreation(genreId)
-    setCreateMenu(false)
+    closeMenus()
+  }
+
+  const onOpenCampaign = (id?: string) => {
+    const target = id ?? campaignId
+    if (!target) return
+    openSession(target)
+    setCampaignId(target)
+    enterGmHub()
+    closeMenus()
+  }
+
+  const onNewCampaign = () => {
+    resetCampaignForgeDraft()
+    enterCampaignForge()
+    closeMenus()
   }
 
   const selectedRow = savedCharacterRows.find((r) => r.id === openId)
   const selectedRowDisplay = selectedRow
     ? resolveCharacterIndexRowDisplay(selectedRow)
     : null
+  const selectedCampaign = sessionList.find((r) => r.id === campaignId)
 
   return (
     <div className="relative flex min-h-svh flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
@@ -212,6 +295,7 @@ export function AppLauncher() {
               onClick={() => {
                 setOpenMenu((v) => !v)
                 setCreateMenu(false)
+                setCampaignMenu(false)
               }}
               className={`flex w-full items-center justify-center gap-3 rounded-xl border-2 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] transition ${
                 openMenu
@@ -272,6 +356,7 @@ export function AppLauncher() {
               onClick={() => {
                 setCreateMenu((v) => !v)
                 setOpenMenu(false)
+                setCampaignMenu(false)
               }}
               className={`flex w-full items-center justify-center gap-3 rounded-xl border-2 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] transition ${
                 createMenu
@@ -331,21 +416,78 @@ export function AppLauncher() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-6 md:grid-cols-2">
+          <div ref={campaignPanelRef} className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                setCampaignMenu((v) => !v)
+                setOpenMenu(false)
+                setCreateMenu(false)
+              }}
+              className={`flex w-full items-center justify-center gap-3 rounded-xl border-2 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] transition ${
+                campaignMenu
+                  ? 'border-amber-400/80 bg-slate-900/90 text-amber-100 shadow-[0_0_24px_rgba(251,191,36,0.25)]'
+                  : 'border-slate-600 bg-slate-900/70 text-slate-200 hover:border-slate-400'
+              }`}
+              aria-expanded={campaignMenu}
+            >
+              <span className="text-xl" aria-hidden>
+                🜂
+              </span>
+              Campaigns
+            </button>
+
+            {campaignMenu ? (
+              <ul
+                className="absolute left-0 right-0 top-full z-30 mt-2 max-h-64 overflow-y-auto rounded-xl border border-slate-600/90 bg-slate-950/95 py-2 shadow-2xl backdrop-blur-sm"
+                role="listbox"
+              >
+                {sessionList.length === 0 ? (
+                  <li className="px-4 py-3 text-sm text-slate-500">
+                    No campaigns yet — use New Campaign to open the Campaign Creation Forge.
+                  </li>
+                ) : (
+                  sessionList.map((row) => {
+                    const selected = row.id === campaignId
+                    return (
+                      <li key={row.id}>
+                        <CampaignIndexSelectRow
+                          row={row}
+                          selected={selected}
+                          onSelect={() => {
+                            setCampaignId(row.id)
+                            onOpenCampaign(row.id)
+                          }}
+                        />
+                      </li>
+                    )
+                  })
+                )}
+              </ul>
+            ) : null}
+
+            {selectedCampaign && !campaignMenu ? (
+              <p className="mt-3 text-center text-xs text-slate-500">
+                Selected: {selectedCampaign.name}
+                <sup className="ml-1 text-[9px] font-bold uppercase tracking-wide text-slate-600">
+                  {formatGenreSlug(selectedCampaign.hostGenreId)}
+                </sup>{' '}
+                — open menu to switch
+              </p>
+            ) : null}
+          </div>
+
           <button
             type="button"
-            onClick={enterGmHub}
-            className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-amber-700/70 bg-slate-900/70 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] text-amber-100 transition hover:border-amber-400 hover:shadow-[0_0_24px_rgba(251,191,36,0.18)]"
+            onClick={onNewCampaign}
+            className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-slate-600 bg-slate-900/70 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] text-slate-200 transition hover:border-amber-400/80 hover:bg-slate-900/90 hover:text-amber-100 hover:shadow-[0_0_24px_rgba(251,191,36,0.25)]"
           >
             <span className="text-xl" aria-hidden>
-              🜂
+              🗺
             </span>
-            Gamemaster Hub
+            New Campaign
           </button>
-          <p className="text-center text-xs text-slate-500">
-            Local table workspace — party snapshots, fodder, combat abacus. Player
-            devices and LAN join come later.
-          </p>
         </div>
 
         {inProgressCharacterRows.length > 0 ? (

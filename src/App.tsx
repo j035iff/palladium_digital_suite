@@ -1,4 +1,5 @@
 import { AppLauncher } from './components/dashboard/AppLauncher'
+import { CampaignCreationForge } from './components/gm/CampaignCreationForge'
 import { GmHubShell } from './components/gm/GmHubShell'
 import { MainLayout } from './components/layout/MainLayout'
 import { useCharacter } from './context/CharacterContext'
@@ -8,6 +9,10 @@ function App() {
 
   if (viewport === 'launcher') {
     return <AppLauncher />
+  }
+
+  if (viewport === 'campaign_forge') {
+    return <CampaignCreationForge />
   }
 
   if (viewport === 'gm') {

@@ -45,6 +45,7 @@ export function ForgeNavigationBar({
   singleRow = false,
   /** Exposes the Continue control for banner→tab collapse targeting. */
   continueTargetRef,
+  ariaLabel = 'Forge steps',
 }: {
   tabs: ForgeTabView[]
   activeTabId: string
@@ -55,6 +56,7 @@ export function ForgeNavigationBar({
   continueTooltip?: string
   singleRow?: boolean
   continueTargetRef?: RefObject<HTMLButtonElement | null>
+  ariaLabel?: string
 }) {
   const activeRef = useRef<HTMLButtonElement>(null)
 
@@ -69,7 +71,7 @@ export function ForgeNavigationBar({
 
   return (
     <nav
-      aria-label="Forge steps"
+      aria-label={ariaLabel}
       className={
         singleRow
           ? 'flex min-w-0 flex-nowrap items-center gap-1.5 overflow-x-auto overscroll-x-contain pb-0.5 [-ms-overflow-style:none] [scrollbar-width:thin]'

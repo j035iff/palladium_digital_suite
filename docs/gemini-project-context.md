@@ -94,7 +94,8 @@ The UI theme shifts when Morphus is active (dark violet gradient vs light Facade
 App Launch (AppLauncher) — docs/app_viewport_launcher.md
   ├─ Open Character → load JSON → genreTransformer → CharacterContext → MainLayout
   ├─ Create Character → pick genre → Forge (docs/forge/character_creation.md) → spawn (docs/character_spawn_handoff.md)
-  └─ Gamemaster Hub → GmHubShell (docs/gm_hub.md) — Sessions / Party / Cast / Combat
+  ├─ Campaigns → open GM table → GmHubShell (docs/gm_hub.md)
+  └─ New Campaign → Campaign Creation Forge → confirm → GmHubShell (header Open Session)
 
 MainLayout (live sheet)
   ├─ Identity / XP / form toggle
@@ -146,7 +147,7 @@ src/
                                # LiveLedger, PendingDiceResolutionPanel, ability forge panels
     forge/                     # ForgeNavigationBar, tab shells, Continue gate
     live/                      # CombatHUD, SavingThrowsPanel, Inventory, LevelUpModal
-    gm/                        # GmHubShell — Sessions, Party, Cast, Combat
+    gm/                        # GmHubShell — Story/Combat, Home + Party + Cast
 
     features/FeatureCard.tsx   # Unified ability/feature presentation
   lib/                         # ~273 modules — rules engines (combat, skills, morphus, forge nav, saves)
@@ -426,7 +427,7 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 | Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |
 | Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md), [`docs/unified_paths.md`](unified_paths.md) when pipeline stages change |
 | Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |
-| GM Hub session / combat / party observer | [`docs/gm_hub.md`](gm_hub.md), [`docs/unified_paths.md`](unified_paths.md) when observer/roster pipelines change |
+| GM Hub session / combat / party observer / campaign forge | [`docs/gm_hub.md`](gm_hub.md), [`docs/unified_paths.md`](unified_paths.md) when observer/roster/forge pipelines change |
 | Product pillars or AI protocol | [`docs/vision.md`](vision.md), [`.cursorrules`](../.cursorrules) |
 | New unified pipeline (Pillar 9) | [`docs/unified_paths.md`](unified_paths.md) — add or extend registry entry |
 | New catalog type or major content scale shift | [`docs/gemini-project-context.md`](gemini-project-context.md) — counts, paths, related doc index |

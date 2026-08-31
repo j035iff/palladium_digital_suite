@@ -14,15 +14,16 @@ Related docs:
 
 ## Viewport Model
 
-The shell uses a binary viewport switch (`CharacterContext.viewport`):
+The shell uses a viewport switch (`CharacterContext.viewport`):
 
 | Viewport | UI | Entry |
 |----------|-----|--------|
-| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header or GM Hub |
+| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header, GM Hub, or Campaign Creation Forge |
 | `sheet` | `MainLayout` — live sheet + optional creation chrome | **Open Character** or **Create Character** |
-| `gm` | `GmHubShell` — Sessions / Party / Cast / Combat | **Gamemaster Hub** on the launcher |
+| `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
+| `gm` | `GmHubShell` — Story / Combat (Home + Party + Cast) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
 
-`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`.
+`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`.
 
 GM Hub sessions are a separate local record (not a character save). Spec: [gm_hub.md](./gm_hub.md).
 
@@ -69,13 +70,15 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 
 ---
 
-## Vector C: Gamemaster Hub
+## Vector C: Campaigns (Gamemaster Hub)
 
-**Purpose:** Open the local GM table workspace without loading a character sheet.
+**Purpose:** Open or start a local GM campaign without loading a character sheet.
 
-1. **Gamemaster Hub** on `AppLauncher` calls `enterGmHub()` → `viewport: 'gm'`.
-2. `GmHubShell` + `GmSessionContext` manage session records in local storage.
-3. Full behavior: [gm_hub.md](./gm_hub.md).
+1. **Campaigns** — dropdown of persisted tables (`listGmSessions()` / `pds:gmSession:*`). Selecting a row calls `openSession(id)` then `enterGmHub()` → `viewport: 'gm'`.
+2. **New Campaign** — button (not a dropdown). Resets the campaign-forge draft and sets `viewport: 'campaign_forge'`.
+3. **Campaign Creation Forge** — option registry in `src/lib/gm/campaignForge.ts`. v1 **Identity** (unique name + host genre) and **Rules** (`conversionPolicy` dropdown: Disable non-native / Apply conversion). Roadmap genres stay visible but not selectable. Add later campaign choices as new option rows / renderer `kind`s on this same forge — do not fork a second create form. Extra groups may become UFNE tabs later.
+4. **Create Campaign** on the forge is gated until name, genre, and conversion rules validate. Confirm dialog: *Are you sure you want to create a new {Genre} Campaign?* **Yes** commits (`createGmSession` with the chosen conversion policy) and `enterGmHub()`. **Not yet** closes the dialog and leaves the draft editable. Host genre and conversion rules are immutable after create. Hub header `h1` is the campaign name; host genre and conversion rules stay in the subtitle.
+5. Hub landing: Story / Combat master tabs (sheet analogue). **Open Session** is in the hub header under **Return to launcher**. Story Home is Sessions (scratchpad, conversion rules). Combat Home is the combat HUD. Party and Cast sit under both modes. Full hub: [gm_hub.md](./gm_hub.md).
 
 ---
 
@@ -83,7 +86,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 
 - **Radical visibility:** Roadmap genres remain visible but clearly non-selectable.
 - **Megaversal bridge:** `creationGenreId` is stamped at creation and preserved in saves; `hostGenreId` may diverge for cross-setting play.
-- **No hidden launcher paths:** Open Character, Create Character, and Gamemaster Hub are all on the portal. Roadmap genres stay visible but non-selectable.
+- **No hidden launcher paths:** My Characters, Create Character, Campaigns, and New Campaign are all on the portal. Roadmap genres stay visible but non-selectable.
 
 ---
 
@@ -92,7 +95,8 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 | Concern | Location |
 |---------|----------|
 | Launcher UI | `src/components/dashboard/AppLauncher.tsx` |
-| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterGmHub`, `returnToLauncher`) |
+| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGmHub`, `returnToLauncher`) |
+| Campaign Creation Forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
 | GM Hub | [gm_hub.md](./gm_hub.md) — `src/components/gm/`, `src/context/GmSessionContext.tsx` |
 | Genre manifest | `src/data/genres.ts` — `GENRE_MANIFEST`, `LAUNCHER_CREATE_OPTIONS` |
 | Blank character root | `src/lib/characterRoot.ts` — `createBlankCharacterForGenre` |

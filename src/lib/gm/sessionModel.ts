@@ -1,5 +1,10 @@
-import type { GenreId } from '../../data/genres'
+import { formatGenreSlug, type GenreId } from '../../data/genres'
 import { createGmId } from './sessionId'
+import {
+  activePlaySession,
+  createPlaySessionRecord,
+  hydratePlaySessions,
+} from './playSession'
 import {
   DEFAULT_PARTY_OVERLAY,
   INITIAL_COMBAT_STATE,
@@ -13,6 +18,10 @@ import {
 } from './sessionTypes'
 
 const EVENT_LOG_CAP = 60
+
+export function defaultCampaignName(hostGenreId: GenreId): string {
+  return `${formatGenreSlug(hostGenreId)} campaign`
+}
 
 function touch(session: GmSessionRecord): GmSessionRecord {
   return { ...session, updatedAtMs: Date.now() }
@@ -55,11 +64,61 @@ export function createGmSession(input: {
     npcs: [],
     combat: { ...INITIAL_COMBAT_STATE },
     eventLog: [],
+    playSessions: [],
+    activePlaySessionId: null,
   }
   return pushEvent(
     session,
     'session_created',
     `Session “${name}” opened (${input.hostGenreId}).`,
+  )
+}
+
+export function openPlaySession(
+  session: GmSessionRecord,
+  openedAtMs = Date.now(),
+): GmSessionRecord {
+  const current = hydratePlaySessions(session)
+  if (activePlaySession(current)) return current
+  const play = createPlaySessionRecord(
+    current.name,
+    openedAtMs,
+    current.playSessions.map((row) => row.playerLabel),
+  )
+  return touch(
+    pushEvent(
+      {
+        ...current,
+        playSessions: [play, ...current.playSessions],
+        activePlaySessionId: play.id,
+      },
+      'play_session_opened',
+      `Players see “${play.playerLabel}”.`,
+    ),
+  )
+}
+
+export function closePlaySession(
+  session: GmSessionRecord,
+  closedAtMs = Date.now(),
+): GmSessionRecord {
+  const current = hydratePlaySessions(session)
+  const live = activePlaySession(current)
+  if (!live) return current
+  return touch(
+    pushEvent(
+      {
+        ...current,
+        activePlaySessionId: null,
+        playSessions: current.playSessions.map((row) =>
+          row.id === live.id
+            ? { ...row, status: 'closed', closedAtMs }
+            : row,
+        ),
+      },
+      'play_session_closed',
+      `Closed “${live.playerLabel}”.`,
+    ),
   )
 }
 

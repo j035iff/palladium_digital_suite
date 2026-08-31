@@ -11,6 +11,7 @@ import { listEncounterArchetypes } from '../data/library/encounterArchetypeCatal
 import { listFinalizedCharacters, loadCharacterSave } from '../lib/characterIndex'
 import type { CharacterIndexEntry } from '../lib/characterIndex'
 import { assembleGmCombatRoster } from '../lib/gm/combatRoster'
+import type { GmHubMode, GmHubTabId } from '../lib/gm/hubTabs'
 import { createNpcFromArchetype } from '../lib/gm/npcInstance'
 import {
   addNpcInstance,
@@ -25,7 +26,6 @@ import {
   removeNpcInstance,
   removePartyMember,
   renameSession,
-  setConversionPolicy,
   setNpcInitiativeRoll,
   setPartyInitiativeRoll,
   setScratchpad,
@@ -33,6 +33,8 @@ import {
   startNewMeleeRound,
   unlockInitiative,
   createGmSession,
+  openPlaySession as stampOpenPlaySession,
+  closePlaySession as stampClosePlaySession,
 } from '../lib/gm/sessionModel'
 import {
   deleteGmSession,
@@ -49,22 +51,37 @@ import {
 } from '../lib/gm/partyObserver'
 import type {
   GmConversionPolicy,
-  GmHubTab,
   GmNpcInstance,
   GmSessionIndexEntry,
   GmSessionRecord,
 } from '../lib/gm/sessionTypes'
-import type { ActiveForm } from '../types'
+import {
+  blankCampaignForgeDraft,
+  campaignForgeReady,
+  patchCampaignForgeValue,
+  readCampaignForgeConversion,
+  readCampaignForgeGenre,
+  readCampaignForgeName,
+  type CampaignForgeDraft,
+  type CampaignForgeOptionId,
+} from '../lib/gm/campaignForge'
 
 type GmSessionContextValue = {
-  tab: GmHubTab
-  setTab: (tab: GmHubTab) => void
+  hubMode: GmHubMode
+  setHubMode: (mode: GmHubMode) => void
+  hubTabId: GmHubTabId
+  setHubTabId: (tab: GmHubTabId) => void
   sessionList: GmSessionIndexEntry[]
   session: GmSessionRecord | null
   partySlices: GmPartyObserverSlice[]
   missingPartyIds: string[]
   finalizedCharacters: CharacterIndexEntry[]
   refreshCharacters: () => void
+  refreshSessionList: () => void
+  campaignForgeDraft: CampaignForgeDraft
+  resetCampaignForgeDraft: () => void
+  setCampaignForgeValue: (id: CampaignForgeOptionId, value: string) => void
+  commitCampaignForge: () => boolean
   createSession: (input: {
     name: string
     hostGenreId: GenreId
@@ -74,8 +91,9 @@ type GmSessionContextValue = {
   removeSession: (id: string) => void
   applySession: (next: GmSessionRecord) => void
   updateScratchpad: (text: string) => void
-  updateConversionPolicy: (policy: GmConversionPolicy) => void
   updateSessionName: (name: string) => void
+  openPlaySession: () => void
+  closePlaySession: () => void
   addCharacterToParty: (characterId: string) => void
   dropCharacterFromParty: (characterId: string) => void
   setViewForm: (characterId: string, form: ActiveForm) => void
@@ -103,7 +121,18 @@ function persist(next: GmSessionRecord): GmSessionRecord {
 }
 
 export function GmSessionProvider({ children }: { children: ReactNode }) {
-  const [tab, setTab] = useState<GmHubTab>('sessions')
+  const [hubMode, setHubModeState] = useState<GmHubMode>('story')
+  const [hubTabId, setHubTabId] = useState<GmHubTabId>('home')
+
+  const goToStoryHome = useCallback(() => {
+    setHubModeState('story')
+    setHubTabId('home')
+  }, [])
+
+  const setHubMode = useCallback((mode: GmHubMode) => {
+    setHubModeState(mode)
+    setHubTabId('home')
+  }, [])
   const [sessionList, setSessionList] = useState<GmSessionIndexEntry[]>(() =>
     listGmSessions(),
   )
@@ -115,9 +144,15 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     CharacterIndexEntry[]
   >(() => listFinalizedCharacters())
 
+  const [campaignForgeDraft, setCampaignForgeDraft] = useState<CampaignForgeDraft>(
+    () => blankCampaignForgeDraft(),
+  )
+
   const refreshList = useCallback(() => {
     setSessionList(listGmSessions())
   }, [])
+
+  const refreshSessionList = refreshList
 
   const refreshCharacters = useCallback(() => {
     setFinalizedCharacters(listFinalizedCharacters())
@@ -144,18 +179,47 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     }) => {
       const created = createGmSession(input)
       applySession(created)
-      setTab('sessions')
+      goToStoryHome()
     },
-    [applySession],
+    [applySession, goToStoryHome],
   )
+
+  const resetCampaignForgeDraft = useCallback(() => {
+    setCampaignForgeDraft(blankCampaignForgeDraft())
+  }, [])
+
+  const setCampaignForgeValue = useCallback(
+    (id: CampaignForgeOptionId, value: string) => {
+      setCampaignForgeDraft((prev) => patchCampaignForgeValue(prev, id, value))
+    },
+    [],
+  )
+
+  const commitCampaignForge = useCallback(() => {
+    const takenNames = listGmSessions().map((row) => row.name)
+    if (!campaignForgeReady(campaignForgeDraft, { takenNames })) return false
+    const name = readCampaignForgeName(campaignForgeDraft)
+    const hostGenreId = readCampaignForgeGenre(campaignForgeDraft)
+    const conversionPolicy = readCampaignForgeConversion(campaignForgeDraft)
+    if (!hostGenreId || !conversionPolicy) return false
+    const created = createGmSession({
+      name,
+      hostGenreId,
+      conversionPolicy,
+    })
+    applySession(created)
+    setCampaignForgeDraft(blankCampaignForgeDraft())
+    goToStoryHome()
+    return true
+  }, [applySession, campaignForgeDraft, goToStoryHome])
 
   const openSession = useCallback((id: string) => {
     const loaded = loadGmSession(id)
     if (!loaded) return
     setActiveGmSessionId(id)
     setSession(loaded)
-    setTab('sessions')
-  }, [])
+    goToStoryHome()
+  }, [goToStoryHome])
 
   const removeSession = useCallback(
     (id: string) => {
@@ -196,19 +260,20 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     [patchSession],
   )
 
-  const updateConversionPolicy = useCallback(
-    (policy: GmConversionPolicy) => {
-      patchSession((s) => setConversionPolicy(s, policy))
-    },
-    [patchSession],
-  )
-
   const updateSessionName = useCallback(
     (name: string) => {
       patchSession((s) => renameSession(s, name))
     },
     [patchSession],
   )
+
+  const openPlaySession = useCallback(() => {
+    patchSession((s) => stampOpenPlaySession(s))
+  }, [patchSession])
+
+  const closePlaySession = useCallback(() => {
+    patchSession((s) => stampClosePlaySession(s))
+  }, [patchSession])
 
   const addCharacterToParty = useCallback(
     (characterId: string) => {
@@ -368,21 +433,29 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<GmSessionContextValue>(
     () => ({
-      tab,
-      setTab,
+      hubMode,
+      setHubMode,
+      hubTabId,
+      setHubTabId,
       sessionList,
       session,
       partySlices: partyLoad.slices,
       missingPartyIds: partyLoad.missing,
       finalizedCharacters,
       refreshCharacters,
+      refreshSessionList,
+      campaignForgeDraft,
+      resetCampaignForgeDraft,
+      setCampaignForgeValue,
+      commitCampaignForge,
       createSession,
       openSession,
       removeSession,
       applySession,
       updateScratchpad,
-      updateConversionPolicy,
       updateSessionName,
+      openPlaySession,
+      closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
       setViewForm,
@@ -402,19 +475,27 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       npcById,
     }),
     [
-      tab,
+      hubMode,
+      setHubMode,
+      hubTabId,
       sessionList,
       session,
       partyLoad,
       finalizedCharacters,
       refreshCharacters,
+      refreshSessionList,
+      campaignForgeDraft,
+      resetCampaignForgeDraft,
+      setCampaignForgeValue,
+      commitCampaignForge,
       createSession,
       openSession,
       removeSession,
       applySession,
       updateScratchpad,
-      updateConversionPolicy,
       updateSessionName,
+      openPlaySession,
+      closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
       setViewForm,

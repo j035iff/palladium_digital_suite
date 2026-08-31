@@ -168,6 +168,23 @@ Copy this block when registering a new unified path:
 
 ---
 
+### Campaign Creation Forge
+
+**Status:** `partial` (v1 Identity: unique name + host genre; Rules: conversion policy)  
+**Related spec:** `docs/gm_hub.md`, `docs/app_viewport_launcher.md` Vector C
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Registry | `src/lib/gm/campaignForge.ts` | `CAMPAIGN_FORGE_OPTIONS`, `campaignForgeReady` | Add options here; do not fork a second create form |
+| Field render | `src/components/gm/CampaignForgeField.tsx` | `kind: text \| genreSelect \| select` | New `kind`s get a renderer case; dropdowns use `select` + `choices` |
+| Viewport | `CampaignCreationForge` | Confirm Yes / Not yet | Commit via `commitCampaignForge` then `enterGmHub` |
+
+**Modes / variants:** One draft (`CampaignForgeDraft`) for all campaign options. Extra groups may become UFNE tabs later.
+
+**Extension guide:** New campaign questions are new `CampaignForgeOptionDef` rows (and a `kind` if the field UI is new). Conversion-style dropdowns reuse `kind: 'select'`. Validation stays on the option, not in the React screen.
+
+---
+
 ### GM Hub — party observer + combat roster
 
 **Status:** `partial` (local GM-only v1; LAN transport not wired)  
@@ -179,13 +196,15 @@ Copy this block when registering a new unified path:
 | Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder |
 | Fodder | `src/lib/gm/npcInstance.ts` | `createNpcFromArchetype` | Encounter catalog → instance vitals / APM |
 | Roster | `src/lib/gm/combatRoster.ts` | `assembleGmCombatRoster`, `sortCombatRoster` | One sorted list; `kind: pc \| npc` |
+| Nav | `src/lib/gm/hubTabs.ts` | `buildGmHubTabViews`, `gmHubTabTitle` | Story/Combat modes; Home is Sessions or Combat HUD |
+| Play sitting | `src/lib/gm/playSession.ts` | `openPlaySession`, `playSessionPlayerLabel` | Player join name `{campaign}: {date}`; one live sitting |
 | Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
-| Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope` | v1 JSON shapes for a future LAN server |
-| UI | `src/components/gm/*` | `GmHubShell` | Sessions / Party / Cast / Combat |
+| Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 JSON shapes for a future LAN server |
+| UI | `src/components/gm/*` | `GmHubShell` | Story / Combat modes; Home + Party + Cast |
 
-**Modes / variants:** Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer.
+**Modes / variants:** Hub `story` / `combat` (Home differs; Party and Cast are one pipeline). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer.
 
-**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables.
+**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork Party or Cast per Story/Combat mode.
 
 ---
 
@@ -220,6 +239,10 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-08-30 | GM Hub Story/Combat master tabs (Home + Party + Cast), matching live sheet |
+| 2026-08-30 | Play sessions: Open Session stamps `{campaign}: {date}` join name; Sessions landing drops saved-tables / passive matrix |
+| 2026-08-30 | Campaign Creation Forge: conversion rules dropdown (baked in; Sessions is read-only) |
+| 2026-08-30 | Campaign Creation Forge registry (identity: unique name + host genre) |
 | 2026-08-30 | GM Hub party observer + combat roster (local v1) |
 | 2026-07-05 | Vitality gather-first via `resolveVitalityLedgerRows`; combat/saves project through `resolveStackLedgerRow` + `projectStackLine` |
 | 2026-07-05 | Vitality pending blocks projected from `ResolvedLedgerRow`; `refreshMorphusAttributeRowsInContext` avoids full bundle rebuild on Morphus ledger |

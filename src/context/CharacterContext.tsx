@@ -230,7 +230,7 @@ import {
   shadowOccMountMessage,
 } from '../lib/shadowOcc'
 
-export type AppViewport = 'launcher' | 'sheet' | 'gm'
+export type AppViewport = 'launcher' | 'sheet' | 'gm' | 'campaign_forge'
 
 /** Active-form combat sheet slice (vitality pools + attribute bonuses). */
 type ActiveStats = {
@@ -259,6 +259,7 @@ type CharacterContextValue = {
   loadSavedCharacter: (id: string) => void
   startCreation: (genreId: GenreId) => void
   enterGmHub: () => void
+  enterCampaignForge: () => void
   returnToLauncher: () => void
   /** Clears every creation tab and starts a fresh blank record for the current genre. */
   resetCreation: () => void
@@ -815,6 +816,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const enterGmHub = useCallback(() => {
     setViewport('gm')
+  }, [])
+
+  const enterCampaignForge = useCallback(() => {
+    setViewport('campaign_forge')
   }, [])
 
   const resetCreation = useCallback(() => {
@@ -2839,6 +2844,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       loadSavedCharacter,
       startCreation,
       enterGmHub,
+      enterCampaignForge,
       returnToLauncher,
       resetCreation,
       saveCreationForLater,
@@ -3002,6 +3008,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       loadSavedCharacter,
       startCreation,
       enterGmHub,
+      enterCampaignForge,
       returnToLauncher,
       resetCreation,
       saveCreationForLater,

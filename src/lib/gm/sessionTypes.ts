@@ -4,7 +4,11 @@ import type { ActiveForm } from '../../types'
 /** Session-wide cross-genre policy (view-model only — never writes character saves). */
 export type GmConversionPolicy = 'disable_non_native' | 'apply_conversion'
 
-export type GmHubTab = 'sessions' | 'party' | 'cast' | 'combat'
+export function isGmConversionPolicy(
+  value: string,
+): value is GmConversionPolicy {
+  return value === 'disable_non_native' || value === 'apply_conversion'
+}
 
 export type GmHfOutcome = 'pending' | 'passed' | 'failed'
 
@@ -49,6 +53,8 @@ export type GmCombatState = {
 
 export type GmSessionEventKind =
   | 'session_created'
+  | 'play_session_opened'
+  | 'play_session_closed'
   | 'party_added'
   | 'party_removed'
   | 'npc_spawned'
@@ -67,6 +73,17 @@ export type GmSessionEvent = {
   text: string
 }
 
+/** Joinable play sitting under a campaign. Players see `playerLabel`. */
+export type GmPlaySessionStatus = 'open' | 'closed'
+
+export type GmPlaySession = {
+  id: string
+  playerLabel: string
+  openedAtMs: number
+  closedAtMs: number | null
+  status: GmPlaySessionStatus
+}
+
 export type GmSessionRecord = {
   id: string
   name: string
@@ -81,6 +98,9 @@ export type GmSessionRecord = {
   npcs: GmNpcInstance[]
   combat: GmCombatState
   eventLog: GmSessionEvent[]
+  /** Play sittings players can connect to. Campaign `name` stays separate. */
+  playSessions: GmPlaySession[]
+  activePlaySessionId: string | null
 }
 
 export type GmSessionIndexEntry = {

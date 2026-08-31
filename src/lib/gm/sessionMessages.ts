@@ -1,3 +1,6 @@
+import { activePlaySession } from './playSession'
+import type { GmSessionRecord } from './sessionTypes'
+
 /**
  * Future LAN / WebSocket payload shapes.
  * v1 has no transport — keep these envelopes stable so a desktop server can bind later.
@@ -16,7 +19,10 @@ export type GmEnvelope<T extends string, P> = {
 export type GmHelloPayload = {
   hostGenreId: string
   conversionPolicy: 'disable_non_native' | 'apply_conversion'
+  /** Player-visible join name when a play session is open; otherwise campaign name. */
   sessionName: string
+  campaignName: string
+  playSessionId: string | null
 }
 
 export type GmPartySnapshotPayload = {
@@ -89,4 +95,17 @@ export function isGmEnvelope(value: unknown): value is GmEnvelope<string, unknow
     typeof row.sentAtMs === 'number' &&
     'payload' in row
   )
+}
+
+export function gmHelloPayloadFromCampaign(
+  session: GmSessionRecord,
+): GmHelloPayload {
+  const live = activePlaySession(session)
+  return {
+    hostGenreId: session.hostGenreId,
+    conversionPolicy: session.conversionPolicy,
+    sessionName: live?.playerLabel ?? session.name,
+    campaignName: session.name,
+    playSessionId: live?.id ?? null,
+  }
 }

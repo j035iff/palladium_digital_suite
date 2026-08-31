@@ -1,4 +1,5 @@
 import { isGenreId } from '../../data/genres'
+import { hydratePlaySessions } from './playSession'
 import type { GmSessionIndexEntry, GmSessionRecord } from './sessionTypes'
 
 const INDEX_KEY = 'pds:gmSessionIndex'
@@ -57,7 +58,8 @@ export function loadGmSession(id: string): GmSessionRecord | null {
     const raw = localStorage.getItem(`${SAVE_PREFIX}${id}`)
     if (!raw) return null
     const parsed = JSON.parse(raw) as unknown
-    return isSessionRecord(parsed) ? parsed : null
+    if (!isSessionRecord(parsed)) return null
+    return hydratePlaySessions(parsed)
   } catch {
     return null
   }

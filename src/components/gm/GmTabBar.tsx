@@ -1,52 +1,76 @@
-import type { GmHubTab } from '../../lib/gm/sessionTypes'
+import { useMemo } from 'react'
+import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
+import {
+  buildGmHubTabViews,
+  gmHubTabTitle,
+  isGmHubTabId,
+  type GmHubMode,
+  type GmHubTabId,
+} from '../../lib/gm/hubTabs'
 
-const TABS: { id: GmHubTab; label: string; hint: string }[] = [
-  { id: 'sessions', label: 'Sessions', hint: 'Lobby, scratchpad, conversion policy' },
-  { id: 'party', label: 'Party', hint: 'Cached player sheets' },
-  { id: 'cast', label: 'Cast', hint: 'Encounter archetypes' },
-  { id: 'combat', label: 'Combat', hint: 'Initiative, APM, Quick-Blocks' },
-]
+const MODES: readonly GmHubMode[] = ['story', 'combat']
 
 export function GmTabBar({
-  tab,
-  onChange,
-  sessionOpen,
+  mode,
+  tabId,
+  onModeChange,
+  onTabChange,
+  campaignOpen,
 }: {
-  tab: GmHubTab
-  onChange: (tab: GmHubTab) => void
-  sessionOpen: boolean
+  mode: GmHubMode
+  tabId: GmHubTabId
+  onModeChange: (mode: GmHubMode) => void
+  onTabChange: (tab: GmHubTabId) => void
+  campaignOpen: boolean
 }) {
+  const tabs = useMemo(
+    () => buildGmHubTabViews(tabId, { campaignOpen }),
+    [tabId, campaignOpen],
+  )
+
   return (
-    <nav
-      className="flex shrink-0 gap-1 overflow-x-auto border-b border-slate-800 bg-slate-950/80 px-3 py-2"
-      aria-label="GM Hub workspaces"
+    <div
+      className="shrink-0 border-b border-slate-800 bg-slate-950/90 px-4 py-2"
+      aria-label="GM Hub mode and tabs"
     >
-      {TABS.map((row) => {
-        const active = tab === row.id
-        const locked = !sessionOpen && row.id !== 'sessions'
-        return (
-          <button
-            key={row.id}
-            type="button"
-            disabled={locked}
-            title={
-              locked
-                ? 'Open or create a session first'
-                : row.hint
-            }
-            onClick={() => onChange(row.id)}
-            className={`rounded-lg px-3 py-2 text-[11px] font-black uppercase tracking-[0.16em] transition ${
-              locked
-                ? 'cursor-not-allowed text-slate-600'
-                : active
-                  ? 'bg-amber-500/20 text-amber-100 ring-1 ring-amber-400/70'
-                  : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'
-            }`}
-          >
-            {row.label}
-          </button>
-        )
-      })}
-    </nav>
+      <div className="flex flex-col gap-1.5">
+        <div
+          className="flex w-fit rounded-lg border-2 border-amber-700/70 bg-slate-950 p-1"
+          role="group"
+          aria-label="GM Hub mode"
+        >
+          {MODES.map((row) => {
+            const active = mode === row
+            return (
+              <button
+                key={row}
+                type="button"
+                aria-pressed={active}
+                onClick={() => onModeChange(row)}
+                className={`rounded-md px-4 py-1.5 text-xs font-black uppercase tracking-wide transition ${
+                  active
+                    ? 'bg-amber-500 text-slate-950 shadow'
+                    : 'text-amber-200/80 hover:bg-amber-950/60'
+                }`}
+              >
+                {row}
+              </button>
+            )
+          })}
+        </div>
+        <ForgeNavigationBar
+          tabs={tabs}
+          activeTabId={tabId}
+          singleRow
+          ariaLabel="GM Hub tabs"
+          onSelectTab={(id) => {
+            if (isGmHubTabId(id)) onTabChange(id)
+          }}
+        />
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-200/80">
+          {gmHubTabTitle(mode, tabId)}
+        </p>
+      </div>
+    </div>
   )
 }
