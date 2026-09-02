@@ -33,7 +33,7 @@ const SHARED_TAB_TITLES: Record<Exclude<LiveSheetTabId, 'home'>, string> = {
   saves: 'Saving throws',
   skills: 'Skills',
   abilities: 'Magic, psionics & talents',
-  gear: 'Armory & inventory',
+  gear: 'Weapons, armor & load',
 }
 
 export function liveSheetTabTitle(

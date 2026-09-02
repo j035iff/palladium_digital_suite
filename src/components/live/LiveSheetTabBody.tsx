@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
-import { Armory } from './Armory'
 import { CombatHUD } from './CombatHUD'
-import { Inventory } from './Inventory'
+import { GearPanel } from './GearPanel'
 import { LiveAbilitiesPanel } from './LiveAbilitiesPanel'
 import { MorphusCapabilitiesPanel } from './MorphusCapabilitiesPanel'
 import { MorphusTraitsPanel } from './MorphusTraitsPanel'
@@ -110,12 +109,7 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
   }
 
   if (tabId === 'gear') {
-    return (
-      <div className="flex flex-col gap-6">
-        <Armory />
-        <Inventory />
-      </div>
-    )
+    return <GearPanel />
   }
 
   return (
