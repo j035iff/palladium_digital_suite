@@ -2537,6 +2537,11 @@ export type Character = {
   activeMorphusCharacteristicIds?: readonly string[]
   /** Sub-Forge trait slots (catalog + optional custom instance). Preferred over bare ids. */
   morphusTraitSlotResolutions?: readonly MorphusTraitSlotResolution[]
+  /**
+   * Live sheet gear — inventory rows, equipped armor, weapon slots, ammo reserves.
+   * Omitted when empty; hydrated on load into session state (master_flow.md §2).
+   */
+  inventory?: CharacterInventoryState
   primary: FormState
   morphus: FormState
 }
@@ -2633,6 +2638,14 @@ export interface GearItem extends Item {
 }
 
 export type InventoryItem = GearItem | Armor | Weapon
+
+/** Persisted gear-tab snapshot (native save layout; stripped of host runtime flags on save). */
+export type CharacterInventoryState = {
+  items: InventoryItem[]
+  equippedArmorId: string | null
+  readyWeaponIds: readonly [string | null, string | null]
+  ammoReserves: Record<string, number>
+}
 
 /** Pillar 6 — vitality header pulse; combat HUD uses {@link CombatHudDamagePulse} for armor vs body hits. */
 export type VitalityFlashKind = 'none' | 'damage' | 'heal'

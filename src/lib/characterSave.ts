@@ -44,11 +44,19 @@ function stripInventoryItem(item: InventoryItem): InventoryItem {
 export function serializeCharacterRootForSave(
   state: CharacterRootState,
 ): CharacterRootState {
-  return {
+  const base: CharacterRootState = {
     ...state,
     schemaVersion: CHARACTER_SAVE_SCHEMA_VERSION,
     primary: stripFormBranch(state.primary),
     morphus: stripFormBranch(state.morphus),
+  }
+  if (!state.inventory) return base
+  return {
+    ...base,
+    inventory: {
+      ...state.inventory,
+      items: serializeInventoryForSave(state.inventory.items),
+    },
   }
 }
 

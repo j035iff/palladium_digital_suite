@@ -73,9 +73,11 @@ Level-up queue and XP rituals activate when `isFinalized` and O.C.C. XP table fl
 
 Spawn **does not** auto-write to disk. The player uses header **Save** (`saveCharacter`):
 
-1. `serializeCharacterRootForSave(rawCharacter)` — strips runtime-only flags (`isHostGenreLocked`, etc.) per [master_flow.md](./master_flow.md) §2; stamps `schemaVersion`.
+1. `serializeCharacterRootForSave(rawCharacter)` — strips runtime-only flags (`isHostGenreLocked`, etc.) per [master_flow.md](./master_flow.md) §2; stamps `schemaVersion`. Merges the live gear session (`inventory` block: carried items, equipped armor id, primary/secondary weapon slot ids, ammo reserves) before write.
 2. `saveCharacterToStorage` — writes pristine JSON keyed by character `id`.
 3. Index refresh for launcher **Open Character** list.
+
+Gear edits on a finalized sheet auto-persist via the same merge path (no separate save action required for inventory-only changes).
 
 **Rule:** The save file stores the character in **`creationGenreId` native layout** without host-derived transforms. Reloading applies `transformCharacterToHostEnvironment` for display.
 

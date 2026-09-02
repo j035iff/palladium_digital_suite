@@ -88,6 +88,10 @@ import {
 } from '../lib/characterIndex'
 import { serializeCharacterRootForSave } from '../lib/characterSave'
 import {
+  hydrateInventorySession,
+  mergeCharacterWithInventory,
+} from '../lib/inventoryPersistence'
+import {
   createBlankCharacterForGenre,
   ensureCharacterRoot,
   retainCharacterRoot,
@@ -737,6 +741,15 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [string | null, string | null]
   >([null, null])
   const [ammoReserves, setAmmoReserves] = useState<AmmoReservesState>(() => ({}))
+  const inventorySession = useMemo(
+    () => ({
+      items: inventoryItems,
+      equippedArmorId,
+      readyWeaponIds,
+      ammoReserves,
+    }),
+    [inventoryItems, equippedArmorId, readyWeaponIds, ammoReserves],
+  )
   const [combatNarrativeLog, setCombatNarrativeLog] = useState<
     CombatNarrativeEntry[]
   >([])
@@ -780,10 +793,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     prevMorphusLedgerUnlockedRef.current = null
   }, [])
 
-  const persistCharacterSave = useCallback((state: CharacterRootState) => {
-    saveCharacterToStorage(serializeCharacterRootForSave(state))
-    refreshSavedCharacterIndex()
-  }, [refreshSavedCharacterIndex])
+  const persistCharacterSave = useCallback(
+    (state: CharacterRootState) => {
+      saveCharacterToStorage(
+        serializeCharacterRootForSave(
+          mergeCharacterWithInventory(state, inventorySession),
+        ),
+      )
+      refreshSavedCharacterIndex()
+    },
+    [inventorySession, refreshSavedCharacterIndex],
+  )
+
+  useEffect(() => {
+    if (rawCharacter.isFinalized !== true) return
+    persistCharacterSave(rawCharacter)
+    // Gear session only — rawCharacter is read from the render that produced the inventory change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inventoryItems, equippedArmorId, readyWeaponIds, ammoReserves])
 
   const saveCharacter = useCallback(() => {
     persistCharacterSave(rawCharacter)
@@ -801,6 +828,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setRawCharacter(
       hydrated.creationVitalityCommitted ? hydrated : syncRaceOccPrimarySdc(hydrated),
     )
+    const inv = hydrateInventorySession(hydrated)
+    setInventoryItems(inv.items)
+    setEquippedArmorId(inv.equippedArmorId)
+    setReadyWeaponIds([inv.readyWeaponIds[0], inv.readyWeaponIds[1]])
+    setAmmoReserves(inv.ammoReserves)
     setPsychicTierState(resolveCreationPsychicTier(hydrated))
     setViewport('sheet')
     setActiveForm('primary')

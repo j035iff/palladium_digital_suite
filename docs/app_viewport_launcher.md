@@ -38,6 +38,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 3. **Selection** — `loadSavedCharacter(id)`:
    - Loads raw JSON via `loadCharacterSave`.
    - Hydrates root stamps (`id`, `creationGenreId`, `hostGenreId`) with `hydrateCharacterFromStorage` / `ensureCharacterRoot`.
+   - Restores gear session state (`inventory` block → carried items, equipped armor, weapon slots, ammo reserves).
    - If vitality was not committed at save time, may run `syncRaceOccPrimarySdc` for consistency.
    - Sets viewport to `sheet`; does **not** enter a blank creation template.
 4. **Runtime display** — The active `character` object exposed to React is **`transformCharacterToHostEnvironment(rawCharacter, hostGenreId)`** (`src/utils/genreTransformer.ts`). Saves remain in **native** `creationGenreId` layout; host-only flags (e.g. `isHostGenreLocked`) are derived at read time and stripped on save (see [master_flow.md](./master_flow.md) §2).
@@ -59,7 +60,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
    - Viewport → `sheet`; creation chrome visible (`MainLayout` shows `CreationFlowShell` while `isFinalized !== true`).
 3. **Downstream** — User completes the [Character Creation Forge](./forge/character_creation.md); spawn is specified in [character_spawn_handoff.md](./character_spawn_handoff.md).
 
-**Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists.
+**Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists. Finalized characters persist gear in the save file's `inventory` block; changes auto-save while the live sheet is open.
 
 ### Genre manifest flags
 

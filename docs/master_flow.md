@@ -62,8 +62,8 @@ The transformer walks nested character nodes and cross-references global lookups
 When the player edits the sheet during live play (XP, stats, inventory, etc.):
 
 1. **User action** — Editor interaction on the sheet.
-2. **Reverse serialization** — Strip transient, runtime-derived host modifications.
-3. **Immutable base override** — Write the clean update to native `creationGenreId` fields in the root payload.
+2. **Reverse serialization** — Strip transient, runtime-derived host modifications (skills, inventory rows with `isHostGenreLocked`, etc.).
+3. **Immutable base override** — Write the clean update to native `creationGenreId` fields in the root payload (including optional `inventory` gear block when the live session has carried items).
 4. **Re-evaluation** — Optionally persist via **Save**, then re-run Step C to refresh UI.
 
 See [character_spawn_handoff.md](./character_spawn_handoff.md) for spawn-time persistence rules.
