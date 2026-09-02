@@ -117,9 +117,9 @@ describe('creationAttributeSync', () => {
       validatePoolRollAssignment('ps', 0, pool, guardianFormulas, () => undefined),
     ).toBeNull()
     expect(assignmentToPoolRoll(guardianFormulas, 'iq', 21)).toBe(5)
-    const strictPool = [null, null, null, 15, null, null, null, null]
+    const strictPool = [null, null, null, null, 15, null, null, null]
     expect(
-      validatePoolRollAssignment('me', 3, strictPool, guardianFormulas, () => undefined),
+      validatePoolRollAssignment('me', 4, strictPool, guardianFormulas, () => undefined),
     ).toMatch(/Outside 2D6/)
   })
 

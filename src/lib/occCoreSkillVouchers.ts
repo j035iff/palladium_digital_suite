@@ -40,10 +40,8 @@ import {
 } from './occRelatedSkillVouchers'
 import { occStartingOccSkillIds } from './occCatalogEngine'
 import { resolveCreationLibrarySkillSelectionTier } from './creationSkillPicks'
-import {
-  applyPsychicOccSkillBonusPercent,
-  type PsychicTier,
-} from './creationPsychicSkills'
+import { applyPsychicOccSkillBonusPercent } from './creationPsychicSkills'
+import type { PsychicTier } from '../types'
 
 export type OccCoreVoucherTask = {
   id: string

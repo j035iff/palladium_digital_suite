@@ -252,7 +252,7 @@ export function resolveActiveHandToHandSkillId(
     catalogIds.has(mapSheetSkillIdToHandToHandCatalogId(sheetSkillId))
 
   if (occ?.handToHandRules) {
-    const { defaultSkillId, upgradePaths } = occ.handToHandRules
+    const { upgradePaths } = occ.handToHandRules
     for (let i = upgradePaths.length - 1; i >= 0; i--) {
       const target = upgradePaths[i]?.targetSkillId
       if (target && hasUnlockedHandToHandTarget(unlocked, target) && hasCatalog(target)) {

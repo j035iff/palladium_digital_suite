@@ -2,9 +2,8 @@ import type {
   CharacterRootState,
   PalladiumOcc,
   RaceAttributeFormulas,
-} from '../types'
+} from '../../types'
 import type { ForgeAttrKey } from '../attributeKeys'
-import { FORGE_ATTRIBUTE_KEYS } from '../attributeKeys'
 import { attributePoolNotationBounds } from '../diceNotationBounds'
 import { raceAttrNotation } from '../creationAttributeSync'
 import {

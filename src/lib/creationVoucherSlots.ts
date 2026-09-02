@@ -152,11 +152,33 @@ function collectBookCategoriesForRef(
   catalogSkillIds: readonly string[],
   forbiddenWpIds: readonly string[] = [],
 ): string[] {
-  const entry = ref.task.entry
   if (ref.kind === 'occ_core') {
+    const entry = ref.task.entry
     const libraryCats = resolveOccCoreVoucherLibraryBookCategories(entry)
     if (libraryCats.length) return libraryCats
+    if (entry.allowedCategories?.length) {
+      return [...entry.allowedCategories]
+    }
+    if (entry.allowedSkillIds?.length) {
+      const cats = new Set<string>()
+      for (const skillId of entry.allowedSkillIds) {
+        for (const cat of getSkillBookCategories(skillId)) cats.add(cat)
+      }
+      return [...cats]
+    }
+    const cats = new Set<string>()
+    for (const skillId of listEligibleVoucherSkillIds(
+      entry,
+      hostGenreId,
+      catalogSkillIds,
+      forbiddenWpIds,
+    )) {
+      for (const cat of getSkillBookCategories(skillId)) cats.add(cat)
+    }
+    return [...cats]
   }
+
+  const entry = ref.task.entry
   if (entry.allowedCategories?.length) {
     return [...entry.allowedCategories]
   }
@@ -166,18 +188,6 @@ function collectBookCategoriesForRef(
   if (entry.allowedSkillIds?.length) {
     const cats = new Set<string>()
     for (const skillId of entry.allowedSkillIds) {
-      for (const cat of getSkillBookCategories(skillId)) cats.add(cat)
-    }
-    return [...cats]
-  }
-  if (ref.kind === 'occ_core') {
-    const cats = new Set<string>()
-    for (const skillId of listEligibleVoucherSkillIds(
-      entry,
-      hostGenreId,
-      catalogSkillIds,
-      forbiddenWpIds,
-    )) {
       for (const cat of getSkillBookCategories(skillId)) cats.add(cat)
     }
     return [...cats]

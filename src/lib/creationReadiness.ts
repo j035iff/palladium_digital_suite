@@ -33,6 +33,7 @@ import {
   sumRelatedPoolSlotUsage,
 } from './creationSkillPicks'
 import { resolveEffectivePalladiumOcc } from './occComposition'
+import { occSkillSlotPolicy } from './occCatalogEngine'
 import { creationHandToHandReservedRelatedSlots } from './creationHandToHandChoice'
 import { raceLineageFromDefinition } from './raceEngine'
 import { creationAttributesBlockerLabel } from './creationFormLabels'
@@ -129,7 +130,7 @@ export function assessCreationReviewBlockers(
     const relatedCap = creationRelatedSkillCap(
       relatedBase,
       psychicTier,
-      occLib.occSkillSlotPolicy,
+      occSkillSlotPolicy(occLib),
     )
     const freeRelatedCap = creationFreeRelatedSkillCap(
       relatedCap,

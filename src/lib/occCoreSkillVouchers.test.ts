@@ -127,6 +127,7 @@ describe('occCoreSkillVouchers', () => {
     expect(
       resolveOccCoreVoucherLibraryBookCategories({
         choiceCount: 1,
+        bonusPercent: 0,
         allowedCategories: ['Weapon Proficiencies'],
         weaponProficiencyEra: 'ancient',
       }),
@@ -134,6 +135,7 @@ describe('occCoreSkillVouchers', () => {
     expect(
       resolveOccCoreVoucherLibraryBookCategories({
         choiceCount: 1,
+        bonusPercent: 0,
         allowedCategories: ['Weapon Proficiencies'],
       }),
     ).toEqual(['WP: Ancient', 'WP: Modern'])

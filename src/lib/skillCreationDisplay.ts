@@ -21,7 +21,6 @@ import {
   type SkillPercentResolutionContext,
 } from './skillPercentResolution'
 import {
-  applyPsychicOccSkillBonusPercent,
   resolveOccSkillBonusPercent,
 } from './creationPsychicSkills'
 import { resolveOccCoreVoucherSkillBonus } from './occCoreSkillVouchers'

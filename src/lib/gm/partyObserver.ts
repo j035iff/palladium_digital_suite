@@ -17,7 +17,7 @@ import { computeSaveProfile } from '../saveProfile'
 import { migrateCharacterSave } from '../characterMigrate'
 import { ensureCharacterRoot } from '../characterRoot'
 import { transformCharacterToHostEnvironment } from '../../utils/genreTransformer'
-import type { ActiveForm, CharacterRootState } from '../../types'
+import type { ActiveForm, CharacterRootState, DerivedSheetSkill } from '../../types'
 import type { GmConversionPolicy } from './sessionTypes'
 
 export type GmPartyObserverSlice = {
@@ -125,7 +125,9 @@ export function buildPartyObserverSlice(
     supportsDualForm,
   )
   const branch = form === 'morphus' ? derived.morphus : derived.primary
-  const lockedSkillCount = branch.skills.filter((s) => s.isHostGenreLocked).length
+  const lockedSkillCount = branch.skills.filter(
+    (s) => (s as DerivedSheetSkill).isHostGenreLocked,
+  ).length
   const crossGenre =
     derived.creationGenreId.toLowerCase() !== hostGenreId.toLowerCase()
   const creationLabel = formatGenreSlug(derived.creationGenreId)

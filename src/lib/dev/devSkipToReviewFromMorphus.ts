@@ -34,11 +34,7 @@ import { applyMorphusPendingDiceResolutions } from '../spawnVitalityManual'
 import { buildDevAutoFillCreationAbilitiesState } from './devAutoFillCreationAbilities'
 import { buildDevSkipToMorphusCreationState } from './devSkipToMorphusCreation'
 import { buildAutoRolledPendingDiceResolutions } from './devAutoRollPendingDice'
-import {
-  DEV_SKIP_TO_REVIEW_CHARACTER_NAME,
-  DEV_SKIP_TO_REVIEW_IDENTITY_PROFILE,
-  withDevSpawnIdentity,
-} from './devSpawnIdentity'
+import { withDevSpawnIdentity } from './devSpawnIdentity'
 
 export {
   DEV_SKIP_TO_REVIEW_CHARACTER_NAME,

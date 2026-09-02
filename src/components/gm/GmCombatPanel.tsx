@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import type { EncounterEquipmentEntry } from '../../lib/encounterArchetypes'
 import { listEncounterArchetypes } from '../../data/library/encounterArchetypeCatalogLoader'
 import { useGmCombatRoster, useGmSession } from '../../context/GmSessionContext'
 import { npcParryBonus, npcStrikeBonus } from '../../lib/gm/npcInstance'
@@ -301,7 +302,7 @@ export function GmCombatPanel() {
                     {arch?.equipment.length ? (
                       <p className="mt-1 text-[11px] text-slate-500">
                         {arch.equipment
-                          .map((eq) =>
+                          .map((eq: EncounterEquipmentEntry) =>
                             eq.damageFormula
                               ? `${eq.label} ${eq.damageFormula}`
                               : eq.label,

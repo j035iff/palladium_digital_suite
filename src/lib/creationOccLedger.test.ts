@@ -149,7 +149,7 @@ describe('creation OCC live ledger integration', () => {
     expect(ppe?.valueModified).toBe(true)
     expect(ppe?.hasPendingRolls).toBe(true)
     expect(ppe?.valueTooltip).toBe('(PE(12) × 10, +pending rolls)')
-    expect(ppe?.diceGroups?.find((group) => group.kind === 'race')?.display).toBe('2D6')
+    expect(ppe?.diceGroups?.find((group) => group.kind === 'race')).toBeUndefined()
     expect(ppe?.diceGroups?.find((group) => group.kind === 'occ')?.display).toBe('2D6')
 
     const sdcDiceGroups = vitals.find((l) => l.label === 'S.D.C.')?.diceGroups ?? []

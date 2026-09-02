@@ -5,7 +5,6 @@ import { useCharacter } from '../../context/CharacterContext'
 import { getSkillById } from '../../data/library/skills'
 
 import {
-  collectAllCreationSkillPicks,
   listOccCoreVoucherTasks,
 } from '../../lib/occCoreSkillVouchers'
 

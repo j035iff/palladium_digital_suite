@@ -30,8 +30,6 @@ import type { PendingDiceBlock, PendingDiceGroup } from './spawnDiceBlocks'
 import { FACADE_LABEL } from './creationFormLabels'
 import {
   addDiceContribution,
-  projectStackLine,
-  resolveStackLedgerRow,
   sumResolvedRowTotal,
   type CreationLedgerResolutionContext,
   type LedgerContribution,
@@ -203,7 +201,7 @@ export function resolveMorphusAttributeRow(
   facadeTotal: number | null,
   skillIds: readonly string[],
   resolutions: Readonly<Record<string, number>>,
-  pendingMorphusTotal?: number | null,
+  _pendingMorphusTotal?: number | null,
 ): ResolvedLedgerRow {
   const blockId = `morphus_attr_${attr}`
   const contributions: LedgerContribution[] = []

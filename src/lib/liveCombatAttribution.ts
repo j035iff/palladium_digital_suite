@@ -1,4 +1,4 @@
-import type { ActiveForm, Character, FeatureModifiers } from '../types'
+import type { ActiveForm, Character, CharacterRootState, FeatureModifiers } from '../types'
 import { getRaceById, raceCatalogGenreId } from '../data/library/registry'
 import { getSkillById } from '../data/skillLibrary'
 import { listApplyingFeatures } from './featureEngine'
@@ -25,7 +25,7 @@ function addModifierLine(
 
 /** Per-source attribution for passive combat modifier keys (initiative, entangle, …). */
 export function liveCombatPassiveKeyAttribution(
-  character: Character,
+  character: Character & Partial<Pick<CharacterRootState, 'hostGenreId' | 'creationGenreId'>>,
   activeForm: ActiveForm,
   passiveKey: keyof FeatureModifiers & string,
   opts?: { supportsDualForm?: boolean },
@@ -64,7 +64,10 @@ export function liveCombatPassiveKeyAttribution(
     const race = racePassiveModifiers(
       getRaceById(
         character.raceId ?? DEFAULT_RACE_ID,
-        raceCatalogGenreId(character.hostGenreId, character.creationGenreId),
+        raceCatalogGenreId(
+          character.hostGenreId ?? 'nightbane',
+          character.creationGenreId ?? character.hostGenreId ?? 'nightbane',
+        ),
       ),
     )
     const amount = race[passiveKey as keyof FeatureModifiers]

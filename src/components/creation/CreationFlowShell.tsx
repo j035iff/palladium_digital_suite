@@ -407,7 +407,6 @@ export function CreationFlowShell({
 
   const pageTitle = CHARACTER_CREATION_TAB_PAGE_TITLES[activeTabId]
 
-  const activeBlockers = activeView?.blockers ?? []
   const tabInactive = activeView?.visual === 'na'
 
   const activeRequirements = useMemo(

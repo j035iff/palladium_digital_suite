@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import { sanitizeIdentityHeightInchesInput } from '../../lib/characterIdentity'
 import {
   CREATION_FORGE_DETAILS_ROW_CLASS,

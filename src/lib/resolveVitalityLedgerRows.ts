@@ -3,7 +3,7 @@
  * Facade vitals resolve before Morphus vitals that depend on Facade S.D.C.
  */
 import type { Character, PalladiumOcc, Race } from '../types'
-import { FORGE_ATTRIBUTE_KEYS, type ForgeAttrKey } from './attributeKeys'
+import type { ForgeAttrKey } from './attributeKeys'
 import { diceNotationBounds, isDiceNotation } from './diceNotationBounds'
 import {
   createPhysicalPendingRoll,
@@ -87,6 +87,7 @@ function formulaDiceRolls(
       min: bounds.min,
       max: bounds.max,
       source: term.label,
+      groupKind: 'occ',
     }
   })
 }
@@ -105,6 +106,7 @@ function perLevelDiceRolls(
       min: bounds.min,
       max: bounds.max,
       source: `${normalizeDiceDisplay(per)}/level`,
+      groupKind: 'occ',
     },
   ]
 }

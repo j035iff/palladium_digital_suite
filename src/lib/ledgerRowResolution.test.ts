@@ -75,6 +75,7 @@ describe('ledgerRowResolution', () => {
               min: 1,
               max: 6,
               source: 'Body Building',
+              groupKind: 'skills' as const,
             },
           ],
         },

@@ -49,6 +49,7 @@ import {
   partyHorrorSaveBonus,
   type GmPartyObserverSlice,
 } from '../lib/gm/partyObserver'
+import type { ActiveForm } from '../types'
 import type {
   GmConversionPolicy,
   GmNpcInstance,

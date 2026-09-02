@@ -40,6 +40,7 @@ import {
   sumRelatedVoucherReservedSlots,
 } from '../occRelatedSkillVouchers'
 import { creationHandToHandReservedRelatedSlots } from '../creationHandToHandChoice'
+import { occSkillSlotPolicy } from '../occCatalogEngine'
 import {
   creationFreeRelatedSkillCap,
   getCreationRelatedPicks,
@@ -435,7 +436,7 @@ function assessSkillsTabBlockers(ctx: CharacterCreationForgeContext): string[] {
     const relatedCap = creationRelatedSkillCap(
       relatedBase,
       ctx.psychicTier,
-      occ.occSkillSlotPolicy,
+      occSkillSlotPolicy(occ),
     )
     const freeRelatedCap = creationFreeRelatedSkillCap(
       relatedCap,

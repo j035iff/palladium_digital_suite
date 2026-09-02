@@ -117,6 +117,7 @@ describe('ledgerLineBuilder', () => {
               min: 1,
               max: 6,
               source: 'Race',
+              groupKind: 'race' as const,
             },
           ],
         },
@@ -208,6 +209,7 @@ describe('ledgerLineBuilder', () => {
           min: 1,
           max: 6,
           source: contribution.label,
+          groupKind: group.kind,
         })),
       })),
     }

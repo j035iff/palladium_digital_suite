@@ -123,8 +123,6 @@ import {
   skillRequiresSpecialization,
   skillSupportsProfessionalQuality,
   sumCreationSkillPickSlots,
-  sumFreeRelatedSkillSlotUsage,
-  sumOccCoreProfessionalRelatedSlotSurcharges,
   sumRelatedPoolSlotUsage,
   sumRelatedPoolUsageExcludingHandToHand,
   upgradePickToProfessional,
@@ -721,6 +719,7 @@ export function SkillEngine() {
       secondaryPicks: secondarySelected,
       allPicks: allCreationPicks,
       activeFilterCategory: category,
+      raceBlocked: false,
     }),
     [
       effectiveOcc,
@@ -1610,10 +1609,6 @@ export function SkillEngine() {
     )
   }
 
-  /** @deprecated Use {@link handleCreationVoucherAdd}. */
-  function handleOccVoucherAdd(skillId: string) {
-    handleCreationVoucherAdd(skillId)
-  }
 
   function handleSkillAdd(skillId: string, action: 'related' | 'secondary') {
     const def = getSkillById(skillId)

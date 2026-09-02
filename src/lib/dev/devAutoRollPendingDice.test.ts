@@ -16,6 +16,7 @@ describe('devAutoRollPendingDice', () => {
       min: 3,
       max: 18,
       source: 'Race',
+      groupKind: 'race' as const,
     }
     expect(rollPendingDiceValue(roll)).toBe(3)
     vi.restoreAllMocks()

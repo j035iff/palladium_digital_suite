@@ -379,10 +379,22 @@ export type CreationSkillLibraryPartitions = {
 function compareLibrarySelectedSkills(
   a: EngineSkillDef,
   b: EngineSkillDef,
-  selectionTier: (skillId: string) => 'occ' | 'related' | 'secondary' | undefined,
+  selectionTier: (
+    skillId: string,
+  ) => 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
 ): number {
-  const tierRank = (tier: 'occ' | 'related' | 'secondary' | undefined) =>
-    tier === 'occ' ? 0 : tier === 'related' ? 1 : tier === 'secondary' ? 2 : 3
+  const tierRank = (
+    tier: 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
+  ) =>
+    tier === 'occ'
+      ? 0
+      : tier === 'related'
+        ? 1
+        : tier === 'secondary'
+          ? 2
+          : tier === 'voucher' || tier === 'specialization'
+            ? 3
+            : 4
   const tierDelta =
     tierRank(selectionTier(a.id)) - tierRank(selectionTier(b.id))
   if (tierDelta !== 0) return tierDelta
@@ -395,7 +407,9 @@ export function partitionCreationSkillLibrary(
   filterCategory: string,
   isUnconditionallyExcluded: (def: EngineSkillDef) => boolean,
   isChosen: (def: EngineSkillDef) => boolean,
-  selectionTier?: (skillId: string) => 'occ' | 'related' | 'secondary' | undefined,
+  selectionTier?: (
+    skillId: string,
+  ) => 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
 ): CreationSkillLibraryPartitions {
   const sorted = sortCreationSkillLibraryResults(skills, filterCategory)
   const selected: EngineSkillDef[] = []
@@ -427,7 +441,9 @@ export function sortCreationSkillLibraryWithSelectableFirst(
   filterCategory: string,
   isUnconditionallyExcluded: (def: EngineSkillDef) => boolean,
   isChosen?: (def: EngineSkillDef) => boolean,
-  selectionTier?: (skillId: string) => 'occ' | 'related' | 'secondary' | undefined,
+  selectionTier?: (
+    skillId: string,
+  ) => 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
 ): EngineSkillDef[] {
   const { selected, browse } = partitionCreationSkillLibrary(
     skills,

@@ -142,7 +142,13 @@ export function assessRelatedSkillSlotBlockersAtCap(
 ): string[] {
   if (cap <= 0) return []
   if (relatedSelectedCount >= cap) return []
+  const hthNote =
+    handToHandReservedSlots > 0
+      ? ` — ${handToHandReservedSlots} reserved for Hand-to-Hand`
+      : psychicTier === 'major'
+        ? ' — Major psychic halved budget'
+        : ''
   return [
-    `Fill all O.C.C. related skill slots (${relatedSelectedCount} / ${cap}${psychicTier === 'major' ? ' — Major psychic halved budget' : ''}).`,
+    `Fill all O.C.C. related skill slots (${relatedSelectedCount} / ${cap}${hthNote}).`,
   ]
 }

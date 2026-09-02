@@ -118,6 +118,7 @@ describe('resolveVitalPendingBlockTotal', () => {
               min: 1,
               max: 6,
               source: 'Race',
+              groupKind: 'race' as const,
             },
           ],
         },

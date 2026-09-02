@@ -135,6 +135,7 @@ describe('liveSheetAbilities', () => {
         {
           id: 'animal_avian_full_bird',
           name: 'Full Bird',
+          tableCategory: 'animal',
           sensory: { hawkLikeDayVision: true },
           customOneOffs: [
             'Exceptional vision: can see a rabbit or read a sign two miles (3.2 km) away.',

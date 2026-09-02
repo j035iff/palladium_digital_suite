@@ -34,7 +34,6 @@ import {
   pendingBlockHasUnresolvedRolls,
   resolveCombatLedgerTotals,
   resolveExceptionalDisplayValue,
-  resolveFacadeAttributeSnapshot,
   statStackToLedgerLines,
   statStackTotal,
   type ExceptionalDisplayKey,
@@ -97,7 +96,6 @@ import {
   buildCreationLedgerResolutionBundle,
   sumPendingAttributeDiceBonuses,
   pendingAttributeDiceBreakdown,
-  morphusTraitAttributeDiceBreakdown,
   creationPendingBlockTotal,
   pendingDiceBlocksById,
   pendingDiceBlockRunningTotal,
@@ -458,17 +456,6 @@ function occSaveLedgerParts(
     )
   }
   return total > 0 ? [{ label: 'O.C.C.', amount: total }] : []
-}
-
-const ATTR_LEDGER_LABELS: Record<ForgeAttrKey, string> = {
-  iq: 'I.Q.',
-  me: 'M.E.',
-  ma: 'M.A.',
-  ps: 'P.S.',
-  pp: 'P.P.',
-  pe: 'P.E.',
-  pb: 'P.B.',
-  spd: 'Spd',
 }
 
 /** Attribute totals with O.C.C. / skill / variable dice — used for exceptional bonus rows. */
