@@ -69,6 +69,7 @@ import {
 } from '../lib/ammoReserves'
 import { loadXpHistory, saveXpHistory } from '../lib/xpHistoryPersistence'
 import { getOccById, snapshotOccForCharacter } from '../data/occDefinitions'
+import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
 import {
   LEVEL_CAP,
   newlyCrossedLevels,
@@ -477,7 +478,7 @@ type CharacterContextValue = {
   encumbranceSpdNote: string
   /** Wear body armor (`null` clears equipped suit). Ruined armor (0 S.D.C.) cannot be equipped. */
   equipArmor: (id: string | null) => void
-  /** Add a new armor row to inventory (Armory). */
+  /** Add a new armor row to inventory (Gear → Armor). */
   addArmorToInventory: (piece: {
     name: string
     ar: number
@@ -485,6 +486,18 @@ type CharacterContextValue = {
     weightLbs: number
     morphusCompatible?: boolean
     humanSized?: boolean
+  }) => void
+  /** Add a new weapon row to inventory (Gear → Weapons). */
+  addWeaponToInventory: (piece: {
+    name: string
+    category: string
+    damage: string
+    strikeBonus?: number
+    weightLbs?: number
+    linkedWpSkillId?: string
+    wpCategory?: string
+    payload?: { current: number; max: number }
+    ammoCategory?: string
   }) => void
   dropItem: (id: string) => void
   /** Up to two carried weapons flagged ready for the combat HUD strike row. */
@@ -1453,6 +1466,55 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           equippedArmorId,
           readyWeaponIds,
         ),
+      )
+    },
+    [equippedArmorId, readyWeaponIds],
+  )
+
+  const addWeaponToInventory = useCallback(
+    (piece: {
+      name: string
+      category: string
+      damage: string
+      strikeBonus?: number
+      weightLbs?: number
+      linkedWpSkillId?: string
+      wpCategory?: string
+      payload?: { current: number; max: number }
+      ammoCategory?: string
+    }) => {
+      const id = `weapon_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`
+      const wpEntry = piece.linkedWpSkillId
+        ? getWeaponProficiencyCatalogEntryById(piece.linkedWpSkillId)
+        : undefined
+      const payload = piece.payload
+        ? {
+            max: Math.max(1, Math.round(piece.payload.max)),
+            current: Math.max(
+              0,
+              Math.min(
+                Math.round(piece.payload.current),
+                Math.max(1, Math.round(piece.payload.max)),
+              ),
+            ),
+          }
+        : undefined
+      const row: Weapon = {
+        id,
+        itemType: 'weapon',
+        name: piece.name.trim() || 'Unnamed weapon',
+        weightLbs: Math.max(0, piece.weightLbs ?? 2),
+        category: piece.category.trim() || 'Misc',
+        strikeBonus: Number.isFinite(piece.strikeBonus) ? Math.round(piece.strikeBonus!) : 0,
+        damage: piece.damage.trim() || '1D6',
+        isEquipped: false,
+        linkedWpSkillId: piece.linkedWpSkillId,
+        wpCategory: piece.wpCategory ?? wpEntry?.name,
+        payload,
+        ammoCategory: payload ? piece.ammoCategory?.trim() || undefined : undefined,
+      }
+      setInventoryItems((prev) =>
+        syncArmorAndWeaponFlags([...prev, row], equippedArmorId, readyWeaponIds),
       )
     },
     [equippedArmorId, readyWeaponIds],
@@ -3004,6 +3066,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       encumbranceSpdNote,
       equipArmor,
       addArmorToInventory,
+      addWeaponToInventory,
       dropItem,
       readyWeaponIds,
       readyWeapons,
@@ -3149,6 +3212,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       encumbranceSpdNote,
       equipArmor,
       addArmorToInventory,
+      addWeaponToInventory,
       dropItem,
       readyWeaponIds,
       readyWeapons,
