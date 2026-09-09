@@ -60,6 +60,9 @@ const xpTableBookSchema = loadJson(join(schemasDir, 'palladium-xp-table-book.sch
 const encounterArchetypeSchema = loadJson(
   join(schemasDir, 'palladium-encounter-archetype.schema.json'),
 )
+const weaponAncientSchema = loadJson(
+  join(schemasDir, 'palladium-weapon-ancient.schema.json'),
+)
 const morphusDescriptionLeakRe =
   /\b(?:Talent Manifestations|New Common Talents|Appendix Talents|Common Talents from Nightbane|Elite Talents from Nightbane)\b/i
 
@@ -91,6 +94,7 @@ for (const [label, schema] of [
   ['palladium-xp-table.schema.json', xpTableSchema],
   ['palladium-xp-table-book.schema.json', xpTableBookSchema],
   ['palladium-encounter-archetype.schema.json', encounterArchetypeSchema],
+  ['palladium-weapon-ancient.schema.json', weaponAncientSchema],
 ]) {
   try {
     ajv.compile(schema)
@@ -116,6 +120,7 @@ const validateMorphusForgeRoutingDoc = ajv.compile(morphusForgeRoutingSchema)
 const validateXpTableDoc = ajv.compile(xpTableSchema)
 const validateXpTableBookDoc = ajv.compile(xpTableBookSchema)
 const validateEncounterArchetypeRow = ajv.compile(encounterArchetypeSchema)
+const validateWeaponAncientRow = ajv.compile(weaponAncientSchema)
 
 const skillsDir = join(contentDir, 'skills')
 let palladiumSkills
@@ -197,6 +202,44 @@ if (!Array.isArray(weaponProficiencies)) {
     failed = true
     console.error(
       `ERR skills/weapon_proficiencies.json — ${bad} row(s) failed schema validation`,
+    )
+  }
+}
+
+const weaponsAncientPath = join(contentDir, 'weapons/ancient.json')
+const weaponsAncient = loadJson(weaponsAncientPath)
+if (!Array.isArray(weaponsAncient)) {
+  failed = true
+  console.error('ERR weapons/ancient.json — expected top-level array')
+} else {
+  let bad = 0
+  const seenIds = new Set()
+  for (const row of weaponsAncient) {
+    if (!validateWeaponAncientRow(row)) {
+      bad++
+      if (bad <= 8) {
+        console.error(
+          `ERR weapons/ancient.json id=${row?.id ?? '?'}:`,
+          validateWeaponAncientRow.errors,
+        )
+      }
+    }
+    if (row?.id) {
+      if (seenIds.has(row.id)) {
+        bad++
+        console.error(`ERR weapons/ancient.json — duplicate id ${row.id}`)
+      }
+      seenIds.add(row.id)
+    }
+  }
+  if (bad === 0) {
+    console.log(
+      `OK  weapons/ancient.json — ${weaponsAncient.length} rows validate`,
+    )
+  } else {
+    failed = true
+    console.error(
+      `ERR weapons/ancient.json — ${bad} row(s) failed schema validation`,
     )
   }
 }
@@ -1093,6 +1136,10 @@ const exampleValidators = [
     compile: validateWeaponProficiencyRow,
   },
   {
+    prefix: 'palladium-weapon-ancient',
+    compile: validateWeaponAncientRow,
+  },
+  {
     prefix: 'palladium-encounter-archetype',
     compile: validateEncounterArchetypeRow,
   },
@@ -1124,10 +1171,15 @@ if (exampleFiles.length > 0) {
       }
       continue
     }
-    if (!rule.compile(doc)) {
-      exampleBad++
-      if (exampleBad <= 5) {
-        console.error(`ERR schemas/examples/${file}:`, rule.compile.errors)
+    const rows = Array.isArray(doc) ? doc : [doc]
+    for (let i = 0; i < rows.length; i++) {
+      const row = stripSchemaPointer(rows[i])
+      if (!rule.compile(row)) {
+        exampleBad++
+        if (exampleBad <= 5) {
+          const where = rows.length > 1 ? `${file}[${i}]` : file
+          console.error(`ERR schemas/examples/${where}:`, rule.compile.errors)
+        }
       }
     }
   }

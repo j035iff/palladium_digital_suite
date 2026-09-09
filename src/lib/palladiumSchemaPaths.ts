@@ -228,6 +228,16 @@ export const PALLADIUM_ENCOUNTER_ARCHETYPE_SCHEMA_PATH =
 export const PALLADIUM_ENCOUNTER_ARCHETYPE_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-encounter-archetype.schema.json' as const
 
+export const PALLADIUM_WEAPON_ANCIENT_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-weapon-ancient.schema.json` as const
+
+export const PALLADIUM_WEAPON_ANCIENT_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-weapon-ancient.schema.json' as const
+
+/** Ancient-weapon hardware catalog — single pool `weapons/ancient.json`. */
+export const PALLADIUM_WEAPONS_ANCIENT_JSON_PATH =
+  `${PALLADIUM_CONTENT_DIR}/weapons/ancient.json` as const
+
 /** GM encounter archetype pools — `encounters/<genre>/<book>.json`. Not player creation. */
 export const PALLADIUM_ENCOUNTERS_DIR =
   `${PALLADIUM_CONTENT_DIR}/encounters` as const

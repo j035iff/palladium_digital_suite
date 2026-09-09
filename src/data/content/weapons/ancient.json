@@ -1,0 +1,4011 @@
+[
+  {
+    "id": "weapon_ancient_battle_axe",
+    "name": "Axe, Battle",
+    "category": "axes",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_battle_axe",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "2.0kg/4.6lb",
+          "kg": 2.0,
+          "lb": 4.6
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_throwing_axe",
+    "name": "Axe, Throwing",
+    "category": "axes",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_battle_axe",
+    "throwable": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".4m/1.25ft",
+          "meters": 0.4,
+          "feet": 1.25
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 100,
+          "display": "$100"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_stone_axe",
+    "name": "Axe, Stone",
+    "category": "axes",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_battle_axe",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".6m/2.0ft",
+          "meters": 0.6,
+          "feet": 2.0
+        },
+        "averageWeight": {
+          "display": "1.8kg/4.0kg",
+          "kg": 1.8,
+          "lb": 4.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 100,
+          "display": "$100"
+        },
+        "notes": "Printed weight cell appears to typo lb as kg (1.8kg/4.0kg); encoded lb=4.0."
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_bipennis_axe",
+    "name": "Axe, Bipennis (2-head)",
+    "aliases": [
+      "Bipennis Axe",
+      "Double-headed Axe"
+    ],
+    "category": "axes",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_battle_axe",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "2.8kg/6.0lb",
+          "kg": 2.8,
+          "lb": 6.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 120,
+          "display": "$120"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_oncin_pick",
+    "name": "Oncin Pick",
+    "category": "axes",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_battle_axe",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.0m/3.75ft",
+          "meters": 1.0,
+          "feet": 3.75
+        },
+        "averageWeight": {
+          "display": "1.8kg/4.0lb",
+          "kg": 1.8,
+          "lb": 4.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 220,
+          "display": "$220"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_awl_pike",
+    "name": "Awl Pike",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "3.2m/10ft",
+          "meters": 3.2,
+          "feet": 10.0
+        },
+        "averageWeight": {
+          "display": "2.7kg/6.0lb",
+          "kg": 2.7,
+          "lb": 6.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 445,
+          "display": "$445"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_beaked_axe",
+    "name": "Beaked Axe",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.3m/7.5ft",
+          "meters": 2.3,
+          "feet": 7.5
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 540,
+          "display": "$540"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_berdiche",
+    "name": "Berdiche",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.1m/7.0ft",
+          "meters": 2.1,
+          "feet": 7.0
+        },
+        "averageWeight": {
+          "display": "3.2kg/7.0lb",
+          "kg": 3.2,
+          "lb": 7.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 550,
+          "display": "$550"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_glaive",
+    "name": "Glaive",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.3m/7.5ft",
+          "meters": 2.3,
+          "feet": 7.5
+        },
+        "averageWeight": {
+          "display": "2.7kg/6.0lb",
+          "kg": 2.7,
+          "lb": 6.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 540,
+          "display": "$540"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_guisarme",
+    "name": "Guisarme",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.5m/7.25ft",
+          "meters": 2.5,
+          "feet": 7.25
+        },
+        "averageWeight": {
+          "display": "2.7kg/6.0lb",
+          "kg": 2.7,
+          "lb": 6.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 550,
+          "display": "$550"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_halberd",
+    "name": "Halberd",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.2m/7.25ft",
+          "meters": 2.2,
+          "feet": 7.25
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "3D6",
+        "damageBookDisplay": "3-18",
+        "averageCost": {
+          "currency": "usd",
+          "min": 660,
+          "display": "$660"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_sabre_halberd",
+    "name": "Sabre Halberd",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.4m/8.0ft",
+          "meters": 2.4,
+          "feet": 8.0
+        },
+        "averageWeight": {
+          "display": "3.2kg/7.0lb",
+          "kg": 3.2,
+          "lb": 7.0
+        },
+        "damage": "3D6",
+        "damageBookDisplay": "3-18",
+        "averageCost": {
+          "currency": "usd",
+          "min": 650,
+          "display": "$650"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_hippe",
+    "name": "Hippe",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.3m/7.5ft",
+          "meters": 2.3,
+          "feet": 7.5
+        },
+        "averageWeight": {
+          "display": "2.7kg/6.0lb",
+          "kg": 2.7,
+          "lb": 6.0
+        },
+        "damage": "3D6",
+        "damageBookDisplay": "3-18",
+        "averageCost": {
+          "currency": "usd",
+          "min": 750,
+          "display": "$750"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_lucerne_hammer",
+    "name": "Lucerne Hammer",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.9m/9.75ft",
+          "meters": 2.9,
+          "feet": 9.75
+        },
+        "averageWeight": {
+          "display": "2.9kg/6.5lb",
+          "kg": 2.9,
+          "lb": 6.5
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 540,
+          "display": "$540"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_military_fork",
+    "name": "Military Fork",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.1m/7.0ft",
+          "meters": 2.1,
+          "feet": 7.0
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 330,
+          "display": "$330"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_pike",
+    "name": "Pike",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "5.0m/16ft",
+          "meters": 5.0,
+          "feet": 16.0
+        },
+        "averageWeight": {
+          "display": "3.6kg/8.0lb",
+          "kg": 3.6,
+          "lb": 8.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 445,
+          "display": "$445"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_runka",
+    "name": "Runka",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.3m/7.5ft",
+          "meters": 2.3,
+          "feet": 7.5
+        },
+        "averageWeight": {
+          "display": "2.7kg/6.0lb",
+          "kg": 2.7,
+          "lb": 6.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 445,
+          "display": "$445"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_scythe",
+    "name": "Scythe",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.4m/8.0ft",
+          "meters": 2.4,
+          "feet": 8.0
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 445,
+          "display": "$445"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_voulge",
+    "name": "Voulge",
+    "category": "pole_arms",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.1m/7.0ft",
+          "meters": 2.1,
+          "feet": 7.0
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "3D6",
+        "damageBookDisplay": "3-18",
+        "averageCost": {
+          "currency": "usd",
+          "min": 550,
+          "display": "$550"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_short_spear",
+    "name": "Short Spear",
+    "category": "spears",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "1.2-1.8m/4-6ft",
+          "metersMin": 1.2,
+          "metersMax": 1.8,
+          "feetMin": 4,
+          "feetMax": 6
+        },
+        "averageWeight": {
+          "display": "1.8kg/4.0lb",
+          "kg": 1.8,
+          "lb": 4.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 130,
+          "display": "$130"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_long_spear",
+    "name": "Long Spear",
+    "category": "spears",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.1-3.0m/7-10ft",
+          "metersMin": 2.1,
+          "metersMax": 3.0,
+          "feetMin": 7,
+          "feetMax": 10
+        },
+        "averageWeight": {
+          "display": "2.9kg/6.5lb",
+          "kg": 2.9,
+          "lb": 6.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 180,
+          "display": "$180"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_javelin",
+    "name": "Javelin",
+    "category": "spears",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "2.1m/7.0ft",
+          "meters": 2.1,
+          "feet": 7.0
+        },
+        "averageWeight": {
+          "display": "1.8kg/4.0lb",
+          "kg": 1.8,
+          "lb": 4.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 180,
+          "display": "$180"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_beaked_axe_spear",
+    "name": "Beaked Axe",
+    "description": "Spear-section listing (distinct from the Pole Arms Beaked Axe row). Shorter, one-handed.",
+    "category": "spears",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "1.4m/4.5ft",
+          "meters": 1.4,
+          "feet": 4.5
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 430,
+          "display": "$430"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_trident",
+    "name": "Trident",
+    "category": "spears",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.5m/5.0ft",
+          "meters": 1.5,
+          "feet": 5.0
+        },
+        "averageWeight": {
+          "display": "1.8kg/4.0lb",
+          "kg": 1.8,
+          "lb": 4.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_lance",
+    "name": "Lance",
+    "category": "spears",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "4.0m/13ft",
+          "meters": 4.0,
+          "feet": 13.0
+        },
+        "averageWeight": {
+          "display": "3.6kg/8.0lb",
+          "kg": 3.6,
+          "lb": 8.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 460,
+          "display": "$460"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_daggers_and_knives",
+    "name": "Daggers and Knives",
+    "category": "knives",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_knife",
+    "throwable": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 204
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".2-.5m/10-20in.",
+          "metersMin": 0.2,
+          "metersMax": 0.5,
+          "feetMin": 0.8333333333333334,
+          "feetMax": 1.6666666666666667
+        },
+        "averageWeight": {
+          "display": ".5kg/1.0lb",
+          "kg": 0.5,
+          "lb": 1.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 30,
+          "display": "$30-100",
+          "max": 100
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_short_sword",
+    "name": "Short Sword",
+    "category": "short_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".7m/2.5ft",
+          "meters": 0.7,
+          "feet": 2.5
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_sabre",
+    "name": "Sabre",
+    "category": "short_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".6m/2.0ft",
+          "meters": 0.6,
+          "feet": 2.0
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 230,
+          "display": "$230"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_scimitar",
+    "name": "Scimitar",
+    "category": "short_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".7m/2.5ft",
+          "meters": 0.7,
+          "feet": 2.5
+        },
+        "averageWeight": {
+          "display": "1.5kg/3.5lb",
+          "kg": 1.5,
+          "lb": 3.5
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 235,
+          "display": "$235"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_falchion",
+    "name": "Falchion",
+    "category": "short_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "1.8kg/4.0lb",
+          "kg": 1.8,
+          "lb": 4.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 350,
+          "display": "$350"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_cutlass",
+    "name": "Cutlass",
+    "category": "short_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".6m/2.0ft",
+          "meters": 0.6,
+          "feet": 2.0
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 235,
+          "display": "$235"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_bastard_sword",
+    "name": "Bastard",
+    "category": "large_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.0m/3.75ft",
+          "meters": 1.0,
+          "feet": 3.75
+        },
+        "averageWeight": {
+          "display": "2.1kg/4.5lb",
+          "kg": 2.1,
+          "lb": 4.5
+        },
+        "damage": "1D8+2",
+        "damageBookDisplay": "1-8+2",
+        "averageCost": {
+          "currency": "usd",
+          "min": 450,
+          "display": "$450"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_broadsword",
+    "name": "Broadsword",
+    "category": "large_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".9m/3.0ft",
+          "meters": 0.9,
+          "feet": 3.0
+        },
+        "averageWeight": {
+          "display": "1.6kg/3.5lb",
+          "kg": 1.6,
+          "lb": 3.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 340,
+          "display": "$340"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_claymore",
+    "name": "Claymore",
+    "category": "large_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.2m/4.0ft",
+          "meters": 1.2,
+          "feet": 4.0
+        },
+        "averageWeight": {
+          "display": "2.9kg/6.5lb",
+          "kg": 2.9,
+          "lb": 6.5
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 560,
+          "display": "$560"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_flamberge",
+    "name": "Flamberge",
+    "category": "large_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.3m/4.25ft",
+          "meters": 1.3,
+          "feet": 4.25
+        },
+        "averageWeight": {
+          "display": "3.4kg/7.5lb",
+          "kg": 3.4,
+          "lb": 7.5
+        },
+        "damage": "3D6",
+        "damageBookDisplay": "3-18",
+        "averageCost": {
+          "currency": "usd",
+          "min": 670,
+          "display": "$670"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_long_sword",
+    "name": "Long Sword",
+    "category": "large_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".9m/3.0ft",
+          "meters": 0.9,
+          "feet": 3.0
+        },
+        "averageWeight": {
+          "display": "1.6kg/3.5lb",
+          "kg": 1.6,
+          "lb": 3.5
+        },
+        "damage": "1D8+2",
+        "damageBookDisplay": "1-8+2",
+        "averageCost": {
+          "currency": "usd",
+          "min": 455,
+          "display": "$455"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_espandon",
+    "name": "2-handed Espandon",
+    "category": "large_swords",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": ".9m/3.0ft",
+          "meters": 0.9,
+          "feet": 3.0
+        },
+        "averageWeight": {
+          "display": "2.1kg/4.5lb",
+          "kg": 2.1,
+          "lb": 4.5
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 460,
+          "display": "$460"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_ball_and_chain",
+    "name": "Ball and Chain",
+    "category": "ball_and_chain",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".9m/3.0ft",
+          "meters": 0.9,
+          "feet": 3.0
+        },
+        "averageWeight": {
+          "display": "2.1kg/4.5lb",
+          "kg": 2.1,
+          "lb": 4.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 250,
+          "display": "$250"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_flail",
+    "name": "Flail",
+    "category": "ball_and_chain",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.6m/5.25ft",
+          "meters": 1.6,
+          "feet": 5.25
+        },
+        "averageWeight": {
+          "display": "2.5kg/5.5lb",
+          "kg": 2.5,
+          "lb": 5.5
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 355,
+          "display": "$355"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_goupillon_flail",
+    "name": "Goupillon Flail",
+    "category": "ball_and_chain",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": ".5m/2.0ft",
+          "meters": 0.5,
+          "feet": 2.0
+        },
+        "averageWeight": {
+          "display": "2.1kg/4.5lb",
+          "kg": 2.1,
+          "lb": 4.5
+        },
+        "damage": "3D6",
+        "damageBookDisplay": "3-18",
+        "averageCost": {
+          "currency": "usd",
+          "min": 460,
+          "display": "$460"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_mace_and_chain",
+    "name": "Mace and Chain",
+    "category": "ball_and_chain",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".9m/3.0ft",
+          "meters": 0.9,
+          "feet": 3.0
+        },
+        "averageWeight": {
+          "display": "2.1kg/4.5lb",
+          "kg": 2.1,
+          "lb": 4.5
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 280,
+          "display": "$280"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_nunchaku",
+    "name": "Nunchaku",
+    "aliases": [
+      "Numchuks"
+    ],
+    "category": "ball_and_chain",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "canEntangle": true,
+    "description": "Western table (Ball and Chain, p. 205) and oriental prose (p. 207). Can be used as a paired weapon for striking. Entangle only if one weapon is used with two hands.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "1.1kg/2.5lb",
+          "kg": 1.1,
+          "lb": 2.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 30,
+          "display": "$30 each",
+          "unit": "each"
+        },
+        "notes": "Entangle requires using one nunchaku with two hands."
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_arab_mace",
+    "name": "Arab Mace",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".6m/2.0ft",
+          "meters": 0.6,
+          "feet": 2.0
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_mace",
+    "name": "Mace",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".7m/2.5ft",
+          "meters": 0.7,
+          "feet": 2.5
+        },
+        "averageWeight": {
+          "display": "2.0kg/4.5lb",
+          "kg": 2.0,
+          "lb": 4.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_cudgel",
+    "name": "Cudgel",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "1.0kg/2.5lb",
+          "kg": 1.0,
+          "lb": 2.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_club_stick_pipe",
+    "name": "Club/Stick/Pipe",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 10,
+          "display": "$10"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_hercules_club",
+    "name": "Hercules Club",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.2m/4.0ft",
+          "meters": 1.2,
+          "feet": 4.0
+        },
+        "averageWeight": {
+          "display": "2.5kg/5.5lb",
+          "kg": 2.5,
+          "lb": 5.5
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 260,
+          "display": "$260"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_horseman_hammer",
+    "name": "Horseman Hammer",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "1.6kg/3.5lb",
+          "kg": 1.6,
+          "lb": 3.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 145,
+          "display": "$145"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_maul",
+    "name": "Maul",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "1.2m/4.0ft",
+          "meters": 1.2,
+          "feet": 4.0
+        },
+        "averageWeight": {
+          "display": "2.0kg/4.0lb",
+          "kg": 2.0,
+          "lb": 4.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 100,
+          "display": "$100"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_morning_star",
+    "name": "Morning Star",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/2.75ft",
+          "meters": 0.8,
+          "feet": 2.75
+        },
+        "averageWeight": {
+          "display": "1.0kg/2.5lb",
+          "kg": 1.0,
+          "lb": 2.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_war_club_wood",
+    "name": "War Club (wood)",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".9m/3.0ft",
+          "meters": 0.9,
+          "feet": 3.0
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 75,
+          "display": "$75"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_war_hammer",
+    "name": "War Hammer",
+    "category": "blunt",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".7m/2.5ft",
+          "meters": 0.7,
+          "feet": 2.5
+        },
+        "averageWeight": {
+          "display": "2.1kg/4.5lb",
+          "kg": 2.1,
+          "lb": 4.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 190,
+          "display": "$190"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_short_staff",
+    "name": "Short Staff",
+    "aliases": [
+      "Short"
+    ],
+    "category": "staves",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "1.2-1.8m/4-6ft",
+          "metersMin": 1.2,
+          "metersMax": 1.8,
+          "feetMin": 4,
+          "feetMax": 6
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 120,
+          "display": "$120"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_long_staff",
+    "name": "Long Staff",
+    "aliases": [
+      "Long"
+    ],
+    "category": "staves",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.9-2.7m/7-9ft",
+          "metersMin": 1.9,
+          "metersMax": 2.7,
+          "feetMin": 7,
+          "feetMax": 9
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 125,
+          "display": "$125"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_bo_staff",
+    "name": "Bo Staff",
+    "category": "staves",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "description": "Western table (p. 205) plus oriental prose (p. 206): size should be about a foot taller than the owner. Cost conflict: table $140 vs oriental $120 — table cost used; oriental $120 noted.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "2.8m/9.5ft",
+          "meters": 2.8,
+          "feet": 9.5
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 140,
+          "display": "$140",
+          "notes": "Oriental prose lists $120."
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_quarterstaff",
+    "name": "Quarterstaff",
+    "category": "staves",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.8m/6.0ft",
+          "meters": 1.8,
+          "feet": 6.0
+        },
+        "averageWeight": {
+          "display": "1.5kg/3.5lb",
+          "kg": 1.5,
+          "lb": 3.5
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 130,
+          "display": "$130"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_iron_staff",
+    "name": "Iron Staff",
+    "category": "staves",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.8-2.1m/6-7ft",
+          "metersMin": 1.8,
+          "metersMax": 2.1,
+          "feetMin": 6,
+          "feetMax": 7
+        },
+        "averageWeight": {
+          "display": "3.2kg/7lb",
+          "kg": 3.2,
+          "lb": 7.0
+        },
+        "damage": "1D8+2",
+        "damageBookDisplay": "1-8+2",
+        "averageCost": {
+          "currency": "usd",
+          "min": 245,
+          "display": "$245"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_short_bow",
+    "name": "Short Bow",
+    "category": "missile",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageWeight": {
+          "display": "1.0lb",
+          "lb": 1.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 130,
+          "display": "$130"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_arrows_short_bow",
+    "name": "Arrows (Short Bow)",
+    "entryRole": "ammunition",
+    "category": "missile",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "damageSpecial": "Damage is that of the short bow that fires them",
+        "averageCost": {
+          "currency": "usd",
+          "min": 20,
+          "display": "$20/dozen",
+          "unit": "dozen"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_long_bow",
+    "name": "Long Bow",
+    "category": "missile",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageWeight": {
+          "display": "2.0lb",
+          "lb": 2.0
+        },
+        "damage": "2D6",
+        "damageBookDisplay": "2-12",
+        "averageCost": {
+          "currency": "usd",
+          "min": 270,
+          "display": "$270"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_arrows_long_bow",
+    "name": "Arrows (Long Bow)",
+    "entryRole": "ammunition",
+    "category": "missile",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "damageSpecial": "Damage is that of the long bow that fires them",
+        "averageCost": {
+          "currency": "usd",
+          "min": 40,
+          "display": "$40/dozen",
+          "unit": "dozen"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_crossbow",
+    "name": "Cross Bow",
+    "aliases": [
+      "Crossbow"
+    ],
+    "category": "missile",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageWeight": {
+          "display": "7.0lb",
+          "lb": 7.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "range": {
+          "display": "500-700ft",
+          "feetMin": 500,
+          "feetMax": 700
+        },
+        "averageCost": {
+          "currency": "usd",
+          "min": 160,
+          "display": "$160"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_bolts",
+    "name": "Bolts",
+    "entryRole": "ammunition",
+    "category": "missile",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "damageSpecial": "Damage is that of the crossbow that fires them",
+        "averageCost": {
+          "currency": "usd",
+          "min": 35,
+          "display": "$35/dozen",
+          "unit": "dozen"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_sling",
+    "name": "Sling",
+    "category": "missile",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageWeight": {
+          "display": "2.0oz.",
+          "lb": 0.125
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 40,
+          "display": "$40"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
+    "entryRole": "weapon"
+  },
+  {
+    "id": "weapon_ancient_blackjack",
+    "name": "Black Jack",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "10in",
+          "feet": 0.8333333333333334
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D4",
+        "damageBookDisplay": "1-4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 10,
+          "display": "$10"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_dart",
+    "name": "Dart",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": true,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "6.0in",
+          "feet": 0.5
+        },
+        "averageWeight": {
+          "display": "6oz.",
+          "lb": 0.375
+        },
+        "damage": "1D4",
+        "damageBookDisplay": "1-4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 2,
+          "display": "$2"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_bull_whip",
+    "name": "Bull Whip",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "2.4m/8.0ft",
+          "meters": 2.4,
+          "feet": 8.0
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 60,
+          "display": "$60"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_cat_o_nine_tails",
+    "name": "Cat-o-Nine Tails",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".8m/3.0ft",
+          "meters": 0.8,
+          "feet": 3.0
+        },
+        "averageWeight": {
+          "display": ".5kg/1.0lb",
+          "kg": 0.5,
+          "lb": 1.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 100,
+          "display": "$100"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_meat_cleaver",
+    "name": "Meat Cleaver",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".3m/1.0ft",
+          "meters": 0.3,
+          "feet": 1.0
+        },
+        "averageWeight": {
+          "display": ".5kg/1.0lb",
+          "kg": 0.5,
+          "lb": 1.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 10,
+          "display": "$10"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_frying_pan",
+    "name": "Frying Pan",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".3m/1.0ft",
+          "meters": 0.3,
+          "feet": 1.0
+        },
+        "averageWeight": {
+          "display": ".5kg/1.0lb",
+          "kg": 0.5,
+          "lb": 1.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 10,
+          "display": "$10"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_hand_pick",
+    "name": "Hand Pick",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "7.0in",
+          "feet": 0.5833333333333334
+        },
+        "averageWeight": {
+          "display": "8.0oz.",
+          "lb": 0.5
+        },
+        "damage": "1D4",
+        "damageBookDisplay": "1-4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 5,
+          "display": "$5"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_large_pick_mattock",
+    "name": "Large Pick/Mattock",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.2m/4.0ft",
+          "meters": 1.2,
+          "feet": 4.0
+        },
+        "averageWeight": {
+          "display": "2.3kg/5.0lb",
+          "kg": 2.3,
+          "lb": 5.0
+        },
+        "damage": "1D8",
+        "damageBookDisplay": "1-8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 50,
+          "display": "$50"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_shovel",
+    "name": "Shovel",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "1.2m/4.0ft",
+          "meters": 1.2,
+          "feet": 4.0
+        },
+        "averageWeight": {
+          "display": "2.0kg/5.0lb",
+          "kg": 2.0,
+          "lb": 5.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 40,
+          "display": "$40"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_hammer_tool",
+    "name": "Hammer (tool)",
+    "category": "miscellaneous",
+    "entryRole": "improvised",
+    "weaponProficiencyEligible": false,
+    "throwable": false,
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "10in",
+          "feet": 0.8333333333333334
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D4",
+        "damageBookDisplay": "1-4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 10,
+          "display": "$10"
+        }
+      }
+    ],
+    "gameSystems": [
+      "nightbane"
+    ]
+  },
+  {
+    "id": "weapon_ancient_aikuchi",
+    "name": "Aikuchi",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_knife",
+    "throwable": true,
+    "description": "Curved Japanese dagger without a hilt (Tanto has a hilt). Can be thrown. Cost varies by quality and beauty.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 20,
+          "max": 1000,
+          "display": "$20-$1,000",
+          "notes": "Varies according to quality and beauty."
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_tanto",
+    "name": "Tanto",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_knife",
+    "throwable": true,
+    "description": "Curved Japanese dagger with a hilt (Aikuchi has no hilt). Can be thrown. Cost varies by quality and beauty.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 20,
+          "max": 1000,
+          "display": "$20-$1,000",
+          "notes": "Varies according to quality and beauty."
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_bisento",
+    "name": "Bisento",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "description": "Spear with a broad, curved blade, large enough to be considered a kind of pole arm. Must be imported from Japan.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "2D6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 600,
+          "display": "$600"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_blow_gun",
+    "name": "Blow Gun",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "description": "Favorite ninja weapon. Effective range is no more than 50 ft.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damageSpecial": "The dart itself does no damage",
+        "payloadNotes": "Usually coated with poison or drugs (GM-resolved).",
+        "range": {
+          "display": "50ft",
+          "feet": 50
+        },
+        "averageCost": {
+          "currency": "usd",
+          "min": 45,
+          "display": "$45.00"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_ninja_bow",
+    "name": "Ninja Bow",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "description": "Short, none too powerful bow favored by ninjas; can be disassembled and easily hidden.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "1D8",
+        "range": {
+          "display": "400ft",
+          "feet": 400
+        },
+        "averageCost": {
+          "currency": "usd",
+          "min": 500,
+          "display": "$500"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_samurai_long_bow",
+    "name": "Samurai Long Bow",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "description": "Separate skill learned by the ninja; probably the most powerful weapon of its type in the world.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "2D6",
+        "range": {
+          "display": "800ft",
+          "feet": 800
+        },
+        "averageCost": {
+          "currency": "usd",
+          "min": 1000,
+          "display": "$1,000",
+          "notes": "$1,000 or more for a high quality samurai bow."
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_modern_hunting_bow",
+    "name": "Modern Hunting Bow",
+    "aliases": [
+      "Modern commercial hunting bow"
+    ],
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "description": "Modern commercial hunting bow listed with ancient oriental bows (Nightbane RPG).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "1D10",
+        "averageCost": {
+          "currency": "usd",
+          "min": 200,
+          "display": "$200"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_heavy_crossbow",
+    "name": "Heavy Crossbow",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "description": "Heavy, two-handed crossbow. Commonly available by mail order in the U.S.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "2D6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 300,
+          "display": "$300"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_pistol_crossbow",
+    "name": "Pistol Crossbow",
+    "aliases": [
+      "Pistol-style crossbow"
+    ],
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "description": "40 lb, pistol-style crossbow. Commonly available by mail order in the U.S.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "damage": "1D10",
+        "averageCost": {
+          "currency": "usd",
+          "min": 150,
+          "display": "$150"
+        },
+        "notes": "40 lb draw, pistol style."
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_daisho",
+    "name": "Daisho",
+    "category": "oriental",
+    "entryRole": "weapon_set",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_paired_weapons",
+    "throwable": false,
+    "componentWeaponIds": [
+      "weapon_ancient_katana",
+      "weapon_ancient_wakizashi"
+    ],
+    "description": "Literally \"the long and the short\" — traditional Japanese set of a Wakizashi and a Katana. Using both together is a separate skill (paired weapons).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damageSpecial": "When used as paired weapons: 1D8+2 (long / Katana), 1D6 (short / Wakizashi)",
+        "notes": "Component weapons retain their own qualityVariants for solo use. Set cost for fair vs authentic paired use printed as little as $150 / $1,200.",
+        "averageCost": {
+          "currency": "usd",
+          "min": 150,
+          "max": 1200,
+          "display": "$150-$1,200",
+          "notes": "As little as $150 for fair quality and $1,200 for an authentic high quality (paired set pricing from Daisho / paired-use text)."
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_jitte",
+    "name": "Jitte",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "canEntangle": true,
+    "description": "Oversized three-pronged fork, generally designed to be used as a pair (with Sai). Excellent for countering samurai sword attacks; skilled user can entangle with one hand and attack with the other.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 50,
+          "unit": "pair",
+          "display": "$50/pair"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_sai",
+    "name": "Sai",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "canEntangle": true,
+    "description": "Oversized three-pronged fork, generally designed to be used as a pair (with Jitte). Excellent for countering samurai sword attacks; skilled user can entangle with one hand and attack with the other.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 50,
+          "unit": "pair",
+          "display": "$50/pair"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_katana",
+    "name": "Katana",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "description": "Primary weapon of the Samurai warrior; a long sword up to 3 ft in length. Enormous difference in quality between manufactured and authentic blades.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "up to 3ft",
+          "feet": 3
+        },
+        "qualityVariants": [
+          {
+            "id": "regular",
+            "label": "Regular quality",
+            "damage": "2D6",
+            "averageCost": {
+              "currency": "usd",
+              "min": 300,
+              "display": "$300",
+              "notes": "Manufactured versions could be as little as $300."
+            }
+          },
+          {
+            "id": "top",
+            "label": "Top quality (authentic)",
+            "damage": "3D6",
+            "averageCost": {
+              "currency": "usd",
+              "min": 5000,
+              "display": "$5,000",
+              "notes": "A top quality sword could cost at least $5,000."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_kusari_gama",
+    "name": "Kusari-Gama",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "canEntangle": true,
+    "requiresHandToHand": [
+      "hth_martial_arts",
+      "hth_assassin"
+    ],
+    "description": "Chain with a weight on one end and a sickle on the other. One end can entangle while the other strikes. Ninja favorite; also used as a climbing device.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D10",
+        "averageCost": {
+          "currency": "usd",
+          "min": 300,
+          "display": "$300"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_kyoketsu_shogi",
+    "name": "Kyoketsu-Shogi",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "canEntangle": true,
+    "requiresHandToHand": [
+      "hth_martial_arts",
+      "hth_assassin"
+    ],
+    "description": "Made with rope; iron ring on one end and a double blade on the other. Somewhat less damaging than Kusari-Gama. One end can entangle while the other strikes; usually used as a climbing device.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 100,
+          "display": "$100"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_kawanga",
+    "name": "Kawanga",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "description": "Ninja combination of a rope and grapple used for climbing and fighting. Separate chain weapon.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 50,
+          "display": "$50"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_manriki_gusari",
+    "name": "Manriki-Gusari",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_chain",
+    "throwable": false,
+    "canEntangle": true,
+    "description": "Chain with solid blunt weights on each end. Can entangle with one end and strike with the other. Easy to disassemble and conceal; can be improvised from hardware-store chain and lead weights.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 30,
+          "display": "$30"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_no_dachi",
+    "name": "No-Dachi",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "description": "Huge two-handed sword; 5 to 6 ft long, carried on the back and drawn over the shoulder. Does much more damage than most weapons in its class.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "averageLength": {
+          "display": "5-6ft",
+          "feetMin": 5,
+          "feetMax": 6
+        },
+        "damage": "3D6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 750,
+          "display": "$750 and up",
+          "notes": "$750 and up."
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_sa_tjat_koen",
+    "name": "Sa Tjat Koen",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "canEntangle": true,
+    "description": "Malaysian weapon that looks like Nunchaku with a second chain and third handle. Can entangle like nunchaku. Cannot be used as a paired weapon.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D10",
+        "averageCost": {
+          "currency": "usd",
+          "min": 150,
+          "display": "$150"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_shikomi_zue",
+    "name": "Shikomi-Zue",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "objectSdc": 50,
+    "description": "Hollow bamboo staff with a concealed spring-loaded blade (release via trigger stud). Ninja commonly disguised themselves as blind men while carrying it. Usable as a somewhat fragile Bo Staff or as a spear.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "1D8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 150,
+          "display": "$150"
+        },
+        "notes": "Dual mode: Bo Staff or spear. Object S.D.C. 50 (fragile staff)."
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_shuriken",
+    "name": "Shuriken",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": true,
+    "description": "Ninja throwing stars — designed more for concealment and discouraging pursuit than raw lethality. Throwing knives require a different technique.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 5,
+          "unit": "each",
+          "display": "$5.00 each",
+          "notes": "High quality shuriken."
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_throwing_knife_oriental",
+    "name": "Throwing Knife (Oriental)",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_knife",
+    "throwable": true,
+    "description": "Listed with Shuriken pricing (Nightbane RPG). Throwing knives require a different technique than shuriken.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D4",
+        "averageCost": {
+          "currency": "usd",
+          "min": 3,
+          "unit": "each",
+          "display": "$3.00 each",
+          "notes": "High quality throwing knives."
+        },
+        "notes": "Damage not separately listed from shuriken (1D4); encoded to match the shared damage line on that entry."
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_naginata",
+    "name": "Naginata",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "description": "Curved-blade spear. Otherwise alike to Yari and used as a spear. Very difficult to conceal.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "1D8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 150,
+          "display": "$150"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_yari",
+    "name": "Yari",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_polearm",
+    "throwable": false,
+    "description": "Straight-blade spear. Otherwise alike to Naginata and used as a spear. Very difficult to conceal.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": true,
+        "damage": "1D8",
+        "averageCost": {
+          "currency": "usd",
+          "min": 150,
+          "display": "$150"
+        }
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_wakizashi",
+    "name": "Wakizashi",
+    "aliases": [
+      "Ninja short sword"
+    ],
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "description": "Short sword favored by the samurai. The ninja short sword has a straighter blade but is otherwise just like a wakizashi. Cost varies by quality (see Katana).",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "qualityVariants": [
+          {
+            "id": "regular",
+            "label": "Regular quality",
+            "damage": "1D8",
+            "averageCost": {
+              "currency": "usd",
+              "min": 300,
+              "display": "$300",
+              "notes": "Cost varies according to quality — see Katana prices."
+            }
+          },
+          {
+            "id": "top",
+            "label": "Top quality",
+            "damage": "2D6",
+            "averageCost": {
+              "currency": "usd",
+              "min": 5000,
+              "display": "$5,000",
+              "notes": "Cost varies according to quality — see Katana prices."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "weapon_ancient_tonfa",
+    "name": "Tonfa",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": [
+      "nightbane"
+    ],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_blunt",
+    "throwable": false,
+    "description": "Short wood weapon ideal for parrying and close combat.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damage": "1D6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 40,
+          "display": "$40"
+        }
+      }
+    ]
+  }
+]

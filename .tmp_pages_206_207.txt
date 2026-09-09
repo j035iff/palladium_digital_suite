@@ -1,0 +1,463 @@
+=== PDF INDEX 205 ===
+Type 
+SHORT SWORDS 
+Shor t Sword ."-a:' ==�> 
+����tar 
+�-: � _____ ;7_ Falchion nmI? � 
+Cutlass �--=-� <4 
+LARGE SWORDS 
+i� 
+Bast ard ,," •• 1�===:;::::. 
+Broadsw ord \I'" t r "> ii > 
+Cla ymore 'f; > � 
+Flamb erge 9*:u i: ?:SGC2'£:> 
+Long Sword (lO':'I�_iiiii_�>�I.�=��> 2-handed Espandon 
+... , t > 
+BALL and CHAIN 
+Short 
+Long 
+< t ;:. ; 2) 
+'e. 
+t 
+2-Ha nded 
+no 
+no 
+no 
+no 
+no 
+yes 
+no 
+yes 
+yes 
+no 
+yes 
+no 
+yes 
+yes 
+no 
+yes 
+no 
+no 
+no 
+no 
+yes 
+no 
+no 
+no 
+no 
+no 
+Bo Staff c::::::=================� 
+no 
+yes 
+yes 
+Quarterstaf f . =-' 
+Iron Staff i I I I I I I I Is> 
+MISSILE WEAPONS 
+Shor t Bow � 
+Arrows 
+Long Bow 
+Arrows 
+Cross Bow 
+Bolts 
+Sl ing 
+�" " t::: � 
+MISC ELLANEOUS (no W.P. bonuses) 
+Bla ck Jack ." . , , u:. 
+Dart � 
+Bull Whip 
+Cat-o- Nine Tai ls � 
+Meat Clea ver � \� 
+Frying Pan -c:::::I� 
+Hand Pick � 
+Large Pick/Ma ttock 
+Shovel 
+Hammer (tool) 
+205 
+yes 
+yes 
+yes 
+no 
+yes 
+no 
+yes 
+no 
+no 
+no 
+no 
+no 
+no 
+no 
+no 
+no 
+yes 
+yes 
+no 
+Avg. Length 
+.7 m/2 .5 ft 
+.6 m12 .0 ft 
+.7m1 2.5 ft 
+.8 m12 .7 5ft 
+.6 m!2 .0 ft 
+l. Om/3 .7 5ft 
+.9 m13 .0 ft 
+1. 2m/4 .0 ft 
+1. 3m14.2 5ft 
+.9 m/3 .0ft 
+.9 m13 . 0ft 
+.9 m13 .0 ft 
+1. 6m15 . 25ft 
+.5 m12 .0 ft 
+.9 m13 .0ft 
+.8 m12 . 75ft 
+.6 m12 . 0ft 
+.7m /2 .5ft 
+.8 m!2.7 5ft 
+.8 m!2 .7 5ft 
+1. 2m14 .0 ft 
+.8 m12 .7 5ft 
+1. 2m14 .0 ft 
+.8 m12 . 75ft 
+.9 m/3 .0 ft 
+.7m /2 .5ft 
+l. 2- l. 8m14-6ft 
+1. 9-2 . 7mJ7-9ft 
+2. 8m/9 .5 ft 
+1. 8m/6 .0 ft 
+l. 8-2. lm l6-7ft 
+Range : 500-70 0ft 
+lO in 
+6.0 in 
+2.4 m18 .0 ft 
+.8 m/3 .0 ft 
+.3m11 .0 ft 
+.3 m/l .O ft 
+7. 0in 
+l. 2m/4 .0 ft 
+1. 2m14 .0 ft 
+lO in 
+Avg. Weight Damage Avg. Cost 
+l. 4kg/3 .O lb 
+l. 4kg/3 .O lb 
+1. 5kg/3 .5I b 
+1. 8kg/4 .O lb 
+l. 4kg/3 .O lb 
+2. lk g/4. 5Ib 
+1. 6kg/3 .5 Ib 
+2.9 kg-6 .5 Ib 
+3.4 kgJ7 .5 Ib 
+1. 6kg/3 .5I b 
+2. 1 kg/4 .5I b 
+1- 6 
+1- 6 
+1- 6 
+1- 8 
+1- 6 
+1- 8+2 
+1- 8 
+2- 12 
+3- 18 
+1- 8 + 2 
+2- 12 
+2. 1 kg/4 .5 Ib 1- 8 
+2. 5kg/5 .5 Ib 2- 12 
+2.lk g/4. 5Ib 3- 18 
+2. lk g/4. 5Ib 2- 12 
+l. I kg/2 . 51b 1- 8 
+l. 4kg/3 .O lb 1- 8 
+2.0 kg/4. 5Ib 1- 8 
+l. Okg/2. 5Ib 1- 8 
+l. 4kg/3 .O lb 1- 6 
+2.5kg/5 .5 Ib 2- 12 
+1. 6kg/3 .5 Ib 1- 8 
+2.0 kg/4 .O lb 1- 6 
+l. Okg/2. 5Ib 1- 8 
+l. 4kg/3 .O lb 1- 6 
+2.lk g/4 .5I b 1- 8 
+l. 4kg/3 .O lb 
+2. 3kg/5 .O lb 
+l. 4kg/3 .O lb 
+1- 6 
+1- 8 
+1- 8 
+l. 5kg/3 .5 1b 1- 8 
+3. 2kgl7 lb 1- 8+2 
+l. Olb 1- 6 
+2.O lb 2- 12 
+7.O lb 1- 8 
+2.0 0z . 1- 6 
+l. 4kg/3 .O lb 1- 4 
+60z . 1- 4 
+l. 4kg/3 .O lb 1- 8 
+.5 kg/l .O lb 1- 6 
+.5 kg/l .O lb 1- 6 
+.5 kg/I .O lb 1- 6 
+8.0 0z . 1- 4 
+2.3kg/5 .O lb 1- 8 
+2.0 kg/5 .O lb 1- 6 
+l. 4kg/3 .O lb 1- 4 
+$240 
+$230 
+$235 
+$350 
+$235 
+$450 
+$340 
+$56 0 
+$670 
+$455 
+$460 
+$250 
+$355 
+$460 
+$280 
+$30 
+$240 
+$240 
+$240 
+$ 10 
+$260 
+$ 14 5 
+$10 0 
+$240 
+$75 
+$19 0 
+$ 12 0 
+$ 12 5 
+$14 0 
+$13 0 
+$245 
+$13 0 
+$20/dozen 
+$270 
+$40/dozen 
+$ 16 0 
+$35 /dozen 
+$40 
+$ 10 
+$2 
+$60 
+$ 10 0 
+$ 10 
+$ 10 
+$5 
+$50 
+$40 
+$ 10 
+Joe Sifferman (Order #46323384)
+
+=== PDF INDEX 206 ===
+ANC IENT ORIENTAL WEAPONS 
+ANCIENT WEAPON DESCRIPTIONS 
+Aikuchi /Tanto 
+These are curved Japanese daggers . The Tanto has a hilt , the 
+Aikuchi does not . This weapon can also be thrown . Cost : Varies 
+accor ding to quality and beauty , from $20 to $ 1 ,000 . Damage : 
+ID 4. 
+I l'fJIII' 
+KATANA 
+can be used as paired weapon s. Usin g both of these weapons 
+together is a separate skill . Cost : As li ttle as $ 15 0 for fair 
+quality and $1 200 for an authentic high qual ity . Damage : 
+ID 8 + 2 (lon g), ID 6 (short) . 
+WAKIZASHI 
+5f.101?T 5WORD 
+LON6 SWORD 
+Bisento 
+This spear features a broad , curved bl ade and is large enough 
+to be consid ered a kind of pole arm . This weapon must be 
+impor ted from Japan . Cost: $600 . Damage : 2D6 . 
+Blow Gun 
+The blow gun is a favorite weapon of the ninja. Effective 
+range is no more than 50ft . Cost: $45 .0 0. Damage : The dart 
+itself does no damage ; howev er, it is usually coated wit h poison 
+or drug s. 
+Bo Staff 
+Alt hough staff weapons have appeared in vir tually every cul­
+ture worldw ide , the techniques of use were probab ly most ad­
+vanced in the martial arts scho ols of samurai Japan . The size of 
+the Bo Staff should be about a foot tal ler than the height of its 
+owner . Cost : $ 12 0. Damage : I D8 . 
+Bows 
+Ninjas favored a short , none too powerful , bow that could be 
+di sassembled and eas ily hid den . A separate ski ll learned by the 
+ninja is that of the Samurai Long Bow , probab ly the most pow­
+erful weapon of its type in the world . Effective range for the 
+ninja bow is 400ft, for the samurai bow it is 800ft . Cost: $500 
+for ninja bow , $1 ,000 (or more) for a high quality samurai bow . 
+Modem commer cia l hunting bows cost: $200. Damage : I D8 
+- Ninja Bow , 2D6 - Samurai Bow , I D I 0 - Modem Bow . 
+Crossbows 
+Crossbows are now commonly avai lable by mail order in the 
+U.S. Cost : $3 00 for heavy crossbow , $15 0 for pi stol style 
+crossb ow . Damage : 2D6 for heavy , two- handed crossb ow; 
+I D 10 for 40lb, pistol style crossbow . 
+Daisho 
+Literal ly , "the long and the short," this is the traditional 
+Japanese weapon made up of a Wakizashi and a Katana which 
+206 
+Jitte or Sai (Paired Weapons) 
+These weapo ns look li ke oversi zed , three-pronged forks and 
+are general ly design ed to be used as a pair, one in each hand . 
+They are excel lent for countering the massive attack force of 
+the samurai sword bla de . A skilled user can entang le an opponent 
+wit h one hand and attack wit h the other. Cost : $50/pai r. Dam­
+age: ID 6. 
+Katana 
+This is the, primary weapon of the Samurai warri or; a long 
+sword up to 3ft in length . There is an enormous difference in 
+the quality of these weapons . Costs : For manuf actured versions 
+could be as lit tle as $300 . A top quality sword could cost at 
+least $5 ,000 . Damage : 2D6 for regula r quality , 3D6 for top 
+qual ity (authent ic) . 
+Kusari-Gama/Kyoketsu-Shogi 
+The combina tion of a chain wit h a weight on one end and a 
+sickle weapon on the other is another ninja favori te . The 
+Kyoketsu-Sh ogi is made wit h rope and has an iron ring on one 
+end and a double bl ade on the other. With both weapons , one 
+end can be used for an entangle while the other is still availa ble 
+for striking . It is usual ly used as a clim bing device , but doubles 
+Joe Sifferman (Order #46323384)
+
+=== PDF INDEX 207 ===
+as a somewha t less dama ging Kusa ri-Gama . Neither of these 
+weapons can be used by anyone not trained in hand to hand 
+martial arts or assa ssin. The Kyoketsu- Shogi costs $10 0, the 
+Kusari -Ga ma is $300. Damage: 10 8 for the Kyoketsu-Sho gi, 
+IDIO for the Kusar i-Gama. 
+Kawanga 
+Ninja combi nation of a rope and grapple used for clim bing 
+and fighti ng . This is a separate chain weapon . Cost : $50. 
+Damage : 10 8. 
+'-=""=====--===-
+�@:ll:ar-=---� 
+Manriki-Gus ari 
+No-Dachi 
+This huge two- handed sword does much more damage than 
+most weapons in its class . 5 to 6ft long and carried on the back, 
+the weapon is pul led from the scabbard over the should er . 
+Cost : $750 and up . Damage : 306. 
+Nunchaku 
+Nuncha ku (usually called "Numchuks") can be used as a pair ed 
+weapon for stri king . One of the main advantages of Nuncha ku 
+is for entangle and this can only be done if one weapon is used 
+with two hands . Cost : $30 each . Damage : 10 8. 
+Sa Tjat Koen 
+This Mala ysia n weapon looks li ke Nunchaku wit h a second 
+chain and thir d handle attached . Can be used to entangle li ke 
+nuncha ku . Can not be used as a paired weapon . Cost : $ 15 0. 
+Damage : ID IO. 
+Shikomi-Zu e 
+Ninja commonly disguis ed themselves as blin dmen and carri ed 
+this hollow bamboo staff wi th a concealed bla de . The bla de is 
+spring loaded , and the release is controlled wit h a trigger stud 
+that can be press ed or turned . Weapon can be used as a somewhat 
+fragile (S .O.c. 50) Bo St aff or as a spear . Cost: $ 15 0. Damage : 
+ID 8. 
+Shur iken 
+The famous "throwing stars" of the ninja were not designed 
+for deadly effect so much as for the ir ease of concealment and 
+usefulness in di scour aging an opponent 's pursuit . Throwing 
+knives requir es a different technique than shuriken . Cost: High 
+qual ity shuriken are $5.0 0 each , high qual ity throwing knives 
+are $3 .00 each . Damage : 10 4. 
+Chain weapon wit h solid , blunt weights on each end . It can 
+be used li ke a Kusa ri-Gama , entang lin g wit h one end , striking 
+with the other . This is a weapon which is easy to disa ssemble 
+and conceal . It is also easy to make a Manr iki-Gusa ri from a 
+lengt h of chain and lead weights found in any hardware store . 
+Cost : $30. Damage : 10 8. 
++- x+ * 
+Naginata/Y ari 
+Nagi nata have curved bla des and Yari have straight bla des . 
+Otherwis e, both of these weapons are alik e and used as spears . 
+They are very difficult to conceal . Cost: $ 15 0. Damage : 10 8. 
+��==� ................. -
+.. �============================�=; =' ='='==' =' =' =:='=.=r=r='==' �., - �. ;, J .. ' .. , : I , , ,. " 
+• � , I' " , • , , , � , , , , , , I 
+Wakizashi 
+This is the short sword favored by the samurai . The ninja 
+short sword has a strai ghter blade , but it is otherwise jus t li ke 
+a waki zash i. Cost : Varies according to the qualit y (see Katana 
+for prices ). Damage : 10 8 for regula r qual ity , 206 for top qual­
+ity . 
+Tonfa 
+A short wood weapon ideal for parrying and clos e comba t . 
+Cost: $40 . Damage : ID 6. 
+4�� >:. 
+207 
+Joe Sifferman (Order #46323384)
+
+=== PDF INDEX 208 ===
+NINJA EQUIPMENT 
+The Ninja have developed a number of spec ializ ed tools and 
+weapons to aid their missio ns . These weapons are often provid ed 
+by Ninja organ izations or built by the Ninja himself. Ninja equip­
+ment is gener ally not commonly availa ble to the publ ic . 
+Climbing Claws: Also called Tekagi or Shuk o . There is usu-
+ally a metal or leather band that wraps around the palm be­
+tween the thumb and fingers . The ins ide surface has from 
+two to six spikes that are hel pful in clim bing wood and stone 
+surfaces. Adds + 15 % to cl imbing skills . Cost: $85/ pair . 
+T£KAGI OR 5HUKO 
+MEnu BAR �OR 
+I$lOCKING. , 
+TAiLS ON THE 
+INs/DF O� WI/1fT. 
+USFlJ AS A CLIMBING TOOL AND W£APOIJ 
+\ bAMAGC RATING : ( 
+Climbing Spikes : These are spiked cla ws that are attached to 
+the soles of the feet for clim bing . Note that normal walking 
+or running is imp ossible while wearing these . Add + 15 % to 
+clim bing skill . Cost : $45/pa ir. 
+Eggshell Bomb: This is an eggshell filled wit h pepper, metal 
+shavings and other secret sub stanc es . When tossed , it will 
+shatter and a small cl oud of blinding , irrita ting smoke will 
+come out . Does no damage , but all victims must save against 
+poison gas . Cost : $5.0 0 each . Bl inded victims are - 6 to 
+strike , parry and dodge . 
+Ippon-Sugi Nobori : A spec ial tool used ONLY for cl imbing 
+trees and telephone poles . A short length of spike- studded 
+wood wit h ropes attached to each end. This is used much 
+like a lum berjack 's or lin eman's leather clim bing belt . Add 
+25 % to cl imbing skill . Cost : $25 . 
+Ninja Emergency Kit : This is an assor tment of items that a 
+Ninja might need in case of troub le . Ninjas will keep several 
+of these kits hi dden in various place s. Includ ed in a small 
+clo th bag would be a Kyoketsu -Sho gi , 6 Shuriken , 12 Cal­
+trops, a 3ft towel , a small cooking pot , paper and pencil , 
+match es, first-aid kit (banda ges, disinf ectant, small sciss ors , 
+pai nkille r) , lock picks , spare clot hing , and an eggshell fill ed 
+wit h blinding powder . Enough rice , soybean curd and tea 
+would be incl uded for 7 days of tight ratio ns. Cost : $12 0. 
+208 
+CLI MBING. TOOL 
+OF RDPE ANP 8AM/300 
+Ninja Clothing: Comes completely bla ck for concealment in 
+darkness or complet ely whit e for snow . Consists of jacket , 
+hakama (pants ), tabi (sock s) , and belt. Leggi ns, and separate 
+sleeves fitted from elbow to back of hand , a groin protector 
+and a body protector are made out of qui lted padding and 
+used as protection . There are numerous pockets and compart­
+ments used to conceal shurik en , garrote , calt rops , lock picks 
+and other Ni nja ite ms . Cost: $600 . 
+Rope and Chain : Availa ble in just about any hardware store . 
+Modem rope and chain is usually well tested and reinforced . 
+Cost varies according to thickness and ten sile strength . An 
+average cost for chain would be about $ 1. 00 per foot , about 
+$ .2 5 per foot for rope . 
+Rope Ladder: This Ninja rope ladder has loops knotted into 
+it every two feet or so (depend ing on the height of the owner) . 
+There is a 3 pound weight attached to the bottom end . The 
+top end is often tied to a grappling hook . This item is easy 
+to use and easy to conceal . Cost: $ .7 5/foot . 
+Tetsubis hi: Ninja caltrops come in a variety of styl es. All are 
+desig ned so that metal barbs will point upwa rds no matter 
+how they land on the floor . Damage is rarely more than I 
+point , but someone wit h a cal trop in their foot is n't li kely to 
+continue walking until they pull it out . Cost : $2.0 0 each . 
+OTHER ANCIENT EXOTIC WEAPONS 
+African Throwing Knives : Cost : $80-$ 15 0. Damage : 
+ID 8. 
+THROW ING IRONS 
+Joe Sifferman (Order #46323384)
+

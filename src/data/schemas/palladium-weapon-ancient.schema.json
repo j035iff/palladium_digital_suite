@@ -1,0 +1,434 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-weapon-ancient.schema.json",
+  "title": "Palladium ancient weapon (hardware)",
+  "description": "Catalog row for **ancient / medieval / improvised melee and missile hardware** (Nightbane RPG Weapons & Equipment tables pp. 204–209 and equivalents in other Palladium lines). Distinct from **`palladium-weapon-proficiency.schema.json`** (W.P. skill ladders).\n\n**Genre-specific stats:** Printings disagree on damage and sometimes cost/length (e.g. Short Sword **1D6** in Nightbane vs **2D4** in Palladium Fantasy). Put shared identity on the root; put every measurable table column that can differ by line under **`genreStats[]`**, one object per **`gameSystem`**. Engines resolve the active host/creation genre to pick the matching **`genreStats`** row.\n\n**Cost / currency:** Each genre block’s **`averageCost`** (or a **`qualityVariants[]`** entry’s cost) requires **`currency`** + **`min`** (optional **`max`** for ranges). Use open currency slugs (`usd` for modern $-priced lines, `gold` for Fantasy, `credits` for Rifts, …). Optional **`unit`**: each / dozen / score / **pair** / other.\n\n**Damage authoring:** Prefer machine-friendly **`damage`** dice tokens (`1D6`, `2D6`, `1D8+2`). Optional **`damageBookDisplay`** preserves the printed range form (`2-12`, `1-8+2`) when useful for tooltips. When the book lists quality tiers, put them in **`qualityVariants[]`** (each with its own damage/cost) and omit a single root **`damage`**. When damage is not numeric (e.g. blow-gun darts), omit **`damage`** and use **`damageSpecial`** / **`payloadNotes`**.\n\n**Oriental listings** (Nightbane pp. 206–207): use **`category`: `oriental`**. One catalog row per named weapon (split compound headings). Structured flags: **`canEntangle`**, **`objectSdc`**, **`requiresHandToHand`**.\n\n**Miscellaneous tools** (blackjack, frying pan, etc.): set **`weaponProficiencyEligible`: false** — the Nightbane table states they gain **no W.P. bonuses**.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "category",
+    "gameSystems",
+    "sources",
+    "weaponProficiencyEligible",
+    "genreStats"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional editor pointer to this schema `$id`."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^weapon_ancient_[a-z0-9_]+$",
+      "minLength": 1,
+      "description": "Stable catalog id (e.g. `weapon_ancient_short_sword`, `weapon_ancient_katana`)."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Printed weapon name (e.g. Short Sword, Katana)."
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Alternate book names or spellings for search (optional)."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional prose notes (usage, rarity, GM guidance)."
+    },
+    "category": {
+      "$ref": "#/$defs/weaponCategory",
+      "description": "Table section from the ancient weapons listing."
+    },
+    "entryRole": {
+      "type": "string",
+      "enum": ["weapon", "ammunition", "improvised", "weapon_set"],
+      "default": "weapon",
+      "description": "**weapon** (default); **ammunition** for Arrows / Bolts rows; **improvised** for household/tool rows under Miscellaneous; **weapon_set** for paired/set SKUs (e.g. Daisho) that reference component weapons."
+    },
+    "gameSystems": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "minLength": 1
+      },
+      "description": "Game lines this hardware appears in. Each listed slug **MUST** have a matching **`genreStats[].gameSystem`** entry."
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceRef" },
+      "description": "Book + page refs per game line (same shape as skills / W.P.)."
+    },
+    "weaponProficiencyEligible": {
+      "type": "boolean",
+      "description": "When **false**, W.P. strike/parry/etc. do **not** apply (Nightbane Miscellaneous table note). When **true**, link via **`linkedWpSkillId`** when known."
+    },
+    "linkedWpSkillId": {
+      "type": "string",
+      "pattern": "^wp_[a-z0-9_]+$",
+      "minLength": 1,
+      "description": "Optional catalog W.P. id (e.g. `wp_sword`, `wp_battle_axe`, `wp_polearm`). Omit when **`weaponProficiencyEligible`** is false or the mapping is unresolved."
+    },
+    "throwable": {
+      "type": "boolean",
+      "description": "True when the book treats this as a thrown weapon (throwing axe, javelin, dagger, etc.). Distinct from missile bows."
+    },
+    "canEntangle": {
+      "type": "boolean",
+      "description": "True when the book states the weapon can entangle (nunchaku, kusari-gama, jitte/sai, manriki-gusari, etc.)."
+    },
+    "objectSdc": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Printed object S.D.C. for the hardware itself when given (e.g. Shikomi-Zue staff S.D.C. 50)."
+    },
+    "requiresHandToHand": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^hth_[a-z0-9_]+$",
+        "minLength": 1
+      },
+      "description": "When set, only characters with one of these Hand-to-Hand style ids may use the weapon (e.g. Kusari-Gama / Kyoketsu-Shogi require martial arts or assassin). Empty/omitted = no H.T.H. gate."
+    },
+    "componentWeaponIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^weapon_ancient_[a-z0-9_]+$",
+        "minLength": 1
+      },
+      "description": "For **`entryRole`: `weapon_set`** — catalog ids of the component weapons (e.g. Daisho → katana + wakizashi)."
+    },
+    "genreStats": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/genreStatBlock" },
+      "description": "Per-genre table columns. One entry per **`gameSystems`** slug. Fields omitted on a block are **not** inherited from another genre — author the full measurable set for each line (or omit only when that line’s printing lacks the column)."
+    }
+  },
+  "$defs": {
+    "weaponCategory": {
+      "type": "string",
+      "enum": [
+        "axes",
+        "pole_arms",
+        "spears",
+        "knives",
+        "short_swords",
+        "large_swords",
+        "ball_and_chain",
+        "blunt",
+        "staves",
+        "missile",
+        "miscellaneous",
+        "oriental"
+      ],
+      "description": "Matches Nightbane RPG ancient weapons table section headings (pp. 204–205) plus **oriental** for the Ancient Oriental Weapons prose list (pp. 206–207)."
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gameSystem", "reference", "pageNumber"],
+      "properties": {
+        "gameSystem": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1,
+          "description": "Slug matching **`gameSystems`** / **`genreStats.gameSystem`**."
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Book title only (no page numbers)."
+        },
+        "pageNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Printed page where this weapon’s table row begins."
+        }
+      }
+    },
+    "damageNotation": {
+      "description": "Machine-friendly damage token. Compact **`NdM±k`** (e.g. `1D6`, `2D6`, `1D8+2`) preferred. Legacy free-form allowed when the book cannot be reduced to a single token.",
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(\\d+[Dd]\\d+((\\+|-)\\d+)?|\\d+)$",
+          "description": "Canonical: `1D6`, `2d4`, `1D8+2`, or a plain integer string (including `0`)."
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "^(\\d+[Dd]\\d+((\\+|-)\\d+)?|\\d+)$"
+          },
+          "description": "Prose / multi-clause damage that does not fit the canonical token."
+        }
+      ]
+    },
+    "lengthMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Average length from the table. Prefer numeric meters/feet when a single value; use min/max when the book prints a range (e.g. Short Spear 1.2–1.8 m / 4–6 ft). **`display`** preserves the printed cell.",
+      "properties": {
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed length cell (e.g. `.8m/2.75ft`, `1.2-1.8m/4-6ft`)."
+        },
+        "meters": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Single average length in meters."
+        },
+        "feet": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Single average length in feet."
+        },
+        "metersMin": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "metersMax": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "feetMin": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "feetMax": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "weightMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Average weight from the table. Prefer **`kg`** / **`lb`**; use min/max for ranges. **`display`** preserves the printed cell.",
+      "properties": {
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed weight cell (e.g. `2.0kg/4.6lb`)."
+        },
+        "kg": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "lb": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "kgMin": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "kgMax": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "lbMin": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "lbMax": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "costMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currency", "min"],
+      "description": "Average cost for one genre (or one quality tier). **`currency`** is always required on the block. Use open slugs: **`usd`**, **`gold`**, **`credits`**, …. Exact price: set **`min`** only. Printed ranges: set both **`min`** and **`max`**. Optional **`unit`** for ammo packs or paired sets.",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1,
+          "description": "Currency slug for this genre (e.g. `usd`, `gold`, `credits`, `silver`). Open vocabulary — prefer stable lowercase slugs."
+        },
+        "min": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Price, or the low end of a printed range."
+        },
+        "max": {
+          "type": "number",
+          "minimum": 0,
+          "description": "High end when the book prints a cost range. Omit for a single price."
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["each", "dozen", "score", "pair", "other"],
+          "description": "Pricing unit — default **each** for weapons; **dozen** / **score** for arrows/bolts; **pair** for paired-weapon SKUs (e.g. Jitte/Sai $50/pair)."
+        },
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional printed cost cell verbatim (e.g. `$240`, `$50/pair`)."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "rangeMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Missile / thrown effective range when the table lists one (e.g. Crossbow 500–700 ft).",
+      "properties": {
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed range cell (e.g. `500-700ft`)."
+        },
+        "feet": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Single range in feet."
+        },
+        "feetMin": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "feetMax": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "meters": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "metersMin": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "metersMax": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "qualityVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "damage"],
+      "description": "One printed quality tier (e.g. Katana regular vs top/authentic). Each tier carries its own damage and usually its own cost.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1,
+          "description": "Stable tier slug within the weapon (e.g. `regular`, `top`, `fair`, `high`)."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "UI / book label (e.g. `Regular quality`, `Top quality (authentic)`)."
+        },
+        "damage": {
+          "allOf": [{ "$ref": "#/$defs/damageNotation" }],
+          "description": "Damage for this quality tier."
+        },
+        "damageBookDisplay": {
+          "type": "string",
+          "minLength": 1
+        },
+        "averageCost": {
+          "$ref": "#/$defs/costMeasure"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "genreStatBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gameSystem"],
+      "description": "One genre’s hardware columns. Provide **`damage`**, and/or **`qualityVariants`**, and/or **`damageSpecial`** / **`payloadNotes`** so the weapon has an authored damage story.",
+      "anyOf": [
+        { "required": ["damage"] },
+        { "required": ["qualityVariants"] },
+        { "required": ["damageSpecial"] },
+        { "required": ["payloadNotes"] }
+      ],
+      "properties": {
+        "gameSystem": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1,
+          "description": "Must appear in the root **`gameSystems`** array."
+        },
+        "twoHanded": {
+          "type": "boolean",
+          "description": "Printed **2-Handed** column (yes/no)."
+        },
+        "averageLength": {
+          "$ref": "#/$defs/lengthMeasure"
+        },
+        "averageWeight": {
+          "$ref": "#/$defs/weightMeasure"
+        },
+        "damage": {
+          "allOf": [{ "$ref": "#/$defs/damageNotation" }],
+          "description": "Primary damage for this genre when the book lists a single value. Omit when using **`qualityVariants`** only, or when damage is non-numeric (**`damageSpecial`** / **`payloadNotes`**)."
+        },
+        "damageBookDisplay": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional verbatim printed damage cell (e.g. `2-12`, `1-8 + 2`) for UI that mirrors the book."
+        },
+        "damageSpecial": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Non-numeric or special damage story (e.g. `Dart itself does no damage`). Use instead of or alongside omitting **`damage`**."
+        },
+        "payloadNotes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Poison, drug, or other payload guidance when the weapon’s effect is not intrinsic dice damage (blow-gun darts, etc.)."
+        },
+        "qualityVariants": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/qualityVariant" },
+          "description": "Quality tiers from the book (Katana, Wakizashi, Aikuchi/Tanto cost bands, etc.). When present, each variant owns damage/cost; omit a single root **`damage`** / **`averageCost`** unless a non-tier default is also printed."
+        },
+        "averageCost": {
+          "$ref": "#/$defs/costMeasure"
+        },
+        "range": {
+          "$ref": "#/$defs/rangeMeasure",
+          "description": "Missile/thrown range when listed for this genre."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Genre-specific caveats (ammo packaging, rate of fire prose, dual-mode use, etc.)."
+        }
+      }
+    }
+  }
+}

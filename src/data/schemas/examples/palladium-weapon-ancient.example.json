@@ -1,0 +1,157 @@
+[
+  {
+    "$schema": "https://megaverse-companion.local/schemas/palladium-weapon-ancient.schema.json",
+    "id": "weapon_ancient_short_sword",
+    "name": "Short Sword",
+    "category": "short_swords",
+    "entryRole": "weapon",
+    "gameSystems": ["nightbane", "palladium_fantasy"],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "description": "Example multi-genre ancient weapon. Nightbane RPG table damage is 1D6; Palladium Fantasy uses 2D4 for the same weapon class — encode each under genreStats.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 205
+      },
+      {
+        "gameSystem": "palladium_fantasy",
+        "reference": "Palladium Fantasy RPG (example)",
+        "pageNumber": 1
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".7m/2.5ft",
+          "meters": 0.7,
+          "feet": 2.5
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "1D6",
+        "damageBookDisplay": "1-6",
+        "averageCost": {
+          "currency": "usd",
+          "min": 240,
+          "display": "$240"
+        }
+      },
+      {
+        "gameSystem": "palladium_fantasy",
+        "twoHanded": false,
+        "averageLength": {
+          "display": ".7m/2.5ft",
+          "meters": 0.7,
+          "feet": 2.5
+        },
+        "averageWeight": {
+          "display": "1.4kg/3.0lb",
+          "kg": 1.4,
+          "lb": 3.0
+        },
+        "damage": "2D4",
+        "averageCost": {
+          "currency": "gold",
+          "min": 200,
+          "notes": "Example Fantasy pricing — replace with authoritative book values when ingesting."
+        }
+      }
+    ]
+  },
+  {
+    "$schema": "https://megaverse-companion.local/schemas/palladium-weapon-ancient.schema.json",
+    "id": "weapon_ancient_katana",
+    "name": "Katana",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": ["nightbane"],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_sword",
+    "throwable": false,
+    "description": "Example oriental weapon with qualityVariants (Nightbane RPG pp. 206–207). Primary Samurai long sword; quality tiers own damage and cost.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 207
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "twoHanded": false,
+        "averageLength": {
+          "display": "up to 3ft",
+          "feet": 3
+        },
+        "qualityVariants": [
+          {
+            "id": "regular",
+            "label": "Regular quality",
+            "damage": "2D6",
+            "averageCost": {
+              "currency": "usd",
+              "min": 300,
+              "display": "$300",
+              "notes": "Manufactured versions could be as little as $300."
+            }
+          },
+          {
+            "id": "top",
+            "label": "Top quality (authentic)",
+            "damage": "3D6",
+            "averageCost": {
+              "currency": "usd",
+              "min": 5000,
+              "display": "$5000",
+              "notes": "A top quality sword could cost at least $5,000."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "$schema": "https://megaverse-companion.local/schemas/palladium-weapon-ancient.schema.json",
+    "id": "weapon_ancient_blow_gun",
+    "name": "Blow Gun",
+    "category": "oriental",
+    "entryRole": "weapon",
+    "gameSystems": ["nightbane"],
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_archery_and_targeting",
+    "throwable": false,
+    "description": "Example non-numeric damage: dart itself does no damage; effect comes from poison/drug payload.",
+    "sources": [
+      {
+        "gameSystem": "nightbane",
+        "reference": "Nightbane RPG",
+        "pageNumber": 206
+      }
+    ],
+    "genreStats": [
+      {
+        "gameSystem": "nightbane",
+        "damageSpecial": "The dart itself does no damage",
+        "payloadNotes": "Usually coated with poison or drugs (GM-resolved).",
+        "range": {
+          "display": "50ft",
+          "feet": 50
+        },
+        "averageCost": {
+          "currency": "usd",
+          "min": 45,
+          "display": "$45.00"
+        }
+      }
+    ]
+  }
+]
