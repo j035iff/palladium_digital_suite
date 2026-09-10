@@ -65,7 +65,7 @@ Loader: `psionicCatalogLoader.ts` globs `psionics/*.json` only.
 | **Talents** | `talents/common.json`, `talents/elite.json` | Tier-band split |
 | **Morphus** | `morphus/tables/*.json`, `morphus/forge/*.json` | Per-table trait files; Sub-Forge routing in `forge/` |
 | **Encounter archetypes** | `encounters/<genre>/<book>.json` | GM-only random/minor NPC templates — not forge-spawnable races or O.C.C.s |
-| **Ancient weapons** | `weapons/ancient.json` | Single hardware pool (`palladium-weapon-ancient.schema.json`) — Western table + Oriental prose; genre-scoped `genreStats[]` / `qualityVariants` |
+| **Ancient weapons** | `weapons/ancient.json` | Single hardware pool (`palladium-weapon-ancient.schema.json`) — loader: `weaponsAncientCatalogLoader.ts`; Gear catalog pick → inventory |
 
 When a new ancillary file is needed for these catalogs (e.g. a shared progression doc), add `utils/` under that catalog folder and follow the same pattern.
 

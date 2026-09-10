@@ -275,8 +275,11 @@ export function morphusFreeHandSlots(
 export function morphusBlocksTwoHandedWeapon(
   handCapacity: MorphusHandCapacityConstraints,
   weaponCategory: string,
+  twoHanded?: boolean,
 ): boolean {
   if (!handCapacity.blocksTwoHandedWeapons) return false
+  if (twoHanded === true) return true
+  if (twoHanded === false) return handCapacity.occupiesHands >= 1
   const cat = weaponCategory.toLowerCase()
   if (cat.includes('heavy') || cat.includes('two')) return true
   return handCapacity.occupiesHands >= 1

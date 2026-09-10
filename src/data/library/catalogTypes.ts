@@ -123,3 +123,63 @@ export type StandardModernWeaponProgressionDoc = {
   version?: number
   bundles: Readonly<Record<string, StandardModernProgressionBundle>>
 }
+
+/** Quality tier under `genreStats[].qualityVariants[]` (`weapons/ancient.json`). */
+export type AncientWeaponQualityVariant = {
+  id: string
+  label: string
+  damage: string
+  damageBookDisplay?: string
+  averageCost?: {
+    currency: string
+    min: number
+    max?: number
+    unit?: string
+    display?: string
+    notes?: string
+  }
+  notes?: string
+}
+
+/** Per-genre hardware block on an ancient weapon catalog row. */
+export type AncientWeaponGenreStatBlock = {
+  gameSystem: string
+  twoHanded?: boolean
+  averageLength?: { display?: string; meters?: number; feet?: number; [k: string]: unknown }
+  averageWeight?: { display?: string; kg?: number; lb?: number; [k: string]: unknown }
+  damage?: string
+  damageBookDisplay?: string
+  damageSpecial?: string
+  payloadNotes?: string
+  qualityVariants?: readonly AncientWeaponQualityVariant[]
+  averageCost?: {
+    currency: string
+    min: number
+    max?: number
+    unit?: string
+    display?: string
+    notes?: string
+  }
+  range?: { display?: string; feet?: number; feetMin?: number; feetMax?: number; [k: string]: unknown }
+  notes?: string
+}
+
+/** Row from `weapons/ancient.json` (`palladium-weapon-ancient.schema.json`). */
+export type AncientWeaponCatalogEntry = {
+  id: string
+  name: string
+  aliases?: readonly string[]
+  description?: string
+  category: string
+  entryRole?: 'weapon' | 'ammunition' | 'improvised' | 'weapon_set'
+  gameSystems: readonly string[]
+  sources: readonly PalladiumSourceRef[]
+  weaponProficiencyEligible: boolean
+  linkedWpSkillId?: string
+  throwable?: boolean
+  canEntangle?: boolean
+  objectSdc?: number
+  requiresHandToHand?: readonly string[]
+  componentWeaponIds?: readonly string[]
+  genreStats: readonly AncientWeaponGenreStatBlock[]
+}

@@ -1,5 +1,11 @@
 import { useMemo, useState } from 'react'
 import { useCharacter } from '../../../context/CharacterContext'
+import {
+  ancientCatalogToInventoryPiece,
+  ancientWeaponCategoryLabel,
+  listAncientWeaponsForGearPicker,
+  resolveAncientWeaponGenreStats,
+} from '../../../data/library/weaponsAncientCatalogLoader'
 import { listWeaponProficienciesForGameSystem } from '../../../data/library/weaponProficienciesCatalogLoader'
 import {
   ammoCategoryForWeapon,
@@ -9,70 +15,6 @@ import {
 import type { Weapon } from '../../../types'
 import { WeaponReloadControl } from '../WeaponReloadControl'
 import { gearPanelTheme } from './gearPanelTheme'
-
-const WEAPON_TEMPLATES: Array<{
-  label: string
-  name: string
-  category: string
-  damage: string
-  weightLbs: number
-  linkedWpSkillId: string
-  wpCategory: string
-  payload?: { current: number; max: number }
-  ammoCategory?: string
-}> = [
-  {
-    label: 'Long sword',
-    name: 'Long sword',
-    category: 'Swords',
-    damage: '2D6',
-    weightLbs: 4,
-    linkedWpSkillId: 'wp_sword',
-    wpCategory: 'W.P. Sword',
-  },
-  {
-    label: 'Combat knife',
-    name: 'Combat knife',
-    category: 'Knives',
-    damage: '1D6',
-    weightLbs: 1,
-    linkedWpSkillId: 'wp_knife',
-    wpCategory: 'W.P. Knife',
-  },
-  {
-    label: '9mm pistol',
-    name: '9mm pistol',
-    category: 'Handguns',
-    damage: '2D6',
-    weightLbs: 2,
-    linkedWpSkillId: 'wp_automatic_pistol',
-    wpCategory: 'W.P. Automatic Pistol',
-    payload: { current: 15, max: 15 },
-    ammoCategory: '9mm',
-  },
-  {
-    label: 'Pump shotgun',
-    name: 'Pump shotgun',
-    category: 'Shotguns',
-    damage: '4D6',
-    weightLbs: 8,
-    linkedWpSkillId: 'wp_shotgun',
-    wpCategory: 'W.P. Shotgun',
-    payload: { current: 5, max: 5 },
-    ammoCategory: '12 gauge',
-  },
-  {
-    label: 'Hunting rifle',
-    name: 'Hunting rifle',
-    category: 'Rifles',
-    damage: '4D6',
-    weightLbs: 9,
-    linkedWpSkillId: 'wp_bolt_action_rifle',
-    wpCategory: 'W.P. Bolt Action Rifle',
-    payload: { current: 5, max: 5 },
-    ammoCategory: '.308',
-  },
-]
 
 type Props = {
   morphus: boolean
@@ -95,6 +37,11 @@ export function GearWeaponsSection({ morphus }: Props) {
   const [ammoAddRounds, setAmmoAddRounds] = useState('12')
   const [ammoCategoryPick, setAmmoCategoryPick] = useState('9mm')
 
+  const [catalogQuery, setCatalogQuery] = useState('')
+  const [catalogCategory, setCatalogCategory] = useState('')
+  const [selectedCatalogId, setSelectedCatalogId] = useState('')
+  const [qualityVariantId, setQualityVariantId] = useState('')
+
   const [customName, setCustomName] = useState('')
   const [customCategory, setCustomCategory] = useState('Misc')
   const [customDamage, setCustomDamage] = useState('2D6')
@@ -110,6 +57,38 @@ export function GearWeaponsSection({ morphus }: Props) {
     () => listWeaponProficienciesForGameSystem(hostGenreId),
     [hostGenreId],
   )
+
+  const catalogRows = useMemo(
+    () => listAncientWeaponsForGearPicker(hostGenreId),
+    [hostGenreId],
+  )
+
+  const catalogCategories = useMemo(() => {
+    const set = new Set(catalogRows.map((r) => r.category))
+    return [...set].sort()
+  }, [catalogRows])
+
+  const filteredCatalog = useMemo(() => {
+    const q = catalogQuery.trim().toLowerCase()
+    return catalogRows.filter((r) => {
+      if (catalogCategory && r.category !== catalogCategory) return false
+      if (!q) return true
+      const blob = `${r.name} ${r.aliases?.join(' ') ?? ''} ${r.category} ${r.id}`.toLowerCase()
+      return blob.includes(q)
+    })
+  }, [catalogRows, catalogCategory, catalogQuery])
+
+  const selectedCatalog = useMemo(
+    () => catalogRows.find((r) => r.id === selectedCatalogId),
+    [catalogRows, selectedCatalogId],
+  )
+
+  const selectedGenreStats = useMemo(() => {
+    if (!selectedCatalog) return undefined
+    return resolveAncientWeaponGenreStats(selectedCatalog, hostGenreId)
+  }, [selectedCatalog, hostGenreId])
+
+  const qualityOptions = selectedGenreStats?.qualityVariants ?? []
 
   const weapons = useMemo(
     () => inventoryItems.filter((it): it is Weapon => it.itemType === 'weapon'),
@@ -129,6 +108,17 @@ export function GearWeaponsSection({ morphus }: Props) {
     () => activeAmmoCategories.map((cat) => [cat, ammoReserves[cat] ?? 0] as const),
     [activeAmmoCategories, ammoReserves],
   )
+
+  const addFromCatalog = () => {
+    if (!selectedCatalog) return
+    const piece = ancientCatalogToInventoryPiece(
+      selectedCatalog,
+      hostGenreId,
+      qualityOptions.length ? qualityVariantId || qualityOptions[0]?.id : null,
+    )
+    if (!piece) return
+    addWeaponToInventory(piece)
+  }
 
   const addCustomWeapon = () => {
     const strikeBonus = Number(customStrike)
@@ -171,30 +161,123 @@ export function GearWeaponsSection({ morphus }: Props) {
       aria-label="Weapons"
     >
       <p className={`mb-4 text-[11px] font-semibold leading-snug ${theme.muted}`}>
-        Equip up to two weapons for the tactical HUD. W.P. skills on your sheet feed the strike
-        engine when the weapon&apos;s linked W.P. skill id matches.
+        Equip up to two weapons for the tactical HUD. Ancient hardware comes from the book catalog;
+        W.P. skills on your sheet feed the strike engine when the weapon&apos;s linked W.P. matches.
       </p>
 
       <div className={`mb-5 p-3 ${theme.dashedPanel}`}>
         <h3 className={`mb-2 text-[11px] font-black uppercase tracking-wider ${theme.th}`}>
-          Add weapon
+          Ancient weapons catalog
         </h3>
         <p className={`mb-3 text-[11px] leading-snug ${theme.muted}`}>
-          Quick templates use common Nightbane loadouts. Custom entries support melee or ranged
-          (magazine + ammo category for reload pools).
+          Nightbane RPG ancient / oriental tables. Pick a row (and quality tier when listed), then add
+          to carried gear.
         </p>
-        <div className="mb-3 flex flex-wrap gap-2">
-          {WEAPON_TEMPLATES.map((t) => (
+        {catalogRows.length === 0 ? (
+          <p className={`text-sm ${theme.muted}`}>
+            No ancient weapons are available for this host genre yet.
+          </p>
+        ) : (
+          <>
+            <div className="mb-2 grid gap-2 sm:grid-cols-2">
+              <label className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
+                Search
+                <input
+                  className={`mt-0.5 ${theme.inputCls}`}
+                  value={catalogQuery}
+                  onChange={(e) => setCatalogQuery(e.target.value)}
+                  placeholder="Katana, long sword…"
+                />
+              </label>
+              <label className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
+                Category
+                <select
+                  className={`mt-0.5 min-w-0 ${theme.inputCls}`}
+                  value={catalogCategory}
+                  onChange={(e) => setCatalogCategory(e.target.value)}
+                >
+                  <option value="">All categories</option>
+                  {catalogCategories.map((c) => (
+                    <option key={c} value={c}>
+                      {ancientWeaponCategoryLabel(c)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <label className={`mb-2 block text-[10px] font-bold uppercase ${theme.muted}`}>
+              Weapon
+              <select
+                className={`mt-0.5 min-w-0 ${theme.inputCls}`}
+                value={selectedCatalogId}
+                onChange={(e) => {
+                  setSelectedCatalogId(e.target.value)
+                  setQualityVariantId('')
+                }}
+                size={Math.min(10, Math.max(4, filteredCatalog.length || 4))}
+              >
+                <option value="">— Select —</option>
+                {filteredCatalog.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name} · {ancientWeaponCategoryLabel(r.category)}
+                    {r.weaponProficiencyEligible === false ? ' (no W.P.)' : ''}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {qualityOptions.length > 0 ? (
+              <label className={`mb-2 block text-[10px] font-bold uppercase ${theme.muted}`}>
+                Quality
+                <select
+                  className={`mt-0.5 min-w-0 ${theme.inputCls}`}
+                  value={qualityVariantId || qualityOptions[0]?.id || ''}
+                  onChange={(e) => setQualityVariantId(e.target.value)}
+                >
+                  {qualityOptions.map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.label} · {v.damage}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
+            {selectedCatalog && selectedGenreStats ? (
+              <p className={`mb-2 font-mono text-[11px] ${theme.muted}`}>
+                {[
+                  selectedGenreStats.damage ||
+                    selectedGenreStats.damageSpecial ||
+                    qualityOptions.find((v) => v.id === (qualityVariantId || qualityOptions[0]?.id))
+                      ?.damage,
+                  selectedGenreStats.averageWeight?.display,
+                  selectedCatalog.throwable ? 'throwable' : null,
+                  selectedCatalog.linkedWpSkillId && selectedCatalog.weaponProficiencyEligible !== false
+                    ? selectedCatalog.linkedWpSkillId
+                    : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ')}
+              </p>
+            ) : null}
             <button
-              key={t.label}
               type="button"
-              className={theme.btnGhost}
-              onClick={() => addWeaponToInventory(t)}
+              className={theme.btn}
+              disabled={!selectedCatalogId}
+              onClick={addFromCatalog}
             >
-              + {t.label}
+              Add from catalog
             </button>
-          ))}
-        </div>
+          </>
+        )}
+      </div>
+
+      <div className={`mb-5 p-3 ${theme.dashedPanel}`}>
+        <h3 className={`mb-2 text-[11px] font-black uppercase tracking-wider ${theme.th}`}>
+          Custom / modern weapon
+        </h3>
+        <p className={`mb-3 text-[11px] leading-snug ${theme.muted}`}>
+          Homebrew or modern firearms until a modern hardware catalog exists. Supports melee or ranged
+          (magazine + ammo category).
+        </p>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           <label className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
             Name
@@ -403,6 +486,8 @@ export function GearWeaponsSection({ morphus }: Props) {
                         {w.category} · dmg {w.damage} · strike item {w.strikeBonus >= 0 ? '+' : ''}
                         {w.strikeBonus}
                         {w.linkedWpSkillId ? ` · W.P. link: ${w.linkedWpSkillId}` : ''}
+                        {w.throwable ? ' · throwable' : ''}
+                        {w.catalogWeaponId ? ` · catalog` : ''}
                       </p>
                       {ranged && w.payload ? (
                         <p className={`mt-1 font-mono text-[11px] font-semibold ${theme.muted}`}>

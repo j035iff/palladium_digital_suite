@@ -498,6 +498,11 @@ type CharacterContextValue = {
     wpCategory?: string
     payload?: { current: number; max: number }
     ammoCategory?: string
+    catalogWeaponId?: string
+    qualityVariantId?: string
+    throwable?: boolean
+    twoHanded?: boolean
+    weaponProficiencyEligible?: boolean
   }) => void
   dropItem: (id: string) => void
   /** Up to two carried weapons flagged ready for the combat HUD strike row. */
@@ -1482,6 +1487,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       wpCategory?: string
       payload?: { current: number; max: number }
       ammoCategory?: string
+      catalogWeaponId?: string
+      qualityVariantId?: string
+      throwable?: boolean
+      twoHanded?: boolean
+      weaponProficiencyEligible?: boolean
     }) => {
       const id = `weapon_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`
       const wpEntry = piece.linkedWpSkillId
@@ -1512,6 +1522,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         wpCategory: piece.wpCategory ?? wpEntry?.name,
         payload,
         ammoCategory: payload ? piece.ammoCategory?.trim() || undefined : undefined,
+        catalogWeaponId: piece.catalogWeaponId,
+        qualityVariantId: piece.qualityVariantId,
+        throwable: piece.throwable,
+        twoHanded: piece.twoHanded,
+        weaponProficiencyEligible: piece.weaponProficiencyEligible,
       }
       setInventoryItems((prev) =>
         syncArmorAndWeaponFlags([...prev, row], equippedArmorId, readyWeaponIds),
@@ -1538,7 +1553,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           })
           if (
             bundle &&
-            morphusBlocksTwoHandedWeapon(bundle.handCapacity, w.category)
+            morphusBlocksTwoHandedWeapon(bundle.handCapacity, w.category, w.twoHanded)
           ) {
             return [a, b]
           }

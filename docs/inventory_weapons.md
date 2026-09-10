@@ -1,6 +1,6 @@
 # Advanced Inventory & Custom Weapon Forge
 
-> **Implementation status:** Target UX specification. The live **Gear** tab uses four sub-panels — **Weapons** (quick templates + custom add, slots, ammo reserves), **Armor** (templates + custom add), **Artifacts** (placeholder), and **Other** (encumbrance + misc gear). Gear **persists** in the character save (`inventory` block). Currency smart-math, weapon forge, and Destiny-style HUD swap are **not fully implemented**.
+> **Implementation status:** Live **Gear → Weapons** adds ancient hardware from `weapons/ancient.json` (searchable catalog + quality tiers). Custom / modern add remains for homebrew and firearms until a modern hardware catalog exists. Armor templates, artifacts placeholder, encumbrance, and inventory save (`inventory` block) are live. Currency smart-math, weapon forge, and Destiny-style HUD swap are **not fully implemented**.
 
 This document defines the logic for currency management, item presence states, and the creation of unique, rule-breaking weapons (like Rune Swords) with a focus on high-speed UI interaction.
 1. Currency & Resource Management

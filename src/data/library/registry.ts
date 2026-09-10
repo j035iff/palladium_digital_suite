@@ -86,6 +86,17 @@ export {
 } from './weaponProficienciesCatalogLoader'
 
 export {
+  ANCIENT_WEAPON_CATALOG,
+  getAncientWeaponById,
+  listAncientWeaponsForGameSystem,
+  listAncientWeaponsForGearPicker,
+  ancientWeaponCategoryLabel,
+  resolveAncientWeaponGenreStats,
+  resolveAncientWeaponCombatStats,
+  ancientCatalogToInventoryPiece,
+} from './weaponsAncientCatalogLoader'
+
+export {
   STANDARD_MODERN_WEAPON_PROGRESSION,
   getStandardModernProgressionBundle,
   defaultStandardModernProgressionKey,

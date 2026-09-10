@@ -226,7 +226,7 @@ Content is **JSON-first**, validated by Ajv:
 | `palladium-magic.schema.json` | `magic/*.json` (school files); registries in `magic/utils/` — ingest: [`docs/ingest/magic.md`](ingest/magic.md) |
 | `palladium-hth.schema.json` | `skills/hand_to_hand.json` — ingest: [`docs/ingest/hth.md`](ingest/hth.md) |
 | `palladium-weapon-proficiency.schema.json` | `skills/weapon_proficiencies.json`; modern ladder in `skills/utils/` — ingest: [`docs/ingest/weapon_proficiencies.md`](ingest/weapon_proficiencies.md) |
-| `palladium-weapon-ancient.schema.json` | `weapons/ancient.json` (Nightbane pp. 204–207 Western + Oriental; 100 rows) — hardware with genre-scoped `genreStats[]` / `qualityVariants`; example: `schemas/examples/palladium-weapon-ancient.example.json` |
+| `palladium-weapon-ancient.schema.json` | `weapons/ancient.json` (Nightbane pp. 204–207 Western + Oriental; 100 rows) — runtime loader `weaponsAncientCatalogLoader.ts` (Gear catalog pick → inventory); example: `schemas/examples/palladium-weapon-ancient.example.json` |
 | `palladium-morphus-table.schema.json` | Each morphus **table** wrapper (`id`, `entries[]`) |
 | `palladium-morphus.schema.json` | Each characteristic **entry** inside morphus tables — ingest: [`docs/ingest/morphus.md`](ingest/morphus.md) |
 | `palladium-morphus-forge-routing.schema.json` | `morphus/forge/*.json` — ingest: [`docs/ingest/morphus.md`](ingest/morphus.md) § Sub-Forge routing |

@@ -69,6 +69,8 @@ export function isRangedWeapon(weapon: Weapon): boolean {
 }
 
 function weaponShowsThrowBonus(weapon: Weapon): boolean {
+  if (weapon.throwable === true) return true
+  if (weapon.throwable === false) return false
   if (weapon.weaponSpecificModifiers?.throw != null && weapon.weaponSpecificModifiers.throw !== 0)
     return true
   const c = weapon.category.trim().toLowerCase()
@@ -139,7 +141,10 @@ export function computeWeaponProfileBonuses(
 
   const hth = ranged ? { strike: 0, parry: 0 } : hthMeleeBonuses(handToHandAccumulated)
 
-  const wpSkillId = resolveWeaponProficiencySkillId(weapon.wpCategory, weapon.linkedWpSkillId)
+  const wpEligible = weapon.weaponProficiencyEligible !== false
+  const wpSkillId = wpEligible
+    ? resolveWeaponProficiencySkillId(weapon.wpCategory, weapon.linkedWpSkillId)
+    : undefined
   const unlocked = collectUnlockedSkillIds(character, activeForm)
   let wpStrike = 0
   let wpParry = 0

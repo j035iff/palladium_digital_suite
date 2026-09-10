@@ -2629,6 +2629,22 @@ export interface Weapon extends Item {
   ammoPoolKey?: string
   /** If set and unlocked on the sheet, W.P. skill % feeds the strike engine. */
   linkedWpSkillId?: string
+  /**
+   * Stable hardware catalog id when spawned from `weapons/ancient.json`
+   * (e.g. `weapon_ancient_long_sword`). Instance {@link id} stays unique per carried copy.
+   */
+  catalogWeaponId?: string
+  /** Quality tier id when the catalog row uses `qualityVariants` (e.g. `regular`, `top`). */
+  qualityVariantId?: string
+  /** True when the book treats this as throwable (catalog `throwable`). */
+  throwable?: boolean
+  /** From catalog `genreStats.twoHanded` — Morphus hand-capacity gating. */
+  twoHanded?: boolean
+  /**
+   * When false, W.P. strike/parry do not apply (Nightbane Miscellaneous table).
+   * Omit / true = eligible when `linkedWpSkillId` matches an unlocked W.P.
+   */
+  weaponProficiencyEligible?: boolean
   /** True when assigned to primary or secondary combat slot. */
   isEquipped: boolean
 }
