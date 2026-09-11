@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   ANCIENT_WEAPON_CATALOG,
   ancientCatalogToInventoryPiece,
+  ancientWeaponCategoryLabel,
   getAncientWeaponById,
   listAncientWeaponsForGearPicker,
   resolveAncientWeaponCombatStats,
@@ -47,5 +48,11 @@ describe('weaponsAncientCatalogLoader', () => {
     const piece = ancientCatalogToInventoryPiece(entry!, 'nightbane')
     expect(piece?.weaponProficiencyEligible).toBe(false)
     expect(piece?.linkedWpSkillId).toBeUndefined()
+  })
+
+  it('lists Daisho under both large and short swords', () => {
+    const daisho = getAncientWeaponById('weapon_ancient_daisho')
+    expect(daisho?.category).toEqual(['large_swords', 'short_swords'])
+    expect(ancientWeaponCategoryLabel(daisho!.category)).toBe('Large Swords / Short Swords')
   })
 })

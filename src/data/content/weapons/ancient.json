@@ -1569,7 +1569,7 @@
   {
     "id": "weapon_ancient_ball_and_chain",
     "name": "Ball and Chain",
-    "category": "ball_and_chain",
+    "category": "chain",
     "weaponProficiencyEligible": true,
     "linkedWpSkillId": "wp_chain",
     "throwable": false,
@@ -1611,7 +1611,7 @@
   {
     "id": "weapon_ancient_flail",
     "name": "Flail",
-    "category": "ball_and_chain",
+    "category": "chain",
     "weaponProficiencyEligible": true,
     "linkedWpSkillId": "wp_chain",
     "throwable": false,
@@ -1653,7 +1653,7 @@
   {
     "id": "weapon_ancient_goupillon_flail",
     "name": "Goupillon Flail",
-    "category": "ball_and_chain",
+    "category": "chain",
     "weaponProficiencyEligible": true,
     "linkedWpSkillId": "wp_chain",
     "throwable": false,
@@ -1695,7 +1695,7 @@
   {
     "id": "weapon_ancient_mace_and_chain",
     "name": "Mace and Chain",
-    "category": "ball_and_chain",
+    "category": "chain",
     "weaponProficiencyEligible": true,
     "linkedWpSkillId": "wp_chain",
     "throwable": false,
@@ -1740,7 +1740,7 @@
     "aliases": [
       "Numchuks"
     ],
-    "category": "ball_and_chain",
+    "category": "chain",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -2725,7 +2725,7 @@
   {
     "id": "weapon_ancient_dart",
     "name": "Dart",
-    "category": "miscellaneous",
+    "category": "thrown",
     "entryRole": "improvised",
     "weaponProficiencyEligible": false,
     "throwable": true,
@@ -2764,9 +2764,10 @@
   {
     "id": "weapon_ancient_bull_whip",
     "name": "Bull Whip",
-    "category": "miscellaneous",
-    "entryRole": "improvised",
-    "weaponProficiencyEligible": false,
+    "category": "whips",
+    "entryRole": "weapon",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_whip",
     "throwable": false,
     "sources": [
       {
@@ -2805,9 +2806,10 @@
   {
     "id": "weapon_ancient_cat_o_nine_tails",
     "name": "Cat-o-Nine Tails",
-    "category": "miscellaneous",
-    "entryRole": "improvised",
-    "weaponProficiencyEligible": false,
+    "category": "whips",
+    "entryRole": "weapon",
+    "weaponProficiencyEligible": true,
+    "linkedWpSkillId": "wp_whip",
     "throwable": false,
     "sources": [
       {
@@ -3089,7 +3091,7 @@
   {
     "id": "weapon_ancient_aikuchi",
     "name": "Aikuchi",
-    "category": "oriental",
+    "category": "knives",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3122,7 +3124,7 @@
   {
     "id": "weapon_ancient_tanto",
     "name": "Tanto",
-    "category": "oriental",
+    "category": "knives",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3155,7 +3157,7 @@
   {
     "id": "weapon_ancient_bisento",
     "name": "Bisento",
-    "category": "oriental",
+    "category": "pole_arms",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3187,7 +3189,7 @@
   {
     "id": "weapon_ancient_blow_gun",
     "name": "Blow Gun",
-    "category": "oriental",
+    "category": "missile",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3223,7 +3225,7 @@
   {
     "id": "weapon_ancient_ninja_bow",
     "name": "Ninja Bow",
-    "category": "oriental",
+    "category": "missile",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3259,7 +3261,7 @@
   {
     "id": "weapon_ancient_samurai_long_bow",
     "name": "Samurai Long Bow",
-    "category": "oriental",
+    "category": "missile",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3299,7 +3301,7 @@
     "aliases": [
       "Modern commercial hunting bow"
     ],
-    "category": "oriental",
+    "category": "missile",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3331,7 +3333,7 @@
   {
     "id": "weapon_ancient_heavy_crossbow",
     "name": "Heavy Crossbow",
-    "category": "oriental",
+    "category": "missile",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3366,7 +3368,7 @@
     "aliases": [
       "Pistol-style crossbow"
     ],
-    "category": "oriental",
+    "category": "missile",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3399,7 +3401,10 @@
   {
     "id": "weapon_ancient_daisho",
     "name": "Daisho",
-    "category": "oriental",
+    "category": [
+      "large_swords",
+      "short_swords"
+    ],
     "entryRole": "weapon_set",
     "gameSystems": [
       "nightbane"
@@ -3411,7 +3416,7 @@
       "weapon_ancient_katana",
       "weapon_ancient_wakizashi"
     ],
-    "description": "Literally \"the long and the short\" — traditional Japanese set of a Wakizashi and a Katana. Using both together is a separate skill (paired weapons).",
+    "description": "Literally \"the long and the short\" — traditional Japanese set of one long sword (Katana) and one short sword (Wakizashi). Listed under both Large Swords and Short Swords. Using both together is a separate skill (paired weapons).",
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -3423,7 +3428,7 @@
       {
         "gameSystem": "nightbane",
         "damageSpecial": "When used as paired weapons: 1D8+2 (long / Katana), 1D6 (short / Wakizashi)",
-        "notes": "Component weapons retain their own qualityVariants for solo use. Set cost for fair vs authentic paired use printed as little as $150 / $1,200.",
+        "notes": "Component weapons retain their own qualityVariants for solo use. Set cost for fair vs authentic paired use printed as little as $150 / $1,200. Daisho is one long (Katana) and one short (Wakizashi) sword; catalog category lists both large_swords and short_swords.",
         "averageCost": {
           "currency": "usd",
           "min": 150,
@@ -3437,13 +3442,13 @@
   {
     "id": "weapon_ancient_jitte",
     "name": "Jitte",
-    "category": "oriental",
+    "category": "knives",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
     ],
     "weaponProficiencyEligible": true,
-    "linkedWpSkillId": "wp_blunt",
+    "linkedWpSkillId": "wp_knife",
     "throwable": false,
     "canEntangle": true,
     "description": "Oversized three-pronged fork, generally designed to be used as a pair (with Sai). Excellent for countering samurai sword attacks; skilled user can entangle with one hand and attack with the other.",
@@ -3470,13 +3475,13 @@
   {
     "id": "weapon_ancient_sai",
     "name": "Sai",
-    "category": "oriental",
+    "category": "knives",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
     ],
     "weaponProficiencyEligible": true,
-    "linkedWpSkillId": "wp_blunt",
+    "linkedWpSkillId": "wp_knife",
     "throwable": false,
     "canEntangle": true,
     "description": "Oversized three-pronged fork, generally designed to be used as a pair (with Jitte). Excellent for countering samurai sword attacks; skilled user can entangle with one hand and attack with the other.",
@@ -3503,7 +3508,7 @@
   {
     "id": "weapon_ancient_katana",
     "name": "Katana",
-    "category": "oriental",
+    "category": "large_swords",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3557,7 +3562,7 @@
   {
     "id": "weapon_ancient_kusari_gama",
     "name": "Kusari-Gama",
-    "category": "oriental",
+    "category": "chain",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3593,7 +3598,7 @@
   {
     "id": "weapon_ancient_kyoketsu_shogi",
     "name": "Kyoketsu-Shogi",
-    "category": "oriental",
+    "category": "chain",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3629,7 +3634,7 @@
   {
     "id": "weapon_ancient_kawanga",
     "name": "Kawanga",
-    "category": "oriental",
+    "category": "miscellaneous",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3660,7 +3665,7 @@
   {
     "id": "weapon_ancient_manriki_gusari",
     "name": "Manriki-Gusari",
-    "category": "oriental",
+    "category": "chain",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3692,7 +3697,7 @@
   {
     "id": "weapon_ancient_no_dachi",
     "name": "No-Dachi",
-    "category": "oriental",
+    "category": "large_swords",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3730,7 +3735,7 @@
   {
     "id": "weapon_ancient_sa_tjat_koen",
     "name": "Sa Tjat Koen",
-    "category": "oriental",
+    "category": "chain",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3762,13 +3767,13 @@
   {
     "id": "weapon_ancient_shikomi_zue",
     "name": "Shikomi-Zue",
-    "category": "oriental",
+    "category": "spears",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
     ],
     "weaponProficiencyEligible": true,
-    "linkedWpSkillId": "wp_blunt",
+    "linkedWpSkillId": "wp_polearm",
     "throwable": false,
     "objectSdc": 50,
     "description": "Hollow bamboo staff with a concealed spring-loaded blade (release via trigger stud). Ninja commonly disguised themselves as blind men while carrying it. Usable as a somewhat fragile Bo Staff or as a spear.",
@@ -3796,7 +3801,7 @@
   {
     "id": "weapon_ancient_shuriken",
     "name": "Shuriken",
-    "category": "oriental",
+    "category": "thrown",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3829,7 +3834,7 @@
   {
     "id": "weapon_ancient_throwing_knife_oriental",
     "name": "Throwing Knife (Oriental)",
-    "category": "oriental",
+    "category": "knives",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3863,7 +3868,7 @@
   {
     "id": "weapon_ancient_naginata",
     "name": "Naginata",
-    "category": "oriental",
+    "category": "pole_arms",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3895,7 +3900,7 @@
   {
     "id": "weapon_ancient_yari",
     "name": "Yari",
-    "category": "oriental",
+    "category": "spears",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3930,7 +3935,7 @@
     "aliases": [
       "Ninja short sword"
     ],
-    "category": "oriental",
+    "category": "short_swords",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"
@@ -3980,7 +3985,7 @@
   {
     "id": "weapon_ancient_tonfa",
     "name": "Tonfa",
-    "category": "oriental",
+    "category": "blunt",
     "entryRole": "weapon",
     "gameSystems": [
       "nightbane"

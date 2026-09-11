@@ -64,16 +64,21 @@ export function GearWeaponsSection({ morphus }: Props) {
   )
 
   const catalogCategories = useMemo(() => {
-    const set = new Set(catalogRows.map((r) => r.category))
+    const set = new Set<string>()
+    for (const r of catalogRows) {
+      const slugs = Array.isArray(r.category) ? r.category : [r.category]
+      for (const c of slugs) set.add(c)
+    }
     return [...set].sort()
   }, [catalogRows])
 
   const filteredCatalog = useMemo(() => {
     const q = catalogQuery.trim().toLowerCase()
     return catalogRows.filter((r) => {
-      if (catalogCategory && r.category !== catalogCategory) return false
+      const slugs = Array.isArray(r.category) ? r.category : [r.category]
+      if (catalogCategory && !slugs.includes(catalogCategory)) return false
       if (!q) return true
-      const blob = `${r.name} ${r.aliases?.join(' ') ?? ''} ${r.category} ${r.id}`.toLowerCase()
+      const blob = `${r.name} ${r.aliases?.join(' ') ?? ''} ${slugs.join(' ')} ${r.id}`.toLowerCase()
       return blob.includes(q)
     })
   }, [catalogRows, catalogCategory, catalogQuery])
@@ -170,8 +175,8 @@ export function GearWeaponsSection({ morphus }: Props) {
           Ancient weapons catalog
         </h3>
         <p className={`mb-3 text-[11px] leading-snug ${theme.muted}`}>
-          Nightbane RPG ancient / oriental tables. Pick a row (and quality tier when listed), then add
-          to carried gear.
+          Nightbane RPG ancient weapons tables (Western + Oriental prose, filed by hardware family).
+          Pick a row (and quality tier when listed), then add to carried gear.
         </p>
         {catalogRows.length === 0 ? (
           <p className={`text-sm ${theme.muted}`}>

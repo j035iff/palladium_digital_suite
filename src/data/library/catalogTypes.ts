@@ -170,7 +170,8 @@ export type AncientWeaponCatalogEntry = {
   name: string
   aliases?: readonly string[]
   description?: string
-  category: string
+  /** One section slug, or several when a set spans families (e.g. Daisho). */
+  category: string | readonly string[]
   entryRole?: 'weapon' | 'ammunition' | 'improvised' | 'weapon_set'
   gameSystems: readonly string[]
   sources: readonly PalladiumSourceRef[]

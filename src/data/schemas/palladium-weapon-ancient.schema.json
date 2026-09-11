@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://megaverse-companion.local/schemas/palladium-weapon-ancient.schema.json",
   "title": "Palladium ancient weapon (hardware)",
-  "description": "Catalog row for **ancient / medieval / improvised melee and missile hardware** (Nightbane RPG Weapons & Equipment tables pp. 204–209 and equivalents in other Palladium lines). Distinct from **`palladium-weapon-proficiency.schema.json`** (W.P. skill ladders).\n\n**Genre-specific stats:** Printings disagree on damage and sometimes cost/length (e.g. Short Sword **1D6** in Nightbane vs **2D4** in Palladium Fantasy). Put shared identity on the root; put every measurable table column that can differ by line under **`genreStats[]`**, one object per **`gameSystem`**. Engines resolve the active host/creation genre to pick the matching **`genreStats`** row.\n\n**Cost / currency:** Each genre block’s **`averageCost`** (or a **`qualityVariants[]`** entry’s cost) requires **`currency`** + **`min`** (optional **`max`** for ranges). Use open currency slugs (`usd` for modern $-priced lines, `gold` for Fantasy, `credits` for Rifts, …). Optional **`unit`**: each / dozen / score / **pair** / other.\n\n**Damage authoring:** Prefer machine-friendly **`damage`** dice tokens (`1D6`, `2D6`, `1D8+2`). Optional **`damageBookDisplay`** preserves the printed range form (`2-12`, `1-8+2`) when useful for tooltips. When the book lists quality tiers, put them in **`qualityVariants[]`** (each with its own damage/cost) and omit a single root **`damage`**. When damage is not numeric (e.g. blow-gun darts), omit **`damage`** and use **`damageSpecial`** / **`payloadNotes`**.\n\n**Oriental listings** (Nightbane pp. 206–207): use **`category`: `oriental`**. One catalog row per named weapon (split compound headings). Structured flags: **`canEntangle`**, **`objectSdc`**, **`requiresHandToHand`**.\n\n**Miscellaneous tools** (blackjack, frying pan, etc.): set **`weaponProficiencyEligible`: false** — the Nightbane table states they gain **no W.P. bonuses**.",
+  "description": "Catalog row for **ancient / medieval / improvised melee and missile hardware** (Nightbane RPG Weapons & Equipment tables pp. 204–209 and equivalents in other Palladium lines). Distinct from **`palladium-weapon-proficiency.schema.json`** (W.P. skill ladders).\n\n**Genre-specific stats:** Printings disagree on damage and sometimes cost/length (e.g. Short Sword **1D6** in Nightbane vs **2D4** in Palladium Fantasy). Put shared identity on the root; put every measurable table column that can differ by line under **`genreStats[]`**, one object per **`gameSystem`**. Engines resolve the active host/creation genre to pick the matching **`genreStats`** row.\n\n**Cost / currency:** Each genre block’s **`averageCost`** (or a **`qualityVariants[]`** entry’s cost) requires **`currency`** + **`min`** (optional **`max`** for ranges). Use open currency slugs (`usd` for modern $-priced lines, `gold` for Fantasy, `credits` for Rifts, …). Optional **`unit`**: each / dozen / score / **pair** / other.\n\n**Damage authoring:** Prefer machine-friendly **`damage`** dice tokens (`1D6`, `2D6`, `1D8+2`). Optional **`damageBookDisplay`** preserves the printed range form (`2-12`, `1-8+2`) when useful for tooltips. When the book lists quality tiers, put them in **`qualityVariants[]`** (each with its own damage/cost) and omit a single root **`damage`**. When damage is not numeric (e.g. blow-gun darts), omit **`damage`** and use **`damageSpecial`** / **`payloadNotes`**.\n\n**Categories:** Western table families (axes, pole arms, …) plus **`chain`** (Ball and Chain / chain weapons), **`thrown`** (shuriken, darts, …), and **`whips`**. Oriental prose weapons (pp. 206–207) use those same families — not a separate oriental bucket. **`category`** may be a single slug or an array when a set spans sections (e.g. Daisho). Structured flags: **`canEntangle`**, **`objectSdc`**, **`requiresHandToHand`**.\n\n**Miscellaneous tools** (blackjack, frying pan, etc.): set **`weaponProficiencyEligible`: false** — the Nightbane table states they gain **no W.P. bonuses**.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -32,7 +32,10 @@
     },
     "aliases": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 },
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "uniqueItems": true,
       "description": "Alternate book names or spellings for search (optional)."
     },
@@ -42,12 +45,29 @@
       "description": "Optional prose notes (usage, rarity, GM guidance)."
     },
     "category": {
-      "$ref": "#/$defs/weaponCategory",
-      "description": "Table section from the ancient weapons listing."
+      "description": "Table section(s) for this hardware. Usually one slug (e.g. `large_swords`). Use an array when a set belongs in more than one section (e.g. Daisho → `large_swords` + `short_swords`).",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/weaponCategory"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/weaponCategory"
+          }
+        }
+      ]
     },
     "entryRole": {
       "type": "string",
-      "enum": ["weapon", "ammunition", "improvised", "weapon_set"],
+      "enum": [
+        "weapon",
+        "ammunition",
+        "improvised",
+        "weapon_set"
+      ],
       "default": "weapon",
       "description": "**weapon** (default); **ammunition** for Arrows / Bolts rows; **improvised** for household/tool rows under Miscellaneous; **weapon_set** for paired/set SKUs (e.g. Daisho) that reference component weapons."
     },
@@ -65,7 +85,9 @@
     "sources": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/sourceRef" },
+      "items": {
+        "$ref": "#/$defs/sourceRef"
+      },
       "description": "Book + page refs per game line (same shape as skills / W.P.)."
     },
     "weaponProficiencyEligible": {
@@ -116,7 +138,9 @@
     "genreStats": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/genreStatBlock" },
+      "items": {
+        "$ref": "#/$defs/genreStatBlock"
+      },
       "description": "Per-genre table columns. One entry per **`gameSystems`** slug. Fields omitted on a block are **not** inherited from another genre — author the full measurable set for each line (or omit only when that line’s printing lacks the column)."
     }
   },
@@ -130,19 +154,24 @@
         "knives",
         "short_swords",
         "large_swords",
-        "ball_and_chain",
+        "chain",
         "blunt",
         "staves",
         "missile",
-        "miscellaneous",
-        "oriental"
+        "thrown",
+        "whips",
+        "miscellaneous"
       ],
-      "description": "Matches Nightbane RPG ancient weapons table section headings (pp. 204–205) plus **oriental** for the Ancient Oriental Weapons prose list (pp. 206–207)."
+      "description": "Hardware family for filters/UI. Western table headings (pp. 204–205) plus **thrown** (shuriken, darts, …), **chain** (Ball and Chain / chain weapons), and **whips** (bull whip, cat-o-nine tails, …)."
     },
     "sourceRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["gameSystem", "reference", "pageNumber"],
+      "required": [
+        "gameSystem",
+        "reference",
+        "pageNumber"
+      ],
       "properties": {
         "gameSystem": {
           "type": "string",
@@ -257,7 +286,10 @@
     "costMeasure": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["currency", "min"],
+      "required": [
+        "currency",
+        "min"
+      ],
       "description": "Average cost for one genre (or one quality tier). **`currency`** is always required on the block. Use open slugs: **`usd`**, **`gold`**, **`credits`**, …. Exact price: set **`min`** only. Printed ranges: set both **`min`** and **`max`**. Optional **`unit`** for ammo packs or paired sets.",
       "properties": {
         "currency": {
@@ -278,7 +310,13 @@
         },
         "unit": {
           "type": "string",
-          "enum": ["each", "dozen", "score", "pair", "other"],
+          "enum": [
+            "each",
+            "dozen",
+            "score",
+            "pair",
+            "other"
+          ],
           "description": "Pricing unit — default **each** for weapons; **dozen** / **score** for arrows/bolts; **pair** for paired-weapon SKUs (e.g. Jitte/Sai $50/pair)."
         },
         "display": {
@@ -332,7 +370,11 @@
     "qualityVariant": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "label", "damage"],
+      "required": [
+        "id",
+        "label",
+        "damage"
+      ],
       "description": "One printed quality tier (e.g. Katana regular vs top/authentic). Each tier carries its own damage and usually its own cost.",
       "properties": {
         "id": {
@@ -347,7 +389,11 @@
           "description": "UI / book label (e.g. `Regular quality`, `Top quality (authentic)`)."
         },
         "damage": {
-          "allOf": [{ "$ref": "#/$defs/damageNotation" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/damageNotation"
+            }
+          ],
           "description": "Damage for this quality tier."
         },
         "damageBookDisplay": {
@@ -366,13 +412,31 @@
     "genreStatBlock": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["gameSystem"],
+      "required": [
+        "gameSystem"
+      ],
       "description": "One genre’s hardware columns. Provide **`damage`**, and/or **`qualityVariants`**, and/or **`damageSpecial`** / **`payloadNotes`** so the weapon has an authored damage story.",
       "anyOf": [
-        { "required": ["damage"] },
-        { "required": ["qualityVariants"] },
-        { "required": ["damageSpecial"] },
-        { "required": ["payloadNotes"] }
+        {
+          "required": [
+            "damage"
+          ]
+        },
+        {
+          "required": [
+            "qualityVariants"
+          ]
+        },
+        {
+          "required": [
+            "damageSpecial"
+          ]
+        },
+        {
+          "required": [
+            "payloadNotes"
+          ]
+        }
       ],
       "properties": {
         "gameSystem": {
@@ -392,7 +456,11 @@
           "$ref": "#/$defs/weightMeasure"
         },
         "damage": {
-          "allOf": [{ "$ref": "#/$defs/damageNotation" }],
+          "allOf": [
+            {
+              "$ref": "#/$defs/damageNotation"
+            }
+          ],
           "description": "Primary damage for this genre when the book lists a single value. Omit when using **`qualityVariants`** only, or when damage is non-numeric (**`damageSpecial`** / **`payloadNotes`**)."
         },
         "damageBookDisplay": {
@@ -413,7 +481,9 @@
         "qualityVariants": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/qualityVariant" },
+          "items": {
+            "$ref": "#/$defs/qualityVariant"
+          },
           "description": "Quality tiers from the book (Katana, Wakizashi, Aikuchi/Tanto cost bands, etc.). When present, each variant owns damage/cost; omit a single root **`damage`** / **`averageCost`** unless a non-tier default is also printed."
         },
         "averageCost": {

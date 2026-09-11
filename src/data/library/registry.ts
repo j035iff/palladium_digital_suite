@@ -91,6 +91,7 @@ export {
   listAncientWeaponsForGameSystem,
   listAncientWeaponsForGearPicker,
   ancientWeaponCategoryLabel,
+  ancientWeaponCategorySlugs,
   resolveAncientWeaponGenreStats,
   resolveAncientWeaponCombatStats,
   ancientCatalogToInventoryPiece,

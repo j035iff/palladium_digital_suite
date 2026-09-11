@@ -22,16 +22,28 @@ const CATEGORY_LABELS: Record<string, string> = {
   knives: 'Knives',
   short_swords: 'Short Swords',
   large_swords: 'Large Swords',
-  ball_and_chain: 'Ball and Chain',
+  chain: 'Chain',
   blunt: 'Blunt',
   staves: 'Staves',
   missile: 'Missile',
+  thrown: 'Thrown',
+  whips: 'Whips',
   miscellaneous: 'Miscellaneous',
-  oriental: 'Oriental',
 }
 
-export function ancientWeaponCategoryLabel(category: string): string {
-  return CATEGORY_LABELS[category] ?? category.replace(/_/g, ' ')
+/** Normalize catalog `category` (string or array) to a slug list. */
+export function ancientWeaponCategorySlugs(
+  category: string | readonly string[],
+): readonly string[] {
+  return Array.isArray(category) ? category : [category]
+}
+
+export function ancientWeaponCategoryLabel(
+  category: string | readonly string[],
+): string {
+  return ancientWeaponCategorySlugs(category)
+    .map((c) => CATEGORY_LABELS[c] ?? c.replace(/_/g, ' '))
+    .join(' / ')
 }
 
 export function getAncientWeaponById(
