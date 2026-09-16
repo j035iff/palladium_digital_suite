@@ -400,6 +400,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 | `docs/attribute_and_stat.md` | Attribute Forge mechanics |
 | `docs/psychic_gate.md` | Psionic tiers |
 | `src/data/source/morphus-ingest/_README.md` | PDF ingest CLI |
+| `.cursor/projects/README.md` | Cursor **Projects** coordinator seed prompts (Gear Forge, Content Ingest, Gardening) |
 
 ---
 
@@ -430,6 +431,7 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 | Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |
 | GM Hub session / combat / party observer / campaign forge | [`docs/gm_hub.md`](gm_hub.md), [`docs/unified_paths.md`](unified_paths.md) when observer/roster/forge pipelines change |
 | Product pillars or AI protocol | [`docs/vision.md`](vision.md), [`.cursorrules`](../.cursorrules) |
+| Cursor Projects coordinator seeds | [`.cursor/projects/`](../.cursor/projects/README.md) (and matching `.seed.md` files) |
 | New unified pipeline (Pillar 9) | [`docs/unified_paths.md`](unified_paths.md) — add or extend registry entry |
 | New catalog type or major content scale shift | [`docs/gemini-project-context.md`](gemini-project-context.md) — counts, paths, related doc index |
 
@@ -456,6 +458,7 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 14. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
 15. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
 16. **Commits** — only when the user explicitly asks.
+17. **Cursor Projects** — for multi-PR feature / ingest / gardening bodies of work, use seeds under [`.cursor/projects/`](../.cursor/projects/README.md); Project shared context does not replace git-backed pillars, ingest playbooks, or Unified Path docs.
 
 ---
 

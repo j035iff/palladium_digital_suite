@@ -1,0 +1,18 @@
+---
+description: Cursor Projects seed prompts for Gear Forge, Content Ingest, and Gardening coordinators
+alwaysApply: false
+---
+
+# Cursor Projects seeds
+
+Long-running coordinator work for this repo uses versioned seeds under **`.cursor/projects/`**:
+
+| Body of work | Seed |
+|--------------|------|
+| Gear / Inventory Forge | `.cursor/projects/gear-forge.seed.md` |
+| Content catalog ingest | `.cursor/projects/content-ingest.seed.md` |
+| Ongoing hygiene / PR-CI | `.cursor/projects/gardening.seed.md` |
+
+Setup steps: `.cursor/projects/README.md`.
+
+Do not treat Project shared context as a replacement for `docs/vision.md`, `.cursorrules`, `docs/unified_paths.md`, or `docs/ingest/*`. When conventions change, update the git-backed docs/playbooks (and the seed if the coordinator brief drifted).
