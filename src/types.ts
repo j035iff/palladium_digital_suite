@@ -2598,6 +2598,38 @@ export type FireMode = {
   damageMultiplier?: number
 }
 
+/** Resource cost for a forged weapon ability trigger (inventory_weapons.md). */
+export type WeaponForgeResource = 'ppe' | 'isp'
+
+/** Conditional damage multiplier on a forged weapon (display + later combat routing). */
+export type WeaponForgeDamageMultiplier = {
+  id: string
+  /** e.g. "vs Supernatural" */
+  label: string
+  multiplier: number
+}
+
+/** Sub-ability housed on a unique weapon (Rune Sword, etc.). */
+export type WeaponForgeAbilityTrigger = {
+  id: string
+  name: string
+  description?: string
+  resourceType: WeaponForgeResource
+  cost: number
+}
+
+/**
+ * Custom property stack from the Gear Forge (docs/inventory_weapons.md).
+ * Quality still writes concrete strike/damage fields; this stores forge metadata.
+ */
+export type WeaponForgeProperties = {
+  indestructible?: boolean
+  /** Named quality applied at forge time (Excellent, Dwarven, etc.). */
+  qualityLabel?: string
+  damageMultipliers?: readonly WeaponForgeDamageMultiplier[]
+  abilityTriggers?: readonly WeaponForgeAbilityTrigger[]
+}
+
 /**
  * Carried weapon — strike card + optional magazine (combat_logic.md, master_flow.md).
  */
@@ -2645,6 +2677,13 @@ export interface Weapon extends Item {
    * Omit / true = eligible when `linkedWpSkillId` matches an unlocked W.P.
    */
   weaponProficiencyEligible?: boolean
+  /** Gear Forge custom property stack (indestructible, multipliers, triggers). */
+  forgeProperties?: WeaponForgeProperties
+  /**
+   * True when this row originated as a unique / forged artifact-style weapon.
+   * Filters Artifacts lists; still `itemType: 'weapon'` for combat.
+   */
+  isArtifact?: boolean
   /** True when assigned to primary or secondary combat slot. */
   isEquipped: boolean
 }

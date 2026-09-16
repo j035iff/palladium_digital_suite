@@ -18,14 +18,15 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 
 | Viewport | UI | Entry |
 |----------|-----|--------|
-| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header, GM Hub, or Campaign Creation Forge |
+| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header, GM Hub, Campaign Creation Forge, or Gear Forge |
 | `sheet` | `MainLayout` — live sheet + optional creation chrome | **Open Character** or **Create Character** |
 | `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
+| `gear_forge` | `GearForgeViewport` — shared Gear Forge → custom gear library | **Gear Forge** or **My Custom Gear** on the launcher |
 | `gm` | `GmHubShell` — Story / Combat (Home + Party + Cast) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
 
-`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`.
+`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`.
 
-GM Hub sessions are a separate local record (not a character save). Spec: [gm_hub.md](./gm_hub.md).
+GM Hub sessions are a separate local record (not a character save). Spec: [gm_hub.md](./gm_hub.md). Gear Forge library: [forge/gear_forge.md](./forge/gear_forge.md).
 
 ---
 
@@ -87,7 +88,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 
 - **Radical visibility:** Roadmap genres remain visible but clearly non-selectable.
 - **Megaversal bridge:** `creationGenreId` is stamped at creation and preserved in saves; `hostGenreId` may diverge for cross-setting play.
-- **No hidden launcher paths:** My Characters, Create Character, Campaigns, and New Campaign are all on the portal. Roadmap genres stay visible but non-selectable.
+- **No hidden launcher paths:** My Characters, Create Character, Campaigns, New Campaign, **Gear Forge**, and **My Custom Gear** are all on the portal. Roadmap genres stay visible but non-selectable.
 
 ---
 
@@ -96,8 +97,9 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 | Concern | Location |
 |---------|----------|
 | Launcher UI | `src/components/dashboard/AppLauncher.tsx` |
-| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGmHub`, `returnToLauncher`) |
+| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGearForge`, `enterGmHub`, `returnToLauncher`) |
 | Campaign Creation Forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
+| Gear Forge (portal) | [forge/gear_forge.md](./forge/gear_forge.md) — `GearForgeViewport`, `customGearLibrary.ts` |
 | GM Hub | [gm_hub.md](./gm_hub.md) — `src/components/gm/`, `src/context/GmSessionContext.tsx` |
 | Genre manifest | `src/data/genres.ts` — `GENRE_MANIFEST`, `LAUNCHER_CREATE_OPTIONS` |
 | Blank character root | `src/lib/characterRoot.ts` — `createBlankCharacterForGenre` |

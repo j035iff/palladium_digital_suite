@@ -224,6 +224,23 @@ Copy this block when registering a new unified path:
 
 ---
 
+### Gear Forge (inventory)
+
+**Status:** `partial`  
+**Related spec:** `docs/forge/gear_forge.md`, `docs/inventory_weapons.md`
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Lane nav | `src/lib/forgeNavigation/gearForge.ts` | `buildGearForgeLaneViews` | Weapons / Armor / Artifacts / Other — stubs stay visible |
+| Host adapter | `src/lib/gear/gearForgeHost.ts` | `GearForgeHostAdapter` | `library` \| `creation` \| `sheet` \| `gm` |
+| Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear |
+| Property stack | `src/lib/weaponForgeProperties.ts` | `Weapon.forgeProperties` | Indestructible / quality / multipliers / triggers |
+| UI shell | `src/components/gear/GearForgeShell.tsx` | Portal `GearForgeViewport` | Creation / sheet / GM hosts planned |
+
+**Modes / variants:** One shell for all hosts. Portal commits to library; later hosts commit to character/NPC inventory. Do not fork lane editors per host.
+
+---
+
 ## Planned / partial paths
 
 Track work here until promoted to the registry above.

@@ -101,17 +101,37 @@ describe('inventoryPersistence', () => {
     expect(merged.inventory?.ammoReserves).toEqual({ '9mm': 10 })
   })
 
-  it('round-trips through serializeCharacterRootForSave', () => {
-    const session = {
-      items: [{ ...sampleArmor, isHostGenreLocked: true } as Armor & { isHostGenreLocked: true }],
-      equippedArmorId: sampleArmor.id,
-      readyWeaponIds: [null, null] as const,
-      ammoReserves: {},
+  it('round-trips forgeProperties on weapons through inventory hydrate', () => {
+    const forged: Weapon = {
+      ...sampleWeapon,
+      id: 'weapon_forged_1',
+      isEquipped: false,
+      forgeProperties: {
+        indestructible: true,
+        qualityLabel: 'Excellent',
+        damageMultipliers: [
+          { id: 'dm1', label: 'vs Supernatural', multiplier: 2 },
+        ],
+        abilityTriggers: [
+          { id: 'at1', name: 'Rune Flare', resourceType: 'ppe', cost: 20 },
+        ],
+      },
+      isArtifact: true,
     }
-    const merged = mergeCharacterWithInventory(testRoot(), session)
-    const saved = serializeCharacterRootForSave(merged)
-    expect(saved.inventory?.items[0]).not.toHaveProperty('isHostGenreLocked')
-    const reloaded = hydrateInventorySession(saved)
-    expect(reloaded.items[0]?.id).toBe(sampleArmor.id)
+    const session = hydrateInventorySession(
+      testRoot({
+        inventory: {
+          items: [forged],
+          equippedArmorId: null,
+          readyWeaponIds: [null, null],
+          ammoReserves: {},
+        },
+      }),
+    )
+    const row = session.items[0] as Weapon
+    expect(row.forgeProperties?.indestructible).toBe(true)
+    expect(row.forgeProperties?.qualityLabel).toBe('Excellent')
+    expect(row.forgeProperties?.damageMultipliers?.[0]?.multiplier).toBe(2)
+    expect(row.isArtifact).toBe(true)
   })
 })

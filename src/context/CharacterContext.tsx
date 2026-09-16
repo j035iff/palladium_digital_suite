@@ -235,7 +235,12 @@ import {
   shadowOccMountMessage,
 } from '../lib/shadowOcc'
 
-export type AppViewport = 'launcher' | 'sheet' | 'gm' | 'campaign_forge'
+export type AppViewport =
+  | 'launcher'
+  | 'sheet'
+  | 'gm'
+  | 'campaign_forge'
+  | 'gear_forge'
 
 /** Active-form combat sheet slice (vitality pools + attribute bonuses). */
 type ActiveStats = {
@@ -265,6 +270,13 @@ type CharacterContextValue = {
   startCreation: (genreId: GenreId) => void
   enterGmHub: () => void
   enterCampaignForge: () => void
+  /**
+   * Open the standalone Gear Forge (custom gear library).
+   * Pass `libraryId` to focus an existing My Custom Gear entry after open.
+   */
+  enterGearForge: (opts?: { libraryId?: string }) => void
+  /** Active library entry id when `viewport === 'gear_forge'` (optional focus hint). */
+  gearForgeLibraryId: string | null
   returnToLauncher: () => void
   /** Clears every creation tab and starts a fresh blank record for the current genre. */
   resetCreation: () => void
@@ -670,6 +682,9 @@ function mergeLevelQueues(existing: number[], crossed: number[]): number[] {
 
 export function CharacterProvider({ children }: { children: ReactNode }) {
   const [viewport, setViewport] = useState<AppViewport>('launcher')
+  const [gearForgeLibraryId, setGearForgeLibraryId] = useState<string | null>(
+    null,
+  )
   const [rawCharacter, setRawCharacter] = useState<CharacterRootState>(
     () => INITIAL_CHARACTER_SNAPSHOT,
   )
@@ -872,6 +887,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setViewport('campaign_forge')
   }, [])
 
+  const enterGearForge = useCallback((opts?: { libraryId?: string }) => {
+    setGearForgeLibraryId(opts?.libraryId?.trim() || null)
+    setViewport('gear_forge')
+  }, [])
+
   const resetCreation = useCallback(() => {
     if (
       !window.confirm(
@@ -925,6 +945,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const returnToLauncher = useCallback(() => {
+    setGearForgeLibraryId(null)
     setViewport('launcher')
     refreshSavedCharacterIndex()
   }, [refreshSavedCharacterIndex])
@@ -2954,6 +2975,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       startCreation,
       enterGmHub,
       enterCampaignForge,
+      enterGearForge,
+      gearForgeLibraryId,
       returnToLauncher,
       resetCreation,
       saveCreationForLater,
@@ -3119,6 +3142,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       startCreation,
       enterGmHub,
       enterCampaignForge,
+      enterGearForge,
+      gearForgeLibraryId,
       returnToLauncher,
       resetCreation,
       saveCreationForLater,

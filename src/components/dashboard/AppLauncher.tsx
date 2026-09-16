@@ -12,7 +12,45 @@ import {
   resolveCharacterIndexRowDisplay,
   type CharacterIndexEntry,
 } from '../../lib/characterIndex'
+import {
+  listCustomGearIndex,
+  type CustomGearLibraryIndexEntry,
+} from '../../lib/gear/customGearLibrary'
 import type { GmSessionIndexEntry } from '../../lib/gm/sessionTypes'
+
+function CustomGearIndexSelectRow({
+  row,
+  selected,
+  onSelect,
+}: {
+  row: CustomGearLibraryIndexEntry
+  selected: boolean
+  onSelect: () => void
+}) {
+  const genreLabel = formatGenreSlug(row.genreId)
+  return (
+    <button
+      type="button"
+      role="option"
+      aria-selected={selected}
+      onClick={onSelect}
+      className={`relative w-full px-4 py-2.5 pr-20 text-left text-sm transition ${
+        selected
+          ? 'bg-emerald-500/15 font-semibold text-emerald-100 ring-1 ring-inset ring-emerald-400/50'
+          : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+      }`}
+    >
+      <sup
+        className={`absolute right-3 top-2 text-[9px] font-bold uppercase tracking-wide ${
+          selected ? 'text-emerald-300/90' : 'text-slate-500'
+        }`}
+      >
+        {genreLabel}
+      </sup>
+      <span className="block leading-snug">{row.name}</span>
+    </button>
+  )
+}
 
 function CharacterIndexSelectRow({
   row,
@@ -162,6 +200,7 @@ export function AppLauncher() {
     startCreation,
     enterGmHub,
     enterCampaignForge,
+    enterGearForge,
     loadSavedCharacter,
     savedCharacterRows,
     inProgressCharacterRows,
@@ -178,22 +217,34 @@ export function AppLauncher() {
 
   const [openId, setOpenId] = useState('')
   const [campaignId, setCampaignId] = useState('')
+  const [customGearId, setCustomGearId] = useState('')
+  const [customGearRows, setCustomGearRows] = useState<CustomGearLibraryIndexEntry[]>(
+    () => listCustomGearIndex(),
+  )
   const [openMenu, setOpenMenu] = useState(false)
   const [createMenu, setCreateMenu] = useState(false)
   const [campaignMenu, setCampaignMenu] = useState(false)
+  const [customGearMenu, setCustomGearMenu] = useState(false)
   const openPanelRef = useRef<HTMLDivElement>(null)
   const createPanelRef = useRef<HTMLDivElement>(null)
   const campaignPanelRef = useRef<HTMLDivElement>(null)
+  const customGearPanelRef = useRef<HTMLDivElement>(null)
 
   const closeMenus = () => {
     setOpenMenu(false)
     setCreateMenu(false)
     setCampaignMenu(false)
+    setCustomGearMenu(false)
+  }
+
+  const refreshCustomGearIndex = () => {
+    setCustomGearRows(listCustomGearIndex())
   }
 
   useEffect(() => {
     refreshSavedCharacterIndex()
     refreshSessionList()
+    refreshCustomGearIndex()
   }, [refreshSavedCharacterIndex, refreshSessionList])
 
   useEffect(() => {
@@ -212,6 +263,12 @@ export function AppLauncher() {
     }
   }, [session?.id, sessionList, campaignId])
 
+  useEffect(() => {
+    if (!customGearId && customGearRows.length > 0) {
+      setCustomGearId(customGearRows[0].id)
+    }
+  }, [customGearRows, customGearId])
+
   const recentRows = listRecentlyEditedCharacters(6)
 
   useEffect(() => {
@@ -220,12 +277,13 @@ export function AppLauncher() {
       const inside =
         (openPanelRef.current && openPanelRef.current.contains(t)) ||
         (createPanelRef.current && createPanelRef.current.contains(t)) ||
-        (campaignPanelRef.current && campaignPanelRef.current.contains(t))
+        (campaignPanelRef.current && campaignPanelRef.current.contains(t)) ||
+        (customGearPanelRef.current && customGearPanelRef.current.contains(t))
       if (!inside) closeMenus()
     }
     document.addEventListener('mousedown', onDocClick)
     return () => document.removeEventListener('mousedown', onDocClick)
-  }, [openMenu, createMenu, campaignMenu])
+  }, [openMenu, createMenu, campaignMenu, customGearMenu])
 
   const onOpen = (id?: string) => {
     const target = id ?? openId
@@ -252,6 +310,22 @@ export function AppLauncher() {
   const onNewCampaign = () => {
     resetCampaignForgeDraft()
     enterCampaignForge()
+    closeMenus()
+  }
+
+  const onOpenGearForge = () => {
+    enterGearForge()
+    closeMenus()
+  }
+
+  const onOpenCustomGear = (id?: string) => {
+    const target = id ?? customGearId
+    if (!target) {
+      enterGearForge()
+      closeMenus()
+      return
+    }
+    enterGearForge({ libraryId: target })
     closeMenus()
   }
 
@@ -296,6 +370,7 @@ export function AppLauncher() {
                 setOpenMenu((v) => !v)
                 setCreateMenu(false)
                 setCampaignMenu(false)
+                setCustomGearMenu(false)
               }}
               className={`flex w-full items-center justify-center gap-3 rounded-xl border-2 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] transition ${
                 openMenu
@@ -357,6 +432,7 @@ export function AppLauncher() {
                 setCreateMenu((v) => !v)
                 setOpenMenu(false)
                 setCampaignMenu(false)
+                setCustomGearMenu(false)
               }}
               className={`flex w-full items-center justify-center gap-3 rounded-xl border-2 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] transition ${
                 createMenu
@@ -424,6 +500,7 @@ export function AppLauncher() {
                 setCampaignMenu((v) => !v)
                 setOpenMenu(false)
                 setCreateMenu(false)
+                setCustomGearMenu(false)
               }}
               className={`flex w-full items-center justify-center gap-3 rounded-xl border-2 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] transition ${
                 campaignMenu
@@ -487,6 +564,72 @@ export function AppLauncher() {
               🗺
             </span>
             New Campaign
+          </button>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div ref={customGearPanelRef} className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                refreshCustomGearIndex()
+                setCustomGearMenu((v) => !v)
+                setOpenMenu(false)
+                setCreateMenu(false)
+                setCampaignMenu(false)
+              }}
+              className={`flex w-full items-center justify-center gap-3 rounded-xl border-2 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] transition ${
+                customGearMenu
+                  ? 'border-emerald-400/80 bg-slate-900/90 text-emerald-100 shadow-[0_0_24px_rgba(52,211,153,0.25)]'
+                  : 'border-slate-600 bg-slate-900/70 text-slate-200 hover:border-slate-400'
+              }`}
+              aria-expanded={customGearMenu}
+            >
+              <span className="text-xl" aria-hidden>
+                ⚔
+              </span>
+              My Custom Gear
+            </button>
+
+            {customGearMenu ? (
+              <ul
+                className="absolute left-0 right-0 top-full z-30 mt-2 max-h-64 overflow-y-auto rounded-xl border border-slate-600/90 bg-slate-950/95 py-2 shadow-2xl backdrop-blur-sm"
+                role="listbox"
+              >
+                {customGearRows.length === 0 ? (
+                  <li className="px-4 py-3 text-sm text-slate-500">
+                    No custom gear yet — open Gear Forge to create and save weapons.
+                  </li>
+                ) : (
+                  customGearRows.map((row) => {
+                    const selected = row.id === customGearId
+                    return (
+                      <li key={row.id}>
+                        <CustomGearIndexSelectRow
+                          row={row}
+                          selected={selected}
+                          onSelect={() => {
+                            setCustomGearId(row.id)
+                            onOpenCustomGear(row.id)
+                          }}
+                        />
+                      </li>
+                    )
+                  })
+                )}
+              </ul>
+            ) : null}
+          </div>
+
+          <button
+            type="button"
+            onClick={onOpenGearForge}
+            className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-slate-600 bg-slate-900/70 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] text-slate-200 transition hover:border-emerald-400/80 hover:bg-slate-900/90 hover:text-emerald-100 hover:shadow-[0_0_24px_rgba(52,211,153,0.25)]"
+          >
+            <span className="text-xl" aria-hidden>
+              ⚒
+            </span>
+            Gear Forge
           </button>
         </div>
 

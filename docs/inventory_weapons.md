@@ -1,6 +1,6 @@
 # Advanced Inventory & Custom Weapon Forge
 
-> **Implementation status:** Live **Gear → Weapons** adds ancient hardware from `weapons/ancient.json` (searchable catalog + quality tiers). Custom / modern add remains for homebrew and firearms until a modern hardware catalog exists. Armor templates, artifacts placeholder, encumbrance, and inventory save (`inventory` block) are live. Currency smart-math, weapon forge, and Destiny-style HUD swap are **not fully implemented**.
+> **Implementation status:** Live **Gear → Weapons** still adds ancient hardware from `weapons/ancient.json`. **Gear Forge** (portal) ships the shared shell + weapons lane with custom property stack into **My Custom Gear** library (`viewport: 'gear_forge'`). Creation Gear tab, sheet host, GM Gear tab, currency smart-math, and Destiny-style HUD swap are **not fully implemented**.
 
 This document defines the logic for currency management, item presence states, and the creation of unique, rule-breaking weapons (like Rune Swords) with a focus on high-speed UI interaction.
 1. Currency & Resource Management
@@ -26,10 +26,11 @@ Item is hidden from active character calculations. No weight/bonus impact.
 3. The Weapon Forge & HUD Icons
 Inspired by modern looter-shooter UIs (e.g., Destiny 2), weapons are identified by W.P. Category Icons.
 Icon Mapping: Every weapon is assigned a silhouette based on its Weapon Proficiency (W.P. Sword, W.P. Archery, etc.).
-Custom Property Stack: Users can add unique mechanical triggers to items:
-Indestructible: Disables durability tracking.
-Damage Multipliers: Conditional damage (e.g., x2 vs. Supernatural).
-Quality Modifiers: Pre-calculated bonuses for "Excellent" or "Dwarven" workmanship.
-Ability Triggers: Unique items (like Rune Swords) can house custom sub-abilities with their own P.P.E./I.S.P. costs.
+Custom Property Stack: Users can add unique mechanical triggers to items (Gear Forge weapons lane → `Weapon.forgeProperties`):
+Indestructible: Flag on the forged weapon (durability tracking still later).
+Damage Multipliers: Conditional damage (e.g., x2 vs. Supernatural) — stored and shown; combat auto-apply later.
+Quality Modifiers: Presets write concrete strike/damage fields plus `qualityLabel`.
+Ability Triggers: Unique items can house sub-abilities with P.P.E./I.S.P. costs — stored and shown; spend flow later.
+See [forge/gear_forge.md](./forge/gear_forge.md).
 4. Visual HUD States
 The Combat HUD shows **Unarmed (Hand-to-Hand name) / Ancient / Modern** category bubbles with a simple W.P. glyph and collapsed Strike/Parry/Damage. Empty slots stay grayed, not hidden. Expand opens the full profile and a picker of carried Gear weapons of that era. Stowed-but-carried weapons appear in that picker (not a Destiny one-tap icon strip — still later).
