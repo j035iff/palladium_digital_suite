@@ -1,5 +1,5 @@
 ---
-description: Cursor Projects seed prompts for Gear Forge, Content Ingest, and Gardening coordinators
+description: Cursor Projects seed prompts for Gear Forge, Content Ingest, GM Hub, and Gardening coordinators
 alwaysApply: false
 ---
 
@@ -11,6 +11,7 @@ Long-running coordinator work for this repo uses versioned seeds under **`.curso
 |--------------|------|
 | Gear / Inventory Forge | `.cursor/projects/gear-forge.seed.md` |
 | Content catalog ingest | `.cursor/projects/content-ingest.seed.md` |
+| GM Hub (campaign / session / combat) | `.cursor/projects/gm-hub.seed.md` |
 | Ongoing hygiene / PR-CI | `.cursor/projects/gardening.seed.md` |
 
 Setup steps: `.cursor/projects/README.md`.
