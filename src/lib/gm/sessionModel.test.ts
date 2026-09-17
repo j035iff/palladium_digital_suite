@@ -122,7 +122,9 @@ describe('session combat economy', () => {
   })
 
   it('locks PC initiative entry and still allows NPC APM spend', () => {
-    let { s, npcId } = sessionWithParty()
+    const started = sessionWithParty()
+    const npcId = started.npcId
+    let s = started.s
     s = setPartyInitiativeRoll(s, 'char_alex', 14)
     s = setNpcInitiativeRoll(s, npcId, 9)
     s = lockInitiative(s)
@@ -135,7 +137,9 @@ describe('session combat economy', () => {
   })
 
   it('H.F. emit records saves without spending NPC APM', () => {
-    let { s, npcId } = sessionWithParty()
+    const started = sessionWithParty()
+    const npcId = started.npcId
+    let s = started.s
     const npc = s.npcs[0]!
     s = spendNpcApm(s, npcId, 1)
     s = emitHorrorFactor(s, npc, 10, true, 'Test emit')
@@ -189,7 +193,9 @@ describe('session combat economy', () => {
   })
 
   it('new melee round refills NPC APM and does not invent PC APM tracking', () => {
-    let { s, npcId } = sessionWithParty()
+    const started = sessionWithParty()
+    const npcId = started.npcId
+    let s = started.s
     s = spendNpcApm(s, npcId, 2)
     s = startNewMeleeRound(s)
     expect(s.combat.round).toBe(2)
@@ -201,7 +207,9 @@ describe('session combat economy', () => {
   })
 
   it('math-in strike logs die + bonus without mutating APM', () => {
-    let { s, npcId } = sessionWithParty()
+    const started = sessionWithParty()
+    const npcId = started.npcId
+    let s = started.s
     const npc = s.npcs[0]!
     s = recordNpcStrike(s, npc, 14, 2)
     expect(s.npcs.find((n) => n.instanceId === npcId)?.apmSpent).toBe(0)

@@ -24,6 +24,8 @@ import { SupernaturalAbilitiesForgeProvider } from './abilities/SupernaturalAbil
 
 import { CreationReviewFinalize } from './CreationReviewFinalize'
 
+import { CreationGearForgePanel } from './CreationGearForgePanel'
+
 import { OccVariableBonusPhase } from './OccVariableBonusPhase'
 
 import { CreationAttributeHeader } from './CreationAttributeHeader'
@@ -95,8 +97,10 @@ function clampLeftColumnPct(next: number, rightPct: number): number {
 
 function ForgeTabBody({
   tabId,
+  morphus = false,
 }: {
   tabId: CharacterCreationForgeTabId
+  morphus?: boolean
 }) {
 
   switch (tabId) {
@@ -141,7 +145,11 @@ function ForgeTabBody({
 
       return <SupernaturalAbilitiesForge />
 
-    case 'tab8_review':
+    case 'tab8_gear':
+
+      return <CreationGearForgePanel morphus={morphus} />
+
+    case 'tab9_review':
 
       return null
 
@@ -433,7 +441,8 @@ export function CreationFlowShell({
     activeTabId === 'tab1_configurator' ||
     activeTabId === 'tab4_skills' ||
     activeTabId === 'tab6_traits' ||
-    activeTabId === 'tab7_abilities'
+    activeTabId === 'tab7_abilities' ||
+    activeTabId === 'tab8_gear'
 
   const shortViewport = useMediaQuery(FORGE_SHORT_VIEWPORT_QUERY)
   const splitColumns = useMediaQuery('(min-width: 768px)')
@@ -448,7 +457,7 @@ export function CreationFlowShell({
   const [collapseOffset, setCollapseOffset] = useState<{ dx: number; dy: number } | null>(
     null,
   )
-  const hadUnsatisfiedRef = useRef(false)
+  const [hadUnsatisfied, setHadUnsatisfied] = useState(false)
   const prevTabIdRef = useRef(activeTabId)
   const continueTargetRef = useRef<HTMLButtonElement | null>(null)
   const bannerRef = useRef<HTMLDivElement | null>(null)
@@ -458,13 +467,13 @@ export function CreationFlowShell({
       prevTabIdRef.current = activeTabId
       setBannerCollapsing(false)
       setCollapseOffset(null)
-      hadUnsatisfiedRef.current = unsatisfiedRequirements.length > 0
+      setHadUnsatisfied(unsatisfiedRequirements.length > 0)
       setCollapseSnapshot(activeRequirements)
       return
     }
 
     if (unsatisfiedRequirements.length > 0) {
-      hadUnsatisfiedRef.current = true
+      setHadUnsatisfied(true)
       setCollapseSnapshot(activeRequirements)
       setBannerCollapsing(false)
       setCollapseOffset(null)
@@ -472,7 +481,7 @@ export function CreationFlowShell({
     }
 
     if (
-      hadUnsatisfiedRef.current &&
+      hadUnsatisfied &&
       allRequirementsSatisfied &&
       nav.continueEnabled &&
       !bannerCollapsing
@@ -506,13 +515,14 @@ export function CreationFlowShell({
     allRequirementsSatisfied,
     nav.continueEnabled,
     bannerCollapsing,
+    hadUnsatisfied,
   ])
 
   const showRequirementsBanner =
     bannerCollapsing ||
     unsatisfiedRequirements.length > 0 ||
     // Keep the filled checklist visible for one frame until collapse starts.
-    (allRequirementsSatisfied && hadUnsatisfiedRef.current)
+    (allRequirementsSatisfied && hadUnsatisfied)
 
   const showContextualBanner =
     showTab7Lanes ||
@@ -595,7 +605,7 @@ export function CreationFlowShell({
                   onCollapseEnd={() => {
                     setBannerCollapsing(false)
                     setCollapseOffset(null)
-                    hadUnsatisfiedRef.current = false
+                    setHadUnsatisfied(false)
                   }}
                   subheader={
                     showTab7Lanes && !bannerCollapsing ? (
@@ -708,7 +718,7 @@ export function CreationFlowShell({
                 </p>
               ) : null}
 
-              {activeTabId === 'tab8_review' ? (
+              {activeTabId === 'tab9_review' ? (
                 <>
                   <CreationReviewFinalize
                     onSpawnConfirm={(finalize) => {
@@ -724,18 +734,19 @@ export function CreationFlowShell({
               ) : activeTabId === 'tab4_skills' ||
                 activeTabId === 'tab1_configurator' ||
                 activeTabId === 'tab6_traits' ||
-                activeTabId === 'tab7_abilities' ? (
+                activeTabId === 'tab7_abilities' ||
+                activeTabId === 'tab8_gear' ? (
                 <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
                   <ForgeTabInactiveShell
                     inactive={tabInactive}
                     className="flex min-h-0 flex-1 flex-col overflow-hidden"
                   >
-                    <ForgeTabBody tabId={activeTabId} />
+                    <ForgeTabBody tabId={activeTabId} morphus={shellPanelMorphus} />
                   </ForgeTabInactiveShell>
                 </div>
               ) : (
                 <ForgeTabInactiveShell inactive={tabInactive}>
-                  <ForgeTabBody tabId={activeTabId} />
+                  <ForgeTabBody tabId={activeTabId} morphus={shellPanelMorphus} />
                 </ForgeTabInactiveShell>
               )}
             </div>
