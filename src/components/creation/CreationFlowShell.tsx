@@ -457,7 +457,7 @@ export function CreationFlowShell({
   const [collapseOffset, setCollapseOffset] = useState<{ dx: number; dy: number } | null>(
     null,
   )
-  const hadUnsatisfiedRef = useRef(false)
+  const [hadUnsatisfied, setHadUnsatisfied] = useState(false)
   const prevTabIdRef = useRef(activeTabId)
   const continueTargetRef = useRef<HTMLButtonElement | null>(null)
   const bannerRef = useRef<HTMLDivElement | null>(null)
@@ -467,13 +467,13 @@ export function CreationFlowShell({
       prevTabIdRef.current = activeTabId
       setBannerCollapsing(false)
       setCollapseOffset(null)
-      hadUnsatisfiedRef.current = unsatisfiedRequirements.length > 0
+      setHadUnsatisfied(unsatisfiedRequirements.length > 0)
       setCollapseSnapshot(activeRequirements)
       return
     }
 
     if (unsatisfiedRequirements.length > 0) {
-      hadUnsatisfiedRef.current = true
+      setHadUnsatisfied(true)
       setCollapseSnapshot(activeRequirements)
       setBannerCollapsing(false)
       setCollapseOffset(null)
@@ -481,7 +481,7 @@ export function CreationFlowShell({
     }
 
     if (
-      hadUnsatisfiedRef.current &&
+      hadUnsatisfied &&
       allRequirementsSatisfied &&
       nav.continueEnabled &&
       !bannerCollapsing
@@ -515,13 +515,14 @@ export function CreationFlowShell({
     allRequirementsSatisfied,
     nav.continueEnabled,
     bannerCollapsing,
+    hadUnsatisfied,
   ])
 
   const showRequirementsBanner =
     bannerCollapsing ||
     unsatisfiedRequirements.length > 0 ||
     // Keep the filled checklist visible for one frame until collapse starts.
-    (allRequirementsSatisfied && hadUnsatisfiedRef.current)
+    (allRequirementsSatisfied && hadUnsatisfied)
 
   const showContextualBanner =
     showTab7Lanes ||
@@ -604,7 +605,7 @@ export function CreationFlowShell({
                   onCollapseEnd={() => {
                     setBannerCollapsing(false)
                     setCollapseOffset(null)
-                    hadUnsatisfiedRef.current = false
+                    setHadUnsatisfied(false)
                   }}
                   subheader={
                     showTab7Lanes && !bannerCollapsing ? (
