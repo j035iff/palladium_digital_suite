@@ -11,8 +11,10 @@ Versioned **first messages** for Cursor [Projects](https://cursor.com/blog/proje
 
 | Project name (suggested) | Seed file |
 |--------------------------|-----------|
+| Character Creation Forge | [`character-creation.seed.md`](character-creation.seed.md) |
 | Gear Forge | [`gear-forge.seed.md`](gear-forge.seed.md) |
 | Content Ingest | [`content-ingest.seed.md`](content-ingest.seed.md) |
+| GM Hub | [`gm-hub.seed.md`](gm-hub.seed.md) |
 | Gardening (optional) | [`gardening.seed.md`](gardening.seed.md) |
 
 ## After seed

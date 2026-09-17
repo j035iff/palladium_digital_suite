@@ -400,7 +400,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 | `docs/attribute_and_stat.md` | Attribute Forge mechanics |
 | `docs/psychic_gate.md` | Psionic tiers |
 | `src/data/source/morphus-ingest/_README.md` | PDF ingest CLI |
-| `.cursor/projects/README.md` | Cursor **Projects** coordinator seed prompts (Gear Forge, Content Ingest, Gardening) |
+| `.cursor/projects/README.md` | Cursor **Projects** coordinator seed prompts (Gear Forge, Content Ingest, GM Hub, Gardening) |
 
 ---
 
@@ -458,7 +458,7 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 14. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
 15. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
 16. **Commits** — only when the user explicitly asks.
-17. **Cursor Projects** — for multi-PR feature / ingest / gardening bodies of work, use seeds under [`.cursor/projects/`](../.cursor/projects/README.md); Project shared context does not replace git-backed pillars, ingest playbooks, or Unified Path docs.
+17. **Cursor Projects** — for multi-PR feature / ingest / GM Hub / gardening bodies of work, use seeds under [`.cursor/projects/`](../.cursor/projects/README.md); Project shared context does not replace git-backed pillars, ingest playbooks, or Unified Path docs.
 
 ---
 
