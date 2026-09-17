@@ -80,10 +80,11 @@ export function buildDevSkipToReviewFromRaceOccState(
     psychicTier,
   )
   next = { ...next, ...completeForgeTab(next, 'tab7_abilities', ctx) }
+  next = { ...next, ...completeForgeTab(next, 'tab8_gear', ctx) }
 
   return {
     ...next,
-    creationForgeTab: 'tab8_review',
-    creationPhase: forgeTabToLegacyPhase('tab8_review'),
+    creationForgeTab: 'tab9_review',
+    creationPhase: forgeTabToLegacyPhase('tab9_review'),
   }
 }

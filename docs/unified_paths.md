@@ -233,11 +233,13 @@ Copy this block when registering a new unified path:
 |-------|--------|----------------|-------|
 | Lane nav | `src/lib/forgeNavigation/gearForge.ts` | `buildGearForgeLaneViews` | Weapons / Armor / Artifacts / Other — stubs stay visible |
 | Host adapter | `src/lib/gear/gearForgeHost.ts` | `GearForgeHostAdapter` | `library` \| `creation` \| `sheet` \| `gm` |
+| Creation host | `src/lib/gear/creationGearForgeHost.ts` | `buildCreationGearForgeAdapter` | `tab8_gear` → draft inventory |
+| Inventory commit | `src/lib/gear/inventoryWeaponCommit.ts` | `createInventoryWeaponFromPiece` | Shared grant/patch for creation / sheet |
 | Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear |
 | Property stack | `src/lib/weaponForgeProperties.ts` | `Weapon.forgeProperties` | Indestructible / quality / multipliers / triggers |
-| UI shell | `src/components/gear/GearForgeShell.tsx` | Portal `GearForgeViewport` | Creation / sheet / GM hosts planned |
+| UI shell | `src/components/gear/GearForgeShell.tsx` | Portal `GearForgeViewport` + creation `CreationGearForgePanel` | Sheet / GM hosts planned |
 
-**Modes / variants:** One shell for all hosts. Portal commits to library; later hosts commit to character/NPC inventory. Do not fork lane editors per host.
+**Modes / variants:** One shell for all hosts. Portal commits to library; creation commits to draft character inventory. Do not fork lane editors per host.
 
 ---
 
@@ -256,6 +258,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-09-16 | Gear Forge Creation host: `tab8_gear` + `kind: 'creation'` adapter on shared shell; Review → `tab9_review` |
 | 2026-08-30 | GM Hub Story/Combat master tabs (Home + Party + Cast), matching live sheet |
 | 2026-08-30 | Play sessions: Open Session stamps `{campaign}: {date}` join name; Sessions landing drops saved-tables / passive matrix |
 | 2026-08-30 | Campaign Creation Forge: conversion rules dropdown (baked in; Sessions is read-only) |

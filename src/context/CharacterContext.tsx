@@ -69,7 +69,6 @@ import {
 } from '../lib/ammoReserves'
 import { loadXpHistory, saveXpHistory } from '../lib/xpHistoryPersistence'
 import { getOccById, snapshotOccForCharacter } from '../data/occDefinitions'
-import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
 import {
   LEVEL_CAP,
   newlyCrossedLevels,
@@ -92,6 +91,11 @@ import {
   hydrateInventorySession,
   mergeCharacterWithInventory,
 } from '../lib/inventoryPersistence'
+import {
+  applyInventoryWeaponPatch,
+  createInventoryWeaponFromPiece,
+} from '../lib/gear/inventoryWeaponCommit'
+import type { GearForgeWeaponPiece } from '../lib/gear/gearForgeHost'
 import {
   createBlankCharacterForGenre,
   ensureCharacterRoot,
@@ -145,6 +149,7 @@ import type {
   MorphusSurfaceType,
   VitalityFlashKind,
   Weapon,
+  WeaponForgeProperties,
   XpGainEvent,
 } from '../types'
 import { getFormState } from '../types'
@@ -499,7 +504,7 @@ type CharacterContextValue = {
     morphusCompatible?: boolean
     humanSized?: boolean
   }) => void
-  /** Add a new weapon row to inventory (Gear → Weapons). */
+  /** Add a new weapon row to inventory (Gear → Weapons / Gear Forge). */
   addWeaponToInventory: (piece: {
     name: string
     category: string
@@ -515,7 +520,17 @@ type CharacterContextValue = {
     throwable?: boolean
     twoHanded?: boolean
     weaponProficiencyEligible?: boolean
+    weaponSpecificModifiers?: Record<string, number>
+    forgeProperties?: WeaponForgeProperties
+    isArtifact?: boolean
   }) => void
+  /** Patch an existing inventory weapon (Gear Forge property stack / edits). */
+  updateWeaponInInventory: (
+    id: string,
+    patch: Partial<
+      Omit<Weapon, 'id' | 'itemType'> & { forgeProperties?: WeaponForgeProperties }
+    >,
+  ) => void
   dropItem: (id: string) => void
   /** Up to two carried weapons flagged ready for the combat HUD strike row. */
   readyWeaponIds: readonly [string | null, string | null]
@@ -839,8 +854,17 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   useEffect(() => {
-    if (rawCharacter.isFinalized !== true) return
-    persistCharacterSave(rawCharacter)
+    if (rawCharacter.isFinalized === true) {
+      persistCharacterSave(rawCharacter)
+      return
+    }
+    // Mirror session inventory onto the draft root so Gear tab snapshots / yellow detection work.
+    setRawCharacter((prev) => {
+      const merged = mergeCharacterWithInventory(prev, inventorySession)
+      const prevKey = JSON.stringify(prev.inventory ?? null)
+      const nextKey = JSON.stringify(merged.inventory ?? null)
+      return prevKey === nextKey ? prev : merged
+    })
     // Gear session only — rawCharacter is read from the render that produced the inventory change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inventoryItems, equippedArmorId, readyWeaponIds, ammoReserves])
@@ -1498,60 +1522,29 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const addWeaponToInventory = useCallback(
-    (piece: {
-      name: string
-      category: string
-      damage: string
-      strikeBonus?: number
-      weightLbs?: number
-      linkedWpSkillId?: string
-      wpCategory?: string
-      payload?: { current: number; max: number }
-      ammoCategory?: string
-      catalogWeaponId?: string
-      qualityVariantId?: string
-      throwable?: boolean
-      twoHanded?: boolean
-      weaponProficiencyEligible?: boolean
-    }) => {
-      const id = `weapon_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`
-      const wpEntry = piece.linkedWpSkillId
-        ? getWeaponProficiencyCatalogEntryById(piece.linkedWpSkillId)
-        : undefined
-      const payload = piece.payload
-        ? {
-            max: Math.max(1, Math.round(piece.payload.max)),
-            current: Math.max(
-              0,
-              Math.min(
-                Math.round(piece.payload.current),
-                Math.max(1, Math.round(piece.payload.max)),
-              ),
-            ),
-          }
-        : undefined
-      const row: Weapon = {
-        id,
-        itemType: 'weapon',
-        name: piece.name.trim() || 'Unnamed weapon',
-        weightLbs: Math.max(0, piece.weightLbs ?? 2),
-        category: piece.category.trim() || 'Misc',
-        strikeBonus: Number.isFinite(piece.strikeBonus) ? Math.round(piece.strikeBonus!) : 0,
-        damage: piece.damage.trim() || '1D6',
-        isEquipped: false,
-        linkedWpSkillId: piece.linkedWpSkillId,
-        wpCategory: piece.wpCategory ?? wpEntry?.name,
-        payload,
-        ammoCategory: payload ? piece.ammoCategory?.trim() || undefined : undefined,
-        catalogWeaponId: piece.catalogWeaponId,
-        qualityVariantId: piece.qualityVariantId,
-        throwable: piece.throwable,
-        twoHanded: piece.twoHanded,
-        weaponProficiencyEligible: piece.weaponProficiencyEligible,
-      }
+    (piece: GearForgeWeaponPiece) => {
+      const row = createInventoryWeaponFromPiece(piece)
       setInventoryItems((prev) =>
         syncArmorAndWeaponFlags([...prev, row], equippedArmorId, readyWeaponIds),
       )
+    },
+    [equippedArmorId, readyWeaponIds],
+  )
+
+  const updateWeaponInInventory = useCallback(
+    (
+      id: string,
+      patch: Partial<
+        Omit<Weapon, 'id' | 'itemType'> & { forgeProperties?: WeaponForgeProperties }
+      >,
+    ) => {
+      setInventoryItems((prev) => {
+        const next = prev.map((it) => {
+          if (it.id !== id || it.itemType !== 'weapon') return it
+          return applyInventoryWeaponPatch(it as Weapon, patch)
+        })
+        return syncArmorAndWeaponFlags(next, equippedArmorId, readyWeaponIds)
+      })
     },
     [equippedArmorId, readyWeaponIds],
   )
@@ -3105,6 +3098,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       equipArmor,
       addArmorToInventory,
       addWeaponToInventory,
+      updateWeaponInInventory,
       dropItem,
       readyWeaponIds,
       readyWeapons,
@@ -3253,6 +3247,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       equipArmor,
       addArmorToInventory,
       addWeaponToInventory,
+      updateWeaponInInventory,
       dropItem,
       readyWeaponIds,
       readyWeapons,

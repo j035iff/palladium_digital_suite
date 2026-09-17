@@ -100,7 +100,7 @@ The tab cannot be completed until the original slot is replaced **and** all newl
 |------------|----------------------|
 | **Tab 5 — Roll Pending** | Facade / single-form dice only. No Morphus tables or slots. |
 | **Tab 6 — Traits** | Hosts this Sub-Forge in full. Morphus vitality dice (H.P., S.D.C.) and trait generation occur here. |
-| **Tab 8 — Review & Spawn** | Summary only; Morphus must already be finalized on Tab 6. |
+| **Tab 9 — Review & Spawn** | Summary only; Morphus must already be finalized on Tab 6. |
 
 **Pillar alignment:**
 

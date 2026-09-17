@@ -41,10 +41,10 @@ describe('migrateCharacterSave', () => {
     })
 
     expect(character.schemaVersion).toBe(CHARACTER_SAVE_SCHEMA_VERSION)
-    expect(character.creationForgeTab).toBe('tab8_review')
-    expect(character.creationForgeCompleted?.tab8_review).toBe(true)
-    expect(character.creationForgeSnapshots?.tab8_review).toBe('snap')
-    expect(report.fieldRenames.some((r) => r.includes('tab7_review→tab8_review'))).toBe(
+    expect(character.creationForgeTab).toBe('tab9_review')
+    expect(character.creationForgeCompleted?.tab9_review).toBe(true)
+    expect(character.creationForgeSnapshots?.tab9_review).toBe('snap')
+    expect(report.fieldRenames.some((r) => r.includes('tab7_review→tab9_review'))).toBe(
       true,
     )
   })

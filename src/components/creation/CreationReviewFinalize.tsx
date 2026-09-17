@@ -3,7 +3,7 @@ import { useCharacter } from '../../context/CharacterContext'
 import { getAbilityById } from '../../data/abilityLibrary'
 import { getSkillById } from '../../data/skillLibrary'
 import {
-  assessTab8SpawnBlockers,
+  assessTab9SpawnBlockers,
   buildCharacterCreationForgeContext,
 } from '../../lib/forgeNavigation/characterCreationForge'
 import { PALLADIUM_ALIGNMENT_VALUES } from '../../lib/configuratorMatrix'
@@ -103,7 +103,7 @@ export function CreationReviewFinalize({
   )
 
   const blockers = useMemo(
-    () => assessTab8SpawnBlockers(forgeCtx),
+    () => assessTab9SpawnBlockers(forgeCtx),
     [forgeCtx],
   )
 

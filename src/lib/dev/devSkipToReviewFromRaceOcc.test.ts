@@ -4,7 +4,7 @@ import { getLibraryOccById, getRaceById } from '../../data/library/registry'
 import { createBlankCharacterForGenre } from '../characterRoot'
 import { isIdentitySpawnPrepComplete } from '../characterIdentity'
 import {
-  assessTab8SpawnBlockers,
+  assessTab9SpawnBlockers,
   buildCharacterCreationForgeContext,
 } from '../forgeNavigation/characterCreationForge'
 import { raceLineageFromDefinition } from '../raceEngine'
@@ -46,7 +46,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
 
     expect(next.raceId).toBe('race_nightbane')
     expect(next.occ.id).toBe('occ_nightbane_basic')
-    expect(next.creationForgeTab).toBe('tab8_review')
+    expect(next.creationForgeTab).toBe('tab9_review')
     expect(next.creationTraitForgeStubComplete).toBe(true)
     expect(next.creationMorphusDiceFinalized).toBe(true)
     expect(next.morphusTraitSlotResolutions?.length).toBeGreaterThan(0)
@@ -57,7 +57,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
     ).toBe(true)
 
     const ctx = buildCharacterCreationForgeContext(next, race, occ, 'none')
-    expect(assessTab8SpawnBlockers(ctx)).toEqual([])
+    expect(assessTab9SpawnBlockers(ctx)).toEqual([])
   })
 
   it('keeps Nightbane Sorcerer and fills starting spells plus Morphus', () => {
@@ -67,7 +67,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
     const occ = getLibraryOccById('occ_nightbane_sorcerer')
 
     expect(next.occ.id).toBe('occ_nightbane_sorcerer')
-    expect(next.creationForgeTab).toBe('tab8_review')
+    expect(next.creationForgeTab).toBe('tab9_review')
     expect(next.creationTraitForgeStubComplete).toBe(true)
     const spells = (next.selectedAbilities ?? []).filter(
       (id) => getAbilityById(id)?.category === 'Spell',
@@ -83,7 +83,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
       occ,
       next.creationPsychicTier ?? 'none',
     )
-    expect(assessTab8SpawnBlockers(ctx)).toEqual([])
+    expect(assessTab9SpawnBlockers(ctx)).toEqual([])
   })
 
   it('completes Human Sorcerer without Morphus and fills spells', () => {
@@ -96,7 +96,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
     const occ = getLibraryOccById('occ_sorcerer')
 
     expect(next.raceId).toBe('race_human')
-    expect(next.creationForgeTab).toBe('tab8_review')
+    expect(next.creationForgeTab).toBe('tab9_review')
     expect(next.creationTraitForgeStubComplete).not.toBe(true)
     expect(next.morphusTraitSlotResolutions?.length ?? 0).toBe(0)
     const spells = (next.selectedAbilities ?? []).filter(
@@ -110,7 +110,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
       occ,
       next.creationPsychicTier ?? 'none',
     )
-    expect(assessTab8SpawnBlockers(ctx)).toEqual([])
+    expect(assessTab9SpawnBlockers(ctx)).toEqual([])
   })
 
   it('auto-picks specialization for Human ADA and reaches Review & Spawn', () => {
@@ -123,7 +123,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
     const occ = getLibraryOccById('occ_ada_field_agent')
 
     expect(next.occSpecializationId).toBeTruthy()
-    expect(next.creationForgeTab).toBe('tab8_review')
+    expect(next.creationForgeTab).toBe('tab9_review')
     expect(isIdentitySpawnPrepComplete(next.name, next.identityProfile)).toBe(true)
 
     const ctx = buildCharacterCreationForgeContext(
@@ -132,7 +132,7 @@ describe('buildDevSkipToReviewFromRaceOccState', () => {
       occ,
       next.creationPsychicTier ?? 'none',
     )
-    expect(assessTab8SpawnBlockers(ctx)).toEqual([])
+    expect(assessTab9SpawnBlockers(ctx)).toEqual([])
   })
 
   it('no-ops when race/O.C.C. are incomplete', () => {

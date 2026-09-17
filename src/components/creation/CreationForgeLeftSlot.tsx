@@ -12,12 +12,13 @@ import {
 import { useCreationForgeLeftSlotRegisteredContent } from './CreationForgeLeftSlotContext'
 import { SelectedAbilitiesPanel } from './abilities/SelectedAbilitiesPanel'
 import { SelectedMorphusTraitsPanel } from './morphus/SelectedMorphusTraitsPanel'
+import { SelectedGearPanel } from './SelectedGearPanel'
 
 const CONTEXT_TABS: ReadonlySet<CharacterCreationForgeTabId> = new Set([
   'tab2_attributes',
   'tab3_psionic',
   'tab5_finalize',
-  'tab8_review',
+  'tab9_review',
 ])
 
 function SkillsLeftSlotPlaceholder({ morphus }: { morphus: boolean }) {
@@ -86,6 +87,8 @@ export function CreationForgeLeftSlot({
         shellMode
       />
     )
+  } else if (activeTabId === 'tab8_gear') {
+    content = <SelectedGearPanel morphus={morphus} />
   } else if (CONTEXT_TABS.has(activeTabId)) {
     content = <CreationForgeBuildContextPanel morphus={morphus} />
   }
