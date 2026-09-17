@@ -11,6 +11,7 @@ import {
 } from '../data/library/morphusTableCatalogLoader'
 import { formatMorphusPercentileBand } from './morphusForgeNavigation'
 import {
+  buildMorphusIndependentSubRollPickOption,
   buildMorphusVariantPickEntries,
   enrichMorphusTraitPickOption,
   formatMorphusSlotPlanRoute,
@@ -375,19 +376,31 @@ function expandPostPickChildren(
       const sub = entry.independentSubRolls[i]!
       const subPath = `${path}/ind:${i}`
       const chosen = variantPick(state, subPath)
+      const pickEntries = sub.options.map((option) =>
+        buildMorphusIndependentSubRollPickOption(option),
+      )
       if (!chosen) {
         nodes.push({
           path: subPath,
           label: sub.tableName,
           kind: 'variant_choice',
           status: 'ready',
-          pickEntries: sub.options.map((option) => ({
-            id: option.label,
-            name: option.label,
-            description: option.description,
-            bonuses: [],
-            penalties: [],
-          })),
+          pickEntries,
+          children: [],
+        })
+      } else {
+        const option = sub.options.find(
+          (row) => row.label === chosen || row.roll === chosen,
+        )
+        nodes.push({
+          path: subPath,
+          label: sub.tableName,
+          kind: 'variant_choice',
+          status: 'complete',
+          // Synthetic id — not a catalog row; mechanics merge into the parent trait slot.
+          resolvedEntryId: `${entry.id}::ind:${i}:${option?.label ?? chosen}`,
+          resolvedEntryName: option?.label ?? chosen,
+          pickEntries,
           children: [],
         })
       }
@@ -921,6 +934,8 @@ export function syncMorphusTraitSlotsFromForgeState(
       continue
     }
     if (!node.resolvedEntryId || node.kind === 'choice' || node.kind === 'dice') continue
+    // Independent sub-roll picks are overlays on the parent trait — not separate catalog rows.
+    if (node.kind === 'variant_choice' && node.path.includes('/ind:')) continue
     const entry = getMorphusCharacteristicById(node.resolvedEntryId)
     if (!entry) continue
     if (entry.entryRole === 'table_router') continue
@@ -935,6 +950,17 @@ export function syncMorphusTraitSlotsFromForgeState(
       continue
     }
     if (entry.customTraitResolution) continue
+    const selectedIndependentSubRolls = collectSelectedIndependentSubRolls(
+      entry,
+      node.path,
+      state,
+    )
+    if (
+      entry.independentSubRolls?.length &&
+      selectedIndependentSubRolls.length < entry.independentSubRolls.length
+    ) {
+      continue
+    }
     const selectedSubTraitIds = collectMorphusSubTraitPicksForPath(
       state.subTraitPicks,
       node.path,
@@ -943,6 +969,9 @@ export function syncMorphusTraitSlotsFromForgeState(
       slotId: node.path,
       catalogEntryId: node.resolvedEntryId,
       ...(selectedSubTraitIds.length > 0 ? { selectedSubTraitIds } : {}),
+      ...(selectedIndependentSubRolls.length > 0
+        ? { selectedIndependentSubRolls }
+        : {}),
     })
   }
 
@@ -953,6 +982,31 @@ export function syncMorphusTraitSlotsFromForgeState(
     seen.add(key)
     return true
   })
+}
+
+function collectSelectedIndependentSubRolls(
+  entry: MorphusCharacteristic,
+  parentPath: string,
+  state: MorphusForgeSlotState,
+): NonNullable<MorphusTraitSlotResolution['selectedIndependentSubRolls']> {
+  if (!entry.independentSubRolls?.length) return []
+  const out: {
+    tableName: string
+    optionLabel: string
+  }[] = []
+  for (let i = 0; i < entry.independentSubRolls.length; i += 1) {
+    const sub = entry.independentSubRolls[i]!
+    const chosen = variantPick(state, `${parentPath}/ind:${i}`)
+    if (!chosen) continue
+    const option = sub.options.find(
+      (row) => row.label === chosen || row.roll === chosen,
+    )
+    out.push({
+      tableName: sub.tableName,
+      optionLabel: option?.label ?? chosen,
+    })
+  }
+  return out
 }
 
 export function deriveMorphusSlotResolutionView(

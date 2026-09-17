@@ -31,7 +31,7 @@ export function MorphusCustomTraitSlotsPanel() {
           </h3>
           <p className="mt-1 max-w-2xl text-xs text-violet-300/80">
             When a table result is <strong>Other</strong>, define the feature here with common
-            bonuses first — open <strong>Expert mode</strong> for full stat keys, saves, weapons, and
+            bonuses first — open <strong>Full fields</strong> for full stat keys, saves, weapons, and
             narrative rules.
           </p>
         </div>

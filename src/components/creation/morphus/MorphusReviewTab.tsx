@@ -6,6 +6,7 @@ import {
 } from '../../../lib/morphusForgeNavigation'
 import { PendingDiceResolutionPanel } from '../PendingDiceResolutionPanel'
 import { MorphusCustomTraitSlotsPanel } from './MorphusCustomTraitSlotsPanel'
+import { SelectedMorphusTraitsPanel } from './SelectedMorphusTraitsPanel'
 
 type Props = {
   morphusForgeState: ReturnType<typeof resolveMorphusForgeState>
@@ -34,15 +35,16 @@ export function MorphusReviewTab({ morphusForgeState, onFinalize }: Props) {
 
   const handleFinalize = () => {
     if (!diceReady) return
-    onFinalize()
+    // Stub first so master Tab 6 validate sees Complete, then parent marks Green + advances.
     setTraitForgeStubComplete(true)
+    onFinalize()
   }
 
   return (
     <div className="space-y-6">
       <section className="rounded-xl border border-violet-700/50 bg-slate-950/40 p-4">
         <h3 className="text-xs font-bold uppercase tracking-wide text-violet-300">
-          Morphus summary (stub)
+          Morphus summary
         </h3>
         <dl className="mt-2 grid gap-2 text-sm text-violet-100/90 sm:grid-cols-2">
           <div>
@@ -69,10 +71,13 @@ export function MorphusReviewTab({ morphusForgeState, onFinalize }: Props) {
           ) : null}
         </dl>
         <p className="mt-3 text-xs text-violet-400/90">
-          Full Morphus Live Ledger compilation arrives in a later build. Trait picks and variable
-          dice from traits will appear here.
+          Inspect selected traits below. Enter Morphus vitality dice, then{' '}
+          <strong>Finalize Morphus</strong> to mark master Tab 6 complete and continue — no
+          second Continue click required.
         </p>
       </section>
+
+      <SelectedMorphusTraitsPanel morphusForgeState={state} embedded />
 
       <PendingDiceResolutionPanel scope="morphus" variant="compact" />
 
@@ -89,9 +94,16 @@ export function MorphusReviewTab({ morphusForgeState, onFinalize }: Props) {
         </button>
         {!diceReady ? (
           <span className="text-xs text-amber-200">Enter all Morphus vitality dice first.</span>
-        ) : null}
+        ) : finalized ? (
+          <span className="text-xs text-emerald-200/90">
+            Master Tab 6 is complete. Changing slots or dice returns it to incomplete.
+          </span>
+        ) : (
+          <span className="text-xs text-violet-300/90">
+            Finalize marks Tab 6 Green and opens the next master step.
+          </span>
+        )}
       </div>
-
     </div>
   )
 }

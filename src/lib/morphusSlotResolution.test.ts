@@ -404,4 +404,59 @@ describe('morphusSlotResolution', () => {
     ])
     expect(view.complete).toBe(true)
   })
+
+  it('keeps independentSubRolls choices visible and merges option mechanics into trait slots', () => {
+    const forgeState: MorphusForgeState = {
+      path: 'characteristics',
+      characteristicsPickCount: 1,
+    }
+    const incomplete: MorphusForgeSlotState = {
+      routingPicks: { 'plan:0': 'alien_creature' },
+      branchTableIds: { 'plan:0/plan:0': 'extraterrestrial' },
+      picks: { 'plan:0/plan:0/branch': 'extraterrestrial_b_movie_alien' },
+    }
+    const beforePick = buildMorphusSlotTree(forgeState, incomplete)
+    const readyHands = findMorphusSlotNode(
+      beforePick,
+      (node) => node.path === 'plan:0/plan:0/branch/ind:0',
+    )
+    expect(readyHands?.status).toBe('ready')
+    expect(readyHands?.label).toBe('Hands')
+    expect(readyHands?.pickEntries?.some((row) => row.id === 'Clawed hands')).toBe(true)
+
+    const complete: MorphusForgeSlotState = {
+      ...incomplete,
+      variantPicks: {
+        'plan:0/plan:0/branch/ind:0': 'Clawed hands',
+        'plan:0/plan:0/branch/ind:1': 'Tall, thin humanoid',
+      },
+    }
+    const afterPick = buildMorphusSlotTree(forgeState, complete)
+    const completeHands = findMorphusSlotNode(
+      afterPick,
+      (node) => node.path === 'plan:0/plan:0/branch/ind:0',
+    )
+    const completeBody = findMorphusSlotNode(
+      afterPick,
+      (node) => node.path === 'plan:0/plan:0/branch/ind:1',
+    )
+    expect(completeHands?.status).toBe('complete')
+    expect(completeHands?.resolvedEntryName).toBe('Clawed hands')
+    expect(completeBody?.status).toBe('complete')
+    expect(completeBody?.resolvedEntryName).toBe('Tall, thin humanoid')
+
+    const panelRows = collectMorphusSelectedTraitPanelRows(afterPick, complete)
+    expect(panelRows.some((row) => row.name === 'Clawed hands')).toBe(true)
+    expect(panelRows.some((row) => row.name === 'Tall, thin humanoid')).toBe(true)
+
+    const view = deriveMorphusSlotResolutionView(forgeState, complete)
+    expect(view.complete).toBe(true)
+    const slot = view.traitSlots.find(
+      (row) => row.catalogEntryId === 'extraterrestrial_b_movie_alien',
+    )
+    expect(slot?.selectedIndependentSubRolls).toEqual([
+      { tableName: 'Hands', optionLabel: 'Clawed hands' },
+      { tableName: 'Body Type', optionLabel: 'Tall, thin humanoid' },
+    ])
+  })
 })

@@ -11,6 +11,7 @@ import {
 import { formatMorphusSlotPlanRoute } from '../../../lib/morphusTraitPickDisplay'
 import type { MorphusForgePath } from '../../../types'
 import { MorphusSlotPlanPreview } from './MorphusSlotPlanPreview'
+import { MORPHUS_FORGE_FIELD_CLASS } from './MorphusTraitPickCard'
 
 type Props = {
   morphusForgeState: ReturnType<typeof resolveMorphusForgeState>
@@ -23,6 +24,7 @@ type Props = {
 
 export function MorphusCrossroadsTab({ morphusForgeState, onPatchState }: Props) {
   const state = morphusForgeState
+  const { min, max, notation } = MORPHUS_FORGE_MANIFEST.path2.countRoll
 
   const setPath = (path: MorphusForgePath) => {
     onPatchState({ path })
@@ -102,9 +104,9 @@ export function MorphusCrossroadsTab({ morphusForgeState, onPatchState }: Props)
             <span className="text-xs font-bold uppercase text-violet-300">Path 2</span>
             <p className="mt-1 font-semibold text-violet-50">Personality Crafter</p>
             <p className="mt-2 text-sm text-violet-200/85">
-              {MORPHUS_FORGE_MANIFEST.path2.description} Roll{' '}
-              <strong>{MORPHUS_FORGE_MANIFEST.path2.countRoll.notation}</strong> on the Trait Forge
-              tab (next step).
+              {MORPHUS_FORGE_MANIFEST.path2.description} Enter your physical{' '}
+              <strong>{notation}</strong> result below to unlock that many Characteristics
+              selections on the Trait Forge.
             </p>
           </button>
         </div>
@@ -161,30 +163,47 @@ export function MorphusCrossroadsTab({ morphusForgeState, onPatchState }: Props)
       ) : null}
 
       {state.path === 'characteristics' ? (
-        <section className="rounded-lg border border-violet-700/50 bg-violet-950/20 p-4 text-sm text-violet-100/90">
-          <p>
-            On the <strong>Trait Forge</strong> tab you will enter your physical{' '}
-            <strong>{MORPHUS_FORGE_MANIFEST.path2.countRoll.notation}</strong> die result, then
-            make that many direct Characteristics selections.
-          </p>
+        <section className="rounded-lg border border-violet-700/50 bg-violet-950/20 p-4">
+          <label className="block max-w-xs">
+            <span className="text-xs font-bold uppercase tracking-wide text-violet-300">
+              Physical {notation} result
+            </span>
+            <input
+              type="number"
+              inputMode="numeric"
+              min={min}
+              max={max}
+              value={state.characteristicsPickCount ?? ''}
+              onChange={(e) => {
+                const raw = e.target.value
+                if (raw === '') {
+                  onPatchState({ characteristicsPickCount: undefined })
+                  return
+                }
+                const n = Number.parseInt(raw, 10)
+                onPatchState({
+                  characteristicsPickCount: Number.isFinite(n) ? n : undefined,
+                })
+              }}
+              className={`mt-1 ${MORPHUS_FORGE_FIELD_CLASS} text-center text-lg font-bold tabular-nums ${
+                state.characteristicsPickCount != null &&
+                (state.characteristicsPickCount < min ||
+                  state.characteristicsPickCount > max ||
+                  !Number.isFinite(state.characteristicsPickCount))
+                  ? 'border-rose-500/90'
+                  : state.characteristicsPickCount != null &&
+                      state.characteristicsPickCount >= min &&
+                      state.characteristicsPickCount <= max
+                    ? 'border-emerald-500/90'
+                    : ''
+              }`}
+            />
+            <span className="mt-1 block text-xs text-violet-400">
+              Valid range: {min}–{max} (sum of one d4 + 2). Required to Continue from Crossroads.
+            </span>
+          </label>
         </section>
       ) : null}
-
-      <section className="rounded-lg border border-dashed border-violet-600/40 px-3 py-2">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-xs font-bold uppercase tracking-wide text-violet-400">
-            Expert mode
-          </span>
-          <button
-            type="button"
-            disabled
-            title="Coming soon"
-            className="cursor-not-allowed rounded-full border border-violet-700 px-3 py-1 text-[10px] font-bold uppercase text-violet-500 opacity-60"
-          >
-            Coming soon
-          </button>
-        </div>
-      </section>
     </div>
   )
 }

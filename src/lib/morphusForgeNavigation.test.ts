@@ -27,15 +27,27 @@ describe('morphusForgeNavigation', () => {
         appearanceEntryId: 'amalgam',
       }),
     ).toBe(true)
-    expect(
-      isMorphusForgeCrossroadsComplete({ path: 'characteristics' }),
-    ).toBe(true)
   })
 
-  it('requires 1D4+2 count and slot resolution for path 2 trait tab', () => {
+  it('requires Path 2 1D4+2 count on Crossroads', () => {
     expect(
-      isMorphusForgeTraitTabComplete({ path: 'characteristics' }),
+      isMorphusForgeCrossroadsComplete({ path: 'characteristics' }),
     ).toBe(false)
+    expect(
+      isMorphusForgeCrossroadsComplete({
+        path: 'characteristics',
+        characteristicsPickCount: 5,
+      }),
+    ).toBe(true)
+    expect(
+      isMorphusForgeCrossroadsComplete({
+        path: 'characteristics',
+        characteristicsPickCount: 2,
+      }),
+    ).toBe(false)
+  })
+
+  it('requires slot resolution for path 2 trait tab after Crossroads count', () => {
     expect(
       isMorphusForgeTraitTabComplete({
         path: 'characteristics',
@@ -58,13 +70,16 @@ describe('morphusForgeNavigation', () => {
     expect(next.subTabCompleted).toEqual({})
   })
 
-  it('does not invalidate crossroads after Path 2 count is entered on Trait Forge', () => {
+  it('includes Path 2 count in Crossroads snapshot (count entered on Crossroads)', () => {
     const forgeState = {
       path: 'characteristics' as const,
       activeSubTab: 'trait_forge' as const,
       subTabCompleted: { crossroads: true as const },
       subTabSnapshots: {
-        crossroads: morphusCrossroadsSnapshot({ path: 'characteristics' }),
+        crossroads: morphusCrossroadsSnapshot({
+          path: 'characteristics',
+          characteristicsPickCount: 4,
+        }),
       },
       characteristicsPickCount: 4,
     }
@@ -82,6 +97,12 @@ describe('morphusForgeNavigation', () => {
 
     expect(nav.firstRepairTabId).toBeNull()
     expect(nav.tabs.find((t) => t.id === 'crossroads')?.visual).not.toBe('conflict')
+    expect(morphusCrossroadsSnapshot(forgeState)).toBe(
+      JSON.stringify({
+        path: 'characteristics',
+        characteristicsPickCount: 4,
+      }),
+    )
     expect(morphusTraitForgeSnapshot(forgeState)).toBe(
       JSON.stringify({
         path: 'characteristics',

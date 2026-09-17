@@ -593,6 +593,7 @@ function updateMorphusForgeSlotState(
     ...prev,
     morphusForgeSlotState: nextSlotState,
     creationTraitForgeStubComplete: false,
+    ...clearCreationForgeTabMark(prev, 'tab6_traits'),
   })
 }
 
@@ -2154,7 +2155,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const setTraitForgeStubComplete = useCallback((complete: boolean) => {
     setRawCharacter((prev) => {
       if (!complete) {
-        return { ...prev, creationTraitForgeStubComplete: false }
+        return {
+          ...prev,
+          creationTraitForgeStubComplete: false,
+          ...clearCreationForgeTabMark(prev, 'tab6_traits'),
+        }
       }
       if (!characterHasDualForms(prev)) {
         return { ...prev, creationTraitForgeStubComplete: true }
@@ -2195,6 +2200,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           typeof patch !== 'function' &&
           patch.appearanceEntryId != null &&
           patch.appearanceEntryId !== merged.appearanceEntryId
+        const countChanged =
+          typeof patch !== 'function' &&
+          Object.prototype.hasOwnProperty.call(patch, 'characteristicsPickCount') &&
+          patch.characteristicsPickCount !== merged.characteristicsPickCount
 
         let next: CharacterRootState = {
           ...prev,
@@ -2217,7 +2226,16 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
                   morphusTraitSlotResolutions: [],
                   activeMorphusCharacteristicIds: [],
                 }
-              : {}),
+              : countChanged
+                ? {
+                    creationTraitForgeStubComplete: false,
+                    creationMorphusDiceFinalized: false,
+                    ...clearCreationForgeTabMark(prev, 'tab6_traits'),
+                    morphusForgeSlotState: clearMorphusForgeSlotState(),
+                    morphusTraitSlotResolutions: [],
+                    activeMorphusCharacteristicIds: [],
+                  }
+                : {}),
         }
         if (!nextState.baseStatsApplied) {
           next = applyNightbaneMorphusBaseAttributes(next, effectiveOcc ?? undefined)

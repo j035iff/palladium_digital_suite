@@ -28,6 +28,8 @@ export function MorphusForge() {
     patchMorphusForgeState,
     markMorphusForgeSubTabComplete,
     setMorphusForgeSubTab,
+    markCreationForgeTabComplete,
+    setCreationForgeTab,
   } = useCharacter()
 
   const primaryReady =
@@ -57,8 +59,29 @@ export function MorphusForge() {
   const activeView = nav.tabs.find((t) => t.id === activeSubTab)
 
   const handlePatchCrossroads = useCallback(
-    (patch: Parameters<typeof morphusForgeStateAfterPathChange>[1]) => {
-      patchMorphusForgeState((prev) => morphusForgeStateAfterPathChange(prev, patch))
+    (
+      patch: Parameters<typeof morphusForgeStateAfterPathChange>[1] & {
+        characteristicsPickCount?: number
+      },
+    ) => {
+      const countOnly =
+        patch.characteristicsPickCount !== undefined &&
+        patch.path == null &&
+        patch.appearanceEntryId == null
+      if (countOnly) {
+        patchMorphusForgeState((prev) => ({
+          ...prev,
+          characteristicsPickCount: patch.characteristicsPickCount,
+        }))
+        return
+      }
+      patchMorphusForgeState((prev) => {
+        const next = morphusForgeStateAfterPathChange(prev, patch)
+        if (patch.characteristicsPickCount !== undefined) {
+          next.characteristicsPickCount = patch.characteristicsPickCount
+        }
+        return next
+      })
     },
     [patchMorphusForgeState],
   )
@@ -116,21 +139,14 @@ export function MorphusForge() {
             />
           ) : null}
           {activeSubTab === 'trait_forge' ? (
-            <MorphusTraitForgeTab
-              morphusForgeState={morphusState}
-              onSetCharacteristicsCount={(count) =>
-                patchMorphusForgeState((prev) => ({
-                  ...prev,
-                  characteristicsPickCount: count,
-                }))
-              }
-            />
+            <MorphusTraitForgeTab morphusForgeState={morphusState} />
           ) : null}
           {activeSubTab === 'review' ? (
             <MorphusReviewTab
               morphusForgeState={morphusState}
               onFinalize={() => {
-                /* creationTraitForgeStubComplete set in MorphusReviewTab */
+                markCreationForgeTabComplete('tab6_traits')
+                setCreationForgeTab('tab7_abilities')
               }}
             />
           ) : null}

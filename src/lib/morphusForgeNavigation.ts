@@ -56,6 +56,9 @@ export function isMorphusForgeCrossroadsComplete(state: MorphusForgeState): bool
   if (state.path === 'appearance') {
     return !!state.appearanceEntryId?.trim()
   }
+  if (state.path === 'characteristics') {
+    return path2CharacteristicsCountValid(state)
+  }
   return true
 }
 
@@ -114,6 +117,13 @@ function crossroadsBlockers(state: MorphusForgeState): string[] {
   if (state.path === 'appearance' && !state.appearanceEntryId?.trim()) {
     blockers.push('Select an Appearance archetype.')
   }
+  if (state.path === 'characteristics') {
+    const count = state.characteristicsPickCount
+    const { notation, min, max } = MORPHUS_FORGE_MANIFEST.path2.countRoll
+    if (count == null || count < min || count > max) {
+      blockers.push(`Enter your physical ${notation} die result (${min}–${max}).`)
+    }
+  }
   return blockers
 }
 
@@ -125,14 +135,6 @@ function traitForgeBlockers(
   if (blockers.length > 0) {
     blockers.unshift('Complete the Crossroads step first.')
     return blockers
-  }
-  if (state.path === 'characteristics') {
-    const count = state.characteristicsPickCount
-    const { notation, min, max } = MORPHUS_FORGE_MANIFEST.path2.countRoll
-    if (count == null || count < min || count > max) {
-      blockers.push(`Enter your physical ${notation} die result (${min}–${max}).`)
-      return blockers
-    }
   }
   if (!morphusTraitForgeReady(state, character)) {
     const { blockers: slotBlockers } = deriveMorphusSlotResolutionView(
@@ -181,15 +183,12 @@ function tab6Snapshot(state: MorphusForgeState): string {
   })
 }
 
-/** Snapshot for Crossroads only — excludes Path 2 count (entered on Trait Forge). */
+/** Snapshot for Crossroads — includes Path 2 `1D4+2` count (entered here). */
 export function morphusCrossroadsSnapshot(state: MorphusForgeState): string {
-  return JSON.stringify({
-    path: state.path,
-    appearanceEntryId: state.appearanceEntryId,
-  })
+  return tab6Snapshot(state)
 }
 
-/** Snapshot for Trait Forge — upstream path/archetype plus Path 2 count. */
+/** Snapshot for Trait Forge — path/archetype/count plus slot tree readiness is validated live. */
 export function morphusTraitForgeSnapshot(state: MorphusForgeState): string {
   return tab6Snapshot(state)
 }

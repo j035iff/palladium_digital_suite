@@ -73,6 +73,8 @@ import {
 import type { ForgeTabRequirement } from './types'
 import type { CharacterCreationForgeContext } from './characterCreationForge'
 import { traitForgeTabApplicable } from './characterCreationForge'
+import { resolveMorphusForgeState } from '../morphusForgeNavigation'
+import { morphusTraitForgeReady } from '../morphusSlotResolution'
 import {
   listPendingDiceBlocks,
   pendingDiceBlocksResolutionComplete,
@@ -397,25 +399,32 @@ function tab6Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
       label: 'Complete Facade dice on the Roll Pending tab',
       satisfied: ctx.character.creationPrimaryDiceFinalized === true,
     })
-    const morphusBlocks = listPendingDiceBlocks(ctx.character, ctx.race, ctx.occ, {
-      supportsDualForm: true,
-      psychicTier: ctx.psychicTier,
-      scope: 'morphus',
+  }
+  const forgeState = resolveMorphusForgeState(ctx.character)
+  const slotsReady = morphusTraitForgeReady(forgeState, ctx.character)
+  requirements.push({
+    id: 'morphus-slots',
+    label: 'Resolve all Morphus trait slots (Crossroads + Trait Forge)',
+    satisfied: slotsReady,
+  })
+  const morphusBlocks = listPendingDiceBlocks(ctx.character, ctx.race, ctx.occ, {
+    supportsDualForm: ctx.supportsDualForm,
+    psychicTier: ctx.psychicTier,
+    scope: 'morphus',
+  })
+  if (morphusBlocks.length > 0) {
+    requirements.push({
+      id: 'morphus-dice',
+      label: 'Enter all Morphus physical die results',
+      satisfied: pendingDiceBlocksResolutionComplete(
+        morphusBlocks,
+        ctx.character.creationPendingDiceResolutions ?? {},
+      ),
     })
-    if (morphusBlocks.length > 0) {
-      requirements.push({
-        id: 'morphus-dice',
-        label: 'Enter all Morphus physical die results',
-        satisfied: pendingDiceBlocksResolutionComplete(
-          morphusBlocks,
-          ctx.character.creationPendingDiceResolutions ?? {},
-        ),
-      })
-    }
   }
   requirements.push({
-    id: 'morphus-sub-forge',
-    label: 'Complete the Morphus Sub-Forge and Finalize Morphus',
+    id: 'morphus-finalize',
+    label: 'Finalize Morphus (marks Tab 6 complete)',
     satisfied: ctx.character.creationTraitForgeStubComplete === true,
   })
   return requirements

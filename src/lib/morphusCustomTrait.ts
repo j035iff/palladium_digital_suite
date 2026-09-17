@@ -2,6 +2,7 @@ import {
   getMorphusCharacteristicById,
   MORPHUS_TABLE_CATALOG,
 } from '../data/library/morphusTableCatalogLoader'
+import { mergeIndependentSubRollOptionIntoCharacteristic } from './morphusTraitPickDisplay'
 import type {
   MorphusCharacteristic,
   MorphusCustomTraitAllowedField,
@@ -194,16 +195,28 @@ export function resolveEffectiveMorphusTraitFromSlot(
     return resolveEffectiveMorphusTrait(catalog, slot.customInstance, slot.slotId)
   }
   if (catalog.customTraitResolution) return undefined
+  let effective: MorphusCharacteristic = catalog
   if (slot.selectedSubTraitIds?.length && catalog.gimmickInventory?.length) {
     const selected = new Set(slot.selectedSubTraitIds)
-    return {
-      ...catalog,
+    effective = {
+      ...effective,
       gimmickInventory: catalog.gimmickInventory.filter(
         (row) => row.id != null && selected.has(row.id),
       ),
     }
   }
-  return catalog
+  if (slot.selectedIndependentSubRolls?.length && catalog.independentSubRolls?.length) {
+    for (const pick of slot.selectedIndependentSubRolls) {
+      const sub = catalog.independentSubRolls.find(
+        (row) => row.tableName === pick.tableName,
+      )
+      const option = sub?.options.find((row) => row.label === pick.optionLabel)
+      if (option) {
+        effective = mergeIndependentSubRollOptionIntoCharacteristic(effective, option)
+      }
+    }
+  }
+  return effective
 }
 
 export function isMorphusCustomTraitSlotComplete(
