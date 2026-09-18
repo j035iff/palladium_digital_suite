@@ -234,12 +234,13 @@ Copy this block when registering a new unified path:
 | Lane nav | `src/lib/forgeNavigation/gearForge.ts` | `buildGearForgeLaneViews` | Weapons / Armor / Artifacts / Other — stubs stay visible |
 | Host adapter | `src/lib/gear/gearForgeHost.ts` | `GearForgeHostAdapter` | `library` \| `creation` \| `sheet` \| `gm` |
 | Creation host | `src/lib/gear/creationGearForgeHost.ts` | `buildCreationGearForgeAdapter` | `tab8_gear` → draft inventory |
+| Sheet host | `src/lib/gear/sheetGearForgeHost.ts` | `buildSheetGearForgeAdapter` | Live `GearPanel` → active inventory |
 | Inventory commit | `src/lib/gear/inventoryWeaponCommit.ts` | `createInventoryWeaponFromPiece` | Shared grant/patch for creation / sheet |
 | Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear |
 | Property stack | `src/lib/weaponForgeProperties.ts` | `Weapon.forgeProperties` | Indestructible / quality / multipliers / triggers |
-| UI shell | `src/components/gear/GearForgeShell.tsx` | Portal `GearForgeViewport` + creation `CreationGearForgePanel` | Sheet / GM hosts planned |
+| UI shell | `src/components/gear/GearForgeShell.tsx` | Portal `GearForgeViewport` + creation `CreationGearForgePanel` + sheet `GearPanel` | GM host planned |
 
-**Modes / variants:** One shell for all hosts. Portal commits to library; creation commits to draft character inventory. Do not fork lane editors per host.
+**Modes / variants:** One shell for all hosts. Portal commits to library; creation and sheet commit to character inventory (draft vs active). Do not fork lane editors per host.
 
 ---
 
@@ -258,6 +259,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-09-18 | Gear Forge Sheet host: live `GearPanel` + `kind: 'sheet'` adapter on shared shell → active inventory |
 | 2026-09-16 | Gear Forge Creation host: `tab8_gear` + `kind: 'creation'` adapter on shared shell; Review → `tab9_review` |
 | 2026-08-30 | GM Hub Story/Combat master tabs (Home + Party + Cast), matching live sheet |
 | 2026-08-30 | Play sessions: Open Session stamps `{campaign}: {date}` join name; Sessions landing drops saved-tables / passive matrix |

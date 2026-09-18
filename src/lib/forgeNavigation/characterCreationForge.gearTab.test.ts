@@ -48,7 +48,7 @@ describe('Creation forge Gear tab (tab8_gear)', () => {
       ...createBlankCharacterForGenre('nightbane'),
       // Legacy persisted value, handled by resolveActiveForgeTab.
       creationForgeTab: 'tab8_review',
-    } as Parameters<typeof resolveActiveForgeTab>[0]
+    } as unknown as Parameters<typeof resolveActiveForgeTab>[0]
 
     expect(resolveActiveForgeTab(character)).toBe('tab9_review')
     expect(CHARACTER_CREATION_TAB_ORDER.indexOf('tab8_gear')).toBeLessThan(
