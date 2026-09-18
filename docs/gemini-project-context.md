@@ -147,7 +147,7 @@ src/
                                # LiveLedger, PendingDiceResolutionPanel, ability forge panels
     forge/                     # ForgeNavigationBar, tab shells, Continue gate
     live/                      # CombatHUD, SavingThrowsPanel, Inventory, LevelUpModal
-    gm/                        # GmHubShell — Story/Combat, Home + Party + Cast
+    gm/                        # GmHubShell — Story/Combat, Home + Party + Cast + Gear
 
     features/FeatureCard.tsx   # Unified ability/feature presentation
   lib/                         # ~273 modules — rules engines (combat, skills, morphus, forge nav, saves)

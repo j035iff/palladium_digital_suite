@@ -36,14 +36,16 @@ Confirm: **Yes** commits; **Not yet** returns to the forge with the draft intact
 
 ## Workspaces
 
-Story / Combat master modes match the live character sheet. Home is mode-specific; **Party** and **Cast** are the same panels under both modes (not forked).
+Story / Combat master modes match the live character sheet. Home is mode-specific; **Party**, **Cast**, and **Gear** are the same panels under both modes (not forked).
 
 | Mode | Home | Shared tabs |
 |------|------|-------------|
-| **Story** | Sessions landing (scratchpad, conversion rules) | Party, Cast |
-| **Combat** | Combat HUD (initiative, APM, Quick-Blocks, H.F.) | Party, Cast |
+| **Story** | Sessions landing (scratchpad, conversion rules) | Party, Cast, Gear |
+| **Combat** | Combat HUD (initiative, APM, Quick-Blocks, H.F.) | Party, Cast, Gear |
 
 Switching Story ↔ Combat returns to that mode’s Home, same as the character sheet. Campaigns are still switched from the launcher.
+
+**Gear tab:** mounts the shared [Gear Forge](./forge/gear_forge.md) shell (`kind: 'gm'`). Grant target is a **party** character’s local save inventory (write-back via `gmCharacterInventoryGrant`). Party observer still does not mutate saves for vitals/overlays. Cast Quick-Blocks have no inventory — the Gear tab shows why Cast cannot receive grants. Do not fork a GM-only forge shell.
 
 Deferred tab names **Forge** / **Plot** are omitted so they do not collide with Character Creation Forge.
 
@@ -79,6 +81,7 @@ JSON envelopes live in `src/lib/gm/sessionMessages.ts` (`v: 1`). No transport is
 | Party observer (Pillar 9) | `src/lib/gm/partyObserver.ts` |
 | Combat roster | `src/lib/gm/combatRoster.ts` |
 | Fodder spawn | `src/lib/gm/npcInstance.ts` |
+| Gear grant (party save) | `src/lib/gear/gmGearForgeHost.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` |
 | Protocol | `src/lib/gm/sessionMessages.ts` |
 | Campaign forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
 | React | `src/context/GmSessionContext.tsx`, `src/components/gm/*` |
