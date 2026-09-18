@@ -25,7 +25,8 @@ export type CharacterCreationForgeTabId =
   | 'tab5_finalize'
   | 'tab6_traits'
   | 'tab7_abilities'
-  | 'tab8_review'
+  | 'tab8_gear'
+  | 'tab9_review'
 
 /**
  * Damage / durability scaling tier (docs/combat_logic.md §1).

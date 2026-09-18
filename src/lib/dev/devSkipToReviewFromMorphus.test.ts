@@ -3,7 +3,7 @@ import { createBlankCharacterForGenre } from '../characterRoot'
 import { getRaceById, getLibraryOccById } from '../../data/library/registry'
 import { isIdentitySpawnPrepComplete } from '../characterIdentity'
 import {
-  assessTab8SpawnBlockers,
+  assessTab9SpawnBlockers,
   buildCharacterCreationForgeContext,
   deriveCharacterCreationForgeNavigation,
 } from '../forgeNavigation/characterCreationForge'
@@ -39,7 +39,7 @@ describe('buildDevSkipToReviewFromMorphusState', () => {
     const race = getRaceById('race_nightbane')
     const occ = getLibraryOccById('occ_nightbane_basic')
 
-    expect(next.creationForgeTab).toBe('tab8_review')
+    expect(next.creationForgeTab).toBe('tab9_review')
     expect(next.creationPhase).toBe('review')
     expect(next.morphusForgeState?.path).toBe('appearance')
     expect(next.morphusForgeState?.appearanceEntryId).toBe(
@@ -68,10 +68,10 @@ describe('buildDevSkipToReviewFromMorphusState', () => {
     expect(isIdentitySpawnPrepComplete(next.name, next.identityProfile)).toBe(true)
 
     const ctx = buildCharacterCreationForgeContext(next, race, occ, 'none')
-    const nav = deriveCharacterCreationForgeNavigation(ctx, 'tab8_review')
-    const review = nav.tabs.find((t) => t.id === 'tab8_review')
+    const nav = deriveCharacterCreationForgeNavigation(ctx, 'tab9_review')
+    const review = nav.tabs.find((t) => t.id === 'tab9_review')
     expect(review?.clickable).toBe(true)
     expect(review?.visual).not.toBe('locked')
-    expect(assessTab8SpawnBlockers(ctx)).toEqual([])
+    expect(assessTab9SpawnBlockers(ctx)).toEqual([])
   })
 })

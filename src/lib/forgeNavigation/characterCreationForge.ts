@@ -85,7 +85,8 @@ export const CHARACTER_CREATION_TAB_ORDER: readonly CharacterCreationForgeTabId[
     'tab5_finalize',
     'tab6_traits',
     'tab7_abilities',
-    'tab8_review',
+    'tab8_gear',
+    'tab9_review',
   ] as const
 
 export const CHARACTER_CREATION_TAB_LABELS: Record<
@@ -99,7 +100,8 @@ export const CHARACTER_CREATION_TAB_LABELS: Record<
   tab5_finalize: 'Roll Pending',
   tab6_traits: 'Traits',
   tab7_abilities: 'Abilities',
-  tab8_review: 'Review & Spawn',
+  tab8_gear: 'Gear',
+  tab9_review: 'Review & Spawn',
 }
 
 /** In-tab page heading (paired with Continue in the top-right). */
@@ -114,14 +116,16 @@ export const CHARACTER_CREATION_TAB_PAGE_TITLES: Record<
   tab5_finalize: CHARACTER_CREATION_TAB_LABELS.tab5_finalize,
   tab6_traits: CHARACTER_CREATION_TAB_LABELS.tab6_traits,
   tab7_abilities: CHARACTER_CREATION_TAB_LABELS.tab7_abilities,
-  tab8_review: CHARACTER_CREATION_TAB_LABELS.tab8_review,
+  tab8_gear: CHARACTER_CREATION_TAB_LABELS.tab8_gear,
+  tab9_review: CHARACTER_CREATION_TAB_LABELS.tab9_review,
 }
 
 const LEGACY_FORGE_TAB_IDS: Record<string, CharacterCreationForgeTabId> = {
   tab0_identity: 'tab1_configurator',
   tab5_traits: 'tab6_traits',
   tab6_abilities: 'tab7_abilities',
-  tab7_review: 'tab8_review',
+  tab7_review: 'tab9_review',
+  tab8_review: 'tab9_review',
 }
 
 function migrateForgeTabId(
@@ -145,7 +149,8 @@ function migrateForgeCompletionState(
   const pairs: [string, CharacterCreationForgeTabId][] = [
     ['tab5_traits', 'tab6_traits'],
     ['tab6_abilities', 'tab7_abilities'],
-    ['tab7_review', 'tab8_review'],
+    ['tab7_review', 'tab9_review'],
+    ['tab8_review', 'tab9_review'],
   ]
   for (const [legacy, modern] of pairs) {
     if (nextCompleted[legacy as CharacterCreationForgeTabId]) {
@@ -249,6 +254,17 @@ function tab7Snapshot(c: Character): string {
   return stableJson({ abilities: c.selectedAbilities })
 }
 
+/** Optional gear — snapshot carried weapons for yellow conflict detection. */
+function tab8GearSnapshot(c: {
+  inventory?: CharacterRootState['inventory']
+}): string {
+  const items = c.inventory?.items ?? []
+  const weapons = items
+    .filter((it) => it.itemType === 'weapon')
+    .map((w) => ({ id: w.id, name: w.name }))
+  return stableJson({ weapons })
+}
+
 export { traitForgeTabApplicable } from '../creationSubForge'
 
 function randomPsionicsTabNaReason(ctx: CharacterCreationForgeContext): string {
@@ -330,7 +346,7 @@ export function legacyPhaseToForgeTab(
     case 'abilities':
       return 'tab7_abilities'
     case 'review':
-      return 'tab8_review'
+      return 'tab9_review'
     default:
       return 'tab1_configurator'
   }
@@ -354,7 +370,9 @@ export function forgeTabToLegacyPhase(
       return 'morphus'
     case 'tab7_abilities':
       return 'abilities'
-    case 'tab8_review':
+    case 'tab8_gear':
+      return 'review'
+    case 'tab9_review':
       return 'review'
     default:
       return 'configurator'
@@ -631,7 +649,15 @@ function buildTabDefinitions(
           },
           snapshot: () => tab7Snapshot(character),
         }
-      case 'tab8_review':
+      case 'tab8_gear':
+        return {
+          id,
+          label,
+          isNa: () => false,
+          validate: () => ({ ok: true, blockers: [] }),
+          snapshot: () => tab8GearSnapshot(character),
+        }
+      case 'tab9_review':
         return {
           id,
           label,
@@ -659,7 +685,7 @@ export function deriveCharacterCreationForgeNavigation(
   const tabDefs = buildTabDefinitions(ctx)
 
   const nav = deriveForgeNavigation(tabDefs, activeTabId, completion, {
-    terminalTabId: 'tab8_review',
+    terminalTabId: 'tab9_review',
   })
 
   return {
@@ -710,7 +736,7 @@ export function characterCreationTraitsTabPageTitle(
   return label === 'Traits' ? 'Character Trait Sub-Forge' : label
 }
 
-export function assessTab8SpawnBlockers(
+export function assessTab9SpawnBlockers(
   ctx: CharacterCreationForgeContext,
 ): string[] {
   const alignment = ctx.character.primary.alignment?.trim()
@@ -730,8 +756,11 @@ export function assessTab8SpawnBlockers(
   return blockers
 }
 
-/** @deprecated Use {@link assessTab8SpawnBlockers}. */
-export const assessTab7SpawnBlockers = assessTab8SpawnBlockers
+/** @deprecated Use {@link assessTab9SpawnBlockers}. */
+export const assessTab8SpawnBlockers = assessTab9SpawnBlockers
+
+/** @deprecated Use {@link assessTab9SpawnBlockers}. */
+export const assessTab7SpawnBlockers = assessTab9SpawnBlockers
 
 export function buildCharacterCreationForgeContext(
   character: Character & Pick<CharacterRootState, 'creationGenreId' | 'hostGenreId'>,

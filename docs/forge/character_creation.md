@@ -16,7 +16,7 @@ The Character Creation flow is an implementation of the [Universal Forge Navigat
 
 Session actions (**Reset**, **Save for Later**, **Leave without Saving**) open from the **Session** button on the identity summary row. The global header (with **Become Morphus**) returns only on the finalized live sheet. Form switching during creation remains available via the Live Ledger's Facade/Morphus toggle once unlocked.
 
-**Continue on the tab pill** — when requirements are met, the viewing pill reads **Continue**; clicking it marks the tab Green, restores the normal label, and opens the next available tab. **Continue never locks data** — only the Tab 8 spawn confirmation modal runs [spawn handoff](../character_spawn_handoff.md).
+**Continue on the tab pill** — when requirements are met, the viewing pill reads **Continue**; clicking it marks the tab Green, restores the normal label, and opens the next available tab. **Continue never locks data** — only the Tab 9 spawn confirmation modal runs [spawn handoff](../character_spawn_handoff.md).
 
 **Nightbane Morphus:** Tab 6 hosts the nested [Morphus Sub-Forge](morphus_creation.md). Facade dice are finalized on Tab 5; all Morphus trait generation and Morphus vitality dice live on Tab 6 only.
 
@@ -34,22 +34,22 @@ Session actions (**Reset**, **Save for Later**, **Leave without Saving**) open f
 
 ### Multiple Yellow / Red Tabs — Top-Down Repair
 
-When more than one tab is Yellow or Red, the engine designates the **first** such tab in sequence (1 → 8). The user must resolve that tab first; downstream flagged tabs stay locked or blocked until the chain is repaired in order. Continue and Tab 8 access honor this ordering.
+When more than one tab is Yellow or Red, the engine designates the **first** such tab in sequence (1 → 9). The user must resolve that tab first; downstream flagged tabs stay locked or blocked until the chain is repaired in order. Continue and Tab 9 access honor this ordering.
 
-### Alignment (Tab 1 vs Tab 8)
+### Alignment (Tab 1 vs Tab 9)
 
 | Location | Rule |
 |----------|------|
 | **Tab 1** | Alignment is **optional** for **Continue**. A valid Race + O.C.C. pair is sufficient to turn Tab 1 Green. |
-| **Tab 8** | Alignment is **required** before **Spawn Character**. The Review tab hosts the alignment picker; spawn blockers list a missing alignment explicitly. Tab 1 may still show “Alignment (optional).” |
+| **Tab 9** | Alignment is **required** before **Spawn Character**. The Review tab hosts the alignment picker; spawn blockers list a missing alignment explicitly. Tab 1 may still show “Alignment (optional).” |
 
-### Pending Dice (Tabs 5, 6, and 8)
+### Pending Dice (Tabs 5, 6, and 9)
 
 | Location | Rule |
 |----------|------|
 | **Tab 5 — Roll Pending** | All Facade / single-form physical dice (attributes, H.P., S.D.C., P.P.E., I.S.P.). Nightbane: **Facade only** — no Morphus blocks. |
 | **Tab 6 — Traits** | Nightbane only: Morphus vitality dice and the full [Morphus Sub-Forge](morphus_creation.md). Requires Tab 5 complete. |
-| **Tab 8 — Review & Spawn** | **Summary only** — no dice entry. Spawn blocked until Tabs 5 and 6 (when applicable) have finalized all pending rolls. |
+| **Tab 9 — Review & Spawn** | **Summary only** — no dice entry. Spawn blocked until Tabs 5 and 6 (when applicable) have finalized all pending rolls. |
 
 ---
 
@@ -111,15 +111,22 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 - **Completion Criteria (Turns Green):** **Full** mandatory budget satisfied (all required spell, psionic, and talent slots filled per effective budget, including Psychic Gate pool rules). User clicks **Continue**.
 - **Optional picks UX:** When minimum mandatory picks are met but optional budget remains, the **Continue** tooltip may note optional spend; the selection UI shows remaining budget clearly.
 
-### Tab 8: Review and Spawn (The Terminal Gate)
+### Tab 8: Gear (`tab8_gear`)
+
+- **Engine Action:** Shared [Gear Forge](gear_forge.md) shell (`GearForgeShell`) with `kind: 'creation'` host adapter. Commits catalog grants and custom weapons (including `forgeProperties`) into the **draft character inventory** — not the portal custom gear library. Armor / Artifacts / Other lanes stay visible with Radical Visibility stub reasons.
+- **Black (N/A) Condition:** Never.
+- **Completion Criteria (Turns Green):** Gear is **optional**. User clicks **Continue** (empty inventory is allowed). Snapshot captures carried weapon ids/names for yellow conflict detection.
+- **Left summary:** Starting gear weapon list.
+
+### Tab 9: Review and Spawn (The Terminal Gate)
 
 - **Engine Action:** Build **summary only**, **alignment selection (required)**, then spawn. No dice entry on this tab.
 - **Black (N/A) Condition:** Never.
-- **Availability Gate:** **Grey (Locked)** until Tabs 1–7 are each **Green** or **Black**. Any upstream **Red** or **Yellow** blocks access. Pending dice must already be finalized on Tabs 5 and 6.
+- **Availability Gate:** **Grey (Locked)** until Tabs 1–8 are each **Green** or **Black**. Any upstream **Red** or **Yellow** blocks access. Pending dice must already be finalized on Tabs 5 and 6.
 - **No Continue pill** on this tab.
 - **Terminal completion:**
   - **Select alignment** (required here even if skipped on Tab 1).
-  - **Spawn Character** enables only when `assessTab8SpawnBlockers` is empty (alignment, dice-finalized flags, and other spawn checks).
+  - **Spawn Character** enables only when `assessTab9SpawnBlockers` is empty (alignment, dice-finalized flags, and other spawn checks).
   - Confirmation modal → [spawn handoff](../character_spawn_handoff.md) → live sheet; creation UI hidden.
 
 ---
@@ -136,5 +143,6 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 | Shell UI | `src/components/creation/CreationFlowShell.tsx` |
 | Tab 5 Roll Pending | `src/components/creation/CreationFinalizeDice.tsx` |
 | Tab 6 Traits / Morphus Sub-Forge | `src/components/creation/MorphusForge.tsx` |
-| Tab 8 spawn + alignment | `src/components/creation/CreationReviewFinalize.tsx` |
+| Tab 8 Gear | `src/components/creation/CreationGearForgePanel.tsx`, `src/lib/gear/creationGearForgeHost.ts` |
+| Tab 9 spawn + alignment | `src/components/creation/CreationReviewFinalize.tsx` |
 | Morphus Sub-Forge spec | [morphus_creation.md](morphus_creation.md) |

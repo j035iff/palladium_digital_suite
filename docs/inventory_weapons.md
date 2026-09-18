@@ -1,6 +1,6 @@
 # Advanced Inventory & Custom Weapon Forge
 
-> **Implementation status:** Live **Gear → Weapons** still adds ancient hardware from `weapons/ancient.json`. **Gear Forge** (portal) ships the shared shell + weapons lane with custom property stack into **My Custom Gear** library (`viewport: 'gear_forge'`). Creation Gear tab, sheet host, GM Gear tab, currency smart-math, and Destiny-style HUD swap are **not fully implemented**.
+> **Implementation status:** Live **Gear → Weapons** still adds ancient hardware from `weapons/ancient.json`. **Gear Forge** ships the shared shell + weapons lane: portal **My Custom Gear** library (`viewport: 'gear_forge'`) and Creation **`tab8_gear`** (draft inventory). Sheet host, GM Gear tab, currency smart-math, and Destiny-style HUD swap are **not fully implemented**.
 
 This document defines the logic for currency management, item presence states, and the creation of unique, rule-breaking weapons (like Rune Swords) with a focus on high-speed UI interaction.
 1. Currency & Resource Management

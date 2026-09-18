@@ -24,6 +24,8 @@ import { SupernaturalAbilitiesForgeProvider } from './abilities/SupernaturalAbil
 
 import { CreationReviewFinalize } from './CreationReviewFinalize'
 
+import { CreationGearForgePanel } from './CreationGearForgePanel'
+
 import { OccVariableBonusPhase } from './OccVariableBonusPhase'
 
 import { CreationAttributeHeader } from './CreationAttributeHeader'
@@ -95,8 +97,10 @@ function clampLeftColumnPct(next: number, rightPct: number): number {
 
 function ForgeTabBody({
   tabId,
+  morphus = false,
 }: {
   tabId: CharacterCreationForgeTabId
+  morphus?: boolean
 }) {
 
   switch (tabId) {
@@ -141,7 +145,11 @@ function ForgeTabBody({
 
       return <SupernaturalAbilitiesForge />
 
-    case 'tab8_review':
+    case 'tab8_gear':
+
+      return <CreationGearForgePanel morphus={morphus} />
+
+    case 'tab9_review':
 
       return null
 
@@ -433,7 +441,8 @@ export function CreationFlowShell({
     activeTabId === 'tab1_configurator' ||
     activeTabId === 'tab4_skills' ||
     activeTabId === 'tab6_traits' ||
-    activeTabId === 'tab7_abilities'
+    activeTabId === 'tab7_abilities' ||
+    activeTabId === 'tab8_gear'
 
   const shortViewport = useMediaQuery(FORGE_SHORT_VIEWPORT_QUERY)
   const splitColumns = useMediaQuery('(min-width: 768px)')
@@ -710,7 +719,7 @@ export function CreationFlowShell({
                 </p>
               ) : null}
 
-              {activeTabId === 'tab8_review' ? (
+              {activeTabId === 'tab9_review' ? (
                 <>
                   <CreationReviewFinalize
                     onSpawnConfirm={(finalize) => {
@@ -726,18 +735,19 @@ export function CreationFlowShell({
               ) : activeTabId === 'tab4_skills' ||
                 activeTabId === 'tab1_configurator' ||
                 activeTabId === 'tab6_traits' ||
-                activeTabId === 'tab7_abilities' ? (
+                activeTabId === 'tab7_abilities' ||
+                activeTabId === 'tab8_gear' ? (
                 <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
                   <ForgeTabInactiveShell
                     inactive={tabInactive}
                     className="flex min-h-0 flex-1 flex-col overflow-hidden"
                   >
-                    <ForgeTabBody tabId={activeTabId} />
+                    <ForgeTabBody tabId={activeTabId} morphus={shellPanelMorphus} />
                   </ForgeTabInactiveShell>
                 </div>
               ) : (
                 <ForgeTabInactiveShell inactive={tabInactive}>
-                  <ForgeTabBody tabId={activeTabId} />
+                  <ForgeTabBody tabId={activeTabId} morphus={shellPanelMorphus} />
                 </ForgeTabInactiveShell>
               )}
             </div>

@@ -27,17 +27,25 @@ export function GearForgeShell({ adapter, morphus = false, title }: Props) {
         ? 'GM Gear'
         : 'Gear')
 
+  const lightChrome =
+    adapter.kind === 'creation' || adapter.kind === 'sheet'
+  const titleClass = lightChrome
+    ? 'text-sm font-black uppercase tracking-[0.18em] text-slate-800 dark:text-slate-200'
+    : 'text-sm font-black uppercase tracking-[0.18em] text-slate-200'
+  const targetClass = lightChrome
+    ? 'mt-0.5 text-[11px] text-slate-500 dark:text-slate-400'
+    : 'mt-0.5 text-[11px] text-slate-400'
+  const blockerClass = lightChrome
+    ? 'text-[11px] text-amber-800 dark:text-amber-200/80'
+    : 'text-[11px] text-amber-200/80'
+
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h2 className="text-sm font-black uppercase tracking-[0.18em] text-slate-200">
-            {heading}
-          </h2>
+          <h2 className={titleClass}>{heading}</h2>
           {adapter.targetLabel ? (
-            <p className="mt-0.5 text-[11px] text-slate-400">
-              Target: {adapter.targetLabel}
-            </p>
+            <p className={targetClass}>Target: {adapter.targetLabel}</p>
           ) : null}
         </div>
       </div>
@@ -60,7 +68,7 @@ export function GearForgeShell({ adapter, morphus = false, title }: Props) {
       />
 
       {tabs.find((t) => t.id === laneId)?.blockers[0] && laneId !== 'weapons' ? (
-        <p className="text-[11px] text-amber-200/80">
+        <p className={blockerClass}>
           {tabs.find((t) => t.id === laneId)?.blockers[0]}
         </p>
       ) : null}

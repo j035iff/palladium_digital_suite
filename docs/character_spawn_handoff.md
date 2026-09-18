@@ -2,16 +2,17 @@
 
 ## Overview
 
-This specification covers **what happens when the player commits a new character** — after the [Character Creation Forge](./forge/character_creation.md) Tab 8 gates pass and the user confirms the spawn modal. It is distinct from in-forge editing (Continue, yellow/red repair) and from [app launch](./app_viewport_launcher.md).
+This specification covers **what happens when the player commits a new character** — after the [Character Creation Forge](./forge/character_creation.md) Tab 9 gates pass and the user confirms the spawn modal. It is distinct from in-forge editing (Continue, yellow/red repair) and from [app launch](./app_viewport_launcher.md).
 
 **Terminology:** Nightbane UI labels **Facade** and **Morphus**. Persisted save JSON uses `character.primary` and `character.morphus` (`ActiveForm`: `'primary' | 'morphus'`).
 
-**Pre-handoff (Tabs 5–8, still reversible until modal confirm):**
+**Pre-handoff (Tabs 5–9, still reversible until modal confirm):**
 
 - **Tab 5 — Roll Pending:** Resolve primary / Facade / single-form pending dice; **Continue** commits primary vitality via `commitVitalityFromPendingDice()` and related helpers.
 - **Tab 6 — Traits (Nightbane):** Morphus vitality dice and Sub-Forge finalize when applicable.
 - **Tab 7 — Abilities:** Mandatory magic / psionic / talent budget satisfied.
-- **Tab 8 — Review & Spawn:** **Select alignment** (required for spawn even if skipped on Tab 1). **Spawn Character** enabled when `assessTab8SpawnBlockers` returns no blockers.
+- **Tab 8 — Gear:** Optional starting gear via Gear Forge (`kind: 'creation'`).
+- **Tab 9 — Review & Spawn:** **Select alignment** (required for spawn even if skipped on Tab 1). **Spawn Character** enabled when `assessTab9SpawnBlockers` returns no blockers.
 
 **Irreversible step:** Confirming the spawn modal calls `finalizeCharacter()` → `applySpawnSheetHandoff()`.
 
@@ -19,7 +20,7 @@ This specification covers **what happens when the player commits a new character
 
 ## Confirmation Modal
 
-- **Trigger:** Active **Spawn Character** on Tab 8 (`CreationReviewFinalize`).
+- **Trigger:** Active **Spawn Character** on Tab 9 (`CreationReviewFinalize`).
 - **Copy:** Warns that creation-level framework choices will lock; offers **Go back** or confirm spawn.
 - **Presentation:** `MainLayout` may show a brief spawn splash (~1.5s) before invoking finalize (cosmetic only).
 
@@ -98,26 +99,26 @@ Additive catalog fields (e.g. new `naturalAr`) do not need a save migrator — t
 
 ---
 
-## Spawn Blockers (Tab 8)
+## Spawn Blockers (Tab 9)
 
-`assessTab8SpawnBlockers` (`characterCreationForge.ts`) composes:
+`assessTab9SpawnBlockers` (`characterCreationForge.ts`) composes:
 
 - `assessCreationSpawnBlockers` — dice completeness, vitality commit, and related readiness checks.
 - **Alignment** — non-empty `character.primary.alignment` after trim.
 - **Identity** — name / identity profile requirements when applicable.
 
-Blockers render on Tab 8; spawn button stays disabled until resolved.
+Blockers render on Tab 9; spawn button stays disabled until resolved.
 
-(`assessTab7SpawnBlockers` is a deprecated alias for `assessTab8SpawnBlockers`.)
+(`assessTab8SpawnBlockers` / `assessTab7SpawnBlockers` are deprecated aliases for `assessTab9SpawnBlockers`.)
 
 ---
 
-## Relationship to Forge Tab 8
+## Relationship to Forge Tab 9
 
 | Phase | Document |
 |-------|----------|
-| Tab availability, alignment UI, summary, Continue N/A | [forge/character_creation.md](./forge/character_creation.md) Tab 8 |
-| Pending dice (Tabs 5–6), abilities (Tab 7) | [forge/character_creation.md](./forge/character_creation.md) Tabs 5–7 |
+| Tab availability, alignment UI, summary, Continue N/A | [forge/character_creation.md](./forge/character_creation.md) Tab 9 |
+| Pending dice (Tabs 5–6), abilities (Tab 7), gear (Tab 8) | [forge/character_creation.md](./forge/character_creation.md) Tabs 5–8 |
 | Modal + `applySpawnSheetHandoff` + sheet mode | This document |
 
 ---
@@ -126,8 +127,8 @@ Blockers render on Tab 8; spawn button stays disabled until resolved.
 
 | Concern | Location |
 |---------|----------|
-| Tab 8 UI & modal | `src/components/creation/CreationReviewFinalize.tsx` |
-| Spawn blockers | `src/lib/forgeNavigation/characterCreationForge.ts` — `assessTab8SpawnBlockers` |
+| Tab 9 UI & modal | `src/components/creation/CreationReviewFinalize.tsx` |
+| Spawn blockers | `src/lib/forgeNavigation/characterCreationForge.ts` — `assessTab9SpawnBlockers` |
 | Readiness checks | `src/lib/creationReadiness.ts` |
 | Handoff engine | `src/lib/spawnSheetHandoff.ts` |
 | Finalize entry | `src/context/CharacterContext.tsx` — `finalizeCharacter` |

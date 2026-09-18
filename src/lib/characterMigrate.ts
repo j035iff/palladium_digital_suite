@@ -44,7 +44,8 @@ const LEGACY_FORGE_TAB_IDS: Record<string, string> = {
   tab0_identity: 'tab1_configurator',
   tab5_traits: 'tab6_traits',
   tab6_abilities: 'tab7_abilities',
-  tab7_review: 'tab8_review',
+  tab7_review: 'tab9_review',
+  tab8_review: 'tab9_review',
 }
 
 export type CatalogIdKind = keyof typeof CATALOG_ID_REMAPS
