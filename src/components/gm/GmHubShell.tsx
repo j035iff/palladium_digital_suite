@@ -5,6 +5,7 @@ import { conversionRuleLabel } from '../../lib/gm/campaignForge'
 import { activePlaySession } from '../../lib/gm/playSession'
 import { GmCastPanel } from './GmCastPanel'
 import { GmCombatPanel } from './GmCombatPanel'
+import { GmGearPanel } from './GmGearPanel'
 import { GmPartyPanel } from './GmPartyPanel'
 import { GmSessionsPanel } from './GmSessionsPanel'
 import { GmTabBar } from './GmTabBar'
@@ -14,6 +15,7 @@ function GmHubWorkspace() {
 
   if (hubTabId === 'party') return <GmPartyPanel />
   if (hubTabId === 'cast') return <GmCastPanel />
+  if (hubTabId === 'gear') return <GmGearPanel />
   if (hubMode === 'combat') return <GmCombatPanel />
   return <GmSessionsPanel />
 }

@@ -200,9 +200,10 @@ Copy this block when registering a new unified path:
 | Play sitting | `src/lib/gm/playSession.ts` | `openPlaySession`, `playSessionPlayerLabel` | Player join name `{campaign}: {date}`; one live sitting |
 | Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
 | Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 JSON shapes for a future LAN server |
-| UI | `src/components/gm/*` | `GmHubShell` | Story / Combat modes; Home + Party + Cast |
+| UI | `src/components/gm/*` | `GmHubShell` | Story / Combat modes; Home + Party + Cast + Gear |
+| Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
 
-**Modes / variants:** Hub `story` / `combat` (Home differs; Party and Cast are one pipeline). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer.
+**Modes / variants:** Hub `story` / `combat` (Home differs; Party, Cast, and Gear are one pipeline each). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge.
 
 **Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork Party or Cast per Story/Combat mode.
 
@@ -235,12 +236,14 @@ Copy this block when registering a new unified path:
 | Host adapter | `src/lib/gear/gearForgeHost.ts` | `GearForgeHostAdapter` | `library` \| `creation` \| `sheet` \| `gm` |
 | Creation host | `src/lib/gear/creationGearForgeHost.ts` | `buildCreationGearForgeAdapter` | `tab8_gear` → draft inventory |
 | Sheet host | `src/lib/gear/sheetGearForgeHost.ts` | `buildSheetGearForgeAdapter` | Live `GearPanel` → active inventory |
-| Inventory commit | `src/lib/gear/inventoryWeaponCommit.ts` | `createInventoryWeaponFromPiece` | Shared grant/patch for creation / sheet |
+| GM host | `src/lib/gear/gmGearForgeHost.ts` | `buildGmGearForgeAdapter` | Hub Gear → party character save |
+| Inventory commit | `src/lib/gear/inventoryWeaponCommit.ts` | `createInventoryWeaponFromPiece` | Shared grant/patch for creation / sheet / GM |
+| GM save grant | `src/lib/gear/gmCharacterInventoryGrant.ts` | `addWeaponToCharacterSave` | Party save write-back; Cast blocked |
 | Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear |
 | Property stack | `src/lib/weaponForgeProperties.ts` | `Weapon.forgeProperties` | Indestructible / quality / multipliers / triggers |
-| UI shell | `src/components/gear/GearForgeShell.tsx` | Portal `GearForgeViewport` + creation `CreationGearForgePanel` + sheet `GearPanel` | GM host planned |
+| UI shell | `src/components/gear/GearForgeShell.tsx` | Portal + creation + sheet + GM `GmGearPanel` | One shell for all hosts |
 
-**Modes / variants:** One shell for all hosts. Portal commits to library; creation and sheet commit to character inventory (draft vs active). Do not fork lane editors per host.
+**Modes / variants:** One shell for all hosts. Portal commits to library; creation and sheet commit to character inventory (draft vs active); GM commits to a selected party character’s local save. Cast Quick-Blocks have no inventory yet (visible why-disabled). Do not fork lane editors per host.
 
 ---
 
@@ -259,6 +262,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-09-18 | Gear Forge GM host: Hub **Gear** tab + `kind: 'gm'` adapter on shared shell → selected party character save |
 | 2026-09-18 | Gear Forge Sheet host: live `GearPanel` + `kind: 'sheet'` adapter on shared shell → active inventory |
 | 2026-09-16 | Gear Forge Creation host: `tab8_gear` + `kind: 'creation'` adapter on shared shell; Review → `tab9_review` |
 | 2026-08-30 | GM Hub Story/Combat master tabs (Home + Party + Cast), matching live sheet |

@@ -6,8 +6,8 @@ import {
 } from './hubTabs'
 
 describe('GM Hub tabs', () => {
-  it('uses Home plus Party and Cast under both Story and Combat', () => {
-    expect(GM_HUB_TAB_ORDER).toEqual(['home', 'party', 'cast'])
+  it('uses Home plus Party, Cast, and Gear under both Story and Combat', () => {
+    expect(GM_HUB_TAB_ORDER).toEqual(['home', 'party', 'cast', 'gear'])
     expect(buildGmHubTabViews('home', { campaignOpen: true }).map((tab) => tab.id)).toEqual(
       GM_HUB_TAB_ORDER,
     )
@@ -17,12 +17,14 @@ describe('GM Hub tabs', () => {
     expect(gmHubTabTitle('story', 'home')).toBe('Sessions')
     expect(gmHubTabTitle('combat', 'home')).toBe('Combat')
     expect(gmHubTabTitle('combat', 'party')).toBe('Party')
+    expect(gmHubTabTitle('combat', 'gear')).toBe('Gear')
   })
 
-  it('locks Party and Cast until a campaign is open', () => {
+  it('locks Party, Cast, and Gear until a campaign is open', () => {
     const views = buildGmHubTabViews('home', { campaignOpen: false })
     expect(views.find((tab) => tab.id === 'home')?.clickable).toBe(true)
     expect(views.find((tab) => tab.id === 'party')?.clickable).toBe(false)
     expect(views.find((tab) => tab.id === 'cast')?.visual).toBe('locked')
+    expect(views.find((tab) => tab.id === 'gear')?.visual).toBe('locked')
   })
 })

@@ -4,23 +4,26 @@ import type { ForgeTabView } from '../forgeNavigation/types'
 export type GmHubMode = 'story' | 'combat'
 
 /** Shared sub-tabs under both hub modes (sheet analogue: Home + Stats/Saves/…). */
-export type GmHubTabId = 'home' | 'party' | 'cast'
+export type GmHubTabId = 'home' | 'party' | 'cast' | 'gear'
 
 export const GM_HUB_TAB_ORDER: readonly GmHubTabId[] = [
   'home',
   'party',
   'cast',
+  'gear',
 ] as const
 
 export const GM_HUB_TAB_LABELS: Record<GmHubTabId, string> = {
   home: 'Home',
   party: 'Party',
   cast: 'Cast',
+  gear: 'Gear',
 }
 
 const SHARED_TAB_TITLES: Record<Exclude<GmHubTabId, 'home'>, string> = {
   party: 'Party',
   cast: 'Cast',
+  gear: 'Gear',
 }
 
 export function gmHubTabTitle(mode: GmHubMode, tabId: GmHubTabId): string {
