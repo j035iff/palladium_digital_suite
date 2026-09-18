@@ -58,7 +58,7 @@ export function CustomTraitWorkshop({ slot, onChange, onRemove }: Props) {
             onClick={() => setExpertMode((v) => !v)}
             className="rounded border border-violet-600 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-violet-200 hover:bg-violet-900/50"
           >
-            {expertMode ? 'Common view' : 'Expert mode'}
+            {expertMode ? 'Common fields' : 'Full fields'}
           </button>
           {onRemove ? (
             <button

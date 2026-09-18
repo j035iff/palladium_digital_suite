@@ -1588,6 +1588,12 @@ export type MorphusCustomTraitInstance = {
 }
 
 /** Resolved Morphus trait slot during Sub-Forge (catalog id + optional custom overlay). */
+/** Chosen independent sub-roll option under a parent Morphus trait (e.g. B-Movie Alien Hands). */
+export type MorphusSelectedIndependentSubRoll = {
+  tableName: string
+  optionLabel: string
+}
+
 export type MorphusTraitSlotResolution = {
   slotId: string
   catalogEntryId: string
@@ -1595,6 +1601,11 @@ export type MorphusTraitSlotResolution = {
   branchChoice?: string
   /** Gimmick or other sub-trait pool picks resolved under this trait slot. */
   selectedSubTraitIds?: readonly string[]
+  /**
+   * Independent sub-roll option labels chosen under this trait.
+   * Mechanics (naturalWeapons / statModifiers / …) merge in resolveEffectiveMorphusTraitFromSlot.
+   */
+  selectedIndependentSubRolls?: readonly MorphusSelectedIndependentSubRoll[]
   customInstance?: MorphusCustomTraitInstance
 }
 

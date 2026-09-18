@@ -722,10 +722,8 @@ export function invalidateForgeFromConfiguratorChange(
   return {
     creationForgeCompleted: next.completed,
     creationForgeSnapshots: next.snapshots,
-    creationTraitForgeStubComplete: false,
-    morphusForgeState: undefined,
     creationPrimaryDiceFinalized: false,
-    creationMorphusDiceFinalized: false,
+    // Morphus wipe is race-scoped via creationInvalidationPatch — not here.
   }
 }
 

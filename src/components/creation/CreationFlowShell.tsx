@@ -457,6 +457,7 @@ export function CreationFlowShell({
   const [collapseOffset, setCollapseOffset] = useState<{ dx: number; dy: number } | null>(
     null,
   )
+  // State (not ref) so render can read it for the one-frame filled checklist hold.
   const [hadUnsatisfied, setHadUnsatisfied] = useState(false)
   const prevTabIdRef = useRef(activeTabId)
   const continueTargetRef = useRef<HTMLButtonElement | null>(null)

@@ -8,6 +8,7 @@ import {
 import { occCharacterCategory } from '../../lib/occCatalogEngine'
 import type { PalladiumOcc, Race } from '../../types'
 import { creationUsesOccSkillProgram, configuratorRaceColumnIgnoresActiveOcc, raceForcedOccId } from '../../lib/shadowOcc'
+import { characterHasMorphusSettingsDefined } from '../../lib/creationInvalidate'
 import {
   assessOccConfiguratorTier,
   assessRaceConfiguratorTier,
@@ -62,10 +63,30 @@ export function ConfiguratorPanel() {
     useState(true)
   const [hideRaceIncompatibleOccs, setHideRaceIncompatibleOccs] = useState(true)
   const [hideOccIncompatibleRaces, setHideOccIncompatibleRaces] = useState(true)
+  const [pendingRaceChangeId, setPendingRaceChangeId] = useState<string | null>(null)
   const morphus = supportsDualForm && activeForm === 'morphus'
   const panel = morphus
     ? 'border-violet-600 bg-slate-950/90 text-violet-50'
     : 'border-blue-300 bg-white text-slate-900'
+
+  const requestRaceChange = (raceId: string | null) => {
+    const nextId = raceId?.trim() || null
+    const currentId = character.raceId?.trim() || null
+    if (nextId === currentId) return
+    if (characterHasMorphusSettingsDefined(character)) {
+      setPendingRaceChangeId(nextId === null ? '' : nextId)
+      return
+    }
+    setRaceId(nextId)
+  }
+
+  const confirmPendingRaceChange = () => {
+    if (pendingRaceChangeId === null) return
+    setRaceId(pendingRaceChangeId === '' ? null : pendingRaceChangeId)
+    setPendingRaceChangeId(null)
+  }
+
+  const cancelPendingRaceChange = () => setPendingRaceChangeId(null)
 
   const occPool = useMemo(
     () => listPalladiumOccsForCreation(creationGenreId, hostGenreId),
@@ -318,6 +339,7 @@ export function ConfiguratorPanel() {
   const subColor = morphus ? '#a5b4fc' : '#475569'
 
   return (
+    <>
     <section
       className="flex min-h-0 min-w-0 flex-1 flex-col"
       aria-labelledby="forge-tab-page-heading"
@@ -543,7 +565,7 @@ export function ConfiguratorPanel() {
           ariaLabel="Race"
           placeholderLabel={raceLayout.placeholderLabel}
           placeholderSelected={racePlaceholderSelected}
-          onSelectPlaceholder={() => setRaceId(null)}
+          onSelectPlaceholder={() => requestRaceChange(null)}
           pinned={
             raceLayout.pinned ? (
               <RaceRow
@@ -556,7 +578,7 @@ export function ConfiguratorPanel() {
                   occById,
                 )}
                 filterMismatch={raceLayout.pinned.filterMismatch}
-                onSelect={() => setRaceId(raceLayout.pinned!.item.id)}
+                onSelect={() => requestRaceChange(raceLayout.pinned!.item.id)}
               />
             ) : null
           }
@@ -583,7 +605,7 @@ export function ConfiguratorPanel() {
               morphus={morphus}
               selected={false}
               tierResult={assessRaceConfiguratorTier(race, raceMatrixCtx, occById)}
-              onSelect={() => setRaceId(race.id)}
+              onSelect={() => requestRaceChange(race.id)}
             />
           )}
         />
@@ -709,6 +731,44 @@ export function ConfiguratorPanel() {
       ) : null}
         </div>
       </section>
+      {pendingRaceChangeId !== null ? (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 px-4"
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby="race-change-morphus-wipe-title"
+        >
+          <div className="max-w-md rounded-xl border-2 border-amber-500/80 bg-slate-950 p-6 text-center shadow-2xl">
+            <h2
+              id="race-change-morphus-wipe-title"
+              className="text-lg font-black uppercase tracking-wide text-amber-200"
+            >
+              Change race?
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-slate-200">
+              Changing race will <strong>wipe current Morphus settings</strong> (path, trait
+              slots, and Finalize state). O.C.C. changes do not wipe Morphus.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <button
+                type="button"
+                onClick={cancelPendingRaceChange}
+                className="rounded-lg border-2 border-slate-500 px-4 py-2 text-sm font-bold uppercase text-slate-200 hover:border-slate-300"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmPendingRaceChange}
+                className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-black uppercase text-white hover:bg-amber-500"
+              >
+                Wipe Morphus &amp; change race
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
   )
 }
 

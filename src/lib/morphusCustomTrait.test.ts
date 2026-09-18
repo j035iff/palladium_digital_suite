@@ -79,4 +79,27 @@ describe('morphusCustomTrait', () => {
     expect(cleaned.statModifiers?.sdc?.flat).toBe(10)
     expect(cleaned.statModifiers?.hp).toBeUndefined()
   })
+
+  it('merges independentSubRolls option weapons and stat modifiers into effective trait', () => {
+    const withClaws = resolveEffectiveMorphusTraitFromSlot({
+      slotId: 'plan:0/plan:0/branch',
+      catalogEntryId: 'extraterrestrial_b_movie_alien',
+      selectedIndependentSubRolls: [
+        { tableName: 'Hands', optionLabel: 'Clawed hands' },
+        { tableName: 'Body Type', optionLabel: 'Tall, thin humanoid' },
+      ],
+    })
+    expect(withClaws).toBeDefined()
+    expect(withClaws!.naturalWeapons?.some((w) => w.label === 'Alien Claws')).toBe(true)
+
+    const withExtraArms = resolveEffectiveMorphusTraitFromSlot({
+      slotId: 'plan:0/plan:0/branch',
+      catalogEntryId: 'extraterrestrial_b_movie_alien',
+      selectedIndependentSubRolls: [
+        { tableName: 'Hands', optionLabel: 'Extra pair of arms and hands' },
+        { tableName: 'Body Type', optionLabel: 'Tall, thin humanoid' },
+      ],
+    })
+    expect(withExtraArms!.statModifiers?.apm?.flat).toBe(1)
+  })
 })

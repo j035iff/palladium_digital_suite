@@ -12,6 +12,8 @@ import type { MorphusForgeState } from '../../../types'
 type Props = {
   morphusForgeState: MorphusForgeState
   shellMode?: boolean
+  /** Full-width dark panel for Review (not the creation shell sidebar). */
+  embedded?: boolean
 }
 
 function TraitSlotBox({
@@ -150,6 +152,7 @@ function PathSection({
 export function SelectedMorphusTraitsPanel({
   morphusForgeState,
   shellMode = false,
+  embedded = false,
 }: Props) {
   const { character, morphusForgeSlotActions } = useCharacter()
 
@@ -175,12 +178,12 @@ export function SelectedMorphusTraitsPanel({
     ? 'border-violet-300 bg-violet-50 text-violet-950'
     : 'border-violet-700 bg-slate-950/80 text-violet-50'
 
-  const Wrapper = shellMode ? 'div' : 'aside'
+  const Wrapper = shellMode || embedded ? 'div' : 'aside'
 
   return (
     <Wrapper
       className={
-        shellMode
+        shellMode || embedded
           ? 'flex h-full min-h-0 w-full flex-col'
           : 'flex min-h-0 w-full shrink-0 flex-col border-t border-violet-800 pt-4 lg:w-64 lg:border-t-0 lg:border-r lg:pr-4 lg:pt-0 xl:w-72'
       }

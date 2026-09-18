@@ -295,6 +295,72 @@ export function morphusVariantMergedEntryId(
   return `${parentEntryId}::variant:${variant.label}`
 }
 
+/** Pick-card bonuses/penalties for an independent sub-roll option (not a catalog row). */
+export function buildMorphusIndependentSubRollPickOption(
+  option: MorphusVariantPercentile,
+): MorphusSlotPickOption {
+  const shell: MorphusCharacteristic = {
+    id: `independent_option:${option.label}`,
+    name: option.label,
+    description: option.description ?? '',
+    tableCategory: 'Characteristics',
+    sources: [],
+    statModifiers: option.statModifiers,
+    naturalWeapons: option.naturalWeapons,
+    skillModifiers: option.skillModifiers,
+    sensory: option.sensory,
+    mobility: option.mobility,
+  }
+  const { bonuses, penalties } = collectDirectStatAndSaveModifiers(shell)
+  return {
+    id: option.label,
+    name: option.label,
+    description: option.description,
+    bonuses,
+    penalties,
+  }
+}
+
+/**
+ * Merge one independent sub-roll option into a parent trait (concatenate weapons;
+ * shallow-merge stat / skill / sensory / mobility blocks).
+ */
+export function mergeIndependentSubRollOptionIntoCharacteristic(
+  entry: MorphusCharacteristic,
+  option: MorphusVariantPercentile,
+): MorphusCharacteristic {
+  return {
+    ...entry,
+    statModifiers: {
+      ...(entry.statModifiers ?? {}),
+      ...(option.statModifiers ?? {}),
+    },
+    skillModifiers: {
+      ...(entry.skillModifiers ?? {}),
+      ...(option.skillModifiers ?? {}),
+    },
+    sensory: {
+      ...(entry.sensory ?? {}),
+      ...(option.sensory ?? {}),
+    },
+    mobility: {
+      ...(entry.mobility ?? {}),
+      ...(option.mobility ?? {}),
+    },
+    limbDurability: option.limbDurability ?? entry.limbDurability,
+    naturalWeapons: [
+      ...(entry.naturalWeapons ?? []),
+      ...(option.naturalWeapons ?? []),
+    ],
+    weightModifier: option.weightModifier ?? entry.weightModifier,
+    customOneOffs: [
+      ...(entry.customOneOffs ?? []),
+      ...(option.customOneOffs ?? []),
+    ],
+    combatEffects: option.combatEffects ?? entry.combatEffects,
+  }
+}
+
 export function buildMorphusVariantPickEntries(
   parentEntryId: string,
   variants: readonly MorphusVariantPercentile[],

@@ -28,8 +28,9 @@ Session actions (**Reset**, **Save for Later**, **Leave without Saving**) open f
 
 - **Yellow:** A tab was Green, upstream data changed, and this tab’s stored snapshot no longer matches the live payload (even if current fields still pass validation). Player data is **not** auto-cleared; the tab shows what must be re-confirmed.
 - **Red:** A tab was Green (or was being edited) and required fields are now missing or invalid.
-- **Race / O.C.C. change:** Typically cascades conflict flags across Tabs 2–7 (and Tab 6 Morphus state when applicable). Tab 1 completion may remain Green until the user re-validates it.
-- **No destructive invalidation:** Changing Race or O.C.C. does **not** wipe skills, attributes, psychic tier, abilities, dice resolutions, or voucher picks. Only downstream **completion markers and snapshots** are cleared so tabs turn Yellow until the user clicks **Continue** again on each affected step.
+- **Race / O.C.C. change:** Typically cascades conflict flags across Tabs 2–7. Tab 1 completion may remain Green until the user re-validates it.
+- **Morphus wipe (race only):** Changing **Race** wipes Morphus Sub-Forge state (path, slots, Finalize flags). If any Morphus settings are defined, Tab 1 shows a **confirm dialog** before applying the race change. Changing **O.C.C.** leaves Morphus intact (tabs still Yellow until re-Continue / Finalize as needed).
+- **No destructive invalidation (non-Morphus):** Changing Race or O.C.C. does **not** wipe skills, attributes, psychic tier, abilities, dice resolutions, or voucher picks. Only downstream **completion markers and snapshots** are cleared so tabs turn Yellow until the user clicks **Continue** again on each affected step (plus the Morphus wipe on race change above).
 
 ### Multiple Yellow / Red Tabs — Top-Down Repair
 
@@ -98,9 +99,10 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 - **Black (N/A) Condition:** **Black** when the selected Race line does not use a trait sub-system (e.g., non–Nightbane builds).
 - **Nightbane completion:**
   - Tab 5 (Roll Pending) must be Green first.
-  - Morphus vitality dice entered on this tab.
-  - Sub-Forge **Finalize Morphus** passes Complete state up to turn Tab 6 Green on the master forge.
-- **Implementation (current):** [Morphus Sub-Forge](morphus_creation.md) in `MorphusForge.tsx` — crossroads, trait forge, slot resolution, review dice. Guided/basic UX still in active development; Sub-Forge Expert Mode not started. (`MorphusForgeStub.tsx` is a deprecated re-export alias.)
+  - Morphus vitality dice entered on this tab (Sub-Forge Review).
+  - Sub-Forge **Finalize Morphus** marks master Tab 6 **Green** and opens the next master step in one action — no second master Tab 6 Continue click.
+  - Changing Morphus slots/dice after Finalize returns Tab 6 to incomplete / Yellow.
+- **Implementation (current):** [Morphus Sub-Forge](morphus_creation.md) in `MorphusForge.tsx` — crossroads (incl. Path 2 `1D4+2`), trait forge, slot resolution, review summary + dice. Guided/basic polish in progress; Sub-Forge Expert Mode not started. (`MorphusForgeStub.tsx` is a deprecated re-export alias.)
 
 ### Tab 7: Resource-Based Abilities Selection
 
