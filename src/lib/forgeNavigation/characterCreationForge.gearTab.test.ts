@@ -44,11 +44,11 @@ describe('Creation forge Gear tab (tab8_gear)', () => {
   })
 
   it('migrates legacy tab8_review to tab9_review without removing Gear from order', () => {
+    // Legacy drafts may still persist tab8_review; migrateForgeTabId remaps it.
     const character = {
       ...createBlankCharacterForGenre('nightbane'),
-      // Legacy persisted value, handled by resolveActiveForgeTab.
       creationForgeTab: 'tab8_review',
-    } as Parameters<typeof resolveActiveForgeTab>[0]
+    } as unknown as Parameters<typeof resolveActiveForgeTab>[0]
 
     expect(resolveActiveForgeTab(character)).toBe('tab9_review')
     expect(CHARACTER_CREATION_TAB_ORDER.indexOf('tab8_gear')).toBeLessThan(
