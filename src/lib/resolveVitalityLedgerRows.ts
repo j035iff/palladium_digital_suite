@@ -147,7 +147,7 @@ function addDiceGroupDetailContributions(
   group: LedgerStatDiceGroupDetail,
   resolutions: Readonly<Record<string, number>>,
 ): number {
-  let flatFromDice = flatBonusesFromDiceContributions(group.contributions)
+  const flatFromDice = flatBonusesFromDiceContributions(group.contributions)
   group.contributions.forEach((contribution, index) => {
     const parsed = createPhysicalPendingRoll(
       blockId,

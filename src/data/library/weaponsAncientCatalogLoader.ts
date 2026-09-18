@@ -35,7 +35,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 export function ancientWeaponCategorySlugs(
   category: string | readonly string[],
 ): readonly string[] {
-  return Array.isArray(category) ? category : [category]
+  if (typeof category === 'string') return [category]
+  return category
 }
 
 export function ancientWeaponCategoryLabel(
