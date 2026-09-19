@@ -8,6 +8,13 @@ import {
 import { listWeaponProficienciesForGameSystem } from '../../../data/library/weaponProficienciesCatalogLoader'
 import type { GearForgeHostAdapter } from '../../../lib/gear/gearForgeHost'
 import {
+  buildGearForgeWeaponsSubTabViews,
+  GEAR_FORGE_WEAPONS_SUB_TAB_LABELS,
+  gearForgeWeaponsModernStubReason,
+  isGearForgeWeaponsSubTabId,
+  type GearForgeWeaponsSubTabId,
+} from '../../../lib/forgeNavigation/gearForgeWeapons'
+import {
   applyQualityPresetToDraft,
   newAbilityTrigger,
   newDamageMultiplier,
@@ -16,6 +23,7 @@ import {
   type WeaponQualityPresetId,
 } from '../../../lib/weaponForgeProperties'
 import type { Weapon, WeaponForgeProperties } from '../../../types'
+import { ForgeNavigationBar } from '../../forge/ForgeNavigationBar'
 import { gearPanelTheme } from '../../live/gear/gearPanelTheme'
 
 type Props = {
@@ -27,11 +35,17 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const theme = gearPanelTheme(morphus)
   const blocked = adapter.commitBlockedReason?.trim() || null
 
+  const [weaponsSubTab, setWeaponsSubTab] =
+    useState<GearForgeWeaponsSubTabId>('ancient')
+  const weaponsSubTabs = useMemo(
+    () => buildGearForgeWeaponsSubTabViews(weaponsSubTab),
+    [weaponsSubTab],
+  )
+
   const [catalogQuery, setCatalogQuery] = useState('')
   const [catalogCategory, setCatalogCategory] = useState('')
   const [selectedCatalogId, setSelectedCatalogId] = useState('')
   const [qualityVariantId, setQualityVariantId] = useState('')
-
   const [customName, setCustomName] = useState('')
   const [customCategory, setCustomCategory] = useState('Misc')
   const [customDamage, setCustomDamage] = useState('2D6')
@@ -206,6 +220,37 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
       role="tabpanel"
       aria-label="Weapons"
     >
+      <div className="mb-3">
+        <ForgeNavigationBar
+          tabs={weaponsSubTabs}
+          activeTabId={weaponsSubTab}
+          onSelectTab={(id) => {
+            if (isGearForgeWeaponsSubTabId(id)) setWeaponsSubTab(id)
+          }}
+          singleRow
+          ariaLabel="Weapons era"
+        />
+      </div>
+
+      {weaponsSubTab === 'modern' ? (
+        <div
+          className={`rounded-lg border-2 border-dashed px-4 py-8 text-center ${
+            morphus
+              ? 'border-violet-600/70 bg-slate-900/40'
+              : 'border-blue-300 bg-blue-50/50'
+          }`}
+          role="tabpanel"
+          aria-label={GEAR_FORGE_WEAPONS_SUB_TAB_LABELS.modern}
+        >
+          <p className={`text-sm font-semibold ${theme.th}`}>
+            Modern weapons — not wired yet
+          </p>
+          <p className={`mt-2 text-xs ${theme.muted}`}>
+            {gearForgeWeaponsModernStubReason()}
+          </p>
+        </div>
+      ) : (
+        <>
       <p className={`mb-4 text-[11px] font-semibold leading-snug ${theme.muted}`}>
         Grant ancient hardware from the book catalog, or forge a custom weapon with an optional
         property stack (indestructible, quality, multipliers, ability triggers).
@@ -613,6 +658,8 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
           </ul>
         )}
       </div>
+        </>
+      )}
     </div>
   )
 }

@@ -67,23 +67,16 @@ export function GearForgeViewport() {
 
   return (
     <div className="flex h-svh min-h-0 flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
-      <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-slate-800 bg-slate-950/90 px-4 py-3">
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-cyan-500/90">
-            Gear Forge
-          </p>
-          <h1 className="text-lg font-black tracking-wide text-white">
-            Custom gear library
-          </h1>
-          <p className="text-[11px] text-slate-500">
-            Create and save reusable weapons. Grant them later from creation, sheet, or GM.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wide text-slate-400">
+      <header className="flex shrink-0 items-center justify-between gap-3 border-b border-slate-800/80 bg-slate-950/90 px-4 py-2">
+        {/* Avoid global `h1` rules in index.css (56px / 32px margin / dark text). */}
+        <p className="m-0 text-sm font-black uppercase tracking-[0.18em] text-white">
+          Gear Forge
+        </p>
+        <div className="flex shrink-0 items-center gap-2">
+          <label className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-400">
             Genre
             <select
-              className="rounded-md border-2 border-slate-600 bg-slate-950 px-2 py-1.5 font-mono text-xs text-slate-100"
+              className="rounded-md border border-slate-600 bg-slate-950 px-2 py-1 font-mono text-xs text-slate-100"
               value={genreId}
               onChange={(e) => {
                 if (isGenreId(e.target.value)) setGenreId(e.target.value)
@@ -99,15 +92,16 @@ export function GearForgeViewport() {
           <button
             type="button"
             onClick={returnToLauncher}
-            className="rounded-lg border-2 border-slate-500 px-4 py-2 text-sm font-bold uppercase text-slate-200 hover:border-slate-300"
+            className="rounded-full border border-slate-300 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-100 hover:border-white hover:text-white"
           >
             Return to launcher
           </button>
         </div>
       </header>
 
-      <main className="mx-auto flex min-h-0 w-full max-w-4xl flex-1 flex-col overflow-hidden px-4 py-4">
-        <GearForgeShell adapter={adapter} morphus={false} title="Gear Forge" />
+      {/* Title lives in the viewport bar; shell shows lanes + forge body only. */}
+      <main className="mx-auto flex min-h-0 w-full max-w-4xl flex-1 flex-col overflow-hidden px-4 pb-3 pt-1.5">
+        <GearForgeShell adapter={adapter} morphus={false} />
       </main>
     </div>
   )
