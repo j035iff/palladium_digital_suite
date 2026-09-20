@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ancientCatalogToInventoryPiece,
   ancientWeaponCategoryLabel,
+  ancientWeaponCategorySlugs,
+  formatAncientWeaponPickerStatLine,
   listAncientWeaponsForGearPicker,
   resolveAncientWeaponGenreStats,
 } from '../../../data/library/weaponsAncientCatalogLoader'
@@ -42,8 +44,11 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
     [weaponsSubTab],
   )
 
-  const [catalogQuery, setCatalogQuery] = useState('')
+  /** '' = not chosen; 'All' = search-only browse (mirrors skills library). */
   const [catalogCategory, setCatalogCategory] = useState('')
+  const [catalogQuery, setCatalogQuery] = useState('')
+  const [categoryOpen, setCategoryOpen] = useState(false)
+  const categorySelectRef = useRef<HTMLDivElement>(null)
   const [selectedCatalogId, setSelectedCatalogId] = useState('')
   const [qualityVariantId, setQualityVariantId] = useState('')
   const [customName, setCustomName] = useState('')
@@ -76,27 +81,66 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const catalogCategories = useMemo(() => {
     const set = new Set<string>()
     for (const r of catalogRows) {
-      const slugs = Array.isArray(r.category) ? r.category : [r.category]
-      for (const c of slugs) set.add(c)
+      for (const c of ancientWeaponCategorySlugs(r.category)) set.add(c)
     }
-    return [...set].sort()
+    return [...set]
+      .map((slug) => ({ slug, label: ancientWeaponCategoryLabel(slug) }))
+      .sort((a, b) => a.label.localeCompare(b.label))
   }, [catalogRows])
 
+  const catalogPopulated =
+    catalogCategory === 'All'
+      ? catalogQuery.trim().length > 0
+      : catalogCategory !== ''
+
   const filteredCatalog = useMemo(() => {
+    if (!catalogPopulated) return []
     const q = catalogQuery.trim().toLowerCase()
     return catalogRows.filter((r) => {
-      const slugs = Array.isArray(r.category) ? r.category : [r.category]
-      if (catalogCategory && !slugs.includes(catalogCategory)) return false
+      const slugs = ancientWeaponCategorySlugs(r.category)
+      if (catalogCategory !== 'All' && !slugs.includes(catalogCategory)) {
+        return false
+      }
       if (!q) return true
-      const blob = `${r.name} ${r.aliases?.join(' ') ?? ''} ${slugs.join(' ')} ${r.id}`.toLowerCase()
+      const blob =
+        `${r.name} ${r.aliases?.join(' ') ?? ''} ${slugs.join(' ')} ${r.id}`.toLowerCase()
       return blob.includes(q)
     })
-  }, [catalogRows, catalogCategory, catalogQuery])
+  }, [catalogRows, catalogCategory, catalogQuery, catalogPopulated])
+
+  useEffect(() => {
+    if (!categoryOpen) return
+    function handlePointerDown(event: MouseEvent) {
+      if (
+        categorySelectRef.current &&
+        !categorySelectRef.current.contains(event.target as Node)
+      ) {
+        setCategoryOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handlePointerDown)
+    return () => document.removeEventListener('mousedown', handlePointerDown)
+  }, [categoryOpen])
+
+  useEffect(() => {
+    if (!selectedCatalogId) return
+    if (!filteredCatalog.some((r) => r.id === selectedCatalogId)) {
+      setSelectedCatalogId('')
+      setQualityVariantId('')
+    }
+  }, [filteredCatalog, selectedCatalogId])
 
   const selectedCatalog = useMemo(
     () => catalogRows.find((r) => r.id === selectedCatalogId),
     [catalogRows, selectedCatalogId],
   )
+
+  const catalogCategoryLabel =
+    catalogCategory === ''
+      ? '— select category —'
+      : catalogCategory === 'All'
+        ? 'All (search only)'
+        : ancientWeaponCategoryLabel(catalogCategory)
 
   const selectedGenreStats = useMemo(() => {
     if (!selectedCatalog) return undefined
@@ -272,57 +316,159 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
           </p>
         ) : (
           <>
-            <div className="mb-2 grid gap-2 sm:grid-cols-2">
-              <label className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
-                Search
-                <input
-                  className={`mt-0.5 ${theme.inputCls}`}
-                  value={catalogQuery}
-                  onChange={(e) => setCatalogQuery(e.target.value)}
-                  placeholder="Katana, long sword…"
-                />
-              </label>
-              <label className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
-                Category
-                <select
-                  className={`mt-0.5 ${theme.inputCls}`}
-                  value={catalogCategory}
-                  onChange={(e) => setCatalogCategory(e.target.value)}
-                >
-                  <option value="">All</option>
-                  {catalogCategories.map((c) => (
-                    <option key={c} value={c}>
-                      {ancientWeaponCategoryLabel(c)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <ul className="mb-2 max-h-40 overflow-y-auto rounded-md border border-slate-500/40">
-              {filteredCatalog.map((row) => (
-                <li key={row.id}>
+            <div className="mb-3 flex flex-wrap items-center gap-3">
+              <label className="flex items-center gap-2 text-sm">
+                <span className={theme.muted}>Category</span>
+                <div ref={categorySelectRef} className="relative min-w-[14rem]">
                   <button
                     type="button"
-                    onClick={() => {
-                      setSelectedCatalogId(row.id)
-                      setQualityVariantId('')
-                    }}
-                    className={`flex w-full items-center justify-between px-2 py-1.5 text-left text-xs ${
-                      selectedCatalogId === row.id
-                        ? morphus
-                          ? 'bg-violet-800/60 text-violet-50'
-                          : 'bg-blue-100 text-blue-950'
-                        : 'hover:bg-slate-500/10'
+                    aria-haspopup="listbox"
+                    aria-expanded={categoryOpen}
+                    aria-label="Weapon category"
+                    onClick={() => setCategoryOpen((open) => !open)}
+                    className={`flex w-full items-center justify-between gap-2 rounded-md border px-2 py-2 text-left text-sm ${
+                      morphus
+                        ? 'border-violet-700 bg-slate-900 text-violet-50'
+                        : 'border-slate-300 bg-white text-slate-900'
                     }`}
                   >
-                    <span className="font-semibold">{row.name}</span>
-                    <span className={theme.muted}>
-                      {ancientWeaponCategoryLabel(row.category)}
+                    <span>{catalogCategoryLabel}</span>
+                    <span className="text-xs opacity-60" aria-hidden>
+                      ▾
                     </span>
                   </button>
-                </li>
-              ))}
-            </ul>
+                  {categoryOpen ? (
+                    <ul
+                      role="listbox"
+                      className={`absolute z-20 mt-1 max-h-72 w-full overflow-y-auto rounded-md border py-1 shadow-lg ${
+                        morphus
+                          ? 'border-violet-700 bg-slate-900 text-violet-50'
+                          : 'border-slate-300 bg-white text-slate-900'
+                      }`}
+                    >
+                      {[
+                        { value: '', label: '— select category —' },
+                        { value: 'All', label: 'All (search only)' },
+                        ...catalogCategories.map((c) => ({
+                          value: c.slug,
+                          label: c.label,
+                        })),
+                      ].map((item) => (
+                        <li key={item.value || '__empty'} role="option">
+                          <button
+                            type="button"
+                            className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm hover:bg-slate-100 ${
+                              morphus ? 'hover:bg-violet-950' : ''
+                            } ${
+                              catalogCategory === item.value
+                                ? morphus
+                                  ? 'bg-violet-950'
+                                  : 'bg-sky-50'
+                                : ''
+                            }`}
+                            onClick={() => {
+                              setCatalogCategory(item.value)
+                              setCategoryOpen(false)
+                              setSelectedCatalogId('')
+                              setQualityVariantId('')
+                            }}
+                          >
+                            <span>{item.label}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              </label>
+              <input
+                type="search"
+                placeholder="Search Weapons…"
+                value={catalogQuery}
+                onChange={(e) => setCatalogQuery(e.target.value)}
+                className={`min-w-[200px] flex-1 rounded-md border px-3 py-2 text-sm ${
+                  morphus
+                    ? 'border-violet-700 bg-slate-900 text-violet-50'
+                    : 'border-slate-300 bg-white text-slate-900'
+                }`}
+                aria-label="Filter weapons by name"
+              />
+            </div>
+
+            <div
+              className={`mb-2 space-y-2 rounded-lg border p-3 ${
+                morphus
+                  ? 'border-violet-700/60 bg-slate-900/40'
+                  : 'border-slate-300 bg-white/80'
+              }`}
+            >
+              {catalogPopulated && catalogCategory !== '' && catalogCategory !== 'All' ? (
+                <h4 className={`text-sm font-bold uppercase tracking-wide ${theme.th}`}>
+                  {ancientWeaponCategoryLabel(catalogCategory)}
+                </h4>
+              ) : (
+                <h4 className={`text-xs font-bold uppercase tracking-wide opacity-80 ${theme.th}`}>
+                  Library
+                </h4>
+              )}
+
+              {!catalogPopulated ? (
+                <p className={`text-sm ${theme.muted}`}>
+                  Select a category to browse weapons, or choose All and enter a search
+                  term.
+                </p>
+              ) : filteredCatalog.length === 0 ? (
+                <p className={`text-sm ${theme.muted}`}>No weapons match this filter.</p>
+              ) : (
+                <ul className="flex max-h-[480px] min-h-0 flex-col gap-2 overflow-y-auto text-sm">
+                  {filteredCatalog.map((row) => {
+                    const selected = selectedCatalogId === row.id
+                    const statLine = formatAncientWeaponPickerStatLine(
+                      row,
+                      adapter.genreId,
+                    )
+                    const showCategoryChip =
+                      catalogCategory === 'All' ||
+                      ancientWeaponCategorySlugs(row.category).length > 1
+                    return (
+                      <li key={row.id}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedCatalogId(row.id)
+                            setQualityVariantId('')
+                          }}
+                          className={`w-full rounded-md border p-2 text-left ${
+                            selected
+                              ? morphus
+                                ? 'border-violet-400 bg-violet-800/60 text-violet-50'
+                                : 'border-blue-400 bg-blue-50 text-blue-950'
+                              : morphus
+                                ? 'border-violet-700/50 bg-slate-950/40 hover:bg-violet-950/50'
+                                : 'border-slate-200 bg-white hover:bg-slate-50'
+                          }`}
+                        >
+                          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                            <span className="font-medium">{row.name}</span>
+                            {showCategoryChip ? (
+                              <span className={`text-xs ${theme.muted}`}>
+                                {ancientWeaponCategoryLabel(row.category)}
+                              </span>
+                            ) : null}
+                          </div>
+                          {statLine ? (
+                            <p className={`mt-1 font-mono text-xs opacity-80 ${theme.muted}`}>
+                              {statLine}
+                            </p>
+                          ) : null}
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+            </div>
+
             {qualityOptions.length > 0 ? (
               <label className={`mb-2 block text-[10px] font-bold uppercase ${theme.muted}`}>
                 Catalog quality tier
