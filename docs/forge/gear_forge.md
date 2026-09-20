@@ -14,7 +14,7 @@ Shared inventory forge shell: **Weapons / Armor / Artifacts / Other** lanes on o
 ## MVP (shipped)
 
 - `GearForgeShell` + lane nav (`src/lib/forgeNavigation/gearForge.ts`)
-- **Weapons** lane with era sub-tabs (**Ancient weapons** / **Modern weapons**): Ancient keeps catalog grant, custom weapon, and property stack (`forgeProperties` on `Weapon`); Modern is a visible Radical Visibility stub (coming soon)
+- **Weapons** lane with era sub-tabs (**Ancient weapons** / **Modern weapons**): Ancient uses a skills-style catalog picker (category dropdown + search; list only after a category — or All + search — with condensed damage/weight/flag rows); custom weapon + property stack (`forgeProperties` on `Weapon`) remain below. Modern is a visible Radical Visibility stub (coming soon)
 - Armor / Artifacts / Other lanes visible with Radical Visibility stubs
 - Portal: **Gear Forge** + **My Custom Gear** on `AppLauncher`
 - Creation: **`kind: 'creation'`** adapter (`buildCreationGearForgeAdapter`) on `tab8_gear` — same shell; commits to draft inventory (not the custom library)

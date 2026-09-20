@@ -140,6 +140,51 @@ export function resolveAncientWeaponCombatStats(
   }
 }
 
+/**
+ * Condensed picker meta line from existing catalog fields only
+ * (damage, weight, range, flags, linked W.P.) — no invented bonuses.
+ */
+export function formatAncientWeaponPickerStatLine(
+  entry: AncientWeaponCatalogEntry,
+  gameSystem: string,
+): string {
+  const resolved = resolveAncientWeaponCombatStats(entry, gameSystem)
+  const stats = resolveAncientWeaponGenreStats(entry, gameSystem)
+  const parts: string[] = []
+
+  if (resolved?.damage && resolved.damage !== '—') {
+    parts.push(resolved.damage)
+  } else if (resolved?.damageSpecial?.trim()) {
+    parts.push(resolved.damageSpecial.trim())
+  }
+
+  if (resolved && Number.isFinite(resolved.weightLbs)) {
+    const lb = resolved.weightLbs
+    parts.push(`${Number.isInteger(lb) ? lb : lb.toFixed(1)} lb`)
+  }
+
+  if (stats?.range?.display?.trim()) {
+    parts.push(stats.range.display.trim())
+  } else if (typeof stats?.range?.feet === 'number') {
+    parts.push(`${stats.range.feet} ft`)
+  }
+
+  if (resolved?.twoHanded) parts.push('2H')
+  if (entry.throwable) parts.push('thrown')
+  if (entry.canEntangle) parts.push('entangle')
+
+  if (entry.weaponProficiencyEligible !== false && entry.linkedWpSkillId) {
+    const wp = getWeaponProficiencyCatalogEntryById(entry.linkedWpSkillId)
+    if (wp?.name) parts.push(wp.name)
+  }
+
+  if (stats?.qualityVariants && stats.qualityVariants.length > 1) {
+    parts.push(`${stats.qualityVariants.length} tiers`)
+  }
+
+  return parts.join(' · ')
+}
+
 /** Fields for {@link CharacterContext.addWeaponToInventory} from a catalog row. */
 export function ancientCatalogToInventoryPiece(
   entry: AncientWeaponCatalogEntry,

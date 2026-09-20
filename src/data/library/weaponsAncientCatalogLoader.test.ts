@@ -3,6 +3,7 @@ import {
   ANCIENT_WEAPON_CATALOG,
   ancientCatalogToInventoryPiece,
   ancientWeaponCategoryLabel,
+  formatAncientWeaponPickerStatLine,
   getAncientWeaponById,
   listAncientWeaponsForGearPicker,
   resolveAncientWeaponCombatStats,
@@ -54,5 +55,14 @@ describe('weaponsAncientCatalogLoader', () => {
     const daisho = getAncientWeaponById('weapon_ancient_daisho')
     expect(daisho?.category).toEqual(['large_swords', 'short_swords'])
     expect(ancientWeaponCategoryLabel(daisho!.category)).toBe('Large Swords / Short Swords')
+  })
+
+  it('formats condensed picker stats from catalog fields', () => {
+    const axe = getAncientWeaponById('weapon_ancient_throwing_axe')
+    expect(axe).toBeTruthy()
+    const line = formatAncientWeaponPickerStatLine(axe!, 'nightbane')
+    expect(line).toContain('1D6')
+    expect(line).toContain('lb')
+    expect(line).toContain('thrown')
   })
 })
