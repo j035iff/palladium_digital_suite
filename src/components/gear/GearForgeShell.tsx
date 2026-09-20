@@ -29,6 +29,8 @@ export function GearForgeShell({ adapter, morphus = false, title }: Props) {
 
   const lightChrome =
     adapter.kind === 'creation' || adapter.kind === 'sheet'
+  /** Library viewport already paints the title in its compact top bar. */
+  const showShellTitle = adapter.kind !== 'library'
   const titleClass = lightChrome
     ? 'text-sm font-black uppercase tracking-[0.18em] text-slate-800 dark:text-slate-200'
     : 'text-sm font-black uppercase tracking-[0.18em] text-slate-200'
@@ -40,15 +42,17 @@ export function GearForgeShell({ adapter, morphus = false, title }: Props) {
     : 'text-[11px] text-amber-200/80'
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3">
-      <div className="flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h2 className={titleClass}>{heading}</h2>
-          {adapter.targetLabel ? (
-            <p className={targetClass}>Target: {adapter.targetLabel}</p>
-          ) : null}
+    <div className="flex min-h-0 flex-1 flex-col gap-1.5">
+      {showShellTitle ? (
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 className={titleClass}>{heading}</h2>
+            {adapter.targetLabel ? (
+              <p className={targetClass}>Target: {adapter.targetLabel}</p>
+            ) : null}
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <ForgeNavigationBar
         tabs={tabs}
@@ -65,6 +69,7 @@ export function GearForgeShell({ adapter, morphus = false, title }: Props) {
         }}
         singleRow
         ariaLabel="Gear forge lanes"
+        onDarkSurface={adapter.kind === 'library'}
       />
 
       {tabs.find((t) => t.id === laneId)?.blockers[0] && laneId !== 'weapons' ? (

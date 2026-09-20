@@ -233,6 +233,7 @@ Copy this block when registering a new unified path:
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
 | Lane nav | `src/lib/forgeNavigation/gearForge.ts` | `buildGearForgeLaneViews` | Weapons / Armor / Artifacts / Other — stubs stay visible |
+| Weapons era sub-tabs | `src/lib/forgeNavigation/gearForgeWeapons.ts` | `buildGearForgeWeaponsSubTabViews` | Ancient (live) / Modern (visible stub) inside Weapons only |
 | Host adapter | `src/lib/gear/gearForgeHost.ts` | `GearForgeHostAdapter` | `library` \| `creation` \| `sheet` \| `gm` |
 | Creation host | `src/lib/gear/creationGearForgeHost.ts` | `buildCreationGearForgeAdapter` | `tab8_gear` → draft inventory |
 | Sheet host | `src/lib/gear/sheetGearForgeHost.ts` | `buildSheetGearForgeAdapter` | Live `GearPanel` → active inventory |

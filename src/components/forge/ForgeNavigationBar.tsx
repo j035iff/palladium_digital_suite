@@ -6,6 +6,14 @@ import { forgeTabVisualTheme } from '../../lib/forgeNavigation/forgeTabVisual'
 const VIEWING_RING =
   'relative z-[1] !ring-2 !ring-slate-900 !ring-offset-2 !ring-offset-slate-100 dark:!ring-white dark:!ring-offset-slate-900'
 
+/** Same viewing affordance when the bar sits on always-dark chrome (library forge). */
+const VIEWING_RING_ON_DARK =
+  'relative z-[1] !ring-2 !ring-white !ring-offset-2 !ring-offset-slate-950'
+
+/** Force dark available/inactive pills when prefers-color-scheme is light. */
+const AVAILABLE_PILL_ON_DARK =
+  'bg-slate-800 text-slate-200 ring-1 ring-slate-600 hover:bg-slate-700'
+
 function NaTabWatermark() {
   return (
     <span
@@ -46,6 +54,8 @@ export function ForgeNavigationBar({
   /** Exposes the Continue control for banner→tab collapse targeting. */
   continueTargetRef,
   ariaLabel = 'Forge steps',
+  /** When the bar sits on dark chrome (e.g. Gear Forge library), force dark inactive pills. */
+  onDarkSurface = false,
 }: {
   tabs: ForgeTabView[]
   activeTabId: string
@@ -57,6 +67,7 @@ export function ForgeNavigationBar({
   singleRow?: boolean
   continueTargetRef?: RefObject<HTMLButtonElement | null>
   ariaLabel?: string
+  onDarkSurface?: boolean
 }) {
   const activeRef = useRef<HTMLButtonElement>(null)
 
@@ -86,6 +97,11 @@ export function ForgeNavigationBar({
           tab.visual !== 'complete' &&
           onContinueTab != null
         const theme = forgeTabVisualTheme(tab.visual)
+        const pillTheme =
+          onDarkSurface && tab.visual === 'available'
+            ? AVAILABLE_PILL_ON_DARK
+            : theme.pill
+        const viewingRing = onDarkSurface ? VIEWING_RING_ON_DARK : VIEWING_RING
         const title = isContinuePill
           ? continueTooltip ||
             'Validate this section and open the next step. Choices stay editable.'
@@ -122,11 +138,11 @@ export function ForgeNavigationBar({
             className={
               isContinuePill
                 ? 'pds-forge-continue shrink-0'
-                : `relative shrink-0 overflow-hidden rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide transition ${theme.pill} ${
+                : `relative shrink-0 overflow-hidden rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide transition ${pillTheme} ${
                     tab.visual === 'na' ? 'cursor-pointer' : ''
                   } ${
                     !tab.clickable ? 'cursor-not-allowed opacity-95' : ''
-                  } ${isViewing ? VIEWING_RING : ''}`
+                  } ${isViewing ? viewingRing : ''}`
             }
             aria-current={isViewing ? 'step' : undefined}
             aria-disabled={!isContinuePill && !tab.clickable ? true : undefined}
