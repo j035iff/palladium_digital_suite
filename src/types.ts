@@ -2633,11 +2633,35 @@ export type WeaponForgeAbilityTrigger = {
 /**
  * Custom property stack from the Gear Forge (docs/inventory_weapons.md).
  * Quality still writes concrete strike/damage fields; this stores forge metadata.
+ *
+ * `editorDraft` holds Custom Weapon form slots that are not yet first-class on
+ * {@link Weapon} (material, length, N/A combat cells, etc.) so saves do not lie
+ * by dropping user input. Combat engines do **not** consume `editorDraft` yet —
+ * see deferred schema/units note in docs/forge/gear_forge.md.
  */
+export type WeaponForgeEditorDraft = {
+  material?: string
+  /** Canonical length in feet when known (interim; metric UI is display-only). */
+  lengthFeet?: number
+  parry?: string
+  entangle?: string
+  disarm?: string
+  range?: string
+  rateOfFire?: string
+  strikeWhenThrown?: string
+  addsPsDamageBonus?: boolean
+  /** Category label kept for Misc → no W.P. even when Category is hidden in mock layout. */
+  category?: string
+}
+
 export type WeaponForgeProperties = {
   indestructible?: boolean
   /** Named quality applied at forge time (Excellent, Dwarven, etc.). */
   qualityLabel?: string
+  /** Freeform notes (e.g. catalog description copied via Use as base archetype). */
+  notes?: string
+  /** Non-combat / not-yet-schema Custom Weapon form extras (round-trip only). */
+  editorDraft?: WeaponForgeEditorDraft
   damageMultipliers?: readonly WeaponForgeDamageMultiplier[]
   abilityTriggers?: readonly WeaponForgeAbilityTrigger[]
 }

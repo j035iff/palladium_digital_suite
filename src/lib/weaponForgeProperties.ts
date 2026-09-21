@@ -42,6 +42,8 @@ export function hasForgeProperties(
   if (!fp) return false
   if (fp.indestructible) return true
   if (fp.qualityLabel?.trim()) return true
+  if (fp.notes?.trim()) return true
+  if (fp.editorDraft && Object.keys(fp.editorDraft).length > 0) return true
   if (fp.damageMultipliers?.length) return true
   if (fp.abilityTriggers?.length) return true
   return false
@@ -62,6 +64,7 @@ export function summarizeForgeProperties(
   const bits: string[] = []
   if (fp.indestructible) bits.push('Indestructible')
   if (fp.qualityLabel?.trim()) bits.push(fp.qualityLabel.trim())
+  if (fp.notes?.trim()) bits.push('Notes')
   for (const m of fp.damageMultipliers ?? []) {
     bits.push(`${m.multiplier}× ${m.label}`)
   }
