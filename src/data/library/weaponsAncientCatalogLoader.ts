@@ -369,7 +369,6 @@ export function ancientCatalogToCustomArchetypeDraft(
   if (!piece) return null
 
   const stats = resolveAncientWeaponGenreStats(entry, gameSystem)
-  const lb = stats?.averageWeight?.lb
   const kg = stats?.averageWeight?.kg
   const feet = stats?.averageLength?.feet
   const meters = stats?.averageLength?.meters
