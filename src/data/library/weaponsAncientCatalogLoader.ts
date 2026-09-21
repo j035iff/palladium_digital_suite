@@ -173,7 +173,12 @@ export function formatAncientWeaponPickerStatLine(
   if (entry.throwable) parts.push('thrown')
   if (entry.canEntangle) parts.push('entangle')
 
-  if (entry.weaponProficiencyEligible !== false && entry.linkedWpSkillId) {
+  // Misc: no W.P. chip (Joe ruling — for now), even if catalog row still links one.
+  if (
+    !isAncientWeaponMiscellaneousCategory(entry.category) &&
+    entry.weaponProficiencyEligible !== false &&
+    entry.linkedWpSkillId
+  ) {
     const wp = getWeaponProficiencyCatalogEntryById(entry.linkedWpSkillId)
     if (wp?.name) parts.push(wp.name)
   }
@@ -183,6 +188,26 @@ export function formatAncientWeaponPickerStatLine(
   }
 
   return parts.join(' · ')
+}
+
+/**
+ * Joe ruling (for now): Miscellaneous ancient weapons never carry a linked W.P.
+ * — even if a catalog row still has `linkedWpSkillId` (e.g. Kawanga → wp_chain).
+ */
+export function isAncientWeaponMiscellaneousCategory(
+  category: string | readonly string[],
+): boolean {
+  return ancientWeaponCategorySlugs(category).some(
+    (slug) => slug === 'miscellaneous',
+  )
+}
+
+/** True when a custom-form category label is Misc / Miscellaneous. */
+export function isCustomWeaponMiscellaneousCategoryLabel(
+  categoryLabel: string,
+): boolean {
+  const n = categoryLabel.trim().toLowerCase()
+  return n === 'misc' || n === 'miscellaneous'
 }
 
 /** Fields for {@link CharacterContext.addWeaponToInventory} from a catalog row. */
@@ -207,9 +232,13 @@ export function ancientCatalogToInventoryPiece(
   const resolved = resolveAncientWeaponCombatStats(entry, gameSystem, qualityVariantId)
   if (!resolved) return null
 
-  const wpEntry = entry.linkedWpSkillId
-    ? getWeaponProficiencyCatalogEntryById(entry.linkedWpSkillId)
-    : undefined
+  const miscNoWp = isAncientWeaponMiscellaneousCategory(entry.category)
+  const wpEligible =
+    !miscNoWp && entry.weaponProficiencyEligible !== false
+  const wpEntry =
+    wpEligible && entry.linkedWpSkillId
+      ? getWeaponProficiencyCatalogEntryById(entry.linkedWpSkillId)
+      : undefined
 
   const name = resolved.qualityLabel
     ? `${entry.name} (${resolved.qualityLabel})`
@@ -221,16 +250,175 @@ export function ancientCatalogToInventoryPiece(
     damage: resolved.damage,
     strikeBonus: 0,
     weightLbs: resolved.weightLbs,
-    linkedWpSkillId:
-      entry.weaponProficiencyEligible === false
-        ? undefined
-        : entry.linkedWpSkillId,
-    wpCategory:
-      entry.weaponProficiencyEligible === false ? undefined : wpEntry?.name,
+    linkedWpSkillId: wpEligible ? entry.linkedWpSkillId : undefined,
+    wpCategory: wpEligible ? wpEntry?.name : undefined,
     catalogWeaponId: entry.id,
     qualityVariantId: resolved.qualityVariantId,
     throwable: Boolean(entry.throwable),
     twoHanded: resolved.twoHanded,
-    weaponProficiencyEligible: entry.weaponProficiencyEligible !== false,
+    weaponProficiencyEligible: wpEligible,
   }
+}
+
+/**
+ * Draft fields for the Custom Weapon editor when using a catalog row as a
+ * base archetype. Maps only existing catalog fields — ancient genreStats do
+ * not encode intrinsic strike / parry / entangle / disarm numeric bonuses.
+ *
+ * Combat bonus slots default to `+0` for now (Joe ruling). Ideal later:
+ * `N/A` only when schema/JSON marks a stat inapplicable to that weapon type
+ * (e.g. swords can’t entangle) — do not invent per-type N/A matrices yet.
+ */
+export type AncientWeaponCustomArchetypeDraft = {
+  name: string
+  category: string
+  damage: string
+  /** Display for Strike field — catalog has no intrinsic; `+0`. */
+  strikeDisplay: string
+  /** Display for Parry — catalog has none; `+0`. */
+  parryDisplay: string
+  /** Catalog has canEntangle flag only (no numeric); form shows `+0` for now. */
+  entangleDisplay: string
+  /** Not in ancient catalog; `+0` until applicability schema exists. */
+  disarmDisplay: string
+  /** Catalog `range.display` / feet when present; else empty (not a bonus cell). */
+  rangeDisplay: string
+  /** Not in ancient catalog; `+0` until applicability schema exists. */
+  rateOfFireDisplay: string
+  /** Catalog has throwable flag only (no numeric); `+0` for now. */
+  strikeWhenThrownDisplay: string
+  weightLbs: number
+  weightKg: number | null
+  lengthFeet: number | null
+  lengthMeters: number | null
+  /** Catalog has no material field — left empty (do not invent). */
+  material: string
+  description: string
+  linkedWpSkillId?: string
+  wpCategory?: string
+  weaponProficiencyEligible: boolean
+  throwable: boolean
+  twoHanded: boolean
+  /**
+   * Catalog has no P.S. damage-bonus flag.
+   * Default **false** (Joe ruling) until schema carries source of truth.
+   */
+  addsPsDamageBonus: boolean
+  /** Honest gaps vs custom-form combat slots that catalog rows do not fill. */
+  catalogGaps: readonly string[]
+}
+
+function buildArchetypeDescription(
+  entry: AncientWeaponCatalogEntry,
+  gameSystem: string,
+  qualityVariantId?: string | null,
+): string {
+  const stats = resolveAncientWeaponGenreStats(entry, gameSystem)
+  const resolved = resolveAncientWeaponCombatStats(
+    entry,
+    gameSystem,
+    qualityVariantId,
+  )
+  const parts: string[] = []
+  if (entry.description?.trim()) parts.push(entry.description.trim())
+  if (resolved?.damageSpecial?.trim()) {
+    parts.push(`Special damage: ${resolved.damageSpecial.trim()}`)
+  }
+  if (stats?.payloadNotes?.trim()) {
+    parts.push(stats.payloadNotes.trim())
+  }
+  if (stats?.notes?.trim()) parts.push(stats.notes.trim())
+  if (entry.canEntangle) {
+    const alreadyMentionsEntangle = parts.some((p) =>
+      /entangle/i.test(p),
+    )
+    if (!alreadyMentionsEntangle) parts.push('Can entangle.')
+  }
+  return parts.join('\n\n')
+}
+
+function formatCatalogRangeDisplay(
+  stats: AncientWeaponGenreStatBlock | undefined,
+): string {
+  if (!stats?.range) return ''
+  if (stats.range.display?.trim()) return stats.range.display.trim()
+  if (typeof stats.range.feet === 'number') return `${stats.range.feet} ft`
+  if (
+    typeof stats.range.feetMin === 'number' &&
+    typeof stats.range.feetMax === 'number'
+  ) {
+    return `${stats.range.feetMin}–${stats.range.feetMax} ft`
+  }
+  return ''
+}
+
+/**
+ * Populate Custom Weapon editor slots from an ancient catalog row.
+ * Intrinsic strike/parry/entangle/disarm bonuses are absent from catalog data.
+ */
+export function ancientCatalogToCustomArchetypeDraft(
+  entry: AncientWeaponCatalogEntry,
+  gameSystem: string,
+  qualityVariantId?: string | null,
+): AncientWeaponCustomArchetypeDraft | null {
+  const piece = ancientCatalogToInventoryPiece(
+    entry,
+    gameSystem,
+    qualityVariantId,
+  )
+  if (!piece) return null
+
+  const stats = resolveAncientWeaponGenreStats(entry, gameSystem)
+  const kg = stats?.averageWeight?.kg
+  const feet = stats?.averageLength?.feet
+  const meters = stats?.averageLength?.meters
+
+  const catalogGaps = [
+    'Intrinsic strike / parry / entangle / disarm bonuses (not in genreStats) — form shows +0 for now',
+    'Material (not in catalog — left blank)',
+    'Rate of fire (ancient catalog has none) — form shows +0 until applicability schema',
+    'Adds P.S. damage bonus (no catalog flag — defaults off)',
+    'Future: N/A only when schema marks a combat slot inapplicable to the weapon type',
+  ]
+
+  return {
+    name: piece.name,
+    category: piece.category,
+    damage: piece.damage,
+    strikeDisplay: '+0',
+    parryDisplay: '+0',
+    entangleDisplay: '+0',
+    disarmDisplay: '+0',
+    rangeDisplay: formatCatalogRangeDisplay(stats),
+    rateOfFireDisplay: '+0',
+    strikeWhenThrownDisplay: '+0',
+    weightLbs: piece.weightLbs,
+    weightKg:
+      typeof kg === 'number' && Number.isFinite(kg) ? kg : null,
+    lengthFeet:
+      typeof feet === 'number' && Number.isFinite(feet) ? feet : null,
+    lengthMeters:
+      typeof meters === 'number' && Number.isFinite(meters) ? meters : null,
+    material: '',
+    description: buildArchetypeDescription(entry, gameSystem, qualityVariantId),
+    linkedWpSkillId: piece.linkedWpSkillId,
+    wpCategory: piece.wpCategory,
+    weaponProficiencyEligible: piece.weaponProficiencyEligible,
+    throwable: piece.throwable,
+    twoHanded: piece.twoHanded,
+    addsPsDamageBonus: false,
+    catalogGaps,
+  }
+}
+
+/** Sort category rows with Miscellaneous last; otherwise A–Z by label. */
+export function sortAncientWeaponCategoriesMiscLast<
+  T extends { slug: string; label: string },
+>(categories: readonly T[]): T[] {
+  return [...categories].sort((a, b) => {
+    const aMisc = a.slug === 'miscellaneous' ? 1 : 0
+    const bMisc = b.slug === 'miscellaneous' ? 1 : 0
+    if (aMisc !== bMisc) return aMisc - bMisc
+    return a.label.localeCompare(b.label)
+  })
 }

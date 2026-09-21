@@ -362,6 +362,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 - **Morphus Sub-Forge guided/basic flow** (Tab 6) — slot engine shipped; UX polish and validation still in progress. Expert Mode not started.
 - Talent Pass B — runtime consumption of Tier 2 combat/play blocks.
 - Supernatural ability forge panels (magic / psionics / talents) polish and spawn handoff edge cases.
+- **Gear Forge Custom Weapon form** — mock layout shipped; **deferred:** interface units (standard/metric) engine-wide pass + promoting combat/other-stat fields off `forgeProperties.editorDraft` (see `docs/forge/gear_forge.md` Later + project store `internal/deferred-gear-schema-units.md`).
 
 **Roadmap genres** (visible in launcher, not all wired): Rifts Aftermath, generic Fantasy/Sci-Fi stubs.
 
@@ -378,6 +379,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 | `docs/app_viewport_launcher.md` | Gate Check — Open vs Create vs GM Hub, genre manifest, viewports |
 | `docs/gm_hub.md` | Gamemaster Hub v1 — local session, party snapshots, fodder, combat |
 | `docs/forge/character_creation.md` | Character Creation Forge — tab sequence & state (Identity tab + eight step tabs) |
+| `docs/forge/gear_forge.md` | Shared Gear Forge shell — hosts, weapons Ancient/Modern, Custom Weapon form + deferred units/schema |
 | `docs/forge/morphus_creation.md` | Morphus Sub-Forge (Tab 6) |
 | `docs/character_spawn_handoff.md` | Spawn modal, sheet handoff, `isFinalized`, saves |
 | `docs/character_creation.md` | Documentation map (links above + configurator tiers) |

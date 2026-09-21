@@ -14,7 +14,7 @@ Shared inventory forge shell: **Weapons / Armor / Artifacts / Other** lanes on o
 ## MVP (shipped)
 
 - `GearForgeShell` + lane nav (`src/lib/forgeNavigation/gearForge.ts`)
-- **Weapons** lane with era sub-tabs (**Ancient weapons** / **Modern weapons**): Ancient uses a skills-style catalog picker (category dropdown + search; list only after a category — or All + search — with condensed damage/weight/flag rows); custom weapon + property stack (`forgeProperties` on `Weapon`) remain below. Modern is a visible Radical Visibility stub (coming soon)
+- **Weapons** lane with era sub-tabs (**Ancient weapons** / **Modern weapons**): Ancient uses a skills-style catalog picker (category dropdown + search; list only after a category — or All + search — with condensed damage/weight/flag rows; **Miscellaneous** sorted last). Selecting a catalog row enables **Use as base archetype**, which fills the **Custom weapon** editor: **Name** + locked **Linked W.P.** (category is internal only — not shown; Misc → no W.P.); **Combat stats** (Damage plus Strike / Parry / Entangle / Disarm / Rate of Fire / Strike when Thrown default **`+0`** until schema carries applicability — future: N/A only when a type can’t use a slot); **Other stats** (Material blank on fill, Weight, Length, Throwable / Two-handed / Adds PS Damage Bonus default **off**); **Description**. Custom property stack stays below (plus interim magazine toggles). Weight/length labels are interim **lbs / ft** until a units preference exists. Extra form cells round-trip in `forgeProperties.editorDraft` until a later schema pass — see deferred note in project store `internal/deferred-gear-schema-units.md`. Modern is a visible Radical Visibility stub (coming soon)
 - Armor / Artifacts / Other lanes visible with Radical Visibility stubs
 - Portal: **Gear Forge** + **My Custom Gear** on `AppLauncher`
 - Creation: **`kind: 'creation'`** adapter (`buildCreationGearForgeAdapter`) on `tab8_gear` — same shell; commits to draft inventory (not the custom library)
@@ -26,5 +26,7 @@ Shared inventory forge shell: **Weapons / Armor / Artifacts / Other** lanes on o
 - Cast inventory / fodder gear bags; LAN item push
 - Artifacts lane deep editor; armor/other catalogs
 - Combat auto-apply of multipliers; P.P.E./I.S.P. spend for ability triggers
+- **Units preference (standard/metric)** — engine-wide conversion; Gear Forge currently labels lbs/ft only
+- **Weapon schema** — promote Custom Weapon combat/other-stat fields off `forgeProperties.editorDraft` into first-class inventory + combat consumption
 
 Related: [inventory_weapons.md](../inventory_weapons.md) · [app_viewport_launcher.md](../app_viewport_launcher.md) · [character_creation.md](character_creation.md) · [gm_hub.md](../gm_hub.md)
