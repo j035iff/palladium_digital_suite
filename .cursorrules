@@ -72,6 +72,9 @@ When adding, updating, or auditing W.P. rows (`src/data/content/skills/weapon_pr
 ### Palladium encounter archetype ingest
 When adding, updating, or auditing GM encounter templates (`src/data/content/encounters/<genre>/`), follow **`docs/ingest/encounters.md`** (Pass A workflow, composition modes, cross-refs to races/O.C.C./H2H/W.P., batch template). Keep that doc updated when ingest rules change; flag mechanics ambiguity and ask the user for a ruling before encoding.
 
+### Measurement units (Standard / Metric)
+When encoding measurable length, weight, temperature, speed, volume, or area on any catalog, follow **`docs/ingest/units.md`**. Prefer book-printed dual values (`bookDual`); engine conversion only when one side is missing or the value is custom. Runtime preference: **`docs/units_preference.md`**. Schema fragments: `src/data/schemas/palladium-units.schema.json`.
+
 ### Ingest orchestrator (multi-batch jobs)
 When the user provides a `*.brief.json` under `src/data/source/ingest-briefs/` or asks to run the ingest orchestrator, follow **`docs/ingest/orchestrator.md`** end-to-end: validate/init brief → content review checklist → batch plan → ingest one batch at a time → persist `runs/<id>/run.json` → completion report with open rulings. Brief format: **`docs/ingest/brief-format.md`**. CLI: `npm run ingest:brief`.
 

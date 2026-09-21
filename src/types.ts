@@ -2641,7 +2641,7 @@ export type WeaponForgeAbilityTrigger = {
  */
 export type WeaponForgeEditorDraft = {
   material?: string
-  /** Canonical length in feet when known (interim; metric UI is display-only). */
+  /** Canonical length in feet when known; metric UI converts via units preference. */
   lengthFeet?: number
   parry?: string
   entangle?: string

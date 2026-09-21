@@ -259,10 +259,33 @@ Track work here until promoted to the registry above.
 
 ---
 
+### Measurement units (Standard ↔ Metric)
+
+**Status:** `partial` (engine + preference + Gear Forge wired; catalog dual backfill ongoing)  
+**Related spec:** `docs/units_preference.md`, `docs/ingest/units.md`
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Math | `src/lib/units/convert.ts` | gross factors + rounding | Yard ladder only when book used yards |
+| Resolve | `src/lib/units/resolve.ts` | `resolveLength`, `resolveWeight`, `resolveTemperature`, … | Book dual preferred; fill when one side missing |
+| Format | `src/lib/units/format.ts` | `formatLength`, `weightUnitLabel`, … | Structured fields only — no prose rewrite |
+| Ingest parse | `src/lib/units/parse.ts` | `parseLengthFromProse`, … | Dice lengths ignored for now |
+| Preference | `src/lib/units/preference.ts` + `UnitsPreferenceContext` | `localStorage` `pds:unitsPreference` | Per-user/device; not in character saves |
+| Schema | `palladium-units.schema.json` | `#/$defs/*Measure` | Shared dual structures |
+| UI | `UnitsPreferenceToggle` | Launcher + sheet chrome; Gear Forge field labels | |
+
+**Modes / variants:** `standard` \| `metric`  
+**Extension guide:** Add new quantity kinds to schema `$defs` + convert/resolve/format; wire UI through `useUnitsPreference` — never fork per-form converters.
+
+**Tests:** `src/lib/units/units.test.ts`
+
+---
+
 ## Changelog
 
 | Date | Change |
 |------|--------|
+| 2026-09-21 | Measurement units path: Standard/Metric preference, dual measure schema, Gear Forge convert-on-edit |
 | 2026-09-18 | Gear Forge GM host: Hub **Gear** tab + `kind: 'gm'` adapter on shared shell → selected party character save |
 | 2026-09-18 | Gear Forge Sheet host: live `GearPanel` + `kind: 'sheet'` adapter on shared shell → active inventory |
 | 2026-09-16 | Gear Forge Creation host: `tab8_gear` + `kind: 'creation'` adapter on shared shell; Review → `tab9_review` |

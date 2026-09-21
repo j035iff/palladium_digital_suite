@@ -28,8 +28,56 @@ import {
   type WeaponQualityPresetId,
 } from '../../../lib/weaponForgeProperties'
 import type { Weapon, WeaponForgeProperties } from '../../../types'
+import {
+  feetToMeters,
+  kilogramsToPounds,
+  metersToFeet,
+  poundsToKilograms,
+  useUnitsPreference,
+  weightUnitLabel as unitsWeightLabel,
+  lengthUnitLabel as unitsLengthLabel,
+  type MeasurementSystem,
+} from '../../../lib/units'
 import { ForgeNavigationBar } from '../../forge/ForgeNavigationBar'
 import { gearPanelTheme } from '../../live/gear/gearPanelTheme'
+
+function formatFieldNumber(n: number): string {
+  return Number.isInteger(n) ? String(n) : String(n)
+}
+
+function weightToDisplay(
+  weightLbs: number,
+  system: MeasurementSystem,
+): string {
+  if (system === 'metric') return formatFieldNumber(poundsToKilograms(weightLbs))
+  return formatFieldNumber(weightLbs)
+}
+
+function weightFromDisplay(
+  raw: string,
+  system: MeasurementSystem,
+): number | undefined {
+  const n = Number(raw)
+  if (!Number.isFinite(n)) return undefined
+  return system === 'metric' ? kilogramsToPounds(n) : n
+}
+
+function lengthToDisplay(
+  lengthFeet: number,
+  system: MeasurementSystem,
+): string {
+  if (system === 'metric') return formatFieldNumber(feetToMeters(lengthFeet))
+  return formatFieldNumber(lengthFeet)
+}
+
+function lengthFromDisplay(
+  raw: string,
+  system: MeasurementSystem,
+): number | undefined {
+  const n = Number(raw)
+  if (!Number.isFinite(n) || raw.trim() === '') return undefined
+  return system === 'metric' ? metersToFeet(n) : n
+}
 
 type Props = {
   adapter: GearForgeHostAdapter
@@ -38,6 +86,8 @@ type Props = {
 
 export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const theme = gearPanelTheme(morphus)
+  const { measurementSystem } = useUnitsPreference()
+  const prevSystemRef = useRef(measurementSystem)
   const blocked = adapter.commitBlockedReason?.trim() || null
 
   const [weaponsSubTab, setWeaponsSubTab] =
@@ -82,11 +132,28 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const customEditorRef = useRef<HTMLDivElement>(null)
 
   /**
-   * Interim units: no wired interface units setting yet — label as standard (lbs / ft).
-   * Deferred: holistic standard/metric conversion pass.
+   * Gear Forge stores weightLbs / lengthFeet canonically; UI labels and field
+   * values follow the app-wide Standard/Metric preference.
    */
-  const weightUnitLabel = 'lbs'
-  const lengthUnitLabel = 'ft'
+  const weightUnitLabel = unitsWeightLabel(measurementSystem)
+  const lengthUnitLabel = unitsLengthLabel(measurementSystem)
+
+  useEffect(() => {
+    const prev = prevSystemRef.current
+    if (prev === measurementSystem) return
+    setCustomWeight((raw) => {
+      const asLbs = weightFromDisplay(raw, prev)
+      if (asLbs == null) return raw
+      return weightToDisplay(asLbs, measurementSystem)
+    })
+    setCustomLength((raw) => {
+      if (!raw.trim()) return raw
+      const asFeet = lengthFromDisplay(raw, prev)
+      if (asFeet == null) return raw
+      return lengthToDisplay(asFeet, measurementSystem)
+    })
+    prevSystemRef.current = measurementSystem
+  }, [measurementSystem])
 
   const [indestructible, setIndestructible] = useState(false)
   const [qualityPresetId, setQualityPresetId] =
@@ -207,10 +274,10 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
     const notes = customDescription.trim()
     if (notes) fp.notes = notes
 
-    const lengthFeet = Number(customLength)
+    const lengthFeet = lengthFromDisplay(customLength, measurementSystem)
     const editorDraft: NonNullable<WeaponForgeProperties['editorDraft']> = {}
     if (customMaterial.trim()) editorDraft.material = customMaterial.trim()
-    if (Number.isFinite(lengthFeet) && customLength.trim() !== '') {
+    if (lengthFeet != null) {
       editorDraft.lengthFeet = lengthFeet
     }
     if (customParry.trim()) editorDraft.parry = customParry.trim()
@@ -274,17 +341,11 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
     setCustomRateOfFire(draft.rateOfFireDisplay)
     setCustomStrikeWhenThrown(draft.strikeWhenThrownDisplay)
     setCustomMaterial(draft.material)
-    setCustomWeight(
-      Number.isInteger(draft.weightLbs)
-        ? String(draft.weightLbs)
-        : String(draft.weightLbs),
-    )
+    setCustomWeight(weightToDisplay(draft.weightLbs, measurementSystem))
     setCustomLength(
       draft.lengthFeet == null
         ? ''
-        : Number.isInteger(draft.lengthFeet)
-          ? String(draft.lengthFeet)
-          : String(draft.lengthFeet),
+        : lengthToDisplay(draft.lengthFeet, measurementSystem),
     )
     setCustomDescription(draft.description)
     // Misc archetype: force empty W.P. (Joe ruling — for now).
@@ -336,8 +397,8 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const addCustomWeapon = () => {
     if (blocked) return
     const strikeBonus = parseBonusField(customStrike) ?? 0
-    const weightLbs = Number(customWeight)
-    if (!Number.isFinite(weightLbs)) return
+    const weightLbs = weightFromDisplay(customWeight, measurementSystem)
+    if (weightLbs == null) return
 
     const wpEntry =
       !miscCategoryNoWp && customWpEligible && customWpId

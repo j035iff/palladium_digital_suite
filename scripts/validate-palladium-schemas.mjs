@@ -63,6 +63,7 @@ const encounterArchetypeSchema = loadJson(
 const weaponAncientSchema = loadJson(
   join(schemasDir, 'palladium-weapon-ancient.schema.json'),
 )
+const unitsSchema = loadJson(join(schemasDir, 'palladium-units.schema.json'))
 const morphusDescriptionLeakRe =
   /\b(?:Talent Manifestations|New Common Talents|Appendix Talents|Common Talents from Nightbane|Elite Talents from Nightbane)\b/i
 
@@ -95,6 +96,7 @@ for (const [label, schema] of [
   ['palladium-xp-table-book.schema.json', xpTableBookSchema],
   ['palladium-encounter-archetype.schema.json', encounterArchetypeSchema],
   ['palladium-weapon-ancient.schema.json', weaponAncientSchema],
+  ['palladium-units.schema.json', unitsSchema],
 ]) {
   try {
     ajv.compile(schema)
@@ -121,6 +123,7 @@ const validateXpTableDoc = ajv.compile(xpTableSchema)
 const validateXpTableBookDoc = ajv.compile(xpTableBookSchema)
 const validateEncounterArchetypeRow = ajv.compile(encounterArchetypeSchema)
 const validateWeaponAncientRow = ajv.compile(weaponAncientSchema)
+const validateUnitsExampleDoc = ajv.compile(unitsSchema)
 
 const skillsDir = join(contentDir, 'skills')
 let palladiumSkills
@@ -1146,6 +1149,10 @@ const exampleValidators = [
   {
     prefix: 'standard-modern-weapon-progression',
     compile: validateProgressionDoc,
+  },
+  {
+    prefix: 'palladium-units',
+    compile: validateUnitsExampleDoc,
   },
 ]
 

@@ -14,6 +14,7 @@ import {
 } from '../../lib/liveSheetTabs'
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 import { IdentityHeader } from './IdentityHeader'
+import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
 export function MainLayout() {
   const [spawnSplash, setSpawnSplash] = useState(false)
@@ -174,6 +175,9 @@ export function MainLayout() {
               </div>
 
               <div className="flex shrink-0 flex-wrap items-center gap-2">
+                <UnitsPreferenceToggle
+                  tone={morphusActive ? 'morphus' : 'sheet'}
+                />
                 <button
                   type="button"
                   onClick={returnToLauncher}

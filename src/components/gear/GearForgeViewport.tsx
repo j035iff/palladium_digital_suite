@@ -14,6 +14,7 @@ import type {
 } from '../../lib/gear/gearForgeHost'
 import { useCharacter } from '../../context/CharacterContext'
 import { GearForgeShell } from './GearForgeShell'
+import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
 /**
  * Standalone portal host for Gear Forge (`viewport: 'gear_forge'`).
@@ -73,6 +74,7 @@ export function GearForgeViewport() {
           Gear Forge
         </p>
         <div className="flex shrink-0 items-center gap-2">
+          <UnitsPreferenceToggle tone="launcher" />
           <label className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-400">
             Genre
             <select

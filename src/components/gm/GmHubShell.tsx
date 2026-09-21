@@ -9,6 +9,7 @@ import { GmGearPanel } from './GmGearPanel'
 import { GmPartyPanel } from './GmPartyPanel'
 import { GmSessionsPanel } from './GmSessionsPanel'
 import { GmTabBar } from './GmTabBar'
+import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
 function GmHubWorkspace() {
   const { hubMode, hubTabId } = useGmSession()
@@ -59,6 +60,7 @@ export function GmHubShell() {
           )}
         </div>
         <div className="flex min-w-[11rem] flex-col gap-2">
+          <UnitsPreferenceToggle tone="launcher" className="self-end" />
           <button
             type="button"
             onClick={returnToLauncher}

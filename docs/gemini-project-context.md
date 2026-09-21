@@ -362,7 +362,7 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 - **Morphus Sub-Forge guided/basic flow** (Tab 6) — slot engine shipped; UX polish and validation still in progress. Expert Mode not started.
 - Talent Pass B — runtime consumption of Tier 2 combat/play blocks.
 - Supernatural ability forge panels (magic / psionics / talents) polish and spawn handoff edge cases.
-- **Gear Forge Custom Weapon form** — mock layout shipped; **deferred:** interface units (standard/metric) engine-wide pass + promoting combat/other-stat fields off `forgeProperties.editorDraft` (see `docs/forge/gear_forge.md` Later + project store `internal/deferred-gear-schema-units.md`).
+- **Gear Forge Custom Weapon form** — mock layout shipped; combat/other-stat fields still round-trip via `forgeProperties.editorDraft` (see `docs/forge/gear_forge.md`). **Units preference** engine + schema + Gear Forge labels shipped (`docs/units_preference.md`); catalog dual-measure backfill and identity metric entry polish remain.
 
 **Roadmap genres** (visible in launcher, not all wired): Rifts Aftermath, generic Fantasy/Sci-Fi stubs.
 
@@ -379,7 +379,9 @@ Tab 6 hosts the nested **Morphus Sub-Forge** (`docs/forge/morphus_creation.md`) 
 | `docs/app_viewport_launcher.md` | Gate Check — Open vs Create vs GM Hub, genre manifest, viewports |
 | `docs/gm_hub.md` | Gamemaster Hub v1 — local session, party snapshots, fodder, combat |
 | `docs/forge/character_creation.md` | Character Creation Forge — tab sequence & state (Identity tab + eight step tabs) |
-| `docs/forge/gear_forge.md` | Shared Gear Forge shell — hosts, weapons Ancient/Modern, Custom Weapon form + deferred units/schema |
+| `docs/forge/gear_forge.md` | Shared Gear Forge shell — hosts, weapons Ancient/Modern, Custom Weapon form + units preference |
+| `docs/units_preference.md` | App-wide Standard/Metric toggle, conversion rules, storage |
+| `docs/ingest/units.md` | Dual-measure ingest encoding for all catalogs |
 | `docs/forge/morphus_creation.md` | Morphus Sub-Forge (Tab 6) |
 | `docs/character_spawn_handoff.md` | Spawn modal, sheet handoff, `isFinalized`, saves |
 | `docs/character_creation.md` | Documentation map (links above + configurator tiers) |
@@ -431,6 +433,7 @@ Use this checklist **in the same PR/session** as code changes. Skipping doc upda
 | Morphus forge / trait encoding | [`docs/morphus_authoring.md`](morphus_authoring.md), [`docs/ingest/morphus.md`](ingest/morphus.md), [`docs/forge/morphus_creation.md`](forge/morphus_creation.md) |
 | Stat formulas, saves, live ledger | [`docs/stat_engine_spec.md`](stat_engine_spec.md), [`docs/live_ledger.md`](live_ledger.md), [`docs/unified_paths.md`](unified_paths.md) when pipeline stages change |
 | Launcher, genres, viewports | [`docs/app_viewport_launcher.md`](app_viewport_launcher.md) |
+| Units preference / dual measures | [`docs/units_preference.md`](units_preference.md), [`docs/ingest/units.md`](ingest/units.md), [`docs/unified_paths.md`](unified_paths.md) |
 | GM Hub session / combat / party observer / campaign forge | [`docs/gm_hub.md`](gm_hub.md), [`docs/unified_paths.md`](unified_paths.md) when observer/roster/forge pipelines change |
 | Product pillars or AI protocol | [`docs/vision.md`](vision.md), [`.cursorrules`](../.cursorrules) |
 | Cursor Projects coordinator seeds | [`.cursor/projects/`](../.cursor/projects/README.md) (and matching `.seed.md` files) |
@@ -455,12 +458,13 @@ When unsure, add a short note to the most specific doc (ingest playbook or featu
 10. **Encounter archetype ingest** — follow `docs/ingest/encounters.md`; GM-only templates, not player creation rows.
 11. **XP tables / HtH / W.P. ingest** — follow `docs/ingest/xp_tables.md`, `docs/ingest/hth.md`, `docs/ingest/weapon_proficiencies.md` respectively.
 12. **Morphus trait ingest** — follow `docs/ingest/morphus.md` (+ `docs/morphus_authoring.md` for field encoding); flag ambiguous mechanics and ask the user before encoding.
-13. **Ingest orchestrator** — when the user provides a `*.brief.json`, follow `docs/ingest/orchestrator.md` end-to-end; persist `src/data/source/ingest-briefs/runs/<id>/run.json`; report open rulings at completion.
-13. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
-14. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
-15. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
-16. **Commits** — only when the user explicitly asks.
-17. **Cursor Projects** — for multi-PR feature / ingest / GM Hub / gardening bodies of work, use seeds under [`.cursor/projects/`](../.cursor/projects/README.md); Project shared context does not replace git-backed pillars, ingest playbooks, or Unified Path docs.
+13. **Units / dual measures** — follow `docs/ingest/units.md` when encoding length, weight, temperature, speed, volume, or area; prefer book dual values; see `docs/units_preference.md` for runtime.
+14. **Ingest orchestrator** — when the user provides a `*.brief.json`, follow `docs/ingest/orchestrator.md` end-to-end; persist `src/data/source/ingest-briefs/runs/<id>/run.json`; report open rulings at completion.
+15. **Minimize diff scope** — match existing naming, import style, and polymorphic modifier patterns.
+16. **Genre gating** — never show Nightbane-only mechanics as universal without checking `gameSystems` / genre manifests.
+17. **Schema examples** — when a content schema changes, update the matching file under `src/data/schemas/examples/` (do not create duplicate example files).
+18. **Commits** — only when the user explicitly asks.
+19. **Cursor Projects** — for multi-PR feature / ingest / GM Hub / gardening bodies of work, use seeds under [`.cursor/projects/`](../.cursor/projects/README.md); Project shared context does not replace git-backed pillars, ingest playbooks, or Unified Path docs.
 
 ---
 

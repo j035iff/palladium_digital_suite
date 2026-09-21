@@ -16,7 +16,9 @@ Pass A/B workflows, batch templates, and validation commands for catalog JSON au
 | XP tables | [`xp_tables.md`](xp_tables.md) | `src/data/content/progression/xp_tables/<genre>/` |
 | Talents | [`talents.md`](talents.md) | `src/data/content/talents/` |
 | Morphus traits | [`morphus.md`](morphus.md) | `src/data/content/morphus/tables/` (+ `morphus/forge/` routing) |
+| **Units (cross-cutting)** | [`units.md`](units.md) | Dual Standard/Metric structured measures on any catalog |
 
 **Layout contract:** [`../content-catalog-layout.md`](../content-catalog-layout.md) (`utils/` ancillary files, loader rules).  
+**Units preference (runtime):** [`../units_preference.md`](../units_preference.md)  
 **Multi-book source order:** [`brief-format.md`](brief-format.md) § Multi-book source order · master list `src/data/source/ingest-briefs/utils/genre-source-reference-order.json`  
 **Project context & doc-sync:** [`../gemini-project-context.md`](../gemini-project-context.md) § Development workflow.

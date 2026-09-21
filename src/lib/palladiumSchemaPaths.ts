@@ -33,6 +33,9 @@ export const PALLADIUM_PSIONIC_SCHEMA_PATH =
 export const PALLADIUM_FEATURE_COMMON_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-feature-common.schema.json` as const
 
+export const PALLADIUM_UNITS_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-units.schema.json` as const
+
 export const PALLADIUM_MAGIC_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-magic.schema.json` as const
 
@@ -75,6 +78,9 @@ export const PALLADIUM_PSIONIC_SCHEMA_ID =
 
 export const PALLADIUM_FEATURE_COMMON_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-feature-common.schema.json' as const
+
+export const PALLADIUM_UNITS_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-units.schema.json' as const
 
 export const PALLADIUM_MAGIC_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-magic.schema.json' as const

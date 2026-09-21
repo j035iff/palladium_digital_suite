@@ -17,6 +17,7 @@ import {
   type CustomGearLibraryIndexEntry,
 } from '../../lib/gear/customGearLibrary'
 import type { GmSessionIndexEntry } from '../../lib/gm/sessionTypes'
+import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
 function CustomGearIndexSelectRow({
   row,
@@ -346,6 +347,10 @@ export function AppLauncher() {
         style={{ backgroundImage: "url('/assets/launcher-hero.png')" }}
         aria-hidden
       />
+
+      <div className="absolute left-4 top-4 z-20 sm:left-6 sm:top-6">
+        <UnitsPreferenceToggle tone="launcher" />
+      </div>
 
       <header className="relative z-10 px-6 pt-10 text-center">
         <h1 className="text-4xl font-black uppercase tracking-[0.2em] text-white drop-shadow-lg sm:text-5xl">

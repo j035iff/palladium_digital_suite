@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-units.schema.json",
+  "title": "Palladium dual measurement fragments",
+  "description": "Shared dual Standard/Metric measurement objects for catalog rows. Prefer book-printed dual values (`bookDual: true`). Engine conversion fills a missing side only when one system is known or the value is custom user input. See docs/ingest/units.md and docs/units_preference.md.\n\nDomain schemas `$ref` individual `#/$defs/*Measure` fragments. The root object shape is the example-bundle used by `palladium-units.example.json`.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "comment": { "type": "string" },
+    "bookDualLengthFeet": { "$ref": "#/$defs/lengthMeasure" },
+    "bookDualLengthYards": { "$ref": "#/$defs/lengthMeasure" },
+    "bookDualLengthMiles": { "$ref": "#/$defs/lengthMeasure" },
+    "singleSideLengthCustom": { "$ref": "#/$defs/lengthMeasure" },
+    "bookDualWeight": { "$ref": "#/$defs/weightMeasure" },
+    "bookDualTemperatureAbsolute": { "$ref": "#/$defs/temperatureMeasure" },
+    "temperatureDeltaSingle": { "$ref": "#/$defs/temperatureMeasure" },
+    "bookDualSpeed": { "$ref": "#/$defs/speedMeasure" },
+    "volumeConstruct": { "$ref": "#/$defs/volumeMeasure" },
+    "areaSense": { "$ref": "#/$defs/areaMeasure" },
+    "characterHeight": { "$ref": "#/$defs/characterHeightMeasure" }
+  },
+  "$defs": {
+    "lengthStandardUnit": {
+      "type": "string",
+      "enum": ["inches", "feet", "yards", "miles"],
+      "description": "Which US Customary unit the book printed. Use `yards` only when the book explicitly says yards (triggers 1 yd = 1 m). Otherwise prefer `feet` / `inches` / `miles`."
+    },
+    "lengthMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Dual length/distance. Populate both systems when the book prints both. Set `standardUnit` to the book’s standard-side unit.",
+      "properties": {
+        "display": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Printed fragment (e.g. `100 ft (30.5 m)`)."
+        },
+        "inches": { "type": "number" },
+        "feet": { "type": "number" },
+        "yards": { "type": "number" },
+        "miles": { "type": "number" },
+        "centimeters": { "type": "number" },
+        "meters": { "type": "number" },
+        "kilometers": { "type": "number" },
+        "standardUnit": { "$ref": "#/$defs/lengthStandardUnit" },
+        "bookDual": {
+          "type": "boolean",
+          "description": "True when both systems appear in the book — engine must not overwrite with calculated values."
+        }
+      }
+    },
+    "weightMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Dual weight. Gross conversion: 1 lb = 0.5 kg (nearest tenth) when only one side is known.",
+      "properties": {
+        "display": { "type": "string", "minLength": 1 },
+        "pounds": { "type": "number" },
+        "kilograms": { "type": "number" },
+        "bookDual": { "type": "boolean" }
+      }
+    },
+    "temperatureMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Dual temperature. Absolute: (F−30)/2 ↔ (C×2)+30. Deltas (`isDelta`): 1°F = ½°C. Round to nearest whole.",
+      "properties": {
+        "display": { "type": "string", "minLength": 1 },
+        "fahrenheit": { "type": "number" },
+        "celsius": { "type": "number" },
+        "isDelta": {
+          "type": "boolean",
+          "description": "True for relative changes (±4°F), not absolute thermometer readings."
+        },
+        "bookDual": { "type": "boolean" }
+      }
+    },
+    "speedMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Dual speed. Gross: 1 mph = 1.6 km/h (nearest tenth).",
+      "properties": {
+        "display": { "type": "string", "minLength": 1 },
+        "mph": { "type": "number" },
+        "kmh": { "type": "number" },
+        "bookDual": { "type": "boolean" }
+      }
+    },
+    "volumeMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Dual volume. Gross: 1 m³ = 35 ft³.",
+      "properties": {
+        "display": { "type": "string", "minLength": 1 },
+        "cubicFeet": { "type": "number" },
+        "cubicMeters": { "type": "number" },
+        "bookDual": { "type": "boolean" }
+      }
+    },
+    "areaMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Dual area. Gross: 1 m² = 10.8 ft².",
+      "properties": {
+        "display": { "type": "string", "minLength": 1 },
+        "squareFeet": { "type": "number" },
+        "squareMeters": { "type": "number" },
+        "bookDual": { "type": "boolean" }
+      }
+    },
+    "characterHeightMeasure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Character height. Metric display is meters to one decimal (e.g. 5′10″ → 1.8 m). Reverse conversion uses nearest whole inch.",
+      "properties": {
+        "feet": { "type": "integer", "minimum": 0 },
+        "inches": { "type": "integer", "minimum": 0, "maximum": 11 },
+        "meters": { "type": "number", "exclusiveMinimum": 0 },
+        "bookDual": { "type": "boolean" }
+      }
+    }
+  }
+}

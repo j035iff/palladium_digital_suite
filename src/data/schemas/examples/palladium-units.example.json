@@ -1,0 +1,69 @@
+{
+  "$schema": "https://megaverse-companion.local/schemas/palladium-units.schema.json",
+  "comment": "Example dual measurement fragments for ingest authoring.",
+  "bookDualLengthFeet": {
+    "display": "100 ft (30.5 m)",
+    "feet": 100,
+    "meters": 30.5,
+    "standardUnit": "feet",
+    "bookDual": true
+  },
+  "bookDualLengthYards": {
+    "display": "20 yards (20 m)",
+    "yards": 20,
+    "meters": 20,
+    "standardUnit": "yards",
+    "bookDual": true
+  },
+  "bookDualLengthMiles": {
+    "display": "2 miles (3.2 km)",
+    "miles": 2,
+    "kilometers": 3.2,
+    "standardUnit": "miles",
+    "bookDual": true
+  },
+  "singleSideLengthCustom": {
+    "feet": 6,
+    "standardUnit": "feet",
+    "bookDual": false
+  },
+  "bookDualWeight": {
+    "display": "2.0kg/4.6lb",
+    "pounds": 4.6,
+    "kilograms": 2.0,
+    "bookDual": true
+  },
+  "bookDualTemperatureAbsolute": {
+    "display": "39°F (4°C)",
+    "fahrenheit": 39,
+    "celsius": 4,
+    "isDelta": false,
+    "bookDual": true
+  },
+  "temperatureDeltaSingle": {
+    "fahrenheit": 10,
+    "isDelta": true,
+    "bookDual": false
+  },
+  "bookDualSpeed": {
+    "display": "70 mph (112 km)",
+    "mph": 70,
+    "kmh": 112,
+    "bookDual": true
+  },
+  "volumeConstruct": {
+    "cubicFeet": 35,
+    "bookDual": false
+  },
+  "areaSense": {
+    "squareFeet": 108,
+    "squareMeters": 10,
+    "bookDual": true
+  },
+  "characterHeight": {
+    "feet": 5,
+    "inches": 10,
+    "meters": 1.8,
+    "bookDual": false
+  }
+}

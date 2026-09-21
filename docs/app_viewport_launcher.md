@@ -26,6 +26,8 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 
 `App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`.
 
+**Units preference:** Launcher and live sheet expose a Standard/Metric toggle (`docs/units_preference.md`). Preference is local to the device/user (`localStorage`), not part of character saves or GM session state.
+
 GM Hub sessions are a separate local record (not a character save). Spec: [gm_hub.md](./gm_hub.md). Gear Forge library: [forge/gear_forge.md](./forge/gear_forge.md).
 
 ---
