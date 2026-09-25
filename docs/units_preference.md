@@ -32,11 +32,11 @@ Not written into character saves (see [`master_flow.md`](./master_flow.md) — s
 
 | Quantity | Factor |
 |----------|--------|
-| inch → cm | 1 in = 2.5 cm |
-| foot → m | via inches (`× 0.3`) — **not** via yards |
+| inch → cm | 1 in = 2.54 cm |
+| foot → m | via inches (`× 0.3048`) — **not** via yards |
 | yard → m | 1 yd = 1 m (**yards only**) |
 | mile → km | 1 mi = 1.6 km |
-| lb → kg | 1 lb = 0.5 kg |
+| kg → lb | 1 kg = 2.2 lb |
 | °F → °C (absolute) | `(F − 30) / 2` |
 | °C → °F (absolute) | `(C × 2) + 30` |
 | °F → °C (delta) | `F / 2` |

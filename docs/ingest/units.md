@@ -24,18 +24,18 @@ Cross-cutting — apply during Pass A/B for **any** catalog that carries measura
 
 | From | To | Factor | Rounding |
 |------|-----|--------|----------|
-| in | cm | × 2.5 | nearest whole cm when length &lt; 1 ft |
-| ft | m | × 0.3 (via inches) | nearest tenth m when length ≥ 1 ft |
+| in | cm | × 2.54 | nearest whole cm when length &lt; 1 ft |
+| ft | m | × 0.3048 (via inches) | nearest tenth m when length ≥ 1 ft |
 | yd | m | × 1 | nearest tenth (**yards only**) |
 | mi | km | × 1.6 | nearest tenth |
-| lb | kg | × 0.5 | nearest tenth |
+| kg | lb | × 2.2 | nearest tenth (lb → kg uses ÷ 2.2) |
 | °F abs | °C | `(F−30)/2` | nearest whole |
 | °C abs | °F | `(C×2)+30` | nearest whole |
 | °F delta | °C | `/2` | nearest whole |
 | mph | km/h | × 1.6 | nearest tenth |
 | m³ | ft³ | × 35 | nearest tenth |
 | m² | ft² | × 10.8 | nearest tenth |
-| character height | m | via inches × 2.5 | nearest tenth m (e.g. 5′10″ → 1.8 m) |
+| character height | m | via inches × 2.54 | nearest tenth m (e.g. 5′10″ → 1.8 m) |
 | m → height | ft+in | reverse | nearest whole inch |
 
 ---

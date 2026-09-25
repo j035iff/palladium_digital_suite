@@ -3,14 +3,17 @@
  * See docs/ingest/units.md and docs/units_preference.md.
  */
 
-/** 1 inch = 2.5 cm (gross). */
-export const CM_PER_INCH = 2.5
+/** 1 inch = 2.54 cm. */
+export const CM_PER_INCH = 2.54
 
-/** Derived: 1 foot = 30 cm = 0.3 m (via inches, not yards). */
+/** Derived: 1 foot = 12 × 2.54 cm = 0.3048 m (via inches, not yards). */
 export const METERS_PER_FOOT = (12 * CM_PER_INCH) / 100
 
-/** 1 lb = 0.5 kg (gross). */
-export const KG_PER_LB = 0.5
+/** 1 kg = 2.2 lbs. */
+export const LB_PER_KG = 2.2
+
+/** Derived: 1 lb = 1/2.2 kg. */
+export const KG_PER_LB = 1 / LB_PER_KG
 
 /** 1 yard = 1 meter — only when the book explicitly uses yards. */
 export const METERS_PER_YARD = 1

@@ -30,13 +30,13 @@ import {
 
 describe('gross conversion factors', () => {
   it('converts inches to whole centimeters', () => {
-    expect(inchesToCentimeters(1)).toBe(3) // 2.5 → 3
-    expect(inchesToCentimeters(4)).toBe(10)
+    expect(inchesToCentimeters(1)).toBe(3) // 2.54 → 3
+    expect(inchesToCentimeters(4)).toBe(10) // 10.16 → 10
   })
 
   it('converts feet to meters via inch ladder (nearest tenth)', () => {
-    expect(feetToMeters(1)).toBe(0.3)
-    expect(feetToMeters(100)).toBe(30)
+    expect(feetToMeters(1)).toBe(0.3) // 0.3048 → 0.3
+    expect(feetToMeters(100)).toBe(30.5) // 30.48 → 30.5
   })
 
   it('uses 1:1 yards to meters only for yard quantities', () => {
@@ -48,9 +48,9 @@ describe('gross conversion factors', () => {
     expect(milesToKilometers(2)).toBe(3.2)
   })
 
-  it('converts pounds to kilograms at 0.5', () => {
-    expect(poundsToKilograms(5)).toBe(2.5)
-    expect(poundsToKilograms(11)).toBe(5.5)
+  it('converts pounds to kilograms at 1 kg = 2.2 lb', () => {
+    expect(poundsToKilograms(5)).toBe(2.3) // 5/2.2 → 2.3
+    expect(poundsToKilograms(11)).toBe(5) // 11/2.2 → 5.0
   })
 
   it('converts absolute temperature with Palladium offset', () => {
@@ -71,13 +71,12 @@ describe('gross conversion factors', () => {
   })
 
   it('converts character height 5′10″ → 1.8 m', () => {
-    expect(characterHeightToMeters(5, 10)).toBe(1.8)
+    expect(characterHeightToMeters(5, 10)).toBe(1.8) // 70×2.54/100 → 1.8
   })
 
   it('converts meters to feet+inches at nearest whole inch', () => {
-    // 1.8 m → 72 in via gross factor (may not round-trip 5′10″ after tenth rounding)
-    expect(metersToCharacterHeight(1.8)).toEqual({ feet: 6, inches: 0 })
-    expect(metersToCharacterHeight(1.75)).toEqual({ feet: 5, inches: 10 })
+    expect(metersToCharacterHeight(1.8)).toEqual({ feet: 5, inches: 11 }) // 180/2.54 → 71
+    expect(metersToCharacterHeight(1.75)).toEqual({ feet: 5, inches: 9 }) // 175/2.54 → 69
   })
 })
 
@@ -99,12 +98,12 @@ describe('resolve dual measures', () => {
   it('calculates metric when only standard is known', () => {
     expect(resolveLength({ feet: 100, standardUnit: 'feet' }, 'metric')).toEqual(
       {
-        value: 30,
+        value: 30.5,
         unit: 'm',
       },
     )
     expect(resolveWeight({ pounds: 11 }, 'metric')).toEqual({
-      value: 5.5,
+      value: 5,
       unit: 'kg',
     })
   })
@@ -113,7 +112,7 @@ describe('resolve dual measures', () => {
     expect(
       resolveLength({ yards: 10, standardUnit: 'yards' }, 'metric'),
     ).toEqual({ value: 10, unit: 'm' })
-    // 10 feet via inch ladder → 3.0 m, not 10 m
+    // 10 feet via inch ladder → 3.0 m (30.48 → 3.0), not 10 m
     expect(resolveLength({ feet: 10, standardUnit: 'feet' }, 'metric')).toEqual({
       value: 3,
       unit: 'm',
@@ -124,8 +123,8 @@ describe('resolve dual measures', () => {
     expect(formatCharacterHeight({ feet: 5, inches: 10 }, 'metric')).toBe(
       '1.8 m',
     )
-    // Single-side metric → nearest whole inch via gross factor (1.8 m → 6′0″)
-    expect(formatCharacterHeight({ meters: 1.8 }, 'standard')).toBe('6\'0"')
+    // Single-side metric → nearest whole inch via conversion (1.8 m → 5′11″)
+    expect(formatCharacterHeight({ meters: 1.8 }, 'standard')).toBe('5\'11"')
     expect(
       formatCharacterHeight({ feet: 5, inches: 10, meters: 1.8 }, 'standard'),
     ).toBe('5\'10"')
@@ -143,7 +142,7 @@ describe('fill missing side', () => {
   })
 
   it('fills weight and temperature from one side', () => {
-    expect(fillWeightMeasure({ pounds: 10 }).kilograms).toBe(5)
+    expect(fillWeightMeasure({ pounds: 10 }).kilograms).toBe(4.5)
     expect(fillTemperatureMeasure({ fahrenheit: 39 }).celsius).toBe(5)
     expect(
       fillTemperatureMeasure({ fahrenheit: 10, isDelta: true }).celsius,
