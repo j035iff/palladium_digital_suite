@@ -76,6 +76,7 @@ Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-n
 |-------|----------|
 | Protocol | `src/lib/gm/sessionMessages.ts` (`v: 1`) — `session.join` / `welcome` / `leave` / `closed` / `presence` / `kick`, plus existing combat + `party.snapshot` |
 | Authority | GM host remains source of truth for `GmSessionRecord`; presence is **ephemeral in-memory** on the host (not in campaign JSON) |
+| Seat status | `joining` → `connected` (wire name for fully joined) → optional `reconnecting`; join completes on character attach (`party.snapshot`). Tray tone helpers + Join Session gate: `sessionPresence.ts`, `sessionJoinGate.ts` |
 | Token | **Rotate-on-open** join token when listen starts; short code + QR carry it |
 | Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Session clears seats |
 | Character attach | Joiner sends `party.snapshot`; host caches JSON for the sitting and runs the **same** party observer pipeline. Host “Add from this machine” remains as fallback |
@@ -97,7 +98,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Fodder spawn | `src/lib/gm/npcInstance.ts` |
 | Gear grant (party save) | `src/lib/gear/gmGearForgeHost.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` |
 | Protocol | `src/lib/gm/sessionMessages.ts` |
-| Presence / join token | `src/lib/gm/sessionPresence.ts`, `sessionJoinCode.ts` |
+| Presence / join token / join gate | `src/lib/gm/sessionPresence.ts`, `sessionJoinCode.ts`, `sessionJoinGate.ts` |
 | Host / client runtime | `src/lib/gm/sessionHostRuntime.ts`, `sessionClientRuntime.ts`, `gmHostListenController.ts` |
 | Interim WS relay | `scripts/gm-interim-ws-host.mjs`, `src/lib/gm/browserWsTransport.ts` |
 | Joiner character cache | `src/lib/gm/sessionPartyCache.ts` |

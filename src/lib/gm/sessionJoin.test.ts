@@ -5,9 +5,16 @@ import {
   connectedSeatCount,
   emptyPresence,
   grantOrReclaimSeat,
+  isSeatFullyJoined,
+  isSeatJoining,
+  joiningSeatCount,
   kickSeat,
   markSeatReconnecting,
+  seatFlippedToFullyJoined,
+  seatStatusAfterGrant,
+  seatTrayPresentation,
 } from './sessionPresence'
+import { resolveJoinSessionGate } from './sessionJoinGate'
 import {
   rotateJoinCredentials,
   shortCodeFromJoinToken,
@@ -53,10 +60,20 @@ describe('join credentials', () => {
 })
 
 describe('presence reduce', () => {
-  it('reclaims the same deviceId and clears on close', () => {
+  it('starts joining, completes on character attach, reclaims by deviceId', () => {
     let p = emptyPresence('play_1')
     p = grantOrReclaimSeat(p, { deviceId: 'dev_a', displayName: 'Ada', atMs: 1 })
-    expect(connectedSeatCount(p)).toBe(1)
+    expect(p.seats[0]?.status).toBe('joining')
+    expect(joiningSeatCount(p)).toBe(1)
+    expect(connectedSeatCount(p)).toBe(0)
+    expect(isSeatJoining(p.seats[0]!)).toBe(true)
+    expect(isSeatFullyJoined(p.seats[0]!)).toBe(false)
+    expect(seatTrayPresentation('joining')).toEqual({
+      tone: 'yellow',
+      showJoiningLabel: true,
+    })
+
+    const beforeAttach = p
     p = grantOrReclaimSeat(p, {
       deviceId: 'dev_a',
       displayName: 'Ada 2',
@@ -64,14 +81,76 @@ describe('presence reduce', () => {
     })
     expect(p.seats).toHaveLength(1)
     expect(p.seats[0]?.displayName).toBe('Ada 2')
-    p = markSeatReconnecting(p, 'dev_a', 3)
-    expect(p.seats[0]?.status).toBe('reconnecting')
+    expect(p.seats[0]?.status).toBe('joining')
+
     p = attachSeatCharacter(p, 'dev_a', 'char_1')
     expect(p.seats[0]?.characterId).toBe('char_1')
+    expect(p.seats[0]?.status).toBe('connected')
+    expect(connectedSeatCount(p)).toBe(1)
+    expect(isSeatFullyJoined(p.seats[0]!)).toBe(true)
+    expect(
+      seatFlippedToFullyJoined(beforeAttach, p, 'dev_a'),
+    ).toBe(true)
+    expect(seatTrayPresentation('connected')).toEqual({
+      tone: 'green',
+      showJoiningLabel: false,
+    })
+
+    p = markSeatReconnecting(p, 'dev_a', 3)
+    expect(p.seats[0]?.status).toBe('reconnecting')
+    expect(seatTrayPresentation('reconnecting').tone).toBe('neutral')
+
+    p = grantOrReclaimSeat(p, {
+      deviceId: 'dev_a',
+      displayName: 'Ada',
+      atMs: 4,
+    })
+    expect(p.seats[0]?.status).toBe('connected')
+    expect(seatStatusAfterGrant({ characterId: 'char_1' })).toBe('connected')
+    expect(seatStatusAfterGrant({ characterId: null })).toBe('joining')
+
     p = kickSeat(p, 'dev_a')
     expect(p.seats).toHaveLength(0)
     p = clearPresence('play_1')
     expect(p.seats).toHaveLength(0)
+  })
+
+  it('does not treat connected-without-character as fully joined by default', () => {
+    const p = emptyPresence('play_1')
+    const seat = {
+      deviceId: 'dev_b',
+      displayName: 'Bea',
+      status: 'connected' as const,
+      joinedAtMs: 1,
+      lastSeenAtMs: 1,
+      characterId: null,
+    }
+    expect(isSeatFullyJoined(seat)).toBe(false)
+    expect(isSeatFullyJoined(seat, { requireCharacterId: false })).toBe(true)
+    expect(seatFlippedToFullyJoined(null, { ...p, seats: [seat] }, 'dev_b')).toBe(
+      false,
+    )
+  })
+})
+
+describe('join session gate', () => {
+  it('greys until player name and character are set', () => {
+    expect(
+      resolveJoinSessionGate({ playerName: '', characterId: null }),
+    ).toEqual({
+      canJoin: false,
+      disabledReason:
+        'Enter a player name and select a character before joining a session.',
+    })
+    expect(
+      resolveJoinSessionGate({ playerName: '  ', characterId: 'char_1' }),
+    ).toMatchObject({ canJoin: false })
+    expect(
+      resolveJoinSessionGate({ playerName: 'Ada', characterId: '' }),
+    ).toMatchObject({ canJoin: false })
+    expect(
+      resolveJoinSessionGate({ playerName: 'Ada', characterId: 'char_1' }),
+    ).toEqual({ canJoin: true, disabledReason: null })
   })
 })
 
@@ -210,6 +289,7 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
     expect(client.getState().status).toBe('joined')
     expect(client.getState().hello?.campaignName).toBe('Harbor Watch')
     expect(runtime.getState().presence?.seats).toHaveLength(1)
+    expect(runtime.getState().presence?.seats[0]?.status).toBe('joining')
 
     client.sendInitiative('char_pc', 15)
     await Promise.resolve()
@@ -255,6 +335,10 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
     await Promise.resolve()
     expect(session.partyCharacterIds).toContain('char_remote')
     expect(loadCachedJoinedCharacter(session.id, 'char_remote')).toBeTruthy()
+    expect(runtime.getState().presence?.seats[0]?.status).toBe('connected')
+    expect(runtime.getState().presence?.seats[0]?.characterId).toBe(
+      'char_remote',
+    )
 
     // Reclaim seat
     clientT.stop()
