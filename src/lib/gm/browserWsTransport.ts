@@ -27,6 +27,8 @@ export type CreateBrowserWsTransportOpts = {
   role: WsRelayRole
   host?: {
     campaignId: string
+    /** Campaign display name — advertised on GET /sessions (Join Session label). */
+    campaignName: string
     playSessionId: string
     credentials: GmJoinCredentials
   }
@@ -122,6 +124,7 @@ export function createBrowserWsTransport(
               JSON.stringify({
                 op: 'register_host',
                 campaignId: opts.host.campaignId,
+                campaignName: opts.host.campaignName,
                 playSessionId: opts.host.playSessionId,
                 joinToken: opts.host.credentials.joinToken,
                 shortCode: opts.host.credentials.shortCode,
