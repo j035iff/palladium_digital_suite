@@ -108,9 +108,9 @@ MainLayout (live sheet)
   └─ Combat HUD (APM, weapon slots, strikes, reload)
 ```
 
-### Character Creation Forge (9 tabs: Identity + 8 step tabs)
+### Character Creation Forge (9 step tabs after Identity chrome)
 
-Leads with a combined **Identity** tab (`tab1_configurator`: profile + Race/O.C.C.); the global app header is hidden during creation; session actions use a **Session** popover; Live Ledger is on the **right**. See `docs/forge/character_creation.md` and `docs/universal_forge_navigation_engine.md`.
+Leads with a combined **Identity** header (`tab1_configurator`: profile + Race/O.C.C.); the global app header is hidden during creation; session actions use a **Session** popover; Live Ledger is on the **right**. See `docs/forge/character_creation.md` and `docs/universal_forge_navigation_engine.md`.
 
 | Tab | Purpose |
 |-----|---------|
@@ -121,7 +121,8 @@ Leads with a combined **Identity** tab (`tab1_configurator`: profile + Race/O.C.
 | 5 | Roll Pending — Facade / single-form physical dice |
 | 6 | Morphus Sub-Forge (Nightbane only) — traits + Morphus vitality dice |
 | 7 | Supernatural abilities — magic, psionics, talents forge panels |
-| 8 | Review & Spawn — alignment required here; spawn handoff |
+| 8 | Gear (`tab8_gear`) — shared Gear Forge shell; optional draft inventory |
+| 9 | Review & Spawn (`tab9_review`) — alignment required here; spawn handoff |
 
 **Continue** never changes the viewport; user picks the next tab manually. Yellow/red conflict flags cascade top-down when Race or O.C.C. changes upstream.
 
