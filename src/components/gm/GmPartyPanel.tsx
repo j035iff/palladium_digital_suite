@@ -30,8 +30,10 @@ export function GmPartyPanel() {
             Cached party
           </h2>
           <p className="mt-1 max-w-xl text-xs text-slate-400">
-            Snapshots read local character saves through the host genre. Nothing
-            is written back. Device reconnect / ghost state ships with LAN later.
+            Snapshots read local character saves (or joiner party.snapshot
+            cache) through the host genre. Nothing is written back to player
+            files. Same deviceId reclaims a seat for this sitting; Close Session
+            clears seats.
           </p>
         </div>
         <button

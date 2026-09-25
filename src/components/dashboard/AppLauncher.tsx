@@ -202,6 +202,7 @@ export function AppLauncher() {
     enterGmHub,
     enterCampaignForge,
     enterGearForge,
+    enterJoinTable,
     loadSavedCharacter,
     savedCharacterRows,
     inProgressCharacterRows,
@@ -569,6 +570,19 @@ export function AppLauncher() {
               🗺
             </span>
             New Campaign
+          </button>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <button
+            type="button"
+            onClick={enterJoinTable}
+            className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-slate-600 bg-slate-900/70 px-6 py-4 text-sm font-black uppercase tracking-[0.2em] text-slate-200 transition hover:border-cyan-400/80 hover:bg-slate-900/90 hover:text-cyan-100 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
+          >
+            <span className="text-xl" aria-hidden>
+              ⧉
+            </span>
+            Join table
           </button>
         </div>
 

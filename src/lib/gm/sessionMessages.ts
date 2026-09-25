@@ -1,9 +1,11 @@
 import { activePlaySession } from './playSession'
 import type { GmSessionRecord } from './sessionTypes'
+import type { GmSeat } from './sessionPresence'
 
 /**
- * Future LAN / WebSocket payload shapes.
- * v1 has no transport — keep these envelopes stable so a desktop server can bind later.
+ * GM Hub LAN / WebSocket payload shapes (protocol v1).
+ * Host authority for GmSessionRecord; presence is ephemeral on the host.
+ * sessionId on envelopes = campaign GmSessionRecord.id; room key = playSessionId.
  */
 
 export const GM_PROTOCOL_VERSION = 1 as const
@@ -23,6 +25,40 @@ export type GmHelloPayload = {
   sessionName: string
   campaignName: string
   playSessionId: string | null
+}
+
+export type GmJoinPayload = {
+  playSessionId: string
+  joinToken: string
+  /** Optional short code — host accepts token or matching shortCode. */
+  shortCode?: string
+  deviceId: string
+  displayName: string
+}
+
+export type GmWelcomePayload = {
+  deviceId: string
+  hello: GmHelloPayload
+}
+
+export type GmLeavePayload = {
+  deviceId: string
+  reason?: string
+}
+
+export type GmClosedPayload = {
+  playSessionId: string
+  reason: string
+}
+
+export type GmPresencePayload = {
+  playSessionId: string
+  seats: GmSeat[]
+}
+
+export type GmKickPayload = {
+  deviceId: string
+  reason: string
 }
 
 export type GmPartySnapshotPayload = {
@@ -61,14 +97,44 @@ export type GmStrikeRecordedPayload = {
   total: number
 }
 
+export type GmInitiativeLockPayload = {
+  locked: boolean
+}
+
+/** Clears live H.F. on clients (e.g. new melee round). */
+export type GmHfClearPayload = Record<string, never>
+
 export type GmProtocolMessage =
   | GmEnvelope<'session.hello', GmHelloPayload>
+  | GmEnvelope<'session.join', GmJoinPayload>
+  | GmEnvelope<'session.welcome', GmWelcomePayload>
+  | GmEnvelope<'session.leave', GmLeavePayload>
+  | GmEnvelope<'session.closed', GmClosedPayload>
+  | GmEnvelope<'session.presence', GmPresencePayload>
+  | GmEnvelope<'session.kick', GmKickPayload>
   | GmEnvelope<'party.snapshot', GmPartySnapshotPayload>
   | GmEnvelope<'combat.initiative', GmInitiativePayload>
   | GmEnvelope<'combat.apmSpend', GmApmSpendPayload>
   | GmEnvelope<'combat.hfEmit', GmHfEmitPayload>
+  | GmEnvelope<'combat.hfClear', GmHfClearPayload>
   | GmEnvelope<'combat.hfSave', GmHfSavePayload>
+  | GmEnvelope<'combat.initiativeLock', GmInitiativeLockPayload>
   | GmEnvelope<'combat.strikeRecorded', GmStrikeRecordedPayload>
+
+/** Client → host messages allowed after a successful welcome. */
+export const CLIENT_TO_HOST_TYPES = [
+  'session.leave',
+  'party.snapshot',
+  'combat.initiative',
+  'combat.apmSpend',
+  'combat.hfSave',
+] as const
+
+export type GmClientToHostType = (typeof CLIENT_TO_HOST_TYPES)[number]
+
+export function isClientToHostType(type: string): type is GmClientToHostType {
+  return (CLIENT_TO_HOST_TYPES as readonly string[]).includes(type)
+}
 
 export function createGmEnvelope<T extends string, P>(
   type: T,
@@ -107,5 +173,13 @@ export function gmHelloPayloadFromCampaign(
     sessionName: live?.playerLabel ?? session.name,
     campaignName: session.name,
     playSessionId: live?.id ?? null,
+  }
+}
+
+export function parseWireJson(raw: string): unknown | null {
+  try {
+    return JSON.parse(raw) as unknown
+  } catch {
+    return null
   }
 }

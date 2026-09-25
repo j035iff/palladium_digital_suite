@@ -187,25 +187,28 @@ Copy this block when registering a new unified path:
 
 ### GM Hub — party observer + combat roster
 
-**Status:** `partial` (local GM-only v1; LAN transport not wired)  
+**Status:** `partial` (local GM + interim same-WiFi join; production desktop WS sidecar not shipped)  
 **Related spec:** `docs/gm_hub.md`
 
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
 | Transform | `src/utils/genreTransformer.ts` | `transformCharacterToHostEnvironment` | Session `hostGenreId`; saves never written |
-| Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder |
+| Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder; joiner `party.snapshot` cache feeds the same builder |
 | Fodder | `src/lib/gm/npcInstance.ts` | `createNpcFromArchetype` | Encounter catalog → instance vitals / APM |
 | Roster | `src/lib/gm/combatRoster.ts` | `assembleGmCombatRoster`, `sortCombatRoster` | One sorted list; `kind: pc \| npc` |
 | Nav | `src/lib/gm/hubTabs.ts` | `buildGmHubTabViews`, `gmHubTabTitle` | Story/Combat modes; Home is Sessions or Combat HUD |
 | Play sitting | `src/lib/gm/playSession.ts` | `openPlaySession`, `playSessionPlayerLabel` | Player join name `{campaign}: {date}`; one live sitting |
 | Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
-| Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 JSON shapes for a future LAN server |
+| Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 envelopes including join/presence + combat |
+| Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `createGmHostRuntime` | Ephemeral seats; same `deviceId` reclaims |
+| Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host` | Interim same-WiFi; desktop sidecar later |
+| Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | launcher **Join table** / hub listen chrome | One Party/Cast pipeline — no remote fork |
 | UI | `src/components/gm/*` | `GmHubShell` | Story / Combat modes; Home + Party + Cast + Gear |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
 
-**Modes / variants:** Hub `story` / `combat` (Home differs; Party, Cast, and Gear are one pipeline each). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge.
+**Modes / variants:** Hub `story` / `combat` (Home differs; Party, Cast, and Gear are one pipeline each). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second Party implementation.
 
-**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork Party or Cast per Story/Combat mode.
+**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork Party or Cast per Story/Combat mode. New join envelopes stay on `sessionMessages` v1.
 
 ---
 
@@ -285,6 +288,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-09-25 | GM Hub client join first slice: interim `ws`, presence/join envelopes, Join table viewport, interacting sheet |
 | 2026-09-21 | Measurement units path: Standard/Metric preference, dual measure schema, Gear Forge convert-on-edit |
 | 2026-09-18 | Gear Forge GM host: Hub **Gear** tab + `kind: 'gm'` adapter on shared shell → selected party character save |
 | 2026-09-18 | Gear Forge Sheet host: live `GearPanel` + `kind: 'sheet'` adapter on shared shell → active inventory |

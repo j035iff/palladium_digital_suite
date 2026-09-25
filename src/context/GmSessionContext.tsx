@@ -2,7 +2,9 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -10,6 +12,7 @@ import type { GenreId } from '../data/genres'
 import { listEncounterArchetypes } from '../data/library/encounterArchetypeCatalogLoader'
 import { listFinalizedCharacters, loadCharacterSave } from '../lib/characterIndex'
 import type { CharacterIndexEntry } from '../lib/characterIndex'
+import type { CharacterRootState } from '../types'
 import { assembleGmCombatRoster } from '../lib/gm/combatRoster'
 import type { GmHubMode, GmHubTabId } from '../lib/gm/hubTabs'
 import { createNpcFromArchetype } from '../lib/gm/npcInstance'
@@ -23,6 +26,7 @@ import {
   patchPartyOverlay,
   recordNpcStrike,
   recordPartyHfSave,
+  recordPcApmSpendEvent,
   removeNpcInstance,
   removePartyMember,
   renameSession,
@@ -66,6 +70,18 @@ import {
   type CampaignForgeDraft,
   type CampaignForgeOptionId,
 } from '../lib/gm/campaignForge'
+import { resolveJoinListenCapability } from '../lib/gm/desktopHostCapability'
+import {
+  createGmHostListenController,
+  initialHostListenUiState,
+  type GmHostListenController,
+  type GmHostListenUiState,
+} from '../lib/gm/gmHostListenController'
+import { loadCachedJoinedCharacter } from '../lib/gm/sessionPartyCache'
+import { activePlaySession } from '../lib/gm/playSession'
+import type { GmJoinCredentials } from '../lib/gm/sessionJoinCode'
+import type { GmSeat } from '../lib/gm/sessionPresence'
+import type { GmJoinListenCapability } from '../lib/gm/desktopHostCapability'
 
 type GmSessionContextValue = {
   hubMode: GmHubMode
@@ -112,6 +128,18 @@ type GmSessionContextValue = {
   recordPcHfSave: (characterId: string, d20: number) => void
   recordStrike: (instanceId: string, d20: number, strikeBonus: number) => void
   npcById: (instanceId: string) => GmNpcInstance | undefined
+  /** Client join host chrome */
+  joinCapability: GmJoinListenCapability
+  joinListening: boolean
+  joinCredentials: GmJoinCredentials | null
+  joinSeats: GmSeat[]
+  joinUrl: string | null
+  joinLanHint: string | null
+  joinLastError: string | null
+  startJoinListen: () => Promise<void>
+  stopJoinListen: () => Promise<void>
+  kickJoinedDevice: (deviceId: string) => void
+  refreshJoinProbe: () => Promise<void>
 }
 
 const GmSessionContext = createContext<GmSessionContextValue | null>(null)
@@ -141,6 +169,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     const active = loadActiveGmSessionId()
     return active ? loadGmSession(active) : null
   })
+  const sessionRef = useRef(session)
+  sessionRef.current = session
+
   const [finalizedCharacters, setFinalizedCharacters] = useState<
     CharacterIndexEntry[]
   >(() => listFinalizedCharacters())
@@ -148,6 +179,11 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   const [campaignForgeDraft, setCampaignForgeDraft] = useState<CampaignForgeDraft>(
     () => blankCampaignForgeDraft(),
   )
+
+  const [joinUi, setJoinUi] = useState<GmHostListenUiState>(() =>
+    initialHostListenUiState(),
+  )
+  const joinControllerRef = useRef<GmHostListenController | null>(null)
 
   const refreshList = useCallback(() => {
     setSessionList(listGmSessions())
@@ -170,6 +206,72 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       return persist(fn(prev))
     })
     setSessionList(listGmSessions())
+  }, [])
+
+  useEffect(() => {
+    const controller = createGmHostListenController(
+      {
+        getSession: () => sessionRef.current,
+        applySession: (next) => {
+          setSession(persist(next))
+          setSessionList(listGmSessions())
+        },
+        applyPcInitiative: (characterId, d20) => {
+          setSession((prev) => {
+            if (!prev) return prev
+            return persist(setPartyInitiativeRoll(prev, characterId, d20))
+          })
+        },
+        applyPcHfSave: (characterId, d20) => {
+          setSession((prev) => {
+            if (!prev) return prev
+            const save =
+              loadCharacterSave(characterId) ??
+              (loadCachedJoinedCharacter(prev.id, characterId) as CharacterRootState | null)
+            if (!save) return prev
+            const overlay = prev.partyOverlays[characterId]
+            const bonus = partyHorrorSaveBonus(
+              save,
+              prev.hostGenreId,
+              overlay?.viewForm ?? 'primary',
+              Boolean(prev.combat.activeHfEmit?.useNightbaneHorrorFactor),
+            )
+            const label =
+              typeof save.name === 'string' && save.name.trim()
+                ? save.name.trim()
+                : characterId
+            const result = recordPartyHfSave(prev, characterId, label, d20, bonus)
+            return result ? persist(result.session) : prev
+          })
+        },
+        applyPcApmSpend: (characterId, actions) => {
+          setSession((prev) => {
+            if (!prev) return prev
+            const save =
+              loadCharacterSave(characterId) ??
+              (loadCachedJoinedCharacter(prev.id, characterId) as CharacterRootState | null)
+            const label =
+              save && typeof save.name === 'string' && save.name.trim()
+                ? save.name.trim()
+                : characterId
+            return persist(recordPcApmSpendEvent(prev, characterId, label, actions))
+          })
+        },
+        applyPartySnapshot: (characterId, label) => {
+          setSession((prev) => {
+            if (!prev) return prev
+            return persist(addPartyMember(prev, characterId, label))
+          })
+        },
+      },
+      setJoinUi,
+    )
+    joinControllerRef.current = controller
+    void controller.refreshCapabilityProbe()
+    return () => {
+      void controller.dispose()
+      joinControllerRef.current = null
+    }
   }, [])
 
   const createSession = useCallback(
@@ -236,7 +338,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     const slices: GmPartyObserverSlice[] = []
     const missing: string[] = []
     for (const id of session.partyCharacterIds) {
-      const save = loadCharacterSave(id)
+      const save =
+        loadCharacterSave(id) ??
+        (loadCachedJoinedCharacter(session.id, id) as CharacterRootState | null)
       if (!save) {
         missing.push(id)
         continue
@@ -273,8 +377,37 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   }, [patchSession])
 
   const closePlaySession = useCallback(() => {
+    void joinControllerRef.current?.stopListen('Play sitting closed.')
     patchSession((s) => stampClosePlaySession(s))
   }, [patchSession])
+
+  const startJoinListen = useCallback(async () => {
+    const result = await joinControllerRef.current?.startListen()
+    if (result && !result.ok) {
+      setJoinUi((prev) => ({ ...prev, lastError: result.reason }))
+    }
+  }, [])
+
+  const stopJoinListen = useCallback(async () => {
+    await joinControllerRef.current?.stopListen('Listener stopped by GM.')
+  }, [])
+
+  const kickJoinedDevice = useCallback((deviceId: string) => {
+    joinControllerRef.current?.kickDevice(deviceId)
+  }, [])
+
+  const refreshJoinProbe = useCallback(async () => {
+    await joinControllerRef.current?.refreshCapabilityProbe()
+  }, [])
+
+  const joinCapability = useMemo(
+    () =>
+      resolveJoinListenCapability({
+        playSessionOpen: Boolean(session && activePlaySession(session)),
+        interimHostReachable: joinUi.interimReachable,
+      }),
+    [session, joinUi.interimReachable],
+  )
 
   const addCharacterToParty = useCallback(
     (characterId: string) => {
@@ -357,15 +490,28 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   )
 
   const lockInit = useCallback(() => {
-    patchSession((s) => lockInitiative(s))
+    patchSession((s) => {
+      const next = lockInitiative(s)
+      joinControllerRef.current?.broadcastFromSession(next, 'initiativeLock')
+      return next
+    })
   }, [patchSession])
 
   const unlockInit = useCallback(() => {
-    patchSession((s) => unlockInitiative(s))
+    patchSession((s) => {
+      const next = unlockInitiative(s)
+      joinControllerRef.current?.broadcastFromSession(next, 'initiativeUnlock')
+      return next
+    })
   }, [patchSession])
 
   const newMeleeRound = useCallback(() => {
-    patchSession((s) => startNewMeleeRound(s))
+    patchSession((s) => {
+      const next = startNewMeleeRound(s)
+      joinControllerRef.current?.broadcastFromSession(next, 'hfClear')
+      joinControllerRef.current?.broadcastFromSession(next, 'initiativeUnlock')
+      return next
+    })
   }, [patchSession])
 
   const emitNpcHf = useCallback(
@@ -378,13 +524,15 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
         )
         const morale = arch?.horrorFactorMorale
         if (!morale) return s
-        return emitHorrorFactor(
+        const next = emitHorrorFactor(
           s,
           npc,
           morale.saveTarget,
           Boolean(morale.useNightbaneHorrorFactor),
           morale.notes,
         )
+        joinControllerRef.current?.broadcastFromSession(next, 'hfEmit')
+        return next
       })
     },
     [patchSession],
@@ -393,7 +541,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   const recordPcHfSave = useCallback(
     (characterId: string, d20: number) => {
       patchSession((s) => {
-        const save = loadCharacterSave(characterId)
+        const save =
+          loadCharacterSave(characterId) ??
+          (loadCachedJoinedCharacter(s.id, characterId) as CharacterRootState | null)
         if (!save) return s
         const overlay = s.partyOverlays[characterId]
         const bonus = partyHorrorSaveBonus(
@@ -474,6 +624,19 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       recordPcHfSave,
       recordStrike,
       npcById,
+      joinCapability,
+      joinListening: joinUi.listening,
+      joinCredentials: joinUi.credentials,
+      joinSeats: joinUi.presence?.seats ?? [],
+      joinUrl: joinUi.joinUrl,
+      joinLanHint: joinUi.lanHost
+        ? `${joinUi.lanHost}:${joinUi.lanPort}`
+        : null,
+      joinLastError: joinUi.lastError,
+      startJoinListen,
+      stopJoinListen,
+      kickJoinedDevice,
+      refreshJoinProbe,
     }),
     [
       hubMode,
@@ -514,6 +677,12 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       recordPcHfSave,
       recordStrike,
       npcById,
+      joinCapability,
+      joinUi,
+      startJoinListen,
+      stopJoinListen,
+      kickJoinedDevice,
+      refreshJoinProbe,
     ],
   )
 

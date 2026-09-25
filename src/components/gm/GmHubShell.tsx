@@ -6,6 +6,7 @@ import { activePlaySession } from '../../lib/gm/playSession'
 import { GmCastPanel } from './GmCastPanel'
 import { GmCombatPanel } from './GmCombatPanel'
 import { GmGearPanel } from './GmGearPanel'
+import { GmJoinHostChrome } from './GmJoinHostChrome'
 import { GmPartyPanel } from './GmPartyPanel'
 import { GmSessionsPanel } from './GmSessionsPanel'
 import { GmTabBar } from './GmTabBar'
@@ -31,6 +32,17 @@ export function GmHubShell() {
     session,
     openPlaySession,
     closePlaySession,
+    joinCapability,
+    joinListening,
+    joinCredentials,
+    joinSeats,
+    joinUrl,
+    joinLanHint,
+    joinLastError,
+    startJoinListen,
+    stopJoinListen,
+    kickJoinedDevice,
+    refreshJoinProbe,
   } = useGmSession()
   const livePlay = session ? activePlaySession(session) : null
   const canOpen = Boolean(session) && livePlay == null
@@ -49,13 +61,13 @@ export function GmHubShell() {
             <p className="text-[11px] text-slate-400">
               Host {formatGenreSlug(session.hostGenreId)} ·{' '}
               {conversionRuleLabel(session.conversionPolicy)}
-              {livePlay ? ` · Players see ${livePlay.playerLabel}` : ''} · local
-              only
+              {livePlay ? ` · Players see ${livePlay.playerLabel}` : ''} ·
+              campaigns stay on this machine
             </p>
           ) : (
             <p className="text-[11px] text-slate-500">
-              Open a campaign from the launcher. LAN / QR join is not in this
-              build.
+              Open a campaign from the launcher. Join listen needs an open play
+              sitting.
             </p>
           )}
         </div>
@@ -94,6 +106,32 @@ export function GmHubShell() {
           ) : null}
         </div>
       </header>
+      {session ? (
+        <GmJoinHostChrome
+          capability={joinCapability}
+          listening={joinListening}
+          credentials={joinCredentials}
+          seats={joinSeats}
+          joinUrl={joinUrl}
+          playerLabel={livePlay?.playerLabel ?? null}
+          lanHint={joinLanHint}
+          onStartListen={() => {
+            void refreshJoinProbe().then(() => startJoinListen())
+          }}
+          onStopListen={() => {
+            void stopJoinListen()
+          }}
+          onKick={kickJoinedDevice}
+        />
+      ) : null}
+      {joinLastError ? (
+        <p
+          className="border-b border-red-900/50 bg-red-950/40 px-4 py-2 text-[11px] text-red-200"
+          role="status"
+        >
+          {joinLastError}
+        </p>
+      ) : null}
       <GmTabBar
         mode={hubMode}
         tabId={hubTabId}

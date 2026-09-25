@@ -408,6 +408,26 @@ export function recordNpcStrike(
   )
 }
 
+/**
+ * PC APM stays player-managed (not roster-tracked). Client wire spends are
+ * acknowledged in the event log only — no auto-spend / no roster mutation.
+ */
+export function recordPcApmSpendEvent(
+  session: GmSessionRecord,
+  _characterId: string,
+  label: string,
+  actions: number,
+): GmSessionRecord {
+  const n = Math.max(1, Math.floor(actions))
+  return touch(
+    pushEvent(
+      session,
+      'note',
+      `${label} spent ${n} APM on their device (player-managed; roster unchanged).`,
+    ),
+  )
+}
+
 export function adjustNpcPool(
   session: GmSessionRecord,
   instanceId: string,
