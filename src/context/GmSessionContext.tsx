@@ -170,7 +170,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     return active ? loadGmSession(active) : null
   })
   const sessionRef = useRef(session)
-  sessionRef.current = session
+  useEffect(() => {
+    sessionRef.current = session
+  }, [session])
 
   const [finalizedCharacters, setFinalizedCharacters] = useState<
     CharacterIndexEntry[]
