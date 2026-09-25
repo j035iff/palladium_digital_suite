@@ -201,7 +201,8 @@ Copy this block when registering a new unified path:
 | Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
 | Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 envelopes including join/presence + combat |
 | Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `createGmHostRuntime` | Ephemeral seats; same `deviceId` reclaims |
-| Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host` | Interim same-WiFi; desktop sidecar later |
+| Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions` | Interim same-WiFi; desktop sidecar later |
+| Discovery | `src/lib/gm/sessionDiscovery.ts` | `listLanSessions`, `parseLanSessionAdvertisement` | Join Session browse; **campaignName** display only |
 | Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | launcher **Join table** / hub listen chrome | One Party/Cast pipeline — no remote fork |
 | UI | `src/components/gm/*` | `GmHubShell` | Story / Combat modes; Home + Party + Cast + Gear |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |

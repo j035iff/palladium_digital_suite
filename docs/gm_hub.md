@@ -70,17 +70,18 @@ Chosen in the Campaign Creation Forge (**Conversion rules**) and stored on the c
 
 ## Client join (interim same-WiFi)
 
-Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray): [join-table-flow.md](./join-table-flow.md). Shipped path below still uses join code + QR until that story is implemented.
+Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray): [join-table-flow.md](./join-table-flow.md). Discovery advertise (`GET /sessions` + `listLanSessions`) is shipped; primary Join Session UX chrome still follows in later slices (code/QR remain advanced/fallback).
 
 | Piece | Behavior |
 |-------|----------|
 | Protocol | `src/lib/gm/sessionMessages.ts` (`v: 1`) — `session.join` / `welcome` / `leave` / `closed` / `presence` / `kick`, plus existing combat + `party.snapshot` |
 | Authority | GM host remains source of truth for `GmSessionRecord`; presence is **ephemeral in-memory** on the host (not in campaign JSON) |
 | Seat status | `joining` → `connected` (wire name for fully joined) → optional `reconnecting`; join completes on character attach (`party.snapshot`). Tray tone helpers + Join Session gate: `sessionPresence.ts`, `sessionJoinGate.ts` |
-| Token | **Rotate-on-open** join token when listen starts; short code + QR carry it |
+| Discovery | Interim host **`GET /sessions`** advertises open rooms (`campaignName` + routing ids/token). Lib: `listLanSessions` / `sessionDiscovery.ts`. List display identity is **campaign name only** (no date/time on Join Session DTOs). Closed/unlist when host stops listen. |
+| Token | **Rotate-on-open** join token when listen starts; short code + QR carry it (primary browse is `/sessions`; code/QR remain as advanced/fallback) |
 | Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Session clears seats |
 | Character attach | Joiner sends `party.snapshot`; host caches JSON for the sitting and runs the **same** party observer pipeline. Host “Add from this machine” remains as fallback |
-| Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`) |
+| Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`). Advertise: `GET /sessions` |
 | UI | Host chrome on `GmHubShell`; client `viewport: 'join_table'` from launcher **Join table** |
 
 Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hello.
@@ -99,8 +100,9 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Gear grant (party save) | `src/lib/gear/gmGearForgeHost.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` |
 | Protocol | `src/lib/gm/sessionMessages.ts` |
 | Presence / join token / join gate | `src/lib/gm/sessionPresence.ts`, `sessionJoinCode.ts`, `sessionJoinGate.ts` |
+| LAN discovery | `src/lib/gm/sessionDiscovery.ts` (`listLanSessions`, `GET /sessions` client) |
 | Host / client runtime | `src/lib/gm/sessionHostRuntime.ts`, `sessionClientRuntime.ts`, `gmHostListenController.ts` |
-| Interim WS relay | `scripts/gm-interim-ws-host.mjs`, `src/lib/gm/browserWsTransport.ts` |
+| Interim WS relay | `scripts/gm-interim-ws-host.mjs` (`/health`, `/sessions`), `src/lib/gm/browserWsTransport.ts` |
 | Joiner character cache | `src/lib/gm/sessionPartyCache.ts` |
 | Campaign forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
 | React | `src/context/GmSessionContext.tsx`, `src/components/gm/*` (`GmJoinHostChrome`, `GmJoinTableViewport`) |
