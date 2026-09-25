@@ -105,6 +105,11 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const [selectedCatalogId, setSelectedCatalogId] = useState('')
   const [qualityVariantId, setQualityVariantId] = useState('')
   const [customName, setCustomName] = useState('')
+  /**
+   * Read-only catalog source label from “Use as base archetype”
+   * (e.g. `Katana (Top quality (authentic))`). Not editable; Name stays separate.
+   */
+  const [customArchetypeLabel, setCustomArchetypeLabel] = useState('')
   /** Internal only — set by archetype; drives Misc → no W.P. (not shown in Custom Weapon UI). */
   const [customCategory, setCustomCategory] = useState('Misc')
   const [customDamage, setCustomDamage] = useState('2D6')
@@ -330,7 +335,9 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
       qualityOptions.length ? qualityVariantId || qualityOptions[0]?.id : null,
     )
     if (!draft) return
-    setCustomName(draft.name)
+    // Name stays empty so “Enter Name…” placeholder shows; Archetype holds source name.
+    setCustomName('')
+    setCustomArchetypeLabel(draft.name)
     setCustomCategory(draft.category)
     setCustomDamage(draft.damage)
     setCustomStrike(draft.strikeDisplay)
@@ -713,31 +720,50 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
       </div>
 
       <div ref={customEditorRef} className={`mb-5 p-3 ${theme.dashedPanel}`}>
-        <h3 className={`mb-3 text-[11px] font-black uppercase tracking-wider ${theme.th}`}>
-          Custom weapon
-        </h3>
-
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-          <label className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
-            Name
-            <input
-              className={`mt-0.5 font-mono text-sm ${theme.inputCls}`}
-              value={customName}
-              onChange={(e) => setCustomName(e.target.value)}
-            />
-          </label>
-          <div className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
-            Linked W.P.
-            <p
-              className={`mt-0.5 rounded-md border px-2 py-2 font-mono text-sm font-normal normal-case ${
-                morphus
-                  ? 'border-violet-800 bg-slate-950/60 text-violet-100/80'
-                  : 'border-slate-200 bg-slate-100 text-slate-600'
-              }`}
-              aria-live="polite"
-            >
-              {lockedWpLabel}
-            </p>
+          <div className="min-w-0">
+            <h3 className={`text-[11px] font-black uppercase tracking-wider ${theme.th}`}>
+              Custom weapon
+            </h3>
+            <label className={`mt-3 block text-[10px] font-bold uppercase ${theme.muted}`}>
+              Name
+              <input
+                className={`mt-0.5 font-mono text-sm ${theme.inputCls}`}
+                value={customName}
+                onChange={(e) => setCustomName(e.target.value)}
+                placeholder="Enter Name..."
+                aria-label="Custom weapon name"
+              />
+            </label>
+          </div>
+          <div className="min-w-0 space-y-3">
+            <div className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
+              Archetype
+              <p
+                className={`mt-0.5 rounded-md border px-2 py-2 font-mono text-sm font-normal normal-case ${
+                  morphus
+                    ? 'border-violet-800 bg-slate-950/60 text-violet-100/80'
+                    : 'border-slate-200 bg-slate-100 text-slate-600'
+                }`}
+                aria-live="polite"
+                aria-label="Base archetype"
+              >
+                {customArchetypeLabel.trim() || '—'}
+              </p>
+            </div>
+            <div className={`block text-[10px] font-bold uppercase ${theme.muted}`}>
+              Linked W.P.
+              <p
+                className={`mt-0.5 rounded-md border px-2 py-2 font-mono text-sm font-normal normal-case ${
+                  morphus
+                    ? 'border-violet-800 bg-slate-950/60 text-violet-100/80'
+                    : 'border-slate-200 bg-slate-100 text-slate-600'
+                }`}
+                aria-live="polite"
+              >
+                {lockedWpLabel}
+              </p>
+            </div>
           </div>
         </div>
 
