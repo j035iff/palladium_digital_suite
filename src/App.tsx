@@ -2,6 +2,7 @@ import { AppLauncher } from './components/dashboard/AppLauncher'
 import { CampaignCreationForge } from './components/gm/CampaignCreationForge'
 import { GearForgeViewport } from './components/gear/GearForgeViewport'
 import { GmHubShell } from './components/gm/GmHubShell'
+import { GmJoinTableViewport } from './components/gm/GmJoinTableViewport'
 import { MainLayout } from './components/layout/MainLayout'
 import { useCharacter } from './context/CharacterContext'
 
@@ -22,6 +23,10 @@ function App() {
 
   if (viewport === 'gm') {
     return <GmHubShell />
+  }
+
+  if (viewport === 'join_table') {
+    return <GmJoinTableViewport />
   }
 
   const themeClass =

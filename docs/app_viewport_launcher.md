@@ -18,13 +18,14 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 
 | Viewport | UI | Entry |
 |----------|-----|--------|
-| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header, GM Hub, Campaign Creation Forge, or Gear Forge |
+| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header, GM Hub, Campaign Creation Forge, Gear Forge, or Join table |
 | `sheet` | `MainLayout` — live sheet + optional creation chrome | **Open Character** or **Create Character** |
 | `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
 | `gear_forge` | `GearForgeViewport` — shared Gear Forge → custom gear library | **Gear Forge** or **My Custom Gear** on the launcher |
 | `gm` | `GmHubShell` — Story / Combat (Home + Party + Cast + Gear) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
+| `join_table` | `GmJoinTableViewport` — connect to an open play sitting | **Join table** on the launcher |
 
-`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`.
+`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, `GmJoinTableViewport` when `viewport === 'join_table'`, otherwise `MainLayout`.
 
 **Units preference:** Launcher and live sheet expose a Standard/Metric toggle (`docs/units_preference.md`). Preference is local to the device/user (`localStorage`), not part of character saves or GM session state.
 
@@ -90,7 +91,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 
 - **Radical visibility:** Roadmap genres remain visible but clearly non-selectable.
 - **Megaversal bridge:** `creationGenreId` is stamped at creation and preserved in saves; `hostGenreId` may diverge for cross-setting play.
-- **No hidden launcher paths:** My Characters, Create Character, Campaigns, New Campaign, **Gear Forge**, and **My Custom Gear** are all on the portal. Roadmap genres stay visible but non-selectable.
+- **No hidden launcher paths:** My Characters, Create Character, Campaigns, New Campaign, **Join table**, **Gear Forge**, and **My Custom Gear** are all on the portal. Roadmap genres stay visible but non-selectable.
 
 ---
 
