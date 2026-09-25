@@ -6,7 +6,7 @@ Local-only table workspace for running a session from this machine. It is a **so
 
 **Shipped (client join first slice):** interim same-WiFi `ws` listen on the GM machine, short join code + QR, same-SPA **Join table** viewport, interacting sheet (initiative / H.F. save / PC APM over the wire), `party.snapshot` attach from the joiner. Production desktop WebSocket sidecar is **not** shipped — join chrome greys that path with an explicit why (Radical Visibility).
 
-Related: [vision.md](./vision.md) · [master_flow.md](./master_flow.md) · [app_viewport_launcher.md](./app_viewport_launcher.md) · [ingest/encounters.md](./ingest/encounters.md) · [unified_paths.md](./unified_paths.md)
+Related: [vision.md](./vision.md) · [master_flow.md](./master_flow.md) · [app_viewport_launcher.md](./app_viewport_launcher.md) · [join-table-flow.md](./join-table-flow.md) (target simple LAN Join Table UX) · [ingest/encounters.md](./ingest/encounters.md) · [unified_paths.md](./unified_paths.md)
 
 ---
 
@@ -69,6 +69,8 @@ Chosen in the Campaign Creation Forge (**Conversion rules**) and stored on the c
 - **Emit H.F.** records the save target and party pass/fail icons. It does **not** auto-spend player APM or apply book penalties. Joined clients may submit H.F. saves with a physical d20 on their device.
 
 ## Client join (interim same-WiFi)
+
+Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray): [join-table-flow.md](./join-table-flow.md). Shipped path below still uses join code + QR until that story is implemented.
 
 | Piece | Behavior |
 |-------|----------|
