@@ -126,7 +126,7 @@ export function createGmHostListenController(
     if (!live) {
       return {
         ok: false,
-        reason: 'Open a play sitting before starting the join listener.',
+        reason: 'Open Table before starting the join listener.',
       }
     }
 

@@ -112,7 +112,7 @@ export function seatFlippedToFullyJoined(
 
 /**
  * Same deviceId reclaims the seat for the life of the sitting.
- * Close Session clears all seats (caller uses clearPresence).
+ * Close Table clears all seats (caller uses clearPresence).
  * New seats start as `joining` until character attach completes join.
  */
 export function grantOrReclaimSeat(

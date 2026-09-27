@@ -41,7 +41,7 @@ import {
   emitHorrorFactor,
 } from './sessionModel'
 import type { GmSessionRecord } from './sessionTypes'
-import { resolveJoinListenCapability } from './desktopHostCapability'
+import { resolveJoinListenCapability, openTableDisabledReason } from './desktopHostCapability'
 import {
   __resetJoinedCharacterCacheForTests,
   cacheJoinedCharacter,
@@ -155,13 +155,25 @@ describe('join session gate', () => {
 })
 
 describe('desktop capability Radical Visibility', () => {
+  it('greys Open Table when no campaign or table already open', () => {
+    expect(
+      openTableDisabledReason({ campaignOpen: false, tableOpen: false }),
+    ).toMatch(/campaign/i)
+    expect(
+      openTableDisabledReason({ campaignOpen: true, tableOpen: true }),
+    ).toMatch(/already open/i)
+    expect(
+      openTableDisabledReason({ campaignOpen: true, tableOpen: false }),
+    ).toBeNull()
+  })
+
   it('greys listen when sitting closed or interim unreachable', () => {
     const closed = resolveJoinListenCapability({
       playSessionOpen: false,
       interimHostReachable: true,
     })
     expect(closed.canListen).toBe(false)
-    expect(closed.listenDisabledReason).toMatch(/Open a play sitting/i)
+    expect(closed.listenDisabledReason).toMatch(/Open Table/i)
     expect(closed.productionDisabledReason).toMatch(/desktop WebSocket host/i)
 
     const noInterim = resolveJoinListenCapability({

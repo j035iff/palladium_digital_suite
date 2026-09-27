@@ -4,7 +4,7 @@ Local-only table workspace for running a session from this machine. It is a **so
 
 **Not in v1 (still deferred):** internet/cloud relay, Plot wiki, item push, Creation-Forge-named GM factory, structural M.D.C.↔S.D.C. conversion, production Tauri/Electron packaging polish.
 
-**Shipped (client join first slice):** interim same-WiFi `ws` listen on the GM machine, short join code + QR, same-SPA **Join table** viewport, interacting sheet (initiative / H.F. save / PC APM over the wire), `party.snapshot` attach from the joiner. Production desktop WebSocket sidecar is **not** shipped — join chrome greys that path with an explicit why (Radical Visibility).
+**Shipped (client join):** interim same-WiFi `ws` listen on the GM machine, LAN `/sessions` discovery, **Open Table** (one-click publish = open sitting + start listen), **Players in Session** tray (yellow joining / green joined), short join code + QR as Advanced fallback, same-SPA **Join table** viewport, interacting sheet (initiative / H.F. save / PC APM over the wire), `party.snapshot` attach from the joiner. Production desktop WebSocket sidecar is **not** shipped — join chrome greys that path with an explicit why (Radical Visibility).
 
 Related: [vision.md](./vision.md) · [master_flow.md](./master_flow.md) · [app_viewport_launcher.md](./app_viewport_launcher.md) · [join-table-flow.md](./join-table-flow.md) (target simple LAN Join Table UX) · [ingest/encounters.md](./ingest/encounters.md) · [unified_paths.md](./unified_paths.md)
 
@@ -14,19 +14,15 @@ Related: [vision.md](./vision.md) · [master_flow.md](./master_flow.md) · [app_
 
 Launcher **Campaigns** opens an existing table in `GmHubShell` (`viewport: 'gm'`). **New Campaign** opens the Campaign Creation Forge (`viewport: 'campaign_forge'`); confirming **Yes** creates the table and enters the hub. **Join table** opens `GmJoinTableViewport` (`viewport: 'join_table'`) on a second device — clients never load `pds:gmSession:*`. Campaign records persist in `localStorage` (`pds:gmSession:*`) on the **GM machine only**, independently of character saves.
 
-The hub header **title is the campaign name**. Host genre and conversion rules stay in the subtitle. When a play session is open, the subtitle also shows the player-facing join name.
+The hub header **title is the campaign name**. Host genre and conversion rules stay in the subtitle. When a table is open, the subtitle notes **Table open**.
 
 ### Campaign vs play session
 
 A **campaign** is the persistent table created in the Campaign Creation Forge (`GmSessionRecord.name`, `hostGenreId`, `conversionPolicy`). Switch campaigns from the launcher **Campaigns** menu — Sessions does not list other campaigns.
 
-A **play session** is a joinable sitting under that campaign (`playSessions[]`, `activePlaySessionId`). **Open Session** lives in the hub header under **Return to launcher**. Players see:
+A **play session** is a joinable sitting under that campaign (`playSessions[]`, `activePlaySessionId`). **Open Table** lives in the hub header under **Return to launcher** — one control that stamps the sitting **and** starts the LAN listener. The **Players in Session** tray sits under the header (`GmJoinHostChrome`). Internally the sitting still uses a date-stamped `playerLabel` for event-log / collision uniqueness; Join Session browse shows **campaign name only**.
 
-`{campaign name}: {session date}`
-
-example: `Harbor Watch: August 30, 2026`
-
-If that label is already used, the stamp adds local time. **Close Session** ends the live sitting, stops the join listener, and clears seats. `session.hello` carries `campaignName`, `sessionName` (player label), and `playSessionId`.
+If that label is already used, the stamp adds local time. **Close Table** ends the live sitting, stops the join listener, and clears seats. `session.hello` carries `campaignName`, `sessionName` (player label), and `playSessionId`.
 
 Old campaign saves missing `playSessions` hydrate to `[]` / `null` on load.
 
@@ -70,7 +66,7 @@ Chosen in the Campaign Creation Forge (**Conversion rules**) and stored on the c
 
 ## Client join (interim same-WiFi)
 
-Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray): [join-table-flow.md](./join-table-flow.md). Discovery advertise (`GET /sessions` + `listLanSessions`) is shipped; primary Join Session UX chrome still follows in later slices (code/QR remain advanced/fallback).
+Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray): [join-table-flow.md](./join-table-flow.md). Discovery advertise (`GET /sessions` + `listLanSessions`) and host **Open Table** / **Players in Session** chrome are shipped; primary player Join Session list UX still follows in a later slice (code/QR remain Advanced/fallback on the host).
 
 | Piece | Behavior |
 |-------|----------|
@@ -78,11 +74,11 @@ Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-n
 | Authority | GM host remains source of truth for `GmSessionRecord`; presence is **ephemeral in-memory** on the host (not in campaign JSON) |
 | Seat status | `joining` → `connected` (wire name for fully joined) → optional `reconnecting`; join completes on character attach (`party.snapshot`). Tray tone helpers + Join Session gate: `sessionPresence.ts`, `sessionJoinGate.ts` |
 | Discovery | Interim host **`GET /sessions`** advertises open rooms (`campaignName` + routing ids/token). Lib: `listLanSessions` / `sessionDiscovery.ts`. List display identity is **campaign name only** (no date/time on Join Session DTOs). Closed/unlist when host stops listen. |
-| Token | **Rotate-on-open** join token when listen starts; short code + QR carry it (primary browse is `/sessions`; code/QR remain as advanced/fallback) |
-| Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Session clears seats |
+| Token | **Rotate-on-open** join token when listen starts; short code + QR under host **Advanced** (browse-first; code/QR fallback) |
+| Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Table clears seats |
 | Character attach | Joiner sends `party.snapshot`; host caches JSON for the sitting and runs the **same** party observer pipeline. Host “Add from this machine” remains as fallback |
 | Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`). Advertise: `GET /sessions` |
-| UI | Host chrome on `GmHubShell`; client `viewport: 'join_table'` from launcher **Join table** |
+| UI | Host: **Open Table** / **Close Table** on `GmHubShell`; **Players in Session** + Advanced code/QR on `GmJoinHostChrome`. Client `viewport: 'join_table'` from launcher **Join table** |
 
 Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hello.
 

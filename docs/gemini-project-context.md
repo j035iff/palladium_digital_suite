@@ -95,7 +95,7 @@ App Launch (AppLauncher) — docs/app_viewport_launcher.md
   ├─ Open Character → load JSON → genreTransformer → CharacterContext → MainLayout
   ├─ Create Character → pick genre → Forge (docs/forge/character_creation.md) → spawn (docs/character_spawn_handoff.md)
   ├─ Campaigns → open GM table → GmHubShell (docs/gm_hub.md)
-  └─ New Campaign → Campaign Creation Forge → confirm → GmHubShell (header Open Session)
+  └─ New Campaign → Campaign Creation Forge → confirm → GmHubShell (header Open Table)
 
 MainLayout (live sheet)
   ├─ Identity / XP / form toggle

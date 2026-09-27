@@ -2,6 +2,7 @@ import { useCharacter } from '../../context/CharacterContext'
 import { useGmSession } from '../../context/GmSessionContext'
 import { formatGenreSlug } from '../../data/genres'
 import { conversionRuleLabel } from '../../lib/gm/campaignForge'
+import { openTableDisabledReason } from '../../lib/gm/desktopHostCapability'
 import { activePlaySession } from '../../lib/gm/playSession'
 import { GmCastPanel } from './GmCastPanel'
 import { GmCombatPanel } from './GmCombatPanel'
@@ -45,7 +46,12 @@ export function GmHubShell() {
     refreshJoinProbe,
   } = useGmSession()
   const livePlay = session ? activePlaySession(session) : null
-  const canOpen = Boolean(session) && livePlay == null
+  const tableOpen = livePlay != null
+  const openDisabledReason = openTableDisabledReason({
+    campaignOpen: Boolean(session),
+    tableOpen,
+  })
+  const canOpen = openDisabledReason == null
 
   return (
     <div className="flex h-svh min-h-0 flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
@@ -61,13 +67,12 @@ export function GmHubShell() {
             <p className="text-[11px] text-slate-400">
               Host {formatGenreSlug(session.hostGenreId)} ·{' '}
               {conversionRuleLabel(session.conversionPolicy)}
-              {livePlay ? ` · Players see ${livePlay.playerLabel}` : ''} ·
-              campaigns stay on this machine
+              {livePlay ? ` · Table open` : ''} · campaigns stay on this machine
             </p>
           ) : (
             <p className="text-[11px] text-slate-500">
-              Open a campaign from the launcher. Join listen needs an open play
-              sitting.
+              Open a campaign from the launcher. Open Table publishes the sitting
+              on the LAN.
             </p>
           )}
         </div>
@@ -84,24 +89,23 @@ export function GmHubShell() {
             type="button"
             disabled={!canOpen}
             title={
-              !session
-                ? 'Open a campaign from the launcher first'
-                : livePlay
-                  ? 'A session is already open. Close it before opening another.'
-                  : 'Players will see this campaign name and today’s date'
+              openDisabledReason ??
+              'Publish this campaign on the LAN (open sitting + start listen)'
             }
-            onClick={() => openPlaySession()}
+            onClick={() => {
+              void openPlaySession()
+            }}
             className="rounded-lg bg-amber-500 px-3 py-2 text-[10px] font-black uppercase tracking-wide text-slate-950 hover:bg-amber-400 disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-slate-500"
           >
-            Open Session
+            Open Table
           </button>
-          {livePlay ? (
+          {tableOpen ? (
             <button
               type="button"
               onClick={() => closePlaySession()}
               className="rounded-lg border border-slate-500 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-300 hover:text-white"
             >
-              Close Session
+              Close Table
             </button>
           ) : null}
         </div>
@@ -109,10 +113,12 @@ export function GmHubShell() {
       {session ? (
         <GmJoinHostChrome
           capability={joinCapability}
+          tableOpen={tableOpen}
           listening={joinListening}
           credentials={joinCredentials}
           seats={joinSeats}
           joinUrl={joinUrl}
+          campaignName={session.name}
           playerLabel={livePlay?.playerLabel ?? null}
           lanHint={joinLanHint}
           onStartListen={() => {

@@ -108,7 +108,7 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     if (!live) {
       return {
         ok: false,
-        reason: 'No open play sitting. Open Session before listening for joins.',
+        reason: 'No open table. Open Table before listening for joins.',
       }
     }
     state = {
