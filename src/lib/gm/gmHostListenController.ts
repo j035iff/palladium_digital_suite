@@ -155,6 +155,7 @@ export function createGmHostListenController(
       role: 'host',
       host: {
         campaignId: session.id,
+        campaignName: session.name,
         playSessionId: live.id,
         credentials,
       },

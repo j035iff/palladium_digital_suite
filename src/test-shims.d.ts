@@ -15,3 +15,34 @@ declare module '../../scripts/talent-engine-contract.mjs' {
   export function inferTalentUsableInNightbaneForm(row: unknown): string
   export function isTier1ChargenComplete(row: unknown): boolean
 }
+
+declare module '../../../scripts/gm-interim-ws-host.mjs' {
+  export type InterimGmRoom = {
+    campaignId: string
+    campaignName: string
+    playSessionId: string
+    joinToken: string
+    shortCode: string
+    host: unknown
+    clients: Map<string, unknown>
+  }
+
+  export function advertiseOpenSessions(
+    rooms: Iterable<InterimGmRoom>,
+  ): Array<{
+    campaignName: string
+    campaignId: string
+    playSessionId: string
+    joinToken: string
+    shortCode: string
+  }>
+
+  export function createInterimGmHost(opts?: { port?: number }): {
+    readonly port: number
+    server: import('node:http').Server
+    wss: unknown
+    listRooms: () => InterimGmRoom[]
+    listen: () => Promise<void>
+    close: () => Promise<void>
+  }
+}
