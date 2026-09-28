@@ -2,12 +2,18 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import WebSocket from 'ws'
 import {
   advertiseOpenSessions,
+  broadcastForCidr,
   clearDiscoverCache,
   createInterimGmHost,
   fetchPeerLocalSessions,
   hostsInCidr,
+  isIpv4Family,
   mergeLocalAndRemoteSessions,
+  parseDiscoverDatagram,
   stampSessionHosts,
+  udpBrowseOpenSessions,
+  DISCOVER_MSG_AD,
+  DISCOVER_PROTOCOL_V,
 } from '../../../scripts/gm-interim-ws-host.mjs'
 import {
   emptyLanBrowseHint,
@@ -112,25 +118,84 @@ describe('session discovery parse', () => {
       '127.0.0.1',
     )
     expect(parsed.discovered).toBe(true)
-    expect(emptyLanBrowseHint(parsed)).toMatch(/Open Table/i)
+    expect(emptyLanBrowseHint(parsed)).toMatch(/Open Table|same network/i)
+    expect(emptyLanBrowseHint(parsed)).toMatch(/Advanced/i)
+    expect(emptyLanBrowseHint(parsed)).not.toMatch(/firewall/i)
   })
 })
 
-describe('hostsInCidr', () => {
-  it('enumerates /30 usable hosts excluding self', () => {
-    const hosts = hostsInCidr('192.168.1.1/30', {
-      exclude: ['192.168.1.1'],
-    })
-    expect(hosts).toEqual(['192.168.1.2'])
+describe('CIDR / family helpers', () => {
+  it('treats numeric and string IPv4 family as equal', () => {
+    expect(isIpv4Family('IPv4')).toBe(true)
+    expect(isIpv4Family(4)).toBe(true)
+    expect(isIpv4Family('IPv6')).toBe(false)
+    expect(isIpv4Family(6)).toBe(false)
   })
 
-  it('skips oversized subnets', () => {
+  it('enumerates /24 and /23 hosts; skips huge clouds', () => {
+    const hosts24 = hostsInCidr('192.168.4.87/24', {
+      exclude: ['192.168.4.87'],
+    })
+    expect(hosts24).toContain('192.168.4.1')
+    expect(hosts24).toContain('192.168.4.86')
+    expect(hosts24).not.toContain('192.168.4.87')
+    expect(hosts24.length).toBe(253)
+
+    const hosts23 = hostsInCidr('192.168.4.87/23', { maxHosts: 20 })
+    expect(hosts23.length).toBe(20)
+
     expect(hostsInCidr('10.0.0.1/16')).toEqual([])
   })
+
+  it('computes subnet broadcast', () => {
+    expect(broadcastForCidr('192.168.4.87/24')).toBe('192.168.4.255')
+    expect(broadcastForCidr('10.0.0.5/30')).toBe('10.0.0.7')
+  })
 })
 
-describe('mergeLocalAndRemoteSessions', () => {
-  it('dedupes by joinToken preferring local first', () => {
+describe('UDP discover datagram parse', () => {
+  it('parses session ads and ignores queries / bad payloads', () => {
+    const rows = parseDiscoverDatagram(
+      JSON.stringify({
+        t: DISCOVER_MSG_AD,
+        v: DISCOVER_PROTOCOL_V,
+        port: 8765,
+        host: '192.168.4.87',
+        sessions: [
+          {
+            campaignName: 'Night Harbor',
+            campaignId: 'camp_gm',
+            playSessionId: 'play_gm',
+            joinToken: 'join_gm_1',
+            shortCode: 'GMCODE',
+          },
+        ],
+      }),
+      '10.0.0.1',
+    )
+    expect(rows).toEqual([
+      {
+        campaignName: 'Night Harbor',
+        campaignId: 'camp_gm',
+        playSessionId: 'play_gm',
+        joinToken: 'join_gm_1',
+        shortCode: 'GMCODE',
+        host: '192.168.4.87',
+        port: 8765,
+      },
+    ])
+    expect(parseDiscoverDatagram('not-json', '1.2.3.4')).toEqual([])
+    expect(
+      parseDiscoverDatagram(
+        JSON.stringify({ t: 'pds-gm-discover-query', v: 1 }),
+        '1.2.3.4',
+      ),
+    ).toEqual([])
+  })
+})
+
+describe('merge + stamp', () => {
+  it('merges remote without clobbering local tokens', () => {
     const local = stampSessionHosts(
       [
         {
@@ -155,10 +220,10 @@ describe('mergeLocalAndRemoteSessions', () => {
         },
         {
           campaignName: 'Dup',
-          campaignId: 'c1',
-          playSessionId: 'p1',
+          campaignId: 'c1b',
+          playSessionId: 'p1b',
           joinToken: 't1',
-          shortCode: 'AAAAAA',
+          shortCode: 'CCCCCC',
         },
       ],
       '192.168.1.10',
@@ -166,7 +231,7 @@ describe('mergeLocalAndRemoteSessions', () => {
     )
     const merged = mergeLocalAndRemoteSessions(local, remote)
     expect(merged).toHaveLength(2)
-    expect(merged.find((r) => r.joinToken === 't1')?.campaignName).toBe('Local')
+    expect(merged.find((r) => r.joinToken === 't1')?.host).toBe('127.0.0.1')
     expect(merged.find((r) => r.joinToken === 't2')?.host).toBe('192.168.1.10')
   })
 })
@@ -260,9 +325,42 @@ describe('listLanSessions', () => {
     const result = await listLanSessions({ hostHint: '127.0.0.1', timeoutMs: 50 })
     expect(result.ok).toBe(false)
     expect(result.sessions).toEqual([])
-    expect(result.reason).toMatch(/reachable|8765/i)
+    expect(result.reason).toMatch(/reachable|Advanced/i)
+    expect(result.reason).not.toMatch(/firewall/i)
   })
 })
+
+async function registerHost(
+  port: number,
+  fields: {
+    campaignId: string
+    campaignName: string
+    playSessionId: string
+    joinToken: string
+    shortCode: string
+  },
+) {
+  const ws = new WebSocket(`ws://127.0.0.1:${port}`)
+  await new Promise<void>((resolve, reject) => {
+    ws.once('open', () => resolve())
+    ws.once('error', reject)
+  })
+  const registered = new Promise<void>((resolve, reject) => {
+    ws.once('message', (data) => {
+      try {
+        const row = JSON.parse(String(data))
+        if (row.op === 'registered') resolve()
+        else if (row.op === 'error') reject(new Error(row.reason))
+        else reject(new Error(`unexpected op ${row.op}`))
+      } catch (err) {
+        reject(err)
+      }
+    })
+  })
+  ws.send(JSON.stringify({ op: 'register_host', ...fields }))
+  await registered
+  return ws
+}
 
 describe('interim host /sessions advertise', () => {
   afterEach(() => {
@@ -270,7 +368,7 @@ describe('interim host /sessions advertise', () => {
   })
 
   it('lists open table and drops closed table', async () => {
-    const host = createInterimGmHost({ port: 0 })
+    const host = createInterimGmHost({ port: 0, udpPort: 18765 })
     await host.listen()
     const address = host.server.address()
     if (!address || typeof address === 'string') {
@@ -282,34 +380,13 @@ describe('interim host /sessions advertise', () => {
     const empty = await fetch(`${base}/sessions`).then((r) => r.json())
     expect(empty.sessions).toEqual([])
 
-    const ws = new WebSocket(`ws://127.0.0.1:${port}`)
-    await new Promise<void>((resolve, reject) => {
-      ws.once('open', () => resolve())
-      ws.once('error', reject)
+    const ws = await registerHost(port, {
+      campaignId: 'camp_1',
+      campaignName: 'Harbor Watch',
+      playSessionId: 'play_1',
+      joinToken: 'join_token_1',
+      shortCode: 'ABCD12',
     })
-    const registered = new Promise<void>((resolve, reject) => {
-      ws.once('message', (data) => {
-        try {
-          const row = JSON.parse(String(data))
-          if (row.op === 'registered') resolve()
-          else if (row.op === 'error') reject(new Error(row.reason))
-          else reject(new Error(`unexpected op ${row.op}`))
-        } catch (err) {
-          reject(err)
-        }
-      })
-    })
-    ws.send(
-      JSON.stringify({
-        op: 'register_host',
-        campaignId: 'camp_1',
-        campaignName: 'Harbor Watch',
-        playSessionId: 'play_1',
-        joinToken: 'join_token_1',
-        shortCode: 'ABCD12',
-      }),
-    )
-    await registered
 
     const open = await fetch(`${base}/sessions`).then((r) => r.json())
     expect(open.sessions).toEqual([
@@ -336,6 +413,7 @@ describe('interim host /sessions advertise', () => {
 
     const discovered = await fetch(`${base}/discover`).then((r) => r.json())
     expect(discovered.discover).toBe(true)
+    expect(discovered.udpPort).toBe(18765)
     expect(discovered.sessions).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -350,7 +428,6 @@ describe('interim host /sessions advertise', () => {
       ws.once('close', () => resolve())
       ws.close()
     })
-    // Allow host close handler to unlist
     await new Promise((r) => setTimeout(r, 50))
 
     const closed = await fetch(`${base}/sessions`).then((r) => r.json())
@@ -359,9 +436,10 @@ describe('interim host /sessions advertise', () => {
     await host.close()
   })
 
-  it('discover on player host lists a peer GM open table', async () => {
-    const gm = createInterimGmHost({ port: 0 })
-    const player = createInterimGmHost({ port: 0 })
+  it('UDP beacon lets a player host discover a peer GM open table', async () => {
+    const udpPort = 18766
+    const gm = createInterimGmHost({ port: 0, udpPort })
+    const player = createInterimGmHost({ port: 0, udpPort })
     await gm.listen()
     await player.listen()
     const gmAddr = gm.server.address()
@@ -375,36 +453,31 @@ describe('interim host /sessions advertise', () => {
       throw new Error('expected TCP addresses')
     }
 
-    const ws = new WebSocket(`ws://127.0.0.1:${gmAddr.port}`)
-    await new Promise<void>((resolve, reject) => {
-      ws.once('open', () => resolve())
-      ws.once('error', reject)
+    const ws = await registerHost(gmAddr.port, {
+      campaignId: 'camp_gm',
+      campaignName: 'Night Harbor',
+      playSessionId: 'play_gm',
+      joinToken: 'join_gm_1',
+      shortCode: 'GMCODE',
     })
-    const registered = new Promise<void>((resolve, reject) => {
-      ws.once('message', (data) => {
-        try {
-          const row = JSON.parse(String(data))
-          if (row.op === 'registered') resolve()
-          else if (row.op === 'error') reject(new Error(row.reason))
-          else reject(new Error(`unexpected op ${row.op}`))
-        } catch (err) {
-          reject(err)
-        }
-      })
-    })
-    ws.send(
-      JSON.stringify({
-        op: 'register_host',
-        campaignId: 'camp_gm',
-        campaignName: 'Night Harbor',
-        playSessionId: 'play_gm',
-        joinToken: 'join_gm_1',
-        shortCode: 'GMCODE',
-      }),
-    )
-    await registered
 
-    // Simulate player-side peer probe hitting the GM (loopback stands in for LAN).
+    // Direct UDP browse (same path /discover uses) should see the GM ad.
+    const viaUdp = await udpBrowseOpenSessions({
+      udpPort,
+      listenMs: 600,
+      tcpPort: gmAddr.port,
+    })
+    expect(viaUdp).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          campaignName: 'Night Harbor',
+          joinToken: 'join_gm_1',
+          port: gmAddr.port,
+        }),
+      ]),
+    )
+
+    // Simulate player-side TCP peer probe hitting the GM (loopback stands in for LAN).
     const peered = await fetchPeerLocalSessions('127.0.0.1', gmAddr.port, 2000)
     expect(peered).toEqual([
       {
@@ -418,15 +491,22 @@ describe('interim host /sessions advertise', () => {
       },
     ])
 
+    clearDiscoverCache()
     const listed = await listLanSessions({
       hostHint: '127.0.0.1',
       port: playerAddr.port,
-      timeoutMs: 2000,
+      timeoutMs: 4000,
     })
-    // Player local discover may not find GM on other loopback ports via /24 scan,
-    // but /discover still returns ok + local empty; peer fetch above proves path.
     expect(listed.ok).toBe(true)
     expect(listed.discovered).toBe(true)
+    expect(listed.sessions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          campaignName: 'Night Harbor',
+          joinToken: 'join_gm_1',
+        }),
+      ]),
+    )
 
     ws.close()
     await gm.close()
