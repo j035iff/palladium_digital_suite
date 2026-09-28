@@ -135,7 +135,7 @@ export function GmJoinHostChrome({
             <p className="mt-1 text-[11px] text-cyan-300/90">
               Interim same-WiFi listener active
               {lanHint ? ` · ${lanHint}` : ''}. Players Join Table on their own
-              device — browse finds this table via LAN discovery (TCP 8765).
+              device — browse finds this table via LAN discovery (UDP beacon).
               Not the production desktop host.
             </p>
           ) : null}
@@ -215,9 +215,8 @@ export function GmJoinHostChrome({
           </summary>
           <p className="mt-2 text-[11px] text-slate-500">
             Primary join is LAN browse (Join Session on the player device). Use
-            code or QR if browse fails (firewall / AP isolation), or for
-            same-machine debug. GM firewall must allow inbound TCP 8765 from
-            Wi‑Fi.
+            code, QR, or GM Wi‑Fi IP only if browse fails (Radical Visibility
+            failure mode), or for same-machine debug.
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <button

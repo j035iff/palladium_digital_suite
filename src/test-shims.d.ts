@@ -37,12 +37,21 @@ declare module '../../../scripts/gm-interim-ws-host.mjs' {
     port?: number
   }
 
+  export const DISCOVER_MSG_AD: string
+  export const DISCOVER_MSG_QUERY: string
+  export const DISCOVER_PROTOCOL_V: number
+  export const DEFAULT_UDP_PORT: number
+  export const DEFAULT_WS_PORT: number
+
+  export function isIpv4Family(family: string | number | undefined): boolean
   export function lanAddresses(): string[]
   export function lanIpv4Cidrs(): Array<{
     address: string
     cidr: string
     prefix: number
+    broadcast: string
   }>
+  export function broadcastForCidr(cidr: string): string | null
   export function hostsInCidr(
     cidr: string,
     opts?: { exclude?: Iterable<string>; maxHosts?: number },
@@ -67,16 +76,46 @@ declare module '../../../scripts/gm-interim-ws-host.mjs' {
   export function probeLanHosts(
     hosts: string[],
     port: number,
-    opts?: { concurrency?: number; timeoutMs?: number },
+    opts?: {
+      concurrency?: number
+      timeoutMs?: number
+      earlyExit?: boolean
+      deadlineMs?: number
+    },
   ): Promise<InterimSessionAd[]>
+  export function parseDiscoverDatagram(
+    msg: Buffer | string,
+    rinfoAddress: string,
+  ): InterimSessionAd[]
+  export function udpBrowseOpenSessions(opts?: {
+    udpPort?: number
+    listenMs?: number
+    multicastAddr?: string
+    tcpPort?: number
+  }): Promise<InterimSessionAd[]>
   export function discoverLanPeerSessions(
     port: number,
-    opts?: { cacheMs?: number; now?: number; skipCache?: boolean },
+    opts?: {
+      cacheMs?: number
+      emptyCacheMs?: number
+      now?: number
+      skipCache?: boolean
+      udpPort?: number
+      udpListenMs?: number
+      skipUdp?: boolean
+      skipTcp?: boolean
+      tcpDeadlineMs?: number
+      udpBrowse?: (listenMs?: number) => Promise<InterimSessionAd[]>
+    },
   ): Promise<InterimSessionAd[]>
   export function clearDiscoverCache(): void
 
-  export function createInterimGmHost(opts?: { port?: number }): {
+  export function createInterimGmHost(opts?: {
+    port?: number
+    udpPort?: number
+  }): {
     readonly port: number
+    readonly udpPort: number
     server: import('node:http').Server
     wss: unknown
     listRooms: () => InterimGmRoom[]

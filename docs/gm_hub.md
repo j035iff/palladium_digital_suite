@@ -74,7 +74,7 @@ Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-n
 | Authority | GM host remains source of truth for `GmSessionRecord`; presence is **ephemeral in-memory** on the host (not in campaign JSON) |
 | Seat status | `joining` → `connected` (wire name for fully joined) → optional `reconnecting`; join completes on character attach (`party.snapshot`). Tray tone helpers + Join Session gate: `sessionPresence.ts`, `sessionJoinGate.ts` |
 | Party blink | Ephemeral hub flag (`partyBlink.ts`): set when `seatFlippedToFullyJoined`; cleared when GM opens Party or Close Table. Tab chrome only — same `buildPartyObserverSlice` / `GmPartyPanel` |
-| Discovery | Interim host **`GET /sessions`** (local rooms) + **`GET /discover`** (local + LAN peer probe of `/24` Wi‑Fi for other `:8765` hosts). Lib: `listLanSessions` prefers `/discover` so a second device browsing on its own localhost still sees the GM Open Table without typing an IP. List display identity is **campaign name only**. Closed/unlist when host stops listen. Firewall: allow inbound **TCP 8765** on the GM machine. Advanced code/IP remains Radical Visibility fallback (AP client isolation / blocked probes). |
+| Discovery | Interim host **`GET /sessions`** (local rooms) + **`GET /discover`** (UDP multicast/broadcast beacon on **8766** + TCP `/24`–`/23` peer probe fallback for other `:8765` hosts). Lib: `listLanSessions` prefers `/discover` so a second device browsing on its own localhost still sees the GM Open Table without typing an IP. List display identity is **campaign name only**. Closed/unlist when host stops listen. Advanced code/IP is Radical Visibility **failure mode only**. |
 | Token | **Rotate-on-open** join token when listen starts; short code + QR under host **Advanced** (browse-first; code/QR fallback) |
 | Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Table clears seats |
 | Character attach | Happy-path Join Session sends `party.snapshot` on join (pre-selected character); host caches JSON for the sitting and runs the **same** party observer pipeline. Host “Add from this machine” remains as fallback |
@@ -101,7 +101,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | LAN discovery | `src/lib/gm/sessionDiscovery.ts` (`listLanSessions` → `/discover`, peer host stamp) |
 | Join connect / gate | `src/lib/gm/joinSessionConnect.ts`, `sessionJoinGate.ts`, `sessionClientHandle.ts` |
 | Host / client runtime | `src/lib/gm/sessionHostRuntime.ts`, `sessionClientRuntime.ts`, `gmHostListenController.ts` |
-| Interim WS relay | `scripts/gm-interim-ws-host.mjs` (`/health`, `/sessions`, `/discover`), `src/lib/gm/browserWsTransport.ts` |
+| Interim WS relay | `scripts/gm-interim-ws-host.mjs` + `scripts/gm-lan-discover.mjs` (`/health`, `/sessions`, `/discover`, UDP beacon), `src/lib/gm/browserWsTransport.ts` |
 | Joiner character cache | `src/lib/gm/sessionPartyCache.ts` |
 | Campaign forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
 | React | `src/context/GmSessionContext.tsx`, `src/components/gm/*` (`GmJoinHostChrome`, `GmJoinTableViewport`) |

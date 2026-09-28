@@ -30,7 +30,7 @@ import {
 import { resolveJoinSessionGate } from '../../lib/gm/sessionJoinGate'
 import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
-const SESSION_POLL_MS = 3000
+const SESSION_POLL_MS = 2000
 
 /**
  * Same-SPA “Join table” viewport — Player Name + My Characters + Join Session
@@ -384,9 +384,9 @@ export function GmJoinTableViewport() {
               Advanced — manual code / IP (if browse fails)
             </summary>
             <p className="mt-2 text-[11px] leading-relaxed text-slate-500">
-              Use when Join Session browse cannot reach the GM host (firewall,
-              AP client isolation, or discovery still warming). Paste a join
-              link from QR, or enter short code + GM Wi‑Fi IP.
+              Use when Join Session browse cannot reach the GM host (failure
+              mode only — e.g. AP client isolation). Paste a join link from QR,
+              or enter short code + GM Wi‑Fi IP.
             </p>
             <div className="mt-3 space-y-3">
               <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">

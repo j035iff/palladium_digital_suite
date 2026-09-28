@@ -8,8 +8,9 @@
  * player-facing labels.
  *
  * Browsers cannot subnet-scan. Join Session polls the **local** interim host
- * `GET /discover`, which probes the LAN /24 for peer hosts advertising
- * `GET /sessions`. Advanced still accepts a manual GM IP (`hostHint`).
+ * `GET /discover`, which UDP-beacons the LAN for peer Open Tables and falls
+ * back to a TCP peer probe. Advanced still accepts a manual GM IP (`hostHint`)
+ * as Radical Visibility failure-mode only — not the happy path.
  */
 
 export type LanSessionAdvertisement = {
@@ -154,7 +155,7 @@ export type ListLanSessionsOpts = {
    * Hostname or LAN IP of an interim host to probe.
    * Default: this device (`location.hostname`) — use /discover so the local
    * sidecar finds the GM on the Wi‑Fi. Set to the GM Wi‑Fi IP under Advanced
-   * when local discovery cannot reach peers (firewall / AP client isolation).
+   * only when browse fails (Radical Visibility failure mode).
    */
   hostHint?: string
   port?: number
@@ -183,8 +184,8 @@ async function fetchSessionsJson(
 
 /**
  * Probe a reachable GM / local interim host and return open sittings for
- * Join Session. Prefers `GET /discover` (LAN peer probe via Node sidecar);
- * falls back to `GET /sessions` when discover is unavailable.
+ * Join Session. Prefers `GET /discover` (UDP beacon + TCP fallback via Node
+ * sidecar); falls back to `GET /sessions` when discover is unavailable.
  */
 export async function listLanSessions(
   opts: ListLanSessionsOpts | string = {},
@@ -199,7 +200,8 @@ export async function listLanSessions(
   const normalizedHint =
     hostname === 'localhost' ? '127.0.0.1' : hostname
   const port = normalized.port ?? 8765
-  const timeoutMs = normalized.timeoutMs ?? 2500
+  // Discover may UDP-listen (~450ms) then TCP-fallback (~2.5s). Budget above that.
+  const timeoutMs = normalized.timeoutMs ?? 8000
   const preferDiscover = normalized.preferDiscover !== false
 
   if (preferDiscover) {
@@ -233,7 +235,7 @@ export async function listLanSessions(
       lanAddresses: [],
       port,
       reason:
-        'No interim GM host reachable for Join Session browse. On each device run Vite dev (auto-starts the listener) or `npm run gm:ws-host`. Same Wi‑Fi required; allow inbound TCP 8765 on the GM machine. Advanced: enter the GM Wi‑Fi IP.',
+        'No interim GM host reachable for Join Session browse. On each device run Vite dev (auto-starts the listener) or `npm run gm:ws-host`. Same Wi‑Fi required. If browse stays empty after the GM opens the table, use Advanced with the GM Wi‑Fi IP (failure fallback only).',
     }
   }
   return parseLanSessionsResponse(listed.body, normalizedHint)
@@ -243,7 +245,7 @@ export async function listLanSessions(
 export function emptyLanBrowseHint(result: ListLanSessionsResult): string | null {
   if (!result.ok || result.sessions.length > 0) return null
   if (result.discovered) {
-    return 'No open tables found on this Wi‑Fi yet. Confirm the GM clicked Open Table, you are on the same network, and the GM firewall allows inbound TCP 8765. Advanced: enter the GM Wi‑Fi IP.'
+    return 'No open tables found on this Wi‑Fi yet. Confirm the GM clicked Open Table and you are on the same network. If browse stays empty, use Advanced with the GM Wi‑Fi IP (failure fallback only).'
   }
-  return 'No open table on the probed host. If the GM is on another device, ensure its interim listener is running — or enter the GM Wi‑Fi IP under Advanced.'
+  return 'No open table on the probed host. If the GM is on another device, ensure its interim listener is running — or enter the GM Wi‑Fi IP under Advanced (failure fallback only).'
 }
