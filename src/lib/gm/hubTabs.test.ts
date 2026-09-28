@@ -27,4 +27,25 @@ describe('GM Hub tabs', () => {
     expect(views.find((tab) => tab.id === 'cast')?.visual).toBe('locked')
     expect(views.find((tab) => tab.id === 'gear')?.visual).toBe('locked')
   })
+
+  it('marks Party attention when partyTabBlink is set', () => {
+    const idle = buildGmHubTabViews('home', {
+      campaignOpen: true,
+      partyTabBlink: false,
+    })
+    expect(idle.find((tab) => tab.id === 'party')?.attention).toBe(false)
+
+    const blinking = buildGmHubTabViews('cast', {
+      campaignOpen: true,
+      partyTabBlink: true,
+    })
+    expect(blinking.find((tab) => tab.id === 'party')?.attention).toBe(true)
+    expect(blinking.find((tab) => tab.id === 'cast')?.attention).toBe(false)
+
+    const locked = buildGmHubTabViews('home', {
+      campaignOpen: false,
+      partyTabBlink: true,
+    })
+    expect(locked.find((tab) => tab.id === 'party')?.attention).toBe(false)
+  })
 })

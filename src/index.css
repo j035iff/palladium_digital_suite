@@ -350,6 +350,26 @@ code {
   animation: pds-reload-ready-pulse 1.6s ease-in-out infinite;
 }
 
+/* GM Hub Party tab — joiner fully joined attention (no glow; opacity + amber wash) */
+@keyframes pds-hub-tab-blink {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.72;
+    filter: brightness(1.25);
+  }
+}
+
+.pds-hub-tab-blink {
+  animation: pds-hub-tab-blink 1.1s ease-in-out infinite;
+  background-color: rgb(245 158 11 / 0.92) !important;
+  color: rgb(2 6 23) !important;
+  box-shadow: 0 0 0 1px rgb(252 211 77 / 0.85);
+}
+
 /* Forge tab Continue gate — yellow (conflict) arrow chip + attention pulse */
 @keyframes pds-forge-continue-pulse {
   0%,

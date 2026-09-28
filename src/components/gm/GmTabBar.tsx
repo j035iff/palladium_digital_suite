@@ -16,16 +16,19 @@ export function GmTabBar({
   onModeChange,
   onTabChange,
   campaignOpen,
+  partyTabBlink = false,
 }: {
   mode: GmHubMode
   tabId: GmHubTabId
   onModeChange: (mode: GmHubMode) => void
   onTabChange: (tab: GmHubTabId) => void
   campaignOpen: boolean
+  /** Ephemeral Join Table cue — clears when Party is selected. */
+  partyTabBlink?: boolean
 }) {
   const tabs = useMemo(
-    () => buildGmHubTabViews(tabId, { campaignOpen }),
-    [tabId, campaignOpen],
+    () => buildGmHubTabViews(tabId, { campaignOpen, partyTabBlink }),
+    [tabId, campaignOpen, partyTabBlink],
   )
 
   return (
@@ -69,6 +72,11 @@ export function GmTabBar({
         />
         <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-200/80">
           {gmHubTabTitle(mode, tabId)}
+          {partyTabBlink && tabId !== 'party' ? (
+            <span className="ml-2 font-bold normal-case tracking-normal text-amber-400">
+              · new joiner on Party
+            </span>
+          ) : null}
         </p>
       </div>
     </div>
