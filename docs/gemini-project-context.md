@@ -35,7 +35,7 @@ This is **not** a VTT map/token tool. It is a **character sheet + creation wizar
 Key npm scripts:
 
 ```bash
-npm run dev                  # Vite dev server (http://localhost:5173)
+npm run dev                  # Vite (host: true / Network URL) + interim WS :8765
 npm run build                # tsc -b && vite build (see Build health below)
 npm run preview              # Serve production build (http://localhost:4173)
 npm test                     # Vitest — full suite
