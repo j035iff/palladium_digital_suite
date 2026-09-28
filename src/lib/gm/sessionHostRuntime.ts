@@ -7,6 +7,7 @@ import {
   attachSeatCharacter,
   clearPresence,
   emptyPresence,
+  findSeat,
   grantOrReclaimSeat,
   kickSeat,
   markSeatReconnecting,
@@ -27,7 +28,10 @@ import {
 } from './sessionMessages'
 import type { GmJoinCredentials } from './sessionJoinCode'
 import { shortCodesMatch } from './sessionJoinCode'
-import { cacheJoinedCharacter } from './sessionPartyCache'
+import {
+  cacheJoinedCharacter,
+  clearJoinedCharacter,
+} from './sessionPartyCache'
 import { activePlaySession } from './playSession'
 import type { GmSessionRecord } from './sessionTypes'
 import type { GmTransport, GmTransportPeer } from './sessionTransport'
@@ -50,6 +54,11 @@ export type GmHostRuntimeHooks = {
   applyPcApmSpend: (characterId: string, actions: number) => void
   /** Attach party member after caching joiner snapshot. */
   applyPartySnapshot: (characterId: string, label: string) => void
+  /**
+   * Detach party member when a seat leaves / is kicked / listen ends.
+   * Clears joiner cache + removes partyCharacterIds entry (no Missing saves).
+   */
+  applyPartyDetach: (characterId: string) => void
   onPresenceChange?: (presence: GmPresenceState | null) => void
 }
 
@@ -129,6 +138,15 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     return { ok: true }
   }
 
+  const detachSeatParty = (
+    session: GmSessionRecord,
+    characterId: string | null | undefined,
+  ) => {
+    if (!characterId) return
+    clearJoinedCharacter(session.id, characterId)
+    hooks.applyPartyDetach(characterId)
+  }
+
   const endListen = (reason = 'Play sitting closed.') => {
     const session = hooks.getSession()
     if (transport && state.presence && session) {
@@ -138,6 +156,11 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
           reason,
         }),
       )
+    }
+    if (session && state.presence) {
+      for (const seat of state.presence.seats) {
+        detachSeatParty(session, seat.characterId)
+      }
     }
     state = createInitialHostRuntimeState()
     hooks.onPresenceChange?.(null)
@@ -149,6 +172,8 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     const peerId = Object.entries(state.peerDevices).find(
       ([, id]) => id === deviceId,
     )?.[0]
+    const leaving = findSeat(state.presence, deviceId)
+    detachSeatParty(session, leaving?.characterId)
     const next = kickSeat(state.presence, deviceId)
     const peerDevices = { ...state.peerDevices }
     if (peerId) delete peerDevices[peerId]
@@ -238,6 +263,8 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     if (!deviceId) return
 
     if (envelope.type === 'session.leave') {
+      const leaving = findSeat(state.presence, deviceId)
+      detachSeatParty(session, leaving?.characterId)
       const next = kickSeat(state.presence, deviceId)
       const peerDevices = { ...state.peerDevices }
       delete peerDevices[from.peerId]

@@ -204,8 +204,9 @@ Copy this block when registering a new unified path:
 | Party blink | `src/lib/gm/partyBlink.ts` | `nextPartyTabBlink`, `partyTabBlinkAfterTabChange` | Hub chrome only; clears on Party open / Close Table |
 | Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions`, `GET /discover` | Interim same-WiFi; desktop sidecar later |
 | Discovery | `src/lib/gm/sessionDiscovery.ts` + `browserLanHints.ts` | `listLanSessions` → local `/discover` (UDP + TCP + lanHints) + browser `/24` probe | Join Session browse; **campaignName** display only; Advanced IP = failure mode only (does not rebind browse) |
-| Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** → name + characters + Join Session list → sheet | One Party/Cast pipeline — no remote fork; code/QR demoted to Advanced; shared client runtime survives sheet handoff |
-| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar` | Story / Combat modes; Home + Party + Cast + Gear; Party blink on joiner attach |
+| Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** → name + characters (default Select a character) + Join Session list → sheet | One Party/Cast pipeline — no remote fork; Party = joined seats; Cast = local machine add + archetypes; code/QR demoted to Advanced; shared client runtime survives sheet handoff; Return to launcher confirms Close Table (GM) / leave (player) |
+| Leave / party | `sessionHostRuntime` + `joinTableLeave.ts` | `applyPartyDetach`, `playerNameForPartyCharacter`, `joinedPartyCharacterIds` | Leave/kick/Close Table clear seat + party id + joiner cache (no Missing saves phantoms) |
+| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar` | Story / Combat modes; Home + Party + Cast + Gear; Party blink on joiner attach; player name on Party cards |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
 
 **Modes / variants:** Hub `story` / `combat` (Home differs; Party, Cast, and Gear are one pipeline each). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second Party implementation.
@@ -290,6 +291,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-09-28 | Join Table backlog: Open Table stamp matches publish; leave/kick/Close Table detach party+cache; Party = joined + player name; Cast hosts local add; Return to launcher confirms Close/leave |
 | 2026-09-25 | GM Hub client join first slice: interim `ws`, presence/join envelopes, Join table viewport, interacting sheet |
 | 2026-09-21 | Measurement units path: Standard/Metric preference, dual measure schema, Gear Forge convert-on-edit |
 | 2026-09-18 | Gear Forge GM host: Hub **Gear** tab + `kind: 'gm'` adapter on shared shell → selected party character save |

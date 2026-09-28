@@ -194,7 +194,16 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   )
   const [session, setSession] = useState<GmSessionRecord | null>(() => {
     const active = loadActiveGmSessionId()
-    return active ? loadGmSession(active) : null
+    const loaded = active ? loadGmSession(active) : null
+    if (!loaded) return null
+    // Listen does not survive remount — clear stale Open Table stamp so Hub
+    // Open/Close chrome matches real publish state (not published yet).
+    if (activePlaySession(loaded)) {
+      const cleared = stampClosePlaySession(loaded)
+      saveGmSession(cleared)
+      return cleared
+    }
+    return loaded
   })
   const sessionRef = useRef(session)
   useEffect(() => {
@@ -292,6 +301,13 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
             return persist(addPartyMember(prev, characterId, label))
           })
         },
+        applyPartyDetach: (characterId) => {
+          setSession((prev) => {
+            if (!prev) return prev
+            if (!prev.partyCharacterIds.includes(characterId)) return prev
+            return persist(removePartyMember(prev, characterId, characterId))
+          })
+        },
         onPresenceChange: (presence) => {
           const previous = presenceRef.current
           presenceRef.current = presence
@@ -359,8 +375,14 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   const openSession = useCallback((id: string) => {
     const loaded = loadGmSession(id)
     if (!loaded) return
+    // Stale activePlaySessionId from a prior sitting would grey Open Table
+    // while the LAN listener is not running — clear so UI matches publish state.
+    const next = activePlaySession(loaded)
+      ? stampClosePlaySession(loaded)
+      : loaded
+    if (next !== loaded) saveGmSession(next)
     setActiveGmSessionId(id)
-    setSession(loaded)
+    setSession(next)
     goToStoryHome()
   }, [goToStoryHome])
 
@@ -423,6 +445,11 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     setSessionList(listGmSessions())
     const result = await joinControllerRef.current?.startListen()
     if (result && !result.ok) {
+      // Roll back stamp so Open Table stays available and chrome matches LAN.
+      const rolled = stampClosePlaySession(sessionRef.current)
+      sessionRef.current = rolled
+      setSession(persist(rolled))
+      setSessionList(listGmSessions())
       setJoinUi((ui) => ({ ...ui, lastError: result.reason }))
     }
   }, [])

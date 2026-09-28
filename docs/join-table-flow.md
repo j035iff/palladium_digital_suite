@@ -34,6 +34,7 @@ Player clicks **Join Table** and sees a page with:
    - Visible to everyone in the session
 2. **My Characters**
    - Same character drop-down as on the Launcher Landing Page
+   - Defaults to **“Select a character”** — Player cannot join until a real character is selected
    - Player selects their character
 3. **Join Session**
    - Populates any sessions available on the network
@@ -48,6 +49,7 @@ Player clicks **Join Table** and sees a page with:
 (Story also names the top control **Open Table**; treat **Open Table** / **Start Session** as the host action that publishes the sitting.)
 
 - Makes the session visible and joinable on Join Table for any client on the network
+- Open Table chrome matches real listen/publish state (stale stamps from a prior visit are cleared on campaign open; listen failure rolls the stamp back)
 - A tray opens under the button: **Players in Session**
   - Dynamic list of players currently in the session
   - Updates as players join and leave
@@ -65,5 +67,12 @@ Player clicks **Join Table** and sees a page with:
   - Yellow + **“joining”** while connecting
   - Green, no “joining” text, once fully joined
 - GM **Party** tab blinks
-- GM opens Party → sees the player’s character sheet summary
+- GM opens Party → sees the player’s character sheet summary with the **player name** upper-right on each joined character box
 - Opening Party clears the blink
+- Party lists **joined players only**; GM adds local characters from **Cast** (“Add from this machine”)
+
+### 5. Leave
+
+- GM **Return to launcher** with a table open → confirm → **Close Table** (unpublish + stop listen) → launcher
+- Joined player **Return to launcher** / sheet **Portal** → confirm → detach (`session.leave`) → launcher
+- Leave/kick removes the seat and clears that character from Party / joiner cache (no phantom Missing saves)

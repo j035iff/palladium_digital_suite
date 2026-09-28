@@ -106,6 +106,8 @@ export function createGmHostListenController(
       await transport.stop()
       transport = null
     }
+    // Party detach already cleared per-seat cache entries in endListen.
+    // Sweep any orphaned joiner cache for this campaign.
     const session = hooks.getSession()
     if (session) clearJoinedCharacterCache(session.id)
     setUi({

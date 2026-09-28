@@ -28,6 +28,7 @@ import {
   localBrowseHost,
   type LanSessionAdvertisement,
 } from '../../lib/gm/sessionDiscovery'
+import { PLAYER_RETURN_LEAVES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
 import { resolveJoinSessionGate } from '../../lib/gm/sessionJoinGate'
 import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
@@ -86,12 +87,6 @@ export function GmJoinTableViewport() {
   useEffect(() => {
     refreshSavedCharacterIndex()
   }, [refreshSavedCharacterIndex])
-
-  useEffect(() => {
-    if (!characterId && savedCharacterRows.length > 0) {
-      setCharacterId(savedCharacterRows[0].id)
-    }
-  }, [savedCharacterRows, characterId])
 
   useEffect(() => {
     let cancelled = false
@@ -256,7 +251,11 @@ export function GmJoinTableViewport() {
           <button
             type="button"
             onClick={() => {
-              runtime.leave()
+              const joined = state.status === 'joined'
+              if (joined && !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)) {
+                return
+              }
+              if (joined) runtime.leave()
               returnToLauncher()
             }}
             className="rounded-lg border border-slate-600 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-400 hover:text-white"
@@ -298,7 +297,7 @@ export function GmJoinTableViewport() {
               className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
               aria-label="My Characters"
             >
-              <option value="">Select a character…</option>
+              <option value="">Select a character</option>
               {savedCharacterRows.map((row) => (
                 <CharacterOption key={row.id} row={row} />
               ))}

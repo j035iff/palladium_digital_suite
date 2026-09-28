@@ -26,6 +26,13 @@ export function loadCachedJoinedCharacter(
   return cache.get(key(campaignId, characterId)) ?? null
 }
 
+export function clearJoinedCharacter(
+  campaignId: string,
+  characterId: string,
+): void {
+  cache.delete(key(campaignId, characterId))
+}
+
 export function clearJoinedCharacterCache(campaignId: string): void {
   const prefix = `${campaignId}::`
   for (const k of cache.keys()) {

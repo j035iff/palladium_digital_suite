@@ -5,6 +5,8 @@ import { LevelUpModal } from '../live/LevelUpModal'
 import { LiveSheetTabBody } from '../live/LiveSheetTabBody'
 import { useCharacter } from '../../context/CharacterContext'
 import { getIqBonuses } from '../../lib/attributeBonuses'
+import { PLAYER_RETURN_LEAVES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
+import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
 import {
   buildLiveSheetTabViews,
   isLiveSheetTabId,
@@ -180,7 +182,18 @@ export function MainLayout() {
                 />
                 <button
                   type="button"
-                  onClick={returnToLauncher}
+                  onClick={() => {
+                    const runtime = getSharedGmClientRuntime()
+                    const joined = runtime.getState().status === 'joined'
+                    if (
+                      joined &&
+                      !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)
+                    ) {
+                      return
+                    }
+                    if (joined) runtime.leave()
+                    returnToLauncher()
+                  }}
                   className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
                     morphusActive
                       ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
