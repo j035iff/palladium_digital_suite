@@ -39,7 +39,7 @@ Player clicks **Join Table** and sees a page with:
    - Populates any sessions available on the network
    - No session yet → “no session available”
    - When a session exists → show its name (**GM Campaign name** only)
-   - Browse uses the local interim listener’s **`GET /discover`**, which UDP-beacons the LAN for the GM Open Table (multicast + subnet broadcast) and falls back to a TCP peer probe. Browsers cannot scan subnets themselves. Players keep their own device/app so **My Characters** stays local.
+   - Browse always polls this device’s interim listener **`GET /discover`** (never the Advanced GM IP field). Discover UDP-beacons the LAN, TCP-probes ARP + `/24` peers (including browser-visible LAN hints for WSL/VPN), and if still empty the client probes the same `/24` over browser TCP — the plane Advanced IP already uses. Players keep their own device/app so **My Characters** stays local.
    - If Player Name or Character is missing → section tells them they must enter name + select character before joining
    - If browse cannot find the GM → Advanced short code + GM Wi‑Fi IP (Radical Visibility **failure mode only** — not the happy path)
 

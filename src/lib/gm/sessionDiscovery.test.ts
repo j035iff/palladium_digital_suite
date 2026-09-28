@@ -3,6 +3,8 @@ import WebSocket from 'ws'
 import {
   advertiseOpenSessions,
   broadcastForCidr,
+  buildTcpProbeCandidates,
+  cidrFromNetmask,
   clearDiscoverCache,
   createInterimGmHost,
   fetchPeerLocalSessions,
@@ -10,16 +12,23 @@ import {
   isIpv4Family,
   mergeLocalAndRemoteSessions,
   parseDiscoverDatagram,
+  slash24Containing,
   stampSessionHosts,
   udpBrowseOpenSessions,
   DISCOVER_MSG_AD,
   DISCOVER_PROTOCOL_V,
 } from '../../../scripts/gm-interim-ws-host.mjs'
 import {
+  browserProbeLanSessions,
+  hostsInSlash24,
+  slash24ContainingIp,
+} from './browserLanHints'
+import {
   emptyLanBrowseHint,
   interimWsDiscoverUrl,
   interimWsSessionsUrl,
   listLanSessions,
+  localBrowseHost,
   parseLanSessionAdvertisement,
   parseLanSessionsResponse,
 } from './sessionDiscovery'
@@ -147,9 +156,70 @@ describe('CIDR / family helpers', () => {
     expect(hostsInCidr('10.0.0.1/16')).toEqual([])
   })
 
-  it('computes subnet broadcast', () => {
+  it('computes subnet broadcast and netmask CIDR', () => {
     expect(broadcastForCidr('192.168.4.87/24')).toBe('192.168.4.255')
     expect(broadcastForCidr('10.0.0.5/30')).toBe('10.0.0.7')
+    expect(cidrFromNetmask('192.168.4.87', '255.255.255.0')).toBe(
+      '192.168.4.87/24',
+    )
+    expect(slash24Containing('192.168.4.87')).toBe('192.168.4.0/24')
+  })
+
+  it('TCP candidates include lanHint /24 even when Node ifaces differ (WSL case)', () => {
+    const candidates = buildTcpProbeCandidates(8765, {
+      lanHints: ['192.168.4.50'],
+    })
+    expect(candidates).toContain('192.168.4.87')
+    expect(candidates).toContain('192.168.4.1')
+    // Hint /24 peers are present even if this machine's iface is elsewhere.
+    expect(candidates.indexOf('192.168.4.87')).toBeGreaterThanOrEqual(0)
+  })
+})
+
+describe('browser LAN probe helpers', () => {
+  it('builds /24 hosts and probes peer /sessions via browser fetch plane', async () => {
+    expect(slash24ContainingIp('192.168.4.50')).toBe('192.168.4.0/24')
+    expect(hostsInSlash24('192.168.4.0/24', ['192.168.4.50'])).toContain(
+      '192.168.4.87',
+    )
+
+    const fetchImpl = vi.fn(async (url: string) => {
+      if (String(url) === 'http://192.168.4.87:8765/sessions') {
+        return {
+          ok: true,
+          json: async () => ({
+            ok: true,
+            port: 8765,
+            sessions: [
+              {
+                campaignName: 'Night Harbor',
+                campaignId: 'camp_gm',
+                playSessionId: 'play_gm',
+                joinToken: 'join_gm_1',
+                shortCode: 'GMCODE',
+              },
+            ],
+          }),
+        }
+      }
+      throw new Error('unreachable')
+    }) as unknown as typeof fetch
+
+    const found = await browserProbeLanSessions({
+      lanHints: ['192.168.4.50'],
+      port: 8765,
+      deadlineMs: 2000,
+      concurrency: 64,
+      perHostTimeoutMs: 50,
+      fetchImpl,
+    })
+    expect(found).toEqual([
+      expect.objectContaining({
+        campaignName: 'Night Harbor',
+        host: '192.168.4.87',
+        joinToken: 'join_gm_1',
+      }),
+    ])
   })
 })
 
@@ -269,7 +339,11 @@ describe('listLanSessions', () => {
       throw new Error('should not hit /sessions')
     })
     vi.stubGlobal('fetch', fetchMock)
-    const result = await listLanSessions('127.0.0.1')
+    const result = await listLanSessions({
+      hostHint: '127.0.0.1',
+      detectLanHints: async () => [],
+      allowBrowserProbe: false,
+    })
     expect(fetchMock).toHaveBeenCalledWith(
       interimWsDiscoverUrl('127.0.0.1', 8765),
       expect.anything(),
@@ -278,6 +352,53 @@ describe('listLanSessions', () => {
     expect(result.discovered).toBe(true)
     expect(result.sessions[0]?.hostHint).toBe('192.168.1.10')
     expect(result.reason).toBeNull()
+  })
+
+  it('passes browser lanHints on /discover and browser-probes when discover empty', async () => {
+    const fetchMock = vi.fn(async (url: string) => {
+      if (String(url).includes('/discover')) {
+        expect(String(url)).toContain('lanHint=192.168.4.50')
+        return {
+          ok: true,
+          json: async () => ({
+            ok: true,
+            discover: true,
+            port: 8765,
+            lanAddresses: ['172.30.0.2'],
+            sessions: [],
+          }),
+        }
+      }
+      throw new Error(`unexpected ${url}`)
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const result = await listLanSessions({
+      hostHint: '127.0.0.1',
+      lanHints: ['192.168.4.50'],
+      browserProbe: async () => [
+        {
+          campaignName: 'Night Harbor',
+          campaignId: 'camp_gm',
+          playSessionId: 'play_gm',
+          joinToken: 'join_gm_1',
+          shortCode: 'GMCODE',
+          host: '192.168.4.87',
+          port: 8765,
+        },
+      ],
+    })
+    expect(result.ok).toBe(true)
+    expect(result.browserProbed).toBe(true)
+    expect(result.sessions[0]?.hostHint).toBe('192.168.4.87')
+    expect(result.sessions[0]?.campaignName).toBe('Night Harbor')
+  })
+
+  it('keeps browse on local host (Advanced IP must not rebind discover)', () => {
+    expect(localBrowseHost('localhost')).toBe('127.0.0.1')
+    expect(localBrowseHost('192.168.4.50')).toBe('192.168.4.50')
+    expect(interimWsDiscoverUrl('localhost', 8765, ['192.168.4.50'])).toBe(
+      'http://127.0.0.1:8765/discover?lanHint=192.168.4.50',
+    )
   })
 
   it('falls back to /sessions when /discover missing', async () => {
@@ -310,6 +431,8 @@ describe('listLanSessions', () => {
     const result = await listLanSessions({
       hostHint: '127.0.0.1',
       preferDiscover: true,
+      detectLanHints: async () => [],
+      allowBrowserProbe: false,
     })
     expect(result.ok).toBe(true)
     expect(result.sessions[0]?.campaignName).toBe('Harbor Watch')
@@ -322,7 +445,12 @@ describe('listLanSessions', () => {
         throw new Error('network')
       }),
     )
-    const result = await listLanSessions({ hostHint: '127.0.0.1', timeoutMs: 50 })
+    const result = await listLanSessions({
+      hostHint: '127.0.0.1',
+      timeoutMs: 50,
+      detectLanHints: async () => [],
+      allowBrowserProbe: false,
+    })
     expect(result.ok).toBe(false)
     expect(result.sessions).toEqual([])
     expect(result.reason).toMatch(/reachable|Advanced/i)

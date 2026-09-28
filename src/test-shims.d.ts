@@ -52,6 +52,12 @@ declare module '../../../scripts/gm-interim-ws-host.mjs' {
     broadcast: string
   }>
   export function broadcastForCidr(cidr: string): string | null
+  export function cidrFromNetmask(
+    address: string,
+    netmask: string,
+  ): string | null
+  export function slash24Containing(ip: string): string | null
+  export function readArpPeerIps(): string[]
   export function hostsInCidr(
     cidr: string,
     opts?: { exclude?: Iterable<string>; maxHosts?: number },
@@ -83,6 +89,10 @@ declare module '../../../scripts/gm-interim-ws-host.mjs' {
       deadlineMs?: number
     },
   ): Promise<InterimSessionAd[]>
+  export function buildTcpProbeCandidates(
+    port?: number,
+    opts?: { lanHints?: Iterable<string> },
+  ): string[]
   export function parseDiscoverDatagram(
     msg: Buffer | string,
     rinfoAddress: string,
@@ -105,6 +115,7 @@ declare module '../../../scripts/gm-interim-ws-host.mjs' {
       skipUdp?: boolean
       skipTcp?: boolean
       tcpDeadlineMs?: number
+      lanHints?: Iterable<string>
       udpBrowse?: (listenMs?: number) => Promise<InterimSessionAd[]>
     },
   ): Promise<InterimSessionAd[]>

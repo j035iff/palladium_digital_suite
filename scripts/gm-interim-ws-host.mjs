@@ -37,9 +37,12 @@ import {
   udpBrowseOpenSessions,
   broadcastForCidr,
   buildTcpProbeCandidates,
+  cidrFromNetmask,
   isIpv4Family,
   parseDiscoverDatagram,
+  readArpPeerIps,
   sessionsFromPeerBody,
+  slash24Containing,
   DISCOVER_MSG_AD,
   DISCOVER_MSG_QUERY,
   DISCOVER_PROTOCOL_V,
@@ -62,9 +65,12 @@ export {
   udpBrowseOpenSessions,
   broadcastForCidr,
   buildTcpProbeCandidates,
+  cidrFromNetmask,
   isIpv4Family,
   parseDiscoverDatagram,
+  readArpPeerIps,
   sessionsFromPeerBody,
+  slash24Containing,
   DISCOVER_MSG_AD,
   DISCOVER_MSG_QUERY,
   DISCOVER_PROTOCOL_V,
@@ -209,6 +215,14 @@ export function createInterimGmHost(opts = {}) {
     if (req.url?.startsWith('/discover')) {
       void (async () => {
         try {
+          const url = new URL(req.url || '/discover', 'http://127.0.0.1')
+          const lanHints = [
+            ...url.searchParams.getAll('lanHint'),
+            ...(url.searchParams.get('lanHints') || '')
+              .split(',')
+              .map((s) => s.trim())
+              .filter(Boolean),
+          ]
           const lans = lanAddresses()
           const localHint = lans[0] ?? '127.0.0.1'
           const local = stampSessionHosts(
@@ -221,6 +235,7 @@ export function createInterimGmHost(opts = {}) {
             getLocalSessions: () =>
               advertiseOpenSessions(roomsByToken.values()),
             udpBrowse: (ms) => liveBeacon.browse(ms),
+            lanHints,
             // Prefer UDP; keep TCP fallback short so /discover returns inside client budget.
             tcpDeadlineMs: 2500,
           })
@@ -232,6 +247,7 @@ export function createInterimGmHost(opts = {}) {
             port: PORT,
             udpPort: UDP_PORT,
             lanAddresses: lans,
+            lanHints,
             sessions,
           })
           res.writeHead(200, cors)

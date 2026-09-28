@@ -203,7 +203,7 @@ Copy this block when registering a new unified path:
 | Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `seatTrayPresentation`, `seatFlippedToFullyJoined`, `createGmHostRuntime` | Ephemeral seats; yellow joining / green joined tray tokens |
 | Party blink | `src/lib/gm/partyBlink.ts` | `nextPartyTabBlink`, `partyTabBlinkAfterTabChange` | Hub chrome only; clears on Party open / Close Table |
 | Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions`, `GET /discover` | Interim same-WiFi; desktop sidecar later |
-| Discovery | `src/lib/gm/sessionDiscovery.ts` | `listLanSessions` → `/discover` (UDP beacon + TCP fallback) | Join Session browse; **campaignName** display only; Advanced IP = failure mode only |
+| Discovery | `src/lib/gm/sessionDiscovery.ts` + `browserLanHints.ts` | `listLanSessions` → local `/discover` (UDP + TCP + lanHints) + browser `/24` probe | Join Session browse; **campaignName** display only; Advanced IP = failure mode only (does not rebind browse) |
 | Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** → name + characters + Join Session list → sheet | One Party/Cast pipeline — no remote fork; code/QR demoted to Advanced; shared client runtime survives sheet handoff |
 | UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar` | Story / Combat modes; Home + Party + Cast + Gear; Party blink on joiner attach |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
