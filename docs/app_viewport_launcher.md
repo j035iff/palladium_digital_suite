@@ -23,7 +23,7 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 | `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
 | `gear_forge` | `GearForgeViewport` — shared Gear Forge → custom gear library | **Gear Forge** or **My Custom Gear** on the launcher |
 | `gm` | `GmHubShell` — Story / Combat (Home + Party + Cast + Gear) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
-| `join_table` | `GmJoinTableViewport` — connect to an open play sitting | **Join table** on the launcher |
+| `join_table` | `GmJoinTableViewport` — Player Name, My Characters, Join Session LAN list; success → Character Sheet | **Join table** on the launcher |
 
 `App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, `GmJoinTableViewport` when `viewport === 'join_table'`, otherwise `MainLayout`.
 
@@ -100,7 +100,8 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 | Concern | Location |
 |---------|----------|
 | Launcher UI | `src/components/dashboard/AppLauncher.tsx` |
-| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGearForge`, `enterGmHub`, `returnToLauncher`) |
+| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGearForge`, `enterGmHub`, `enterJoinTable`, `returnToLauncher`) |
+| Join table | [gm_hub.md](./gm_hub.md) / [join-table-flow.md](./join-table-flow.md) — `GmJoinTableViewport`, `listLanSessions`, `resolveJoinSessionGate` |
 | Campaign Creation Forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
 | Gear Forge (portal) | [forge/gear_forge.md](./forge/gear_forge.md) — `GearForgeViewport`, `customGearLibrary.ts` |
 | GM Hub | [gm_hub.md](./gm_hub.md) — `src/components/gm/`, `src/context/GmSessionContext.tsx` |
