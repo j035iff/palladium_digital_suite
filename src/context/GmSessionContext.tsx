@@ -109,7 +109,8 @@ type GmSessionContextValue = {
   applySession: (next: GmSessionRecord) => void
   updateScratchpad: (text: string) => void
   updateSessionName: (name: string) => void
-  openPlaySession: () => void
+  /** Open Table: stamp play sitting and start LAN listen (one publish action). */
+  openPlaySession: () => Promise<void>
   closePlaySession: () => void
   addCharacterToParty: (characterId: string) => void
   dropCharacterFromParty: (characterId: string) => void
@@ -374,12 +375,23 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     [patchSession],
   )
 
-  const openPlaySession = useCallback(() => {
-    patchSession((s) => stampOpenPlaySession(s))
-  }, [patchSession])
+  const openPlaySession = useCallback(async () => {
+    const prev = sessionRef.current
+    if (!prev) return
+    if (activePlaySession(prev)) return
+    const next = stampOpenPlaySession(prev)
+    // Sync ref before startListen — React setState alone would race the controller.
+    sessionRef.current = next
+    setSession(persist(next))
+    setSessionList(listGmSessions())
+    const result = await joinControllerRef.current?.startListen()
+    if (result && !result.ok) {
+      setJoinUi((ui) => ({ ...ui, lastError: result.reason }))
+    }
+  }, [])
 
   const closePlaySession = useCallback(() => {
-    void joinControllerRef.current?.stopListen('Play sitting closed.')
+    void joinControllerRef.current?.stopListen('Table closed.')
     patchSession((s) => stampClosePlaySession(s))
   }, [patchSession])
 

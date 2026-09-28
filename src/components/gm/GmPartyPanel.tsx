@@ -32,7 +32,7 @@ export function GmPartyPanel() {
           <p className="mt-1 max-w-xl text-xs text-slate-400">
             Snapshots read local character saves (or joiner party.snapshot
             cache) through the host genre. Nothing is written back to player
-            files. Same deviceId reclaims a seat for this sitting; Close Session
+            files. Same deviceId reclaims a seat for this sitting; Close Table
             clears seats.
           </p>
         </div>

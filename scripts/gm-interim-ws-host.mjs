@@ -210,7 +210,7 @@ export function createInterimGmHost(opts = {}) {
           send(ws, {
             op: 'error',
             reason:
-              'No open sitting for that code. Confirm the GM has Open Session + listen running.',
+              'No open sitting for that code. Confirm the GM has Open Table (listen) running.',
           })
           return
         }

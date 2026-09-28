@@ -1,5 +1,5 @@
 /**
- * Radical Visibility for join listen capability.
+ * Radical Visibility for join listen / Open Table capability.
  * Production desktop WebSocket sidecar is not shipped yet; interim local `ws`
  * proves same-WiFi multi-device until Tauri/Electron lands.
  */
@@ -25,6 +25,23 @@ export type GmJoinListenCapability = {
 const PRODUCTION_DISABLED =
   'Production join needs the desktop WebSocket host on this machine. It is not in this build yet.'
 
+/**
+ * Why Open Table is greyed (Radical Visibility). Null when the control may run.
+ * Open Table = stamp play sitting + start LAN listen (one publish action).
+ */
+export function openTableDisabledReason(input: {
+  campaignOpen: boolean
+  tableOpen: boolean
+}): string | null {
+  if (!input.campaignOpen) {
+    return 'Open a campaign from the launcher first'
+  }
+  if (input.tableOpen) {
+    return 'Table is already open. Close Table before opening another.'
+  }
+  return null
+}
+
 export function resolveJoinListenCapability(input: {
   playSessionOpen: boolean
   interimHostReachable: boolean
@@ -42,7 +59,7 @@ export function resolveJoinListenCapability(input: {
       canListen: false,
       productionDisabledReason,
       listenDisabledReason:
-        'Open a play sitting first (Open Session). Join listens only while a sitting is live.',
+        'Open Table first. Join listens only while the table is live.',
     }
   }
 
