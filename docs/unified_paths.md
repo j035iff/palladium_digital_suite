@@ -202,8 +202,8 @@ Copy this block when registering a new unified path:
 | Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 envelopes including join/presence + combat |
 | Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `seatTrayPresentation`, `seatFlippedToFullyJoined`, `createGmHostRuntime` | Ephemeral seats; yellow joining / green joined tray tokens |
 | Party blink | `src/lib/gm/partyBlink.ts` | `nextPartyTabBlink`, `partyTabBlinkAfterTabChange` | Hub chrome only; clears on Party open / Close Table |
-| Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions` | Interim same-WiFi; desktop sidecar later |
-| Discovery | `src/lib/gm/sessionDiscovery.ts` | `listLanSessions`, `parseLanSessionAdvertisement` | Join Session browse; **campaignName** display only |
+| Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions`, `GET /discover` | Interim same-WiFi; desktop sidecar later |
+| Discovery | `src/lib/gm/sessionDiscovery.ts` | `listLanSessions` → `/discover` (LAN peer probe) | Join Session browse; **campaignName** display only; Advanced IP fallback |
 | Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** → name + characters + Join Session list → sheet | One Party/Cast pipeline — no remote fork; code/QR demoted to Advanced; shared client runtime survives sheet handoff |
 | UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar` | Story / Combat modes; Home + Party + Cast + Gear; Party blink on joiner attach |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |

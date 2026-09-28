@@ -6,10 +6,12 @@ Schema-driven character manager and rules automation engine for the **Palladium 
 
 ```bash
 npm install
-npm run dev          # http://localhost:5173
+npm run dev          # Vite on all interfaces (Network URL for LAN) + interim WS :8765
 npm test
 npm run validate:schemas
 ```
+
+**Same-WiFi Join Table:** GM opens a campaign → **Open Table**. Players on other devices open the app (`npm run dev` on their machine), **Join Table** — Join Session lists the campaign via LAN `/discover` (allow inbound TCP **8765** on the GM). Advanced code/IP if browse fails.
 
 **Production build:** `npm run build` runs `tsc -b` then Vite. If TypeScript errors block the build, `npx vite build` still produces a preview bundle.
 

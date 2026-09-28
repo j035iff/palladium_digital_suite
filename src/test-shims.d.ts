@@ -27,15 +27,53 @@ declare module '../../../scripts/gm-interim-ws-host.mjs' {
     clients: Map<string, unknown>
   }
 
-  export function advertiseOpenSessions(
-    rooms: Iterable<InterimGmRoom>,
-  ): Array<{
+  export type InterimSessionAd = {
     campaignName: string
     campaignId: string
     playSessionId: string
     joinToken: string
     shortCode: string
+    host?: string
+    port?: number
+  }
+
+  export function lanAddresses(): string[]
+  export function lanIpv4Cidrs(): Array<{
+    address: string
+    cidr: string
+    prefix: number
   }>
+  export function hostsInCidr(
+    cidr: string,
+    opts?: { exclude?: Iterable<string>; maxHosts?: number },
+  ): string[]
+  export function advertiseOpenSessions(
+    rooms: Iterable<InterimGmRoom>,
+  ): InterimSessionAd[]
+  export function stampSessionHosts(
+    sessions: InterimSessionAd[],
+    host: string,
+    port: number,
+  ): InterimSessionAd[]
+  export function mergeLocalAndRemoteSessions(
+    local: InterimSessionAd[],
+    remote: InterimSessionAd[],
+  ): InterimSessionAd[]
+  export function fetchPeerLocalSessions(
+    ip: string,
+    port: number,
+    timeoutMs?: number,
+  ): Promise<InterimSessionAd[]>
+  export function probeLanHosts(
+    hosts: string[],
+    port: number,
+    opts?: { concurrency?: number; timeoutMs?: number },
+  ): Promise<InterimSessionAd[]>
+  export function discoverLanPeerSessions(
+    port: number,
+    opts?: { cacheMs?: number; now?: number; skipCache?: boolean },
+  ): Promise<InterimSessionAd[]>
+  export function clearDiscoverCache(): void
 
   export function createInterimGmHost(opts?: { port?: number }): {
     readonly port: number

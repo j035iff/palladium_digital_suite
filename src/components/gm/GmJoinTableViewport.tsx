@@ -24,6 +24,7 @@ import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
 import type { GmClientRuntimeState } from '../../lib/gm/sessionClientRuntime'
 import {
   listLanSessions,
+  emptyLanBrowseHint,
   type LanSessionAdvertisement,
 } from '../../lib/gm/sessionDiscovery'
 import { resolveJoinSessionGate } from '../../lib/gm/sessionJoinGate'
@@ -52,7 +53,6 @@ export function GmJoinTableViewport() {
   const [characterId, setCharacterId] = useState('')
   const [sessions, setSessions] = useState<LanSessionAdvertisement[]>([])
   const [browseReason, setBrowseReason] = useState<string | null>(null)
-  const [browseOk, setBrowseOk] = useState(false)
   const [wsHost, setWsHost] = useState(() =>
     typeof location !== 'undefined' ? location.hostname : '127.0.0.1',
   )
@@ -91,11 +91,18 @@ export function GmJoinTableViewport() {
     const refresh = async () => {
       const result = await listLanSessions({ hostHint: wsHost })
       if (cancelled) return
-      setBrowseOk(result.ok)
-      setBrowseReason(result.reason)
+      setBrowseReason(
+        result.reason ??
+          (result.sessions.length === 0 ? emptyLanBrowseHint(result) : null),
+      )
       setSessions(result.sessions)
-      if (result.lanAddresses.length > 0 && result.sessions.length === 0) {
-        // Prefer first LAN hint when primary hostname has no rooms yet
+      if (
+        result.ok &&
+        result.sessions.length === 0 &&
+        result.lanAddresses.length > 0 &&
+        !result.discovered
+      ) {
+        // Legacy /sessions-only host: try first non-loopback LAN hint.
         const alt = result.lanAddresses.find(
           (a) => a && a !== wsHost && a !== '127.0.0.1',
         )
@@ -103,7 +110,6 @@ export function GmJoinTableViewport() {
           const second = await listLanSessions({ hostHint: alt })
           if (cancelled) return
           if (second.ok && second.sessions.length > 0) {
-            setBrowseOk(true)
             setBrowseReason(null)
             setSessions(second.sessions)
           }
@@ -343,7 +349,7 @@ export function GmJoinTableViewport() {
                   role="status"
                 >
                   no session available
-                  {!browseOk && browseReason ? (
+                  {browseReason ? (
                     <span className="mt-2 block text-[11px] text-slate-500">
                       {browseReason}
                     </span>
@@ -378,8 +384,9 @@ export function GmJoinTableViewport() {
               Advanced — manual code / IP (if browse fails)
             </summary>
             <p className="mt-2 text-[11px] leading-relaxed text-slate-500">
-              Use when Join Session browse cannot reach the GM host. Paste a
-              join link from QR, or enter short code + GM Wi‑Fi IP.
+              Use when Join Session browse cannot reach the GM host (firewall,
+              AP client isolation, or discovery still warming). Paste a join
+              link from QR, or enter short code + GM Wi‑Fi IP.
             </p>
             <div className="mt-3 space-y-3">
               <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">

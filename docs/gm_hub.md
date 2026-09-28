@@ -74,11 +74,11 @@ Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-n
 | Authority | GM host remains source of truth for `GmSessionRecord`; presence is **ephemeral in-memory** on the host (not in campaign JSON) |
 | Seat status | `joining` → `connected` (wire name for fully joined) → optional `reconnecting`; join completes on character attach (`party.snapshot`). Tray tone helpers + Join Session gate: `sessionPresence.ts`, `sessionJoinGate.ts` |
 | Party blink | Ephemeral hub flag (`partyBlink.ts`): set when `seatFlippedToFullyJoined`; cleared when GM opens Party or Close Table. Tab chrome only — same `buildPartyObserverSlice` / `GmPartyPanel` |
-| Discovery | Interim host **`GET /sessions`** advertises open rooms (`campaignName` + routing ids/token). Lib: `listLanSessions` / `sessionDiscovery.ts`. List display identity is **campaign name only** (no date/time on Join Session DTOs). Closed/unlist when host stops listen. |
+| Discovery | Interim host **`GET /sessions`** (local rooms) + **`GET /discover`** (local + LAN peer probe of `/24` Wi‑Fi for other `:8765` hosts). Lib: `listLanSessions` prefers `/discover` so a second device browsing on its own localhost still sees the GM Open Table without typing an IP. List display identity is **campaign name only**. Closed/unlist when host stops listen. Firewall: allow inbound **TCP 8765** on the GM machine. Advanced code/IP remains Radical Visibility fallback (AP client isolation / blocked probes). |
 | Token | **Rotate-on-open** join token when listen starts; short code + QR under host **Advanced** (browse-first; code/QR fallback) |
 | Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Table clears seats |
 | Character attach | Happy-path Join Session sends `party.snapshot` on join (pre-selected character); host caches JSON for the sitting and runs the **same** party observer pipeline. Host “Add from this machine” remains as fallback |
-| Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`). Advertise: `GET /sessions` |
+| Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it; Vite `server.host: true` prints a Network URL). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`). Advertise: `GET /sessions`; LAN browse: `GET /discover` |
 | UI | Host: **Open Table** / **Close Table** on `GmHubShell`; **Players in Session** + Advanced code/QR on `GmJoinHostChrome`; Party tab blink via `GmTabBar`. Client `viewport: 'join_table'`: **Player Name** + **My Characters** + **Join Session** list (`listLanSessions`); grey + explain until name+character (`resolveJoinSessionGate`); **Joining Session** dialog → Character Sheet handoff (`loadSavedCharacter`). Advanced manual code/IP retained. Shared client runtime: `sessionClientHandle.ts` |
 
 Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hello.
@@ -98,10 +98,10 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Protocol | `src/lib/gm/sessionMessages.ts` |
 | Presence / join token / join gate | `src/lib/gm/sessionPresence.ts`, `sessionJoinCode.ts`, `sessionJoinGate.ts` |
 | Party blink | `src/lib/gm/partyBlink.ts` → `GmTabBar` / hub context (clears on Party open) |
-| LAN discovery | `src/lib/gm/sessionDiscovery.ts` (`listLanSessions`, `GET /sessions` client) |
+| LAN discovery | `src/lib/gm/sessionDiscovery.ts` (`listLanSessions` → `/discover`, peer host stamp) |
 | Join connect / gate | `src/lib/gm/joinSessionConnect.ts`, `sessionJoinGate.ts`, `sessionClientHandle.ts` |
 | Host / client runtime | `src/lib/gm/sessionHostRuntime.ts`, `sessionClientRuntime.ts`, `gmHostListenController.ts` |
-| Interim WS relay | `scripts/gm-interim-ws-host.mjs` (`/health`, `/sessions`), `src/lib/gm/browserWsTransport.ts` |
+| Interim WS relay | `scripts/gm-interim-ws-host.mjs` (`/health`, `/sessions`, `/discover`), `src/lib/gm/browserWsTransport.ts` |
 | Joiner character cache | `src/lib/gm/sessionPartyCache.ts` |
 | Campaign forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
 | React | `src/context/GmSessionContext.tsx`, `src/components/gm/*` (`GmJoinHostChrome`, `GmJoinTableViewport`) |

@@ -39,7 +39,9 @@ Player clicks **Join Table** and sees a page with:
    - Populates any sessions available on the network
    - No session yet → “no session available”
    - When a session exists → show its name (**GM Campaign name** only)
+   - Browse uses the local interim listener’s **`GET /discover`**, which probes the Wi‑Fi `/24` for the GM machine’s open table (browsers cannot scan subnets themselves). Players keep their own device/app so **My Characters** stays local.
    - If Player Name or Character is missing → section tells them they must enter name + select character before joining
+   - If browse cannot find the GM (firewall / AP isolation) → Advanced short code + GM Wi‑Fi IP (Radical Visibility)
 
 ### 2. GM clicks Start Session
 
