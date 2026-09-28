@@ -7,11 +7,17 @@
  * Routing fields (ids + token/code) stay on the DTO for connect; they are not
  * player-facing labels.
  *
- * Browsers cannot subnet-scan. Join Session polls the **local** interim host
- * `GET /discover`, which UDP-beacons the LAN for peer Open Tables and falls
- * back to a TCP peer probe. Advanced still accepts a manual GM IP (`hostHint`)
- * as Radical Visibility failure-mode only — not the happy path.
+ * Happy path: poll the **local** interim host `GET /discover` (never the
+ * Advanced GM IP field). The sidecar UDP-beacons + TCP-probes; the client also
+ * passes browser-visible LAN hints and falls back to an in-browser /24 probe
+ * on the same TCP plane Advanced IP uses — so browse succeeds whenever a
+ * direct TCP join to the GM would.
  */
+
+import {
+  browserProbeLanSessions,
+  detectBrowserLanIpv4s,
+} from './browserLanHints'
 
 export type LanSessionAdvertisement = {
   /** Join Session button label — campaign name only. */
@@ -35,6 +41,16 @@ export type ListLanSessionsResult = {
   reason: string | null
   /** True when response came from /discover (LAN peer probe). */
   discovered?: boolean
+  /** True when the in-browser TCP fallback found the table. */
+  browserProbed?: boolean
+}
+
+/** Hostname of the local interim sidecar for Join Session browse. */
+export function localBrowseHost(
+  hostname =
+    typeof location !== 'undefined' ? location.hostname : '127.0.0.1',
+): string {
+  return hostname === 'localhost' ? '127.0.0.1' : hostname
 }
 
 /** HTTP advertise URL on the interim host (CORS open like /health). Local rooms only. */
@@ -43,7 +59,7 @@ export function interimWsSessionsUrl(
     typeof location !== 'undefined' ? location.hostname : '127.0.0.1',
   port = 8765,
 ): string {
-  const host = hostname === 'localhost' ? '127.0.0.1' : hostname
+  const host = localBrowseHost(hostname)
   return `http://${host}:${port}/sessions`
 }
 
@@ -52,9 +68,16 @@ export function interimWsDiscoverUrl(
   hostname =
     typeof location !== 'undefined' ? location.hostname : '127.0.0.1',
   port = 8765,
+  lanHints: string[] = [],
 ): string {
-  const host = hostname === 'localhost' ? '127.0.0.1' : hostname
-  return `http://${host}:${port}/discover`
+  const host = localBrowseHost(hostname)
+  const base = `http://${host}:${port}/discover`
+  if (lanHints.length === 0) return base
+  const params = new URLSearchParams()
+  for (const hint of lanHints) {
+    if (hint) params.append('lanHint', hint)
+  }
+  return `${base}?${params.toString()}`
 }
 
 /**
@@ -152,16 +175,23 @@ export function parseLanSessionsResponse(
 
 export type ListLanSessionsOpts = {
   /**
-   * Hostname or LAN IP of an interim host to probe.
-   * Default: this device (`location.hostname`) — use /discover so the local
-   * sidecar finds the GM on the Wi‑Fi. Set to the GM Wi‑Fi IP under Advanced
-   * only when browse fails (Radical Visibility failure mode).
+   * Hostname of the **local** interim sidecar used for browse (`/discover`).
+   * Default: this device. Do **not** pass the Advanced GM IP here — that made
+   * typing Advanced look like “browse works” while local discovery stayed broken.
    */
   hostHint?: string
   port?: number
   timeoutMs?: number
   /** When false, skip /discover and only hit /sessions (tests / fallback). */
   preferDiscover?: boolean
+  /** Extra LAN IPs (browser-visible) so the sidecar probes the right /24. */
+  lanHints?: string[]
+  /** When false, skip in-browser /24 TCP fallback after empty discover. */
+  allowBrowserProbe?: boolean
+  /** Injected browser-hint detector (tests). */
+  detectLanHints?: () => Promise<string[]>
+  /** Injected browser probe (tests). */
+  browserProbe?: typeof browserProbeLanSessions
 }
 
 async function fetchSessionsJson(
@@ -183,9 +213,10 @@ async function fetchSessionsJson(
 }
 
 /**
- * Probe a reachable GM / local interim host and return open sittings for
- * Join Session. Prefers `GET /discover` (UDP beacon + TCP fallback via Node
- * sidecar); falls back to `GET /sessions` when discover is unavailable.
+ * Probe the local interim host and return open sittings for Join Session.
+ * Prefers `GET /discover` (UDP + TCP via Node sidecar, with browser LAN hints);
+ * falls back to in-browser /24 TCP probe when discover returns empty — the same
+ * reachability plane as Advanced IP join.
  */
 export async function listLanSessions(
   opts: ListLanSessionsOpts | string = {},
@@ -197,54 +228,106 @@ export async function listLanSessions(
   const hostname =
     normalized.hostHint ??
     (typeof location !== 'undefined' ? location.hostname : '127.0.0.1')
-  const normalizedHint =
-    hostname === 'localhost' ? '127.0.0.1' : hostname
+  const normalizedHint = localBrowseHost(hostname)
   const port = normalized.port ?? 8765
   // Discover may UDP-listen (~450ms) then TCP-fallback (~2.5s). Budget above that.
   const timeoutMs = normalized.timeoutMs ?? 8000
   const preferDiscover = normalized.preferDiscover !== false
+  const allowBrowserProbe = normalized.allowBrowserProbe !== false
+  const detectHints = normalized.detectLanHints ?? detectBrowserLanIpv4s
+  const probeBrowser = normalized.browserProbe ?? browserProbeLanSessions
+
+  let lanHints = [...(normalized.lanHints ?? [])]
+  if (lanHints.length === 0 && typeof detectHints === 'function') {
+    try {
+      lanHints = await detectHints()
+    } catch {
+      lanHints = []
+    }
+  }
+
+  let result: ListLanSessionsResult | null = null
 
   if (preferDiscover) {
     const discovered = await fetchSessionsJson(
-      interimWsDiscoverUrl(normalizedHint, port),
+      interimWsDiscoverUrl(normalizedHint, port, lanHints),
       timeoutMs,
     )
     if (discovered.ok) {
-      return parseLanSessionsResponse(discovered.body, normalizedHint)
+      result = parseLanSessionsResponse(discovered.body, normalizedHint)
     }
     // Older host without /discover — fall through to /sessions.
   }
 
-  const listed = await fetchSessionsJson(
-    interimWsSessionsUrl(normalizedHint, port),
-    Math.min(timeoutMs, 800),
-  )
-  if (!listed.ok) {
-    if (listed.status != null) {
+  if (!result) {
+    const listed = await fetchSessionsJson(
+      interimWsSessionsUrl(normalizedHint, port),
+      Math.min(timeoutMs, 800),
+    )
+    if (!listed.ok) {
+      if (listed.status != null) {
+        return {
+          ok: false,
+          sessions: [],
+          lanAddresses: [],
+          port,
+          reason: `Join Session browse failed (HTTP ${listed.status}).`,
+        }
+      }
       return {
         ok: false,
         sessions: [],
         lanAddresses: [],
         port,
-        reason: `Join Session browse failed (HTTP ${listed.status}).`,
+        reason:
+          'No interim GM host reachable for Join Session browse. On each device run Vite dev (auto-starts the listener) or `npm run gm:ws-host`. Same Wi‑Fi required. If browse stays empty after the GM opens the table, use Advanced with the GM Wi‑Fi IP (failure fallback only).',
       }
     }
-    return {
-      ok: false,
-      sessions: [],
-      lanAddresses: [],
-      port,
-      reason:
-        'No interim GM host reachable for Join Session browse. On each device run Vite dev (auto-starts the listener) or `npm run gm:ws-host`. Same Wi‑Fi required. If browse stays empty after the GM opens the table, use Advanced with the GM Wi‑Fi IP (failure fallback only).',
+    result = parseLanSessionsResponse(listed.body, normalizedHint)
+  }
+
+  if (
+    result.ok &&
+    result.sessions.length === 0 &&
+    allowBrowserProbe &&
+    lanHints.length > 0
+  ) {
+    try {
+      const probed = await probeBrowser({
+        lanHints,
+        port,
+        deadlineMs: Math.min(2500, timeoutMs),
+      })
+      if (probed.length > 0) {
+        const sessions: LanSessionAdvertisement[] = []
+        for (const row of probed) {
+          const parsed = parseLanSessionAdvertisement(row, row.host, row.port)
+          if (parsed) sessions.push(parsed)
+        }
+        if (sessions.length > 0) {
+          return {
+            ok: true,
+            sessions,
+            lanAddresses: lanHints,
+            port,
+            reason: null,
+            discovered: true,
+            browserProbed: true,
+          }
+        }
+      }
+    } catch {
+      /* keep sidecar result */
     }
   }
-  return parseLanSessionsResponse(listed.body, normalizedHint)
+
+  return result
 }
 
 /** Empty-list Radical Visibility copy when browse succeeded but found nothing. */
 export function emptyLanBrowseHint(result: ListLanSessionsResult): string | null {
   if (!result.ok || result.sessions.length > 0) return null
-  if (result.discovered) {
+  if (result.discovered || result.browserProbed) {
     return 'No open tables found on this Wi‑Fi yet. Confirm the GM clicked Open Table and you are on the same network. If browse stays empty, use Advanced with the GM Wi‑Fi IP (failure fallback only).'
   }
   return 'No open table on the probed host. If the GM is on another device, ensure its interim listener is running — or enter the GM Wi‑Fi IP under Advanced (failure fallback only).'

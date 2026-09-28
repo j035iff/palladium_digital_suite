@@ -25,6 +25,7 @@ import type { GmClientRuntimeState } from '../../lib/gm/sessionClientRuntime'
 import {
   listLanSessions,
   emptyLanBrowseHint,
+  localBrowseHost,
   type LanSessionAdvertisement,
 } from '../../lib/gm/sessionDiscovery'
 import { resolveJoinSessionGate } from '../../lib/gm/sessionJoinGate'
@@ -53,9 +54,15 @@ export function GmJoinTableViewport() {
   const [characterId, setCharacterId] = useState('')
   const [sessions, setSessions] = useState<LanSessionAdvertisement[]>([])
   const [browseReason, setBrowseReason] = useState<string | null>(null)
-  const [wsHost, setWsHost] = useState(() =>
-    typeof location !== 'undefined' ? location.hostname : '127.0.0.1',
+  // Browse always targets this device's interim sidecar — never Advanced GM IP.
+  const browseHost = useMemo(
+    () =>
+      localBrowseHost(
+        typeof location !== 'undefined' ? location.hostname : '127.0.0.1',
+      ),
+    [],
   )
+  const [manualWsHost, setManualWsHost] = useState(browseHost)
   const [codeOrUrl, setCodeOrUrl] = useState('')
   const [campaignId, setCampaignId] = useState('')
   const [playSessionId, setPlaySessionId] = useState('')
@@ -89,32 +96,13 @@ export function GmJoinTableViewport() {
   useEffect(() => {
     let cancelled = false
     const refresh = async () => {
-      const result = await listLanSessions({ hostHint: wsHost })
+      const result = await listLanSessions({ hostHint: browseHost })
       if (cancelled) return
       setBrowseReason(
         result.reason ??
           (result.sessions.length === 0 ? emptyLanBrowseHint(result) : null),
       )
       setSessions(result.sessions)
-      if (
-        result.ok &&
-        result.sessions.length === 0 &&
-        result.lanAddresses.length > 0 &&
-        !result.discovered
-      ) {
-        // Legacy /sessions-only host: try first non-loopback LAN hint.
-        const alt = result.lanAddresses.find(
-          (a) => a && a !== wsHost && a !== '127.0.0.1',
-        )
-        if (alt) {
-          const second = await listLanSessions({ hostHint: alt })
-          if (cancelled) return
-          if (second.ok && second.sessions.length > 0) {
-            setBrowseReason(null)
-            setSessions(second.sessions)
-          }
-        }
-      }
     }
     void refresh()
     const id = window.setInterval(() => void refresh(), SESSION_POLL_MS)
@@ -122,7 +110,7 @@ export function GmJoinTableViewport() {
       cancelled = true
       window.clearInterval(id)
     }
-  }, [wsHost])
+  }, [browseHost])
 
   const runJoin = async (
     target: JoinSessionConnectTarget,
@@ -227,7 +215,7 @@ export function GmJoinTableViewport() {
     const resolved = connectTargetFromManualFields({
       codeOrUrl,
       shortCode,
-      wsHost,
+      wsHost: manualWsHost,
       campaignId,
       playSessionId,
       joinToken,
@@ -240,7 +228,7 @@ export function GmJoinTableViewport() {
     setPlaySessionId(resolved.target.playSessionId)
     setJoinToken(resolved.target.joinToken)
     setShortCode(resolved.target.shortCode)
-    setWsHost(resolved.target.wsHost)
+    setManualWsHost(resolved.target.wsHost)
     void runJoin(resolved.target, null)
   }
 
@@ -410,8 +398,8 @@ export function GmJoinTableViewport() {
                 <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
                   GM host (Wi‑Fi IP)
                   <input
-                    value={wsHost}
-                    onChange={(e) => setWsHost(e.target.value)}
+                    value={manualWsHost}
+                    onChange={(e) => setManualWsHost(e.target.value)}
                     className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-white"
                   />
                 </label>

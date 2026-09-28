@@ -8,7 +8,9 @@
  * interim host, which runs this plane and stamps peer host/port for connect.
  */
 
+import { execFileSync } from 'node:child_process'
 import dgram from 'node:dgram'
+import { readFileSync } from 'node:fs'
 import { networkInterfaces } from 'node:os'
 
 export const DISCOVER_MSG_AD = 'pds-gm-session-ad'
@@ -23,8 +25,8 @@ const DISCOVER_CACHE_MS = Number(process.env.PDS_GM_DISCOVER_CACHE_MS || 2000)
 const DISCOVER_EMPTY_CACHE_MS = Number(
   process.env.PDS_GM_DISCOVER_EMPTY_CACHE_MS || 750,
 )
-const DISCOVER_TIMEOUT_MS = Number(process.env.PDS_GM_DISCOVER_TIMEOUT_MS || 120)
-const DISCOVER_CONCURRENCY = Number(process.env.PDS_GM_DISCOVER_CONCURRENCY || 48)
+const DISCOVER_TIMEOUT_MS = Number(process.env.PDS_GM_DISCOVER_TIMEOUT_MS || 80)
+const DISCOVER_CONCURRENCY = Number(process.env.PDS_GM_DISCOVER_CONCURRENCY || 64)
 const UDP_LISTEN_MS = Number(process.env.PDS_GM_DISCOVER_UDP_MS || 450)
 const BEACON_INTERVAL_MS = Number(process.env.PDS_GM_BEACON_INTERVAL_MS || 1500)
 
@@ -46,7 +48,55 @@ export function lanAddresses() {
 }
 
 /**
+ * Build CIDR string from IPv4 address + dotted netmask when `cidr` is missing.
+ * @param {string} address
+ * @param {string} netmask
+ * @returns {string | null}
+ */
+export function cidrFromNetmask(address, netmask) {
+  const addrParts = String(address).split('.').map((x) => Number(x))
+  const maskParts = String(netmask).split('.').map((x) => Number(x))
+  if (
+    addrParts.length !== 4 ||
+    maskParts.length !== 4 ||
+    addrParts.some((n) => !Number.isFinite(n) || n < 0 || n > 255) ||
+    maskParts.some((n) => !Number.isFinite(n) || n < 0 || n > 255)
+  ) {
+    return null
+  }
+  let prefix = 0
+  for (const octet of maskParts) {
+    let v = octet
+    for (let i = 0; i < 8; i++) {
+      if (v & 0x80) prefix++
+      else if (v !== 0) return null // non-contiguous mask
+      v = (v << 1) & 0xff
+    }
+  }
+  return `${address}/${prefix}`
+}
+
+/**
+ * Home-Wi‑Fi probe unit: the /24 containing an IPv4 address.
+ * Used even when the OS reports /16, /22, or /32 so TCP fallback still
+ * covers the LAN where Advanced IP join already works.
+ * @param {string} ip
+ * @returns {string | null} e.g. "192.168.4.0/24"
+ */
+export function slash24Containing(ip) {
+  const parts = String(ip).split('.').map((x) => Number(x))
+  if (
+    parts.length !== 4 ||
+    parts.some((n) => !Number.isFinite(n) || n < 0 || n > 255)
+  ) {
+    return null
+  }
+  return `${parts[0]}.${parts[1]}.${parts[2]}.0/24`
+}
+
+/**
  * IPv4 LAN interfaces with CIDR (for peer probe + broadcast).
+ * Falls back to netmask→CIDR when `cidr` is missing (some OS/Node builds).
  * @returns {{ address: string, cidr: string, prefix: number, broadcast: string }[]}
  */
 export function lanIpv4Cidrs() {
@@ -55,20 +105,65 @@ export function lanIpv4Cidrs() {
   for (const rows of Object.values(nets)) {
     if (!rows) continue
     for (const row of rows) {
-      if (!isIpv4Family(row.family) || row.internal || !row.cidr) continue
-      const prefix = Number(row.cidr.split('/')[1])
+      if (!isIpv4Family(row.family) || row.internal) continue
+      const cidr =
+        row.cidr ||
+        (row.netmask ? cidrFromNetmask(row.address, row.netmask) : null)
+      if (!cidr) continue
+      const prefix = Number(String(cidr).split('/')[1])
       if (!Number.isFinite(prefix)) continue
-      const broadcast = broadcastForCidr(row.cidr)
+      const broadcast = broadcastForCidr(cidr)
       if (!broadcast) continue
       out.push({
         address: row.address,
-        cidr: row.cidr,
+        cidr,
         prefix,
         broadcast,
       })
     }
   }
   return out
+}
+
+/**
+ * Recently-seen L2 peers (ARP/neighbor table). Prioritize these in TCP probe
+ * so discovery finds a GM that Advanced IP can already reach — without waiting
+ * on a full /24 timeout sweep across VPN/Docker ifaces.
+ * @returns {string[]}
+ */
+export function readArpPeerIps() {
+  const ips = new Set()
+  try {
+    const text = readFileSync('/proc/net/arp', 'utf8')
+    for (const line of text.split('\n').slice(1)) {
+      const cols = line.trim().split(/\s+/)
+      if (cols.length < 4) continue
+      const ip = cols[0]
+      const flags = Number.parseInt(cols[2], 16)
+      // 0x2 = complete entry (skip incomplete)
+      if (!Number.isFinite(flags) || (flags & 0x2) === 0) continue
+      if (/^\d{1,3}(\.\d{1,3}){3}$/.test(ip) && !ip.startsWith('127.')) {
+        ips.add(ip)
+      }
+    }
+  } catch {
+    /* not Linux or unreadable — try arp -a */
+    try {
+      const out = execFileSync('arp', ['-a'], {
+        encoding: 'utf8',
+        timeout: 500,
+      })
+      for (const match of out.matchAll(
+        /\((\d{1,3}(?:\.\d{1,3}){3})\)|^\s*(\d{1,3}(?:\.\d{1,3}){3})\s/gm,
+      )) {
+        const ip = match[1] || match[2]
+        if (ip && !ip.startsWith('127.')) ips.add(ip)
+      }
+    } catch {
+      /* arp unavailable */
+    }
+  }
+  return [...ips]
 }
 
 /**
@@ -321,28 +416,55 @@ export function parseDiscoverDatagram(msg, rinfoAddress) {
 }
 
 /**
- * Build candidate TCP probe list: prefer same /24 as primary iface, include /23.
+ * Build candidate TCP probe list.
+ * Order: ARP peers → browser/Node LAN hints' /24 → local iface /24 (always) →
+ * reported /23–/30 hosts. Hints cover WSL/VPN cases where Node's ifaces are not
+ * the Wi‑Fi /24 that the browser (Advanced IP) can already reach.
  * @param {number} [_port]
+ * @param {{ lanHints?: Iterable<string> }} [opts]
  */
-export function buildTcpProbeCandidates(_port) {
+export function buildTcpProbeCandidates(_port, opts = {}) {
   const self = new Set(lanAddresses())
   const candidates = []
   const seen = new Set()
+
+  /** @param {string} ip */
+  const push = (ip) => {
+    if (!ip || self.has(ip) || seen.has(ip)) return
+    if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(ip)) return
+    seen.add(ip)
+    candidates.push(ip)
+  }
+
+  for (const ip of readArpPeerIps()) push(ip)
+
+  /** @type {Set<string>} */
+  const slash24s = new Set()
+  for (const hint of opts.lanHints ?? []) {
+    const cidr = slash24Containing(String(hint).trim())
+    if (cidr) slash24s.add(cidr)
+  }
+  for (const addr of self) {
+    const cidr = slash24Containing(addr)
+    if (cidr) slash24s.add(cidr)
+  }
+  for (const cidr of slash24s) {
+    for (const ip of hostsInCidr(cidr, { exclude: self })) push(ip)
+  }
+
   const ifaces = lanIpv4Cidrs()
-    // Prefer tighter home masks first (/24–/30 before /23).
     .filter((iface) => iface.prefix >= 23 && iface.prefix <= 30)
     .sort((a, b) => b.prefix - a.prefix)
   for (const iface of ifaces) {
-    for (const ip of hostsInCidr(iface.cidr, { exclude: self })) {
-      if (seen.has(ip)) continue
-      seen.add(ip)
-      candidates.push(ip)
-    }
+    // Skip if we already expanded this network via slash-24 (avoid dup work).
+    const as24 = slash24Containing(iface.address)
+    if (as24 && slash24s.has(as24) && iface.prefix >= 24) continue
+    for (const ip of hostsInCidr(iface.cidr, { exclude: self })) push(ip)
   }
   return candidates
 }
 
-/** @type {{ at: number, port: number, sessions: SessionAdLike[], empty: boolean } | null} */
+/** @type {{ at: number, port: number, hintKey: string, sessions: SessionAdLike[], empty: boolean } | null} */
 let discoverCache = null
 
 export function clearDiscoverCache() {
@@ -402,16 +524,30 @@ export function udpBrowseOpenSessions(opts = {}) {
       const query = Buffer.from(
         JSON.stringify({ t: DISCOVER_MSG_QUERY, v: DISCOVER_PROTOCOL_V }),
       )
-      try {
-        sock.send(query, targetPort, multicastAddr)
-      } catch {
-        /* ignore */
-      }
-      for (const iface of lanIpv4Cidrs()) {
+      const ifaces = lanIpv4Cidrs()
+      if (ifaces.length === 0) {
         try {
-          sock.send(query, targetPort, iface.broadcast)
+          sock.send(query, targetPort, multicastAddr)
         } catch {
           /* ignore */
+        }
+      } else {
+        for (const iface of ifaces) {
+          try {
+            sock.setMulticastInterface(iface.address)
+          } catch {
+            /* ignore */
+          }
+          try {
+            sock.send(query, targetPort, multicastAddr)
+          } catch {
+            /* ignore */
+          }
+          try {
+            sock.send(query, targetPort, iface.broadcast)
+          } catch {
+            /* ignore */
+          }
         }
       }
       try {
@@ -462,16 +598,30 @@ export function createLanDiscoveryBeacon(opts) {
   const emit = () => {
     const payload = buildPayload()
     if (!payload) return
-    try {
-      sock.send(payload, udpPort, multicastAddr)
-    } catch {
-      /* ignore */
-    }
-    for (const iface of lanIpv4Cidrs()) {
+    const ifaces = lanIpv4Cidrs()
+    if (ifaces.length === 0) {
       try {
-        sock.send(payload, udpPort, iface.broadcast)
+        sock.send(payload, udpPort, multicastAddr)
       } catch {
         /* ignore */
+      }
+    } else {
+      for (const iface of ifaces) {
+        try {
+          sock.setMulticastInterface(iface.address)
+        } catch {
+          /* ignore */
+        }
+        try {
+          sock.send(payload, udpPort, multicastAddr)
+        } catch {
+          /* ignore */
+        }
+        try {
+          sock.send(payload, udpPort, iface.broadcast)
+        } catch {
+          /* ignore */
+        }
       }
     }
     try {
@@ -586,7 +736,7 @@ export function createLanDiscoveryBeacon(opts) {
 }
 
 /**
- * Full peer discovery: UDP first (fast), TCP /24(+ /23) fallback with early exit.
+ * Full peer discovery: UDP first (fast), TCP /24(+ hints/ARP) fallback with early exit.
  * @param {number} port TCP interim port to connect peers on
  * @param {{
  *   cacheMs?: number,
@@ -598,6 +748,7 @@ export function createLanDiscoveryBeacon(opts) {
  *   skipUdp?: boolean,
  *   skipTcp?: boolean,
  *   tcpDeadlineMs?: number,
+ *   lanHints?: Iterable<string>,
  *   getLocalSessions?: () => SessionAdLike[],
  *   udpBrowse?: (listenMs?: number) => Promise<SessionAdLike[]>,
  * }} [opts]
@@ -606,10 +757,12 @@ export async function discoverLanPeerSessions(port, opts = {}) {
   const cacheMs = opts.cacheMs ?? DISCOVER_CACHE_MS
   const emptyCacheMs = opts.emptyCacheMs ?? DISCOVER_EMPTY_CACHE_MS
   const now = opts.now ?? Date.now()
+  const hintKey = [...(opts.lanHints ?? [])].map(String).sort().join(',')
   if (
     !opts.skipCache &&
     discoverCache &&
     discoverCache.port === port &&
+    discoverCache.hintKey === hintKey &&
     now - discoverCache.at <
       (discoverCache.empty ? emptyCacheMs : cacheMs)
   ) {
@@ -634,7 +787,9 @@ export async function discoverLanPeerSessions(port, opts = {}) {
   }
 
   if (!remote.length && !opts.skipTcp) {
-    const candidates = buildTcpProbeCandidates(port)
+    const candidates = buildTcpProbeCandidates(port, {
+      lanHints: opts.lanHints,
+    })
     remote = await probeLanHosts(candidates, port, {
       earlyExit: true,
       deadlineMs: opts.tcpDeadlineMs ?? 3500,
@@ -644,6 +799,7 @@ export async function discoverLanPeerSessions(port, opts = {}) {
   discoverCache = {
     at: now,
     port,
+    hintKey,
     sessions: remote,
     empty: remote.length === 0,
   }

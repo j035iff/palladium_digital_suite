@@ -11,7 +11,7 @@ npm test
 npm run validate:schemas
 ```
 
-**Same-WiFi Join Table:** GM opens a campaign → **Open Table**. Players on other devices open the app (`npm run dev` on their machine), **Join Table** — Join Session lists the campaign via LAN `/discover` (UDP beacon). Advanced code/IP only if browse fails.
+**Same-WiFi Join Table:** GM opens a campaign → **Open Table**. Players on other devices open the app (`npm run dev` on their machine), **Join Table** — Join Session lists the campaign automatically (local `/discover` + browser LAN probe). Advanced code/IP only if browse fails.
 
 **Production build:** `npm run build` runs `tsc -b` then Vite. If TypeScript errors block the build, `npx vite build` still produces a preview bundle.
 
