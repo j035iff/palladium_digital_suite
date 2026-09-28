@@ -196,15 +196,16 @@ Copy this block when registering a new unified path:
 | Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder; joiner `party.snapshot` cache feeds the same builder |
 | Fodder | `src/lib/gm/npcInstance.ts` | `createNpcFromArchetype` | Encounter catalog → instance vitals / APM |
 | Roster | `src/lib/gm/combatRoster.ts` | `assembleGmCombatRoster`, `sortCombatRoster` | One sorted list; `kind: pc \| npc` |
-| Nav | `src/lib/gm/hubTabs.ts` | `buildGmHubTabViews`, `gmHubTabTitle` | Story/Combat modes; Home is Sessions or Combat HUD |
+| Nav | `src/lib/gm/hubTabs.ts` | `buildGmHubTabViews`, `gmHubTabTitle` | Story/Combat modes; Home is Sessions or Combat HUD; optional Party `attention` blink |
 | Play sitting | `src/lib/gm/playSession.ts` | `openPlaySession`, `playSessionPlayerLabel` | UI **Open Table** stamps sitting + starts listen; date label is event-log / uniqueness (Join Session shows campaign name only) |
 | Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
 | Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 envelopes including join/presence + combat |
-| Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `seatTrayPresentation`, `createGmHostRuntime` | Ephemeral seats; yellow joining / green joined tray tokens |
+| Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `seatTrayPresentation`, `seatFlippedToFullyJoined`, `createGmHostRuntime` | Ephemeral seats; yellow joining / green joined tray tokens |
+| Party blink | `src/lib/gm/partyBlink.ts` | `nextPartyTabBlink`, `partyTabBlinkAfterTabChange` | Hub chrome only; clears on Party open / Close Table |
 | Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions` | Interim same-WiFi; desktop sidecar later |
 | Discovery | `src/lib/gm/sessionDiscovery.ts` | `listLanSessions`, `parseLanSessionAdvertisement` | Join Session browse; **campaignName** display only |
 | Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** → name + characters + Join Session list → sheet | One Party/Cast pipeline — no remote fork; code/QR demoted to Advanced; shared client runtime survives sheet handoff |
-| UI | `src/components/gm/*` | `GmHubShell` | Story / Combat modes; Home + Party + Cast + Gear |
+| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar` | Story / Combat modes; Home + Party + Cast + Gear; Party blink on joiner attach |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
 
 **Modes / variants:** Hub `story` / `combat` (Home differs; Party, Cast, and Gear are one pipeline each). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second Party implementation.

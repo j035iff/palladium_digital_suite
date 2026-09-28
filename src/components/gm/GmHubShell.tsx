@@ -44,6 +44,7 @@ export function GmHubShell() {
     stopJoinListen,
     kickJoinedDevice,
     refreshJoinProbe,
+    partyTabBlink,
   } = useGmSession()
   const livePlay = session ? activePlaySession(session) : null
   const tableOpen = livePlay != null
@@ -144,6 +145,7 @@ export function GmHubShell() {
         onModeChange={setHubMode}
         onTabChange={setHubTabId}
         campaignOpen={Boolean(session)}
+        partyTabBlink={partyTabBlink}
       />
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <GmHubWorkspace />

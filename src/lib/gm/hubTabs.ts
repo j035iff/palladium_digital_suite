@@ -43,7 +43,7 @@ export function isGmHubMode(id: string): id is GmHubMode {
 
 export function buildGmHubTabViews(
   activeTabId: GmHubTabId,
-  opts: { campaignOpen: boolean },
+  opts: { campaignOpen: boolean; partyTabBlink?: boolean },
 ): ForgeTabView[] {
   return GM_HUB_TAB_ORDER.map((id) => {
     const locked = !opts.campaignOpen && id !== 'home'
@@ -54,6 +54,8 @@ export function buildGmHubTabViews(
       clickable: !locked,
       blockers: locked ? ['Open a campaign from the launcher first'] : [],
       isViewing: id === activeTabId,
+      // Blink is tab chrome only; Party panel stays on the shared observer path.
+      attention: id === 'party' && Boolean(opts.partyTabBlink) && !locked,
     }
   })
 }

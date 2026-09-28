@@ -4,7 +4,7 @@ Local-only table workspace for running a session from this machine. It is a **so
 
 **Not in v1 (still deferred):** internet/cloud relay, Plot wiki, item push, Creation-Forge-named GM factory, structural M.D.C.↔S.D.C. conversion, production Tauri/Electron packaging polish.
 
-**Shipped (client join):** interim same-WiFi `ws` listen on the GM machine, LAN `/sessions` discovery, **Open Table** (one-click publish = open sitting + start listen), **Players in Session** tray (yellow joining / green joined), short join code + QR as Advanced fallback, same-SPA **Join table** viewport, interacting sheet (initiative / H.F. save / PC APM over the wire), `party.snapshot` attach from the joiner. Production desktop WebSocket sidecar is **not** shipped — join chrome greys that path with an explicit why (Radical Visibility).
+**Shipped (client join):** interim same-WiFi `ws` listen on the GM machine, LAN `/sessions` discovery, **Open Table** (one-click publish = open sitting + start listen), **Players in Session** tray (yellow joining / green joined), short join code + QR as Advanced fallback, same-SPA **Join table** viewport (name + characters + Join Session list → Character Sheet handoff + `party.snapshot` on join), interacting sheet combat wire (initiative / H.F. save / PC APM), Party tab blink when a seat fully joins (clears on open Party). Production desktop WebSocket sidecar is **not** shipped — join chrome greys that path with an explicit why (Radical Visibility).
 
 Related: [vision.md](./vision.md) · [master_flow.md](./master_flow.md) · [app_viewport_launcher.md](./app_viewport_launcher.md) · [join-table-flow.md](./join-table-flow.md) (target simple LAN Join Table UX) · [ingest/encounters.md](./ingest/encounters.md) · [unified_paths.md](./unified_paths.md)
 
@@ -66,19 +66,20 @@ Chosen in the Campaign Creation Forge (**Conversion rules**) and stored on the c
 
 ## Client join (interim same-WiFi)
 
-Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray, player Join Session list → Character Sheet): [join-table-flow.md](./join-table-flow.md). Host Open Table + discovery + player Join Session list are shipped; Party tab blink follows in a later slice. Code/QR remain Advanced/fallback on host and player.
+Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray, player Join Session list → Character Sheet, Party blink): [join-table-flow.md](./join-table-flow.md). Host Open Table + discovery + player Join Session list + Party tab blink on full join are shipped. Code/QR remain Advanced/fallback on host and player.
 
 | Piece | Behavior |
 |-------|----------|
 | Protocol | `src/lib/gm/sessionMessages.ts` (`v: 1`) — `session.join` / `welcome` / `leave` / `closed` / `presence` / `kick`, plus existing combat + `party.snapshot` |
 | Authority | GM host remains source of truth for `GmSessionRecord`; presence is **ephemeral in-memory** on the host (not in campaign JSON) |
 | Seat status | `joining` → `connected` (wire name for fully joined) → optional `reconnecting`; join completes on character attach (`party.snapshot`). Tray tone helpers + Join Session gate: `sessionPresence.ts`, `sessionJoinGate.ts` |
+| Party blink | Ephemeral hub flag (`partyBlink.ts`): set when `seatFlippedToFullyJoined`; cleared when GM opens Party or Close Table. Tab chrome only — same `buildPartyObserverSlice` / `GmPartyPanel` |
 | Discovery | Interim host **`GET /sessions`** advertises open rooms (`campaignName` + routing ids/token). Lib: `listLanSessions` / `sessionDiscovery.ts`. List display identity is **campaign name only** (no date/time on Join Session DTOs). Closed/unlist when host stops listen. |
 | Token | **Rotate-on-open** join token when listen starts; short code + QR under host **Advanced** (browse-first; code/QR fallback) |
 | Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Table clears seats |
 | Character attach | Happy-path Join Session sends `party.snapshot` on join (pre-selected character); host caches JSON for the sitting and runs the **same** party observer pipeline. Host “Add from this machine” remains as fallback |
 | Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`). Advertise: `GET /sessions` |
-| UI | Host: **Open Table** / **Close Table** on `GmHubShell`; **Players in Session** + Advanced code/QR on `GmJoinHostChrome`. Client `viewport: 'join_table'`: **Player Name** + **My Characters** + **Join Session** list (`listLanSessions`); grey + explain until name+character (`resolveJoinSessionGate`); **Joining Session** dialog → Character Sheet handoff (`loadSavedCharacter`). Advanced manual code/IP retained. Shared client runtime: `sessionClientHandle.ts` |
+| UI | Host: **Open Table** / **Close Table** on `GmHubShell`; **Players in Session** + Advanced code/QR on `GmJoinHostChrome`; Party tab blink via `GmTabBar`. Client `viewport: 'join_table'`: **Player Name** + **My Characters** + **Join Session** list (`listLanSessions`); grey + explain until name+character (`resolveJoinSessionGate`); **Joining Session** dialog → Character Sheet handoff (`loadSavedCharacter`). Advanced manual code/IP retained. Shared client runtime: `sessionClientHandle.ts` |
 
 Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hello.
 
@@ -96,6 +97,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Gear grant (party save) | `src/lib/gear/gmGearForgeHost.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` |
 | Protocol | `src/lib/gm/sessionMessages.ts` |
 | Presence / join token / join gate | `src/lib/gm/sessionPresence.ts`, `sessionJoinCode.ts`, `sessionJoinGate.ts` |
+| Party blink | `src/lib/gm/partyBlink.ts` → `GmTabBar` / hub context (clears on Party open) |
 | LAN discovery | `src/lib/gm/sessionDiscovery.ts` (`listLanSessions`, `GET /sessions` client) |
 | Join connect / gate | `src/lib/gm/joinSessionConnect.ts`, `sessionJoinGate.ts`, `sessionClientHandle.ts` |
 | Host / client runtime | `src/lib/gm/sessionHostRuntime.ts`, `sessionClientRuntime.ts`, `gmHostListenController.ts` |

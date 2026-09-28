@@ -80,14 +80,20 @@ import {
 import { loadCachedJoinedCharacter } from '../lib/gm/sessionPartyCache'
 import { activePlaySession } from '../lib/gm/playSession'
 import type { GmJoinCredentials } from '../lib/gm/sessionJoinCode'
-import type { GmSeat } from '../lib/gm/sessionPresence'
+import type { GmPresenceState, GmSeat } from '../lib/gm/sessionPresence'
 import type { GmJoinListenCapability } from '../lib/gm/desktopHostCapability'
+import {
+  nextPartyTabBlink,
+  partyTabBlinkAfterTabChange,
+} from '../lib/gm/partyBlink'
 
 type GmSessionContextValue = {
   hubMode: GmHubMode
   setHubMode: (mode: GmHubMode) => void
   hubTabId: GmHubTabId
   setHubTabId: (tab: GmHubTabId) => void
+  /** True while Party tab should blink after a joiner fully joins. */
+  partyTabBlink: boolean
   sessionList: GmSessionIndexEntry[]
   session: GmSessionRecord | null
   partySlices: GmPartyObserverSlice[]
@@ -152,17 +158,37 @@ function persist(next: GmSessionRecord): GmSessionRecord {
 
 export function GmSessionProvider({ children }: { children: ReactNode }) {
   const [hubMode, setHubModeState] = useState<GmHubMode>('story')
-  const [hubTabId, setHubTabId] = useState<GmHubTabId>('home')
+  const [hubTabId, setHubTabIdState] = useState<GmHubTabId>('home')
+  const [partyTabBlink, setPartyTabBlink] = useState(false)
+  const hubTabIdRef = useRef<GmHubTabId>(hubTabId)
+  const partyTabBlinkRef = useRef(false)
+  const presenceRef = useRef<GmPresenceState | null>(null)
+
+  useEffect(() => {
+    hubTabIdRef.current = hubTabId
+  }, [hubTabId])
+
+  useEffect(() => {
+    partyTabBlinkRef.current = partyTabBlink
+  }, [partyTabBlink])
+
+  const setHubTabId = useCallback((tab: GmHubTabId) => {
+    setHubTabIdState(tab)
+    setPartyTabBlink((prev) => partyTabBlinkAfterTabChange(tab, prev))
+  }, [])
 
   const goToStoryHome = useCallback(() => {
     setHubModeState('story')
     setHubTabId('home')
-  }, [])
+  }, [setHubTabId])
 
-  const setHubMode = useCallback((mode: GmHubMode) => {
-    setHubModeState(mode)
-    setHubTabId('home')
-  }, [])
+  const setHubMode = useCallback(
+    (mode: GmHubMode) => {
+      setHubModeState(mode)
+      setHubTabId('home')
+    },
+    [setHubTabId],
+  )
   const [sessionList, setSessionList] = useState<GmSessionIndexEntry[]>(() =>
     listGmSessions(),
   )
@@ -265,6 +291,17 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
             if (!prev) return prev
             return persist(addPartyMember(prev, characterId, label))
           })
+        },
+        onPresenceChange: (presence) => {
+          const previous = presenceRef.current
+          presenceRef.current = presence
+          const nextBlink = nextPartyTabBlink({
+            currentlyBlinking: partyTabBlinkRef.current,
+            previousPresence: previous,
+            nextPresence: presence,
+            viewingPartyTab: hubTabIdRef.current === 'party',
+          })
+          setPartyTabBlink(nextBlink)
         },
       },
       setJoinUi,
@@ -602,6 +639,7 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubMode,
       hubTabId,
       setHubTabId,
+      partyTabBlink,
       sessionList,
       session,
       partySlices: partyLoad.slices,
@@ -656,6 +694,8 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       hubMode,
       setHubMode,
       hubTabId,
+      setHubTabId,
+      partyTabBlink,
       sessionList,
       session,
       partyLoad,

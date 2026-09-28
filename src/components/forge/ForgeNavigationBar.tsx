@@ -142,14 +142,18 @@ export function ForgeNavigationBar({
                     tab.visual === 'na' ? 'cursor-pointer' : ''
                   } ${
                     !tab.clickable ? 'cursor-not-allowed opacity-95' : ''
-                  } ${isViewing ? viewingRing : ''}`
+                  } ${isViewing ? viewingRing : ''} ${
+                    tab.attention ? 'pds-hub-tab-blink' : ''
+                  }`
             }
             aria-current={isViewing ? 'step' : undefined}
             aria-disabled={!isContinuePill && !tab.clickable ? true : undefined}
             aria-label={
               isContinuePill
                 ? `Continue — validate ${tab.label} and open the next step`
-                : undefined
+                : tab.attention
+                  ? `${tab.label} — new joiner attached; open to review`
+                  : undefined
             }
           >
             {isContinuePill ? (
