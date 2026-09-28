@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import {
-  listFinalizedCharacters,
+  formatCharacterIndexLabel,
   loadCharacterSave,
+  resolveCharacterIndexRowDisplay,
+  type CharacterIndexEntry,
 } from '../../lib/characterIndex'
 import {
   createBrowserWsTransport,
@@ -10,91 +12,158 @@ import {
   probeInterimWsHost,
 } from '../../lib/gm/browserWsTransport'
 import {
-  createGmClientRuntime,
-  loadOrCreateDeviceId,
-  parseJoinUrl,
-  type GmClientRuntimeState,
-} from '../../lib/gm/sessionClientRuntime'
-import { normalizeShortCode } from '../../lib/gm/sessionJoinCode'
+  connectTargetFromLanSession,
+  connectTargetFromManualFields,
+  joiningDialogCopy,
+  sendPartySnapshotOnJoin,
+  waitForClientJoined,
+  type JoinSessionConnectTarget,
+  type JoiningDialogPhase,
+} from '../../lib/gm/joinSessionConnect'
+import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
+import type { GmClientRuntimeState } from '../../lib/gm/sessionClientRuntime'
+import {
+  listLanSessions,
+  type LanSessionAdvertisement,
+} from '../../lib/gm/sessionDiscovery'
+import { resolveJoinSessionGate } from '../../lib/gm/sessionJoinGate'
 import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
+const SESSION_POLL_MS = 3000
+
 /**
- * Same-SPA “Join table” viewport — interacting sheet after hello.
- * Clients never read pds:gmSession:*; host remains authority.
+ * Same-SPA “Join table” viewport — Player Name + My Characters + Join Session
+ * list (LAN browse). On success: party.snapshot + Character Sheet handoff.
+ * Advanced keeps manual code/IP as Radical Visibility fallback.
+ * Client runtime is a shared singleton so transport survives sheet handoff.
  */
 export function GmJoinTableViewport() {
-  const { returnToLauncher } = useCharacter()
-  const deviceId = useMemo(() => loadOrCreateDeviceId(), [])
-  const runtime = useMemo(() => createGmClientRuntime(deviceId), [deviceId])
+  const {
+    returnToLauncher,
+    loadSavedCharacter,
+    savedCharacterRows,
+    refreshSavedCharacterIndex,
+  } = useCharacter()
+  const runtime = useMemo(() => getSharedGmClientRuntime(), [])
   const [state, setState] = useState<GmClientRuntimeState>(() =>
     runtime.getState(),
   )
-  const [displayName, setDisplayName] = useState('Player')
-  const [codeOrUrl, setCodeOrUrl] = useState('')
+  const [playerName, setPlayerName] = useState('')
+  const [characterId, setCharacterId] = useState('')
+  const [sessions, setSessions] = useState<LanSessionAdvertisement[]>([])
+  const [browseReason, setBrowseReason] = useState<string | null>(null)
+  const [browseOk, setBrowseOk] = useState(false)
   const [wsHost, setWsHost] = useState(() =>
     typeof location !== 'undefined' ? location.hostname : '127.0.0.1',
   )
+  const [codeOrUrl, setCodeOrUrl] = useState('')
   const [campaignId, setCampaignId] = useState('')
   const [playSessionId, setPlaySessionId] = useState('')
   const [joinToken, setJoinToken] = useState('')
   const [shortCode, setShortCode] = useState('')
   const [attachError, setAttachError] = useState<string | null>(null)
-  const [characterId, setCharacterId] = useState('')
-  const [initDie, setInitDie] = useState('')
-  const [hfDie, setHfDie] = useState('')
-  const [apmNote, setApmNote] = useState<string | null>(null)
-  const [chars, setChars] = useState(() => listFinalizedCharacters())
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogPhase, setDialogPhase] = useState<JoiningDialogPhase>('idle')
+  const [dialogError, setDialogError] = useState<string | null>(null)
+  const [joiningCampaignName, setJoiningCampaignName] = useState<string | null>(
+    null,
+  )
+
+  const gate = resolveJoinSessionGate({
+    playerName,
+    characterId: characterId || null,
+  })
 
   useEffect(() => runtime.subscribe(setState), [runtime])
 
-  // Transport cleanup is owned by onConnect / leave; no lingering handle here.
+  useEffect(() => {
+    refreshSavedCharacterIndex()
+  }, [refreshSavedCharacterIndex])
 
-  const onConnect = async () => {
+  useEffect(() => {
+    if (!characterId && savedCharacterRows.length > 0) {
+      setCharacterId(savedCharacterRows[0].id)
+    }
+  }, [savedCharacterRows, characterId])
+
+  useEffect(() => {
+    let cancelled = false
+    const refresh = async () => {
+      const result = await listLanSessions({ hostHint: wsHost })
+      if (cancelled) return
+      setBrowseOk(result.ok)
+      setBrowseReason(result.reason)
+      setSessions(result.sessions)
+      if (result.lanAddresses.length > 0 && result.sessions.length === 0) {
+        // Prefer first LAN hint when primary hostname has no rooms yet
+        const alt = result.lanAddresses.find(
+          (a) => a && a !== wsHost && a !== '127.0.0.1',
+        )
+        if (alt) {
+          const second = await listLanSessions({ hostHint: alt })
+          if (cancelled) return
+          if (second.ok && second.sessions.length > 0) {
+            setBrowseOk(true)
+            setBrowseReason(null)
+            setSessions(second.sessions)
+          }
+        }
+      }
+    }
+    void refresh()
+    const id = window.setInterval(() => void refresh(), SESSION_POLL_MS)
+    return () => {
+      cancelled = true
+      window.clearInterval(id)
+    }
+  }, [wsHost])
+
+  const runJoin = async (
+    target: JoinSessionConnectTarget,
+    campaignLabel: string | null,
+  ) => {
     setAttachError(null)
-    const trimmed = codeOrUrl.trim()
-    let nextCampaign = campaignId.trim()
-    let nextPlay = playSessionId.trim()
-    let nextToken = joinToken.trim()
-    let nextCode = normalizeShortCode(shortCode || trimmed)
-    let url = defaultInterimWsUrl(wsHost)
+    setDialogError(null)
+    setJoiningCampaignName(campaignLabel)
+    setDialogPhase('connecting')
+    setDialogOpen(true)
 
-    const parsed = trimmed.includes('://') ? parseJoinUrl(trimmed) : null
-    if (parsed) {
-      url = parsed.wsUrl.split('?')[0] ?? parsed.wsUrl
-      nextCampaign = parsed.campaignId
-      nextPlay = parsed.playSessionId
-      nextToken = parsed.joinToken
-      nextCode = normalizeShortCode(parsed.shortCode)
-      setCampaignId(nextCampaign)
-      setPlaySessionId(nextPlay)
-      setJoinToken(nextToken)
-      setShortCode(nextCode)
-    }
-
-    if (!nextCampaign || !nextPlay || (!nextToken && !nextCode)) {
-      setAttachError(
-        'Need a join link (QR) or campaign id + play session id + code/token from the GM.',
-      )
+    if (!gate.canJoin) {
+      setDialogPhase('error')
+      setDialogError(gate.disabledReason ?? 'Cannot join yet.')
       return
     }
 
-    const probe = await probeInterimWsHost(wsHost)
+    const save = loadCharacterSave(characterId)
+    if (!save) {
+      setDialogPhase('error')
+      setDialogError('Character save not found on this device.')
+      return
+    }
+
+    const probe = await probeInterimWsHost(target.wsHost)
     if (!probe.ok) {
-      setAttachError(
-        'Cannot reach the interim listener on the GM machine. Confirm same Wi‑Fi and that the GM started listen.',
+      setDialogPhase('error')
+      setDialogError(
+        'Cannot reach the interim listener on the GM machine. Confirm same Wi‑Fi and that the GM opened the table.',
       )
       return
     }
+
+    const url = defaultInterimWsUrl(target.wsHost)
+    setDialogPhase('joining')
 
     const transport = createBrowserWsTransport({
       url,
       role: 'client',
       client: {
-        deviceId,
-        joinToken: nextToken || undefined,
-        shortCode: nextCode || undefined,
+        deviceId: state.deviceId,
+        joinToken: target.joinToken || undefined,
+        shortCode: target.shortCode || undefined,
       },
       onRelayError: (reason) => {
+        setDialogPhase('error')
+        setDialogError(reason)
         setAttachError(reason)
       },
       onRegistered: (info) => {
@@ -103,11 +172,11 @@ export function GmJoinTableViewport() {
         if (info.joinToken) setJoinToken(info.joinToken)
         if (info.shortCode) setShortCode(info.shortCode)
         runtime.join({
-          campaignId: info.campaignId ?? nextCampaign,
-          playSessionId: info.playSessionId ?? nextPlay,
-          joinToken: info.joinToken ?? nextToken,
-          shortCode: info.shortCode ?? nextCode,
-          displayName,
+          campaignId: info.campaignId ?? target.campaignId,
+          playSessionId: info.playSessionId ?? target.playSessionId,
+          joinToken: info.joinToken ?? target.joinToken,
+          shortCode: info.shortCode ?? target.shortCode,
+          displayName: playerName.trim(),
         })
       },
     })
@@ -116,24 +185,63 @@ export function GmJoinTableViewport() {
       await transport.start()
     } catch (err) {
       unsub()
-      setAttachError(
+      setDialogPhase('error')
+      setDialogError(
         err instanceof Error ? err.message : 'WebSocket connection failed',
       )
-    }
-  }
-
-  const onAttachCharacter = () => {
-    setAttachError(null)
-    const save = loadCharacterSave(characterId)
-    if (!save) {
-      setAttachError('Character save not found on this device.')
       return
     }
-    runtime.sendPartySnapshot(characterId, save)
+
+    const joined = await waitForClientJoined(runtime)
+    if (!joined.ok) {
+      setDialogPhase('error')
+      setDialogError(joined.reason)
+      return
+    }
+
+    setDialogPhase('attaching')
+    const snap = sendPartySnapshotOnJoin(runtime, characterId, save)
+    if (!snap.ok) {
+      setDialogPhase('error')
+      setDialogError(snap.reason)
+      return
+    }
+
+    setDialogPhase('success')
+    // Handoff to Character Sheet (Vector A). Runtime singleton keeps transport.
+    loadSavedCharacter(characterId)
   }
 
-  const initParsed = Number(initDie.trim())
-  const hfParsed = Number(hfDie.trim())
+  const onJoinSession = (session: LanSessionAdvertisement) => {
+    if (!gate.canJoin) return
+    void runJoin(connectTargetFromLanSession(session), session.campaignName)
+  }
+
+  const onAdvancedConnect = () => {
+    const resolved = connectTargetFromManualFields({
+      codeOrUrl,
+      shortCode,
+      wsHost,
+      campaignId,
+      playSessionId,
+      joinToken,
+    })
+    if (!resolved.ok) {
+      setAttachError(resolved.reason)
+      return
+    }
+    setCampaignId(resolved.target.campaignId)
+    setPlaySessionId(resolved.target.playSessionId)
+    setJoinToken(resolved.target.joinToken)
+    setShortCode(resolved.target.shortCode)
+    setWsHost(resolved.target.wsHost)
+    void runJoin(resolved.target, null)
+  }
+
+  const selectedRow = savedCharacterRows.find((r) => r.id === characterId)
+  const selectedDisplay = selectedRow
+    ? resolveCharacterIndexRowDisplay(selectedRow)
+    : null
 
   return (
     <div className="flex h-svh min-h-0 flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
@@ -143,11 +251,10 @@ export function GmJoinTableViewport() {
             Join table
           </p>
           <h1 className="text-xl font-black tracking-wide text-white sm:text-2xl">
-            {state.hello?.sessionName ?? 'Connect to a play sitting'}
+            {state.hello?.campaignName ?? 'Join a session'}
           </h1>
           <p className="text-[11px] text-slate-400">
-            Interacting sheet — physical d20 on this device. No auto-parry / auto
-            H.F. penalty / auto APM spend.
+            Enter your player name, pick a character, then join a LAN session.
           </p>
         </div>
         <div className="flex min-w-[11rem] flex-col gap-2">
@@ -166,48 +273,143 @@ export function GmJoinTableViewport() {
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4">
-        {state.status !== 'joined' ? (
-          <div className="mx-auto max-w-lg space-y-4">
-            <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
-              Display name
-              <input
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
-              />
-            </label>
-            <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
-              Join link or paste from QR
-              <input
-                value={codeOrUrl}
-                onChange={(e) => setCodeOrUrl(e.target.value)}
-                placeholder="ws://… or leave blank and fill fields below"
-                className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-white"
-              />
-            </label>
-            <div className="grid gap-3 sm:grid-cols-2">
+        <div className="mx-auto max-w-lg space-y-6">
+          <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+            Player Name
+            <input
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              placeholder="Visible to everyone in the session"
+              autoComplete="nickname"
+              className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
+            />
+          </label>
+
+          <section>
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                My Characters
+              </h2>
+              <button
+                type="button"
+                onClick={() => refreshSavedCharacterIndex()}
+                className="rounded border border-slate-600 px-2 py-0.5 text-[10px] font-bold uppercase text-slate-400 hover:border-slate-400"
+              >
+                Refresh
+              </button>
+            </div>
+            <select
+              value={characterId}
+              onChange={(e) => setCharacterId(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
+              aria-label="My Characters"
+            >
+              <option value="">Select a character…</option>
+              {savedCharacterRows.map((row) => (
+                <CharacterOption key={row.id} row={row} />
+              ))}
+            </select>
+            {selectedDisplay ? (
+              <p className="mt-2 text-xs text-slate-500">
+                Selected: {selectedDisplay.mainLabel}
+                <sup className="ml-1 text-[9px] font-bold uppercase tracking-wide text-slate-600">
+                  {selectedDisplay.genreLabel}
+                </sup>
+              </p>
+            ) : savedCharacterRows.length === 0 ? (
+              <p className="mt-2 text-xs text-slate-500">
+                No spawned characters on this device — finish creation and spawn
+                first (same list as the launcher).
+              </p>
+            ) : null}
+          </section>
+
+          <section>
+            <h2 className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
+              Join Session
+            </h2>
+            {!gate.canJoin ? (
+              <p
+                className="mt-2 rounded-lg border border-amber-900/50 bg-amber-950/30 px-3 py-2 text-xs text-amber-100/90"
+                role="status"
+              >
+                {gate.disabledReason}
+              </p>
+            ) : null}
+            <div className="mt-2 space-y-2">
+              {sessions.length === 0 ? (
+                <p
+                  className="rounded-lg border border-slate-800 bg-slate-900/40 px-3 py-4 text-center text-sm text-slate-400"
+                  role="status"
+                >
+                  no session available
+                  {!browseOk && browseReason ? (
+                    <span className="mt-2 block text-[11px] text-slate-500">
+                      {browseReason}
+                    </span>
+                  ) : null}
+                </p>
+              ) : (
+                sessions.map((session) => {
+                  const disabled = !gate.canJoin
+                  return (
+                    <button
+                      key={`${session.hostHint}:${session.campaignId}:${session.playSessionId}`}
+                      type="button"
+                      disabled={disabled}
+                      title={
+                        disabled
+                          ? (gate.disabledReason ?? undefined)
+                          : `Join ${session.campaignName}`
+                      }
+                      onClick={() => onJoinSession(session)}
+                      className="w-full rounded-lg border border-cyan-700/50 bg-cyan-950/40 px-4 py-3 text-left text-sm font-bold text-cyan-50 transition hover:border-cyan-400 hover:bg-cyan-900/50 disabled:cursor-not-allowed disabled:border-slate-700 disabled:bg-slate-900/40 disabled:text-slate-500 disabled:opacity-60"
+                    >
+                      {session.campaignName}
+                    </button>
+                  )
+                })
+              )}
+            </div>
+          </section>
+
+          <details className="rounded-lg border border-slate-800 p-3 text-xs text-slate-400">
+            <summary className="cursor-pointer font-bold uppercase tracking-wide text-slate-500">
+              Advanced — manual code / IP (if browse fails)
+            </summary>
+            <p className="mt-2 text-[11px] leading-relaxed text-slate-500">
+              Use when Join Session browse cannot reach the GM host. Paste a
+              join link from QR, or enter short code + GM Wi‑Fi IP.
+            </p>
+            <div className="mt-3 space-y-3">
               <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
-                Short code
+                Join link or paste from QR
                 <input
-                  value={shortCode}
-                  onChange={(e) => setShortCode(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm tracking-widest text-amber-100"
-                />
-              </label>
-              <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
-                GM host (Wi‑Fi IP)
-                <input
-                  value={wsHost}
-                  onChange={(e) => setWsHost(e.target.value)}
+                  value={codeOrUrl}
+                  onChange={(e) => setCodeOrUrl(e.target.value)}
+                  placeholder="ws://… or leave blank and fill fields below"
                   className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-white"
                 />
               </label>
-            </div>
-            <details className="rounded-lg border border-slate-800 p-3 text-xs text-slate-400">
-              <summary className="cursor-pointer font-bold uppercase tracking-wide text-slate-500">
-                Advanced ids (from join link)
-              </summary>
-              <div className="mt-3 space-y-2">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                  Short code
+                  <input
+                    value={shortCode}
+                    onChange={(e) => setShortCode(e.target.value)}
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm tracking-widest text-amber-100"
+                  />
+                </label>
+                <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                  GM host (Wi‑Fi IP)
+                  <input
+                    value={wsHost}
+                    onChange={(e) => setWsHost(e.target.value)}
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-white"
+                  />
+                </label>
+              </div>
+              <div className="space-y-2">
                 <input
                   value={campaignId}
                   onChange={(e) => setCampaignId(e.target.value)}
@@ -227,187 +429,85 @@ export function GmJoinTableViewport() {
                   className="w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 font-mono"
                 />
               </div>
-            </details>
-            {attachError || state.lastError ? (
-              <p className="rounded-lg border border-red-900/60 bg-red-950/40 px-3 py-2 text-xs text-red-200" role="status">
-                {attachError ?? state.lastError}
+              {attachError ? (
+                <p
+                  className="rounded-lg border border-red-900/60 bg-red-950/40 px-3 py-2 text-xs text-red-200"
+                  role="status"
+                >
+                  {attachError}
+                </p>
+              ) : null}
+              <button
+                type="button"
+                disabled={!gate.canJoin}
+                title={
+                  !gate.canJoin
+                    ? (gate.disabledReason ?? undefined)
+                    : 'Connect with advanced fields'
+                }
+                onClick={onAdvancedConnect}
+                className="w-full rounded-lg bg-slate-700 px-4 py-3 text-xs font-black uppercase tracking-wide text-white hover:bg-slate-600 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Connect (advanced)
+              </button>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      {dialogOpen ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="joining-session-title"
+        >
+          <div className="w-full max-w-sm rounded-xl border border-slate-700 bg-slate-950 p-5 shadow-2xl">
+            <h2
+              id="joining-session-title"
+              className="text-sm font-black uppercase tracking-[0.2em] text-cyan-300"
+            >
+              Joining Session
+            </h2>
+            {joiningCampaignName ? (
+              <p className="mt-2 text-sm font-semibold text-white">
+                {joiningCampaignName}
               </p>
             ) : null}
-            <button
-              type="button"
-              onClick={() => void onConnect()}
-              className="w-full rounded-lg bg-cyan-600 px-4 py-3 text-xs font-black uppercase tracking-wide text-slate-950 hover:bg-cyan-500"
-            >
-              Connect
-            </button>
+            <p className="mt-3 text-xs text-slate-300" role="status">
+              {dialogPhase === 'error'
+                ? (dialogError ?? joiningDialogCopy('error'))
+                : joiningDialogCopy(dialogPhase)}
+            </p>
+            {dialogPhase === 'error' ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setDialogOpen(false)
+                  setDialogPhase('idle')
+                  setDialogError(null)
+                }}
+                className="mt-4 w-full rounded-lg border border-slate-600 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-200 hover:border-slate-400"
+              >
+                Close
+              </button>
+            ) : (
+              <p className="mt-4 text-[10px] uppercase tracking-wide text-slate-500">
+                Please wait…
+              </p>
+            )}
           </div>
-        ) : (
-          <div className="mx-auto grid max-w-3xl gap-4 lg:grid-cols-2">
-            <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
-              <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300">
-                Sitting
-              </h2>
-              <p className="mt-2 text-sm text-slate-200">
-                {state.hello?.campaignName}
-              </p>
-              <p className="text-xs text-slate-400">
-                Host genre {state.hello?.hostGenreId} ·{' '}
-                {state.hello?.conversionPolicy}
-              </p>
-              <p className="mt-2 text-[11px] text-slate-500">
-                Device {state.deviceId} · seats {state.seats.length}
-              </p>
-            </section>
-
-            <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
-              <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300">
-                Attach character
-              </h2>
-              <p className="mt-1 text-[11px] text-slate-500">
-                Sends party.snapshot from this device. Host caches JSON for the
-                sitting (does not need your localStorage keys).
-              </p>
-              <select
-                value={characterId}
-                onChange={(e) => setCharacterId(e.target.value)}
-                className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-2 text-sm"
-              >
-                <option value="">Select finalized save…</option>
-                {chars.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-              <div className="mt-2 flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setChars(listFinalizedCharacters())}
-                  className="rounded border border-slate-600 px-2 py-1 text-[10px] font-bold uppercase text-slate-300"
-                >
-                  Refresh
-                </button>
-                <button
-                  type="button"
-                  disabled={!characterId}
-                  onClick={onAttachCharacter}
-                  className="rounded bg-cyan-700 px-2 py-1 text-[10px] font-bold uppercase text-white disabled:opacity-40"
-                >
-                  Send snapshot
-                </button>
-              </div>
-            </section>
-
-            <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
-              <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-200">
-                Initiative
-              </h2>
-              <p className="mt-1 text-[11px] text-slate-500">
-                Physical d20 on this device. Greyed when the GM locks initiative.
-              </p>
-              <input
-                type="number"
-                inputMode="numeric"
-                value={initDie}
-                disabled={state.initiativeLocked || !characterId}
-                title={
-                  !characterId
-                    ? 'Attach a character first'
-                    : state.initiativeLocked
-                      ? 'Initiative is locked by the GM'
-                      : 'Enter physical d20'
-                }
-                onChange={(e) => setInitDie(e.target.value)}
-                placeholder="Physical d20"
-                className="mt-2 w-full rounded-lg border border-amber-700/60 bg-slate-950 px-2 py-2 text-center font-mono text-lg font-black text-amber-50 disabled:cursor-not-allowed disabled:opacity-40"
-              />
-              <button
-                type="button"
-                disabled={
-                  !characterId ||
-                  state.initiativeLocked ||
-                  !Number.isFinite(initParsed)
-                }
-                onClick={() => {
-                  runtime.sendInitiative(characterId, initParsed)
-                  setInitDie('')
-                }}
-                className="mt-2 rounded bg-amber-600 px-3 py-1.5 text-[10px] font-black uppercase text-slate-950 disabled:opacity-40"
-              >
-                Submit initiative
-              </button>
-            </section>
-
-            <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
-              <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-violet-200">
-                Horror Factor save
-              </h2>
-              {state.activeHf ? (
-                <p className="mt-1 text-xs text-violet-100">
-                  Live H.F. save target {state.activeHf.saveTarget}
-                </p>
-              ) : (
-                <p className="mt-1 text-[11px] text-slate-500">
-                  No live H.F. emit from the host.
-                </p>
-              )}
-              <input
-                type="number"
-                inputMode="numeric"
-                value={hfDie}
-                disabled={!state.activeHf || !characterId}
-                title={
-                  !characterId
-                    ? 'Attach a character first'
-                    : !state.activeHf
-                      ? 'Waiting for GM H.F. emit'
-                      : 'Enter physical d20'
-                }
-                onChange={(e) => setHfDie(e.target.value)}
-                placeholder="Physical d20"
-                className="mt-2 w-full rounded-lg border border-violet-700/60 bg-slate-950 px-2 py-2 text-center font-mono text-lg font-black text-violet-50 disabled:cursor-not-allowed disabled:opacity-40"
-              />
-              <button
-                type="button"
-                disabled={
-                  !characterId || !state.activeHf || !Number.isFinite(hfParsed)
-                }
-                onClick={() => {
-                  runtime.sendHfSave(characterId, hfParsed)
-                  setHfDie('')
-                }}
-                className="mt-2 rounded bg-violet-700 px-3 py-1.5 text-[10px] font-black uppercase text-white disabled:opacity-40"
-              >
-                Submit H.F. save
-              </button>
-            </section>
-
-            <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 lg:col-span-2">
-              <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300">
-                PC APM (player-managed)
-              </h2>
-              <p className="mt-1 text-[11px] text-slate-500">
-                Tells the host you spent actions on your device. Hub does not
-                auto-spend or change the combat roster pips.
-              </p>
-              <button
-                type="button"
-                disabled={!characterId}
-                onClick={() => {
-                  runtime.sendApmSpend(characterId, 1)
-                  setApmNote('APM spend sent to host (logged only).')
-                }}
-                className="mt-2 rounded border border-slate-500 px-3 py-1.5 text-[10px] font-bold uppercase text-slate-200 hover:border-cyan-400 disabled:opacity-40"
-              >
-                Spend 1 APM
-              </button>
-              {apmNote ? (
-                <p className="mt-2 text-[11px] text-cyan-300/90">{apmNote}</p>
-              ) : null}
-            </section>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : null}
     </div>
+  )
+}
+
+function CharacterOption({ row }: { row: CharacterIndexEntry }) {
+  const { mainLabel, genreLabel } = resolveCharacterIndexRowDisplay(row)
+  return (
+    <option value={row.id} title={formatCharacterIndexLabel(row)}>
+      {mainLabel} ({genreLabel})
+    </option>
   )
 }

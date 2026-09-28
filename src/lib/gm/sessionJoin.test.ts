@@ -29,6 +29,11 @@ import {
 } from './sessionMessages'
 import { createGmHostRuntime } from './sessionHostRuntime'
 import { createGmClientRuntime } from './sessionClientRuntime'
+import {
+  connectTargetFromLanSession,
+  connectTargetFromManualFields,
+  sendPartySnapshotOnJoin,
+} from './joinSessionConnect'
 import { MockTransportHub } from './sessionTransport'
 import {
   closePlaySession,
@@ -338,12 +343,13 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
       true,
     )
 
-    client.sendPartySnapshot('char_remote', {
+    const snap = sendPartySnapshotOnJoin(client, 'char_remote', {
       id: 'char_remote',
       name: 'Remote Hero',
       creationGenreId: 'nightbane',
       hostGenreId: 'nightbane',
     })
+    expect(snap.ok).toBe(true)
     await Promise.resolve()
     expect(session.partyCharacterIds).toContain('char_remote')
     expect(loadCachedJoinedCharacter(session.id, 'char_remote')).toBeTruthy()
@@ -405,5 +411,66 @@ describe('party cache', () => {
       id: 'c1',
       name: 'A',
     })
+  })
+})
+
+describe('join session connect helpers', () => {
+  it('maps LAN advertisement to connect target (campaign name not required for routing)', () => {
+    expect(
+      connectTargetFromLanSession({
+        campaignName: 'Harbor Watch',
+        campaignId: 'camp_1',
+        playSessionId: 'play_1',
+        joinToken: 'tok',
+        shortCode: 'ABCDEF',
+        hostHint: '192.168.1.10',
+        port: 8765,
+      }),
+    ).toEqual({
+      wsHost: '192.168.1.10',
+      campaignId: 'camp_1',
+      playSessionId: 'play_1',
+      joinToken: 'tok',
+      shortCode: 'ABCDEF',
+    })
+  })
+
+  it('resolves advanced manual fields and greys incomplete input', () => {
+    expect(
+      connectTargetFromManualFields({
+        codeOrUrl: '',
+        shortCode: '',
+        wsHost: '127.0.0.1',
+        campaignId: '',
+        playSessionId: '',
+        joinToken: '',
+      }).ok,
+    ).toBe(false)
+
+    const ok = connectTargetFromManualFields({
+      codeOrUrl: '',
+      shortCode: 'ABCDEF',
+      wsHost: '10.0.0.2',
+      campaignId: 'camp_1',
+      playSessionId: 'play_1',
+      joinToken: 'tok',
+    })
+    expect(ok).toEqual({
+      ok: true,
+      target: {
+        wsHost: '10.0.0.2',
+        campaignId: 'camp_1',
+        playSessionId: 'play_1',
+        joinToken: 'tok',
+        shortCode: 'ABCDEF',
+      },
+    })
+  })
+
+  it('blocks party.snapshot-on-join until welcome', () => {
+    const client = createGmClientRuntime('dev_snap')
+    expect(
+      sendPartySnapshotOnJoin(client, 'char_1', { id: 'char_1', name: 'A' }),
+    ).toMatchObject({ ok: false })
   })
 })

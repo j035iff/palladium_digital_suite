@@ -203,7 +203,7 @@ Copy this block when registering a new unified path:
 | Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `seatTrayPresentation`, `createGmHostRuntime` | Ephemeral seats; yellow joining / green joined tray tokens |
 | Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions` | Interim same-WiFi; desktop sidecar later |
 | Discovery | `src/lib/gm/sessionDiscovery.ts` | `listLanSessions`, `parseLanSessionAdvertisement` | Join Session browse; **campaignName** display only |
-| Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** | One Party/Cast pipeline — no remote fork; code/QR demoted to Advanced |
+| Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** → name + characters + Join Session list → sheet | One Party/Cast pipeline — no remote fork; code/QR demoted to Advanced; shared client runtime survives sheet handoff |
 | UI | `src/components/gm/*` | `GmHubShell` | Story / Combat modes; Home + Party + Cast + Gear |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
 
