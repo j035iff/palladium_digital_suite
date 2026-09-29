@@ -10,6 +10,10 @@ import {
 
 const MODES: readonly GmHubMode[] = ['story', 'combat']
 
+/**
+ * Top nav under Hub title — Story/Combat + Home/Party/Cast/Gear.
+ * Compact shell places this in the header (no bottom bar).
+ */
 export function GmTabBar({
   mode,
   tabId,
@@ -32,10 +36,7 @@ export function GmTabBar({
   )
 
   return (
-    <div
-      className="shrink-0 border-b border-slate-800 bg-slate-950/90 px-4 py-2"
-      aria-label="GM Hub mode and tabs"
-    >
+    <div aria-label="GM Hub mode and tabs">
       <div className="flex flex-col gap-1.5">
         <div
           className="flex w-fit rounded-lg border-2 border-amber-700/70 bg-slate-950 p-1"

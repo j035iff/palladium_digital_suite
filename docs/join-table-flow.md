@@ -53,6 +53,7 @@ Player clicks **Join Table** and sees a page with:
 - A tray opens under the button: **Players in Session**
   - Dynamic list of players currently in the session
   - Updates as players join and leave
+  - Compact Hub: control label becomes **Table Open**; click expands a hover overlay (Close Table inside; leaving the zone collapses). Host Advanced code/QR is not shown on Hub this pass.
 
 ### 3. Player joins
 
