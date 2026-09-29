@@ -4,7 +4,7 @@ Local-only table workspace for running a session from this machine. It is a **so
 
 **Not in v1 (still deferred):** internet/cloud relay, Plot wiki, item push, Creation-Forge-named GM factory, structural M.D.C.↔S.D.C. conversion, production Tauri/Electron packaging polish.
 
-**Shipped (client join):** interim same-WiFi `ws` listen on the GM machine, LAN `/sessions` discovery, **Open Table** (one-click publish = open sitting + start listen), **Players in Session** tray (yellow joining / green joined), short join code + QR as Advanced fallback, same-SPA **Join table** viewport (name + characters + Join Session list → Character Sheet handoff + `party.snapshot` on join), interacting sheet combat wire (initiative / H.F. save / PC APM), Party tab blink when a seat fully joins (clears on open Party). Production desktop WebSocket sidecar is **not** shipped — join chrome greys that path with an explicit why (Radical Visibility).
+**Shipped (client join):** interim same-WiFi `ws` listen on the GM machine, LAN `/sessions` discovery, **Open Table** (one-click publish = open sitting + start listen), compact Hub chrome (**Table Open** expands a hover **Players in Session** overlay — yellow joining / green joined; **Close Table** inside the panel), Advanced join code / QR / manual listen **hidden on Hub this pass** (transport + listen stay intact), same-SPA **Join table** viewport (name + characters + Join Session list → Character Sheet handoff + `party.snapshot` on join; Advanced code/IP remains on the player Join Table viewport as failure fallback), interacting sheet combat wire (initiative / H.F. save / PC APM), Party tab blink when a seat fully joins (clears on open Party). Production desktop WebSocket sidecar is **not** shipped — capability reasons remain on the listen pipeline (Radical Visibility).
 
 Related: [vision.md](./vision.md) · [master_flow.md](./master_flow.md) · [app_viewport_launcher.md](./app_viewport_launcher.md) · [join-table-flow.md](./join-table-flow.md) (target simple LAN Join Table UX) · [ingest/encounters.md](./ingest/encounters.md) · [unified_paths.md](./unified_paths.md)
 
@@ -16,13 +16,26 @@ Launcher **Campaigns** opens an existing table in `GmHubShell` (`viewport: 'gm'`
 
 The hub header **title is the campaign name**. Host genre and conversion rules stay in the subtitle. When a table is open, the subtitle notes **Table open**.
 
+### Compact Hub chrome (desktop-first)
+
+Top nav only — **no bottom bar**. Layout (`GmHubShell`):
+
+| Zone | Contents |
+|------|----------|
+| Title block | **GAMEMASTER HUB** + campaign name; Story / Combat mode toggle; Home / Party / Cast / Gear tabs (`GmTabBar`) |
+| Top-right icons | **Return to launcher** + **Settings** (gear). Units (**Standard / Metric**) live in Settings only — not a header toggle |
+| Table control | Closed → orange **Open Table** (publish). Open → violet **Table Open** (expands Players overlay; does not re-publish) |
+| Players overlay | `GmJoinHostChrome` — absolute overlay under the table control; Kick per seat; **Close Table** only inside the panel. Stays open while the pointer is in the control+panel zone; leaving collapses. Advanced code / QR / Start–Stop listen UI is **not surfaced** on Hub this pass |
+
+Main content fills below the header. Party / Cast / Gear remain one pipeline under both Story and Combat (Pillar 9) — do not fork.
+
 ### Campaign vs play session
 
 A **campaign** is the persistent table created in the Campaign Creation Forge (`GmSessionRecord.name`, `hostGenreId`, `conversionPolicy`). Switch campaigns from the launcher **Campaigns** menu — Sessions does not list other campaigns.
 
-A **play session** is a joinable sitting under that campaign (`playSessions[]`, `activePlaySessionId`). **Open Table** lives in the hub header under **Return to launcher** — one control that stamps the sitting **and** starts the LAN listener. The **Players in Session** tray sits under the header (`GmJoinHostChrome`). Internally the sitting still uses a date-stamped `playerLabel` for event-log / collision uniqueness; Join Session browse shows **campaign name only**.
+A **play session** is a joinable sitting under that campaign (`playSessions[]`, `activePlaySessionId`). **Open Table** is the header table control — one click that stamps the sitting **and** starts the LAN listener. When open, the same control reads **Table Open** and expands the **Players in Session** overlay (`GmJoinHostChrome`). Internally the sitting still uses a date-stamped `playerLabel` for event-log / collision uniqueness; Join Session browse shows **campaign name only**.
 
-If that label is already used, the stamp adds local time. **Close Table** ends the live sitting, stops the join listener, clears seats, and detaches joined party snapshots (no phantom `Missing saves`). Opening a campaign clears any **stale** open-sitting stamp left from a prior hub visit so **Open Table** matches real LAN publish state. If Open Table’s listen start fails, the stamp rolls back. `session.hello` carries `campaignName`, `sessionName` (player label), and `playSessionId`.
+If that label is already used, the stamp adds local time. **Close Table** (inside the Players overlay, or via Return-to-launcher confirm) ends the live sitting, stops the join listener, clears seats, and detaches joined party snapshots (no phantom `Missing saves`). Opening a campaign clears any **stale** open-sitting stamp left from a prior hub visit so **Open Table** matches real LAN publish state. If Open Table’s listen start fails, the stamp rolls back. `session.hello` carries `campaignName`, `sessionName` (player label), and `playSessionId`.
 
 **Return to launcher:** With a table open, GM Hub confirms then **Close Table** before leaving. A joined player (Join Table viewport or post-join sheet **Portal**) confirms then sends `session.leave` / detaches before returning to the launcher.
 
@@ -68,7 +81,7 @@ Chosen in the Campaign Creation Forge (**Conversion rules**) and stored on the c
 
 ## Client join (interim same-WiFi)
 
-Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session tray, player Join Session list → Character Sheet, Party blink): [join-table-flow.md](./join-table-flow.md). Host Open Table + discovery + player Join Session list + Party tab blink on full join are shipped. Code/QR remain Advanced/fallback on host and player.
+Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-name-only session button, Players in Session overlay, player Join Session list → Character Sheet, Party blink): [join-table-flow.md](./join-table-flow.md). Host Open Table + discovery + player Join Session list + Party tab blink on full join are shipped. Host Advanced code/QR is hidden on Hub this pass (listen still runs under Open Table). Player Join Table keeps Advanced code/IP as failure fallback.
 
 | Piece | Behavior |
 |-------|----------|
@@ -77,12 +90,12 @@ Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-n
 | Seat status | `joining` → `connected` (wire name for fully joined) → optional `reconnecting`; join completes on character attach (`party.snapshot`). Tray tone helpers + Join Session gate: `sessionPresence.ts`, `sessionJoinGate.ts` |
 | Party blink | Ephemeral hub flag (`partyBlink.ts`): set when `seatFlippedToFullyJoined`; cleared when GM opens Party or Close Table. Tab chrome only — same `buildPartyObserverSlice` / `GmPartyPanel` |
 | Discovery | Interim host **`GET /sessions`** (local rooms) + **`GET /discover`** (UDP beacon on **8766** + ARP-assisted TCP `/24` peer probe, accepting browser `lanHint` query params). Client `listLanSessions` always browses the **local** sidecar (Advanced IP does not rebind browse), passes WebRTC LAN hints, and falls back to an in-browser `/24` `/sessions` probe so listing succeeds whenever direct TCP to the GM would. List display identity is **campaign name only**. Closed/unlist when host stops listen. Advanced code/IP is Radical Visibility **failure mode only**. |
-| Token | **Rotate-on-open** join token when listen starts; short code + QR under host **Advanced** (browse-first; code/QR fallback) |
+| Token | **Rotate-on-open** join token when listen starts; short code + QR generation remains on the host runtime (Hub UI hides Advanced this pass; player Join Table keeps code/IP fallback) |
 | Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Table clears seats |
 | Character attach | Happy-path Join Session sends `party.snapshot` on join (pre-selected character); host caches JSON for the sitting and runs the **same** party observer pipeline. **Party** tab shows **joined seats only** (player name upper-right on each card). Local “Add from this machine” lives on **Cast** (same `addPartyMember` pipeline — not a Party fork) |
 | Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it; Vite `server.host: true` prints a Network URL). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`). Advertise: `GET /sessions`; LAN browse: `GET /discover` |
 | Leave / detach | `session.leave` and kick remove the seat **and** detach that character from party + joiner cache. Close Table / stop listen detaches all seated joiners. Prevents phantom party ids / `Missing saves` |
-| UI | Host: **Open Table** / **Close Table** on `GmHubShell`; **Players in Session** + Advanced code/QR on `GmJoinHostChrome`; Party tab blink via `GmTabBar`. Client `viewport: 'join_table'`: **Player Name** + **My Characters** (default **Select a character** — join gated until chosen) + **Join Session** list (`listLanSessions`); grey + explain until name+character (`resolveJoinSessionGate`); **Joining Session** dialog → Character Sheet handoff (`loadSavedCharacter`). Advanced manual code/IP retained. Shared client runtime: `sessionClientHandle.ts` |
+| UI | Host compact chrome on `GmHubShell`: top Story/Combat + tabs, Return + Settings icons, **Open Table** / **Table Open** control, **Players in Session** hover overlay + **Close Table** on `GmJoinHostChrome` (Advanced host chrome hidden). Table control helpers: `hubTableChrome.ts`. Party tab blink via `GmTabBar`. Client `viewport: 'join_table'`: **Player Name** + **My Characters** (default **Select a character** — join gated until chosen) + **Join Session** list (`listLanSessions`); grey + explain until name+character (`resolveJoinSessionGate`); **Joining Session** dialog → Character Sheet handoff (`loadSavedCharacter`). Advanced manual code/IP retained on player Join Table. Shared client runtime: `sessionClientHandle.ts` |
 
 Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hello.
 
@@ -93,6 +106,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Session record + mutators | `src/lib/gm/sessionTypes.ts`, `sessionModel.ts` |
 | Campaign forge registry | `src/lib/gm/campaignForge.ts` |
 | Play sessions | `src/lib/gm/playSession.ts`, `openPlaySession` / `closePlaySession` in `sessionModel.ts` |
+| Compact table chrome | `src/lib/gm/hubTableChrome.ts` — Open Table / Table Open labels, Players overlay expand/collapse, seat overlay lines |
 | Persistence | `src/lib/gm/sessionPersistence.ts` |
 | Party observer (Pillar 9) | `src/lib/gm/partyObserver.ts` |
 | Combat roster | `src/lib/gm/combatRoster.ts` |
@@ -107,4 +121,4 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Interim WS relay | `scripts/gm-interim-ws-host.mjs` + `scripts/gm-lan-discover.mjs` (`/health`, `/sessions`, `/discover`, UDP beacon), `src/lib/gm/browserWsTransport.ts` |
 | Joiner character cache | `src/lib/gm/sessionPartyCache.ts` |
 | Campaign forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
-| React | `src/context/GmSessionContext.tsx`, `src/components/gm/*` (`GmJoinHostChrome`, `GmJoinTableViewport`) |
+| React | `src/context/GmSessionContext.tsx`, `src/components/gm/*` (`GmHubShell`, `GmJoinHostChrome`, `GmHubSettingsDialog`, `GmJoinTableViewport`) |

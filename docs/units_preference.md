@@ -14,7 +14,7 @@ Engine-wide, **per-user / per-device** measurement preference. Players at the sa
 
 Not written into character saves (see [`master_flow.md`](./master_flow.md) — saves stay free of host/display transforms).
 
-**UI:** `UnitsPreferenceToggle` on the launcher and live-sheet chrome. Context: `UnitsPreferenceProvider` / `useUnitsPreference` (`src/lib/units/`).
+**UI:** `UnitsPreferenceToggle` on the launcher and live-sheet chrome. On **GM Hub**, units live only under the header **Settings** gear (`GmHubSettingsDialog`) — not a Hub header toggle. Context: `UnitsPreferenceProvider` / `useUnitsPreference` (`src/lib/units/`).
 
 ---
 
