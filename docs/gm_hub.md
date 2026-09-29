@@ -22,7 +22,9 @@ A **campaign** is the persistent table created in the Campaign Creation Forge (`
 
 A **play session** is a joinable sitting under that campaign (`playSessions[]`, `activePlaySessionId`). **Open Table** lives in the hub header under **Return to launcher** — one control that stamps the sitting **and** starts the LAN listener. The **Players in Session** tray sits under the header (`GmJoinHostChrome`). Internally the sitting still uses a date-stamped `playerLabel` for event-log / collision uniqueness; Join Session browse shows **campaign name only**.
 
-If that label is already used, the stamp adds local time. **Close Table** ends the live sitting, stops the join listener, and clears seats. `session.hello` carries `campaignName`, `sessionName` (player label), and `playSessionId`.
+If that label is already used, the stamp adds local time. **Close Table** ends the live sitting, stops the join listener, clears seats, and detaches joined party snapshots (no phantom `Missing saves`). Opening a campaign clears any **stale** open-sitting stamp left from a prior hub visit so **Open Table** matches real LAN publish state. If Open Table’s listen start fails, the stamp rolls back. `session.hello` carries `campaignName`, `sessionName` (player label), and `playSessionId`.
+
+**Return to launcher:** With a table open, GM Hub confirms then **Close Table** before leaving. A joined player (Join Table viewport or post-join sheet **Portal**) confirms then sends `session.leave` / detaches before returning to the launcher.
 
 Old campaign saves missing `playSessions` hydrate to `[]` / `null` on load.
 
@@ -77,9 +79,10 @@ Target simple LAN Join Table UX (Open Table / Join Session discovery, campaign-n
 | Discovery | Interim host **`GET /sessions`** (local rooms) + **`GET /discover`** (UDP beacon on **8766** + ARP-assisted TCP `/24` peer probe, accepting browser `lanHint` query params). Client `listLanSessions` always browses the **local** sidecar (Advanced IP does not rebind browse), passes WebRTC LAN hints, and falls back to an in-browser `/24` `/sessions` probe so listing succeeds whenever direct TCP to the GM would. List display identity is **campaign name only**. Closed/unlist when host stops listen. Advanced code/IP is Radical Visibility **failure mode only**. |
 | Token | **Rotate-on-open** join token when listen starts; short code + QR under host **Advanced** (browse-first; code/QR fallback) |
 | Reconnect | Same `deviceId` reclaims the seat for the life of the sitting; Close Table clears seats |
-| Character attach | Happy-path Join Session sends `party.snapshot` on join (pre-selected character); host caches JSON for the sitting and runs the **same** party observer pipeline. Host “Add from this machine” remains as fallback |
+| Character attach | Happy-path Join Session sends `party.snapshot` on join (pre-selected character); host caches JSON for the sitting and runs the **same** party observer pipeline. **Party** tab shows **joined seats only** (player name upper-right on each card). Local “Add from this machine” lives on **Cast** (same `addPartyMember` pipeline — not a Party fork) |
 | Transport | Interim Node `ws` relay: `npm run gm:ws-host` (Vite dev auto-starts it; Vite `server.host: true` prints a Network URL). Target production path: desktop WS sidecar — greyd until shipped (`DESKTOP_WS_HOST_SHIPPED`). Advertise: `GET /sessions`; LAN browse: `GET /discover` |
-| UI | Host: **Open Table** / **Close Table** on `GmHubShell`; **Players in Session** + Advanced code/QR on `GmJoinHostChrome`; Party tab blink via `GmTabBar`. Client `viewport: 'join_table'`: **Player Name** + **My Characters** + **Join Session** list (`listLanSessions`); grey + explain until name+character (`resolveJoinSessionGate`); **Joining Session** dialog → Character Sheet handoff (`loadSavedCharacter`). Advanced manual code/IP retained. Shared client runtime: `sessionClientHandle.ts` |
+| Leave / detach | `session.leave` and kick remove the seat **and** detach that character from party + joiner cache. Close Table / stop listen detaches all seated joiners. Prevents phantom party ids / `Missing saves` |
+| UI | Host: **Open Table** / **Close Table** on `GmHubShell`; **Players in Session** + Advanced code/QR on `GmJoinHostChrome`; Party tab blink via `GmTabBar`. Client `viewport: 'join_table'`: **Player Name** + **My Characters** (default **Select a character** — join gated until chosen) + **Join Session** list (`listLanSessions`); grey + explain until name+character (`resolveJoinSessionGate`); **Joining Session** dialog → Character Sheet handoff (`loadSavedCharacter`). Advanced manual code/IP retained. Shared client runtime: `sessionClientHandle.ts` |
 
 Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hello.
 

@@ -3,6 +3,7 @@ import { useGmSession } from '../../context/GmSessionContext'
 import { formatGenreSlug } from '../../data/genres'
 import { conversionRuleLabel } from '../../lib/gm/campaignForge'
 import { openTableDisabledReason } from '../../lib/gm/desktopHostCapability'
+import { GM_RETURN_CLOSES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
 import { activePlaySession } from '../../lib/gm/playSession'
 import { GmCastPanel } from './GmCastPanel'
 import { GmCombatPanel } from './GmCombatPanel'
@@ -54,6 +55,14 @@ export function GmHubShell() {
   })
   const canOpen = openDisabledReason == null
 
+  const handleReturnToLauncher = () => {
+    if (tableOpen) {
+      if (!window.confirm(GM_RETURN_CLOSES_TABLE_CONFIRM)) return
+      closePlaySession()
+    }
+    returnToLauncher()
+  }
+
   return (
     <div className="flex h-svh min-h-0 flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
       <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-slate-800 bg-slate-950/90 px-4 py-3">
@@ -81,7 +90,7 @@ export function GmHubShell() {
           <UnitsPreferenceToggle tone="launcher" className="self-end" />
           <button
             type="button"
-            onClick={returnToLauncher}
+            onClick={handleReturnToLauncher}
             className="rounded-lg border border-slate-600 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-400 hover:text-white"
           >
             Return to launcher

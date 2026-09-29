@@ -43,6 +43,7 @@ import {
   recordPartyHfSave,
   recordPcApmSpendEvent,
   addPartyMember,
+  removePartyMember,
   emitHorrorFactor,
 } from './sessionModel'
 import type { GmSessionRecord } from './sessionTypes'
@@ -50,8 +51,13 @@ import { resolveJoinListenCapability, openTableDisabledReason } from './desktopH
 import {
   __resetJoinedCharacterCacheForTests,
   cacheJoinedCharacter,
+  clearJoinedCharacter,
   loadCachedJoinedCharacter,
 } from './sessionPartyCache'
+import {
+  joinedPartyCharacterIds,
+  playerNameForPartyCharacter,
+} from './joinTableLeave'
 
 describe('join credentials', () => {
   it('rotates token and derives a stable short code', () => {
@@ -216,6 +222,7 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
       applyPcHfSave: () => {},
       applyPcApmSpend: () => {},
       applyPartySnapshot: () => {},
+      applyPartyDetach: () => {},
     })
 
     await hostT.start()
@@ -283,6 +290,9 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
       },
       applyPartySnapshot: (characterId, label) => {
         session = addPartyMember(session, characterId, label)
+      },
+      applyPartyDetach: (characterId) => {
+        session = removePartyMember(session, characterId, characterId)
       },
     })
 
@@ -358,6 +368,32 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
       'char_remote',
     )
 
+    client.leave()
+    await Promise.resolve()
+    expect(runtime.getState().presence?.seats).toHaveLength(0)
+    expect(session.partyCharacterIds).not.toContain('char_remote')
+    expect(loadCachedJoinedCharacter(session.id, 'char_remote')).toBeNull()
+
+    // Re-join + attach for reclaim path
+    client.join({
+      campaignId: session.id,
+      playSessionId: playId,
+      joinToken: creds.joinToken,
+      shortCode: creds.shortCode,
+      displayName: 'Ada',
+    })
+    await Promise.resolve()
+    expect(runtime.getState().presence?.seats).toHaveLength(1)
+    const snap2 = sendPartySnapshotOnJoin(client, 'char_remote', {
+      id: 'char_remote',
+      name: 'Remote Hero',
+      creationGenreId: 'nightbane',
+      hostGenreId: 'nightbane',
+    })
+    expect(snap2.ok).toBe(true)
+    await Promise.resolve()
+    expect(session.partyCharacterIds).toContain('char_remote')
+
     // Reclaim seat
     clientT.stop()
     await Promise.resolve()
@@ -375,7 +411,45 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
     expect(runtime.getState().presence?.seats).toHaveLength(1)
 
     runtime.endListen('closed')
+    await Promise.resolve()
     expect(runtime.getState().listening).toBe(false)
+    expect(session.partyCharacterIds).not.toContain('char_remote')
+    expect(loadCachedJoinedCharacter(session.id, 'char_remote')).toBeNull()
+  })
+})
+
+describe('party overview join helpers', () => {
+  it('maps player name and joined character ids from seats', () => {
+    const seats = [
+      {
+        deviceId: 'd1',
+        displayName: 'Ada',
+        status: 'connected' as const,
+        joinedAtMs: 1,
+        lastSeenAtMs: 1,
+        characterId: 'char_a',
+      },
+      {
+        deviceId: 'd2',
+        displayName: 'Bob',
+        status: 'joining' as const,
+        joinedAtMs: 1,
+        lastSeenAtMs: 1,
+        characterId: null,
+      },
+    ]
+    expect(playerNameForPartyCharacter(seats, 'char_a')).toBe('Ada')
+    expect(playerNameForPartyCharacter(seats, 'char_missing')).toBeNull()
+    expect(joinedPartyCharacterIds(seats)).toEqual(['char_a'])
+  })
+
+  it('clears a single joiner cache entry without wiping the campaign', () => {
+    __resetJoinedCharacterCacheForTests()
+    cacheJoinedCharacter('camp', 'c1', { id: 'c1' })
+    cacheJoinedCharacter('camp', 'c2', { id: 'c2' })
+    clearJoinedCharacter('camp', 'c1')
+    expect(loadCachedJoinedCharacter('camp', 'c1')).toBeNull()
+    expect(loadCachedJoinedCharacter('camp', 'c2')).toEqual({ id: 'c2' })
   })
 })
 
