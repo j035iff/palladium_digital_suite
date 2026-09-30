@@ -15,8 +15,8 @@ import {
   type LiveSheetTabId,
 } from '../../lib/liveSheetTabs'
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
+import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { IdentityHeader } from './IdentityHeader'
-import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
 export function MainLayout() {
   const [spawnSplash, setSpawnSplash] = useState(false)
@@ -177,12 +177,9 @@ export function MainLayout() {
               </div>
 
               <div className="flex shrink-0 flex-wrap items-center gap-2">
-                <UnitsPreferenceToggle
+                <PortalChromeActions
                   tone={morphusActive ? 'morphus' : 'sheet'}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
+                  onReturnToLauncher={() => {
                     const runtime = getSharedGmClientRuntime()
                     const joined = runtime.getState().status === 'joined'
                     if (
@@ -194,14 +191,7 @@ export function MainLayout() {
                     if (joined) runtime.leave()
                     returnToLauncher()
                   }}
-                  className={`rounded-lg border-2 px-3 py-2 text-xs font-bold uppercase tracking-wide ${
-                    morphusActive
-                      ? 'border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400'
-                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400'
-                  }`}
-                >
-                  Portal
-                </button>
+                />
                 {supportsDualForm ? (
                   <button
                     type="button"

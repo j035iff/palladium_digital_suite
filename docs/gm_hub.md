@@ -23,7 +23,7 @@ Top nav only — **no bottom bar**. Layout (`GmHubShell`):
 | Zone | Contents |
 |------|----------|
 | Title block | **GAMEMASTER HUB** + campaign name; Story / Combat mode toggle; Home / Party / Cast / Gear tabs (`GmTabBar`) |
-| Top-right icons | **Return to launcher** + **Settings** (gear). Units (**Standard / Metric**) live in Settings only — not a header toggle |
+| Top-right icons | Shared `PortalChromeActions`: **Return to launcher** + **Settings** (gear). Units (**Standard / Metric**) live in Settings only — not a header toggle |
 | Table control | Closed → orange **Open Table** (publish). Open → violet **Table Open** (expands Players overlay; does not re-publish) |
 | Players overlay | `GmJoinHostChrome` — absolute overlay under the table control; Kick per seat; **Close Table** only inside the panel. Stays open while the pointer is in the control+panel zone; leaving collapses. Advanced code / QR / Start–Stop listen UI is **not surfaced** on Hub this pass |
 
@@ -37,7 +37,7 @@ A **play session** is a joinable sitting under that campaign (`playSessions[]`, 
 
 If that label is already used, the stamp adds local time. **Close Table** (inside the Players overlay, or via Return-to-launcher confirm) ends the live sitting, stops the join listener, clears seats, and detaches joined party snapshots (no phantom `Missing saves`). Opening a campaign clears any **stale** open-sitting stamp left from a prior hub visit so **Open Table** matches real LAN publish state. If Open Table’s listen start fails, the stamp rolls back. `session.hello` carries `campaignName`, `sessionName` (player label), and `playSessionId`.
 
-**Return to launcher:** With a table open, GM Hub confirms then **Close Table** before leaving. A joined player (Join Table viewport or post-join sheet **Portal**) confirms then sends `session.leave` / detaches before returning to the launcher.
+**Return to launcher:** With a table open, GM Hub confirms then **Close Table** before leaving. A joined player (Join Table viewport or live-sheet exit icon) confirms then sends `session.leave` / detaches before returning to the launcher.
 
 Old campaign saves missing `playSessions` hydrate to `[]` / `null` on load.
 

@@ -18,7 +18,7 @@ import {
 import { GmCastPanel } from './GmCastPanel'
 import { GmCombatPanel } from './GmCombatPanel'
 import { GmGearPanel } from './GmGearPanel'
-import { GmHubSettingsDialog } from './GmHubSettingsDialog'
+import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { GmJoinHostChrome } from './GmJoinHostChrome'
 import { GmPartyPanel } from './GmPartyPanel'
 import { GmSessionsPanel } from './GmSessionsPanel'
@@ -32,54 +32,6 @@ function GmHubWorkspace() {
   if (hubTabId === 'gear') return <GmGearPanel />
   if (hubMode === 'combat') return <GmCombatPanel />
   return <GmSessionsPanel />
-}
-
-function ReturnToLauncherIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-4 w-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9 7H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15 3h6v6M10 14 21 3"
-      />
-    </svg>
-  )
-}
-
-function SettingsGearIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-4 w-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9c.1.7.7 1.2 1.5 1.3H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"
-      />
-    </svg>
-  )
 }
 
 export function GmHubShell() {
@@ -101,7 +53,6 @@ export function GmHubShell() {
     partySlices,
   } = useGmSession()
   const [playersPanelExpanded, setPlayersPanelExpanded] = useState(false)
-  const [settingsOpen, setSettingsOpen] = useState(false)
 
   const livePlay = session ? activePlaySession(session) : null
   const tableOpen = livePlay != null
@@ -199,26 +150,7 @@ export function GmHubShell() {
               }
             }}
           >
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={handleReturnToLauncher}
-                title="Return to launcher"
-                aria-label="Return to launcher"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-600 bg-slate-900 text-slate-300 hover:border-slate-400 hover:text-white"
-              >
-                <ReturnToLauncherIcon />
-              </button>
-              <button
-                type="button"
-                onClick={() => setSettingsOpen(true)}
-                title="Settings"
-                aria-label="Settings"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-600 bg-slate-900 text-slate-300 hover:border-slate-400 hover:text-white"
-              >
-                <SettingsGearIcon />
-              </button>
-            </div>
+            <PortalChromeActions onReturnToLauncher={handleReturnToLauncher} />
             <button
               type="button"
               disabled={controlDisabledReason != null}
@@ -267,10 +199,6 @@ export function GmHubShell() {
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <GmHubWorkspace />
       </div>
-      <GmHubSettingsDialog
-        open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-      />
     </div>
   )
 }

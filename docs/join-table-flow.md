@@ -75,5 +75,5 @@ Player clicks **Join Table** and sees a page with:
 ### 5. Leave
 
 - GM **Return to launcher** with a table open → confirm → **Close Table** (unpublish + stop listen) → launcher
-- Joined player **Return to launcher** / sheet **Portal** → confirm → detach (`session.leave`) → launcher
+- Joined player **Return to launcher** (Join table or live-sheet exit icon) → confirm → detach (`session.leave`) → launcher
 - Leave/kick removes the seat and clears that character from Party / joiner cache (no phantom Missing saves)
