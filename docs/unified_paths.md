@@ -206,7 +206,7 @@ Copy this block when registering a new unified path:
 | Discovery | `src/lib/gm/sessionDiscovery.ts` + `browserLanHints.ts` | `listLanSessions` → local `/discover` (UDP + TCP + lanHints) + browser `/24` probe | Join Session browse; **campaignName** display only; Advanced IP = failure mode only (does not rebind browse) |
 | Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** → **Table Open** hover **Players in Session** overlay (Close Table inside); launcher **Join table** → name + characters (default Select a character) + Join Session list → sheet | One Party/Cast pipeline — no remote fork; Party = joined seats; Cast = local machine add + archetypes; host Advanced code/QR hidden this pass (listen intact); player Advanced code/IP = failure fallback; shared client runtime survives sheet handoff; Return to launcher confirms Close Table (GM) / leave (player) |
 | Leave / party | `sessionHostRuntime` + `joinTableLeave.ts` | `applyPartyDetach`, `playerNameForPartyCharacter`, `joinedPartyCharacterIds` | Leave/kick/Close Table clear seat + party id + joiner cache (no Missing saves phantoms) |
-| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar`, `hubTableChrome.ts` | Compact top nav (no bottom bar); Return + Settings icons; units in Settings; Story / Combat + Home / Party / Cast / Gear; Party blink on joiner attach; player name on Party cards |
+| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar`, `hubTableChrome.ts`, shared `PortalChromeActions` | Compact top nav (no bottom bar); Return + Settings icons; units in Settings; Story / Combat + Home / Party / Cast / Gear; Party blink on joiner attach; player name on Party cards |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
 
 **Modes / variants:** Hub `story` / `combat` (Home differs; Party, Cast, and Gear are one pipeline each). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second Party implementation.
@@ -278,7 +278,7 @@ Track work here until promoted to the registry above.
 | Ingest parse | `src/lib/units/parse.ts` | `parseLengthFromProse`, … | Dice lengths ignored for now |
 | Preference | `src/lib/units/preference.ts` + `UnitsPreferenceContext` | `localStorage` `pds:unitsPreference` | Per-user/device; not in character saves |
 | Schema | `palladium-units.schema.json` | `#/$defs/*Measure` | Shared dual structures |
-| UI | `UnitsPreferenceToggle` | Launcher + sheet chrome; GM Hub via Settings gear; Gear Forge field labels | |
+| UI | `UnitsPreferenceToggle` inside `AppSettingsDialog` | Via shared `PortalChromeActions` Settings gear on launcher / sheet / Hub / campaign forge / gear forge / join table; Gear Forge field labels still use preference | |
 
 **Modes / variants:** `standard` \| `metric`  
 **Extension guide:** Add new quantity kinds to schema `$defs` + convert/resolve/format; wire UI through `useUnitsPreference` — never fork per-form converters.
@@ -287,10 +287,29 @@ Track work here until promoted to the registry above.
 
 ---
 
+### Portal chrome (Return + Settings)
+
+**Status:** `complete`  
+**Related spec:** `docs/app_viewport_launcher.md`, `docs/units_preference.md`, `docs/gm_hub.md`
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Icons | `src/components/chrome/PortalChromeIcons.tsx` | `ReturnToLauncherIcon`, `SettingsGearIcon` | One SVG pair |
+| Actions | `src/components/chrome/PortalChromeActions.tsx` | `PortalChromeActions` | Exit + Settings; tones `dark` / `sheet` / `morphus` |
+| Settings | `src/components/chrome/AppSettingsDialog.tsx` | units dial | App-global only — do not invent per-viewport settings |
+| Hosts | Hub / launcher / sheet / campaign forge / gear forge / join table | same component | Launcher: Settings only (`showReturn={false}`) |
+
+**Modes / variants:** Tone is a presentation mode on one control — do not fork per-viewport exit/settings buttons. Confirm dialogs for leave/Close Table stay on the host `onReturnToLauncher` callback.
+
+**Extension guide:** New viewports that need exit or units mount `PortalChromeActions`; do not reintroduce text **Portal** / **Return to launcher** buttons or header `UnitsPreferenceToggle`s.
+
+---
+
 ## Changelog
 
 | Date | Change |
 |------|--------|
+| 2026-09-29 | Portal chrome unified: `PortalChromeActions` Return + Settings icons on launcher / sheet / Hub / campaign forge / gear forge / join table; units only in Settings |
 | 2026-09-29 | GM Hub compact chrome: top nav only; Return + Settings icons; units in Settings; Open Table → Table Open hover Players overlay; host Advanced UI hidden |
 | 2026-09-28 | Join Table backlog: Open Table stamp matches publish; leave/kick/Close Table detach party+cache; Party = joined + player name; Cast hosts local add; Return to launcher confirms Close/leave |
 | 2026-09-25 | GM Hub client join first slice: interim `ws`, presence/join envelopes, Join table viewport, interacting sheet |

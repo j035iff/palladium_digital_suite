@@ -18,7 +18,7 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 
 | Viewport | UI | Entry |
 |----------|-----|--------|
-| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** from sheet header, GM Hub, Campaign Creation Forge, Gear Forge, or Join table |
+| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** icon from sheet header, GM Hub, Campaign Creation Forge, Gear Forge, or Join table |
 | `sheet` | `MainLayout` — live sheet + optional creation chrome | **Open Character** or **Create Character** |
 | `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
 | `gear_forge` | `GearForgeViewport` — shared Gear Forge → custom gear library | **Gear Forge** or **My Custom Gear** on the launcher |
@@ -27,7 +27,7 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 
 `App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, `GmJoinTableViewport` when `viewport === 'join_table'`, otherwise `MainLayout`.
 
-**Units preference:** Launcher and live sheet expose a Standard/Metric toggle (`docs/units_preference.md`). Preference is local to the device/user (`localStorage`), not part of character saves or GM session state.
+**Units preference:** Every viewport opens units via the shared **Settings** gear (`PortalChromeActions` → `AppSettingsDialog`; see `docs/units_preference.md`). Preference is local to the device/user (`localStorage`), not part of character saves or GM session state. The launcher shows Settings only (already home); other viewports show Return + Settings.
 
 GM Hub sessions are a separate local record (not a character save). Spec: [gm_hub.md](./gm_hub.md). Gear Forge library: [forge/gear_forge.md](./forge/gear_forge.md).
 
@@ -83,7 +83,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 2. **New Campaign** — button (not a dropdown). Resets the campaign-forge draft and sets `viewport: 'campaign_forge'`.
 3. **Campaign Creation Forge** — option registry in `src/lib/gm/campaignForge.ts`. v1 **Identity** (unique name + host genre) and **Rules** (`conversionPolicy` dropdown: Disable non-native / Apply conversion). Roadmap genres stay visible but not selectable. Add later campaign choices as new option rows / renderer `kind`s on this same forge — do not fork a second create form. Extra groups may become UFNE tabs later.
 4. **Create Campaign** on the forge is gated until name, genre, and conversion rules validate. Confirm dialog: *Are you sure you want to create a new {Genre} Campaign?* **Yes** commits (`createGmSession` with the chosen conversion policy) and `enterGmHub()`. **Not yet** closes the dialog and leaves the draft editable. Host genre and conversion rules are immutable after create. Hub header `h1` is the campaign name; host genre and conversion rules stay in the subtitle.
-5. Hub landing: Story / Combat master tabs (sheet analogue). **Open Table** is in the hub header under **Return to launcher** (stamps the play sitting and starts LAN listen). **Players in Session** tray sits under the header. Story Home is Sessions (scratchpad, conversion rules). Combat Home is the combat HUD. Party, Cast, and Gear sit under both modes. Full hub: [gm_hub.md](./gm_hub.md).
+5. Hub landing: Story / Combat master tabs (sheet analogue). **Open Table** is in the hub header under the Return / Settings icon pair (stamps the play sitting and starts LAN listen). **Players in Session** tray sits under the header. Story Home is Sessions (scratchpad, conversion rules). Combat Home is the combat HUD. Party, Cast, and Gear sit under both modes. Full hub: [gm_hub.md](./gm_hub.md).
 
 ---
 
@@ -100,6 +100,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 | Concern | Location |
 |---------|----------|
 | Launcher UI | `src/components/dashboard/AppLauncher.tsx` |
+| Portal chrome | `src/components/chrome/PortalChromeActions.tsx` + `AppSettingsDialog.tsx` — Return + Settings icons (launcher: Settings only) |
 | Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGearForge`, `enterGmHub`, `enterJoinTable`, `returnToLauncher`) |
 | Join table | [gm_hub.md](./gm_hub.md) / [join-table-flow.md](./join-table-flow.md) — `GmJoinTableViewport`, `listLanSessions`, `resolveJoinSessionGate` |
 | Campaign Creation Forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |

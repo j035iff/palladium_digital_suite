@@ -8,6 +8,7 @@ import {
   campaignForgeReady,
   optionsForGroup,
 } from '../../lib/gm/campaignForge'
+import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { CampaignForgeField } from './CampaignForgeField'
 
 function CampaignCreateConfirmModal({
@@ -102,13 +103,7 @@ export function CampaignCreationForge() {
             forge.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={returnToLauncher}
-          className="rounded-lg border border-slate-600 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-400 hover:text-white"
-        >
-          Return to launcher
-        </button>
+        <PortalChromeActions onReturnToLauncher={returnToLauncher} />
       </header>
 
       <main className="mx-auto flex min-h-0 w-full max-w-xl flex-1 flex-col gap-6 overflow-y-auto p-6">

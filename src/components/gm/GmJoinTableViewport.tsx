@@ -30,7 +30,7 @@ import {
 } from '../../lib/gm/sessionDiscovery'
 import { PLAYER_RETURN_LEAVES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
 import { resolveJoinSessionGate } from '../../lib/gm/sessionJoinGate'
-import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
+import { PortalChromeActions } from '../chrome/PortalChromeActions'
 
 const SESSION_POLL_MS = 2000
 
@@ -246,23 +246,16 @@ export function GmJoinTableViewport() {
             Enter your player name, pick a character, then join a LAN session.
           </p>
         </div>
-        <div className="flex min-w-[11rem] flex-col gap-2">
-          <UnitsPreferenceToggle tone="launcher" className="self-end" />
-          <button
-            type="button"
-            onClick={() => {
-              const joined = state.status === 'joined'
-              if (joined && !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)) {
-                return
-              }
-              if (joined) runtime.leave()
-              returnToLauncher()
-            }}
-            className="rounded-lg border border-slate-600 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-400 hover:text-white"
-          >
-            Return to launcher
-          </button>
-        </div>
+        <PortalChromeActions
+          onReturnToLauncher={() => {
+            const joined = state.status === 'joined'
+            if (joined && !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)) {
+              return
+            }
+            if (joined) runtime.leave()
+            returnToLauncher()
+          }}
+        />
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4">
