@@ -94,7 +94,7 @@ export function seatTrayPresentation(
 }
 
 /**
- * True when this device flipped into fully joined (for Party tab blink, etc.).
+ * True when this device flipped into fully joined (for Characters/PCs blink, etc.).
  * Compares previous presence snapshot to next after a reduce.
  */
 export function seatFlippedToFullyJoined(

@@ -23,14 +23,16 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 - Local-only table workspace; campaign records in localStorage (`pds:gmSession:*`), independent of character saves
 - Launcher Campaigns → `GmHubShell` (`viewport: 'gm'`); New Campaign → Campaign Creation Forge (`viewport: 'campaign_forge'`) then enter hub
 - Campaign vs play session: persistent campaign + joinable play sittings (`playSessions[]`, `activePlaySessionId`); player label `{campaign}: {date}`
-- Story / Combat master modes (match live sheet). Home is mode-specific; Party and Cast are ONE shared pipeline (not forked per mode)
+- Narrative / Combat master modes (chrome **Narrative**; internal `hubMode: 'story'`). Home is mode-specific; Characters (PCs + NPCs) and Gear are ONE shared pipeline (not forked per mode)
+- Narrative Home: People / Places / Things (stubs) + Notes (scratchpad). Combat Home = combat HUD
+- Characters: PCs = joined seats only; NPCs = local-machine characters + encounter fodder (“Add from this machine” under NPCs)
 - Conversion policy baked at create (`disable_non_native` | `apply_conversion`); view-model only; character JSON never mutated; structural M.D.C.↔S.D.C. not implemented yet
 - Combat: physical d20 in / bonus out; GM taps NPC APM only; party APM display-only; Lock initiative with visible Unlock; New melee round + Emit H.F. (records saves; does not auto-spend PC APM)
 - Future LAN: message envelopes in sessionMessages.ts only — no transport wired
 - Explicitly NOT in v1: player-device join, QR/LAN WebSocket, Tauri/Electron, Plot wiki, item push, Creation-Forge-named GM factory
 
 ## Non-negotiables
-- Pillar 9: extend campaignForge registry, partyObserver, combatRoster, hubTabs, sessionModel — never fork Party/Cast per Story/Combat, never fork PC vs NPC roster tables, never fork a second campaign-create form
+- Pillar 9: extend campaignForge registry, partyObserver, combatRoster, hubTabs, sessionModel — never fork Characters per Narrative/Combat, never fork PC vs NPC roster tables, never fork a second campaign-create form
 - Radical Visibility: locked initiative, host-illegal assets, and deferred features stay visible with why-disabled text (no hidden menus)
 - Physical Dice Priority: Hub prints strike totals; players contest on their sheets (no parry round-trip automation)
 - Total GM Agency: Lock/Unlock and overrides remain inspectable and reversible
@@ -40,7 +42,7 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 - Do not scope-creep into LAN transport, Plot, or player sync unless the human explicitly expands v1
 
 ## First research pass (write into shared Project context)
-Summarize: campaign vs play session model, Campaign Creation Forge option registry, Story/Combat tab navigation, party observer + combat roster pipelines, conversion policy behavior, combat mutators (APM / initiative / H.F. / melee round), session persistence keys, protocol envelopes vs unwired transport, and open gaps vs docs/gm_hub.md “Not in v1” / Future LAN. List key modules from the implementation map.
+Summarize: campaign vs play session model, Campaign Creation Forge option registry, Narrative/Combat tab navigation (Characters PCs/NPCs; Narrative Home stubs), party observer + combat roster pipelines, conversion policy behavior, combat mutators (APM / initiative / H.F. / melee round), session persistence keys, protocol envelopes vs unwired transport, and open gaps vs docs/gm_hub.md “Not in v1” / Future LAN. List key modules from the implementation map.
 
 ## How to work after that
 1. For each feature request: research → short plan → parallel agents (lib / UI / tests / docs)

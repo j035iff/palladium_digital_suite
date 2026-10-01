@@ -280,7 +280,7 @@ export function GmCombatPanel() {
           <ul className="min-h-0 flex-1 overflow-y-auto p-2">
             {session.npcs.length === 0 ? (
               <li className="p-3 text-xs text-slate-500">
-                Spawn fodder on the Cast tab.
+                Spawn fodder on Characters → NPCs.
               </li>
             ) : (
               session.npcs.map((npc) => {

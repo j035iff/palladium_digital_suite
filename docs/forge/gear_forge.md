@@ -19,7 +19,7 @@ Shared inventory forge shell: **Weapons / Armor / Artifacts / Other** lanes on o
 - Portal: **Gear Forge** + **My Custom Gear** on `AppLauncher`
 - Creation: **`kind: 'creation'`** adapter (`buildCreationGearForgeAdapter`) on `tab8_gear` — same shell; commits to draft inventory (not the custom library)
 - Live sheet: **`kind: 'sheet'`** adapter (`buildSheetGearForgeAdapter`) on `GearPanel` — same shell; commits to active character inventory
-- GM Hub: **`kind: 'gm'`** adapter (`buildGmGearForgeAdapter`) on Hub **Gear** — same shell; commits to the selected party character save (`gmCharacterInventoryGrant`). Cast Quick-Blocks stay non-grantable with a visible reason (no inventory bags invented). Party / Cast tabs unchanged.
+- GM Hub: **`kind: 'gm'`** adapter (`buildGmGearForgeAdapter`) on Hub **Gear** — same shell; commits to the selected character save (`gmCharacterInventoryGrant`). Encounter Quick-Blocks stay non-grantable with a visible reason (no inventory bags invented). Characters (PCs / NPCs) tabs unchanged.
 
 ## Later
 

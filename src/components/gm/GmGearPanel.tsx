@@ -20,7 +20,7 @@ import { GearForgeShell } from '../gear/GearForgeShell'
 /**
  * GM Hub Gear tab — mounts the shared {@link GearForgeShell} with a
  * `kind: 'gm'` host adapter that grants into a selected party character save.
- * Party / Cast panels stay separate (no shell fork).
+ * Characters (PCs / NPCs) stay on shared panels — no shell fork.
  */
 export function GmGearPanel() {
   const { session, partySlices } = useGmSession()
@@ -123,8 +123,8 @@ export function GmGearPanel() {
     <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-hidden p-4">
       <div className="shrink-0 space-y-2">
         <p className="text-[11px] leading-snug text-slate-400">
-          Grant catalog weapons or forge customs into a party character&apos;s
-          local save. Party and Cast tabs stay observer / spawn only. Armor /
+          Grant catalog weapons or forge customs into a character save on the
+          table. Characters → PCs / NPCs stay observer / spawn only. Armor /
           Artifacts / Other lanes stay visible with why-disabled reasons until
           wired.
         </p>
@@ -137,7 +137,7 @@ export function GmGearPanel() {
             onChange={(e) => setTargetCharacterId(e.target.value || null)}
             className="mt-1 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-sm text-slate-100"
           >
-            <option value="">Select party character…</option>
+            <option value="">Select character…</option>
             {partySlices.map((pc) => (
               <option key={pc.characterId} value={pc.characterId}>
                 {pc.name}
@@ -147,7 +147,8 @@ export function GmGearPanel() {
         </label>
         {partySlices.length === 0 ? (
           <p className="text-[11px] text-amber-200/80">
-            Party is empty — add characters on the Party tab first.
+            No grant targets yet — add a joined PC or a local-machine NPC under
+            Characters first.
           </p>
         ) : null}
         <p className="text-[11px] text-slate-500">{GM_CAST_GEAR_BLOCKED_REASON}</p>
