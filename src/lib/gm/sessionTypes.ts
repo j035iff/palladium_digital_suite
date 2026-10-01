@@ -65,6 +65,16 @@ export type GmCombatState = {
   round: number
   initiativeLocked: boolean
   activeHfEmit: GmHfEmit | null
+  /**
+   * Character save ids currently in the Melee roster (joined PCs and/or
+   * local-machine NPCs from People). Empty until GM adds via Melee dropdowns.
+   */
+  meleeCharacterIds: string[]
+  /**
+   * Fodder NPC instance ids currently in the Melee roster. Empty until GM adds
+   * via Melee dropdowns. People still owns spawn/management.
+   */
+  meleeNpcInstanceIds: string[]
 }
 
 export type GmSessionEventKind =
@@ -142,4 +152,6 @@ export const INITIAL_COMBAT_STATE: GmCombatState = {
   round: 1,
   initiativeLocked: false,
   activeHfEmit: null,
+  meleeCharacterIds: [],
+  meleeNpcInstanceIds: [],
 }

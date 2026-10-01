@@ -2,6 +2,10 @@ import { useMemo, useState } from 'react'
 import type { EncounterEquipmentEntry } from '../../lib/encounterArchetypes'
 import { listEncounterArchetypes } from '../../data/library/encounterArchetypeCatalogLoader'
 import { useGmCombatRoster, useGmSession } from '../../context/GmSessionContext'
+import {
+  listMeleeNpcCandidates,
+  listMeleePcCandidates,
+} from '../../lib/gm/meleeEngagement'
 import { npcParryBonus, npcStrikeBonus } from '../../lib/gm/npcInstance'
 import { formatBonus } from './GmApmPips'
 import { GmApmPips } from './GmApmPips'
@@ -56,18 +60,24 @@ export function GmCombatPanel() {
   const {
     session,
     partySlices,
+    joinSeats,
     setPcInitiative,
     setNpcInit,
     tapNpcApm,
     lockInit,
     unlockInit,
     newMeleeRound,
+    addPcToMelee,
+    addNpcToMelee,
+    removeFromMelee,
     emitNpcHf,
     recordPcHfSave,
     recordStrike,
   } = useGmSession()
   const roster = useGmCombatRoster()
   const [hfDieByPc, setHfDieByPc] = useState<Record<string, string>>({})
+  const [pcPick, setPcPick] = useState('')
+  const [npcPick, setNpcPick] = useState('')
 
   const archetypes = useMemo(() => {
     if (!session) return new Map()
@@ -75,6 +85,16 @@ export function GmCombatPanel() {
       listEncounterArchetypes(session.hostGenreId).map((row) => [row.id, row]),
     )
   }, [session])
+
+  const pcCandidates = useMemo(() => {
+    if (!session) return []
+    return listMeleePcCandidates(session, partySlices, joinSeats)
+  }, [session, partySlices, joinSeats])
+
+  const npcCandidates = useMemo(() => {
+    if (!session) return []
+    return listMeleeNpcCandidates(session, partySlices, joinSeats)
+  }, [session, partySlices, joinSeats])
 
   if (!session) {
     return <p className="p-6 text-sm text-slate-500">Open a session first.</p>
@@ -127,6 +147,91 @@ export function GmCombatPanel() {
         </button>
       </header>
 
+      <section
+        aria-label="Add combatants from People"
+        className="flex flex-wrap items-end gap-3 rounded-xl border border-slate-700 bg-slate-900/70 p-3"
+      >
+        <label className="min-w-[12rem] flex-1 text-[10px] font-bold uppercase tracking-wide text-slate-500">
+          Add PC (joined)
+          <select
+            value={pcPick}
+            onChange={(e) => setPcPick(e.target.value)}
+            className="mt-1 w-full rounded-lg border border-slate-600 bg-slate-950 px-2 py-1.5 text-sm font-semibold normal-case tracking-normal text-slate-100"
+          >
+            <option value="">
+              {pcCandidates.length === 0
+                ? 'No joined PCs available'
+                : 'Select a joined PC…'}
+            </option>
+            {pcCandidates.map((row) => (
+              <option key={row.key} value={row.characterId}>
+                {row.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          disabled={!pcPick}
+          onClick={() => {
+            if (!pcPick) return
+            addPcToMelee(pcPick)
+            setPcPick('')
+          }}
+          className="rounded bg-cyan-700 px-3 py-1.5 text-[10px] font-black uppercase text-white disabled:opacity-40"
+        >
+          Add to melee
+        </button>
+        <label className="min-w-[12rem] flex-1 text-[10px] font-bold uppercase tracking-wide text-slate-500">
+          Add NPC (local / fodder)
+          <select
+            value={npcPick}
+            onChange={(e) => setNpcPick(e.target.value)}
+            className="mt-1 w-full rounded-lg border border-slate-600 bg-slate-950 px-2 py-1.5 text-sm font-semibold normal-case tracking-normal text-slate-100"
+          >
+            <option value="">
+              {npcCandidates.length === 0
+                ? 'No NPCs available'
+                : 'Select an NPC…'}
+            </option>
+            {npcCandidates.map((row) => (
+              <option
+                key={row.key}
+                value={
+                  row.kind === 'fodder'
+                    ? `fodder:${row.npcInstanceId}`
+                    : `local:${row.characterId}`
+                }
+              >
+                {row.kind === 'fodder' ? `${row.label} (fodder)` : row.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          disabled={!npcPick}
+          onClick={() => {
+            if (!npcPick) return
+            if (npcPick.startsWith('fodder:')) {
+              addNpcToMelee({
+                npcInstanceId: npcPick.slice('fodder:'.length),
+              })
+            } else if (npcPick.startsWith('local:')) {
+              addNpcToMelee({ characterId: npcPick.slice('local:'.length) })
+            }
+            setNpcPick('')
+          }}
+          className="rounded bg-amber-600 px-3 py-1.5 text-[10px] font-black uppercase text-slate-950 disabled:opacity-40"
+        >
+          Add to melee
+        </button>
+        <p className="basis-full text-[11px] text-slate-500">
+          Lists come from Narrative → People (joined PCs + local/fodder NPCs).
+          Manage or spawn there — Melee only adds them into this round.
+        </p>
+      </section>
+
       {emit ? (
         <div
           role="status"
@@ -147,7 +252,8 @@ export function GmCombatPanel() {
           <ul className="min-h-0 flex-1 overflow-y-auto p-2">
             {roster.length === 0 ? (
               <li className="p-3 text-xs text-slate-500">
-                Add party members and spawn fodder to fill the round.
+                Add joined PCs or NPCs from the dropdowns above. Manage People on
+                Narrative → People first if the lists are empty.
               </li>
             ) : (
               roster.map((row) => (
@@ -184,32 +290,50 @@ export function GmCombatPanel() {
                           : ` (bonus ${formatBonus(row.initiativeBonus)})`}
                       </p>
                     </div>
-                    <label className="text-[10px] uppercase text-slate-500">
-                      d20
-                      <input
-                        type="number"
-                        disabled={locked}
-                        title={
-                          locked
-                            ? 'Initiative locked this melee. Unlock to change.'
-                            : 'Physical initiative die'
-                        }
-                        value={row.initiativeRoll ?? ''}
-                        onChange={(e) => {
-                          const v = e.target.value.trim()
-                          const n = v === '' ? null : Number(v)
-                          const die =
-                            n != null && Number.isFinite(n) ? n : null
-                          if (row.kind === 'pc' && row.characterId) {
-                            setPcInitiative(row.characterId, die)
+                    <div className="flex flex-wrap items-center gap-2">
+                      <label className="text-[10px] uppercase text-slate-500">
+                        d20
+                        <input
+                          type="number"
+                          disabled={locked}
+                          title={
+                            locked
+                              ? 'Initiative locked this melee. Unlock to change.'
+                              : 'Physical initiative die'
                           }
-                          if (row.kind === 'npc' && row.npcInstanceId) {
-                            setNpcInit(row.npcInstanceId, die)
+                          value={row.initiativeRoll ?? ''}
+                          onChange={(e) => {
+                            const v = e.target.value.trim()
+                            const n = v === '' ? null : Number(v)
+                            const die =
+                              n != null && Number.isFinite(n) ? n : null
+                            if (row.kind === 'pc' && row.characterId) {
+                              setPcInitiative(row.characterId, die)
+                            }
+                            if (row.kind === 'npc' && row.npcInstanceId) {
+                              setNpcInit(row.npcInstanceId, die)
+                            }
+                          }}
+                          className="ml-1 w-16 rounded border border-slate-600 bg-slate-950 px-1 py-0.5 font-mono text-sm text-slate-100 disabled:opacity-40"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        title="Remove from this melee roster (stays on People)"
+                        onClick={() => {
+                          if (row.characterId) {
+                            removeFromMelee({ characterId: row.characterId })
+                          } else if (row.npcInstanceId) {
+                            removeFromMelee({
+                              npcInstanceId: row.npcInstanceId,
+                            })
                           }
                         }}
-                        className="ml-1 w-16 rounded border border-slate-600 bg-slate-950 px-1 py-0.5 font-mono text-sm text-slate-100 disabled:opacity-40"
-                      />
-                    </label>
+                        className="rounded border border-slate-600 px-2 py-0.5 text-[10px] font-bold uppercase text-slate-400 hover:border-red-500 hover:text-red-300"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                   <div className="mt-2">
                     {row.kind === 'npc' && row.npcInstanceId ? (
@@ -280,7 +404,8 @@ export function GmCombatPanel() {
           <ul className="min-h-0 flex-1 overflow-y-auto p-2">
             {session.npcs.length === 0 ? (
               <li className="p-3 text-xs text-slate-500">
-                Spawn fodder on Characters → NPCs.
+                Spawn fodder on Narrative → People → NPCs, then add them to
+                Melee above.
               </li>
             ) : (
               session.npcs.map((npc) => {
@@ -288,12 +413,22 @@ export function GmCombatPanel() {
                 const strike = arch ? npcStrikeBonus(arch, npc.variantId) : 0
                 const parry = arch ? npcParryBonus(arch, npc.variantId) : 0
                 const canHf = Boolean(arch?.horrorFactorMorale)
+                const inMelee = (
+                  session.combat.meleeNpcInstanceIds ?? []
+                ).includes(npc.instanceId)
                 return (
                   <li
                     key={npc.instanceId}
                     className="mb-2 rounded-lg border border-amber-900/40 bg-slate-950/80 p-3"
                   >
-                    <p className="text-sm font-bold text-amber-50">{npc.displayName}</p>
+                    <p className="text-sm font-bold text-amber-50">
+                      {npc.displayName}
+                      {!inMelee ? (
+                        <span className="ml-2 text-[10px] font-semibold uppercase text-slate-500">
+                          not in melee
+                        </span>
+                      ) : null}
+                    </p>
                     <p className="font-mono text-[11px] text-slate-400">
                       H.P. {npc.hpCurrent}/{npc.hpMax} · S.D.C. {npc.sdcCurrent}/
                       {npc.sdcMax} · Strike {formatBonus(strike)} · Parry{' '}
@@ -318,29 +453,27 @@ export function GmCombatPanel() {
                           recordStrike(npc.instanceId, d20, strike)
                         }
                       />
-                      <div className="flex flex-col justify-end gap-2">
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                          Parry bonus {formatBonus(parry)}
+                        </p>
+                        <p className="mt-1 text-[11px] text-slate-500">
+                          Players contest on their sheets — hub prints strike
+                          totals only.
+                        </p>
                         <button
                           type="button"
                           disabled={!canHf}
                           title={
                             canHf
-                              ? 'Flash H.F. to the table. Player APM is not auto-spent.'
-                              : 'This archetype has no H.F. / morale emitter.'
+                              ? 'Emit H.F. save target to the table'
+                              : 'This archetype has no H.F. / morale block'
                           }
                           onClick={() => emitNpcHf(npc.instanceId)}
-                          className="rounded-lg border border-violet-500/70 bg-violet-900/50 px-3 py-2 text-[11px] font-black uppercase tracking-wide text-violet-100 disabled:cursor-not-allowed disabled:border-slate-700 disabled:bg-slate-900 disabled:text-slate-600"
+                          className="mt-2 rounded bg-violet-700 px-2 py-1 text-[10px] font-black uppercase text-white disabled:cursor-not-allowed disabled:opacity-40"
                         >
-                          {canHf
-                            ? `Emit H.F. ${arch?.horrorFactorMorale?.saveTarget}`
-                            : 'No H.F. emitter'}
+                          Emit H.F.
                         </button>
-                        <GmApmPips
-                          maxApm={npc.maxApm}
-                          spent={npc.apmSpent}
-                          tappable
-                          onSpend={() => tapNpcApm(npc.instanceId)}
-                          label={`${npc.displayName} APM`}
-                        />
                       </div>
                     </div>
                   </li>
@@ -348,30 +481,8 @@ export function GmCombatPanel() {
               })
             )}
           </ul>
-          <div className="max-h-36 overflow-y-auto border-t border-slate-800 px-3 py-2">
-            <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
-              Table log
-            </p>
-            {session.eventLog.length === 0 ? (
-              <p className="mt-1 text-[11px] text-slate-600">Empty.</p>
-            ) : (
-              <ul className="mt-1 space-y-1">
-                {session.eventLog.slice(0, 12).map((evt) => (
-                  <li key={evt.id} className="text-[11px] text-slate-400">
-                    {evt.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
         </section>
       </div>
-      {partySlices.length === 0 ? null : (
-        <p className="text-[10px] text-slate-600">
-          Players contest the printed strike total on their own sheets. The hub
-          does not wait for a parry prompt in v1.
-        </p>
-      )}
     </div>
   )
 }

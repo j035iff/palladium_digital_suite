@@ -9,7 +9,7 @@ export const GM_RETURN_CLOSES_TABLE_CONFIRM =
 export const PLAYER_RETURN_LEAVES_TABLE_CONFIRM =
   'Returning to the launcher will leave this table. Leave the session?'
 
-/** Player name on a Characters → PCs overview card (upper-right). */
+/** Player name on a People → PCs overview card (upper-right). */
 export function playerNameForPartyCharacter(
   seats: ReadonlyArray<{ characterId: string | null; displayName: string }>,
   characterId: string,
@@ -20,8 +20,8 @@ export function playerNameForPartyCharacter(
 }
 
 /**
- * Characters → PCs shows joined seats only — character ids currently attached
- * on presence seats. Local-machine characters are NPCs (Characters → NPCs);
+ * People → PCs shows joined seats only — character ids currently attached
+ * on presence seats. Local-machine characters are NPCs (People → NPCs);
  * they stay on partyCharacterIds for combat/gear but do not render on PCs.
  */
 export function joinedPartyCharacterIds(

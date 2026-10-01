@@ -18,9 +18,12 @@ import type {
   GmCharactersSubTabId,
   GmHubMode,
   GmHubTabId,
-  GmStoryHomeSubTabId,
+  GmThingsSubTabId,
 } from '../lib/gm/hubTabs'
-import { isViewingCharactersPcs } from '../lib/gm/hubTabs'
+import {
+  defaultHubTabForMode,
+  isViewingNarrativePeoplePcs,
+} from '../lib/gm/hubTabs'
 import {
   applyHubNavTarget,
   hubFocusAfterNavChange,
@@ -73,6 +76,12 @@ import {
   partyHorrorSaveBonus,
   type GmPartyObserverSlice,
 } from '../lib/gm/partyObserver'
+import {
+  addCharacterToMelee,
+  addNpcInstanceToMelee,
+  removeCharacterFromMelee,
+  removeNpcInstanceFromMelee,
+} from '../lib/gm/meleeEngagement'
 import type { ActiveForm } from '../types'
 import type {
   GmConversionPolicy,
@@ -113,19 +122,22 @@ type GmSessionContextValue = {
   setHubMode: (mode: GmHubMode) => void
   hubTabId: GmHubTabId
   setHubTabId: (tab: GmHubTabId) => void
-  /** Characters → PCs | NPCs (shared under Narrative and Combat). */
+  /** Narrative → People → PCs | NPCs (management only — not on Combat). */
   charactersSubTabId: GmCharactersSubTabId
   setCharactersSubTabId: (tab: GmCharactersSubTabId) => void
-  /** Narrative Home → People | Places | Things | Notes. */
-  storyHomeSubTabId: GmStoryHomeSubTabId
-  setStoryHomeSubTabId: (tab: GmStoryHomeSubTabId) => void
+  /** Narrative → Things → Notes stub | Gear. */
+  thingsSubTabId: GmThingsSubTabId
+  setThingsSubTabId: (tab: GmThingsSubTabId) => void
+  /** When true, People shows person stub lane (Notes [[person:]] focus). */
+  peopleShowPersonStubs: boolean
+  setPeopleShowPersonStubs: (show: boolean) => void
   /** Ephemeral focus target from a Notes content link click. */
   hubFocus: GmHubFocus | null
   clearHubFocus: () => void
-  /** Shared navigator — Characters keeps mode; storyHome forces Narrative. */
+  /** Shared navigator — People / narrative kinds always force Narrative. */
   navigateHubTarget: (target: GmHubNavTarget) => void
   navigateContentLink: (kind: GmContentLinkKind, id: string) => void
-  /** True while Characters/PCs should blink after a joiner fully joins. */
+  /** True while Narrative → People → PCs should blink after a joiner fully joins. */
   partyTabBlink: boolean
   sessionList: GmSessionIndexEntry[]
   session: GmSessionRecord | null
@@ -174,6 +186,16 @@ type GmSessionContextValue = {
   lockInit: () => void
   unlockInit: () => void
   newMeleeRound: () => void
+  /** Melee dropdowns — add from People data into the shared combat roster. */
+  addPcToMelee: (characterId: string) => void
+  addNpcToMelee: (input: {
+    characterId?: string
+    npcInstanceId?: string
+  }) => void
+  removeFromMelee: (input: {
+    characterId?: string
+    npcInstanceId?: string
+  }) => void
   emitNpcHf: (instanceId: string) => void
   recordPcHfSave: (characterId: string, d20: number) => void
   recordStrike: (instanceId: string, d20: number, strikeBonus: number) => void
@@ -201,16 +223,19 @@ function persist(next: GmSessionRecord): GmSessionRecord {
 
 export function GmSessionProvider({ children }: { children: ReactNode }) {
   const [hubMode, setHubModeState] = useState<GmHubMode>('story')
-  const [hubTabId, setHubTabIdState] = useState<GmHubTabId>('home')
+  const [hubTabId, setHubTabIdState] = useState<GmHubTabId>('story_beats')
   const [charactersSubTabId, setCharactersSubTabIdState] =
     useState<GmCharactersSubTabId>('pcs')
-  const [storyHomeSubTabId, setStoryHomeSubTabIdState] =
-    useState<GmStoryHomeSubTabId>('notes')
+  const [thingsSubTabId, setThingsSubTabIdState] =
+    useState<GmThingsSubTabId>('notes')
+  const [peopleShowPersonStubs, setPeopleShowPersonStubsState] =
+    useState(false)
   const [hubFocus, setHubFocus] = useState<GmHubFocus | null>(null)
   const [partyTabBlink, setPartyTabBlink] = useState(false)
   const hubTabIdRef = useRef<GmHubTabId>(hubTabId)
   const charactersSubTabIdRef = useRef<GmCharactersSubTabId>(charactersSubTabId)
-  const storyHomeSubTabIdRef = useRef<GmStoryHomeSubTabId>(storyHomeSubTabId)
+  const thingsSubTabIdRef = useRef<GmThingsSubTabId>(thingsSubTabId)
+  const peopleShowPersonStubsRef = useRef(peopleShowPersonStubs)
   const hubModeRef = useRef<GmHubMode>(hubMode)
   const partyTabBlinkRef = useRef(false)
   const presenceRef = useRef<GmPresenceState | null>(null)
@@ -224,8 +249,12 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   }, [charactersSubTabId])
 
   useEffect(() => {
-    storyHomeSubTabIdRef.current = storyHomeSubTabId
-  }, [storyHomeSubTabId])
+    thingsSubTabIdRef.current = thingsSubTabId
+  }, [thingsSubTabId])
+
+  useEffect(() => {
+    peopleShowPersonStubsRef.current = peopleShowPersonStubs
+  }, [peopleShowPersonStubs])
 
   useEffect(() => {
     hubModeRef.current = hubMode
@@ -235,57 +264,79 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     partyTabBlinkRef.current = partyTabBlink
   }, [partyTabBlink])
 
+  const navSnapshot = useCallback(
+    () => ({
+      hubMode: hubModeRef.current,
+      hubTabId: hubTabIdRef.current,
+      charactersSubTabId: charactersSubTabIdRef.current,
+      thingsSubTabId: thingsSubTabIdRef.current,
+      peopleShowPersonStubs: peopleShowPersonStubsRef.current,
+    }),
+    [],
+  )
+
   const setHubTabId = useCallback((tab: GmHubTabId) => {
     setHubTabIdState(tab)
+    if (tab === 'people') {
+      setPeopleShowPersonStubsState(false)
+      peopleShowPersonStubsRef.current = false
+    }
     setPartyTabBlink((prev) =>
       partyTabBlinkAfterTabChange(tab, prev, charactersSubTabIdRef.current),
     )
     setHubFocus((prev) =>
       hubFocusAfterNavChange(prev, {
-        hubMode: hubModeRef.current,
+        ...navSnapshot(),
         hubTabId: tab,
-        charactersSubTabId: charactersSubTabIdRef.current,
-        storyHomeSubTabId: storyHomeSubTabIdRef.current,
+        peopleShowPersonStubs:
+          tab === 'people' ? false : peopleShowPersonStubsRef.current,
       }),
     )
-  }, [])
+  }, [navSnapshot])
 
   const setCharactersSubTabId = useCallback((tab: GmCharactersSubTabId) => {
     setCharactersSubTabIdState(tab)
+    setPeopleShowPersonStubsState(false)
+    peopleShowPersonStubsRef.current = false
     setPartyTabBlink((prev) =>
       partyTabBlinkAfterCharactersSubTabChange(tab, prev),
     )
     setHubFocus((prev) =>
       hubFocusAfterNavChange(prev, {
-        hubMode: hubModeRef.current,
-        hubTabId: hubTabIdRef.current,
+        ...navSnapshot(),
         charactersSubTabId: tab,
-        storyHomeSubTabId: storyHomeSubTabIdRef.current,
+        peopleShowPersonStubs: false,
       }),
     )
-  }, [])
+  }, [navSnapshot])
 
-  const setStoryHomeSubTabId = useCallback((tab: GmStoryHomeSubTabId) => {
-    setStoryHomeSubTabIdState(tab)
+  const setThingsSubTabId = useCallback((tab: GmThingsSubTabId) => {
+    setThingsSubTabIdState(tab)
     setHubFocus((prev) =>
       hubFocusAfterNavChange(prev, {
-        hubMode: hubModeRef.current,
-        hubTabId: hubTabIdRef.current,
-        charactersSubTabId: charactersSubTabIdRef.current,
-        storyHomeSubTabId: tab,
+        ...navSnapshot(),
+        thingsSubTabId: tab,
       }),
     )
-  }, [])
+  }, [navSnapshot])
+
+  const setPeopleShowPersonStubs = useCallback((show: boolean) => {
+    setPeopleShowPersonStubsState(show)
+    peopleShowPersonStubsRef.current = show
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        ...navSnapshot(),
+        peopleShowPersonStubs: show,
+      }),
+    )
+  }, [navSnapshot])
 
   const clearHubFocus = useCallback(() => setHubFocus(null), [])
 
   const navigateHubTarget = useCallback((target: GmHubNavTarget) => {
     const next = applyHubNavTarget(
       {
-        hubMode: hubModeRef.current,
-        hubTabId: hubTabIdRef.current,
-        charactersSubTabId: charactersSubTabIdRef.current,
-        storyHomeSubTabId: storyHomeSubTabIdRef.current,
+        ...navSnapshot(),
         hubFocus: null,
       },
       target,
@@ -293,12 +344,20 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     setHubModeState(next.hubMode)
     setHubTabIdState(next.hubTabId)
     setCharactersSubTabIdState(next.charactersSubTabId)
-    setStoryHomeSubTabIdState(next.storyHomeSubTabId)
+    setThingsSubTabIdState(next.thingsSubTabId)
+    setPeopleShowPersonStubsState(next.peopleShowPersonStubs)
+    peopleShowPersonStubsRef.current = next.peopleShowPersonStubs
     setHubFocus(next.hubFocus)
-    if (isViewingCharactersPcs(next.hubTabId, next.charactersSubTabId)) {
+    if (
+      isViewingNarrativePeoplePcs(
+        next.hubMode,
+        next.hubTabId,
+        next.charactersSubTabId,
+      )
+    ) {
       setPartyTabBlink(false)
     }
-  }, [])
+  }, [navSnapshot])
 
   const navigateContentLink = useCallback(
     (kind: GmContentLinkKind, id: string) => {
@@ -309,13 +368,13 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
 
   const goToStoryHome = useCallback(() => {
     setHubModeState('story')
-    setHubTabId('home')
+    setHubTabId('story_beats')
   }, [setHubTabId])
 
   const setHubMode = useCallback(
     (mode: GmHubMode) => {
       setHubModeState(mode)
-      setHubTabId('home')
+      setHubTabId(defaultHubTabForMode(mode))
     },
     [setHubTabId],
   )
@@ -445,7 +504,8 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
             currentlyBlinking: partyTabBlinkRef.current,
             previousPresence: previous,
             nextPresence: presence,
-            viewingCharactersPcs: isViewingCharactersPcs(
+            viewingCharactersPcs: isViewingNarrativePeoplePcs(
+              hubModeRef.current,
               hubTabIdRef.current,
               charactersSubTabIdRef.current,
             ),
@@ -765,6 +825,39 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     })
   }, [patchSession])
 
+  const addPcToMelee = useCallback(
+    (characterId: string) => {
+      patchSession((s) => addCharacterToMelee(s, characterId))
+    },
+    [patchSession],
+  )
+
+  const addNpcToMelee = useCallback(
+    (input: { characterId?: string; npcInstanceId?: string }) => {
+      patchSession((s) => {
+        if (input.characterId) return addCharacterToMelee(s, input.characterId)
+        if (input.npcInstanceId) {
+          return addNpcInstanceToMelee(s, input.npcInstanceId)
+        }
+        return s
+      })
+    },
+    [patchSession],
+  )
+
+  const removeFromMelee = useCallback(
+    (input: { characterId?: string; npcInstanceId?: string }) => {
+      patchSession((s) => {
+        if (input.characterId) return removeCharacterFromMelee(s, input.characterId)
+        if (input.npcInstanceId) {
+          return removeNpcInstanceFromMelee(s, input.npcInstanceId)
+        }
+        return s
+      })
+    },
+    [patchSession],
+  )
+
   const emitNpcHf = useCallback(
     (instanceId: string) => {
       patchSession((s) => {
@@ -841,8 +934,10 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubTabId,
       charactersSubTabId,
       setCharactersSubTabId,
-      storyHomeSubTabId,
-      setStoryHomeSubTabId,
+      thingsSubTabId,
+      setThingsSubTabId,
+      peopleShowPersonStubs,
+      setPeopleShowPersonStubs,
       hubFocus,
       clearHubFocus,
       navigateHubTarget,
@@ -885,6 +980,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       lockInit,
       unlockInit,
       newMeleeRound,
+      addPcToMelee,
+      addNpcToMelee,
+      removeFromMelee,
       emitNpcHf,
       recordPcHfSave,
       recordStrike,
@@ -910,8 +1008,10 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubTabId,
       charactersSubTabId,
       setCharactersSubTabId,
-      storyHomeSubTabId,
-      setStoryHomeSubTabId,
+      thingsSubTabId,
+      setThingsSubTabId,
+      peopleShowPersonStubs,
+      setPeopleShowPersonStubs,
       hubFocus,
       clearHubFocus,
       navigateHubTarget,
@@ -953,6 +1053,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       lockInit,
       unlockInit,
       newMeleeRound,
+      addPcToMelee,
+      addNpcToMelee,
+      removeFromMelee,
       emitNpcHf,
       recordPcHfSave,
       recordStrike,

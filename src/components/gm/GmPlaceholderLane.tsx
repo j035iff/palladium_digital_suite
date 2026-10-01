@@ -17,8 +17,8 @@ const KIND_BY_SUB: Record<
 }
 
 /**
- * Placeholder list for Narrative Home People / Places / Things.
- * People rows are note-ish; deep cast lives on Characters → NPCs when linked.
+ * Placeholder list for Narrative Places / Things (and person stubs under People).
+ * Person rows are note-ish; deep cast lives on People → NPCs when linked.
  */
 export function GmPlaceholderLane({
   lane,
@@ -65,7 +65,7 @@ export function GmPlaceholderLane({
           </h2>
           <p className="mt-1 max-w-xl text-xs text-slate-400">
             {lane === 'people'
-              ? 'People is a notes page — link a person to a real Characters → NPCs entry for the deep sheet. Placeholders keep Notes links working.'
+              ? 'Person stubs are a notes page — link a person to a real People → NPCs entry for the deep sheet. Placeholders keep Notes links working.'
               : 'Placeholder entries so Notes content links can navigate here before full CRUD.'}
           </p>
         </div>
@@ -139,11 +139,11 @@ export function GmPlaceholderLane({
                         }
                         className="font-semibold text-cyan-300 underline hover:text-cyan-100"
                       >
-                        Open Characters → NPCs
+                        Open People → NPCs
                       </button>
                     ) : (
                       <span className="text-slate-500">
-                        none — deep cast lives on Characters → NPCs
+                        none — deep cast lives on People → NPCs
                       </span>
                     )}
                     <select

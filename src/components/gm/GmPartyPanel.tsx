@@ -49,7 +49,7 @@ export function GmPartyPanel() {
           </h2>
           <p className="mt-1 max-w-xl text-xs text-slate-400">
             Player seats at this table only (party.snapshot). Local-machine
-            characters are NPCs — add them under Characters → NPCs. Snapshots
+            characters are NPCs — add them under People → NPCs. Snapshots
             use the joiner cache through the host genre — nothing is written
             back to player files.
           </p>

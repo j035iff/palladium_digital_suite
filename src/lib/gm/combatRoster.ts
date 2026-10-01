@@ -46,26 +46,31 @@ export function assembleGmCombatRoster(input: {
   archetypesByKey: Map<string, CatalogEncounterArchetype>
 }): GmCombatRosterRow[] {
   const { session, party, overlays, archetypesByKey } = input
-  const pcRows: GmCombatRosterRow[] = party.map((slice) => {
-    const overlay = overlays[slice.characterId]
-    const roll = overlay?.initiativeRoll ?? null
-    return {
-      key: `pc:${slice.characterId}`,
-      kind: 'pc',
-      name: slice.name,
-      initiativeRoll: roll,
-      initiativeBonus: slice.initiativeBonus,
-      initiativeTotal: initiativeTotal(roll, slice.initiativeBonus),
-      maxApm: slice.maxApm,
-      apmSpent: 0,
-      hfOutcome: overlay?.hfOutcome ?? null,
-      characterId: slice.characterId,
-    }
-  })
+  const meleeChars = new Set(session.combat.meleeCharacterIds ?? [])
+  const meleeNpcs = new Set(session.combat.meleeNpcInstanceIds ?? [])
 
-  const npcRows: GmCombatRosterRow[] = session.npcs.map((npc) =>
-    npcToRosterRow(npc, archetypesByKey),
-  )
+  const pcRows: GmCombatRosterRow[] = party
+    .filter((slice) => meleeChars.has(slice.characterId))
+    .map((slice) => {
+      const overlay = overlays[slice.characterId]
+      const roll = overlay?.initiativeRoll ?? null
+      return {
+        key: `pc:${slice.characterId}`,
+        kind: 'pc',
+        name: slice.name,
+        initiativeRoll: roll,
+        initiativeBonus: slice.initiativeBonus,
+        initiativeTotal: initiativeTotal(roll, slice.initiativeBonus),
+        maxApm: slice.maxApm,
+        apmSpent: 0,
+        hfOutcome: overlay?.hfOutcome ?? null,
+        characterId: slice.characterId,
+      }
+    })
+
+  const npcRows: GmCombatRosterRow[] = session.npcs
+    .filter((npc) => meleeNpcs.has(npc.instanceId))
+    .map((npc) => npcToRosterRow(npc, archetypesByKey))
 
   return sortCombatRoster([...pcRows, ...npcRows])
 }

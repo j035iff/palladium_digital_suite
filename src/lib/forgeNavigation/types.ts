@@ -33,7 +33,7 @@ export type ForgeTabView = {
   /** Tab whose content is in the viewport (dark outline in nav). */
   isViewing?: boolean
   /**
-   * Ephemeral attention pulse (e.g. GM Characters → PCs after a joiner fully joins).
+   * Ephemeral attention pulse (e.g. GM Narrative → People → PCs after a joiner fully joins).
    * Chrome-only — does not change unlock/visual state.
    */
   attention?: boolean
