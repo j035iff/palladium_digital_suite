@@ -4,7 +4,10 @@
  */
 
 import { createGmId } from './sessionId'
-import type { GmContentLinkKind } from './contentLinks'
+import {
+  GM_CONTENT_LINK_KINDS,
+  type GmContentLinkKind,
+} from './contentLinks'
 import type { GmPlaceholderEntity, GmSessionRecord } from './sessionTypes'
 
 export type { GmPlaceholderEntity }
@@ -197,6 +200,13 @@ export function resolveContentLinkTarget(
   }
 }
 
+export type GmLinkableEntityHit = {
+  kind: GmContentLinkKind
+  id: string
+  name: string
+  source: 'placeholder' | 'npc' | 'pc'
+}
+
 /** Case-insensitive name search across placeholders (+ live NPCs/PCs for those kinds). */
 export function searchLinkableEntities(
   session: GmSessionRecord,
@@ -243,4 +253,42 @@ export function searchLinkableEntities(
   }
 
   return rows
+}
+
+/**
+ * Cross-kind search for `@` mention typeahead (Pillar 9 — one pipeline).
+ * Prefers names that start with the query, then includes substring hits.
+ */
+export function searchAllLinkableEntities(
+  session: GmSessionRecord,
+  query: string,
+  opts: {
+    partyNamesById?: ReadonlyMap<string, string>
+    kinds?: readonly GmContentLinkKind[]
+    limit?: number
+  } = {},
+): GmLinkableEntityHit[] {
+  const kinds = opts.kinds ?? GM_CONTENT_LINK_KINDS
+  const limit = opts.limit ?? 40
+  const q = query.trim().toLowerCase()
+  const hits: GmLinkableEntityHit[] = []
+
+  for (const kind of kinds) {
+    for (const row of searchLinkableEntities(session, kind, query, opts)) {
+      hits.push({ kind, id: row.id, name: row.name, source: row.source })
+    }
+  }
+
+  hits.sort((a, b) => {
+    const aName = a.name.toLowerCase()
+    const bName = b.name.toLowerCase()
+    const aStarts = q !== '' && aName.startsWith(q) ? 0 : 1
+    const bStarts = q !== '' && bName.startsWith(q) ? 0 : 1
+    if (aStarts !== bStarts) return aStarts - bStarts
+    const byName = aName.localeCompare(bName)
+    if (byName !== 0) return byName
+    return a.kind.localeCompare(b.kind)
+  })
+
+  return hits.slice(0, limit)
 }

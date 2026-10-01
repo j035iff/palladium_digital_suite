@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import {
+  findActiveMention,
   insertContentLink,
   isGmContentLinkKind,
   parseContentLinkAt,
+  replaceMentionWithContentLink,
   segmentContentLinks,
   serializeContentLink,
 } from './contentLinks'
@@ -63,5 +65,33 @@ describe('contentLinks', () => {
       { start: 8, end: 12 },
     )
     expect(result.text).toBe('Talk to [[npc:npc_9|Mira]] later')
+  })
+
+  it('finds an active @ mention under the caret', () => {
+    const text = 'The players went to @old'
+    const mention = findActiveMention(text, text.length)
+    expect(mention).toEqual({
+      start: text.indexOf('@'),
+      end: text.length,
+      query: 'old',
+    })
+  })
+
+  it('ignores @ inside unfinished wiki tokens and mid-word', () => {
+    expect(findActiveMention('See [[place:@x', 14)).toBeNull()
+    expect(findActiveMention('email@old', 9)).toBeNull()
+    expect(findActiveMention('hello @old chicago', 17)).toBeNull()
+  })
+
+  it('replaces @query with a structured content link', () => {
+    const text = 'Went to @old'
+    const mention = findActiveMention(text, text.length)
+    expect(mention).not.toBeNull()
+    const next = replaceMentionWithContentLink(text, mention!, {
+      kind: 'place',
+      id: 'place_1',
+      label: 'Old Chicago',
+    })
+    expect(next.text).toBe('Went to [[place:place_1|Old Chicago]]')
   })
 })
