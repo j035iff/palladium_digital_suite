@@ -6,6 +6,7 @@ import {
 } from '../../lib/gm/contentLinks'
 import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
+import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 
 const KIND_BY_SUB: Record<
   'people' | 'places' | 'things',
@@ -115,18 +116,18 @@ export function GmPlaceholderLane({
                     Remove
                   </button>
                 </div>
-                <textarea
+                <GmContentLinkedNotesField
+                  id={`gm-${kind}-notes-${row.id}`}
                   value={row.notes}
-                  onChange={(e) =>
-                    updatePlaceholderNotes(row.id, e.target.value)
-                  }
+                  onChange={(text) => updatePlaceholderNotes(row.id, text)}
+                  density="compact"
                   placeholder={
                     lane === 'people'
-                      ? 'Person notes (not a full sheet)…'
-                      : 'Stub notes…'
+                      ? 'Person notes (not a full sheet)… type @ to link'
+                      : 'Stub notes… type @ to link'
                   }
-                  rows={2}
-                  className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
+                  className="mt-2"
+                  aria-label={`${row.name} notes`}
                 />
                 {lane === 'people' ? (
                   <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] text-slate-400">

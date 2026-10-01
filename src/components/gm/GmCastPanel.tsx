@@ -4,6 +4,7 @@ import { useGmSession } from '../../context/GmSessionContext'
 import { joinedPartyCharacterIds } from '../../lib/gm/joinTableLeave'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
 import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
+import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 
 export function GmCastPanel() {
   const {
@@ -227,14 +228,16 @@ export function GmCastPanel() {
                         Remove
                       </button>
                     </div>
-                    <textarea
+                    <GmContentLinkedNotesField
+                      id={`gm-npc-stub-notes-${stub.id}`}
                       value={stub.notes}
-                      onChange={(e) =>
-                        updatePlaceholderNotes(stub.id, e.target.value)
+                      onChange={(text) =>
+                        updatePlaceholderNotes(stub.id, text)
                       }
-                      placeholder="Stub notes…"
-                      className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
-                      rows={2}
+                      density="compact"
+                      placeholder="Stub notes… type @ to link"
+                      className="mt-2"
+                      aria-label={`${stub.name} notes`}
                     />
                   </li>
                 )
@@ -316,14 +319,16 @@ export function GmCastPanel() {
                         +4 H.P.
                       </button>
                     </div>
-                    <textarea
+                    <GmContentLinkedNotesField
+                      id={`gm-npc-notes-${npc.instanceId}`}
                       value={npc.notes}
-                      onChange={(e) =>
-                        setNpcNotes(npc.instanceId, e.target.value)
+                      onChange={(text) =>
+                        setNpcNotes(npc.instanceId, text)
                       }
-                      placeholder="Motives, names, tells…"
-                      className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
-                      rows={2}
+                      density="compact"
+                      placeholder="Motives, names, tells… type @ to link"
+                      className="mt-2"
+                      aria-label={`${npc.displayName} notes`}
                     />
                   </li>
                 )

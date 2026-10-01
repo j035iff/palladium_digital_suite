@@ -188,3 +188,78 @@ export function contentLinkKindLabel(kind: GmContentLinkKind): string {
       return 'Note'
   }
 }
+
+/**
+ * Familiar Surface view of a notes body: wiki chrome collapsed to labels only.
+ * Storage stays `[[kind:id|label]]`; this is display/mapping only.
+ */
+export function contentLinksDisplayText(storage: string): string {
+  return segmentContentLinks(storage)
+    .map((seg) => (seg.type === 'text' ? seg.text : seg.ref.label))
+    .join('')
+}
+
+/**
+ * Map a caret offset in label-only display text → offset in storage text.
+ * Clamps to [0, storage.length].
+ */
+export function displayOffsetToStorageOffset(
+  storage: string,
+  displayOffset: number,
+): number {
+  const target = Math.max(0, displayOffset)
+  let displayCursor = 0
+  let storageCursor = 0
+  for (const seg of segmentContentLinks(storage)) {
+    if (seg.type === 'text') {
+      const len = seg.text.length
+      if (displayCursor + len >= target) {
+        return storageCursor + (target - displayCursor)
+      }
+      displayCursor += len
+      storageCursor += len
+      continue
+    }
+    const labelLen = seg.ref.label.length
+    const rawLen = seg.raw.length
+    if (displayCursor + labelLen >= target) {
+      // Caret inside/at end of a chip → land after the full wiki token.
+      return storageCursor + rawLen
+    }
+    displayCursor += labelLen
+    storageCursor += rawLen
+  }
+  return storage.length
+}
+
+/**
+ * Map a storage caret offset → label-only display offset.
+ */
+export function storageOffsetToDisplayOffset(
+  storage: string,
+  storageOffset: number,
+): number {
+  const target = Math.max(0, Math.min(storageOffset, storage.length))
+  let displayCursor = 0
+  let storageCursor = 0
+  for (const seg of segmentContentLinks(storage)) {
+    if (seg.type === 'text') {
+      const len = seg.text.length
+      if (storageCursor + len >= target) {
+        return displayCursor + (target - storageCursor)
+      }
+      displayCursor += len
+      storageCursor += len
+      continue
+    }
+    const labelLen = seg.ref.label.length
+    const rawLen = seg.raw.length
+    if (storageCursor + rawLen >= target) {
+      // Any caret inside the token maps to the end of the visible label.
+      return displayCursor + labelLen
+    }
+    displayCursor += labelLen
+    storageCursor += rawLen
+  }
+  return displayCursor
+}

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
+  contentLinksDisplayText,
+  displayOffsetToStorageOffset,
   findActiveMention,
   insertContentLink,
   isGmContentLinkKind,
@@ -7,6 +9,7 @@ import {
   replaceMentionWithContentLink,
   segmentContentLinks,
   serializeContentLink,
+  storageOffsetToDisplayOffset,
 } from './contentLinks'
 
 describe('contentLinks', () => {
@@ -93,5 +96,28 @@ describe('contentLinks', () => {
       label: 'Old Chicago',
     })
     expect(next.text).toBe('Went to [[place:place_1|Old Chicago]]')
+  })
+
+  it('collapses storage wiki tokens to Familiar Surface display labels', () => {
+    expect(
+      contentLinksDisplayText(
+        'The characters went to [[place:place_c90d|Old Chicago]].',
+      ),
+    ).toBe('The characters went to Old Chicago.')
+  })
+
+  it('maps display caret offsets through wiki tokens', () => {
+    const storage = 'See [[place:p1|Dock]] now'
+    // "See Dock|" → after label
+    const afterLabelDisplay = 'See Dock'.length
+    expect(displayOffsetToStorageOffset(storage, afterLabelDisplay)).toBe(
+      'See [[place:p1|Dock]]'.length,
+    )
+    expect(
+      storageOffsetToDisplayOffset(
+        storage,
+        'See [[place:p1|Dock]]'.length,
+      ),
+    ).toBe(afterLabelDisplay)
   })
 })

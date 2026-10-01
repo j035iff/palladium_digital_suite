@@ -53,7 +53,7 @@ Narrative / Combat master modes match the live character sheet mode split (GM ch
 
 | Mode | Top tabs |
 |------|----------|
-| **Narrative** (`story`) | **Story Beats** (notes-like stub) · **People** (PCs / NPCs — former Characters) · **Places** (stub) · **Things** (notes stub + Gear) · **Notes** (scratchpad + content links) |
+| **Narrative** (`story`) | **Story Beats** (content-linked pad) · **People** (PCs / NPCs — former Characters) · **Places** (stub) · **Things** (notes stub + Gear) · **Notes** (scratchpad + content links) |
 | **Combat** | **Melee** (combat HUD + add-from-People dropdowns) · **Prefabs** (stub) |
 
 Switching Narrative ↔ Combat resets to that lane’s default first tab (**Story Beats** / **Melee**). Campaigns are still switched from the launcher.
@@ -73,7 +73,7 @@ Combat roster is **opt-in**: GM picks joined PCs and local/fodder NPCs from Mele
 
 ### Notes content links (v1)
 
-While writing **Notes**, the GM inserts outbound in-app links (`[[kind:id|label]]`) that jump to placeholder or live targets. **Primary authoring:** type `@` in the scratchpad (Cursor-like mentions) → filter existing places / NPCs / PCs / things / people / note stubs → pick one → the structured link is inserted. **Insert link…** remains a fallback dialog; hand-typed `[[…]]` still parses but is not the taught UX. Person stubs are a notes page that links to real cast on **People → NPCs** (not a second sheet). No match / missing targets offer **Create?** to make a stub, then link (Radical Visibility). Broken links stay visible with why-text. Backlinks / wiki graph are deferred.
+While writing on any **Narrative notes-like surface**, the GM inserts outbound in-app links (`[[kind:id|label]]`) that jump to placeholder or live targets. Surfaces share one editor pipeline (`GmContentLinkedNotesField`): **Notes** scratchpad, **Story Beats**, **Places / Things / People** stub notes, note stubs, and cast/NPC notes. **Primary authoring:** type `@` (Cursor-like mentions) → filter existing places / NPCs / PCs / things / people / note stubs → pick one → the structured link is stored as `[[…]]` but **rendered as the clickable label** (Familiar Surface — never show engine ids as the primary UX). **Insert link…** remains a fallback on scratchpad-density fields; hand-typed `[[…]]` still parses but is not the taught UX. Person stubs are a notes page that links to real cast on **People → NPCs** (not a second sheet). No match / missing targets offer **Create?** to make a stub, then link (Radical Visibility). Broken links stay visible with why-text. Backlinks / wiki graph are deferred.
 
 | Kind | Navigate to |
 |------|-------------|
