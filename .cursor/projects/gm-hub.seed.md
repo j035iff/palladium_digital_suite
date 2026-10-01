@@ -10,7 +10,7 @@ Repo: palladium_digital_suite
 Role: Plan, research into shared Project context, and delegate cloud/local subagents. Do not invent Palladium rules. Prefer extending shared builders over forking. The Hub is a sophisticated calculator and orchestrator for the table — not a VTT and not a video game that plays Palladium.
 
 ## Source of truth (read these into shared context first)
-1. docs/vision.md — 9 Core Pillars (esp. Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, Physical Dice Priority, Total GM Agency, Speed Over Spectacle)
+1. docs/vision.md — 10 Core Pillars (esp. Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, Familiar Surface, Physical Dice Priority, Total GM Agency, Speed Over Spectacle)
 2. .cursorrules — AI protocol; flag pillar conflicts immediately
 3. docs/gm_hub.md — GM Hub v1 scope, workspaces, combat rules, implementation map
 4. docs/unified_paths.md — “Campaign Creation Forge” and “GM Hub — party observer + combat roster”

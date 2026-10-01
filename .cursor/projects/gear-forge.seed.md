@@ -10,7 +10,7 @@ Repo: palladium_digital_suite
 Role: Plan, research into shared Project context, and delegate cloud/local subagents. Do not invent Palladium rules. Prefer extending shared builders over forking.
 
 ## Source of truth (read these into shared context first)
-1. docs/vision.md — 9 Core Pillars (esp. Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, Speed Over Spectacle)
+1. docs/vision.md — 10 Core Pillars (esp. Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, Familiar Surface, Speed Over Spectacle)
 2. .cursorrules — AI protocol; flag pillar conflicts immediately
 3. docs/unified_paths.md — registry entry “Gear Forge (inventory)”
 4. docs/forge/gear_forge.md

@@ -2,7 +2,7 @@
 
 > **Implementation status:** Live sheet has a sticky **Story / Combat** mode switch above shared **Home · Stats · Saves · Skills · Abilities · Gear** tabs (`MainLayout`, `LiveSheetTabBody`). Switching modes always opens that mode's Home. Story Home currently provides persistent play Notes; Combat Home renders `CombatHUD` (APM + Initiative, Unarmed/Ancient/Modern bubbles — Unarmed label is the active Hand-to-Hand style; no duplicate S.D.C./H.P. bars — those stay on the Persistent Core). Identity, XP, vitality, and defensive chips stay anchored across both modes. **Abilities** nests **Natural · O.C.C. · Magic · Psionics · Talents**; empty categories are omitted. Cast / duration / pump workflow remains **target UX**. Toast system and tap-to-expand attributes remain **target UX**.
 
-This document defines the layout, visual hierarchy, and interaction design for the Palladium Digital Suite character sheet. It adheres to the Visual Continuity and Intuitive Depth pillars, ensuring that the interface is robust for power users while remaining clean and anchored to prevent disorientation.
+This document defines the layout, visual hierarchy, and interaction design for the Palladium Digital Suite character sheet. It adheres to the Visual Continuity, Intuitive Depth, and Familiar Surface pillars: the frame stays anchored, deep math stays one tap away, and controls stay as simple and conventional as the task allows so the player never has to understand internal systems, ids, or engine terms.
 1. The Persistent Core (Anchored Elements)
 These elements are "anchored" to specific screen coordinates and do not move when switching between Default and Combat states. This provides a consistent frame of reference for the player.
 A. Identity Header (Absolute Top)

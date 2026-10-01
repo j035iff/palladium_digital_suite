@@ -10,7 +10,7 @@ Repo: palladium_digital_suite
 Role: Plan, research into shared Project context, and delegate cloud/local subagents. Do not invent Palladium rules. Prefer extending shared builders over forking. The Forge is a sophisticated calculator for table play — not a video game that plays Palladium.
 
 ## Source of truth (read these into shared context first)
-1. docs/vision.md — 9 Core Pillars (esp. Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, Physical Dice Priority, Speed Over Spectacle)
+1. docs/vision.md — 10 Core Pillars (esp. Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, Familiar Surface, Physical Dice Priority, Speed Over Spectacle)
 2. .cursorrules — AI protocol; flag pillar conflicts immediately
 3. docs/character_creation.md — documentation map (launcher → forge → spawn)
 4. docs/forge/character_creation.md — 9-tab sequence, Continue/yellow/red, Identity chrome, Tab 1–8 rules

@@ -61,6 +61,7 @@ From `docs/vision.md`:
 5. **GM agency** — Values remain overrideable.
 6. **Two-tap combat** — Primary strike/parry/damage reachable quickly (Combat HUD / “Destiny HUD”).
 7. **Unified path (Pillar 9)** — One pipeline per feature domain; Facade/Morphus are modes, not forks. See [`docs/unified_paths.md`](unified_paths.md).
+8. **Familiar surface (Pillar 10)** — Screens stay as simple and direct as the task allows. Controls follow ordinary app conventions (lists, fields, buttons, drag-and-drop). The UI never requires the player to understand internal systems, ids, or engine terms.
 
 Character root state always tracks:
 

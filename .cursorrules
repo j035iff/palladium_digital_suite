@@ -1,12 +1,12 @@
 ###AI Interaction Protocol
-Refer to vision.md as the absolute Source of Truth. If a proposed design element, code change, or UI adjustment conflicts with any of the 9 Core Pillars (specifically Mechanical Integrity, Visual Continuity, Radical Visibility, or Unified Path), you MUST:
+Refer to vision.md as the absolute Source of Truth. If a proposed design element, code change, or UI adjustment conflicts with any of the 10 Core Pillars (specifically Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, or Familiar Surface), you MUST:
 Flag the conflict to the user immediately.
 Explain which Pillar is being violated.
 Propose an alternative solution that satisfies the user's functional goal while remaining compliant with the Pillars.
 
 
 ###Core Design Pillars
-The system is built upon nine fundamental principles that guide all interaction and logic development.
+The system is built upon ten fundamental principles that guide all interaction and logic development.
 Pillar
 Requirement
 1. Mechanical Integrity
@@ -27,6 +27,8 @@ Surface-level results for speed, with deep math and rule references accessible v
 Unless explicitly directed, choices are never hidden. Restricted options are grayed out with a visible explanation of why they are unavailable.
 9. Unified Path
 Facade, Morphus, and dual-form variants are modes on one pipeline per feature domain—single math stack, row assembler, tooltip/diff layer, and UI renderer. Extend shared builders; never fork per-stat or per-form code. Registry: docs/unified_paths.md.
+10. Familiar Surface
+Every screen is as simple and direct as the task allows. Controls follow conventions people already know from other apps (lists, fields, buttons, drag-and-drop). The interface never requires the player to understand internal systems, ids, or engine terms.
 
 Sophisticated Calculator (vision.md Core Project Philosophy): the app is strictly a tool for taking friction out of playing at the table—it is NOT a video game that plays Palladium for you.
 
