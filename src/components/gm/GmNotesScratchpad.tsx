@@ -51,7 +51,8 @@ export function GmNotesScratchpad() {
     partyNamesById,
   })
 
-  const selectionOrQuery = (): string => {
+  /** Selection is only read in handlers — never during render (react-hooks/refs). */
+  const readSelectionOrQuery = (): string => {
     const el = textareaRef.current
     if (el && el.selectionStart !== el.selectionEnd) {
       return session.scratchpad
@@ -60,6 +61,8 @@ export function GmNotesScratchpad() {
     }
     return linkQuery.trim()
   }
+
+  const createNamePreview = linkQuery.trim()
 
   const insertRef = (ref: GmContentLinkRef) => {
     const el = textareaRef.current
@@ -90,7 +93,7 @@ export function GmNotesScratchpad() {
   }
 
   const offerCreate = () => {
-    const name = selectionOrQuery()
+    const name = readSelectionOrQuery()
     if (!name) return
     setPendingCreate({ kind: linkKind, name })
   }
@@ -114,7 +117,7 @@ export function GmNotesScratchpad() {
           onClick={() => {
             setLinkerOpen((open) => !open)
             setPendingCreate(null)
-            const selected = selectionOrQuery()
+            const selected = readSelectionOrQuery()
             if (selected) setLinkQuery(selected)
           }}
           className="rounded-lg border border-cyan-700/70 bg-cyan-950/40 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-cyan-100 hover:border-cyan-500"
@@ -220,12 +223,12 @@ export function GmNotesScratchpad() {
           ) : (
             <button
               type="button"
-              disabled={!selectionOrQuery()}
+              disabled={!createNamePreview}
               onClick={offerCreate}
               className="mt-3 rounded border border-dashed border-amber-700/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-amber-100/90 hover:border-amber-500 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Create {contentLinkKindLabel(linkKind)} “
-              {selectionOrQuery() || '…'}”?
+              {createNamePreview || '…'}”?
             </button>
           )}
         </div>
