@@ -18,8 +18,23 @@ import type {
   GmCharactersSubTabId,
   GmHubMode,
   GmHubTabId,
+  GmStoryHomeSubTabId,
 } from '../lib/gm/hubTabs'
 import { isViewingCharactersPcs } from '../lib/gm/hubTabs'
+import {
+  applyHubNavTarget,
+  hubFocusAfterNavChange,
+  hubNavTargetForContentKind,
+  type GmHubFocus,
+  type GmHubNavTarget,
+} from '../lib/gm/hubNavigation'
+import {
+  addPlaceholder,
+  createPlaceholderEntity,
+  patchPlaceholder,
+  removePlaceholder,
+} from '../lib/gm/narrativePlaceholders'
+import type { GmContentLinkKind } from '../lib/gm/contentLinks'
 import { createNpcFromArchetype } from '../lib/gm/npcInstance'
 import {
   addNpcInstance,
@@ -101,6 +116,15 @@ type GmSessionContextValue = {
   /** Characters → PCs | NPCs (shared under Narrative and Combat). */
   charactersSubTabId: GmCharactersSubTabId
   setCharactersSubTabId: (tab: GmCharactersSubTabId) => void
+  /** Narrative Home → People | Places | Things | Notes. */
+  storyHomeSubTabId: GmStoryHomeSubTabId
+  setStoryHomeSubTabId: (tab: GmStoryHomeSubTabId) => void
+  /** Ephemeral focus target from a Notes content link click. */
+  hubFocus: GmHubFocus | null
+  clearHubFocus: () => void
+  /** Shared navigator — Characters keeps mode; storyHome forces Narrative. */
+  navigateHubTarget: (target: GmHubNavTarget) => void
+  navigateContentLink: (kind: GmContentLinkKind, id: string) => void
   /** True while Characters/PCs should blink after a joiner fully joins. */
   partyTabBlink: boolean
   sessionList: GmSessionIndexEntry[]
@@ -123,6 +147,16 @@ type GmSessionContextValue = {
   removeSession: (id: string) => void
   applySession: (next: GmSessionRecord) => void
   updateScratchpad: (text: string) => void
+  /** Create a placeholder stub (Create? from Notes links) and return it. */
+  createContentStub: (input: {
+    kind: GmContentLinkKind
+    name: string
+    notes?: string
+  }) => ReturnType<typeof createPlaceholderEntity> | null
+  updatePlaceholderNotes: (id: string, notes: string) => void
+  updatePlaceholderName: (id: string, name: string) => void
+  linkPersonToNpc: (personId: string, npcInstanceId: string | undefined) => void
+  dropPlaceholder: (id: string) => void
   updateSessionName: (name: string) => void
   /** Open Table: stamp play sitting and start LAN listen (one publish action). */
   openPlaySession: () => Promise<void>
@@ -170,9 +204,14 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   const [hubTabId, setHubTabIdState] = useState<GmHubTabId>('home')
   const [charactersSubTabId, setCharactersSubTabIdState] =
     useState<GmCharactersSubTabId>('pcs')
+  const [storyHomeSubTabId, setStoryHomeSubTabIdState] =
+    useState<GmStoryHomeSubTabId>('notes')
+  const [hubFocus, setHubFocus] = useState<GmHubFocus | null>(null)
   const [partyTabBlink, setPartyTabBlink] = useState(false)
   const hubTabIdRef = useRef<GmHubTabId>(hubTabId)
   const charactersSubTabIdRef = useRef<GmCharactersSubTabId>(charactersSubTabId)
+  const storyHomeSubTabIdRef = useRef<GmStoryHomeSubTabId>(storyHomeSubTabId)
+  const hubModeRef = useRef<GmHubMode>(hubMode)
   const partyTabBlinkRef = useRef(false)
   const presenceRef = useRef<GmPresenceState | null>(null)
 
@@ -185,6 +224,14 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   }, [charactersSubTabId])
 
   useEffect(() => {
+    storyHomeSubTabIdRef.current = storyHomeSubTabId
+  }, [storyHomeSubTabId])
+
+  useEffect(() => {
+    hubModeRef.current = hubMode
+  }, [hubMode])
+
+  useEffect(() => {
     partyTabBlinkRef.current = partyTabBlink
   }, [partyTabBlink])
 
@@ -193,6 +240,14 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     setPartyTabBlink((prev) =>
       partyTabBlinkAfterTabChange(tab, prev, charactersSubTabIdRef.current),
     )
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        hubMode: hubModeRef.current,
+        hubTabId: tab,
+        charactersSubTabId: charactersSubTabIdRef.current,
+        storyHomeSubTabId: storyHomeSubTabIdRef.current,
+      }),
+    )
   }, [])
 
   const setCharactersSubTabId = useCallback((tab: GmCharactersSubTabId) => {
@@ -200,7 +255,57 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     setPartyTabBlink((prev) =>
       partyTabBlinkAfterCharactersSubTabChange(tab, prev),
     )
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        hubMode: hubModeRef.current,
+        hubTabId: hubTabIdRef.current,
+        charactersSubTabId: tab,
+        storyHomeSubTabId: storyHomeSubTabIdRef.current,
+      }),
+    )
   }, [])
+
+  const setStoryHomeSubTabId = useCallback((tab: GmStoryHomeSubTabId) => {
+    setStoryHomeSubTabIdState(tab)
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        hubMode: hubModeRef.current,
+        hubTabId: hubTabIdRef.current,
+        charactersSubTabId: charactersSubTabIdRef.current,
+        storyHomeSubTabId: tab,
+      }),
+    )
+  }, [])
+
+  const clearHubFocus = useCallback(() => setHubFocus(null), [])
+
+  const navigateHubTarget = useCallback((target: GmHubNavTarget) => {
+    const next = applyHubNavTarget(
+      {
+        hubMode: hubModeRef.current,
+        hubTabId: hubTabIdRef.current,
+        charactersSubTabId: charactersSubTabIdRef.current,
+        storyHomeSubTabId: storyHomeSubTabIdRef.current,
+        hubFocus: null,
+      },
+      target,
+    )
+    setHubModeState(next.hubMode)
+    setHubTabIdState(next.hubTabId)
+    setCharactersSubTabIdState(next.charactersSubTabId)
+    setStoryHomeSubTabIdState(next.storyHomeSubTabId)
+    setHubFocus(next.hubFocus)
+    if (isViewingCharactersPcs(next.hubTabId, next.charactersSubTabId)) {
+      setPartyTabBlink(false)
+    }
+  }, [])
+
+  const navigateContentLink = useCallback(
+    (kind: GmContentLinkKind, id: string) => {
+      navigateHubTarget(hubNavTargetForContentKind(kind, id))
+    },
+    [navigateHubTarget],
+  )
 
   const goToStoryHome = useCallback(() => {
     setHubModeState('story')
@@ -455,6 +560,46 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     [patchSession],
   )
 
+  const createContentStub = useCallback(
+    (input: { kind: GmContentLinkKind; name: string; notes?: string }) => {
+      if (!sessionRef.current) return null
+      const entity = createPlaceholderEntity(input)
+      patchSession((s) => addPlaceholder(s, entity))
+      return entity
+    },
+    [patchSession],
+  )
+
+  const updatePlaceholderNotes = useCallback(
+    (id: string, notes: string) => {
+      patchSession((s) => patchPlaceholder(s, id, { notes }))
+    },
+    [patchSession],
+  )
+
+  const updatePlaceholderName = useCallback(
+    (id: string, name: string) => {
+      patchSession((s) => patchPlaceholder(s, id, { name }))
+    },
+    [patchSession],
+  )
+
+  const linkPersonToNpc = useCallback(
+    (personId: string, npcInstanceId: string | undefined) => {
+      patchSession((s) =>
+        patchPlaceholder(s, personId, { linkedNpcId: npcInstanceId }),
+      )
+    },
+    [patchSession],
+  )
+
+  const dropPlaceholder = useCallback(
+    (id: string) => {
+      patchSession((s) => removePlaceholder(s, id))
+    },
+    [patchSession],
+  )
+
   const updateSessionName = useCallback(
     (name: string) => {
       patchSession((s) => renameSession(s, name))
@@ -696,6 +841,12 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubTabId,
       charactersSubTabId,
       setCharactersSubTabId,
+      storyHomeSubTabId,
+      setStoryHomeSubTabId,
+      hubFocus,
+      clearHubFocus,
+      navigateHubTarget,
+      navigateContentLink,
       partyTabBlink,
       sessionList,
       session,
@@ -713,6 +864,11 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       removeSession,
       applySession,
       updateScratchpad,
+      createContentStub,
+      updatePlaceholderNotes,
+      updatePlaceholderName,
+      linkPersonToNpc,
+      dropPlaceholder,
       updateSessionName,
       openPlaySession,
       closePlaySession,
@@ -754,6 +910,12 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubTabId,
       charactersSubTabId,
       setCharactersSubTabId,
+      storyHomeSubTabId,
+      setStoryHomeSubTabId,
+      hubFocus,
+      clearHubFocus,
+      navigateHubTarget,
+      navigateContentLink,
       partyTabBlink,
       sessionList,
       session,
@@ -770,6 +932,11 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       removeSession,
       applySession,
       updateScratchpad,
+      createContentStub,
+      updatePlaceholderNotes,
+      updatePlaceholderName,
+      linkPersonToNpc,
+      dropPlaceholder,
       updateSessionName,
       openPlaySession,
       closePlaySession,

@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { listEncounterArchetypes } from '../../data/library/encounterArchetypeCatalogLoader'
 import { useGmSession } from '../../context/GmSessionContext'
 import { joinedPartyCharacterIds } from '../../lib/gm/joinTableLeave'
+import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
+import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
 
 export function GmCastPanel() {
   const {
@@ -16,8 +18,18 @@ export function GmCastPanel() {
     dropCharacterFromParty,
     partySlices,
     joinSeats,
+    hubFocus,
+    dropPlaceholder,
+    updatePlaceholderNotes,
   } = useGmSession()
   const [filter, setFilter] = useState('')
+  const focusRef = useRef<HTMLLIElement | null>(null)
+
+  useEffect(() => {
+    if (hubFocus?.kind === 'npc') {
+      focusRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    }
+  }, [hubFocus])
 
   const catalog = useMemo(() => {
     if (!session) return []
@@ -41,6 +53,7 @@ export function GmCastPanel() {
   const localPartySlices = partySlices.filter(
     (pc) => !joinedIds.has(pc.characterId),
   )
+  const npcStubs = placeholdersOfKind(session, 'npc')
 
   return (
     <div className="grid min-h-0 flex-1 gap-4 overflow-hidden p-4 lg:grid-cols-2">
@@ -73,7 +86,9 @@ export function GmCastPanel() {
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="text-sm font-semibold text-slate-100">{row.name}</p>
+                    <p className="text-sm font-semibold text-slate-100">
+                      {row.name}
+                    </p>
                     <p className="mt-0.5 line-clamp-2 text-[11px] text-slate-500">
                       {row.description}
                     </p>
@@ -178,6 +193,56 @@ export function GmCastPanel() {
           ) : null}
         </div>
 
+        {npcStubs.length > 0 ? (
+          <div className="shrink-0 rounded-xl border border-dashed border-cyan-800/50 bg-slate-900/50 p-3">
+            <h2 className="text-[10px] font-bold uppercase tracking-wide text-cyan-200/80">
+              Notes link stubs
+            </h2>
+            <p className="mt-1 text-[11px] text-slate-500">
+              Placeholder NPCs from Notes Create? — not combat fodder yet.
+            </p>
+            <ul className="mt-2 space-y-2">
+              {npcStubs.map((stub) => {
+                const focused = isHubFocusMatch(hubFocus, 'npc', stub.id)
+                return (
+                  <li
+                    key={stub.id}
+                    ref={focused ? focusRef : undefined}
+                    id={`gm-focus-npc-${stub.id}`}
+                    className={`rounded-lg border p-2 ${
+                      focused
+                        ? 'border-cyan-500 bg-cyan-950/40 ring-1 ring-cyan-400/40'
+                        : 'border-slate-800 bg-slate-950/70'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-sm font-semibold text-white">
+                        {stub.name}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => dropPlaceholder(stub.id)}
+                        className="text-[10px] uppercase text-red-400/80"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <textarea
+                      value={stub.notes}
+                      onChange={(e) =>
+                        updatePlaceholderNotes(stub.id, e.target.value)
+                      }
+                      placeholder="Stub notes…"
+                      className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
+                      rows={2}
+                    />
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        ) : null}
+
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/70">
           <div className="border-b border-slate-800 p-3">
             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-cyan-200/90">
@@ -186,63 +251,83 @@ export function GmCastPanel() {
           </div>
           <ul className="min-h-0 flex-1 overflow-y-auto p-2">
             {session.npcs.length === 0 ? (
-              <li className="p-3 text-xs text-slate-500">No adversaries spawned.</li>
+              <li className="p-3 text-xs text-slate-500">
+                No adversaries spawned.
+              </li>
             ) : (
-              session.npcs.map((npc) => (
-                <li
-                  key={npc.instanceId}
-                  className="mb-2 rounded-lg border border-slate-800 bg-slate-950/70 p-2"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-semibold text-white">
-                      {npc.displayName}
+              session.npcs.map((npc) => {
+                const focused = isHubFocusMatch(
+                  hubFocus,
+                  'npc',
+                  npc.instanceId,
+                )
+                return (
+                  <li
+                    key={npc.instanceId}
+                    ref={focused ? focusRef : undefined}
+                    id={`gm-focus-npc-${npc.instanceId}`}
+                    className={`mb-2 rounded-lg border p-2 ${
+                      focused
+                        ? 'border-cyan-500 bg-cyan-950/40 ring-1 ring-cyan-400/40'
+                        : 'border-slate-800 bg-slate-950/70'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-sm font-semibold text-white">
+                        {npc.displayName}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => dropNpc(npc.instanceId)}
+                        className="text-[10px] uppercase text-red-400/80"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <p className="mt-1 font-mono text-[11px] text-slate-300">
+                      H.P. {npc.hpCurrent}/{npc.hpMax} · S.D.C. {npc.sdcCurrent}/
+                      {npc.sdcMax} · APM {npc.maxApm - npc.apmSpent}/
+                      {npc.maxApm}
                     </p>
-                    <button
-                      type="button"
-                      onClick={() => dropNpc(npc.instanceId)}
-                      className="text-[10px] uppercase text-red-400/80"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <p className="mt-1 font-mono text-[11px] text-slate-300">
-                    H.P. {npc.hpCurrent}/{npc.hpMax} · S.D.C. {npc.sdcCurrent}/
-                    {npc.sdcMax} · APM {npc.maxApm - npc.apmSpent}/{npc.maxApm}
-                  </p>
-                  <div className="mt-2 flex flex-wrap gap-1">
-                    <button
-                      type="button"
-                      className="rounded bg-slate-800 px-2 py-0.5 text-[10px] text-red-300"
-                      onClick={() => bumpNpcPool(npc.instanceId, 'sdc', -4)}
-                    >
-                      −4 S.D.C.
-                    </button>
-                    <button
-                      type="button"
-                      className="rounded bg-slate-800 px-2 py-0.5 text-[10px] text-red-300"
-                      onClick={() => bumpNpcPool(npc.instanceId, 'hp', -4)}
-                    >
-                      −4 H.P.
-                    </button>
-                    <button
-                      type="button"
-                      className="rounded bg-slate-800 px-2 py-0.5 text-[10px] text-emerald-300"
-                      onClick={() => bumpNpcPool(npc.instanceId, 'hp', 4)}
-                    >
-                      +4 H.P.
-                    </button>
-                  </div>
-                  <textarea
-                    value={npc.notes}
-                    onChange={(e) =>
-                      setNpcNotes(npc.instanceId, e.target.value)
-                    }
-                    placeholder="Motives, names, tells…"
-                    className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
-                    rows={2}
-                  />
-                </li>
-              ))
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      <button
+                        type="button"
+                        className="rounded bg-slate-800 px-2 py-0.5 text-[10px] text-red-300"
+                        onClick={() =>
+                          bumpNpcPool(npc.instanceId, 'sdc', -4)
+                        }
+                      >
+                        −4 S.D.C.
+                      </button>
+                      <button
+                        type="button"
+                        className="rounded bg-slate-800 px-2 py-0.5 text-[10px] text-red-300"
+                        onClick={() =>
+                          bumpNpcPool(npc.instanceId, 'hp', -4)
+                        }
+                      >
+                        −4 H.P.
+                      </button>
+                      <button
+                        type="button"
+                        className="rounded bg-slate-800 px-2 py-0.5 text-[10px] text-emerald-300"
+                        onClick={() => bumpNpcPool(npc.instanceId, 'hp', 4)}
+                      >
+                        +4 H.P.
+                      </button>
+                    </div>
+                    <textarea
+                      value={npc.notes}
+                      onChange={(e) =>
+                        setNpcNotes(npc.instanceId, e.target.value)
+                      }
+                      placeholder="Motives, names, tells…"
+                      className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
+                      rows={2}
+                    />
+                  </li>
+                )
+              })
             )}
           </ul>
         </div>

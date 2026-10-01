@@ -1,5 +1,6 @@
 import type { GenreId } from '../../data/genres'
 import type { ActiveForm } from '../../types'
+import type { GmContentLinkKind } from './contentLinks'
 
 /** Session-wide cross-genre policy (view-model only — never writes character saves). */
 export type GmConversionPolicy = 'disable_non_native' | 'apply_conversion'
@@ -35,6 +36,21 @@ export type GmNpcInstance = {
   maxApm: number
   apmSpent: number
   initiativeRoll: number | null
+}
+
+/**
+ * Placeholder stub for Notes content links (v1) — person / place / thing /
+ * note / npc / pc. Real combat NPCs stay on `npcs`; joined PCs on party ids.
+ */
+export type GmPlaceholderEntity = {
+  id: string
+  kind: GmContentLinkKind
+  name: string
+  /** Freeform stub notes (person rows are note-ish). */
+  notes: string
+  /** Optional person → real Characters NPC deep link. */
+  linkedNpcId?: string
+  createdAtMs: number
 }
 
 export type GmHfEmit = {
@@ -93,6 +109,11 @@ export type GmSessionRecord = {
   createdAtMs: number
   updatedAtMs: number
   scratchpad: string
+  /**
+   * Placeholder stubs for Notes content links (person / place / thing / note /
+   * npc / pc). Real combat NPCs stay on `npcs`; joined PCs stay on party ids.
+   */
+  placeholders: GmPlaceholderEntity[]
   partyCharacterIds: string[]
   partyOverlays: Record<string, GmPartyOverlay>
   npcs: GmNpcInstance[]

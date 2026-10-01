@@ -1,4 +1,5 @@
 import { isGenreId } from '../../data/genres'
+import { hydratePlaceholders } from './narrativePlaceholders'
 import { hydratePlaySessions } from './playSession'
 import type { GmSessionIndexEntry, GmSessionRecord } from './sessionTypes'
 
@@ -59,7 +60,7 @@ export function loadGmSession(id: string): GmSessionRecord | null {
     if (!raw) return null
     const parsed = JSON.parse(raw) as unknown
     if (!isSessionRecord(parsed)) return null
-    return hydratePlaySessions(parsed)
+    return hydratePlaceholders(hydratePlaySessions(parsed))
   } catch {
     return null
   }

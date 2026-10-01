@@ -44,7 +44,10 @@ describe('GM Hub tabs', () => {
     expect(
       buildGmStoryHomeSubTabViews('notes').map((tab) => tab.id),
     ).toEqual(GM_STORY_HOME_SUB_TAB_ORDER)
-    expect(gmStoryHomeStubReason('people')).toMatch(/not in this build yet/i)
+    // Placeholder lanes are live — no “not in this build” grey-out.
+    expect(gmStoryHomeStubReason('people')).toBe('')
+    expect(gmStoryHomeStubReason('places')).toBe('')
+    expect(gmStoryHomeStubReason('things')).toBe('')
     expect(gmStoryHomeStubReason('notes')).toBe('')
   })
 

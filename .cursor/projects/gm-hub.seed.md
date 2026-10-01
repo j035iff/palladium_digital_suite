@@ -24,7 +24,8 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 - Launcher Campaigns → `GmHubShell` (`viewport: 'gm'`); New Campaign → Campaign Creation Forge (`viewport: 'campaign_forge'`) then enter hub
 - Campaign vs play session: persistent campaign + joinable play sittings (`playSessions[]`, `activePlaySessionId`); player label `{campaign}: {date}`
 - Narrative / Combat master modes (chrome **Narrative**; internal `hubMode: 'story'`). Home is mode-specific; Characters (PCs + NPCs) and Gear are ONE shared pipeline (not forked per mode)
-- Narrative Home: People / Places / Things (stubs) + Notes (scratchpad). Combat Home = combat HUD
+- Narrative Home: People / Places / Things (placeholder stubs for Notes links) + Notes (scratchpad with `[[kind:id|label]]` content links + Create?). Combat Home = combat HUD
+- Notes content links: outbound only; shared `hubNavigation` (Characters keeps mode; narrative kinds → Narrative Home) — no Narrative/Combat fork
 - Characters: PCs = joined seats only; NPCs = local-machine characters + encounter fodder (“Add from this machine” under NPCs)
 - Conversion policy baked at create (`disable_non_native` | `apply_conversion`); view-model only; character JSON never mutated; structural M.D.C.↔S.D.C. not implemented yet
 - Combat: physical d20 in / bonus out; GM taps NPC APM only; party APM display-only; Lock initiative with visible Unlock; New melee round + Emit H.F. (records saves; does not auto-spend PC APM)
