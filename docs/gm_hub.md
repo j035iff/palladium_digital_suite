@@ -53,7 +53,7 @@ Narrative / Combat master modes match the live character sheet mode split (GM ch
 
 | Mode | Top tabs |
 |------|----------|
-| **Narrative** (`story`) | **Story Beats** (notes-like stub) · **People** (PCs / NPCs — former Characters) · **Places** (stub) · **Things** (notes stub + Gear) · **Notes** (scratchpad + content links) |
+| **Narrative** (`story`) | **Story Beats** (content-linked pad) · **People** (PCs / NPCs — former Characters) · **Places** (stub) · **Things** (notes stub + Gear) · **Notes** (scratchpad + content links) |
 | **Combat** | **Melee** (combat HUD + add-from-People dropdowns) · **Prefabs** (stub) |
 
 Switching Narrative ↔ Combat resets to that lane’s default first tab (**Story Beats** / **Melee**). Campaigns are still switched from the launcher.
@@ -73,7 +73,7 @@ Combat roster is **opt-in**: GM picks joined PCs and local/fodder NPCs from Mele
 
 ### Notes content links (v1)
 
-While writing **Notes**, the GM inserts outbound in-app links (`[[kind:id|label]]`) that jump to placeholder or live targets. **Primary authoring:** type `@` in the scratchpad (Cursor-like mentions) → filter existing places / NPCs / PCs / things / people / note stubs → pick one → the structured link is inserted. **Insert link…** remains a fallback dialog; hand-typed `[[…]]` still parses but is not the taught UX. Person stubs are a notes page that links to real cast on **People → NPCs** (not a second sheet). No match / missing targets offer **Create?** to make a stub, then link (Radical Visibility). Broken links stay visible with why-text. Backlinks / wiki graph are deferred.
+While writing on any **Narrative notes-like surface**, the GM inserts outbound in-app links (`[[kind:id|label]]`) that jump to placeholder or live targets. Surfaces share one editor pipeline (`GmContentLinkedNotesField`): **Notes** scratchpad, **Story Beats**, **Places / Things / People** stub notes, note stubs, and cast/NPC notes. **Primary authoring:** type `@` (Cursor-like mentions) → filter existing places / NPCs / PCs / things / people / note stubs → pick one → the structured link is stored as `[[…]]` but **rendered as the clickable label in the primary field body** (Familiar Surface — never show engine ids or raw `[[…]]` as the default UX). There is **no separate “Linked Preview” strip** — the scratchpad body is the rendered surface. **Insert link…** remains a fallback on scratchpad-density fields; hand-typed `[[…]]` still parses but is not the taught UX. Person stubs are a notes page that links to real cast on **People → NPCs** (not a second sheet). No match / missing targets offer **Create?** to make a stub, then link (Radical Visibility). Broken links stay visible with why-text. Backlinks / wiki graph are deferred.
 
 | Kind | Navigate to |
 |------|-------------|
@@ -86,7 +86,7 @@ While writing **Notes**, the GM inserts outbound in-app links (`[[kind:id|label]
 
 Navigation uses one shared Hub navigator (`hubNavigation.ts` + context `navigateHubTarget`): People / narrative kinds always force Narrative (never open People from Combat). Do not fork Story vs Combat link handlers.
 
-**Things → Gear:** mounts the shared [Gear Forge](./forge/gear_forge.md) shell (`kind: 'gm'`). Grant target is a character save on the table (write-back via `gmCharacterInventoryGrant`). Party observer still does not mutate saves for vitals/overlays. Encounter Quick-Blocks have no inventory — the Gear sub-tab shows why they cannot receive grants. Do not fork a GM-only forge shell.
+**Things → Gear:** mounts the shared [Gear Forge](./forge/gear_forge.md) shell (`kind: 'gm'`). **Core commit** is the shared **My Custom Gear** library (`customGearLibrary` — same lists as portal Gear Forge). Saving customs / catalog copies to those lists does **not** require a character. Optional **Push to character** dual-writes a copy into a People character save when a grant target is selected (`gmCharacterInventoryGrant`). Party observer still does not mutate saves for vitals/overlays. Encounter Quick-Blocks have no inventory — the Gear sub-tab shows why they cannot receive grants. User-created stubs / custom gear use **Delete** with a permanent-confirm dialog (engagement **Remove** on Melee / party seats stays non-permanent). Do not fork a GM-only forge shell.
 
 Deferred tab names **Forge** / **Plot** are omitted so they do not collide with Character Creation Forge.
 
@@ -141,7 +141,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Party observer (Pillar 9) | `src/lib/gm/partyObserver.ts` |
 | Combat roster | `src/lib/gm/combatRoster.ts` + `meleeEngagement.ts` (Melee dropdown add/remove) |
 | Fodder spawn | `src/lib/gm/npcInstance.ts` |
-| Gear grant (party save) | `src/lib/gear/gmGearForgeHost.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` (Things → Gear) |
+| Gear (Things → Gear) | `src/lib/gear/gmGearForgeHost.ts`, `customGearLibrary.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` |
 | Protocol | `src/lib/gm/sessionMessages.ts` |
 | Presence / join token / join gate | `src/lib/gm/sessionPresence.ts`, `sessionJoinCode.ts`, `sessionJoinGate.ts` |
 | People blink | `src/lib/gm/partyBlink.ts` → `GmTabBar` / hub context (clears on Narrative → People → PCs) |

@@ -6,7 +6,9 @@ import {
 } from '../../lib/gm/joinTableLeave'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
 import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
+import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
 import { formatBonus, formatPercent } from './GmApmPips'
+import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 
 export function GmPartyPanel() {
   const {
@@ -99,20 +101,25 @@ export function GmPartyPanel() {
                     </p>
                     <button
                       type="button"
-                      onClick={() => dropPlaceholder(stub.id)}
+                      onClick={() => {
+                        if (!confirmPermanentDelete(stub.name)) return
+                        dropPlaceholder(stub.id)
+                      }}
                       className="text-[10px] uppercase text-red-400/80"
                     >
-                      Remove
+                      Delete
                     </button>
                   </div>
-                  <textarea
+                  <GmContentLinkedNotesField
+                    id={`gm-pc-stub-notes-${stub.id}`}
                     value={stub.notes}
-                    onChange={(e) =>
-                      updatePlaceholderNotes(stub.id, e.target.value)
+                    onChange={(text) =>
+                      updatePlaceholderNotes(stub.id, text)
                     }
-                    placeholder="Stub notes…"
-                    className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
-                    rows={2}
+                    density="compact"
+                    placeholder="Stub notes… type @ to link"
+                    className="mt-2"
+                    aria-label={`${stub.name} notes`}
                   />
                 </li>
               )

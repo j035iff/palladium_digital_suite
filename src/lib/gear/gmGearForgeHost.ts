@@ -16,8 +16,9 @@ export type GmGearForgeAdapterDeps = {
 }
 
 /**
- * GM Hub host adapter — commits to a selected party character’s save inventory.
- * Same {@link GearForgeHostAdapter} contract as library / creation / sheet (Pillar 9).
+ * GM Hub host adapter — Things → Gear mounts the shared shell.
+ * Prefer committing to My Custom Gear lists; optional character push is a
+ * panel concern and must not gate library saves (Pillar 9).
  */
 export function buildGmGearForgeAdapter(
   deps: GmGearForgeAdapterDeps,

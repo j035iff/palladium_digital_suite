@@ -60,6 +60,7 @@ export function createGmSession(input: {
     createdAtMs: now,
     updatedAtMs: now,
     scratchpad: '',
+    storyBeats: '',
     placeholders: emptyPlaceholders(),
     partyCharacterIds: [],
     partyOverlays: {},
@@ -136,6 +137,13 @@ export function setScratchpad(
   scratchpad: string,
 ): GmSessionRecord {
   return touch({ ...session, scratchpad })
+}
+
+export function setStoryBeats(
+  session: GmSessionRecord,
+  storyBeats: string,
+): GmSessionRecord {
+  return touch({ ...session, storyBeats })
 }
 
 export function setConversionPolicy(

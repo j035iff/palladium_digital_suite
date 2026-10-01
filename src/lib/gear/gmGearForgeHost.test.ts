@@ -12,6 +12,8 @@ import {
   addWeaponToCharacterSave,
   dropItemFromCharacterSave,
   gmGearCommitBlockedReason,
+  gmGearGrantBlockedReason,
+  gmGearLibraryBlockedReason,
   GM_CAST_GEAR_BLOCKED_REASON,
   listCharacterSaveInventory,
   updateWeaponOnCharacterSave,
@@ -85,34 +87,56 @@ describe('buildGmGearForgeAdapter', () => {
   })
 })
 
-describe('gmGearCommitBlockedReason', () => {
-  it('explains missing campaign, target, and save', () => {
+describe('gmGearLibraryBlockedReason / gmGearGrantBlockedReason', () => {
+  it('library saves only require an open campaign', () => {
     expect(
-      gmGearCommitBlockedReason({
+      gmGearLibraryBlockedReason({
+        campaignOpen: false,
+      }),
+    ).toMatch(/campaign/i)
+    expect(
+      gmGearLibraryBlockedReason({
+        campaignOpen: true,
+      }),
+    ).toBeNull()
+  })
+
+  it('grant push explains missing target and save without gating library', () => {
+    expect(
+      gmGearGrantBlockedReason({
         campaignOpen: false,
         targetCharacterId: null,
       }),
     ).toMatch(/campaign/i)
     expect(
-      gmGearCommitBlockedReason({
+      gmGearGrantBlockedReason({
         campaignOpen: true,
         targetCharacterId: null,
       }),
-    ).toMatch(/character/i)
+    ).toMatch(/optional/i)
     expect(
-      gmGearCommitBlockedReason({
+      gmGearGrantBlockedReason({
         campaignOpen: true,
         targetCharacterId: 'c1',
         saveMissing: true,
       }),
     ).toMatch(/missing/i)
     expect(
-      gmGearCommitBlockedReason({
+      gmGearGrantBlockedReason({
         campaignOpen: true,
         targetCharacterId: 'c1',
       }),
     ).toBeNull()
     expect(GM_CAST_GEAR_BLOCKED_REASON).toMatch(/Quick-Blocks/i)
+  })
+
+  it('legacy gmGearCommitBlockedReason still explains grant gates', () => {
+    expect(
+      gmGearCommitBlockedReason({
+        campaignOpen: true,
+        targetCharacterId: null,
+      }),
+    ).toMatch(/optional|character/i)
   })
 })
 

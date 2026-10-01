@@ -56,6 +56,7 @@ import {
   setNpcInitiativeRoll,
   setPartyInitiativeRoll,
   setScratchpad,
+  setStoryBeats,
   spendNpcApm,
   startNewMeleeRound,
   unlockInitiative,
@@ -159,6 +160,7 @@ type GmSessionContextValue = {
   removeSession: (id: string) => void
   applySession: (next: GmSessionRecord) => void
   updateScratchpad: (text: string) => void
+  updateStoryBeats: (text: string) => void
   /** Create a placeholder stub (Create? from Notes links) and return it. */
   createContentStub: (input: {
     kind: GmContentLinkKind
@@ -620,6 +622,13 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     [patchSession],
   )
 
+  const updateStoryBeats = useCallback(
+    (text: string) => {
+      patchSession((s) => setStoryBeats(s, text))
+    },
+    [patchSession],
+  )
+
   const createContentStub = useCallback(
     (input: { kind: GmContentLinkKind; name: string; notes?: string }) => {
       if (!sessionRef.current) return null
@@ -959,6 +968,7 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       removeSession,
       applySession,
       updateScratchpad,
+      updateStoryBeats,
       createContentStub,
       updatePlaceholderNotes,
       updatePlaceholderName,
@@ -1032,6 +1042,7 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       removeSession,
       applySession,
       updateScratchpad,
+      updateStoryBeats,
       createContentStub,
       updatePlaceholderNotes,
       updatePlaceholderName,

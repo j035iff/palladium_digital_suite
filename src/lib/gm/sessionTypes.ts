@@ -119,6 +119,8 @@ export type GmSessionRecord = {
   createdAtMs: number
   updatedAtMs: number
   scratchpad: string
+  /** Narrative → Story Beats pad (same content-link pipeline as Notes). */
+  storyBeats: string
   /**
    * Placeholder stubs for Notes content links (person / place / thing / note /
    * npc / pc). Real combat NPCs stay on `npcs`; joined PCs stay on party ids.

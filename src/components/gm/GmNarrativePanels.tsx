@@ -1,14 +1,15 @@
 import { useGmSession } from '../../context/GmSessionContext'
 import { GmConversionRulesBanner } from './GmThingsPanel'
+import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 import { GmNotesScratchpad } from './GmNotesScratchpad'
 import { GmPlaceholderLane } from './GmPlaceholderLane'
 
 /**
- * Narrative → Story Beats — notes-like stub for this pass.
- * Reuses Notes editor pattern / scratchpad UX later; placeholder for now.
+ * Narrative → Story Beats — shared content-linked notes field (Pillar 9).
+ * Same `[[kind:id|label]]` pipeline as Notes / Places / Things stubs.
  */
 export function GmStoryBeatsPanel() {
-  const { session } = useGmSession()
+  const { session, updateStoryBeats } = useGmSession()
 
   if (!session) {
     return (
@@ -24,26 +25,29 @@ export function GmStoryBeatsPanel() {
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
       <section className="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-700 bg-slate-900/70 p-4">
         <GmConversionRulesBanner />
-        <div className="mt-4">
+        <div className="mt-4 flex min-h-0 flex-1 flex-col">
           <h2 className="text-xs font-black uppercase tracking-[0.2em] text-amber-200/90">
             Story Beats
           </h2>
           <p className="mt-1 max-w-xl text-xs text-slate-400">
-            Notes-like scratch space for beat tracking. Full beat tools are a
-            later pass — use the campaign Notes tab for structured content
-            links today.
+            Scratch space for beat tracking. Type @ to link places, people, and
+            things — links show as names (same pipeline as Notes).
           </p>
-          <p className="mt-4 rounded-lg border border-dashed border-slate-700 bg-slate-950/40 px-3 py-6 text-center text-sm text-slate-500">
-            Story Beats editor stub — not in this build yet beyond this
-            placeholder.
-          </p>
+          <GmContentLinkedNotesField
+            id="gm-story-beats"
+            value={session.storyBeats}
+            onChange={updateStoryBeats}
+            density="scratchpad"
+            placeholder="Beat notes… type @ to link places, NPCs, PCs, things. Auto-saves."
+            className="mt-4 min-h-[10rem] flex-1"
+          />
         </div>
       </section>
     </div>
   )
 }
 
-/** Narrative → Places — unchanged Places stub lane. */
+/** Narrative → Places — Places stub lane. */
 export function GmPlacesPanel() {
   const { session } = useGmSession()
 
@@ -67,7 +71,7 @@ export function GmPlacesPanel() {
   )
 }
 
-/** Narrative → Notes — campaign scratchpad + content links (unchanged). */
+/** Narrative → Notes — campaign scratchpad + content links. */
 export function GmNotesPanel() {
   const { session } = useGmSession()
 

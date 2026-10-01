@@ -4,6 +4,8 @@ import { useGmSession } from '../../context/GmSessionContext'
 import { joinedPartyCharacterIds } from '../../lib/gm/joinTableLeave'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
 import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
+import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
+import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 
 export function GmCastPanel() {
   const {
@@ -221,20 +223,25 @@ export function GmCastPanel() {
                       </p>
                       <button
                         type="button"
-                        onClick={() => dropPlaceholder(stub.id)}
+                        onClick={() => {
+                          if (!confirmPermanentDelete(stub.name)) return
+                          dropPlaceholder(stub.id)
+                        }}
                         className="text-[10px] uppercase text-red-400/80"
                       >
-                        Remove
+                        Delete
                       </button>
                     </div>
-                    <textarea
+                    <GmContentLinkedNotesField
+                      id={`gm-npc-stub-notes-${stub.id}`}
                       value={stub.notes}
-                      onChange={(e) =>
-                        updatePlaceholderNotes(stub.id, e.target.value)
+                      onChange={(text) =>
+                        updatePlaceholderNotes(stub.id, text)
                       }
-                      placeholder="Stub notes…"
-                      className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
-                      rows={2}
+                      density="compact"
+                      placeholder="Stub notes… type @ to link"
+                      className="mt-2"
+                      aria-label={`${stub.name} notes`}
                     />
                   </li>
                 )
@@ -278,10 +285,13 @@ export function GmCastPanel() {
                       </p>
                       <button
                         type="button"
-                        onClick={() => dropNpc(npc.instanceId)}
+                        onClick={() => {
+                          if (!confirmPermanentDelete(npc.displayName)) return
+                          dropNpc(npc.instanceId)
+                        }}
                         className="text-[10px] uppercase text-red-400/80"
                       >
-                        Remove
+                        Delete
                       </button>
                     </div>
                     <p className="mt-1 font-mono text-[11px] text-slate-300">
@@ -316,14 +326,16 @@ export function GmCastPanel() {
                         +4 H.P.
                       </button>
                     </div>
-                    <textarea
+                    <GmContentLinkedNotesField
+                      id={`gm-npc-notes-${npc.instanceId}`}
                       value={npc.notes}
-                      onChange={(e) =>
-                        setNpcNotes(npc.instanceId, e.target.value)
+                      onChange={(text) =>
+                        setNpcNotes(npc.instanceId, text)
                       }
-                      placeholder="Motives, names, tells…"
-                      className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
-                      rows={2}
+                      density="compact"
+                      placeholder="Motives, names, tells… type @ to link"
+                      className="mt-2"
+                      aria-label={`${npc.displayName} notes`}
                     />
                   </li>
                 )

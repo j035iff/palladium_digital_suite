@@ -16,22 +16,51 @@ import {
 } from './inventoryWeaponCommit'
 import type { GearForgeWeaponPatch, GearForgeWeaponPiece } from './gearForgeHost'
 
-/** Radical Visibility: why GM Gear cannot grant yet. */
-export function gmGearCommitBlockedReason(opts: {
+/**
+ * Radical Visibility: why GM Things → Gear cannot save to custom gear lists.
+ * Character grant is optional — never gates library saves.
+ */
+export function gmGearLibraryBlockedReason(opts: {
   campaignOpen: boolean
-  targetCharacterId: string | null
-  saveMissing?: boolean
 }): string | null {
   if (!opts.campaignOpen) {
     return 'Open a campaign from the launcher first'
   }
+  return null
+}
+
+/**
+ * Why optional push-to-character is unavailable (does not block forge saves).
+ */
+export function gmGearGrantBlockedReason(opts: {
+  campaignOpen: boolean
+  targetCharacterId: string | null
+  saveMissing?: boolean
+}): string | null {
+  const libraryBlock = gmGearLibraryBlockedReason({
+    campaignOpen: opts.campaignOpen,
+  })
+  if (libraryBlock) return libraryBlock
   if (!opts.targetCharacterId?.trim()) {
-    return 'Select a character to grant gear'
+    return 'Select a character to push a copy (optional — saves still work)'
   }
   if (opts.saveMissing) {
     return 'That character save is missing on this machine'
   }
   return null
+}
+
+/**
+ * @deprecated Prefer {@link gmGearLibraryBlockedReason} for forge saves and
+ * {@link gmGearGrantBlockedReason} for optional character push.
+ * Kept for callers that still treat grant as the forge commit gate.
+ */
+export function gmGearCommitBlockedReason(opts: {
+  campaignOpen: boolean
+  targetCharacterId: string | null
+  saveMissing?: boolean
+}): string | null {
+  return gmGearGrantBlockedReason(opts)
 }
 
 /** Encounter Quick-Blocks have no inventory — keep visible in chrome, never invent bags. */
