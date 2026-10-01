@@ -14,7 +14,12 @@ import { listFinalizedCharacters, loadCharacterSave } from '../lib/characterInde
 import type { CharacterIndexEntry } from '../lib/characterIndex'
 import type { CharacterRootState } from '../types'
 import { assembleGmCombatRoster } from '../lib/gm/combatRoster'
-import type { GmHubMode, GmHubTabId } from '../lib/gm/hubTabs'
+import type {
+  GmCharactersSubTabId,
+  GmHubMode,
+  GmHubTabId,
+} from '../lib/gm/hubTabs'
+import { isViewingCharactersPcs } from '../lib/gm/hubTabs'
 import { createNpcFromArchetype } from '../lib/gm/npcInstance'
 import {
   addNpcInstance,
@@ -84,6 +89,7 @@ import type { GmPresenceState, GmSeat } from '../lib/gm/sessionPresence'
 import type { GmJoinListenCapability } from '../lib/gm/desktopHostCapability'
 import {
   nextPartyTabBlink,
+  partyTabBlinkAfterCharactersSubTabChange,
   partyTabBlinkAfterTabChange,
 } from '../lib/gm/partyBlink'
 
@@ -92,7 +98,10 @@ type GmSessionContextValue = {
   setHubMode: (mode: GmHubMode) => void
   hubTabId: GmHubTabId
   setHubTabId: (tab: GmHubTabId) => void
-  /** True while Party tab should blink after a joiner fully joins. */
+  /** Characters → PCs | NPCs (shared under Narrative and Combat). */
+  charactersSubTabId: GmCharactersSubTabId
+  setCharactersSubTabId: (tab: GmCharactersSubTabId) => void
+  /** True while Characters/PCs should blink after a joiner fully joins. */
   partyTabBlink: boolean
   sessionList: GmSessionIndexEntry[]
   session: GmSessionRecord | null
@@ -159,8 +168,11 @@ function persist(next: GmSessionRecord): GmSessionRecord {
 export function GmSessionProvider({ children }: { children: ReactNode }) {
   const [hubMode, setHubModeState] = useState<GmHubMode>('story')
   const [hubTabId, setHubTabIdState] = useState<GmHubTabId>('home')
+  const [charactersSubTabId, setCharactersSubTabIdState] =
+    useState<GmCharactersSubTabId>('pcs')
   const [partyTabBlink, setPartyTabBlink] = useState(false)
   const hubTabIdRef = useRef<GmHubTabId>(hubTabId)
+  const charactersSubTabIdRef = useRef<GmCharactersSubTabId>(charactersSubTabId)
   const partyTabBlinkRef = useRef(false)
   const presenceRef = useRef<GmPresenceState | null>(null)
 
@@ -169,12 +181,25 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   }, [hubTabId])
 
   useEffect(() => {
+    charactersSubTabIdRef.current = charactersSubTabId
+  }, [charactersSubTabId])
+
+  useEffect(() => {
     partyTabBlinkRef.current = partyTabBlink
   }, [partyTabBlink])
 
   const setHubTabId = useCallback((tab: GmHubTabId) => {
     setHubTabIdState(tab)
-    setPartyTabBlink((prev) => partyTabBlinkAfterTabChange(tab, prev))
+    setPartyTabBlink((prev) =>
+      partyTabBlinkAfterTabChange(tab, prev, charactersSubTabIdRef.current),
+    )
+  }, [])
+
+  const setCharactersSubTabId = useCallback((tab: GmCharactersSubTabId) => {
+    setCharactersSubTabIdState(tab)
+    setPartyTabBlink((prev) =>
+      partyTabBlinkAfterCharactersSubTabChange(tab, prev),
+    )
   }, [])
 
   const goToStoryHome = useCallback(() => {
@@ -315,7 +340,10 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
             currentlyBlinking: partyTabBlinkRef.current,
             previousPresence: previous,
             nextPresence: presence,
-            viewingPartyTab: hubTabIdRef.current === 'party',
+            viewingCharactersPcs: isViewingCharactersPcs(
+              hubTabIdRef.current,
+              charactersSubTabIdRef.current,
+            ),
           })
           setPartyTabBlink(nextBlink)
         },
@@ -666,6 +694,8 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubMode,
       hubTabId,
       setHubTabId,
+      charactersSubTabId,
+      setCharactersSubTabId,
       partyTabBlink,
       sessionList,
       session,
@@ -722,6 +752,8 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubMode,
       hubTabId,
       setHubTabId,
+      charactersSubTabId,
+      setCharactersSubTabId,
       partyTabBlink,
       sessionList,
       session,

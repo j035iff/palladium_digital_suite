@@ -15,20 +15,18 @@ import {
   playersPanelAfterTableOpenClick,
   playersPanelForTableOpenState,
 } from '../../lib/gm/hubTableChrome'
-import { GmCastPanel } from './GmCastPanel'
+import { GmCharactersPanel } from './GmCharactersPanel'
 import { GmCombatPanel } from './GmCombatPanel'
 import { GmGearPanel } from './GmGearPanel'
 import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { GmJoinHostChrome } from './GmJoinHostChrome'
-import { GmPartyPanel } from './GmPartyPanel'
 import { GmSessionsPanel } from './GmSessionsPanel'
 import { GmTabBar } from './GmTabBar'
 
 function GmHubWorkspace() {
   const { hubMode, hubTabId } = useGmSession()
 
-  if (hubTabId === 'party') return <GmPartyPanel />
-  if (hubTabId === 'cast') return <GmCastPanel />
+  if (hubTabId === 'characters') return <GmCharactersPanel />
   if (hubTabId === 'gear') return <GmGearPanel />
   if (hubMode === 'combat') return <GmCombatPanel />
   return <GmSessionsPanel />
@@ -41,6 +39,7 @@ export function GmHubShell() {
     setHubMode,
     hubTabId,
     setHubTabId,
+    charactersSubTabId,
     session,
     openPlaySession,
     closePlaySession,
@@ -134,6 +133,7 @@ export function GmHubShell() {
               <GmTabBar
                 mode={hubMode}
                 tabId={hubTabId}
+                charactersSubTabId={charactersSubTabId}
                 onModeChange={setHubMode}
                 onTabChange={setHubTabId}
                 campaignOpen={Boolean(session)}

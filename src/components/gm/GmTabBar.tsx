@@ -2,8 +2,11 @@ import { useMemo } from 'react'
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 import {
   buildGmHubTabViews,
+  gmHubModeLabel,
   gmHubTabTitle,
   isGmHubTabId,
+  isViewingCharactersPcs,
+  type GmCharactersSubTabId,
   type GmHubMode,
   type GmHubTabId,
 } from '../../lib/gm/hubTabs'
@@ -11,12 +14,14 @@ import {
 const MODES: readonly GmHubMode[] = ['story', 'combat']
 
 /**
- * Top nav under Hub title — Story/Combat + Home/Party/Cast/Gear.
+ * Top nav under Hub title — Narrative/Combat + Home/Characters/Gear.
  * Compact shell places this in the header (no bottom bar).
+ * Internal hubMode id `story` displays as Narrative.
  */
 export function GmTabBar({
   mode,
   tabId,
+  charactersSubTabId,
   onModeChange,
   onTabChange,
   campaignOpen,
@@ -24,16 +29,20 @@ export function GmTabBar({
 }: {
   mode: GmHubMode
   tabId: GmHubTabId
+  charactersSubTabId: GmCharactersSubTabId
   onModeChange: (mode: GmHubMode) => void
   onTabChange: (tab: GmHubTabId) => void
   campaignOpen: boolean
-  /** Ephemeral Join Table cue — clears when Party is selected. */
+  /** Ephemeral Join Table cue — clears when Characters → PCs is selected. */
   partyTabBlink?: boolean
 }) {
   const tabs = useMemo(
     () => buildGmHubTabViews(tabId, { campaignOpen, partyTabBlink }),
     [tabId, campaignOpen, partyTabBlink],
   )
+
+  const showJoinerHint =
+    partyTabBlink && !isViewingCharactersPcs(tabId, charactersSubTabId)
 
   return (
     <div aria-label="GM Hub mode and tabs">
@@ -57,7 +66,7 @@ export function GmTabBar({
                     : 'text-amber-200/80 hover:bg-amber-950/60'
                 }`}
               >
-                {row}
+                {gmHubModeLabel(row)}
               </button>
             )
           })}
@@ -73,9 +82,9 @@ export function GmTabBar({
         />
         <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-200/80">
           {gmHubTabTitle(mode, tabId)}
-          {partyTabBlink && tabId !== 'party' ? (
+          {showJoinerHint ? (
             <span className="ml-2 font-bold normal-case tracking-normal text-amber-400">
-              · new joiner on Party
+              · new joiner on Characters → PCs
             </span>
           ) : null}
         </p>

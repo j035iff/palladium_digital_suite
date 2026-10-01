@@ -98,7 +98,7 @@ describe('gmGearCommitBlockedReason', () => {
         campaignOpen: true,
         targetCharacterId: null,
       }),
-    ).toMatch(/party character/i)
+    ).toMatch(/character/i)
     expect(
       gmGearCommitBlockedReason({
         campaignOpen: true,
@@ -112,7 +112,7 @@ describe('gmGearCommitBlockedReason', () => {
         targetCharacterId: 'c1',
       }),
     ).toBeNull()
-    expect(GM_CAST_GEAR_BLOCKED_REASON).toMatch(/Cast Quick-Blocks/i)
+    expect(GM_CAST_GEAR_BLOCKED_REASON).toMatch(/Quick-Blocks/i)
   })
 })
 

@@ -26,17 +26,17 @@ export function gmGearCommitBlockedReason(opts: {
     return 'Open a campaign from the launcher first'
   }
   if (!opts.targetCharacterId?.trim()) {
-    return 'Select a party character to grant gear'
+    return 'Select a character to grant gear'
   }
   if (opts.saveMissing) {
-    return 'That party character save is missing on this machine'
+    return 'That character save is missing on this machine'
   }
   return null
 }
 
-/** Cast Quick-Blocks have no inventory — keep visible in chrome, never invent bags. */
+/** Encounter Quick-Blocks have no inventory — keep visible in chrome, never invent bags. */
 export const GM_CAST_GEAR_BLOCKED_REASON =
-  'Cast Quick-Blocks have no character inventory yet — grant to a party character save'
+  'Encounter Quick-Blocks have no character inventory yet — grant to a character save on the table'
 
 function readInventorySession(characterId: string): InventorySessionState | null {
   const raw = loadCharacterSave(characterId)

@@ -46,7 +46,7 @@ Player clicks **Join Table** and sees a page with:
 
 ### 2. GM clicks Start Session
 
-(Story also names the top control **Open Table**; treat **Open Table** / **Start Session** as the host action that publishes the sitting.)
+(Narrative Home also names the top control **Open Table**; treat **Open Table** / **Start Session** as the host action that publishes the sitting.)
 
 - Makes the session visible and joinable on Join Table for any client on the network
 - Open Table chrome matches real listen/publish state (stale stamps from a prior visit are cleared on campaign open; listen failure rolls the stamp back)
@@ -67,13 +67,13 @@ Player clicks **Join Table** and sees a page with:
 - Player name appears in **Players in Session**
   - Yellow + **“joining”** while connecting
   - Green, no “joining” text, once fully joined
-- GM **Party** tab blinks
-- GM opens Party → sees the player’s character sheet summary with the **player name** upper-right on each joined character box
-- Opening Party clears the blink
-- Party lists **joined players only**; GM adds local characters from **Cast** (“Add from this machine”)
+- GM **Characters** tab blinks (and/or **PCs** sub-tab when already on Characters → NPCs)
+- GM opens Characters → PCs → sees the player’s character sheet summary with the **player name** upper-right on each joined character box
+- Opening Characters → PCs clears the blink
+- **PCs** lists **joined players only**; GM adds local-machine characters as **NPCs** under Characters → NPCs (“Add from this machine”)
 
 ### 5. Leave
 
 - GM **Return to launcher** with a table open → confirm → **Close Table** (unpublish + stop listen) → launcher
 - Joined player **Return to launcher** (Join table or live-sheet exit icon) → confirm → detach (`session.leave`) → launcher
-- Leave/kick removes the seat and clears that character from Party / joiner cache (no phantom Missing saves)
+- Leave/kick removes the seat and clears that character from PCs / joiner cache (no phantom Missing saves)

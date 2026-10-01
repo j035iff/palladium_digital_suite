@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   anySeatFlippedToFullyJoined,
   nextPartyTabBlink,
+  partyTabBlinkAfterCharactersSubTabChange,
   partyTabBlinkAfterTabChange,
 } from './partyBlink'
 import {
@@ -26,7 +27,7 @@ describe('partyBlink', () => {
     expect(anySeatFlippedToFullyJoined(joined, joined)).toBe(false)
   })
 
-  it('sets blink when a seat flips and Party is not open', () => {
+  it('sets blink when a seat flips and Characters → PCs is not open', () => {
     const joining = presenceWithJoining()
     const joined = attachSeatCharacter(joining, 'dev_a', 'char_1')
     expect(
@@ -34,12 +35,12 @@ describe('partyBlink', () => {
         currentlyBlinking: false,
         previousPresence: joining,
         nextPresence: joined,
-        viewingPartyTab: false,
+        viewingCharactersPcs: false,
       }),
     ).toBe(true)
   })
 
-  it('does not set blink when Party is already open', () => {
+  it('does not set blink when Characters → PCs is already open', () => {
     const joining = presenceWithJoining()
     const joined = attachSeatCharacter(joining, 'dev_a', 'char_1')
     expect(
@@ -47,19 +48,19 @@ describe('partyBlink', () => {
         currentlyBlinking: false,
         previousPresence: joining,
         nextPresence: joined,
-        viewingPartyTab: true,
+        viewingCharactersPcs: true,
       }),
     ).toBe(false)
   })
 
-  it('keeps an existing blink until Party opens or presence clears', () => {
+  it('keeps an existing blink until Characters → PCs opens or presence clears', () => {
     const joined = attachSeatCharacter(presenceWithJoining(), 'dev_a', 'char_1')
     expect(
       nextPartyTabBlink({
         currentlyBlinking: true,
         previousPresence: joined,
         nextPresence: joined,
-        viewingPartyTab: false,
+        viewingCharactersPcs: false,
       }),
     ).toBe(true)
     expect(
@@ -67,10 +68,13 @@ describe('partyBlink', () => {
         currentlyBlinking: true,
         previousPresence: joined,
         nextPresence: null,
-        viewingPartyTab: false,
+        viewingCharactersPcs: false,
       }),
     ).toBe(false)
-    expect(partyTabBlinkAfterTabChange('party', true)).toBe(false)
-    expect(partyTabBlinkAfterTabChange('cast', true)).toBe(true)
+    expect(partyTabBlinkAfterTabChange('characters', true, 'pcs')).toBe(false)
+    expect(partyTabBlinkAfterTabChange('characters', true, 'npcs')).toBe(true)
+    expect(partyTabBlinkAfterTabChange('gear', true)).toBe(true)
+    expect(partyTabBlinkAfterCharactersSubTabChange('pcs', true)).toBe(false)
+    expect(partyTabBlinkAfterCharactersSubTabChange('npcs', true)).toBe(true)
   })
 })

@@ -50,8 +50,8 @@ export function GmCastPanel() {
             Archetypes
           </h2>
           <p className="mt-1 text-[11px] text-slate-500">
-            Fodder Quick-Blocks from the encounter catalog. Full NPC character
-            JSON is a later pass.
+            Encounter fodder Quick-Blocks. Full NPC character JSON is a later
+            pass.
           </p>
           <input
             value={filter}
@@ -119,8 +119,8 @@ export function GmCastPanel() {
                 Add from this machine
               </h2>
               <p className="mt-1 text-[11px] text-slate-500">
-                Local character saves for Cast / combat. Joined players appear
-                on Party only.
+                Local character saves become GM-run NPCs for combat. Joined
+                player seats stay on Characters → PCs only.
               </p>
             </div>
             <button
