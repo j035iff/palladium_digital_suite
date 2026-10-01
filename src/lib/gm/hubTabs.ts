@@ -3,26 +3,57 @@ import type { ForgeTabView } from '../forgeNavigation/types'
 /** Same Narrative / Combat split as the live character sheet (`hubMode: 'story'` stays internal). */
 export type GmHubMode = 'story' | 'combat'
 
-/** Shared top tabs under both hub modes (sheet analogue: Home + …). */
-export type GmHubTabId = 'home' | 'characters' | 'gear'
+/** Narrative lane top tabs. */
+export type GmStoryTabId =
+  | 'story_beats'
+  | 'people'
+  | 'places'
+  | 'things'
+  | 'notes'
 
-/** Characters sub-tabs — PCs = joined seats only; NPCs = local-machine + fodder (Pillar 9). */
+/** Combat lane top tabs — no People; Melee selects from People data via dropdowns. */
+export type GmCombatTabId = 'melee' | 'prefabs'
+
+/** Any hub top-tab id (lane-specific orders below). */
+export type GmHubTabId = GmStoryTabId | GmCombatTabId
+
+/** People sub-tabs — PCs = joined seats only; NPCs = local-machine + fodder (Pillar 9). */
 export type GmCharactersSubTabId = 'pcs' | 'npcs'
 
-/** Narrative Home sub-tabs (Combat Home stays the combat HUD — no fork). */
-export type GmStoryHomeSubTabId = 'people' | 'places' | 'things' | 'notes'
+/** Things sub-tabs — notes stub + Gear panel (moved from top-level Gear). */
+export type GmThingsSubTabId = 'notes' | 'gear'
 
-export const GM_HUB_TAB_ORDER: readonly GmHubTabId[] = [
-  'home',
-  'characters',
-  'gear',
+export const GM_STORY_TAB_ORDER: readonly GmStoryTabId[] = [
+  'story_beats',
+  'people',
+  'places',
+  'things',
+  'notes',
 ] as const
 
-export const GM_HUB_TAB_LABELS: Record<GmHubTabId, string> = {
-  home: 'Home',
-  characters: 'Characters',
-  gear: 'Gear',
+export const GM_COMBAT_TAB_ORDER: readonly GmCombatTabId[] = [
+  'melee',
+  'prefabs',
+] as const
+
+export const GM_STORY_TAB_LABELS: Record<GmStoryTabId, string> = {
+  story_beats: 'Story Beats',
+  people: 'People',
+  places: 'Places',
+  things: 'Things',
+  notes: 'Notes',
 }
+
+export const GM_COMBAT_TAB_LABELS: Record<GmCombatTabId, string> = {
+  melee: 'Melee',
+  prefabs: 'Prefabs',
+}
+
+/** Union of all tab ids (for type guards). */
+export const GM_HUB_TAB_ORDER: readonly GmHubTabId[] = [
+  ...GM_STORY_TAB_ORDER,
+  ...GM_COMBAT_TAB_ORDER,
+] as const
 
 /** User-visible mode chrome — internal id `story` displays as Narrative. */
 export const GM_HUB_MODE_LABELS: Record<GmHubMode, string> = {
@@ -43,48 +74,43 @@ export const GM_CHARACTERS_SUB_TAB_LABELS: Record<
   npcs: 'NPCs',
 }
 
-export const GM_STORY_HOME_SUB_TAB_ORDER: readonly GmStoryHomeSubTabId[] = [
-  'people',
-  'places',
-  'things',
+export const GM_THINGS_SUB_TAB_ORDER: readonly GmThingsSubTabId[] = [
   'notes',
+  'gear',
 ] as const
 
-export const GM_STORY_HOME_SUB_TAB_LABELS: Record<
-  GmStoryHomeSubTabId,
-  string
-> = {
-  people: 'People',
-  places: 'Places',
-  things: 'Things',
+export const GM_THINGS_SUB_TAB_LABELS: Record<GmThingsSubTabId, string> = {
   notes: 'Notes',
-}
-
-/**
- * People / Places / Things / Notes are live placeholder lanes (Notes also has
- * the campaign scratchpad). No “not in this build” grey-out — Radical Visibility
- * applies to broken content links instead.
- */
-export function gmStoryHomeStubReason(_subTabId: GmStoryHomeSubTabId): string {
-  return ''
-}
-
-/** True when Narrative Home → Notes scratchpad surface is on screen. */
-export function isViewingStoryHomeNotes(
-  hubMode: GmHubMode,
-  hubTabId: GmHubTabId,
-  storyHomeSubTabId: GmStoryHomeSubTabId,
-): boolean {
-  return (
-    hubMode === 'story' &&
-    hubTabId === 'home' &&
-    storyHomeSubTabId === 'notes'
-  )
-}
-
-const SHARED_TAB_TITLES: Record<Exclude<GmHubTabId, 'home'>, string> = {
-  characters: 'Characters',
   gear: 'Gear',
+}
+
+/** Default top tab when switching into a mode (or opening a campaign). */
+export function defaultHubTabForMode(mode: GmHubMode): GmHubTabId {
+  return mode === 'combat' ? 'melee' : 'story_beats'
+}
+
+export function hubTabOrderForMode(
+  mode: GmHubMode,
+): readonly GmHubTabId[] {
+  return mode === 'combat' ? GM_COMBAT_TAB_ORDER : GM_STORY_TAB_ORDER
+}
+
+export function hubTabLabel(mode: GmHubMode, tabId: GmHubTabId): string {
+  if (mode === 'combat') {
+    if ((GM_COMBAT_TAB_ORDER as readonly string[]).includes(tabId)) {
+      return GM_COMBAT_TAB_LABELS[tabId as GmCombatTabId]
+    }
+  } else if ((GM_STORY_TAB_ORDER as readonly string[]).includes(tabId)) {
+    return GM_STORY_TAB_LABELS[tabId as GmStoryTabId]
+  }
+  if (tabId === 'people') return 'People'
+  if (tabId === 'melee') return 'Melee'
+  if (tabId === 'prefabs') return 'Prefabs'
+  if (tabId === 'story_beats') return 'Story Beats'
+  if (tabId === 'places') return 'Places'
+  if (tabId === 'things') return 'Things'
+  if (tabId === 'notes') return 'Notes'
+  return tabId
 }
 
 export function gmHubModeLabel(mode: GmHubMode): string {
@@ -92,14 +118,18 @@ export function gmHubModeLabel(mode: GmHubMode): string {
 }
 
 export function gmHubTabTitle(mode: GmHubMode, tabId: GmHubTabId): string {
-  if (tabId === 'home') {
-    return mode === 'combat' ? 'Combat' : 'Narrative'
-  }
-  return SHARED_TAB_TITLES[tabId]
+  return hubTabLabel(mode, tabId)
 }
 
 export function isGmHubTabId(id: string): id is GmHubTabId {
   return (GM_HUB_TAB_ORDER as readonly string[]).includes(id)
+}
+
+export function isGmHubTabIdForMode(
+  mode: GmHubMode,
+  id: string,
+): id is GmHubTabId {
+  return (hubTabOrderForMode(mode) as readonly string[]).includes(id)
 }
 
 export function isGmCharactersSubTabId(
@@ -108,42 +138,74 @@ export function isGmCharactersSubTabId(
   return (GM_CHARACTERS_SUB_TAB_ORDER as readonly string[]).includes(id)
 }
 
-export function isGmStoryHomeSubTabId(
-  id: string,
-): id is GmStoryHomeSubTabId {
-  return (GM_STORY_HOME_SUB_TAB_ORDER as readonly string[]).includes(id)
+export function isGmThingsSubTabId(id: string): id is GmThingsSubTabId {
+  return (GM_THINGS_SUB_TAB_ORDER as readonly string[]).includes(id)
 }
 
 export function isGmHubMode(id: string): id is GmHubMode {
   return id === 'story' || id === 'combat'
 }
 
-/** True when the joined-PC summary (Characters → PCs) is on screen. */
+/** True when Narrative → Notes scratchpad surface is on screen. */
+export function isViewingNotes(
+  hubMode: GmHubMode,
+  hubTabId: GmHubTabId,
+): boolean {
+  return hubMode === 'story' && hubTabId === 'notes'
+}
+
+/** @deprecated Use isViewingNotes — Home sub-tabs removed. */
+export function isViewingStoryHomeNotes(
+  hubMode: GmHubMode,
+  hubTabId: GmHubTabId,
+  _storyHomeSubTabId?: string,
+): boolean {
+  return isViewingNotes(hubMode, hubTabId)
+}
+
+/** True when the joined-PC summary (Narrative → People → PCs) is on screen. */
 export function isViewingCharactersPcs(
   hubTabId: GmHubTabId,
   charactersSubTabId: GmCharactersSubTabId,
 ): boolean {
-  return hubTabId === 'characters' && charactersSubTabId === 'pcs'
+  return hubTabId === 'people' && charactersSubTabId === 'pcs'
+}
+
+/** Join-blink clear target: Narrative → People → PCs. */
+export function isViewingNarrativePeoplePcs(
+  hubMode: GmHubMode,
+  hubTabId: GmHubTabId,
+  charactersSubTabId: GmCharactersSubTabId,
+): boolean {
+  return (
+    hubMode === 'story' &&
+    isViewingCharactersPcs(hubTabId, charactersSubTabId)
+  )
 }
 
 export function buildGmHubTabViews(
+  mode: GmHubMode,
   activeTabId: GmHubTabId,
   opts: { campaignOpen: boolean; partyTabBlink?: boolean },
 ): ForgeTabView[] {
-  return GM_HUB_TAB_ORDER.map((id) => {
-    const locked = !opts.campaignOpen && id !== 'home'
+  const order = hubTabOrderForMode(mode)
+  return order.map((id) => {
+    const locked = !opts.campaignOpen && id !== defaultHubTabForMode(mode)
     const blinking = Boolean(opts.partyTabBlink) && !locked
     return {
       id,
-      label: GM_HUB_TAB_LABELS[id],
+      label: hubTabLabel(mode, id),
       visual: locked ? 'locked' : id === activeTabId ? 'active' : 'available',
       clickable: !locked,
       blockers: locked ? ['Open a campaign from the launcher first'] : [],
       isViewing: id === activeTabId,
-      // Blink is tab chrome only; Characters → PCs stays on the shared observer path.
-      // When already on Characters, cue moves to the PCs sub-tab (see buildGmCharactersSubTabViews).
+      // Blink is tab chrome only; People → PCs stays on the shared observer path.
+      // Join cue targets Narrative → People (Combat has no People tab).
       attention:
-        id === 'characters' && blinking && activeTabId !== 'characters',
+        mode === 'story' &&
+        id === 'people' &&
+        blinking &&
+        activeTabId !== 'people',
     }
   })
 }
@@ -164,18 +226,15 @@ export function buildGmCharactersSubTabViews(
   }))
 }
 
-export function buildGmStoryHomeSubTabViews(
-  activeId: GmStoryHomeSubTabId,
+export function buildGmThingsSubTabViews(
+  activeId: GmThingsSubTabId,
 ): ForgeTabView[] {
-  return GM_STORY_HOME_SUB_TAB_ORDER.map((id) => {
-    const stubReason = gmStoryHomeStubReason(id)
-    return {
-      id,
-      label: GM_STORY_HOME_SUB_TAB_LABELS[id],
-      visual: id === activeId ? 'active' : 'available',
-      clickable: true,
-      blockers: stubReason ? [stubReason] : [],
-      isViewing: id === activeId,
-    }
-  })
+  return GM_THINGS_SUB_TAB_ORDER.map((id) => ({
+    id,
+    label: GM_THINGS_SUB_TAB_LABELS[id],
+    visual: id === activeId ? 'active' : 'available',
+    clickable: true,
+    blockers: [],
+    isViewing: id === activeId,
+  }))
 }

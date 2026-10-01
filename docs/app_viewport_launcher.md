@@ -22,7 +22,7 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 | `sheet` | `MainLayout` — live sheet + optional creation chrome | **Open Character** or **Create Character** |
 | `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
 | `gear_forge` | `GearForgeViewport` — shared Gear Forge → custom gear library | **Gear Forge** or **My Custom Gear** on the launcher |
-| `gm` | `GmHubShell` — Narrative / Combat (Home + Characters + Gear) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
+| `gm` | `GmHubShell` — Narrative / Combat lane tabs (Story Beats·People·Places·Things·Notes / Melee·Prefabs) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
 | `join_table` | `GmJoinTableViewport` — Player Name, My Characters, Join Session LAN list; success → Character Sheet | **Join table** on the launcher |
 
 `App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, `GmJoinTableViewport` when `viewport === 'join_table'`, otherwise `MainLayout`.
@@ -83,7 +83,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 2. **New Campaign** — button (not a dropdown). Resets the campaign-forge draft and sets `viewport: 'campaign_forge'`.
 3. **Campaign Creation Forge** — option registry in `src/lib/gm/campaignForge.ts`. v1 **Identity** (unique name + host genre) and **Rules** (`conversionPolicy` dropdown: Disable non-native / Apply conversion). Roadmap genres stay visible but not selectable. Add later campaign choices as new option rows / renderer `kind`s on this same forge — do not fork a second create form. Extra groups may become UFNE tabs later.
 4. **Create Campaign** on the forge is gated until name, genre, and conversion rules validate. Confirm dialog: *Are you sure you want to create a new {Genre} Campaign?* **Yes** commits (`createGmSession` with the chosen conversion policy) and `enterGmHub()`. **Not yet** closes the dialog and leaves the draft editable. Host genre and conversion rules are immutable after create. Hub header `h1` is the campaign name; host genre and conversion rules stay in the subtitle.
-5. Hub landing: Narrative / Combat master tabs (sheet analogue; internal `hubMode: 'story'`). **Open Table** is in the hub header under the Return / Settings icon pair (stamps the play sitting and starts LAN listen). **Players in Session** tray sits under the header. Narrative Home nests People / Places / Things (stubs) + Notes (scratchpad). Combat Home is the combat HUD. Characters (PCs / NPCs) and Gear sit under both modes. Full hub: [gm_hub.md](./gm_hub.md).
+5. Hub landing: Narrative / Combat master tabs (sheet analogue; internal `hubMode: 'story'`). **Open Table** is in the hub header under the Return / Settings icon pair (stamps the play sitting and starts LAN listen). **Players in Session** tray sits under the header. Narrative tabs: Story Beats / People (PCs·NPCs) / Places / Things (notes stub + Gear) / Notes. Combat tabs: Melee (HUD + add-from-People dropdowns) / Prefabs. Mode switch defaults to Story Beats / Melee. Full hub: [gm_hub.md](./gm_hub.md).
 
 ---
 

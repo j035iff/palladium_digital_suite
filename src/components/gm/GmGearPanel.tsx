@@ -124,7 +124,7 @@ export function GmGearPanel() {
       <div className="shrink-0 space-y-2">
         <p className="text-[11px] leading-snug text-slate-400">
           Grant catalog weapons or forge customs into a character save on the
-          table. Characters → PCs / NPCs stay observer / spawn only. Armor /
+          table. People → PCs / NPCs stay observer / spawn only. Armor /
           Artifacts / Other lanes stay visible with why-disabled reasons until
           wired.
         </p>

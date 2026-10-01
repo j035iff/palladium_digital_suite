@@ -15,21 +15,32 @@ import {
   playersPanelAfterTableOpenClick,
   playersPanelForTableOpenState,
 } from '../../lib/gm/hubTableChrome'
-import { GmCharactersPanel } from './GmCharactersPanel'
 import { GmCombatPanel } from './GmCombatPanel'
-import { GmGearPanel } from './GmGearPanel'
 import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { GmJoinHostChrome } from './GmJoinHostChrome'
-import { GmSessionsPanel } from './GmSessionsPanel'
+import {
+  GmNotesPanel,
+  GmPlacesPanel,
+  GmPrefabsPanel,
+  GmStoryBeatsPanel,
+} from './GmNarrativePanels'
+import { GmPeoplePanel } from './GmPeoplePanel'
 import { GmTabBar } from './GmTabBar'
+import { GmThingsPanel } from './GmThingsPanel'
 
 function GmHubWorkspace() {
   const { hubMode, hubTabId } = useGmSession()
 
-  if (hubTabId === 'characters') return <GmCharactersPanel />
-  if (hubTabId === 'gear') return <GmGearPanel />
-  if (hubMode === 'combat') return <GmCombatPanel />
-  return <GmSessionsPanel />
+  if (hubMode === 'combat') {
+    if (hubTabId === 'prefabs') return <GmPrefabsPanel />
+    return <GmCombatPanel />
+  }
+
+  if (hubTabId === 'people') return <GmPeoplePanel />
+  if (hubTabId === 'places') return <GmPlacesPanel />
+  if (hubTabId === 'things') return <GmThingsPanel />
+  if (hubTabId === 'notes') return <GmNotesPanel />
+  return <GmStoryBeatsPanel />
 }
 
 export function GmHubShell() {

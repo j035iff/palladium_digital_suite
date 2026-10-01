@@ -1,7 +1,7 @@
 /**
  * Shared Hub navigation targets for Notes content links (Pillar 9).
- * Characters stays one pipeline under Narrative/Combat — never fork by mode.
- * Narrative entity kinds always open Narrative Home (not Combat HUD).
+ * People is Narrative-only — never open People from Combat (Joe 2026-10-01).
+ * Melee selects from the same People data via dropdowns; no Combat People tab.
  */
 
 import type { GmContentLinkKind } from './contentLinks'
@@ -9,7 +9,7 @@ import type {
   GmCharactersSubTabId,
   GmHubMode,
   GmHubTabId,
-  GmStoryHomeSubTabId,
+  GmThingsSubTabId,
 } from './hubTabs'
 
 export type GmHubFocus = {
@@ -19,13 +19,31 @@ export type GmHubFocus = {
 
 export type GmHubNavTarget =
   | {
-      surface: 'characters'
+      surface: 'people'
       sub: GmCharactersSubTabId
       focus?: GmHubFocus
     }
   | {
-      surface: 'storyHome'
-      sub: GmStoryHomeSubTabId
+      surface: 'places'
+      focus?: GmHubFocus
+    }
+  | {
+      surface: 'things'
+      /** Default notes stub; gear when granting from a future link. */
+      sub?: GmThingsSubTabId
+      focus?: GmHubFocus
+    }
+  | {
+      surface: 'notes'
+      focus?: GmHubFocus
+    }
+  | {
+      surface: 'story_beats'
+      focus?: GmHubFocus
+    }
+  | {
+      /** Person stubs — notes-page list (Radical Visibility for [[person:…]]). */
+      surface: 'person_stubs'
       focus?: GmHubFocus
     }
 
@@ -33,7 +51,9 @@ export type GmHubNavState = {
   hubMode: GmHubMode
   hubTabId: GmHubTabId
   charactersSubTabId: GmCharactersSubTabId
-  storyHomeSubTabId: GmStoryHomeSubTabId
+  thingsSubTabId: GmThingsSubTabId
+  /** When true, People shows person stub lane instead of PCs/NPCs. */
+  peopleShowPersonStubs: boolean
   hubFocus: GmHubFocus | null
 }
 
@@ -45,38 +65,35 @@ export function hubNavTargetForContentKind(
   switch (kind) {
     case 'npc':
       return {
-        surface: 'characters',
+        surface: 'people',
         sub: 'npcs',
         focus: { kind, id },
       }
     case 'pc':
       return {
-        surface: 'characters',
+        surface: 'people',
         sub: 'pcs',
         focus: { kind, id },
       }
     case 'person':
       return {
-        surface: 'storyHome',
-        sub: 'people',
+        surface: 'person_stubs',
         focus: { kind, id },
       }
     case 'place':
       return {
-        surface: 'storyHome',
-        sub: 'places',
+        surface: 'places',
         focus: { kind, id },
       }
     case 'thing':
       return {
-        surface: 'storyHome',
-        sub: 'things',
+        surface: 'things',
+        sub: 'notes',
         focus: { kind, id },
       }
     case 'note':
       return {
-        surface: 'storyHome',
-        sub: 'notes',
+        surface: 'notes',
         focus: { kind, id },
       }
   }
@@ -84,26 +101,65 @@ export function hubNavTargetForContentKind(
 
 /**
  * Pure next-nav state for a target.
- * Characters keeps the current hubMode (shared panel).
- * storyHome forces Narrative + Home.
+ * People / person stubs / narrative entities always force Narrative —
+ * never leave the GM on Combat while opening People.
  */
 export function applyHubNavTarget(
   current: GmHubNavState,
   target: GmHubNavTarget,
 ): GmHubNavState {
-  if (target.surface === 'characters') {
+  if (target.surface === 'people') {
     return {
       ...current,
-      hubTabId: 'characters',
+      hubMode: 'story',
+      hubTabId: 'people',
       charactersSubTabId: target.sub,
+      peopleShowPersonStubs: false,
+      hubFocus: target.focus ?? null,
+    }
+  }
+  if (target.surface === 'person_stubs') {
+    return {
+      ...current,
+      hubMode: 'story',
+      hubTabId: 'people',
+      peopleShowPersonStubs: true,
+      hubFocus: target.focus ?? null,
+    }
+  }
+  if (target.surface === 'places') {
+    return {
+      ...current,
+      hubMode: 'story',
+      hubTabId: 'places',
+      peopleShowPersonStubs: false,
+      hubFocus: target.focus ?? null,
+    }
+  }
+  if (target.surface === 'things') {
+    return {
+      ...current,
+      hubMode: 'story',
+      hubTabId: 'things',
+      thingsSubTabId: target.sub ?? 'notes',
+      peopleShowPersonStubs: false,
+      hubFocus: target.focus ?? null,
+    }
+  }
+  if (target.surface === 'notes') {
+    return {
+      ...current,
+      hubMode: 'story',
+      hubTabId: 'notes',
+      peopleShowPersonStubs: false,
       hubFocus: target.focus ?? null,
     }
   }
   return {
     ...current,
     hubMode: 'story',
-    hubTabId: 'home',
-    storyHomeSubTabId: target.sub,
+    hubTabId: 'story_beats',
+    peopleShowPersonStubs: false,
     hubFocus: target.focus ?? null,
   }
 }
@@ -115,22 +171,46 @@ export function hubFocusAfterNavChange(
 ): GmHubFocus | null {
   if (!focus) return null
   const target = hubNavTargetForContentKind(focus.kind, focus.id)
-  if (target.surface === 'characters') {
+  if (target.surface === 'people') {
     if (
-      next.hubTabId === 'characters' &&
+      next.hubMode === 'story' &&
+      next.hubTabId === 'people' &&
+      !next.peopleShowPersonStubs &&
       next.charactersSubTabId === target.sub
     ) {
       return focus
     }
     return null
   }
-  if (
-    next.hubMode === 'story' &&
-    next.hubTabId === 'home' &&
-    next.storyHomeSubTabId === target.sub
-  ) {
-    return focus
+  if (target.surface === 'person_stubs') {
+    if (
+      next.hubMode === 'story' &&
+      next.hubTabId === 'people' &&
+      next.peopleShowPersonStubs
+    ) {
+      return focus
+    }
+    return null
   }
+  if (target.surface === 'places') {
+    if (next.hubMode === 'story' && next.hubTabId === 'places') return focus
+    return null
+  }
+  if (target.surface === 'things') {
+    if (
+      next.hubMode === 'story' &&
+      next.hubTabId === 'things' &&
+      next.thingsSubTabId === (target.sub ?? 'notes')
+    ) {
+      return focus
+    }
+    return null
+  }
+  if (target.surface === 'notes') {
+    if (next.hubMode === 'story' && next.hubTabId === 'notes') return focus
+    return null
+  }
+  if (next.hubMode === 'story' && next.hubTabId === 'story_beats') return focus
   return null
 }
 

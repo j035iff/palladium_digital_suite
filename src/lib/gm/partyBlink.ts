@@ -1,7 +1,8 @@
 /**
- * Ephemeral Characters/PCs blink for Join Table (hub chrome only).
- * Set when a seat flips to fully joined; clear when Characters → PCs opens
- * or the table closes. Do not fork Party panel — observer path stays unchanged.
+ * Ephemeral People/PCs blink for Join Table (hub chrome only).
+ * Set when a seat flips to fully joined; clear when Narrative → People → PCs
+ * opens (or People → PCs in either mode) or the table closes.
+ * Do not fork Party panel — observer path stays unchanged.
  */
 
 import {
@@ -27,7 +28,7 @@ export function anySeatFlippedToFullyJoined(
 /**
  * Next blink flag after a presence update.
  * - Presence cleared (Close Table / stop listen) → clear blink
- * - Already viewing Characters → PCs → do not blink (summary is already on screen)
+ * - Already viewing People → PCs → do not blink (summary is already on screen)
  * - Else set when any seat flipped to fully joined; keep existing blink otherwise
  */
 export function nextPartyTabBlink(input: {
@@ -53,8 +54,8 @@ export function nextPartyTabBlink(input: {
 }
 
 /**
- * Opening Characters with PCs active (default) clears the blink.
- * Opening Characters on NPCs keeps blink so PCs sub-tab can cue (Radical Visibility).
+ * Opening People with PCs active (default) clears the blink.
+ * Opening People on NPCs keeps blink so PCs sub-tab can cue (Radical Visibility).
  */
 export function partyTabBlinkAfterTabChange(
   tabId: GmHubTabId,
@@ -65,7 +66,7 @@ export function partyTabBlinkAfterTabChange(
   return currentlyBlinking
 }
 
-/** Selecting the PCs sub-tab under Characters clears the blink. */
+/** Selecting the PCs sub-tab under People clears the blink. */
 export function partyTabBlinkAfterCharactersSubTabChange(
   subTabId: GmCharactersSubTabId,
   currentlyBlinking: boolean,

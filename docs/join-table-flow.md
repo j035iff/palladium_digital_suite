@@ -46,7 +46,7 @@ Player clicks **Join Table** and sees a page with:
 
 ### 2. GM clicks Start Session
 
-(Narrative Home also names the top control **Open Table**; treat **Open Table** / **Start Session** as the host action that publishes the sitting.)
+(Narrative Hub also names the top control **Open Table**; treat **Open Table** / **Start Session** as the host action that publishes the sitting.)
 
 - Makes the session visible and joinable on Join Table for any client on the network
 - Open Table chrome matches real listen/publish state (stale stamps from a prior visit are cleared on campaign open; listen failure rolls the stamp back)
@@ -67,10 +67,11 @@ Player clicks **Join Table** and sees a page with:
 - Player name appears in **Players in Session**
   - Yellow + **“joining”** while connecting
   - Green, no “joining” text, once fully joined
-- GM **Characters** tab blinks (and/or **PCs** sub-tab when already on Characters → NPCs)
-- GM opens Characters → PCs → sees the player’s character sheet summary with the **player name** upper-right on each joined character box
-- Opening Characters → PCs clears the blink
-- **PCs** lists **joined players only**; GM adds local-machine characters as **NPCs** under Characters → NPCs (“Add from this machine”)
+- GM **Narrative → People** tab blinks (and/or **PCs** sub-tab when already on People → NPCs); if the GM is on Combat, the Narrative mode control pulses
+- GM opens Narrative → People → PCs → sees the player’s character sheet summary with the **player name** upper-right on each joined character box
+- Opening Narrative → People → PCs clears the blink
+- **PCs** lists **joined players only**; GM adds local-machine characters as **NPCs** under People → NPCs (“Add from this machine”)
+- Combat **Melee** adds those characters into the round via dropdowns (same People data — no Combat People tab)
 
 ### 5. Leave
 

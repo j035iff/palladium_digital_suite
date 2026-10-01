@@ -135,7 +135,7 @@ export function GmCastPanel() {
               </h2>
               <p className="mt-1 text-[11px] text-slate-500">
                 Local character saves become GM-run NPCs for combat. Joined
-                player seats stay on Characters → PCs only.
+                player seats stay on People → PCs only.
               </p>
             </div>
             <button

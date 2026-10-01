@@ -8,21 +8,23 @@ import {
 describe('hubNavigation', () => {
   const base = {
     hubMode: 'combat' as const,
-    hubTabId: 'gear' as const,
+    hubTabId: 'melee' as const,
     charactersSubTabId: 'pcs' as const,
-    storyHomeSubTabId: 'notes' as const,
+    thingsSubTabId: 'notes' as const,
+    peopleShowPersonStubs: false,
     hubFocus: null,
   }
 
-  it('routes NPC/PC to shared Characters without flipping mode', () => {
+  it('routes NPC/PC to Narrative People (never stays on Combat)', () => {
     const npc = applyHubNavTarget(
       base,
       hubNavTargetForContentKind('npc', 'npc_1'),
     )
     expect(npc).toMatchObject({
-      hubMode: 'combat',
-      hubTabId: 'characters',
+      hubMode: 'story',
+      hubTabId: 'people',
       charactersSubTabId: 'npcs',
+      peopleShowPersonStubs: false,
       hubFocus: { kind: 'npc', id: 'npc_1' },
     })
 
@@ -31,22 +33,53 @@ describe('hubNavigation', () => {
       hubNavTargetForContentKind('pc', 'pc_1'),
     )
     expect(pc).toMatchObject({
-      hubMode: 'combat',
-      hubTabId: 'characters',
+      hubMode: 'story',
+      hubTabId: 'people',
       charactersSubTabId: 'pcs',
     })
   })
 
-  it('routes person/place/thing/note to Narrative Home', () => {
+  it('routes place/thing/note to Narrative lane tabs', () => {
     const place = applyHubNavTarget(
       base,
       hubNavTargetForContentKind('place', 'place_1'),
     )
     expect(place).toMatchObject({
       hubMode: 'story',
-      hubTabId: 'home',
-      storyHomeSubTabId: 'places',
+      hubTabId: 'places',
       hubFocus: { kind: 'place', id: 'place_1' },
+    })
+
+    const thing = applyHubNavTarget(
+      base,
+      hubNavTargetForContentKind('thing', 'thing_1'),
+    )
+    expect(thing).toMatchObject({
+      hubMode: 'story',
+      hubTabId: 'things',
+      thingsSubTabId: 'notes',
+    })
+
+    const note = applyHubNavTarget(
+      base,
+      hubNavTargetForContentKind('note', 'note_1'),
+    )
+    expect(note).toMatchObject({
+      hubMode: 'story',
+      hubTabId: 'notes',
+    })
+  })
+
+  it('routes person stubs to Narrative People stub lane', () => {
+    const person = applyHubNavTarget(
+      base,
+      hubNavTargetForContentKind('person', 'person_1'),
+    )
+    expect(person).toMatchObject({
+      hubMode: 'story',
+      hubTabId: 'people',
+      peopleShowPersonStubs: true,
+      hubFocus: { kind: 'person', id: 'person_1' },
     })
   })
 
@@ -55,17 +88,19 @@ describe('hubNavigation', () => {
     expect(
       hubFocusAfterNavChange(focus, {
         hubMode: 'story',
-        hubTabId: 'home',
+        hubTabId: 'places',
         charactersSubTabId: 'pcs',
-        storyHomeSubTabId: 'places',
+        thingsSubTabId: 'notes',
+        peopleShowPersonStubs: false,
       }),
     ).toEqual(focus)
     expect(
       hubFocusAfterNavChange(focus, {
         hubMode: 'story',
-        hubTabId: 'home',
+        hubTabId: 'notes',
         charactersSubTabId: 'pcs',
-        storyHomeSubTabId: 'notes',
+        thingsSubTabId: 'notes',
+        peopleShowPersonStubs: false,
       }),
     ).toBeNull()
   })
