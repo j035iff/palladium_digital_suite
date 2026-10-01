@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useGmSession } from '../../context/GmSessionContext'
 import {
   conversionRuleDescription,
@@ -6,25 +6,23 @@ import {
 } from '../../lib/gm/campaignForge'
 import {
   buildGmStoryHomeSubTabViews,
-  gmStoryHomeStubReason,
-  GM_STORY_HOME_SUB_TAB_LABELS,
   isGmStoryHomeSubTabId,
-  type GmStoryHomeSubTabId,
 } from '../../lib/gm/hubTabs'
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
+import { GmNotesScratchpad } from './GmNotesScratchpad'
+import { GmPlaceholderLane } from './GmPlaceholderLane'
 
 /**
  * Narrative Home (hubMode `story`) — People / Places / Things / Notes.
  * Combat Home stays GmCombatPanel (no these sub-tabs).
+ * storyHomeSubTabId lives in shared hub context so Notes links can navigate here.
  */
 export function GmSessionsPanel() {
-  const { session, updateScratchpad } = useGmSession()
-  const [homeSubTabId, setHomeSubTabId] =
-    useState<GmStoryHomeSubTabId>('notes')
+  const { session, storyHomeSubTabId, setStoryHomeSubTabId } = useGmSession()
 
   const subTabs = useMemo(
-    () => buildGmStoryHomeSubTabViews(homeSubTabId),
-    [homeSubTabId],
+    () => buildGmStoryHomeSubTabViews(storyHomeSubTabId),
+    [storyHomeSubTabId],
   )
 
   if (!session) {
@@ -37,18 +35,16 @@ export function GmSessionsPanel() {
     )
   }
 
-  const stubReason = gmStoryHomeStubReason(homeSubTabId)
-
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       <div className="shrink-0 border-b border-slate-800 bg-slate-950/60 px-4 py-2">
         <ForgeNavigationBar
           tabs={subTabs}
-          activeTabId={homeSubTabId}
+          activeTabId={storyHomeSubTabId}
           singleRow
           ariaLabel="Narrative Home sub-tabs"
           onSelectTab={(id) => {
-            if (isGmStoryHomeSubTabId(id)) setHomeSubTabId(id)
+            if (isGmStoryHomeSubTabId(id)) setStoryHomeSubTabId(id)
           }}
         />
       </div>
@@ -64,27 +60,14 @@ export function GmSessionsPanel() {
             </span>
           </p>
 
-          {stubReason ? (
-            <div
-              className="mt-4 rounded-lg border border-dashed border-amber-800/60 bg-amber-950/20 px-4 py-8 text-center"
-              role="status"
-            >
-              <p className="text-sm font-semibold text-amber-100/90">
-                {GM_STORY_HOME_SUB_TAB_LABELS[homeSubTabId]} — not in this build
-                yet
-              </p>
-              <p className="mt-2 text-xs text-slate-400">{stubReason}</p>
-            </div>
+          {storyHomeSubTabId === 'notes' ? (
+            <GmNotesScratchpad />
+          ) : storyHomeSubTabId === 'people' ? (
+            <GmPlaceholderLane lane="people" />
+          ) : storyHomeSubTabId === 'places' ? (
+            <GmPlaceholderLane lane="places" />
           ) : (
-            <label className="mt-4 flex min-h-[12rem] flex-1 flex-col text-[10px] font-bold uppercase tracking-wide text-slate-500">
-              Scratchpad
-              <textarea
-                value={session.scratchpad}
-                onChange={(e) => updateScratchpad(e.target.value)}
-                placeholder="Scene notes, clocks, names… auto-saves to this campaign."
-                className="mt-1 min-h-[12rem] flex-1 resize-y rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 font-sans text-sm font-normal normal-case tracking-normal text-slate-100"
-              />
-            </label>
+            <GmPlaceholderLane lane="things" />
           )}
         </section>
       </div>

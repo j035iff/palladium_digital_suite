@@ -5,6 +5,7 @@ import {
   createPlaySessionRecord,
   hydratePlaySessions,
 } from './playSession'
+import { emptyPlaceholders } from './narrativePlaceholders'
 import {
   DEFAULT_PARTY_OVERLAY,
   INITIAL_COMBAT_STATE,
@@ -59,6 +60,7 @@ export function createGmSession(input: {
     createdAtMs: now,
     updatedAtMs: now,
     scratchpad: '',
+    placeholders: emptyPlaceholders(),
     partyCharacterIds: [],
     partyOverlays: {},
     npcs: [],

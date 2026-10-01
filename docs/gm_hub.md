@@ -53,8 +53,23 @@ Narrative / Combat master modes match the live character sheet mode split (GM ch
 
 | Mode | Home | Shared tabs |
 |------|------|-------------|
-| **Narrative** (`story`) | Home sub-tabs: **People** / **Places** / **Things** (Radical Visibility stubs — not in this build yet) + **Notes** (campaign scratchpad + conversion rules) | Characters, Gear |
+| **Narrative** (`story`) | Home sub-tabs: **People** / **Places** / **Things** (placeholder entity stubs for Notes links) + **Notes** (campaign scratchpad with structured content links + conversion rules) | Characters, Gear |
 | **Combat** | Combat HUD (initiative, APM, Quick-Blocks, H.F.) — no Narrative Home sub-tabs | Characters, Gear |
+
+### Notes content links (v1)
+
+While writing **Notes**, the GM inserts outbound in-app links (`[[kind:id|label]]`) that jump to placeholder or live targets. People is a notes page that links to real cast on **Characters → NPCs** (not a second sheet). Missing targets offer **Create?** to make a stub, then link. Broken links stay visible with why-text (Radical Visibility). Backlinks / wiki graph are deferred.
+
+| Kind | Navigate to |
+|------|-------------|
+| `npc` | Characters → NPCs (live fodder **or** Notes-link stub) |
+| `pc` | Characters → PCs (joined seat **or** Notes-link stub) |
+| `person` | Narrative Home → People |
+| `place` | Narrative Home → Places |
+| `thing` | Narrative Home → Things |
+| `note` | Narrative Home → Notes (optional note stubs) |
+
+Navigation uses one shared Hub navigator (`hubNavigation.ts` + context `navigateHubTarget`): Characters keeps the current Narrative/Combat mode (Pillar 9); narrative kinds force Narrative Home. Do not fork Story vs Combat link handlers.
 
 **Characters** sub-tabs (shared under both modes):
 
@@ -110,6 +125,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 
 | Concern | Location |
 |---------|----------|
+| Scratchpad + Notes links | `contentLinks.ts`, `narrativePlaceholders.ts`, `hubNavigation.ts`, `GmNotesScratchpad`, `GmPlaceholderLane` |
 | Session record + mutators | `src/lib/gm/sessionTypes.ts`, `sessionModel.ts` |
 | Campaign forge registry | `src/lib/gm/campaignForge.ts` |
 | Play sessions | `src/lib/gm/playSession.ts`, `openPlaySession` / `closePlaySession` in `sessionModel.ts` |

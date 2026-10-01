@@ -196,7 +196,8 @@ Copy this block when registering a new unified path:
 | Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder; joiner `party.snapshot` cache feeds the same builder |
 | Fodder | `src/lib/gm/npcInstance.ts` | `createNpcFromArchetype` | Encounter catalog → instance vitals / APM |
 | Roster | `src/lib/gm/combatRoster.ts` | `assembleGmCombatRoster`, `sortCombatRoster` | One sorted list; `kind: pc \| npc` |
-| Nav | `src/lib/gm/hubTabs.ts` + `hubTableChrome.ts` | `buildGmHubTabViews`, `gmHubTabTitle`, `gmHubModeLabel`, table control / Players overlay helpers | Narrative/Combat modes (`story` id → “Narrative”); Home is Narrative sub-tabs or Combat HUD; optional Characters `attention` blink; compact Open Table / Table Open chrome |
+| Nav | `src/lib/gm/hubTabs.ts` + `hubTableChrome.ts` + `hubNavigation.ts` | `buildGmHubTabViews`, `gmHubTabTitle`, `gmHubModeLabel`, `navigateHubTarget` / `hubNavTargetForContentKind`, table control / Players overlay helpers | Narrative/Combat modes (`story` id → “Narrative”); Home is Narrative sub-tabs or Combat HUD; optional Characters `attention` blink; Notes content links share one navigator (Characters keeps mode; narrative kinds force Narrative Home) |
+| Notes links | `src/lib/gm/contentLinks.ts` + `narrativePlaceholders.ts` | `segmentContentLinks`, `resolveContentLinkTarget`, `createPlaceholderEntity` | Structured `[[kind:id\|label]]` in scratchpad; placeholder store on session; Create? stubs; Radical Visibility for missing targets |
 | Play sitting | `src/lib/gm/playSession.ts` | `openPlaySession`, `playSessionPlayerLabel` | UI **Open Table** stamps sitting + starts listen; date label is event-log / uniqueness (Join Session shows campaign name only) |
 | Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
 | Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 envelopes including join/presence + combat |
@@ -206,12 +207,12 @@ Copy this block when registering a new unified path:
 | Discovery | `src/lib/gm/sessionDiscovery.ts` + `browserLanHints.ts` | `listLanSessions` → local `/discover` (UDP + TCP + lanHints) + browser `/24` probe | Join Session browse; **campaignName** display only; Advanced IP = failure mode only (does not rebind browse) |
 | Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** → **Table Open** hover **Players in Session** overlay (Close Table inside); launcher **Join table** → name + characters (default Select a character) + Join Session list → sheet | One Characters pipeline — no remote fork; PCs = joined seats; NPCs = local-machine adds + archetypes; host Advanced code/QR hidden this pass (listen intact); player Advanced code/IP = failure fallback; shared client runtime survives sheet handoff; Return to launcher confirms Close Table (GM) / leave (player) |
 | Leave / party | `sessionHostRuntime` + `joinTableLeave.ts` | `applyPartyDetach`, `playerNameForPartyCharacter`, `joinedPartyCharacterIds` | Leave/kick/Close Table clear seat + party id + joiner cache (no Missing saves phantoms) |
-| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar`, `GmCharactersPanel`, `hubTableChrome.ts`, shared `PortalChromeActions` | Compact top nav (no bottom bar); Return + Settings icons; units in Settings; Narrative / Combat + Home / Characters / Gear; Characters/PCs blink on joiner attach; player name on PCs cards |
+| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar`, `GmCharactersPanel`, `GmSessionsPanel`, `GmNotesScratchpad`, `GmPlaceholderLane`, `hubTableChrome.ts`, shared `PortalChromeActions` | Compact top nav (no bottom bar); Return + Settings icons; units in Settings; Narrative / Combat + Home / Characters / Gear; Characters/PCs blink on joiner attach; player name on PCs cards; Notes outbound content links |
 | Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → character save on table; encounter Quick-Blocks blocked (no inventory) |
 
 **Modes / variants:** Hub `story` (chrome **Narrative**) / `combat` (Home differs; Characters and Gear are one pipeline each — Characters nests PCs/NPCs). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second Characters implementation.
 
-**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork Characters per Narrative/Combat mode. Extend `buildGmStoryHomeSubTabViews` for Narrative Home lanes — do not invent a second Home shell for Combat. New join envelopes stay on `sessionMessages` v1.
+**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork Characters per Narrative/Combat mode. Extend `buildGmStoryHomeSubTabViews` for Narrative Home lanes — do not invent a second Home shell for Combat. Notes content links go through `hubNavigation` / `navigateHubTarget` — never a Story-only or Combat-only link fork. New join envelopes stay on `sessionMessages` v1.
 
 ---
 
@@ -317,6 +318,7 @@ Track work here until promoted to the registry above.
 | 2026-09-18 | Gear Forge GM host: Hub **Gear** tab + `kind: 'gm'` adapter on shared shell → selected party character save |
 | 2026-09-18 | Gear Forge Sheet host: live `GearPanel` + `kind: 'sheet'` adapter on shared shell → active inventory |
 | 2026-09-16 | Gear Forge Creation host: `tab8_gear` + `kind: 'creation'` adapter on shared shell; Review → `tab9_review` |
+| 2026-10-01 | GM Hub Notes content links: `[[kind:id\|label]]`, placeholder store, shared `hubNavigation` (no Narrative/Combat fork) |
 | 2026-10-01 | GM Hub Characters tab (PCs + NPCs); Narrative mode label; Narrative Home People/Places/Things/Notes |
 | 2026-08-30 | GM Hub Story/Combat master tabs (Home + Party + Cast), matching live sheet |
 | 2026-08-30 | Play sessions: Open Session stamps `{campaign}: {date}` join name; Sessions landing drops saved-tables / passive matrix |

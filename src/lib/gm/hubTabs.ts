@@ -61,15 +61,25 @@ export const GM_STORY_HOME_SUB_TAB_LABELS: Record<
 }
 
 /**
- * Radical Visibility — People / Places / Things not wired yet.
- * Notes keeps the existing campaign scratchpad (shipped; not a fake tool).
+ * People / Places / Things / Notes are live placeholder lanes (Notes also has
+ * the campaign scratchpad). No “not in this build” grey-out — Radical Visibility
+ * applies to broken content links instead.
  */
-export function gmStoryHomeStubReason(subTabId: GmStoryHomeSubTabId): string {
-  if (subTabId === 'notes') {
-    return ''
-  }
-  const label = GM_STORY_HOME_SUB_TAB_LABELS[subTabId]
-  return `${label} is not in this build yet — coming soon. No fake ${label.toLowerCase()} tools here.`
+export function gmStoryHomeStubReason(_subTabId: GmStoryHomeSubTabId): string {
+  return ''
+}
+
+/** True when Narrative Home → Notes scratchpad surface is on screen. */
+export function isViewingStoryHomeNotes(
+  hubMode: GmHubMode,
+  hubTabId: GmHubTabId,
+  storyHomeSubTabId: GmStoryHomeSubTabId,
+): boolean {
+  return (
+    hubMode === 'story' &&
+    hubTabId === 'home' &&
+    storyHomeSubTabId === 'notes'
+  )
 }
 
 const SHARED_TAB_TITLES: Record<Exclude<GmHubTabId, 'home'>, string> = {

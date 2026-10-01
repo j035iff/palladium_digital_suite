@@ -1,8 +1,11 @@
+import { useEffect, useRef } from 'react'
 import { useGmSession } from '../../context/GmSessionContext'
 import {
   joinedPartyCharacterIds,
   playerNameForPartyCharacter,
 } from '../../lib/gm/joinTableLeave'
+import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
+import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
 import { formatBonus, formatPercent } from './GmApmPips'
 
 export function GmPartyPanel() {
@@ -14,7 +17,17 @@ export function GmPartyPanel() {
     dropCharacterFromParty,
     setViewForm,
     joinSeats,
+    hubFocus,
+    dropPlaceholder,
+    updatePlaceholderNotes,
   } = useGmSession()
+  const focusRef = useRef<HTMLLIElement | null>(null)
+
+  useEffect(() => {
+    if (hubFocus?.kind === 'pc') {
+      focusRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    }
+  }, [hubFocus])
 
   if (!session) {
     return (
@@ -25,6 +38,7 @@ export function GmPartyPanel() {
   const joinedIds = new Set(joinedPartyCharacterIds(joinSeats))
   const joinedSlices = partySlices.filter((pc) => joinedIds.has(pc.characterId))
   const joinedMissing = missingPartyIds.filter((id) => joinedIds.has(id))
+  const pcStubs = placeholdersOfKind(session, 'pc')
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto p-4">
@@ -56,6 +70,57 @@ export function GmPartyPanel() {
         </p>
       ) : null}
 
+      {pcStubs.length > 0 ? (
+        <div className="mb-4 rounded-xl border border-dashed border-cyan-800/50 bg-slate-900/50 p-3">
+          <h3 className="text-[10px] font-bold uppercase tracking-wide text-cyan-200/80">
+            Notes link stubs
+          </h3>
+          <p className="mt-1 text-[11px] text-slate-500">
+            Placeholder PCs from Notes Create? — not joined seats. Real PCs
+            appear only after Join Session.
+          </p>
+          <ul className="mt-2 space-y-2">
+            {pcStubs.map((stub) => {
+              const focused = isHubFocusMatch(hubFocus, 'pc', stub.id)
+              return (
+                <li
+                  key={stub.id}
+                  ref={focused ? focusRef : undefined}
+                  id={`gm-focus-pc-${stub.id}`}
+                  className={`rounded-lg border p-2 ${
+                    focused
+                      ? 'border-cyan-500 bg-cyan-950/40 ring-1 ring-cyan-400/40'
+                      : 'border-slate-800 bg-slate-950/70'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-sm font-semibold text-white">
+                      {stub.name}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => dropPlaceholder(stub.id)}
+                      className="text-[10px] uppercase text-red-400/80"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <textarea
+                    value={stub.notes}
+                    onChange={(e) =>
+                      updatePlaceholderNotes(stub.id, e.target.value)
+                    }
+                    placeholder="Stub notes…"
+                    className="mt-2 w-full rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
+                    rows={2}
+                  />
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ) : null}
+
       {joinedSlices.length === 0 ? (
         <p className="text-sm text-slate-500">
           No joined players yet. Open Table and wait for Join Session attaches.
@@ -67,10 +132,17 @@ export function GmPartyPanel() {
               joinSeats,
               pc.characterId,
             )
+            const focused = isHubFocusMatch(hubFocus, 'pc', pc.characterId)
             return (
               <li
                 key={pc.characterId}
-                className="rounded-xl border border-slate-700 bg-slate-900/80 p-3"
+                ref={focused ? focusRef : undefined}
+                id={`gm-focus-pc-${pc.characterId}`}
+                className={`rounded-xl border p-3 ${
+                  focused
+                    ? 'border-cyan-500 bg-cyan-950/30 ring-1 ring-cyan-400/40'
+                    : 'border-slate-700 bg-slate-900/80'
+                }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
