@@ -6,6 +6,7 @@ import {
 } from '../../lib/gm/joinTableLeave'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
 import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
+import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
 import { formatBonus, formatPercent } from './GmApmPips'
 import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 
@@ -100,10 +101,13 @@ export function GmPartyPanel() {
                     </p>
                     <button
                       type="button"
-                      onClick={() => dropPlaceholder(stub.id)}
+                      onClick={() => {
+                        if (!confirmPermanentDelete(stub.name)) return
+                        dropPlaceholder(stub.id)
+                      }}
                       className="text-[10px] uppercase text-red-400/80"
                     >
-                      Remove
+                      Delete
                     </button>
                   </div>
                   <GmContentLinkedNotesField

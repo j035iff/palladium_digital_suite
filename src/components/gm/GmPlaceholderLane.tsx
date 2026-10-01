@@ -7,6 +7,7 @@ import {
 import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
 import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
+import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
 
 const KIND_BY_SUB: Record<
   'people' | 'places' | 'things',
@@ -110,10 +111,13 @@ export function GmPlaceholderLane({
                   />
                   <button
                     type="button"
-                    onClick={() => dropPlaceholder(row.id)}
+                    onClick={() => {
+                      if (!confirmPermanentDelete(row.name)) return
+                      dropPlaceholder(row.id)
+                    }}
                     className="text-[10px] uppercase text-red-400/80 hover:text-red-300"
                   >
-                    Remove
+                    Delete
                   </button>
                 </div>
                 <GmContentLinkedNotesField

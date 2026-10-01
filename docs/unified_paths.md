@@ -209,7 +209,7 @@ Copy this block when registering a new unified path:
 | Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** → **Table Open** hover **Players in Session** overlay (Close Table inside); launcher **Join table** → name + characters (default Select a character) + Join Session list → sheet | One People pipeline — no remote fork; PCs = joined seats; NPCs = local-machine adds + archetypes; host Advanced code/QR hidden this pass (listen intact); player Advanced code/IP = failure fallback; shared client runtime survives sheet handoff; Return to launcher confirms Close Table (GM) / leave (player) |
 | Leave / party | `sessionHostRuntime` + `joinTableLeave.ts` | `applyPartyDetach`, `playerNameForPartyCharacter`, `joinedPartyCharacterIds` | Leave/kick/Close Table clear seat + party id + joiner cache (no Missing saves phantoms) |
 | Melee engagement | `src/lib/gm/meleeEngagement.ts` + `combatRoster.ts` | `listMeleePcCandidates`, `listMeleeNpcCandidates`, `addCharacterToMelee`, `assembleGmCombatRoster` | Opt-in roster from People data; no Combat People tab |
-| Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Things → Gear → character save on table; encounter Quick-Blocks blocked (no inventory) |
+| Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `customGearLibrary.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Things → Gear → My Custom Gear lists; optional push to character save; Quick-Blocks blocked (no inventory) |
 
 **Modes / variants:** Hub `story` (chrome **Narrative**) / `combat` (distinct tab sets; People is Narrative-only; Melee reuses party/NPC ids via engagement lists). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) under Things — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second People implementation.
 
@@ -245,14 +245,15 @@ Copy this block when registering a new unified path:
 | Host adapter | `src/lib/gear/gearForgeHost.ts` | `GearForgeHostAdapter` | `library` \| `creation` \| `sheet` \| `gm` |
 | Creation host | `src/lib/gear/creationGearForgeHost.ts` | `buildCreationGearForgeAdapter` | `tab8_gear` → draft inventory |
 | Sheet host | `src/lib/gear/sheetGearForgeHost.ts` | `buildSheetGearForgeAdapter` | Live `GearPanel` → active inventory |
-| GM host | `src/lib/gear/gmGearForgeHost.ts` | `buildGmGearForgeAdapter` | Hub Gear → party character save |
+| GM host | `src/lib/gear/gmGearForgeHost.ts` | `buildGmGearForgeAdapter` | Things → Gear → My Custom Gear library; optional character push |
 | Inventory commit | `src/lib/gear/inventoryWeaponCommit.ts` | `createInventoryWeaponFromPiece` | Shared grant/patch for creation / sheet / GM |
-| GM save grant | `src/lib/gear/gmCharacterInventoryGrant.ts` | `addWeaponToCharacterSave` | Party save write-back; Cast blocked |
-| Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear |
+| GM save grant | `src/lib/gear/gmCharacterInventoryGrant.ts` | `addWeaponToCharacterSave`, `gmGearLibraryBlockedReason` | Optional push write-back; library saves never gated |
+| Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear + GM Things → Gear |
+| Permanent delete confirm | `src/lib/gm/permanentDeleteConfirm.ts` | `confirmPermanentDelete` | Hub stubs / custom gear Delete dialogs |
 | Property stack | `src/lib/weaponForgeProperties.ts` | `Weapon.forgeProperties` | Indestructible / quality / multipliers / triggers |
 | UI shell | `src/components/gear/GearForgeShell.tsx` | Portal + creation + sheet + GM `GmGearPanel` | One shell for all hosts |
 
-**Modes / variants:** One shell for all hosts. Portal commits to library; creation and sheet commit to character inventory (draft vs active); GM commits to a selected party character’s local save. Cast Quick-Blocks have no inventory yet (visible why-disabled). Do not fork lane editors per host.
+**Modes / variants:** One shell for all hosts. Portal commits to library; creation and sheet commit to character inventory (draft vs active); GM Things → Gear commits to the same My Custom Gear library, with optional push copies onto a selected party character save (push never gates library saves). Cast Quick-Blocks have no inventory yet (visible why-disabled). Do not fork lane editors per host.
 
 ---
 
@@ -316,6 +317,7 @@ Track work here until promoted to the registry above.
 | 2026-09-28 | Join Table backlog: Open Table stamp matches publish; leave/kick/Close Table detach party+cache; Party = joined + player name; Cast hosts local add; Return to launcher confirms Close/leave |
 | 2026-09-25 | GM Hub client join first slice: interim `ws`, presence/join envelopes, Join table viewport, interacting sheet |
 | 2026-09-21 | Measurement units path: Standard/Metric preference, dual measure schema, Gear Forge convert-on-edit |
+| 2026-10-01 | GM Things → Gear: library-first My Custom Gear saves; optional character push; Delete + permanent confirm on Hub stubs/custom gear |
 | 2026-09-18 | Gear Forge GM host: Hub **Gear** tab + `kind: 'gm'` adapter on shared shell → selected party character save |
 | 2026-09-18 | Gear Forge Sheet host: live `GearPanel` + `kind: 'sheet'` adapter on shared shell → active inventory |
 | 2026-09-16 | Gear Forge Creation host: `tab8_gear` + `kind: 'creation'` adapter on shared shell; Review → `tab9_review` |

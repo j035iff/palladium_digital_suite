@@ -12,6 +12,7 @@ import {
 } from '../../../data/library/weaponsAncientCatalogLoader'
 import { getWeaponProficiencyCatalogEntryById } from '../../../data/library/weaponProficienciesCatalogLoader'
 import type { GearForgeHostAdapter } from '../../../lib/gear/gearForgeHost'
+import { confirmPermanentDelete } from '../../../lib/gm/permanentDeleteConfirm'
 import {
   buildGearForgeWeaponsSubTabViews,
   GEAR_FORGE_WEAPONS_SUB_TAB_LABELS,
@@ -89,6 +90,9 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const { measurementSystem } = useUnitsPreference()
   const prevSystemRef = useRef(measurementSystem)
   const blocked = adapter.commitBlockedReason?.trim() || null
+  /** Portal library + GM Things → Gear both persist My Custom Gear lists. */
+  const customLibraryHost =
+    adapter.kind === 'library' || adapter.kind === 'gm'
 
   const [weaponsSubTab, setWeaponsSubTab] =
     useState<GearForgeWeaponsSubTabId>('ancient')
@@ -697,7 +701,7 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
                 onClick={addFromCatalog}
                 title={blocked ?? undefined}
               >
-                {adapter.kind === 'library'
+                {customLibraryHost
                   ? 'Save catalog copy to library'
                   : 'Add from catalog'}
               </button>
@@ -1078,17 +1082,19 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
           onClick={addCustomWeapon}
           title={blocked ?? undefined}
         >
-          {adapter.kind === 'library' ? 'Save custom weapon to library' : 'Add custom weapon'}
+          {customLibraryHost
+            ? 'Save custom weapon to library'
+            : 'Add custom weapon'}
         </button>
       </div>
 
       <div>
         <h3 className={`mb-2 text-[11px] font-black uppercase tracking-wider ${theme.th}`}>
-          {adapter.kind === 'library' ? 'My custom weapons' : 'Carried weapons'}
+          {customLibraryHost ? 'My custom weapons' : 'Carried weapons'}
         </h3>
         {weapons.length === 0 ? (
           <p className={`text-sm ${theme.muted}`}>
-            {adapter.kind === 'library'
+            {customLibraryHost
               ? 'No custom weapons saved yet.'
               : 'No weapons granted yet.'}
           </p>
@@ -1111,9 +1117,17 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
                   <button
                     type="button"
                     className={theme.btnDanger}
-                    onClick={() => adapter.dropItem(w.id)}
+                    onClick={() => {
+                      if (
+                        customLibraryHost &&
+                        !confirmPermanentDelete(w.name)
+                      ) {
+                        return
+                      }
+                      adapter.dropItem(w.id)
+                    }}
                   >
-                    Drop
+                    {customLibraryHost ? 'Delete' : 'Drop'}
                   </button>
                 </li>
               )

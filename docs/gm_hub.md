@@ -86,7 +86,7 @@ While writing on any **Narrative notes-like surface**, the GM inserts outbound i
 
 Navigation uses one shared Hub navigator (`hubNavigation.ts` + context `navigateHubTarget`): People / narrative kinds always force Narrative (never open People from Combat). Do not fork Story vs Combat link handlers.
 
-**Things → Gear:** mounts the shared [Gear Forge](./forge/gear_forge.md) shell (`kind: 'gm'`). Grant target is a character save on the table (write-back via `gmCharacterInventoryGrant`). Party observer still does not mutate saves for vitals/overlays. Encounter Quick-Blocks have no inventory — the Gear sub-tab shows why they cannot receive grants. Do not fork a GM-only forge shell.
+**Things → Gear:** mounts the shared [Gear Forge](./forge/gear_forge.md) shell (`kind: 'gm'`). **Core commit** is the shared **My Custom Gear** library (`customGearLibrary` — same lists as portal Gear Forge). Saving customs / catalog copies to those lists does **not** require a character. Optional **Push to character** dual-writes a copy into a People character save when a grant target is selected (`gmCharacterInventoryGrant`). Party observer still does not mutate saves for vitals/overlays. Encounter Quick-Blocks have no inventory — the Gear sub-tab shows why they cannot receive grants. User-created stubs / custom gear use **Delete** with a permanent-confirm dialog (engagement **Remove** on Melee / party seats stays non-permanent). Do not fork a GM-only forge shell.
 
 Deferred tab names **Forge** / **Plot** are omitted so they do not collide with Character Creation Forge.
 
@@ -141,7 +141,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 | Party observer (Pillar 9) | `src/lib/gm/partyObserver.ts` |
 | Combat roster | `src/lib/gm/combatRoster.ts` + `meleeEngagement.ts` (Melee dropdown add/remove) |
 | Fodder spawn | `src/lib/gm/npcInstance.ts` |
-| Gear grant (party save) | `src/lib/gear/gmGearForgeHost.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` (Things → Gear) |
+| Gear (Things → Gear) | `src/lib/gear/gmGearForgeHost.ts`, `customGearLibrary.ts`, `gmCharacterInventoryGrant.ts`, `src/components/gm/GmGearPanel.tsx` |
 | Protocol | `src/lib/gm/sessionMessages.ts` |
 | Presence / join token / join gate | `src/lib/gm/sessionPresence.ts`, `sessionJoinCode.ts`, `sessionJoinGate.ts` |
 | People blink | `src/lib/gm/partyBlink.ts` → `GmTabBar` / hub context (clears on Narrative → People → PCs) |

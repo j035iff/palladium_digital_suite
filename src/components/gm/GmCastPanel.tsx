@@ -4,6 +4,7 @@ import { useGmSession } from '../../context/GmSessionContext'
 import { joinedPartyCharacterIds } from '../../lib/gm/joinTableLeave'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
 import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
+import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
 import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 
 export function GmCastPanel() {
@@ -222,10 +223,13 @@ export function GmCastPanel() {
                       </p>
                       <button
                         type="button"
-                        onClick={() => dropPlaceholder(stub.id)}
+                        onClick={() => {
+                          if (!confirmPermanentDelete(stub.name)) return
+                          dropPlaceholder(stub.id)
+                        }}
                         className="text-[10px] uppercase text-red-400/80"
                       >
-                        Remove
+                        Delete
                       </button>
                     </div>
                     <GmContentLinkedNotesField
@@ -281,10 +285,13 @@ export function GmCastPanel() {
                       </p>
                       <button
                         type="button"
-                        onClick={() => dropNpc(npc.instanceId)}
+                        onClick={() => {
+                          if (!confirmPermanentDelete(npc.displayName)) return
+                          dropNpc(npc.instanceId)
+                        }}
                         className="text-[10px] uppercase text-red-400/80"
                       >
-                        Remove
+                        Delete
                       </button>
                     </div>
                     <p className="mt-1 font-mono text-[11px] text-slate-300">

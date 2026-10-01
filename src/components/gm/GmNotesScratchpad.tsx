@@ -1,5 +1,6 @@
 import { useGmSession } from '../../context/GmSessionContext'
 import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
+import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
 import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 
 /**
@@ -11,6 +12,7 @@ export function GmNotesScratchpad() {
     session,
     updateScratchpad,
     updatePlaceholderNotes,
+    dropPlaceholder,
     hubFocus,
   } = useGmSession()
 
@@ -53,9 +55,21 @@ export function GmNotesScratchpad() {
                       : 'border-slate-800 bg-slate-950/60'
                   }`}
                 >
-                  <p className="text-sm font-semibold text-slate-100">
-                    {stub.name}
-                  </p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-sm font-semibold text-slate-100">
+                      {stub.name}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!confirmPermanentDelete(stub.name)) return
+                        dropPlaceholder(stub.id)
+                      }}
+                      className="text-[10px] uppercase text-red-400/80 hover:text-red-300"
+                    >
+                      Delete
+                    </button>
+                  </div>
                   <GmContentLinkedNotesField
                     id={`gm-note-stub-${stub.id}`}
                     value={stub.notes}
