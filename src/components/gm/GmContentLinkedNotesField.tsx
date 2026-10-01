@@ -9,8 +9,9 @@ import {
 } from 'react'
 import { useGmSession } from '../../context/GmSessionContext'
 import {
-  CONTENT_LINK_CHIP_ATTR,
+  applyContentLinkChipPresentation,
   contentLinkChipFromEventTarget,
+  contentLinkEditorNeedsRewrite,
   getContentLinkEditorCaretClientOffset,
   getContentLinkEditorCaretStorageOffset,
   getContentLinkEditorSelectedText,
@@ -58,8 +59,9 @@ export type GmContentLinkedNotesFieldProps = {
 
 /**
  * Shared Narrative notes editor: storage is `[[kind:id|label]]`, UI shows
- * clickable labels (Familiar Surface). One pipeline for Notes, Story Beats,
- * Places/Things/People stubs, and cast notes (Pillar 9).
+ * clickable labels inline in the primary body (Familiar Surface). No separate
+ * “Linked Preview”. One pipeline for Notes, Story Beats, Places/Things/People
+ * stubs, and cast notes (Pillar 9).
  */
 export function GmContentLinkedNotesField({
   id,
@@ -80,6 +82,7 @@ export function GmContentLinkedNotesField({
   } = useGmSession()
   const editorRef = useRef<HTMLDivElement>(null)
   const mentionListRef = useRef<HTMLUListElement>(null)
+  /** Skip one layout sync after local typing (DOM already matches). */
   const skipDomSyncRef = useRef(false)
   const pendingCaretRef = useRef<number | null>(null)
 
@@ -123,26 +126,69 @@ export function GmContentLinkedNotesField({
     active?.scrollIntoView({ block: 'nearest' })
   }, [mentionIndex, mentionHits.length])
 
+  const paintChips = (el: HTMLDivElement, live: GmSessionRecord) => {
+    applyContentLinkChipPresentation(
+      el,
+      (kind, id, labelText) =>
+        resolveContentLinkTarget(live, kind, id, labelText, {
+          partyNamesById,
+        }),
+      contentLinkKindLabel,
+    )
+  }
+
+  /** Write storage → label chips in the primary body (never leave raw `[[…]]`). */
+  const syncDomFromStorage = (
+    storage: string,
+    caret: number | null,
+    live: GmSessionRecord,
+  ) => {
+    const el = editorRef.current
+    if (!el) return
+    writeContentLinkEditor(el, storage)
+    paintChips(el, live)
+    if (caret != null) {
+      setContentLinkEditorCaretStorageOffset(el, caret)
+    }
+  }
+
   useLayoutEffect(() => {
     const el = editorRef.current
     if (!el || !session) return
+
     if (skipDomSyncRef.current) {
       skipDomSyncRef.current = false
+      // Even after local typing, never leave complete wiki tokens as raw text.
+      if (contentLinkEditorNeedsRewrite(el, value)) {
+        const caret =
+          pendingCaretRef.current ?? getContentLinkEditorCaretStorageOffset(el)
+        pendingCaretRef.current = null
+        syncDomFromStorage(value, caret, session)
+      } else {
+        paintChips(el, session)
+        if (pendingCaretRef.current != null) {
+          setContentLinkEditorCaretStorageOffset(el, pendingCaretRef.current)
+          pendingCaretRef.current = null
+        }
+      }
       return
     }
-    if (serializeContentLinkEditor(el) === value) {
+
+    if (
+      serializeContentLinkEditor(el) === value &&
+      !contentLinkEditorNeedsRewrite(el, value)
+    ) {
+      paintChips(el, session)
       if (pendingCaretRef.current != null) {
         setContentLinkEditorCaretStorageOffset(el, pendingCaretRef.current)
         pendingCaretRef.current = null
       }
       return
     }
-    writeContentLinkEditor(el, value)
-    applyChipPresentation(el, session, partyNamesById)
-    if (pendingCaretRef.current != null) {
-      setContentLinkEditorCaretStorageOffset(el, pendingCaretRef.current)
-      pendingCaretRef.current = null
-    }
+
+    const caret = pendingCaretRef.current
+    pendingCaretRef.current = null
+    syncDomFromStorage(value, caret, session)
   }, [value, session, partyNamesById])
 
   if (!session) return null
@@ -172,8 +218,10 @@ export function GmContentLinkedNotesField({
   const closeMention = () => setMentionUi(null)
 
   const applyExternalText = (next: { text: string; cursor: number }) => {
+    // Synchronously paint chips into the primary body before React commits.
+    skipDomSyncRef.current = true
     pendingCaretRef.current = next.cursor
-    skipDomSyncRef.current = false
+    syncDomFromStorage(next.text, next.cursor, session)
     onChange(next.text)
     setLinkerOpen(false)
     setPendingCreate(null)
@@ -183,11 +231,14 @@ export function GmContentLinkedNotesField({
       const field = editorRef.current
       if (!field) return
       field.focus()
-      if (pendingCaretRef.current != null) {
-        setContentLinkEditorCaretStorageOffset(field, pendingCaretRef.current)
-        pendingCaretRef.current = null
+      // Re-assert chips in case a stray input wiped them.
+      if (contentLinkEditorNeedsRewrite(field, next.text)) {
+        syncDomFromStorage(next.text, next.cursor, session)
+      } else {
+        setContentLinkEditorCaretStorageOffset(field, next.cursor)
+        paintChips(field, session)
       }
-      applyChipPresentation(field, session, partyNamesById)
+      pendingCaretRef.current = null
     })
   }
 
@@ -260,10 +311,20 @@ export function GmContentLinkedNotesField({
   const handleEditorInput = () => {
     const el = editorRef.current
     if (!el) return
-    const next = serializeContentLinkEditor(el)
+    const caretBefore = getContentLinkEditorCaretStorageOffset(el)
+    let next = serializeContentLinkEditor(el)
+    // If the GM pasted or typed a complete wiki token, collapse it to a chip
+    // immediately so the primary body never shows raw `[[…]]`.
+    if (contentLinkEditorNeedsRewrite(el, next)) {
+      writeContentLinkEditor(el, next)
+      paintChips(el, session)
+      setContentLinkEditorCaretStorageOffset(el, caretBefore)
+      next = serializeContentLinkEditor(el)
+    } else {
+      paintChips(el, session)
+    }
     skipDomSyncRef.current = true
     onChange(next)
-    applyChipPresentation(el, session, partyNamesById)
     const caret = getContentLinkEditorCaretStorageOffset(el)
     syncMentionFromCaret(next, caret)
   }
@@ -384,7 +445,7 @@ export function GmContentLinkedNotesField({
           }}
           className={`gm-content-linked-notes whitespace-pre-wrap break-words rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 font-sans text-slate-100 outline-none focus:border-cyan-700/60 ${
             density === 'scratchpad'
-              ? 'min-h-[10rem] flex-1 resize-y text-sm'
+              ? 'min-h-[10rem] flex-1 text-sm'
               : 'min-h-[2.5rem] w-full text-xs'
           } empty:before:pointer-events-none empty:before:text-slate-500 empty:before:content-[attr(data-placeholder)]`}
         />
@@ -488,9 +549,9 @@ export function GmContentLinkedNotesField({
             Insert link…
           </button>
           <p className="text-[11px] normal-case tracking-normal text-slate-500">
-            Type <span className="font-semibold text-slate-400">@</span> to link
-            existing entities. Links show as names — never raw ids. Missing
-            targets offer Create?
+            Type <span className="font-semibold text-slate-400">@</span> to link.
+            Names show as clickable links in this field — not raw ids or{' '}
+            <span className="font-mono text-[10px]">[[…]]</span> markup.
           </p>
         </div>
       ) : null}
@@ -598,56 +659,6 @@ export function GmContentLinkedNotesField({
           )}
         </div>
       ) : null}
-
-      <style>{`
-        .gm-content-linked-notes .gm-content-link-chip {
-          display: inline;
-          margin: 0 0.1rem;
-          padding: 0 0.15rem;
-          border-radius: 0.2rem;
-          font-weight: 600;
-          color: rgb(103 232 249);
-          text-decoration: underline;
-          text-decoration-color: rgb(14 116 144 / 0.8);
-          cursor: pointer;
-        }
-        .gm-content-linked-notes .gm-content-link-chip[data-broken="1"] {
-          color: rgb(254 243 199);
-          background: rgb(69 26 3 / 0.45);
-          border: 1px solid rgb(146 64 14 / 0.7);
-          text-decoration: none;
-        }
-      `}</style>
     </div>
   )
-}
-
-function applyChipPresentation(
-  root: HTMLElement,
-  session: GmSessionRecord,
-  partyNamesById: Map<string, string>,
-): void {
-  const chips = root.querySelectorAll<HTMLElement>(
-    `[${CONTENT_LINK_CHIP_ATTR}="1"]`,
-  )
-  for (const chip of chips) {
-    const kindRaw = (chip.dataset.kind ?? '').toLowerCase()
-    const id = chip.dataset.id ?? ''
-    const label = chip.dataset.label ?? chip.textContent ?? ''
-    if (!kindRaw || !id) continue
-    const resolved = resolveContentLinkTarget(
-      session,
-      kindRaw as GmContentLinkKind,
-      id,
-      label,
-      { partyNamesById },
-    )
-    if (resolved.status === 'ok') {
-      chip.dataset.broken = '0'
-      chip.title = `Open ${contentLinkKindLabel(kindRaw as GmContentLinkKind)}`
-    } else {
-      chip.dataset.broken = '1'
-      chip.title = resolved.reason
-    }
-  }
 }

@@ -14,6 +14,12 @@ import {
 
 export const CONTENT_LINK_CHIP_ATTR = 'data-content-link'
 
+const CHIP_OK_CLASS =
+  'gm-content-link-chip mx-0.5 cursor-pointer rounded px-0.5 font-semibold text-cyan-300 underline decoration-cyan-700/80 hover:bg-cyan-950/50 hover:text-cyan-100'
+
+const CHIP_BROKEN_CLASS =
+  'gm-content-link-chip mx-0.5 cursor-pointer rounded border border-amber-800/70 bg-amber-950/40 px-0.5 font-semibold text-amber-100'
+
 function appendTextWithBreaks(parent: HTMLElement, text: string): void {
   const parts = text.split('\n')
   parts.forEach((part, index) => {
@@ -31,8 +37,11 @@ function createLinkChip(ref: GmContentLinkRef): HTMLSpanElement {
   span.dataset.kind = ref.kind
   span.dataset.id = ref.id
   span.dataset.label = ref.label
+  span.dataset.broken = '0'
+  // Familiar Surface: visible text is the label only — never the wiki token.
   span.textContent = ref.label
-  span.className = 'gm-content-link-chip'
+  span.className = CHIP_OK_CLASS
+  span.title = ref.label
   return span
 }
 
@@ -50,6 +59,43 @@ export function writeContentLinkEditor(
       root.appendChild(createLinkChip(seg.ref))
     }
   }
+}
+
+/**
+ * True when storage has complete wiki links but the DOM is still showing raw
+ * `[[…]]` text (or chip count drifted). Used to force a Familiar Surface rewrite.
+ */
+export function contentLinkEditorNeedsRewrite(
+  root: HTMLElement,
+  storage: string,
+): boolean {
+  const linkCount = segmentContentLinks(storage).filter(
+    (seg) => seg.type === 'link',
+  ).length
+  const chipCount = root.querySelectorAll(
+    `[${CONTENT_LINK_CHIP_ATTR}="1"]`,
+  ).length
+  if (linkCount !== chipCount) return true
+  if (linkCount === 0) return false
+  // Chip count matches but a text node still exposes wiki chrome — rewrite.
+  return editorHasRawWikiText(root)
+}
+
+function editorHasRawWikiText(root: HTMLElement): boolean {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
+  let node = walker.nextNode()
+  while (node) {
+    const parent = node.parentElement
+    if (
+      parent &&
+      parent.getAttribute(CONTENT_LINK_CHIP_ATTR) !== '1' &&
+      /\[\[[a-z]+:[^\]|]+\|[^\]]+\]\]/i.test(node.textContent ?? '')
+    ) {
+      return true
+    }
+    node = walker.nextNode()
+  }
+  return false
 }
 
 function readChipRef(el: HTMLElement): GmContentLinkRef | null {
@@ -95,6 +141,11 @@ export function serializeContentLinkEditor(root: HTMLElement): string {
   return serializeNode(root)
 }
 
+/** Visible editor string (labels only) — for Familiar Surface assertions. */
+export function contentLinkEditorVisibleText(root: HTMLElement): string {
+  return root.textContent ?? ''
+}
+
 export type ContentLinkChipHit = {
   kind: GmContentLinkKind
   id: string
@@ -112,6 +163,38 @@ export function contentLinkChipFromEventTarget(
   const ref = readChipRef(chip)
   if (!ref) return null
   return { ...ref, element: chip }
+}
+
+export function applyContentLinkChipPresentation(
+  root: HTMLElement,
+  resolve: (
+    kind: GmContentLinkKind,
+    id: string,
+    label: string,
+  ) => { status: 'ok' } | { status: 'missing'; reason: string },
+  kindLabel: (kind: GmContentLinkKind) => string,
+): void {
+  const chips = root.querySelectorAll<HTMLElement>(
+    `[${CONTENT_LINK_CHIP_ATTR}="1"]`,
+  )
+  for (const chip of chips) {
+    const kindRaw = (chip.dataset.kind ?? '').toLowerCase()
+    const id = chip.dataset.id ?? ''
+    const label = chip.dataset.label ?? chip.textContent ?? ''
+    if (!isGmContentLinkKind(kindRaw) || !id) continue
+    // Keep visible text as the human label (never rewrite to wiki/id).
+    if (chip.textContent !== label) chip.textContent = label
+    const resolved = resolve(kindRaw, id, label)
+    if (resolved.status === 'ok') {
+      chip.dataset.broken = '0'
+      chip.className = CHIP_OK_CLASS
+      chip.title = `Open ${kindLabel(kindRaw)}`
+    } else {
+      chip.dataset.broken = '1'
+      chip.className = CHIP_BROKEN_CLASS
+      chip.title = resolved.reason
+    }
+  }
 }
 
 /**
