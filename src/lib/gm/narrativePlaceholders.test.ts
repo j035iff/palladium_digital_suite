@@ -3,6 +3,7 @@ import {
   addPlaceholder,
   createPlaceholderEntity,
   resolveContentLinkTarget,
+  searchAllLinkableEntities,
   searchLinkableEntities,
 } from './narrativePlaceholders'
 import { createGmSession } from './sessionModel'
@@ -77,5 +78,26 @@ describe('narrativePlaceholders', () => {
     expect(searchLinkableEntities(s, 'npc', 'guard')).toEqual([
       { id: 'npc_live', name: 'Guard', source: 'npc' },
     ])
+  })
+
+  it('searches across kinds for @ mention typeahead', () => {
+    let s = sessionWithNpc()
+    const place = createPlaceholderEntity({
+      kind: 'place',
+      name: 'Old Chicago',
+    })
+    const thing = createPlaceholderEntity({ kind: 'thing', name: 'Old Key' })
+    s = addPlaceholder(s, place)
+    s = addPlaceholder(s, thing)
+    const hits = searchAllLinkableEntities(s, 'old', {
+      partyNamesById: new Map([['pc_1', 'Olivia']]),
+    })
+    expect(hits.map((row) => row.name)).toEqual(['Old Chicago', 'Old Key'])
+    expect(hits[0]?.kind).toBe('place')
+    expect(
+      searchAllLinkableEntities(s, 'guard').some(
+        (row) => row.kind === 'npc' && row.id === 'npc_live',
+      ),
+    ).toBe(true)
   })
 })

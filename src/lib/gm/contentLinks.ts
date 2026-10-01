@@ -111,6 +111,67 @@ export function insertContentLink(
   return { text: next, cursor: start + token.length }
 }
 
+/** Active `@query` mention under the caret (Cursor-like typeahead). */
+export type GmActiveMention = {
+  /** Index of the triggering `@`. */
+  start: number
+  /** Exclusive end (usually caret). */
+  end: number
+  /** Filter text after `@` (no leading `@`). */
+  query: string
+}
+
+const MENTION_QUERY_CHAR = /[\w.'-]/
+
+/**
+ * Detect an active `@` mention ending at `cursor`.
+ * Triggers after whitespace / start / common punctuation; stops on whitespace.
+ * Does not open inside an unfinished `[[…` wiki token.
+ */
+export function findActiveMention(
+  text: string,
+  cursor: number,
+): GmActiveMention | null {
+  const pos = Math.max(0, Math.min(cursor, text.length))
+  if (pos === 0) return null
+
+  let at = -1
+  for (let i = pos - 1; i >= 0; i -= 1) {
+    const ch = text[i]!
+    if (ch === '@') {
+      at = i
+      break
+    }
+    if (!MENTION_QUERY_CHAR.test(ch)) return null
+  }
+  if (at < 0) return null
+
+  const before = at === 0 ? '' : text[at - 1]!
+  if (at > 0 && MENTION_QUERY_CHAR.test(before)) return null
+
+  // Skip `@` typed while editing an open `[[…` token before the closer.
+  const openWiki = text.lastIndexOf('[[', at)
+  const closeWiki = text.lastIndexOf(']]', at)
+  if (openWiki >= 0 && openWiki > closeWiki) return null
+
+  const query = text.slice(at + 1, pos)
+  if (query.includes('\n') || /\s/.test(query)) return null
+
+  return { start: at, end: pos, query }
+}
+
+/** Replace an active `@query` range with a structured content link. */
+export function replaceMentionWithContentLink(
+  text: string,
+  mention: GmActiveMention,
+  ref: GmContentLinkRef,
+): { text: string; cursor: number } {
+  return insertContentLink(text, ref, {
+    start: mention.start,
+    end: mention.end,
+  })
+}
+
 export function contentLinkKindLabel(kind: GmContentLinkKind): string {
   switch (kind) {
     case 'npc':

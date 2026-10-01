@@ -73,7 +73,7 @@ Combat roster is **opt-in**: GM picks joined PCs and local/fodder NPCs from Mele
 
 ### Notes content links (v1)
 
-While writing **Notes**, the GM inserts outbound in-app links (`[[kind:id|label]]`) that jump to placeholder or live targets. Person stubs are a notes page that links to real cast on **People → NPCs** (not a second sheet). Missing targets offer **Create?** to make a stub, then link. Broken links stay visible with why-text (Radical Visibility). Backlinks / wiki graph are deferred.
+While writing **Notes**, the GM inserts outbound in-app links (`[[kind:id|label]]`) that jump to placeholder or live targets. **Primary authoring:** type `@` in the scratchpad (Cursor-like mentions) → filter existing places / NPCs / PCs / things / people / note stubs → pick one → the structured link is inserted. **Insert link…** remains a fallback dialog; hand-typed `[[…]]` still parses but is not the taught UX. Person stubs are a notes page that links to real cast on **People → NPCs** (not a second sheet). No match / missing targets offer **Create?** to make a stub, then link (Radical Visibility). Broken links stay visible with why-text. Backlinks / wiki graph are deferred.
 
 | Kind | Navigate to |
 |------|-------------|
@@ -132,7 +132,7 @@ Envelope `sessionId` = campaign id; room key for join = `playSessionId` from hel
 
 | Concern | Location |
 |---------|----------|
-| Scratchpad + Notes links | `contentLinks.ts`, `narrativePlaceholders.ts`, `hubNavigation.ts`, `GmNotesScratchpad`, `GmPlaceholderLane` |
+| Scratchpad + Notes links | `contentLinks.ts` (`findActiveMention`, `replaceMentionWithContentLink`), `narrativePlaceholders.ts` (`searchAllLinkableEntities`), `hubNavigation.ts`, `textareaCaretCoords.ts`, `GmNotesScratchpad`, `GmPlaceholderLane` |
 | Session record + mutators | `src/lib/gm/sessionTypes.ts`, `sessionModel.ts` |
 | Campaign forge registry | `src/lib/gm/campaignForge.ts` |
 | Play sessions | `src/lib/gm/playSession.ts`, `openPlaySession` / `closePlaySession` in `sessionModel.ts` |
