@@ -127,8 +127,8 @@ export function GmGearPanel() {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-hidden p-4">
-      <div className="shrink-0 space-y-2">
+    <div className="flex flex-col gap-3 p-4 pb-6">
+      <div className="space-y-2">
         <p className="text-[11px] leading-snug text-slate-400">
           Gear Forge core — forge customs and catalog copies into{' '}
           <span className="font-semibold text-slate-200">My Custom Gear</span>{' '}
@@ -172,7 +172,7 @@ export function GmGearPanel() {
         )}
         <p className="text-[11px] text-slate-500">{GM_CAST_GEAR_BLOCKED_REASON}</p>
       </div>
-      <div className="min-h-0 flex-1 overflow-hidden">
+      <div>
         <GearForgeShell adapter={adapter} title="GM Gear" />
       </div>
     </div>

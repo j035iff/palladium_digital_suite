@@ -104,7 +104,7 @@ export function GmCombatPanel() {
   const emit = session.combat.activeHfEmit
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-hidden p-4">
+    <div className="flex flex-col gap-3 p-4 pb-6">
       <header className="flex flex-wrap items-center gap-2">
         <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">
           Melee round {session.combat.round}
@@ -244,12 +244,12 @@ export function GmCombatPanel() {
         </div>
       ) : null}
 
-      <div className="grid min-h-0 flex-1 gap-3 overflow-hidden xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-        <section className="flex min-h-0 flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/80">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+        <section className="flex flex-col rounded-xl border border-slate-700 bg-slate-900/80">
           <h2 className="border-b border-slate-800 px-3 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
             Roster
           </h2>
-          <ul className="min-h-0 flex-1 overflow-y-auto p-2">
+          <ul className="p-2">
             {roster.length === 0 ? (
               <li className="p-3 text-xs text-slate-500">
                 Add joined PCs or NPCs from the dropdowns above. Manage People on
@@ -397,11 +397,11 @@ export function GmCombatPanel() {
           </ul>
         </section>
 
-        <section className="flex min-h-0 flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/80">
+        <section className="flex flex-col rounded-xl border border-slate-700 bg-slate-900/80">
           <h2 className="border-b border-slate-800 px-3 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
             Adversary Quick-Blocks
           </h2>
-          <ul className="min-h-0 flex-1 overflow-y-auto p-2">
+          <ul className="p-2">
             {session.npcs.length === 0 ? (
               <li className="p-3 text-xs text-slate-500">
                 Spawn fodder on Narrative → People → NPCs, then add them to

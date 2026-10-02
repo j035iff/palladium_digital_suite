@@ -58,8 +58,8 @@ export function GmCastPanel() {
   const npcStubs = placeholdersOfKind(session, 'npc')
 
   return (
-    <div className="grid min-h-0 flex-1 gap-4 overflow-hidden p-4 lg:grid-cols-2">
-      <section className="flex min-h-0 flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/70">
+    <div className="grid gap-4 p-4 pb-6 lg:grid-cols-2">
+      <section className="flex flex-col rounded-xl border border-slate-700 bg-slate-900/70">
         <div className="border-b border-slate-800 p-3">
           <h2 className="text-xs font-black uppercase tracking-[0.2em] text-amber-200/90">
             Archetypes
@@ -75,7 +75,7 @@ export function GmCastPanel() {
             className="mt-2 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-1.5 text-sm text-slate-100"
           />
         </div>
-        <ul className="min-h-0 flex-1 overflow-y-auto p-2">
+        <ul className="p-2">
           {catalog.length === 0 ? (
             <li className="p-3 text-xs text-slate-500">
               No encounter archetypes ingested for {session.hostGenreId} yet.
@@ -128,7 +128,7 @@ export function GmCastPanel() {
         </ul>
       </section>
 
-      <section className="flex min-h-0 flex-col gap-3 overflow-hidden">
+      <section className="flex flex-col gap-3">
         <div className="shrink-0 rounded-xl border border-slate-700 bg-slate-900/70 p-3">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
@@ -250,13 +250,13 @@ export function GmCastPanel() {
           </div>
         ) : null}
 
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/70">
+        <div className="flex flex-col rounded-xl border border-slate-700 bg-slate-900/70">
           <div className="border-b border-slate-800 p-3">
             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-cyan-200/90">
               On the table
             </h2>
           </div>
-          <ul className="min-h-0 flex-1 overflow-y-auto p-2">
+          <ul className="p-2">
             {session.npcs.length === 0 ? (
               <li className="p-3 text-xs text-slate-500">
                 No adversaries spawned.

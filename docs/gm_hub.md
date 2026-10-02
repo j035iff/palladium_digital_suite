@@ -27,7 +27,7 @@ Top nav only — **no bottom bar**. Layout (`GmHubShell`):
 | Table control | Closed → orange **Open Table** (publish). Open → violet **Table Open** (expands Players overlay; does not re-publish) |
 | Players overlay | `GmJoinHostChrome` — absolute overlay under the table control; Kick per seat; **Close Table** only inside the panel. Stays open while the pointer is in the control+panel zone; leaving collapses. Advanced code / QR / Start–Stop listen UI is **not surfaced** on Hub this pass |
 
-Main content fills below the header. People (PCs / NPCs) is Narrative-only; Melee adds from the same data via dropdowns (Pillar 9) — do not fork pipelines or put People on Combat.
+Main content fills below the header and **scrolls as one shared content pane** (`GmHubContentPane`) when a workspace overflows — hub chrome (title + Narrative/Combat lane tabs) stays anchored (Visual Continuity). People/Things sub-tabs stick to the top of that pane. People (PCs / NPCs) is Narrative-only; Melee adds from the same data via dropdowns (Pillar 9) — do not fork pipelines or put People on Combat.
 
 ### Campaign vs play session
 

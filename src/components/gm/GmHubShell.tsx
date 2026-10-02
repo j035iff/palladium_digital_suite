@@ -17,6 +17,7 @@ import {
 } from '../../lib/gm/hubTableChrome'
 import { GmCombatPanel } from './GmCombatPanel'
 import { PortalChromeActions } from '../chrome/PortalChromeActions'
+import { GmHubContentPane } from './GmHubContentPane'
 import { GmJoinHostChrome } from './GmJoinHostChrome'
 import {
   GmNotesPanel,
@@ -207,9 +208,15 @@ export function GmHubShell() {
           {joinLastError}
         </p>
       ) : null}
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+      {/*
+        Shared content scroll (Pillar 9 / Visual Continuity): header chrome stays
+        anchored; all Narrative + Combat workspace tabs scroll inside this pane.
+        Not a flex column — flex-1 children would take a definite height and clip
+        behind overflow-hidden instead of expanding this scrollbar.
+      */}
+      <GmHubContentPane>
         <GmHubWorkspace />
-      </div>
+      </GmHubContentPane>
     </div>
   )
 }

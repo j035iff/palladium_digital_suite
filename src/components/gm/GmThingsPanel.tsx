@@ -15,6 +15,7 @@ import { GmPlaceholderLane } from './GmPlaceholderLane'
 /**
  * Narrative → Things — notes stub + Gear (moved from top-level Gear tab).
  * Gear panel is reused (Pillar 9); no forked forge host.
+ * Scrolls via shared {@link GmHubContentPane} on the hub shell.
  */
 export function GmThingsPanel() {
   const { session, thingsSubTabId, setThingsSubTabId } = useGmSession()
@@ -26,7 +27,7 @@ export function GmThingsPanel() {
 
   if (!session) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
+      <div className="p-4">
         <p className="rounded-xl border border-dashed border-slate-700 p-6 text-sm text-slate-500">
           Open a campaign from the launcher to manage Things.
         </p>
@@ -35,8 +36,8 @@ export function GmThingsPanel() {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-      <div className="shrink-0 border-b border-slate-800 bg-slate-950/60 px-4 py-2">
+    <div className="pb-4">
+      <div className="sticky top-0 z-10 border-b border-slate-800 bg-[#0a0c12]/95 px-4 py-2 backdrop-blur-sm">
         <ForgeNavigationBar
           tabs={subTabs}
           activeTabId={thingsSubTabId}
@@ -50,8 +51,8 @@ export function GmThingsPanel() {
       {thingsSubTabId === 'gear' ? (
         <GmGearPanel />
       ) : (
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
-          <section className="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+        <div className="p-4">
+          <section className="rounded-xl border border-slate-700 bg-slate-900/70 p-4">
             <p className="rounded-lg border border-slate-800 bg-slate-950/50 px-3 py-2 text-xs text-slate-400">
               Things notes stub — placeholder entries for Notes content links.
               Gear lives on the Gear sub-tab (same forge as before).

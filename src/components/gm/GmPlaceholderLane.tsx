@@ -59,7 +59,7 @@ export function GmPlaceholderLane({
   }
 
   return (
-    <div className="mt-4 flex min-h-0 flex-1 flex-col">
+    <div className="mt-4 flex flex-col">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
           <h2 className="text-xs font-black uppercase tracking-[0.2em] text-amber-200/90">
