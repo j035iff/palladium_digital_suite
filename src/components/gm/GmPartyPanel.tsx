@@ -9,6 +9,7 @@ import { placeholdersOfKind } from '../../lib/gm/narrativePlaceholders'
 import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
 import { GmCampaignPcHistorySection } from './GmCampaignPcHistorySection'
 import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
+import { GmGroupChatSection } from './GmGroupChatSection'
 import { GmPartySummaryFields } from './GmPartySummaryFields'
 import { GmSeatDmPanel } from './GmSeatDmPanel'
 
@@ -27,6 +28,12 @@ export function GmPartyPanel() {
     joinDm,
     sendDmToCharacter,
     markDmReadForCharacter,
+    joinGroupChat,
+    createGroupChat,
+    addGroupMembers,
+    removeGroupMember,
+    sendGroupChatMessage,
+    markGroupChatRead,
   } = useGmSession()
   const focusRef = useRef<HTMLLIElement | null>(null)
 
@@ -225,6 +232,24 @@ export function GmPartyPanel() {
             })}
           </ul>
         )}
+
+        <GmGroupChatSection
+          seatedOptions={joinedSlices.map((pc) => ({
+            characterId: pc.characterId,
+            characterName: pc.name,
+            playerDisplayName: playerNameForPartyCharacter(
+              joinSeats,
+              pc.characterId,
+            ),
+          }))}
+          seats={joinSeats}
+          groupChat={joinGroupChat}
+          onCreate={createGroupChat}
+          onSend={sendGroupChatMessage}
+          onMarkRead={markGroupChatRead}
+          onAddMembers={addGroupMembers}
+          onRemoveMember={removeGroupMember}
+        />
       </section>
 
       <GmCampaignPcHistorySection />
