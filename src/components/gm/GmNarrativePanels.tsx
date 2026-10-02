@@ -7,13 +7,14 @@ import { GmPlaceholderLane } from './GmPlaceholderLane'
 /**
  * Narrative → Story Beats — shared content-linked notes field (Pillar 9).
  * Same `[[kind:id|label]]` pipeline as Notes / Places / Things stubs.
+ * Scrolls via shared {@link GmHubContentPane} on the hub shell.
  */
 export function GmStoryBeatsPanel() {
   const { session, updateStoryBeats } = useGmSession()
 
   if (!session) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
+      <div className="p-4">
         <p className="rounded-xl border border-dashed border-slate-700 p-6 text-sm text-slate-500">
           Open a campaign from the launcher to start Story Beats.
         </p>
@@ -22,10 +23,10 @@ export function GmStoryBeatsPanel() {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
-      <section className="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+    <div className="p-4 pb-6">
+      <section className="rounded-xl border border-slate-700 bg-slate-900/70 p-4">
         <GmConversionRulesBanner />
-        <div className="mt-4 flex min-h-0 flex-1 flex-col">
+        <div className="mt-4 flex min-h-[16rem] flex-col">
           <h2 className="text-xs font-black uppercase tracking-[0.2em] text-amber-200/90">
             Story Beats
           </h2>
@@ -53,7 +54,7 @@ export function GmPlacesPanel() {
 
   if (!session) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
+      <div className="p-4">
         <p className="rounded-xl border border-dashed border-slate-700 p-6 text-sm text-slate-500">
           Open a campaign from the launcher to manage Places.
         </p>
@@ -62,8 +63,8 @@ export function GmPlacesPanel() {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
-      <section className="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+    <div className="p-4 pb-6">
+      <section className="rounded-xl border border-slate-700 bg-slate-900/70 p-4">
         <GmConversionRulesBanner />
         <GmPlaceholderLane lane="places" />
       </section>
@@ -77,7 +78,7 @@ export function GmNotesPanel() {
 
   if (!session) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
+      <div className="p-4">
         <p className="rounded-xl border border-dashed border-slate-700 p-6 text-sm text-slate-500">
           Open a campaign from the launcher to open Notes.
         </p>
@@ -86,8 +87,8 @@ export function GmNotesPanel() {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
-      <section className="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+    <div className="p-4 pb-6">
+      <section className="rounded-xl border border-slate-700 bg-slate-900/70 p-4">
         <GmConversionRulesBanner />
         <GmNotesScratchpad />
       </section>
@@ -98,8 +99,8 @@ export function GmNotesPanel() {
 /** Combat → Prefabs — stub for this pass. */
 export function GmPrefabsPanel() {
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4">
-      <section className="flex min-h-0 flex-1 flex-col rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+    <div className="p-4 pb-6">
+      <section className="rounded-xl border border-slate-700 bg-slate-900/70 p-4">
         <h2 className="text-xs font-black uppercase tracking-[0.2em] text-amber-200/90">
           Prefabs
         </h2>

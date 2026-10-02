@@ -43,7 +43,7 @@ export function GmPartyPanel() {
   const pcStubs = placeholdersOfKind(session, 'pc')
 
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto p-4">
+    <div className="p-4 pb-6">
       <div className="mb-4 flex flex-wrap items-end gap-3">
         <div>
           <h2 className="text-xs font-black uppercase tracking-[0.2em] text-amber-200/90">
