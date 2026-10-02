@@ -70,7 +70,7 @@ Player clicks **Join Table** and sees a page with:
   - Green, no “joining” text, once fully joined
 - GM **Narrative → People** tab blinks (and/or **PCs** sub-tab when already on People → NPCs); if the GM is on Combat, the Narrative mode control pulses
 - GM opens Narrative → People → PCs → **At the table** sees the player’s character sheet summary with the **player name** upper-right on each joined character box
-- Each At-the-table card has a **Messages** section (compose + thread) for private notes with that seated player; the player sees a **Messages** tray on their joined sheet/forge chrome. Campaign history cards are summary-only (no comment field).
+- Each At-the-table card has a **Messages** section (compose + thread) for private notes with that seated player; the GM can also **Create Group Chat** (pick seated players + optional title) for a shared thread. The player sees a **Messages** tray (1:1 GM + groups) on their joined sheet/forge chrome. Campaign history cards are summary-only (no comment field).
 - Opening Narrative → People → PCs clears the blink
 - **At the table** lists **joined players only**; GM adds local-machine characters as **NPCs** under People → NPCs (“Add from this machine”)
 - **Campaign history** (same PCs tab) lists unique **spawned** characters that have ever joined this campaign; drafts at the table stay out of history until Review & Spawn; seated history rows are greyed with “currently at table”

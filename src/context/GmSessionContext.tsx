@@ -122,6 +122,7 @@ import {
   partyTabBlinkAfterTabChange,
 } from '../lib/gm/partyBlink'
 import type { GmDmThreadState } from '../lib/gm/sessionDm'
+import type { GmGroupChatState } from '../lib/gm/sessionGroupChat'
 
 type GmSessionContextValue = {
   hubMode: GmHubMode
@@ -228,6 +229,25 @@ type GmSessionContextValue = {
     text: string,
   ) => { ok: true } | { ok: false; reason: string }
   markDmReadForCharacter: (characterId: string) => void
+  /** Play-session group chats (seated members; cleared on Close Table). */
+  joinGroupChat: GmGroupChatState
+  createGroupChat: (input: {
+    memberCharacterIds: string[]
+    title?: string | null
+  }) => { ok: true } | { ok: false; reason: string }
+  addGroupMembers: (
+    groupId: string,
+    characterIds: string[],
+  ) => { ok: true } | { ok: false; reason: string }
+  removeGroupMember: (
+    groupId: string,
+    characterId: string,
+  ) => { ok: true } | { ok: false; reason: string }
+  sendGroupChatMessage: (
+    groupId: string,
+    text: string,
+  ) => { ok: true } | { ok: false; reason: string }
+  markGroupChatRead: (groupId: string) => void
 }
 
 const GmSessionContext = createContext<GmSessionContextValue | null>(null)
@@ -759,6 +779,64 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     joinControllerRef.current?.markDmRead(characterId)
   }, [])
 
+  const createGroupChat = useCallback(
+    (input: { memberCharacterIds: string[]; title?: string | null }) => {
+      const result = joinControllerRef.current?.createGroupChat(input)
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const addGroupMembers = useCallback(
+    (groupId: string, characterIds: string[]) => {
+      const result = joinControllerRef.current?.addGroupMembers(
+        groupId,
+        characterIds,
+      )
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const removeGroupMember = useCallback(
+    (groupId: string, characterId: string) => {
+      const result = joinControllerRef.current?.removeGroupMember(
+        groupId,
+        characterId,
+      )
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const sendGroupChatMessage = useCallback((groupId: string, text: string) => {
+    const result = joinControllerRef.current?.sendGroupChatMessage(
+      groupId,
+      text,
+    )
+    if (!result) {
+      return { ok: false as const, reason: 'Table is not open for messages.' }
+    }
+    if (!result.ok) return { ok: false as const, reason: result.reason }
+    return { ok: true as const }
+  }, [])
+
+  const markGroupChatRead = useCallback((groupId: string) => {
+    joinControllerRef.current?.markGroupChatRead(groupId)
+  }, [])
+
   const joinCapability = useMemo(
     () =>
       resolveJoinListenCapability({
@@ -1060,6 +1138,12 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       joinDm: joinUi.dm,
       sendDmToCharacter,
       markDmReadForCharacter,
+      joinGroupChat: joinUi.groupChat,
+      createGroupChat,
+      addGroupMembers,
+      removeGroupMember,
+      sendGroupChatMessage,
+      markGroupChatRead,
     }),
     [
       hubMode,
@@ -1131,6 +1215,12 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       joinUi.dm,
       sendDmToCharacter,
       markDmReadForCharacter,
+      joinUi.groupChat,
+      createGroupChat,
+      addGroupMembers,
+      removeGroupMember,
+      sendGroupChatMessage,
+      markGroupChatRead,
     ],
   )
 

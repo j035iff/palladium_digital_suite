@@ -21,6 +21,7 @@ import {
   isGmEnvelope,
   type GmApmSpendPayload,
   type GmDmPayload,
+  type GmGroupSendPayload,
   type GmHfSavePayload,
   type GmInitiativePayload,
   type GmJoinPayload,
@@ -47,6 +48,25 @@ import {
   type GmDmMessage,
   type GmDmThreadState,
 } from './sessionDm'
+import {
+  addMembersToGroup,
+  appendGroupMessage,
+  createGroupChat,
+  createGroupChatMessage,
+  emptyGroupChatState,
+  groupChatById,
+  groupCreatePayloadFromChat,
+  groupMessageFromPayload,
+  groupSendPayloadFromMessage,
+  isGroupMember,
+  markGroupChatRead,
+  removeMemberFromGroups,
+  setGroupMembers,
+  upsertGroupChat,
+  type GmGroupChat,
+  type GmGroupChatMessage,
+  type GmGroupChatState,
+} from './sessionGroupChat'
 
 export type GmHostRuntimeState = {
   listening: boolean
@@ -56,6 +76,8 @@ export type GmHostRuntimeState = {
   peerDevices: Record<string, string>
   /** Play-session-scoped DM threads (cleared on Close Table). */
   dm: GmDmThreadState
+  /** Play-session-scoped group chats (cleared on Close Table). */
+  groupChat: GmGroupChatState
 }
 
 export type GmHostRuntimeHooks = {
@@ -83,6 +105,8 @@ export type GmHostRuntimeHooks = {
   onPresenceChange?: (presence: GmPresenceState | null) => void
   /** DM thread updates for hub UI (People → PCs At the table). */
   onDmChange?: (dm: GmDmThreadState) => void
+  /** Group chat updates for hub UI. */
+  onGroupChatChange?: (groupChat: GmGroupChatState) => void
 }
 
 export function createInitialHostRuntimeState(): GmHostRuntimeState {
@@ -92,6 +116,7 @@ export function createInitialHostRuntimeState(): GmHostRuntimeState {
     presence: null,
     peerDevices: {},
     dm: emptyDmThreadState(),
+    groupChat: emptyGroupChatState(),
   }
 }
 
@@ -128,6 +153,26 @@ export type GmHostRuntime = {
     text: string,
   ) => { ok: true; message: GmDmMessage } | { ok: false; reason: string }
   markDmRead: (characterId: string) => void
+  /** GM creates a group with currently seated members. */
+  createGroupChat: (input: {
+    memberCharacterIds: string[]
+    title?: string | null
+  }) => { ok: true; chat: GmGroupChat } | { ok: false; reason: string }
+  /** GM adds seated players to an existing group. */
+  addGroupMembers: (
+    groupId: string,
+    characterIds: string[],
+  ) => { ok: true; chat: GmGroupChat } | { ok: false; reason: string }
+  /** GM removes a seated member from a group (cheap v1). */
+  removeGroupMember: (
+    groupId: string,
+    characterId: string,
+  ) => { ok: true; chat: GmGroupChat } | { ok: false; reason: string }
+  sendGroupChatMessage: (
+    groupId: string,
+    text: string,
+  ) => { ok: true; message: GmGroupChatMessage } | { ok: false; reason: string }
+  markGroupChatRead: (groupId: string) => void
   /** Wire transport inbound; returns unsubscribe. */
   attachTransport: (transport: GmTransport) => () => void
 }
@@ -141,6 +186,11 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     hooks.onDmChange?.(dm)
   }
 
+  const setGroupChat = (groupChat: GmGroupChatState) => {
+    state = { ...state, groupChat }
+    hooks.onGroupChatChange?.(groupChat)
+  }
+
   const peerIdForCharacter = (characterId: string): string | null => {
     if (!state.presence) return null
     const seat = state.presence.seats.find((s) => s.characterId === characterId)
@@ -149,6 +199,63 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
       ([, deviceId]) => deviceId === seat.deviceId,
     )
     return entry?.[0] ?? null
+  }
+
+  const seatedConnectedCharacter = (
+    characterId: string,
+  ): { ok: true } | { ok: false; reason: string } => {
+    if (!state.presence) {
+      return { ok: false, reason: 'Table is not open for messages.' }
+    }
+    const seat = state.presence.seats.find((s) => s.characterId === characterId)
+    if (!seat || seat.status !== 'connected' || !seat.characterId) {
+      return {
+        ok: false,
+        reason: 'That player is not fully seated at the table.',
+      }
+    }
+    if (!peerIdForCharacter(characterId)) {
+      return { ok: false, reason: 'Player device is not connected.' }
+    }
+    return { ok: true }
+  }
+
+  const fanoutToMembers = (
+    sessionId: string,
+    memberCharacterIds: string[],
+    envelope: GmProtocolMessage,
+    exceptCharacterId?: string | null,
+  ) => {
+    if (!transport) return
+    for (const characterId of memberCharacterIds) {
+      if (exceptCharacterId && characterId === exceptCharacterId) continue
+      const peerId = peerIdForCharacter(characterId)
+      if (peerId) transport.send(peerId, envelope)
+    }
+  }
+
+  const notifyGroupMembers = (chat: GmGroupChat, sessionId: string) => {
+    fanoutToMembers(
+      sessionId,
+      chat.memberCharacterIds,
+      createGmEnvelope(
+        'dm.groupCreate',
+        sessionId,
+        groupCreatePayloadFromChat(chat),
+      ),
+    )
+  }
+
+  const pushGroupMembers = (chat: GmGroupChat, sessionId: string) => {
+    fanoutToMembers(
+      sessionId,
+      chat.memberCharacterIds,
+      createGmEnvelope('dm.groupMembers', sessionId, {
+        playSessionId: chat.playSessionId,
+        groupId: chat.id,
+        memberCharacterIds: [...chat.memberCharacterIds],
+      }),
+    )
   }
 
   const beginListen = (
@@ -171,9 +278,11 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
       presence: emptyPresence(live.id),
       peerDevices: {},
       dm: emptyDmThreadState(),
+      groupChat: emptyGroupChatState(),
     }
     hooks.onPresenceChange?.(state.presence)
     hooks.onDmChange?.(state.dm)
+    hooks.onGroupChatChange?.(state.groupChat)
     if (transport) {
       const hello = createGmEnvelope(
         'session.hello',
@@ -193,6 +302,22 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     clearJoinedCharacter(session.id, characterId)
     hooks.applyPartyDetach(characterId)
     setDm(dropDmCharacterThread(state.dm, characterId))
+    const before = state.groupChat
+    const after = removeMemberFromGroups(before, characterId)
+    if (after !== before) {
+      setGroupChat(after)
+      // Notify remaining members of updated rosters.
+      for (const chat of Object.values(after.byId)) {
+        const prev = before.byId[chat.id]
+        if (
+          prev &&
+          prev.memberCharacterIds.includes(characterId) &&
+          !chat.memberCharacterIds.includes(characterId)
+        ) {
+          pushGroupMembers(chat, session.id)
+        }
+      }
+    }
   }
 
   const endListen = (reason = 'Play sitting closed.') => {
@@ -216,6 +341,7 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     state = createInitialHostRuntimeState()
     hooks.onPresenceChange?.(null)
     hooks.onDmChange?.(state.dm)
+    hooks.onGroupChatChange?.(state.groupChat)
   }
 
   const kickDevice = (deviceId: string, reason = 'Removed by GM.') => {
@@ -285,6 +411,160 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
 
   const markDmRead = (characterId: string) => {
     setDm(markDmThreadRead(state.dm, characterId))
+  }
+
+  const createGroupChatForHost: GmHostRuntime['createGroupChat'] = (input) => {
+    const session = hooks.getSession()
+    if (!session || !state.listening || !state.presence || !transport) {
+      return { ok: false, reason: 'Table is not open for messages.' }
+    }
+    const live = activePlaySession(session)
+    if (!live) {
+      return { ok: false, reason: 'No open table.' }
+    }
+    const members = input.memberCharacterIds
+    if (members.length === 0) {
+      return { ok: false, reason: 'Pick at least one player at the table.' }
+    }
+    for (const characterId of members) {
+      const seated = seatedConnectedCharacter(characterId)
+      if (!seated.ok) return seated
+    }
+    const chat = createGroupChat({
+      playSessionId: live.id,
+      memberCharacterIds: members,
+      title: input.title,
+    })
+    if (!chat) {
+      return { ok: false, reason: 'Could not create group chat.' }
+    }
+    setGroupChat(upsertGroupChat(state.groupChat, chat))
+    notifyGroupMembers(chat, session.id)
+    return { ok: true, chat }
+  }
+
+  const addGroupMembers: GmHostRuntime['addGroupMembers'] = (
+    groupId,
+    characterIds,
+  ) => {
+    const session = hooks.getSession()
+    if (!session || !state.listening || !state.presence || !transport) {
+      return { ok: false, reason: 'Table is not open for messages.' }
+    }
+    const chat = groupChatById(state.groupChat, groupId)
+    if (!chat) {
+      return { ok: false, reason: 'Group chat not found.' }
+    }
+    const toAdd = characterIds.filter((id) => !isGroupMember(chat, id))
+    if (toAdd.length === 0) {
+      return { ok: true, chat }
+    }
+    for (const characterId of toAdd) {
+      const seated = seatedConnectedCharacter(characterId)
+      if (!seated.ok) return seated
+    }
+    const nextState = addMembersToGroup(state.groupChat, groupId, toAdd)
+    const nextChat = groupChatById(nextState, groupId)
+    if (!nextChat) {
+      return { ok: false, reason: 'Group chat not found.' }
+    }
+    setGroupChat(nextState)
+    // New members get full create (title + roster); others get roster update.
+    for (const characterId of toAdd) {
+      const peerId = peerIdForCharacter(characterId)
+      if (peerId) {
+        transport.send(
+          peerId,
+          createGmEnvelope(
+            'dm.groupCreate',
+            session.id,
+            groupCreatePayloadFromChat(nextChat),
+          ),
+        )
+      }
+    }
+    pushGroupMembers(nextChat, session.id)
+    return { ok: true, chat: nextChat }
+  }
+
+  const removeGroupMember: GmHostRuntime['removeGroupMember'] = (
+    groupId,
+    characterId,
+  ) => {
+    const session = hooks.getSession()
+    if (!session || !state.listening || !transport) {
+      return { ok: false, reason: 'Table is not open for messages.' }
+    }
+    const chat = groupChatById(state.groupChat, groupId)
+    if (!chat) {
+      return { ok: false, reason: 'Group chat not found.' }
+    }
+    if (!isGroupMember(chat, characterId)) {
+      return { ok: true, chat }
+    }
+    const nextMembers = chat.memberCharacterIds.filter((id) => id !== characterId)
+    const nextState = setGroupMembers(state.groupChat, groupId, nextMembers)
+    const nextChat = groupChatById(nextState, groupId)
+    if (!nextChat) {
+      return { ok: false, reason: 'Group chat not found.' }
+    }
+    setGroupChat(nextState)
+    const peerId = peerIdForCharacter(characterId)
+    if (peerId) {
+      transport.send(
+        peerId,
+        createGmEnvelope('dm.groupMembers', session.id, {
+          playSessionId: nextChat.playSessionId,
+          groupId: nextChat.id,
+          memberCharacterIds: [],
+        }),
+      )
+    }
+    pushGroupMembers(nextChat, session.id)
+    return { ok: true, chat: nextChat }
+  }
+
+  const sendGroupChatMessage: GmHostRuntime['sendGroupChatMessage'] = (
+    groupId,
+    text,
+  ) => {
+    const session = hooks.getSession()
+    if (!session || !state.listening || !state.presence || !transport) {
+      return { ok: false, reason: 'Table is not open for messages.' }
+    }
+    const live = activePlaySession(session)
+    if (!live) {
+      return { ok: false, reason: 'No open table.' }
+    }
+    const chat = groupChatById(state.groupChat, groupId)
+    if (!chat || chat.playSessionId !== live.id) {
+      return { ok: false, reason: 'Group chat not found.' }
+    }
+    const message = createGroupChatMessage({
+      groupId,
+      playSessionId: live.id,
+      from: 'gm',
+      characterId: null,
+      text,
+    })
+    if (!message) {
+      return { ok: false, reason: 'Message is empty or too long.' }
+    }
+    setGroupChat(appendGroupMessage(state.groupChat, message, false))
+    fanoutToMembers(
+      session.id,
+      chat.memberCharacterIds,
+      createGmEnvelope(
+        'dm.groupSend',
+        session.id,
+        groupSendPayloadFromMessage(message),
+      ),
+    )
+    return { ok: true, message }
+  }
+
+  const markGroupChatReadHost: GmHostRuntime['markGroupChatRead'] = (groupId) => {
+    setGroupChat(markGroupChatRead(state.groupChat, groupId))
   }
 
   const handleJoin = (
@@ -425,6 +705,32 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
       const message = dmMessageFromPayload(payload, envelope.sentAtMs)
       if (!message) return
       setDm(appendDmMessage(state.dm, message, 'player'))
+      return
+    }
+
+    if (envelope.type === 'dm.groupSend') {
+      const payload = envelope.payload as GmGroupSendPayload
+      if (payload.from !== 'player') return
+      const seat = findSeat(state.presence, deviceId)
+      if (!seat?.characterId || seat.status !== 'connected') return
+      if (payload.characterId !== seat.characterId) return
+      const live = activePlaySession(session)
+      if (!live || live.id !== payload.playSessionId) return
+      const chat = groupChatById(state.groupChat, payload.groupId)
+      if (!chat || !isGroupMember(chat, seat.characterId)) return
+      const message = groupMessageFromPayload(payload, envelope.sentAtMs)
+      if (!message) return
+      setGroupChat(appendGroupMessage(state.groupChat, message, true))
+      fanoutToMembers(
+        session.id,
+        chat.memberCharacterIds,
+        createGmEnvelope(
+          'dm.groupSend',
+          session.id,
+          groupSendPayloadFromMessage(message),
+        ),
+        seat.characterId,
+      )
     }
   }
 
@@ -487,6 +793,11 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     broadcastEnvelope,
     sendDmToCharacter,
     markDmRead,
+    createGroupChat: createGroupChatForHost,
+    addGroupMembers,
+    removeGroupMember,
+    sendGroupChatMessage,
+    markGroupChatRead: markGroupChatReadHost,
     attachTransport,
   }
 }

@@ -1,9 +1,19 @@
 import { activePlaySession } from './playSession'
 import type { GmDmSendPayload } from './sessionDm'
+import type {
+  GmGroupCreatePayload,
+  GmGroupMembersPayload,
+  GmGroupSendPayload,
+} from './sessionGroupChat'
 import type { GmSessionRecord } from './sessionTypes'
 import type { GmSeat } from './sessionPresence'
 
 export type { GmDmSendPayload } from './sessionDm'
+export type {
+  GmGroupCreatePayload,
+  GmGroupMembersPayload,
+  GmGroupSendPayload,
+} from './sessionGroupChat'
 
 /**
  * GM Hub LAN / WebSocket payload shapes (protocol v1).
@@ -113,6 +123,14 @@ export type GmHfClearPayload = Record<string, never>
  */
 export type GmDmPayload = GmDmSendPayload
 
+/**
+ * Multi-person group chat (GM + seated members) — same `dm.*` family / host path.
+ * Host fans out create/send/members; clients post `dm.groupSend` only.
+ */
+export type GmGroupCreateWirePayload = GmGroupCreatePayload
+export type GmGroupSendWirePayload = GmGroupSendPayload
+export type GmGroupMembersWirePayload = GmGroupMembersPayload
+
 export type GmProtocolMessage =
   | GmEnvelope<'session.hello', GmHelloPayload>
   | GmEnvelope<'session.join', GmJoinPayload>
@@ -130,6 +148,9 @@ export type GmProtocolMessage =
   | GmEnvelope<'combat.initiativeLock', GmInitiativeLockPayload>
   | GmEnvelope<'combat.strikeRecorded', GmStrikeRecordedPayload>
   | GmEnvelope<'dm.send', GmDmPayload>
+  | GmEnvelope<'dm.groupCreate', GmGroupCreateWirePayload>
+  | GmEnvelope<'dm.groupSend', GmGroupSendWirePayload>
+  | GmEnvelope<'dm.groupMembers', GmGroupMembersWirePayload>
 
 /** Client → host messages allowed after a successful welcome. */
 export const CLIENT_TO_HOST_TYPES = [
@@ -139,6 +160,7 @@ export const CLIENT_TO_HOST_TYPES = [
   'combat.apmSpend',
   'combat.hfSave',
   'dm.send',
+  'dm.groupSend',
 ] as const
 
 export type GmClientToHostType = (typeof CLIENT_TO_HOST_TYPES)[number]

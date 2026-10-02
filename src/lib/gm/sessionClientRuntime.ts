@@ -7,6 +7,9 @@ import {
   createGmEnvelope,
   isGmEnvelope,
   type GmDmPayload,
+  type GmGroupCreatePayload,
+  type GmGroupMembersPayload,
+  type GmGroupSendPayload,
   type GmHelloPayload,
   type GmProtocolMessage,
 } from './sessionMessages'
@@ -22,6 +25,21 @@ import {
   type GmDmMessage,
   type GmDmThreadState,
 } from './sessionDm'
+import {
+  appendGroupMessage,
+  createGroupChatMessage,
+  emptyGroupChatState,
+  groupChatById,
+  groupChatFromCreatePayload,
+  groupMessageFromPayload,
+  groupSendPayloadFromMessage,
+  isGroupMember,
+  markGroupChatRead,
+  setGroupMembers,
+  upsertGroupChat,
+  type GmGroupChatMessage,
+  type GmGroupChatState,
+} from './sessionGroupChat'
 
 const DEVICE_ID_KEY = 'pds:gmDeviceId'
 
@@ -59,6 +77,8 @@ export type GmClientRuntimeState = {
   initiativeLocked: boolean
   /** Play-session DM thread for this device’s seated character. */
   dm: GmDmThreadState
+  /** Play-session group chats this seat is a member of. */
+  groupChat: GmGroupChatState
   /** Character id attached via party.snapshot (local mirror for DM). */
   attachedCharacterId: string | null
 }
@@ -82,6 +102,11 @@ export type GmClientRuntime = {
     text: string,
   ) => { ok: true; message: GmDmMessage } | { ok: false; reason: string }
   markDmRead: () => void
+  sendGroupChat: (
+    groupId: string,
+    text: string,
+  ) => { ok: true; message: GmGroupChatMessage } | { ok: false; reason: string }
+  markGroupChatRead: (groupId: string) => void
   subscribe: (listener: (state: GmClientRuntimeState) => void) => () => void
 }
 
@@ -99,6 +124,7 @@ export function createGmClientRuntime(
     activeHf: null,
     initiativeLocked: false,
     dm: emptyDmThreadState(),
+    groupChat: emptyGroupChatState(),
     attachedCharacterId: null,
   }
   let transport: GmTransport | null = null
@@ -166,6 +192,7 @@ export function createGmClientRuntime(
           hello: null,
           activeHf: null,
           dm: emptyDmThreadState(),
+          groupChat: emptyGroupChatState(),
           attachedCharacterId: null,
         })
         return
@@ -195,6 +222,73 @@ export function createGmClientRuntime(
         setState({
           dm: appendDmMessage(state.dm, dmMessage, 'gm'),
         })
+        return
+      }
+      if (message.type === 'dm.groupCreate') {
+        const payload = message.payload as GmGroupCreatePayload
+        const chat = groupChatFromCreatePayload(payload)
+        if (!chat) return
+        const charId = state.attachedCharacterId
+        if (charId && !isGroupMember(chat, charId)) {
+          // Removed from group via empty/non-member create — drop locally.
+          if (state.groupChat.byId[chat.id]) {
+            const byId = { ...state.groupChat.byId }
+            const unreadByGroupId = { ...state.groupChat.unreadByGroupId }
+            delete byId[chat.id]
+            delete unreadByGroupId[chat.id]
+            setState({ groupChat: { byId, unreadByGroupId } })
+          }
+          return
+        }
+        if (charId && isGroupMember(chat, charId)) {
+          setState({ groupChat: upsertGroupChat(state.groupChat, chat) })
+        }
+        return
+      }
+      if (message.type === 'dm.groupMembers') {
+        const payload = message.payload as GmGroupMembersPayload
+        const charId = state.attachedCharacterId
+        if (!charId) return
+        if (!payload.memberCharacterIds.includes(charId)) {
+          if (!state.groupChat.byId[payload.groupId]) return
+          const byId = { ...state.groupChat.byId }
+          const unreadByGroupId = { ...state.groupChat.unreadByGroupId }
+          delete byId[payload.groupId]
+          delete unreadByGroupId[payload.groupId]
+          setState({ groupChat: { byId, unreadByGroupId } })
+          return
+        }
+        if (!state.groupChat.byId[payload.groupId]) {
+          // Roster update before create is ignored; create carries full chat.
+          return
+        }
+        setState({
+          groupChat: setGroupMembers(
+            state.groupChat,
+            payload.groupId,
+            payload.memberCharacterIds,
+          ),
+        })
+        return
+      }
+      if (message.type === 'dm.groupSend') {
+        const payload = message.payload as GmGroupSendPayload
+        const charId = state.attachedCharacterId
+        if (!charId) return
+        const chat = groupChatById(state.groupChat, payload.groupId)
+        if (!chat || !isGroupMember(chat, charId)) return
+        const groupMessage = groupMessageFromPayload(payload, message.sentAtMs)
+        if (!groupMessage) return
+        const fromSelf =
+          groupMessage.from === 'player' &&
+          groupMessage.characterId === charId
+        setState({
+          groupChat: appendGroupMessage(
+            state.groupChat,
+            groupMessage,
+            !fromSelf,
+          ),
+        })
       }
     })
     return () => {
@@ -217,6 +311,7 @@ export function createGmClientRuntime(
       displayName: input.displayName,
       lastError: null,
       dm: emptyDmThreadState(),
+      groupChat: emptyGroupChatState(),
       attachedCharacterId: null,
     })
     const envelope = createGmEnvelope('session.join', input.campaignId, {
@@ -250,6 +345,7 @@ export function createGmClientRuntime(
       activeHf: null,
       lastError: null,
       dm: emptyDmThreadState(),
+      groupChat: emptyGroupChatState(),
       attachedCharacterId: null,
     })
   }
@@ -338,6 +434,52 @@ export function createGmClientRuntime(
     setState({ dm: markDmThreadRead(state.dm, characterId) })
   }
 
+  const sendGroupChat: GmClientRuntime['sendGroupChat'] = (groupId, text) => {
+    if (!requireJoined()) {
+      return { ok: false, reason: 'Not joined to a table.' }
+    }
+    const playSessionId = state.hello?.playSessionId
+    const characterId = state.attachedCharacterId
+    if (!playSessionId || !characterId) {
+      return {
+        ok: false,
+        reason: 'Sit at the table with a character before messaging.',
+      }
+    }
+    const chat = groupChatById(state.groupChat, groupId)
+    if (!chat || !isGroupMember(chat, characterId)) {
+      return { ok: false, reason: 'You are not in that group chat.' }
+    }
+    const message = createGroupChatMessage({
+      groupId,
+      playSessionId,
+      from: 'player',
+      characterId,
+      text,
+    })
+    if (!message) {
+      return { ok: false, reason: 'Message is empty or too long.' }
+    }
+    transport!.send(
+      'host',
+      createGmEnvelope(
+        'dm.groupSend',
+        state.campaignId!,
+        groupSendPayloadFromMessage(message),
+      ),
+    )
+    setState({
+      groupChat: appendGroupMessage(state.groupChat, message, false),
+    })
+    return { ok: true, message }
+  }
+
+  const markGroupChatReadClient: GmClientRuntime['markGroupChatRead'] = (
+    groupId,
+  ) => {
+    setState({ groupChat: markGroupChatRead(state.groupChat, groupId) })
+  }
+
   return {
     getState: () => state,
     attachTransport,
@@ -349,6 +491,8 @@ export function createGmClientRuntime(
     sendApmSpend,
     sendDm,
     markDmRead,
+    sendGroupChat,
+    markGroupChatRead: markGroupChatReadClient,
     subscribe: (listener) => {
       listeners.add(listener)
       return () => listeners.delete(listener)
