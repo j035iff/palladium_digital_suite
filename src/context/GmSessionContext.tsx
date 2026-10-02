@@ -108,6 +108,11 @@ import {
   type GmHostListenUiState,
 } from '../lib/gm/gmHostListenController'
 import { loadCachedJoinedCharacter } from '../lib/gm/sessionPartyCache'
+import {
+  deleteCampaignPcHistoryEntry as removeCampaignPcHistoryEntry,
+  setCampaignPcHistoryComment as patchCampaignPcHistoryComment,
+  upsertCampaignPcHistory,
+} from '../lib/gm/campaignPcHistory'
 import { activePlaySession } from '../lib/gm/playSession'
 import type { GmJoinCredentials } from '../lib/gm/sessionJoinCode'
 import type { GmPresenceState, GmSeat } from '../lib/gm/sessionPresence'
@@ -177,6 +182,10 @@ type GmSessionContextValue = {
   closePlaySession: () => void
   addCharacterToParty: (characterId: string) => void
   dropCharacterFromParty: (characterId: string) => void
+  /** Free-text GM comment on a campaign history entry (no stat override). */
+  setCampaignPcHistoryComment: (characterId: string, comment: string) => void
+  /** Permanent delete of a history row only (not live seats / saves). */
+  deleteCampaignPcHistoryEntry: (characterId: string) => void
   setViewForm: (characterId: string, form: ActiveForm) => void
   setPcInitiative: (characterId: string, d20: number | null) => void
   spawnArchetype: (archetypeId: string, variantId?: string) => void
@@ -486,10 +495,16 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
             return persist(recordPcApmSpendEvent(prev, characterId, label, actions))
           })
         },
-        applyPartySnapshot: (characterId, label) => {
+        applyPartySnapshot: (characterId, label, meta) => {
           setSession((prev) => {
             if (!prev) return prev
-            return persist(addPartyMember(prev, characterId, label))
+            let next = addPartyMember(prev, characterId, label)
+            next = upsertCampaignPcHistory(next, {
+              characterId,
+              characterJson: meta?.characterJson,
+              playerLabel: meta?.playerLabel,
+            })
+            return persist(next)
           })
         },
         applyPartyDetach: (characterId) => {
@@ -747,6 +762,22 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     [patchSession, partyLoad.slices],
   )
 
+  const setCampaignPcHistoryComment = useCallback(
+    (characterId: string, comment: string) => {
+      patchSession((s) =>
+        patchCampaignPcHistoryComment(s, characterId, comment),
+      )
+    },
+    [patchSession],
+  )
+
+  const deleteCampaignPcHistoryEntry = useCallback(
+    (characterId: string) => {
+      patchSession((s) => removeCampaignPcHistoryEntry(s, characterId))
+    },
+    [patchSession],
+  )
+
   const setViewForm = useCallback(
     (characterId: string, form: ActiveForm) => {
       patchSession((s) => patchPartyOverlay(s, characterId, { viewForm: form }))
@@ -979,6 +1010,8 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
+      setCampaignPcHistoryComment,
+      deleteCampaignPcHistoryEntry,
       setViewForm,
       setPcInitiative,
       spawnArchetype,
@@ -1053,6 +1086,8 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
+      setCampaignPcHistoryComment,
+      deleteCampaignPcHistoryEntry,
       setViewForm,
       setPcInitiative,
       spawnArchetype,

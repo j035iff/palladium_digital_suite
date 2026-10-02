@@ -7,7 +7,7 @@ Most simple version of the Join Table user story. This is the target LAN UX stor
 - Anyone on the same Wi-Fi can see and join any active session on the network without restriction
 - GM and Players are all on the same Wi-Fi
 - GM has already created a Campaign for the session
-- Player has already created a character native to the GM Campaign’s genre
+- Player has a character native to the GM Campaign’s genre **or** will create one from Join Table (Create new character / save-for-later draft)
 
 Related: [gm_hub.md](./gm_hub.md) · [app_viewport_launcher.md](./app_viewport_launcher.md)
 
@@ -33,9 +33,10 @@ Player clicks **Join Table** and sees a page with:
    - Text box for the **player** name (not character name)
    - Visible to everyone in the session
 2. **My Characters**
-   - Same character drop-down as on the Launcher Landing Page
+   - Character drop-down: **spawned** characters **and** in-progress **save-for-later** forge drafts (drafts labeled `[Draft]`)
    - Defaults to **“Select a character”** — Player cannot join until a real character is selected
-   - Player selects their character
+   - **Create new character** — pick a setting → blank draft is saved and selected; after Join Session the shared Character Creation Forge opens (same forge path as the launcher — no fork)
+   - Player selects their character (complete or draft)
 3. **Join Session**
    - Populates any sessions available on the network
    - No session yet → “no session available”
@@ -60,7 +61,7 @@ Player clicks **Join Table** and sees a page with:
 - Session appears as a button on Join Session (campaign name only — **no date/time**)
 - Button greyed out until player name + character are set
 - Player clicks → dialog **“Joining Session”**
-- On success, dialog closes → Player is taken to their **Character Sheet**
+- On success, dialog closes → Player is taken to their **Character Sheet** (spawned) **or** **Character Creation Forge** (draft / Create new)
 
 ### 4. GM sees the joiner
 
@@ -68,9 +69,10 @@ Player clicks **Join Table** and sees a page with:
   - Yellow + **“joining”** while connecting
   - Green, no “joining” text, once fully joined
 - GM **Narrative → People** tab blinks (and/or **PCs** sub-tab when already on People → NPCs); if the GM is on Combat, the Narrative mode control pulses
-- GM opens Narrative → People → PCs → sees the player’s character sheet summary with the **player name** upper-right on each joined character box
+- GM opens Narrative → People → PCs → **At the table** sees the player’s character sheet summary with the **player name** upper-right on each joined character box
 - Opening Narrative → People → PCs clears the blink
-- **PCs** lists **joined players only**; GM adds local-machine characters as **NPCs** under People → NPCs (“Add from this machine”)
+- **At the table** lists **joined players only**; GM adds local-machine characters as **NPCs** under People → NPCs (“Add from this machine”)
+- **Campaign history** (same PCs tab) lists unique **spawned** characters that have ever joined this campaign; drafts at the table stay out of history until Review & Spawn; seated history rows are greyed with “currently at table”
 - Combat **Melee** adds those characters into the round via dropdowns (same People data — no Combat People tab)
 
 ### 5. Leave

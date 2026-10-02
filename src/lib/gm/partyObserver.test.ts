@@ -22,6 +22,13 @@ describe('GM party observer', () => {
     expect(slice.conversionNote).toMatch(/save file is unchanged/i)
     expect(slice.maxApm).toBeGreaterThan(0)
     expect(slice.saveSummaries.length).toBeGreaterThan(0)
+    expect(slice.attributes.iq).toBeGreaterThan(0)
+    expect(slice.hthSkillName === null || typeof slice.hthSkillName === 'string').toBe(
+      true,
+    )
+    expect(Array.isArray(slice.abilities)).toBe(true)
+    expect(typeof slice.ppeMax).toBe('number')
+    expect(typeof slice.ispMax).toBe('number')
   })
 
   it('apply_conversion still refuses to claim structural mapping exists', () => {

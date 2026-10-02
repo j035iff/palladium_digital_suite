@@ -1,4 +1,5 @@
 import { isGenreId } from '../../data/genres'
+import { hydrateCampaignPcHistory } from './campaignPcHistory'
 import { hydrateMeleeEngagement } from './meleeEngagement'
 import { hydratePlaceholders } from './narrativePlaceholders'
 import { hydratePlaySessions } from './playSession'
@@ -67,9 +68,11 @@ export function loadGmSession(id: string): GmSessionRecord | null {
     if (!raw) return null
     const parsed = JSON.parse(raw) as unknown
     if (!isSessionRecord(parsed)) return null
-    return hydrateMeleeEngagement(
-      hydratePlaceholders(
-        hydratePlaySessions(hydrateStoryBeats(parsed as GmSessionRecord)),
+    return hydrateCampaignPcHistory(
+      hydrateMeleeEngagement(
+        hydratePlaceholders(
+          hydratePlaySessions(hydrateStoryBeats(parsed as GmSessionRecord)),
+        ),
       ),
     )
   } catch {

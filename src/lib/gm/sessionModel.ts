@@ -5,6 +5,7 @@ import {
   createPlaySessionRecord,
   hydratePlaySessions,
 } from './playSession'
+import { emptyCampaignPcHistory } from './campaignPcHistory'
 import { emptyPlaceholders } from './narrativePlaceholders'
 import {
   DEFAULT_PARTY_OVERLAY,
@@ -69,6 +70,7 @@ export function createGmSession(input: {
     eventLog: [],
     playSessions: [],
     activePlaySessionId: null,
+    campaignPcHistory: emptyCampaignPcHistory(),
   }
   return pushEvent(
     session,

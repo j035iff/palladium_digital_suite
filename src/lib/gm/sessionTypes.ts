@@ -1,5 +1,5 @@
 import type { GenreId } from '../../data/genres'
-import type { ActiveForm } from '../../types'
+import type { ActiveForm, CharacterRootState } from '../../types'
 import type { GmContentLinkKind } from './contentLinks'
 
 /** Session-wide cross-genre policy (view-model only — never writes character saves). */
@@ -110,6 +110,25 @@ export type GmPlaySession = {
   status: GmPlaySessionStatus
 }
 
+/**
+ * Unique spawned PC that has sat at this campaign’s table (Review & Spawn).
+ * Snapshot JSON refreshes on rejoin; `gmComment` is campaign-local GM note only.
+ */
+export type GmCampaignPcHistoryEntry = {
+  characterId: string
+  characterName: string
+  /** Player display name when known (from seat / join). */
+  playerLabel: string | null
+  lastSeenAtMs: number
+  /** Free-text GM comment — no stat override. */
+  gmComment: string
+  /**
+   * Latest character JSON for summary rebuild via party observer
+   * (Facade/Morphus `viewForm` mode — Unified Path).
+   */
+  characterJson: CharacterRootState
+}
+
 export type GmSessionRecord = {
   id: string
   name: string
@@ -134,6 +153,11 @@ export type GmSessionRecord = {
   /** Play sittings players can connect to. Campaign `name` stays separate. */
   playSessions: GmPlaySession[]
   activePlaySessionId: string | null
+  /**
+   * Unique complete PCs ever at this campaign’s table (spawned + joined).
+   * Survives Close Table; drafts never appear until Review & Spawn.
+   */
+  campaignPcHistory: GmCampaignPcHistoryEntry[]
 }
 
 export type GmSessionIndexEntry = {
