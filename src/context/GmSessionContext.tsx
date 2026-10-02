@@ -122,6 +122,7 @@ import {
   partyTabBlinkAfterCharactersSubTabChange,
   partyTabBlinkAfterTabChange,
 } from '../lib/gm/partyBlink'
+import type { GmDmThreadState } from '../lib/gm/sessionDm'
 
 type GmSessionContextValue = {
   hubMode: GmHubMode
@@ -223,6 +224,13 @@ type GmSessionContextValue = {
   stopJoinListen: () => Promise<void>
   kickJoinedDevice: (deviceId: string) => void
   refreshJoinProbe: () => Promise<void>
+  /** Play-session DM threads (seated only; cleared on Close Table). */
+  joinDm: GmDmThreadState
+  sendDmToCharacter: (
+    characterId: string,
+    text: string,
+  ) => { ok: true } | { ok: false; reason: string }
+  markDmReadForCharacter: (characterId: string) => void
 }
 
 const GmSessionContext = createContext<GmSessionContextValue | null>(null)
@@ -735,6 +743,25 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     await joinControllerRef.current?.refreshCapabilityProbe()
   }, [])
 
+  const sendDmToCharacter = useCallback(
+    (characterId: string, text: string) => {
+      const result = joinControllerRef.current?.sendDmToCharacter(
+        characterId,
+        text,
+      )
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const markDmReadForCharacter = useCallback((characterId: string) => {
+    joinControllerRef.current?.markDmRead(characterId)
+  }, [])
+
   const joinCapability = useMemo(
     () =>
       resolveJoinListenCapability({
@@ -1043,6 +1070,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       stopJoinListen,
       kickJoinedDevice,
       refreshJoinProbe,
+      joinDm: joinUi.dm,
+      sendDmToCharacter,
+      markDmReadForCharacter,
     }),
     [
       hubMode,
@@ -1112,6 +1142,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       stopJoinListen,
       kickJoinedDevice,
       refreshJoinProbe,
+      joinUi.dm,
+      sendDmToCharacter,
+      markDmReadForCharacter,
     ],
   )
 

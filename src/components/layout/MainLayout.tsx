@@ -17,6 +17,7 @@ import {
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { IdentityHeader } from './IdentityHeader'
+import { GmPlayerDmTray } from '../gm/GmPlayerDmTray'
 
 export function MainLayout() {
   const [spawnSplash, setSpawnSplash] = useState(false)
@@ -443,6 +444,7 @@ export function MainLayout() {
           </main>
         )}
       </div>
+      <GmPlayerDmTray />
     </div>
   )
 }

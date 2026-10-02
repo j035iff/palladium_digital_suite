@@ -10,6 +10,7 @@ import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
 import { GmCampaignPcHistorySection } from './GmCampaignPcHistorySection'
 import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 import { GmPartySummaryFields } from './GmPartySummaryFields'
+import { GmSeatDmPanel } from './GmSeatDmPanel'
 
 export function GmPartyPanel() {
   const {
@@ -23,6 +24,9 @@ export function GmPartyPanel() {
     hubFocus,
     dropPlaceholder,
     updatePlaceholderNotes,
+    joinDm,
+    sendDmToCharacter,
+    markDmReadForCharacter,
   } = useGmSession()
   const focusRef = useRef<HTMLLIElement | null>(null)
 
@@ -208,6 +212,13 @@ export function GmPartyPanel() {
                     </div>
                   ) : null}
                   <GmPartySummaryFields pc={pc} />
+                  <GmSeatDmPanel
+                    characterId={pc.characterId}
+                    characterName={pc.name}
+                    dm={joinDm}
+                    onSend={sendDmToCharacter}
+                    onMarkRead={markDmReadForCharacter}
+                  />
                 </li>
               )
             })}
