@@ -110,7 +110,6 @@ import {
 import { loadCachedJoinedCharacter } from '../lib/gm/sessionPartyCache'
 import {
   deleteCampaignPcHistoryEntry as removeCampaignPcHistoryEntry,
-  setCampaignPcHistoryComment as patchCampaignPcHistoryComment,
   upsertCampaignPcHistory,
 } from '../lib/gm/campaignPcHistory'
 import { activePlaySession } from '../lib/gm/playSession'
@@ -183,8 +182,6 @@ type GmSessionContextValue = {
   closePlaySession: () => void
   addCharacterToParty: (characterId: string) => void
   dropCharacterFromParty: (characterId: string) => void
-  /** Free-text GM comment on a campaign history entry (no stat override). */
-  setCampaignPcHistoryComment: (characterId: string, comment: string) => void
   /** Permanent delete of a history row only (not live seats / saves). */
   deleteCampaignPcHistoryEntry: (characterId: string) => void
   setViewForm: (characterId: string, form: ActiveForm) => void
@@ -789,15 +786,6 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     [patchSession, partyLoad.slices],
   )
 
-  const setCampaignPcHistoryComment = useCallback(
-    (characterId: string, comment: string) => {
-      patchSession((s) =>
-        patchCampaignPcHistoryComment(s, characterId, comment),
-      )
-    },
-    [patchSession],
-  )
-
   const deleteCampaignPcHistoryEntry = useCallback(
     (characterId: string) => {
       patchSession((s) => removeCampaignPcHistoryEntry(s, characterId))
@@ -1037,7 +1025,6 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
-      setCampaignPcHistoryComment,
       deleteCampaignPcHistoryEntry,
       setViewForm,
       setPcInitiative,
@@ -1116,7 +1103,6 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
-      setCampaignPcHistoryComment,
       deleteCampaignPcHistoryEntry,
       setViewForm,
       setPcInitiative,

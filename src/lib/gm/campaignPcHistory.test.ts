@@ -7,7 +7,6 @@ import {
   deleteCampaignPcHistoryEntry,
   hydrateCampaignPcHistory,
   isSpawnedCharacterJson,
-  setCampaignPcHistoryComment,
   upsertCampaignPcHistory,
 } from './campaignPcHistory'
 import type { CharacterRootState } from '../../types'
@@ -69,7 +68,6 @@ describe('campaign PC history', () => {
     expect(s.campaignPcHistory).toHaveLength(2)
 
     const refreshed = spawnedSave({ name: 'Scout Prime', level: 4 })
-    s = setCampaignPcHistoryComment(s, first.id, 'Trustworthy')
     s = upsertCampaignPcHistory(s, {
       characterId: first.id,
       characterJson: refreshed,
@@ -79,9 +77,9 @@ describe('campaign PC history', () => {
     expect(s.campaignPcHistory).toHaveLength(2)
     const entry = s.campaignPcHistory.find((row) => row.characterId === first.id)
     expect(entry?.characterName).toBe('Scout Prime')
-    expect(entry?.gmComment).toBe('Trustworthy')
     expect(entry?.lastSeenAtMs).toBe(3000)
     expect(entry?.characterJson.level).toBe(4)
+    expect(entry && 'gmComment' in entry).toBe(false)
   })
 
   it('deletes history rows without touching party seats', () => {
@@ -109,6 +107,30 @@ describe('campaign PC history', () => {
     expect(hydrated.campaignPcHistory).toEqual([])
   })
 
+  it('strips legacy gmComment when hydrating older history rows', () => {
+    const save = spawnedSave()
+    const raw = createGmSession({ name: 'Legacy', hostGenreId: 'nightbane' })
+    const withLegacy = {
+      ...raw,
+      campaignPcHistory: [
+        {
+          characterId: save.id,
+          characterName: save.name,
+          playerLabel: 'Alex',
+          lastSeenAtMs: 1,
+          gmComment: 'old note',
+          characterJson: save,
+        },
+      ],
+    }
+    const hydrated = hydrateCampaignPcHistory(withLegacy as typeof raw)
+    expect(hydrated.campaignPcHistory).toHaveLength(1)
+    expect(hydrated.campaignPcHistory[0]?.characterName).toBe('Scout')
+    expect(hydrated.campaignPcHistory[0] && 'gmComment' in hydrated.campaignPcHistory[0]).toBe(
+      false,
+    )
+  })
+
   it('formats option labels with optional player name', () => {
     expect(
       campaignPcHistoryOptionLabel({
@@ -116,7 +138,6 @@ describe('campaign PC history', () => {
         characterName: 'Scout',
         playerLabel: 'Alex',
         lastSeenAtMs: 1,
-        gmComment: '',
         characterJson: spawnedSave(),
       }),
     ).toBe('Scout (Alex)')

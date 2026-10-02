@@ -112,7 +112,7 @@ export type GmPlaySession = {
 
 /**
  * Unique spawned PC that has sat at this campaign’s table (Review & Spawn).
- * Snapshot JSON refreshes on rejoin; `gmComment` is campaign-local GM note only.
+ * Snapshot JSON refreshes on rejoin. Live notes use seated DM, not history cards.
  */
 export type GmCampaignPcHistoryEntry = {
   characterId: string
@@ -120,8 +120,6 @@ export type GmCampaignPcHistoryEntry = {
   /** Player display name when known (from seat / join). */
   playerLabel: string | null
   lastSeenAtMs: number
-  /** Free-text GM comment — no stat override. */
-  gmComment: string
   /**
    * Latest character JSON for summary rebuild via party observer
    * (Facade/Morphus `viewForm` mode — Unified Path).

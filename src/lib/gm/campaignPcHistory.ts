@@ -2,6 +2,7 @@
  * Campaign PC history — unique spawned characters that have sat at this
  * campaign’s table. Persists on `GmSessionRecord` (localStorage only).
  * Summaries rebuild via {@link buildPartyObserverSlice} (Unified Path).
+ * Live GM↔player notes use seated DM (`sessionDm`), not history-card fields.
  */
 
 import type { CharacterRootState } from '../../types'
@@ -32,26 +33,45 @@ export function emptyCampaignPcHistory(): GmCampaignPcHistoryEntry[] {
   return []
 }
 
-function isHistoryEntry(value: unknown): value is GmCampaignPcHistoryEntry {
-  if (value == null || typeof value !== 'object') return false
-  const row = value as Partial<GmCampaignPcHistoryEntry>
-  return (
-    typeof row.characterId === 'string' &&
-    typeof row.characterName === 'string' &&
-    typeof row.lastSeenAtMs === 'number' &&
-    typeof row.gmComment === 'string' &&
-    isCharacterRootish(row.characterJson)
-  )
+function normalizeHistoryEntry(
+  value: unknown,
+): GmCampaignPcHistoryEntry | null {
+  if (value == null || typeof value !== 'object') return null
+  const row = value as Partial<GmCampaignPcHistoryEntry> & {
+    gmComment?: unknown
+  }
+  if (
+    typeof row.characterId !== 'string' ||
+    typeof row.characterName !== 'string' ||
+    typeof row.lastSeenAtMs !== 'number' ||
+    !isCharacterRootish(row.characterJson)
+  ) {
+    return null
+  }
+  const playerLabel =
+    typeof row.playerLabel === 'string' && row.playerLabel.trim()
+      ? row.playerLabel.trim()
+      : null
+  // Drop legacy `gmComment` from older campaign saves (native DM replaced it).
+  return {
+    characterId: row.characterId,
+    characterName: row.characterName,
+    playerLabel,
+    lastSeenAtMs: row.lastSeenAtMs,
+    characterJson: row.characterJson,
+  }
 }
 
-/** Older campaign saves may omit history — default []. */
+/** Older campaign saves may omit history — default []. Strips legacy gmComment. */
 export function hydrateCampaignPcHistory(
   session: GmSessionRecord,
 ): GmSessionRecord {
   const raw = (session as GmSessionRecord & { campaignPcHistory?: unknown })
     .campaignPcHistory
   const campaignPcHistory = Array.isArray(raw)
-    ? (raw as unknown[]).filter(isHistoryEntry)
+    ? (raw as unknown[])
+        .map(normalizeHistoryEntry)
+        .filter((row): row is GmCampaignPcHistoryEntry => row != null)
     : []
   return { ...session, campaignPcHistory }
 }
@@ -67,7 +87,7 @@ export function findCampaignPcHistoryEntry(
 
 /**
  * Upsert latest snapshot for a spawned character that joined this campaign.
- * Preserves existing `gmComment`. No-op for drafts / non-finalized JSON.
+ * No-op for drafts / non-finalized JSON.
  */
 export function upsertCampaignPcHistory(
   session: GmSessionRecord,
@@ -97,7 +117,6 @@ export function upsertCampaignPcHistory(
     characterName,
     playerLabel: playerLabel ?? existing?.playerLabel ?? null,
     lastSeenAtMs,
-    gmComment: existing?.gmComment ?? '',
     characterJson,
   }
   const without = (session.campaignPcHistory ?? []).filter(
@@ -106,23 +125,6 @@ export function upsertCampaignPcHistory(
   return touch({
     ...session,
     campaignPcHistory: [nextEntry, ...without],
-  })
-}
-
-export function setCampaignPcHistoryComment(
-  session: GmSessionRecord,
-  characterId: string,
-  gmComment: string,
-): GmSessionRecord {
-  const rows = session.campaignPcHistory ?? []
-  if (!rows.some((row) => row.characterId === characterId)) return session
-  return touch({
-    ...session,
-    campaignPcHistory: rows.map((row) =>
-      row.characterId === characterId
-        ? { ...row, gmComment }
-        : row,
-    ),
   })
 }
 
