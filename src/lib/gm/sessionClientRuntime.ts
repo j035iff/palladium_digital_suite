@@ -6,11 +6,22 @@ import { createGmId } from './sessionId'
 import {
   createGmEnvelope,
   isGmEnvelope,
+  type GmDmPayload,
   type GmHelloPayload,
   type GmProtocolMessage,
 } from './sessionMessages'
 import type { GmSeat } from './sessionPresence'
 import type { GmTransport } from './sessionTransport'
+import {
+  appendDmMessage,
+  createDmMessage,
+  dmMessageFromPayload,
+  dmPayloadFromMessage,
+  emptyDmThreadState,
+  markDmThreadRead,
+  type GmDmMessage,
+  type GmDmThreadState,
+} from './sessionDm'
 
 const DEVICE_ID_KEY = 'pds:gmDeviceId'
 
@@ -46,6 +57,10 @@ export type GmClientRuntimeState = {
     useNightbaneHorrorFactor: boolean
   } | null
   initiativeLocked: boolean
+  /** Play-session DM thread for this device’s seated character. */
+  dm: GmDmThreadState
+  /** Character id attached via party.snapshot (local mirror for DM). */
+  attachedCharacterId: string | null
 }
 
 export type GmClientRuntime = {
@@ -63,6 +78,10 @@ export type GmClientRuntime = {
   sendInitiative: (characterId: string, d20: number) => void
   sendHfSave: (characterId: string, d20: number) => void
   sendApmSpend: (characterId: string, actions?: number) => void
+  sendDm: (
+    text: string,
+  ) => { ok: true; message: GmDmMessage } | { ok: false; reason: string }
+  markDmRead: () => void
   subscribe: (listener: (state: GmClientRuntimeState) => void) => () => void
 }
 
@@ -79,6 +98,8 @@ export function createGmClientRuntime(
     lastError: null,
     activeHf: null,
     initiativeLocked: false,
+    dm: emptyDmThreadState(),
+    attachedCharacterId: null,
   }
   let transport: GmTransport | null = null
   const listeners = new Set<(s: GmClientRuntimeState) => void>()
@@ -128,7 +149,12 @@ export function createGmClientRuntime(
       }
       if (message.type === 'session.presence') {
         const payload = message.payload as { seats: GmSeat[] }
-        setState({ seats: payload.seats })
+        const me = payload.seats.find((s) => s.deviceId === state.deviceId)
+        setState({
+          seats: payload.seats,
+          attachedCharacterId:
+            me?.characterId ?? state.attachedCharacterId,
+        })
         return
       }
       if (message.type === 'session.kick' || message.type === 'session.closed') {
@@ -139,6 +165,8 @@ export function createGmClientRuntime(
           lastError: reason,
           hello: null,
           activeHf: null,
+          dm: emptyDmThreadState(),
+          attachedCharacterId: null,
         })
         return
       }
@@ -155,6 +183,18 @@ export function createGmClientRuntime(
       if (message.type === 'combat.initiativeLock') {
         const payload = message.payload as { locked: boolean }
         setState({ initiativeLocked: Boolean(payload.locked) })
+        return
+      }
+      if (message.type === 'dm.send') {
+        const payload = message.payload as GmDmPayload
+        if (payload.from !== 'gm') return
+        const charId = state.attachedCharacterId
+        if (!charId || payload.characterId !== charId) return
+        const dmMessage = dmMessageFromPayload(payload, message.sentAtMs)
+        if (!dmMessage) return
+        setState({
+          dm: appendDmMessage(state.dm, dmMessage, 'gm'),
+        })
       }
     })
     return () => {
@@ -176,6 +216,8 @@ export function createGmClientRuntime(
       campaignId: input.campaignId,
       displayName: input.displayName,
       lastError: null,
+      dm: emptyDmThreadState(),
+      attachedCharacterId: null,
     })
     const envelope = createGmEnvelope('session.join', input.campaignId, {
       playSessionId: input.playSessionId,
@@ -207,11 +249,14 @@ export function createGmClientRuntime(
       seats: [],
       activeHf: null,
       lastError: null,
+      dm: emptyDmThreadState(),
+      attachedCharacterId: null,
     })
   }
 
   const sendPartySnapshot = (characterId: string, characterJson: unknown) => {
     if (!requireJoined()) return
+    setState({ attachedCharacterId: characterId })
     transport!.send(
       'host',
       createGmEnvelope('party.snapshot', state.campaignId!, {
@@ -256,6 +301,43 @@ export function createGmClientRuntime(
     )
   }
 
+  const sendDm: GmClientRuntime['sendDm'] = (text) => {
+    if (!requireJoined()) {
+      return { ok: false, reason: 'Not joined to a table.' }
+    }
+    const playSessionId = state.hello?.playSessionId
+    const characterId = state.attachedCharacterId
+    if (!playSessionId || !characterId) {
+      return {
+        ok: false,
+        reason: 'Sit at the table with a character before messaging.',
+      }
+    }
+    const message = createDmMessage({
+      playSessionId,
+      characterId,
+      from: 'player',
+      text,
+    })
+    if (!message) {
+      return { ok: false, reason: 'Message is empty or too long.' }
+    }
+    transport!.send(
+      'host',
+      createGmEnvelope('dm.send', state.campaignId!, dmPayloadFromMessage(message)),
+    )
+    setState({
+      dm: appendDmMessage(state.dm, message, 'gm'),
+    })
+    return { ok: true, message }
+  }
+
+  const markDmRead = () => {
+    const characterId = state.attachedCharacterId
+    if (!characterId) return
+    setState({ dm: markDmThreadRead(state.dm, characterId) })
+  }
+
   return {
     getState: () => state,
     attachTransport,
@@ -265,6 +347,8 @@ export function createGmClientRuntime(
     sendInitiative,
     sendHfSave,
     sendApmSpend,
+    sendDm,
+    markDmRead,
     subscribe: (listener) => {
       listeners.add(listener)
       return () => listeners.delete(listener)

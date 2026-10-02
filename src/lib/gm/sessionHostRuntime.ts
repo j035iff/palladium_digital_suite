@@ -20,6 +20,7 @@ import {
   isClientToHostType,
   isGmEnvelope,
   type GmApmSpendPayload,
+  type GmDmPayload,
   type GmHfSavePayload,
   type GmInitiativePayload,
   type GmJoinPayload,
@@ -35,6 +36,17 @@ import {
 import { activePlaySession } from './playSession'
 import type { GmSessionRecord } from './sessionTypes'
 import type { GmTransport, GmTransportPeer } from './sessionTransport'
+import {
+  appendDmMessage,
+  createDmMessage,
+  dmMessageFromPayload,
+  dmPayloadFromMessage,
+  dropDmCharacterThread,
+  emptyDmThreadState,
+  markDmThreadRead,
+  type GmDmMessage,
+  type GmDmThreadState,
+} from './sessionDm'
 
 export type GmHostRuntimeState = {
   listening: boolean
@@ -42,6 +54,8 @@ export type GmHostRuntimeState = {
   presence: GmPresenceState | null
   /** peerId → deviceId for connected clients */
   peerDevices: Record<string, string>
+  /** Play-session-scoped DM threads (cleared on Close Table). */
+  dm: GmDmThreadState
 }
 
 export type GmHostRuntimeHooks = {
@@ -67,6 +81,8 @@ export type GmHostRuntimeHooks = {
    */
   applyPartyDetach: (characterId: string) => void
   onPresenceChange?: (presence: GmPresenceState | null) => void
+  /** DM thread updates for hub UI (People → PCs At the table). */
+  onDmChange?: (dm: GmDmThreadState) => void
 }
 
 export function createInitialHostRuntimeState(): GmHostRuntimeState {
@@ -75,6 +91,7 @@ export function createInitialHostRuntimeState(): GmHostRuntimeState {
     credentials: null,
     presence: null,
     peerDevices: {},
+    dm: emptyDmThreadState(),
   }
 }
 
@@ -105,6 +122,12 @@ export type GmHostRuntime = {
   endListen: (reason?: string) => void
   kickDevice: (deviceId: string, reason?: string) => void
   broadcastEnvelope: (message: GmProtocolMessage) => void
+  /** GM → seated player DM (unicast). Requires fully joined seat with character. */
+  sendDmToCharacter: (
+    characterId: string,
+    text: string,
+  ) => { ok: true; message: GmDmMessage } | { ok: false; reason: string }
+  markDmRead: (characterId: string) => void
   /** Wire transport inbound; returns unsubscribe. */
   attachTransport: (transport: GmTransport) => () => void
 }
@@ -112,6 +135,21 @@ export type GmHostRuntime = {
 export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
   let state = createInitialHostRuntimeState()
   let transport: GmTransport | null = null
+
+  const setDm = (dm: GmDmThreadState) => {
+    state = { ...state, dm }
+    hooks.onDmChange?.(dm)
+  }
+
+  const peerIdForCharacter = (characterId: string): string | null => {
+    if (!state.presence) return null
+    const seat = state.presence.seats.find((s) => s.characterId === characterId)
+    if (!seat) return null
+    const entry = Object.entries(state.peerDevices).find(
+      ([, deviceId]) => deviceId === seat.deviceId,
+    )
+    return entry?.[0] ?? null
+  }
 
   const beginListen = (
     credentials: GmJoinCredentials,
@@ -132,8 +170,10 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
       credentials,
       presence: emptyPresence(live.id),
       peerDevices: {},
+      dm: emptyDmThreadState(),
     }
     hooks.onPresenceChange?.(state.presence)
+    hooks.onDmChange?.(state.dm)
     if (transport) {
       const hello = createGmEnvelope(
         'session.hello',
@@ -152,6 +192,7 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     if (!characterId) return
     clearJoinedCharacter(session.id, characterId)
     hooks.applyPartyDetach(characterId)
+    setDm(dropDmCharacterThread(state.dm, characterId))
   }
 
   const endListen = (reason = 'Play sitting closed.') => {
@@ -166,11 +207,15 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     }
     if (session && state.presence) {
       for (const seat of state.presence.seats) {
-        detachSeatParty(session, seat.characterId)
+        if (seat.characterId) {
+          clearJoinedCharacter(session.id, seat.characterId)
+          hooks.applyPartyDetach(seat.characterId)
+        }
       }
     }
     state = createInitialHostRuntimeState()
     hooks.onPresenceChange?.(null)
+    hooks.onDmChange?.(state.dm)
   }
 
   const kickDevice = (deviceId: string, reason = 'Removed by GM.') => {
@@ -196,6 +241,50 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
 
   const broadcastEnvelope = (message: GmProtocolMessage) => {
     transport?.broadcast(message)
+  }
+
+  const sendDmToCharacter: GmHostRuntime['sendDmToCharacter'] = (
+    characterId,
+    text,
+  ) => {
+    const session = hooks.getSession()
+    if (!session || !state.listening || !state.presence || !transport) {
+      return { ok: false, reason: 'Table is not open for messages.' }
+    }
+    const live = activePlaySession(session)
+    if (!live) {
+      return { ok: false, reason: 'No open table.' }
+    }
+    const seat = state.presence.seats.find((s) => s.characterId === characterId)
+    if (!seat || seat.status !== 'connected' || !seat.characterId) {
+      return {
+        ok: false,
+        reason: 'That player is not fully seated at the table.',
+      }
+    }
+    const peerId = peerIdForCharacter(characterId)
+    if (!peerId) {
+      return { ok: false, reason: 'Player device is not connected.' }
+    }
+    const message = createDmMessage({
+      playSessionId: live.id,
+      characterId,
+      from: 'gm',
+      text,
+    })
+    if (!message) {
+      return { ok: false, reason: 'Message is empty or too long.' }
+    }
+    setDm(appendDmMessage(state.dm, message, 'player'))
+    transport.send(
+      peerId,
+      createGmEnvelope('dm.send', session.id, dmPayloadFromMessage(message)),
+    )
+    return { ok: true, message }
+  }
+
+  const markDmRead = (characterId: string) => {
+    setDm(markDmThreadRead(state.dm, characterId))
   }
 
   const handleJoin = (
@@ -322,6 +411,20 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
       const payload = envelope.payload as GmApmSpendPayload
       if (payload.kind !== 'pc') return
       hooks.applyPcApmSpend(payload.combatantKey, payload.actions)
+      return
+    }
+
+    if (envelope.type === 'dm.send') {
+      const payload = envelope.payload as GmDmPayload
+      if (payload.from !== 'player') return
+      const seat = findSeat(state.presence, deviceId)
+      if (!seat?.characterId || seat.characterId !== payload.characterId) return
+      if (seat.status !== 'connected') return
+      const live = activePlaySession(session)
+      if (!live || live.id !== payload.playSessionId) return
+      const message = dmMessageFromPayload(payload, envelope.sentAtMs)
+      if (!message) return
+      setDm(appendDmMessage(state.dm, message, 'player'))
     }
   }
 
@@ -382,6 +485,8 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     endListen,
     kickDevice,
     broadcastEnvelope,
+    sendDmToCharacter,
+    markDmRead,
     attachTransport,
   }
 }

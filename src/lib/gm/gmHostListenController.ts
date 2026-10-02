@@ -23,6 +23,11 @@ import type { GmTransport } from './sessionTransport'
 import { clearJoinedCharacterCache } from './sessionPartyCache'
 import { activePlaySession } from './playSession'
 import { buildJoinUrl } from './sessionClientRuntime'
+import {
+  emptyDmThreadState,
+  type GmDmMessage,
+  type GmDmThreadState,
+} from './sessionDm'
 
 export type GmHostListenUiState = {
   listening: boolean
@@ -33,6 +38,8 @@ export type GmHostListenUiState = {
   lanPort: number
   joinUrl: string | null
   lastError: string | null
+  /** Play-session DM threads (seated only). */
+  dm: GmDmThreadState
 }
 
 export function initialHostListenUiState(): GmHostListenUiState {
@@ -45,6 +52,7 @@ export function initialHostListenUiState(): GmHostListenUiState {
     lanPort: 8765,
     joinUrl: null,
     lastError: null,
+    dm: emptyDmThreadState(),
   }
 }
 
@@ -55,6 +63,11 @@ export type GmHostListenController = {
   startListen: () => Promise<{ ok: true } | { ok: false; reason: string }>
   stopListen: (reason?: string) => Promise<void>
   kickDevice: (deviceId: string) => void
+  sendDmToCharacter: (
+    characterId: string,
+    text: string,
+  ) => { ok: true; message: GmDmMessage } | { ok: false; reason: string }
+  markDmRead: (characterId: string) => void
   broadcastFromSession: (
     session: GmSessionRecord,
     kind:
@@ -81,6 +94,11 @@ export function createGmHostListenController(
       ui = { ...ui, presence }
       onUi(ui)
       hooks.onPresenceChange?.(presence)
+    },
+    onDmChange: (dm) => {
+      ui = { ...ui, dm }
+      onUi(ui)
+      hooks.onDmChange?.(dm)
     },
   })
 
@@ -116,6 +134,7 @@ export function createGmHostListenController(
       presence: null,
       joinUrl: null,
       lastError: null,
+      dm: emptyDmThreadState(),
     })
   }
 
@@ -224,6 +243,7 @@ export function createGmHostListenController(
         shortCode: credentials.shortCode,
       }),
       lastError: null,
+      dm: emptyDmThreadState(),
     })
     return { ok: true }
   }
@@ -288,6 +308,9 @@ export function createGmHostListenController(
     startListen,
     stopListen,
     kickDevice: (deviceId) => runtime.kickDevice(deviceId),
+    sendDmToCharacter: (characterId, text) =>
+      runtime.sendDmToCharacter(characterId, text),
+    markDmRead: (characterId) => runtime.markDmRead(characterId),
     broadcastFromSession,
     dispose: () => stopListen('Host disposed.'),
   }
