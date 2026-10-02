@@ -46,6 +46,7 @@ import {
   removePartyMember,
   emitHorrorFactor,
 } from './sessionModel'
+import { upsertCampaignPcHistory } from './campaignPcHistory'
 import type { GmSessionRecord } from './sessionTypes'
 import { resolveJoinListenCapability, openTableDisabledReason } from './desktopHostCapability'
 import {
@@ -288,8 +289,13 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
       applyPcApmSpend: (characterId, actions) => {
         session = recordPcApmSpendEvent(session, characterId, 'Scout', actions)
       },
-      applyPartySnapshot: (characterId, label) => {
+      applyPartySnapshot: (characterId, label, meta) => {
         session = addPartyMember(session, characterId, label)
+        session = upsertCampaignPcHistory(session, {
+          characterId,
+          characterJson: meta?.characterJson,
+          playerLabel: meta?.playerLabel,
+        })
       },
       applyPartyDetach: (characterId) => {
         session = removePartyMember(session, characterId, characterId)

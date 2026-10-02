@@ -169,6 +169,7 @@ import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { nextCharacterIfAddAbility } from '../lib/creationAbilityPick'
 import { resolvePsychicGateBypassed } from '../lib/creationPhases'
 import { applySpawnSheetHandoff } from '../lib/spawnSheetHandoff'
+import { getSharedGmClientRuntime } from '../lib/gm/sessionClientHandle'
 import { resolveCreationPsychicTier } from '../lib/creationPsychicSkills'
 import type { CreationPhase } from '../lib/creationStep'
 import type { CharacterCreationForgeTabId } from '../types'
@@ -2852,6 +2853,16 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         psychicTier: resolveCreationPsychicTier(next, psychicTier),
       })
       persistCharacterSave(next)
+      // If joined at a table, refresh host party.snapshot so campaign history
+      // upserts when a draft completes Review & Spawn (Unified Path — no fork).
+      try {
+        const client = getSharedGmClientRuntime()
+        if (client.getState().status === 'joined') {
+          client.sendPartySnapshot(next.id, next)
+        }
+      } catch {
+        /* client runtime optional outside join viewport */
+      }
       return next
     })
   }, [psychicTier, persistCharacterSave])

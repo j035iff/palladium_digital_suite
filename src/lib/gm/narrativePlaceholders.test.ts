@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import { characterFixture } from '../../data/characterFixture'
+import { ensureCharacterRoot } from '../characterRoot'
+import { upsertCampaignPcHistory } from './campaignPcHistory'
 import {
   addPlaceholder,
   createPlaceholderEntity,
@@ -97,6 +100,36 @@ describe('narrativePlaceholders', () => {
     expect(
       searchAllLinkableEntities(s, 'guard').some(
         (row) => row.kind === 'npc' && row.id === 'npc_live',
+      ),
+    ).toBe(true)
+  })
+
+  it('resolves and searches campaign history PCs via pc kind', () => {
+    let s = createGmSession({ name: 'Test', hostGenreId: 'nightbane' })
+    const save = ensureCharacterRoot(
+      {
+        ...characterFixture,
+        name: 'Scout History',
+        isFinalized: true,
+      },
+      { creationGenreId: 'nightbane', hostGenreId: 'nightbane' },
+    )
+    s = upsertCampaignPcHistory(s, {
+      characterId: save.id,
+      characterJson: save,
+      playerLabel: 'Ada',
+    })
+    expect(
+      resolveContentLinkTarget(s, 'pc', save.id, 'Scout History'),
+    ).toMatchObject({ status: 'ok', source: 'pc', name: 'Scout History' })
+    expect(
+      searchLinkableEntities(s, 'pc', 'scout').some(
+        (row) => row.id === save.id,
+      ),
+    ).toBe(true)
+    expect(
+      searchAllLinkableEntities(s, 'scout').some(
+        (row) => row.kind === 'pc' && row.id === save.id,
       ),
     ).toBe(true)
   })

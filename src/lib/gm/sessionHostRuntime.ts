@@ -52,8 +52,15 @@ export type GmHostRuntimeHooks = {
   applyPcHfSave: (characterId: string, d20: number) => void
   /** PC APM is player-managed; log / acknowledge only. */
   applyPcApmSpend: (characterId: string, actions: number) => void
-  /** Attach party member after caching joiner snapshot. */
-  applyPartySnapshot: (characterId: string, label: string) => void
+  /**
+   * Attach party member after caching joiner snapshot.
+   * `playerLabel` + `characterJson` feed campaign PC history (spawned only).
+   */
+  applyPartySnapshot: (
+    characterId: string,
+    label: string,
+    meta?: { playerLabel?: string | null; characterJson?: unknown },
+  ) => void
   /**
    * Detach party member when a seat leaves / is kicked / listen ends.
    * Clears joiner cache + removes partyCharacterIds entry (no Missing saves).
@@ -281,7 +288,11 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
         json && typeof json.name === 'string' && json.name.trim()
           ? json.name.trim()
           : payload.characterId
-      hooks.applyPartySnapshot(payload.characterId, label)
+      const seatBefore = findSeat(state.presence, deviceId)
+      hooks.applyPartySnapshot(payload.characterId, label, {
+        playerLabel: seatBefore?.displayName ?? null,
+        characterJson: payload.characterJson,
+      })
       const presence = attachSeatCharacter(
         state.presence,
         deviceId,
