@@ -22,7 +22,9 @@ function isCharacterRootish(value: unknown): value is CharacterRootState {
 }
 
 /** Review & Spawn complete — drafts may sit at the table but never enter history. */
-export function isSpawnedCharacterJson(value: unknown): boolean {
+export function isSpawnedCharacterJson(
+  value: unknown,
+): value is CharacterRootState {
   return isCharacterRootish(value) && value.isFinalized === true
 }
 

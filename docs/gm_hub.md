@@ -65,7 +65,7 @@ Switching Narrative ↔ Combat resets to that lane’s default first tab (**Stor
 | **PCs** | **At the table** — joined player seats (`GmPartyPanel`); **Campaign history** — unique spawned PCs ever at this campaign’s table |
 | **NPCs** | Local-machine characters (GM-run) + encounter fodder / Quick-Blocks (`GmCastPanel`) — “Add from this machine” stays here |
 
-**Campaign history (PCs):** Persists on `GmSessionRecord.campaignPcHistory` (campaign `localStorage` only). A character enters history only after **Review & Spawn** and a play-session join (`party.snapshot` with `isFinalized`). Drafts may sit At the table but are omitted from history until spawned; rejoin refreshes the **latest** snapshot (keyed by character id — same player with two chars keeps both). Dropdown pins stacked summary cards (multi-open) rebuilt via `buildPartyObserverSlice` (header, attributes, HP/SDC, PPE/ISP, APM, HtH, Abilities; Nightbane Facade/Morphus toggle — Unified Path). Seated history rows are greyed with **“currently at table”**. One free-text GM comment per entry (no stat override). Delete uses permanent confirm and removes the history row only.
+**Campaign history (PCs):** Persists on `GmSessionRecord.campaignPcHistory` (campaign `localStorage` only). A character enters history only after **Review & Spawn** and a play-session join (`party.snapshot` with `isFinalized`). Drafts may sit At the table but are omitted from history until spawned; rejoin refreshes the **latest** snapshot (keyed by character id — same player with two chars keeps both). Dropdown pins stacked summary cards (multi-open) rebuilt via `buildPartyObserverSlice` (header, attributes, HP/SDC, PPE/ISP, APM, HtH, Abilities; Nightbane Facade/Morphus toggle — Unified Path). Seated history rows are greyed with **“currently at table”**. One free-text GM comment per entry (no stat override). Delete uses permanent confirm and removes the history row only. Notes wiki / `@` mentions use the same **`pc` kind** for history + seated PCs; following a link navigates to People → PCs and **auto-pins** the history summary card when that id is in `campaignPcHistory`.
 
 Do **not** put People on Combat and do **not** navigate to People from Combat. Melee selects from the same party / NPC data via dropdowns (`meleeEngagement.ts` → shared `assembleGmCombatRoster`).
 
@@ -80,7 +80,7 @@ While writing on any **Narrative notes-like surface**, the GM inserts outbound i
 | Kind | Navigate to |
 |------|-------------|
 | `npc` | Narrative → People → NPCs (live fodder **or** Notes-link stub) |
-| `pc` | Narrative → People → PCs (joined seat **or** Notes-link stub) |
+| `pc` | Narrative → People → PCs (joined seat, **campaign history** PC, **or** Notes-link stub) — history ids auto-pin the summary card |
 | `person` | Narrative → People (person stub lane) |
 | `place` | Narrative → Places |
 | `thing` | Narrative → Things → Notes stub |

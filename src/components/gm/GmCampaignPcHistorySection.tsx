@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useGmSession } from '../../context/GmSessionContext'
 import {
   campaignPcHistoryOptionLabel,
 } from '../../lib/gm/campaignPcHistory'
+import { isHubFocusMatch } from '../../lib/gm/hubNavigation'
 import { joinedPartyCharacterIds } from '../../lib/gm/joinTableLeave'
 import { buildPartyObserverSlice } from '../../lib/gm/partyObserver'
 import { confirmPermanentDelete } from '../../lib/gm/permanentDeleteConfirm'
@@ -11,18 +12,21 @@ import { GmPartySummaryFields } from './GmPartySummaryFields'
 
 /**
  * People → PCs — Campaign history: unique spawned PCs ever at this table.
- * Dropdown pins stacked summary cards (multi-open). Seated rows greyed.
+ * Dropdown pins stacked summary cards (multi-open). Seated rows greyed in the
+ * picker; Notes wiki / `@` links auto-pin via hubFocus (Unified Path).
  */
 export function GmCampaignPcHistorySection() {
   const {
     session,
     joinSeats,
+    hubFocus,
     setCampaignPcHistoryComment,
     deleteCampaignPcHistoryEntry,
   } = useGmSession()
   const [pinnedIds, setPinnedIds] = useState<string[]>([])
   const [pickerValue, setPickerValue] = useState('')
   const [viewForms, setViewForms] = useState<Record<string, ActiveForm>>({})
+  const focusCardRef = useRef<HTMLLIElement | null>(null)
 
   const seatedIds = useMemo(
     () => new Set(joinedPartyCharacterIds(joinSeats)),
@@ -30,6 +34,24 @@ export function GmCampaignPcHistorySection() {
   )
 
   const history = session?.campaignPcHistory ?? []
+
+  /** Wiki / @ → People → PCs auto-pins the history summary card. */
+  useEffect(() => {
+    if (hubFocus?.kind !== 'pc') return
+    const id = hubFocus.id
+    const rows = session?.campaignPcHistory ?? []
+    if (!rows.some((row) => row.characterId === id)) return
+    setPinnedIds((prev) => (prev.includes(id) ? prev : [...prev, id]))
+  }, [hubFocus, session?.campaignPcHistory])
+
+  useEffect(() => {
+    if (hubFocus?.kind !== 'pc') return
+    if (!pinnedIds.includes(hubFocus.id)) return
+    focusCardRef.current?.scrollIntoView({
+      block: 'nearest',
+      behavior: 'smooth',
+    })
+  }, [hubFocus, pinnedIds])
 
   const pinnedEntries = useMemo(
     () =>
@@ -64,7 +86,7 @@ export function GmCampaignPcHistorySection() {
           Unique complete characters that have sat at this campaign’s table
           (Review &amp; Spawn). Drafts at the table are not listed until
           spawned. Pick a character to pin a summary card — several can stay
-          open.
+          open. Notes wiki / @ links open the matching card automatically.
         </p>
       </div>
 
@@ -110,7 +132,8 @@ export function GmCampaignPcHistorySection() {
           </label>
           <p className="mt-2 max-w-md text-[11px] text-slate-500">
             Characters currently at the table are greyed with “currently at
-            table” (use At the table above).
+            table” (use At the table above). Wiki / @ links still open the
+            history summary when present.
           </p>
         </>
       )}
@@ -125,10 +148,18 @@ export function GmCampaignPcHistorySection() {
               session.conversionPolicy,
               viewForm,
             )
+            const focused = isHubFocusMatch(hubFocus, 'pc', entry.characterId)
+            const seated = seatedIds.has(entry.characterId)
             return (
               <li
                 key={entry.characterId}
-                className="rounded-xl border border-slate-700 bg-slate-900/80 p-3"
+                ref={focused ? focusCardRef : undefined}
+                id={`gm-focus-pc-history-${entry.characterId}`}
+                className={`rounded-xl border p-3 ${
+                  focused
+                    ? 'border-cyan-500 bg-cyan-950/30 ring-1 ring-cyan-400/40'
+                    : 'border-slate-700 bg-slate-900/80'
+                }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
@@ -137,6 +168,11 @@ export function GmCampaignPcHistorySection() {
                       Lv {pc.level} · {pc.creationGenreLabel}
                       {pc.crossGenre ? ` → ${pc.hostGenreLabel}` : ''}
                     </p>
+                    {seated ? (
+                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-amber-300/90">
+                        Currently at table
+                      </p>
+                    ) : null}
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-1">
                     {entry.playerLabel ? (

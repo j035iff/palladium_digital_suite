@@ -139,7 +139,8 @@ export type GmResolvedContentTarget =
     }
 
 /**
- * Resolve a Notes link against placeholders + live NPCs / party PCs.
+ * Resolve a Notes link against placeholders + live NPCs / party PCs /
+ * campaign PC history (same `pc` kind — Unified Path).
  */
 export function resolveContentLinkTarget(
   session: GmSessionRecord,
@@ -180,6 +181,18 @@ export function resolveContentLinkTarget(
         kind: 'pc',
         id,
         name,
+        source: 'pc',
+      }
+    }
+    const history = (session.campaignPcHistory ?? []).find(
+      (row) => row.characterId === id,
+    )
+    if (history) {
+      return {
+        status: 'ok',
+        kind: 'pc',
+        id: history.characterId,
+        name: history.characterName || label,
         source: 'pc',
       }
     }
@@ -248,6 +261,13 @@ export function searchLinkableEntities(
       const name = opts.partyNamesById?.get(characterId) ?? characterId
       if (!q || name.toLowerCase().includes(q)) {
         rows.push({ id: characterId, name, source: 'pc' })
+      }
+    }
+    for (const entry of session.campaignPcHistory ?? []) {
+      if (rows.some((row) => row.id === entry.characterId)) continue
+      const name = entry.characterName.trim() || entry.characterId
+      if (!q || name.toLowerCase().includes(q)) {
+        rows.push({ id: entry.characterId, name, source: 'pc' })
       }
     }
   }
