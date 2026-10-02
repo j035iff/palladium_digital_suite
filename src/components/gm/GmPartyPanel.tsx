@@ -215,6 +215,7 @@ export function GmPartyPanel() {
                   <GmSeatDmPanel
                     characterId={pc.characterId}
                     characterName={pc.name}
+                    playerDisplayName={playerName}
                     dm={joinDm}
                     onSend={sendDmToCharacter}
                     onMarkRead={markDmReadForCharacter}

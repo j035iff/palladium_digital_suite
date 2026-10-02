@@ -4,6 +4,7 @@ import {
   clampDmText,
   createDmMessage,
   dmMessagesForCharacter,
+  dmPlayerSenderLabel,
   dmTotalUnread,
   dmUnreadForCharacter,
   dropDmCharacterThread,
@@ -58,6 +59,14 @@ describe('sessionDm helpers', () => {
   it('registers dm.send as client→host', () => {
     expect(CLIENT_TO_HOST_TYPES).toContain('dm.send')
     expect(isClientToHostType('dm.send')).toBe(true)
+  })
+
+  it('labels player bubbles with join display name (clear fallback)', () => {
+    expect(dmPlayerSenderLabel('Ada')).toBe('Ada')
+    expect(dmPlayerSenderLabel('  Bea  ')).toBe('Bea')
+    expect(dmPlayerSenderLabel(null)).toBe('Unknown player')
+    expect(dmPlayerSenderLabel(undefined)).toBe('Unknown player')
+    expect(dmPlayerSenderLabel('   ')).toBe('Unknown player')
   })
 })
 

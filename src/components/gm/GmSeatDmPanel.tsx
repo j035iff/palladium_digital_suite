@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   dmMessagesForCharacter,
+  dmPlayerSenderLabel,
   dmUnreadForCharacter,
   GM_DM_MAX_LENGTH,
   type GmDmMessage,
@@ -10,6 +11,8 @@ import {
 type GmSeatDmPanelProps = {
   characterId: string
   characterName: string
+  /** Seat join display name (People card); null/empty → Unknown player. */
+  playerDisplayName: string | null
   dm: GmDmThreadState
   onSend: (characterId: string, text: string) => { ok: true } | { ok: false; reason: string }
   onMarkRead: (characterId: string) => void
@@ -22,6 +25,7 @@ type GmSeatDmPanelProps = {
 export function GmSeatDmPanel({
   characterId,
   characterName,
+  playerDisplayName,
   dm,
   onSend,
   onMarkRead,
@@ -87,7 +91,13 @@ export function GmSeatDmPanel({
             {messages.length === 0 ? (
               <li className="text-[11px] text-slate-500">No messages yet.</li>
             ) : (
-              messages.map((m) => <DmBubble key={m.id} message={m} />)
+              messages.map((m) => (
+                <DmBubble
+                  key={m.id}
+                  message={m}
+                  playerDisplayName={playerDisplayName}
+                />
+              ))
             )}
           </ul>
           <div className="flex gap-2">
@@ -128,7 +138,13 @@ export function GmSeatDmPanel({
   )
 }
 
-function DmBubble({ message }: { message: GmDmMessage }) {
+function DmBubble({
+  message,
+  playerDisplayName,
+}: {
+  message: GmDmMessage
+  playerDisplayName: string | null
+}) {
   const fromGm = message.from === 'gm'
   return (
     <li
@@ -139,7 +155,7 @@ function DmBubble({ message }: { message: GmDmMessage }) {
       }`}
     >
       <span className="mr-1.5 text-[9px] font-bold uppercase tracking-wide text-slate-400">
-        {fromGm ? 'You' : 'Player'}
+        {fromGm ? 'You' : dmPlayerSenderLabel(playerDisplayName)}
       </span>
       {message.text}
     </li>

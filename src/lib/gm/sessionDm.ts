@@ -170,6 +170,17 @@ export function dmTotalUnread(state: GmDmThreadState): number {
   return n
 }
 
+/**
+ * GM-side bubble label for a player→GM message.
+ * Uses the seat join display name; clear fallback when missing (Radical Visibility).
+ */
+export function dmPlayerSenderLabel(
+  playerDisplayName: string | null | undefined,
+): string {
+  const name = playerDisplayName?.trim()
+  return name ? name : 'Unknown player'
+}
+
 /** Drop one seat’s thread when they leave / are kicked. */
 export function dropDmCharacterThread(
   state: GmDmThreadState,

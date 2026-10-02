@@ -20,7 +20,6 @@ export function GmCampaignPcHistorySection() {
     session,
     joinSeats,
     hubFocus,
-    setCampaignPcHistoryComment,
     deleteCampaignPcHistoryEntry,
   } = useGmSession()
   const [pinnedIds, setPinnedIds] = useState<string[]>([])
@@ -233,21 +232,6 @@ export function GmCampaignPcHistorySection() {
                   </div>
                 ) : null}
                 <GmPartySummaryFields pc={pc} />
-                <label className="mt-3 block text-[10px] font-bold uppercase tracking-wide text-slate-500">
-                  GM comment
-                  <textarea
-                    value={entry.gmComment}
-                    onChange={(e) =>
-                      setCampaignPcHistoryComment(
-                        entry.characterId,
-                        e.target.value,
-                      )
-                    }
-                    rows={2}
-                    placeholder="Campaign-local note (no stat override)…"
-                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-xs text-slate-200"
-                  />
-                </label>
               </li>
             )
           })}
