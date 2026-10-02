@@ -221,7 +221,6 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
   }
 
   const fanoutToMembers = (
-    sessionId: string,
     memberCharacterIds: string[],
     envelope: GmProtocolMessage,
     exceptCharacterId?: string | null,
@@ -236,7 +235,6 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
 
   const notifyGroupMembers = (chat: GmGroupChat, sessionId: string) => {
     fanoutToMembers(
-      sessionId,
       chat.memberCharacterIds,
       createGmEnvelope(
         'dm.groupCreate',
@@ -248,7 +246,6 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
 
   const pushGroupMembers = (chat: GmGroupChat, sessionId: string) => {
     fanoutToMembers(
-      sessionId,
       chat.memberCharacterIds,
       createGmEnvelope('dm.groupMembers', sessionId, {
         playSessionId: chat.playSessionId,
@@ -552,7 +549,6 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     }
     setGroupChat(appendGroupMessage(state.groupChat, message, false))
     fanoutToMembers(
-      session.id,
       chat.memberCharacterIds,
       createGmEnvelope(
         'dm.groupSend',
@@ -722,7 +718,6 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
       if (!message) return
       setGroupChat(appendGroupMessage(state.groupChat, message, true))
       fanoutToMembers(
-        session.id,
         chat.memberCharacterIds,
         createGmEnvelope(
           'dm.groupSend',
