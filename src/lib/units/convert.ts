@@ -123,21 +123,42 @@ export function squareFeetToSquareMeters(ft2: number): number {
 }
 
 /**
- * Character height: feet + inches → meters (nearest tenth).
- * Example: 5′10″ → 1.8 m.
+ * Character height: feet + inches → centimeters (nearest whole cm).
+ * Example: 5′10″ → 178 cm.
  */
-export function characterHeightToMeters(feet: number, inches: number): number {
+export function characterHeightToCentimeters(
+  feet: number,
+  inches: number,
+): number {
   const totalInches = Math.max(0, feet) * INCHES_PER_FOOT + Math.max(0, inches)
-  return roundTenth((totalInches * CM_PER_INCH) / 100)
+  return inchesToCentimeters(totalInches)
 }
 
-/** Character height: meters → feet + inches (nearest whole inch). */
+/** Character height: centimeters → feet + inches (nearest whole inch). */
+export function centimetersToCharacterHeight(centimeters: number): {
+  feet: number
+  inches: number
+} {
+  const totalInches = Math.max(0, centimetersToInches(centimeters))
+  const feet = Math.floor(totalInches / INCHES_PER_FOOT)
+  const inches = totalInches % INCHES_PER_FOOT
+  return { feet, inches }
+}
+
+/**
+ * @deprecated Prefer {@link characterHeightToCentimeters}. Metric height is cm.
+ * Kept as a thin wrapper (cm → m/100, nearest tenth) for older call sites.
+ */
+export function characterHeightToMeters(feet: number, inches: number): number {
+  return roundTenth(characterHeightToCentimeters(feet, inches) / 100)
+}
+
+/**
+ * @deprecated Prefer {@link centimetersToCharacterHeight}.
+ */
 export function metersToCharacterHeight(meters: number): {
   feet: number
   inches: number
 } {
-  const totalInches = Math.max(0, roundWhole((meters * 100) / CM_PER_INCH))
-  const feet = Math.floor(totalInches / INCHES_PER_FOOT)
-  const inches = totalInches % INCHES_PER_FOOT
-  return { feet, inches }
+  return centimetersToCharacterHeight(roundWhole(meters * 100))
 }

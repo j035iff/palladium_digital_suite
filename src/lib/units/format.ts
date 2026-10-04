@@ -86,9 +86,14 @@ export function formatCharacterHeight(
   const resolved = resolveCharacterHeight(measure, system)
   if (!resolved) return ''
   if (resolved.system === 'metric') {
-    return `${formatNumber(resolved.meters)} m`
+    return `${formatNumber(resolved.centimeters)} cm`
   }
   return `${resolved.feet}'${resolved.inches}"`
+}
+
+/** Unit label for character-height form fields (metric is always cm). */
+export function characterHeightUnitLabel(system: MeasurementSystem): string {
+  return system === 'metric' ? 'cm' : 'ft/in'
 }
 
 /** Unit labels for form fields (Gear Forge, identity, etc.). */

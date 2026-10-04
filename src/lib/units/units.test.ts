@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import {
+  characterHeightToCentimeters,
   characterHeightToMeters,
+  centimetersToCharacterHeight,
   celsiusToFahrenheitAbsolute,
   celsiusToFahrenheitDelta,
   cubicMetersToCubicFeet,
@@ -22,6 +24,7 @@ import {
   parseTemperatureFromProse,
   parseWeightFromProse,
   poundsToKilograms,
+  resolveCharacterHeight,
   resolveLength,
   resolveWeight,
   squareMetersToSquareFeet,
@@ -70,13 +73,17 @@ describe('gross conversion factors', () => {
     expect(squareMetersToSquareFeet(1)).toBe(10.8)
   })
 
-  it('converts character height 5′10″ → 1.8 m', () => {
-    expect(characterHeightToMeters(5, 10)).toBe(1.8) // 70×2.54/100 → 1.8
+  it('converts character height 5′10″ → 178 cm', () => {
+    expect(characterHeightToCentimeters(5, 10)).toBe(178) // 70×2.54 → 178
+    // Deprecated meters wrapper still rounds to nearest tenth m.
+    expect(characterHeightToMeters(5, 10)).toBe(1.8)
   })
 
-  it('converts meters to feet+inches at nearest whole inch', () => {
-    expect(metersToCharacterHeight(1.8)).toEqual({ feet: 5, inches: 11 }) // 180/2.54 → 71
-    expect(metersToCharacterHeight(1.75)).toEqual({ feet: 5, inches: 9 }) // 175/2.54 → 69
+  it('converts centimeters to feet+inches at nearest whole inch', () => {
+    expect(centimetersToCharacterHeight(178)).toEqual({ feet: 5, inches: 10 })
+    expect(centimetersToCharacterHeight(175)).toEqual({ feet: 5, inches: 9 })
+    // Legacy meters helper routes through whole cm.
+    expect(metersToCharacterHeight(1.8)).toEqual({ feet: 5, inches: 11 }) // 180 cm
   })
 })
 
@@ -119,14 +126,21 @@ describe('resolve dual measures', () => {
     })
   })
 
-  it('formats character height for both systems', () => {
+  it('formats character height as cm (metric) and ft/in (standard)', () => {
     expect(formatCharacterHeight({ feet: 5, inches: 10 }, 'metric')).toBe(
-      '1.8 m',
+      '178 cm',
     )
-    // Single-side metric → nearest whole inch via conversion (1.8 m → 5′11″)
-    expect(formatCharacterHeight({ meters: 1.8 }, 'standard')).toBe('5\'11"')
+    expect(resolveCharacterHeight({ feet: 5, inches: 10 }, 'metric')).toEqual({
+      system: 'metric',
+      centimeters: 178,
+    })
+    // Legacy meters-only measure → cm for metric; reverse to nearest inch.
+    expect(formatCharacterHeight({ meters: 1.8 }, 'metric')).toBe('180 cm')
+    expect(formatCharacterHeight({ centimeters: 178 }, 'standard')).toBe(
+      '5\'10"',
+    )
     expect(
-      formatCharacterHeight({ feet: 5, inches: 10, meters: 1.8 }, 'standard'),
+      formatCharacterHeight({ feet: 5, inches: 10, centimeters: 178 }, 'standard'),
     ).toBe('5\'10"')
   })
 })

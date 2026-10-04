@@ -1,5 +1,6 @@
 import {
-  characterHeightToMeters,
+  characterHeightToCentimeters,
+  centimetersToCharacterHeight,
   centimetersToInches,
   cubicFeetToCubicMeters,
   cubicMetersToCubicFeet,
@@ -13,11 +14,11 @@ import {
   kilogramsToPounds,
   kilometersToMiles,
   kmhToMph,
-  metersToCharacterHeight,
   metersToYards,
   milesToKilometers,
   mphToKmh,
   poundsToKilograms,
+  roundWhole,
   squareFeetToSquareMeters,
   squareMetersToSquareFeet,
   yardsToMeters,
@@ -287,15 +288,23 @@ export function resolveArea(
   return undefined
 }
 
+function characterHeightCentimetersFromMeasure(
+  measure: CharacterHeightMeasure,
+): number | undefined {
+  if (hasFinite(measure.centimeters)) return measure.centimeters
+  if (hasFinite(measure.meters)) return roundWhole(measure.meters! * 100)
+  return undefined
+}
+
 export function resolveCharacterHeight(
   measure: CharacterHeightMeasure,
   system: MeasurementSystem,
 ):
   | { system: 'standard'; feet: number; inches: number }
-  | { system: 'metric'; meters: number }
+  | { system: 'metric'; centimeters: number }
   | undefined {
   const hasStandard = hasFinite(measure.feet) || hasFinite(measure.inches)
-  const hasMetric = hasFinite(measure.meters)
+  const metricCm = characterHeightCentimetersFromMeasure(measure)
 
   if (system === 'standard') {
     if (hasStandard) {
@@ -305,20 +314,23 @@ export function resolveCharacterHeight(
         inches: measure.inches ?? 0,
       }
     }
-    if (hasMetric) {
-      const { feet, inches } = metersToCharacterHeight(measure.meters!)
+    if (metricCm != null) {
+      const { feet, inches } = centimetersToCharacterHeight(metricCm)
       return { system: 'standard', feet, inches }
     }
     return undefined
   }
 
-  if (hasMetric) {
-    return { system: 'metric', meters: measure.meters! }
+  if (metricCm != null) {
+    return { system: 'metric', centimeters: metricCm }
   }
   if (hasStandard) {
     return {
       system: 'metric',
-      meters: characterHeightToMeters(measure.feet ?? 0, measure.inches ?? 0),
+      centimeters: characterHeightToCentimeters(
+        measure.feet ?? 0,
+        measure.inches ?? 0,
+      ),
     }
   }
   return undefined

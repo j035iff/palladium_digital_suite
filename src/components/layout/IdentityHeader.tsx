@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { ConfiguratorAlignmentSelect } from '../creation/ConfiguratorAlignmentSelect'
 import { CREATION_PLACEHOLDER_OCC } from '../../lib/characterRoot'
@@ -17,6 +17,17 @@ import {
   sanitizeIdentityHeightInchesInput,
 } from '../../lib/characterIdentity'
 import { normalizeAliases } from '../../lib/characterAliases'
+import {
+  identityHeightFromMetricDisplay,
+  identityHeightMetricDisplayError,
+  identityHeightMetricUnitLabel,
+  identityHeightToDisplay,
+  identityWeightDisplayError,
+  identityWeightFromDisplay,
+  identityWeightToDisplay,
+  identityWeightUnitLabel,
+  useUnitsPreference,
+} from '../../lib/units'
 import {
   creationForgeDetailsButtonClass,
   creationForgeSummaryNameSizeClass,
@@ -112,6 +123,74 @@ function IdentityProfileDetailFields({
   heightInchesError: string | null
   weightLbsError: string | null
 }) {
+  const { measurementSystem } = useUnitsPreference()
+  const metric = measurementSystem === 'metric'
+  const heightDisplay = identityHeightToDisplay(
+    profile.heightFeet,
+    profile.heightInches,
+    measurementSystem,
+  )
+  const weightDisplayCanonical = identityWeightToDisplay(
+    profile.weightLbs,
+    measurementSystem,
+  )
+  const [heightCmDraft, setHeightCmDraft] = useState(
+    heightDisplay.system === 'metric' ? heightDisplay.centimeters : '',
+  )
+  const [weightDraft, setWeightDraft] = useState(weightDisplayCanonical)
+  /** Avoid overwriting in-progress metric drafts when persist converts back. */
+  const measureDraftDirtyRef = useRef(false)
+
+  const syncMeasureDraftsFromProfile = () => {
+    const next = identityHeightToDisplay(
+      profile.heightFeet,
+      profile.heightInches,
+      measurementSystem,
+    )
+    setHeightCmDraft(next.system === 'metric' ? next.centimeters : '')
+    setWeightDraft(identityWeightToDisplay(profile.weightLbs, measurementSystem))
+  }
+
+  useEffect(() => {
+    measureDraftDirtyRef.current = false
+    syncMeasureDraftsFromProfile()
+    // Preference toggle always re-derives display from persisted ft/in + lbs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: system flip only
+  }, [measurementSystem])
+
+  useEffect(() => {
+    if (measureDraftDirtyRef.current) return
+    syncMeasureDraftsFromProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- sync when storage profile changes
+  }, [profile.heightFeet, profile.heightInches, profile.weightLbs])
+
+  const metricHeightError = metric
+    ? identityHeightMetricDisplayError(heightCmDraft)
+    : null
+  const weightError = metric
+    ? identityWeightDisplayError(weightDraft, 'metric')
+    : weightLbsError
+  const weightSubLabel = identityWeightUnitLabel(measurementSystem)
+  const heightMetricUnit = identityHeightMetricUnitLabel()
+
+  const onWeightDisplayChange = (raw: string) => {
+    measureDraftDirtyRef.current = true
+    setWeightDraft(raw)
+    if (identityWeightDisplayError(raw, measurementSystem)) return
+    const persisted = identityWeightFromDisplay(raw, measurementSystem)
+    if (persisted == null) return
+    patch({ weightLbs: persisted })
+  }
+
+  const onHeightCmChange = (raw: string) => {
+    measureDraftDirtyRef.current = true
+    setHeightCmDraft(raw)
+    if (identityHeightMetricDisplayError(raw)) return
+    const next = identityHeightFromMetricDisplay(raw)
+    if (next == null) return
+    patch(next)
+  }
+
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
       <div className="flex flex-col gap-2">
@@ -135,20 +214,20 @@ function IdentityProfileDetailFields({
           <span className={`pb-0.5 text-right ${identityLabelClass(morphusActive)}`}>
             Height
           </span>
-          <div className="flex items-end gap-3">
-            <div className="flex-1">
+          {metric ? (
+            <div>
               <input
                 type="text"
                 inputMode="numeric"
-                value={profile.heightFeet}
-                onChange={(e) => patch({ heightFeet: e.target.value })}
-                aria-label="Height feet"
-                aria-invalid={heightFeetError != null}
+                value={heightCmDraft}
+                onChange={(e) => onHeightCmChange(e.target.value)}
+                aria-label="Height centimeters"
+                aria-invalid={metricHeightError != null}
                 aria-describedby={
-                  heightFeetError ? 'identity-height-feet-error' : undefined
+                  metricHeightError ? 'identity-height-cm-error' : undefined
                 }
                 className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
-                  heightFeetError
+                  metricHeightError
                     ? identityInvalidFieldClass(morphusActive)
                     : identityFieldClass(morphusActive)
                 }`}
@@ -158,61 +237,99 @@ function IdentityProfileDetailFields({
                   morphusActive ? 'text-violet-400/70' : 'text-slate-400'
                 }`}
               >
-                Ft.
+                {heightMetricUnit}
               </span>
-              {heightFeetError ? (
+              {metricHeightError ? (
                 <IdentityFieldError
-                  id="identity-height-feet-error"
-                  message={heightFeetError}
+                  id="identity-height-cm-error"
+                  message={metricHeightError}
                   morphusActive={morphusActive}
                 />
               ) : null}
             </div>
-            <div className="flex-1">
-              <input
-                type="text"
-                inputMode="numeric"
-                value={profile.heightInches}
-                onChange={(e) =>
-                  patch({ heightInches: sanitizeIdentityHeightInchesInput(e.target.value) })
-                }
-                aria-label="Height inches"
-                aria-invalid={heightInchesError != null}
-                aria-describedby={
-                  heightInchesError ? 'identity-height-inches-error' : undefined
-                }
-                className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
-                  heightInchesError
-                    ? identityInvalidFieldClass(morphusActive)
-                    : identityFieldClass(morphusActive)
-                }`}
-              />
-              <span
-                className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
-                  morphusActive ? 'text-violet-400/70' : 'text-slate-400'
-                }`}
-              >
-                In.
-              </span>
-              {heightInchesError ? (
-                <IdentityFieldError
-                  id="identity-height-inches-error"
-                  message={heightInchesError}
-                  morphusActive={morphusActive}
+          ) : (
+            <div className="flex items-end gap-3">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={profile.heightFeet}
+                  onChange={(e) => patch({ heightFeet: e.target.value })}
+                  aria-label="Height feet"
+                  aria-invalid={heightFeetError != null}
+                  aria-describedby={
+                    heightFeetError ? 'identity-height-feet-error' : undefined
+                  }
+                  className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
+                    heightFeetError
+                      ? identityInvalidFieldClass(morphusActive)
+                      : identityFieldClass(morphusActive)
+                  }`}
                 />
-              ) : null}
+                <span
+                  className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
+                    morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+                  }`}
+                >
+                  Ft.
+                </span>
+                {heightFeetError ? (
+                  <IdentityFieldError
+                    id="identity-height-feet-error"
+                    message={heightFeetError}
+                    morphusActive={morphusActive}
+                  />
+                ) : null}
+              </div>
+              <div className="flex-1">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={profile.heightInches}
+                  onChange={(e) =>
+                    patch({
+                      heightInches: sanitizeIdentityHeightInchesInput(e.target.value),
+                    })
+                  }
+                  aria-label="Height inches"
+                  aria-invalid={heightInchesError != null}
+                  aria-describedby={
+                    heightInchesError ? 'identity-height-inches-error' : undefined
+                  }
+                  className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
+                    heightInchesError
+                      ? identityInvalidFieldClass(morphusActive)
+                      : identityFieldClass(morphusActive)
+                  }`}
+                />
+                <span
+                  className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
+                    morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+                  }`}
+                >
+                  In.
+                </span>
+                {heightInchesError ? (
+                  <IdentityFieldError
+                    id="identity-height-inches-error"
+                    message={heightInchesError}
+                    morphusActive={morphusActive}
+                  />
+                ) : null}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <UnderlineField
           label="Weight"
-          value={profile.weightLbs}
-          onChange={(weightLbs) => patch({ weightLbs })}
+          value={weightDraft}
+          onChange={onWeightDisplayChange}
           morphusActive={morphusActive}
-          inputMode="numeric"
-          subLabel="Lbs."
-          error={weightLbsError}
-          errorId="identity-weight-lbs-error"
+          inputMode={metric ? 'decimal' : 'numeric'}
+          subLabel={weightSubLabel}
+          error={weightError}
+          errorId="identity-weight-display-error"
+          ariaLabel={metric ? 'Weight kilograms' : 'Weight pounds'}
         />
       </div>
 
@@ -361,6 +478,7 @@ function UnderlineField({
   subLabel,
   error,
   errorId,
+  ariaLabel,
 }: {
   label: string
   value: string
@@ -371,6 +489,7 @@ function UnderlineField({
   subLabel?: string
   error?: string | null
   errorId?: string
+  ariaLabel?: string
 }) {
   const invalid = error != null
   return (
@@ -384,6 +503,7 @@ function UnderlineField({
           inputMode={inputMode}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          aria-label={ariaLabel ?? label}
           aria-invalid={invalid}
           aria-describedby={invalid && errorId ? errorId : undefined}
           className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
