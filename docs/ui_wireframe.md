@@ -1,6 +1,6 @@
 # UI & Wireframe Specifications
 
-> **Implementation status:** Live sheet has a sticky **Story / Combat** mode switch above shared **Home · Stats · Saves · Skills · Abilities · Gear** tabs (`MainLayout`, `LiveSheetTabBody`). Switching modes always opens that mode's Home. Story Home currently provides persistent play Notes; Combat Home renders `CombatHUD` (APM + Initiative, Unarmed/Ancient/Modern bubbles — Unarmed label is the active Hand-to-Hand style; no duplicate S.D.C./H.P. bars — those stay on the Persistent Core). Identity, XP, vitality, and defensive chips stay anchored across both modes. **Abilities** nests **Natural · O.C.C. · Magic · Psionics · Talents**; empty categories are omitted. Cast / duration / pump workflow remains **target UX**. Toast system and tap-to-expand attributes remain **target UX**.
+> **Implementation status:** Live sheet has a sticky **Story / Combat** mode switch above shared **Home · Stats · Saves · Skills · Abilities · Gear** tabs (`MainLayout`, `LiveSheetTabBody`). Switching modes always opens that mode's Home. Story Home currently provides persistent play Notes; Combat Home renders `CombatHUD` (APM + Initiative, Unarmed/Ancient/Modern bubbles — Unarmed label is the active Hand-to-Hand style; no duplicate S.D.C./H.P. bars — those stay on the Persistent Core). Identity, XP, vitality, and defensive chips stay anchored across both modes. Identity Expand edits Name / Alignment / Age / Weight / Hair (and related profile fields) with save persistence; **Aliases** CRUD lives on the same expand; Join Table picks a **Name at the table** (default = real name) that peers see while the GM keeps the canonical name. **Abilities** nests **Natural · O.C.C. · Magic · Psionics · Talents**; empty categories are omitted. Cast / duration / pump workflow remains **target UX**. Toast system and tap-to-expand attributes remain **target UX**.
 
 This document defines the layout, visual hierarchy, and interaction design for the Palladium Digital Suite character sheet. It adheres to the Visual Continuity, Intuitive Depth, and Familiar Surface pillars: the frame stays anchored, deep math stays one tap away, and controls stay as simple and conventional as the task allows so the player never has to understand internal systems, ids, or engine terms.
 1. The Persistent Core (Anchored Elements)
@@ -10,8 +10,9 @@ Experience (XP) Bar: A progress bar tracking the current level's XP band.
 Left Edge: Start of current level (e.g., 2,400 XP).
 Center: Current Level and Exact Total (e.g., Level 2 | 3,500 XP).
 Right Edge: Threshold for next level (e.g., 4,600 XP).
-Identity Row: One-line summary containing Name, Race, O.C.C., and Alignment.
-Profile Drawer: A tap-activated overlay containing Sex, Age, Height, Weight, and a text-based Character Description.
+Identity Row: One-line summary containing Name, Race, O.C.C., and Alignment (name editable inline).
+Profile Expand (Expand/Minimize — not a separate overlay): Sex, Age, Height, Weight, Eyes, Hair, Alignment select, and **Aliases** (add / rename / remove). Name, Alignment, Age, Weight, Hair (and the rest of the profile) persist to the character save on edit. Character Description remains **target UX**.
+Join Table projection: on Join Session the player picks **Name at the table** (real name default, or an alias). Peers see that projected name on the joined-sheet **At this table** roster (`seat.projectedCharacterName`); GM Hub At-the-table / history / Players overlay keep the real `character.name`.
 B. Vitality & Defense Header
 Health/Energy Bars: High-visibility progress bars for H.P., S.D.C., and (if applicable) M.D.C., P.P.E., and I.S.P.
 Defensive Stats: Small, always-visible indicators for Natural Armor Rating (A.R.), Horror Factor (H.F.), and Perception Modifier.

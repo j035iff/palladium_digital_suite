@@ -12,10 +12,14 @@
  */
 import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import { getMorphusCharacteristicById } from '../data/library/morphusTableCatalogLoader'
+import {
+  coerceTableProjectedAliasId,
+  normalizeAliases,
+} from './characterAliases'
 import type { Character, CharacterRootState, MorphusTraitSlotResolution } from '../types'
 
 /** Current save schema version stamped on migrate + serialize. */
-export const CHARACTER_SAVE_SCHEMA_VERSION = 1
+export const CHARACTER_SAVE_SCHEMA_VERSION = 2
 
 type LegacyCharacterFields = {
   facade?: Character['primary']
@@ -282,6 +286,20 @@ function migrateToVersion1(
   return next
 }
 
+/** Normalize aliases + coerce stale tableProjectedAliasId (identity / Join Table). */
+function normalizeIdentityAliasFields(input: CharacterRootState): CharacterRootState {
+  const aliases = normalizeAliases(input.aliases)
+  const tableProjectedAliasId = coerceTableProjectedAliasId(
+    aliases,
+    input.tableProjectedAliasId,
+  )
+  return {
+    ...input,
+    aliases,
+    tableProjectedAliasId,
+  }
+}
+
 /**
  * Apply all pending save migrations up to {@link CHARACTER_SAVE_SCHEMA_VERSION}.
  *
@@ -311,8 +329,13 @@ export function migrateCharacterSave(
     next = migrateCatalogIdsOnSave(next, report)
   }
 
-  // Future field-rename steps:
-  // if (fromVersion < 2) next = migrateToVersion2(next, report)
+  if (fromVersion < 2) {
+    next = normalizeIdentityAliasFields(next)
+    report.fieldRenames.push('aliases+tableProjectedAliasId')
+  } else {
+    // Keep aliases/projection coerce idempotent on current saves.
+    next = normalizeIdentityAliasFields(next)
+  }
 
   next = {
     ...next,

@@ -69,6 +69,8 @@ export function createBlankCharacterForGenre(genreId: GenreId): CharacterRootSta
     {
       name: '',
       identityProfile: { ...EMPTY_CHARACTER_IDENTITY_PROFILE },
+      aliases: [],
+      tableProjectedAliasId: null,
       level: 1,
       xp: 0,
       ppe: { current: 0, maximum: 0 },

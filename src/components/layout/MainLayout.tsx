@@ -18,6 +18,7 @@ import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { IdentityHeader } from './IdentityHeader'
 import { GmPlayerDmTray } from '../gm/GmPlayerDmTray'
+import { JoinedTablePeerRoster } from '../live/JoinedTablePeerRoster'
 
 export function MainLayout() {
   const [spawnSplash, setSpawnSplash] = useState(false)
@@ -444,6 +445,7 @@ export function MainLayout() {
           </main>
         )}
       </div>
+      <JoinedTablePeerRoster />
       <GmPlayerDmTray />
     </div>
   )

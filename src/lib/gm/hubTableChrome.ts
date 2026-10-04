@@ -76,10 +76,15 @@ export type SeatOverlayLines = {
 
 /**
  * One-line player + one-line character for the Players overlay.
- * Character names resolve from party observer ids when available.
+ * GM Hub should pass observer/canonical names via `characterNameById`.
+ * When that map is omitted (peer surfaces), fall back to seat projection.
  */
 export function seatOverlayLines(
-  seat: { displayName: string; characterId: string | null },
+  seat: {
+    displayName: string
+    characterId: string | null
+    projectedCharacterName?: string | null
+  },
   characterNameById?: ReadonlyMap<string, string> | Record<string, string>,
 ): SeatOverlayLines {
   const playerLine = seat.displayName.trim() || 'Player'
@@ -92,6 +97,10 @@ export function seatOverlayLines(
   } else if (characterNameById && typeof characterNameById === 'object') {
     resolved = (characterNameById as Record<string, string>)[seat.characterId]
   }
-  const characterLine = (resolved?.trim() || seat.characterId).trim()
+  const characterLine = (
+    resolved?.trim() ||
+    seat.projectedCharacterName?.trim() ||
+    seat.characterId
+  ).trim()
   return { playerLine, characterLine }
 }
