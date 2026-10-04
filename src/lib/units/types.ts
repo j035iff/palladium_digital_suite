@@ -70,10 +70,21 @@ export type AreaMeasure = {
   bookDual?: boolean
 }
 
-/** Character height: feet+inches ↔ meters (one decimal). */
+/**
+ * Character height: feet+inches ↔ centimeters (whole cm).
+ * Metric preference displays/edits centimeters only (e.g. 178 cm) — not meters
+ * and not a meters+centimeters compound.
+ * Legacy `meters` may appear on older dual rows; resolve converts to cm.
+ */
 export type CharacterHeightMeasure = {
   feet?: number
   inches?: number
+  /** Preferred metric side — whole centimeters. */
+  centimeters?: number
+  /**
+   * @deprecated Prefer {@link centimeters}. Kept for older bookDual / saves;
+   * resolve treats meters as cm = round(m × 100).
+   */
   meters?: number
   bookDual?: boolean
 }
