@@ -318,7 +318,7 @@ Track work here until promoted to the registry above.
 |------|--------|
 | 2026-10-02 | GM Hub shared `GmHubContentPane`: hub chrome anchored; all Narrative/Combat workspace tabs scroll in one content pane (no per-tab overflow fork) |
 | 2026-09-29 | Portal chrome unified: `PortalChromeActions` Return + Settings icons on launcher / sheet / Hub / campaign forge / gear forge / join table; units only in Settings |
-| 2026-10-04 | Live sheet identity persist + aliases; Join Table **Name at the table** projection on seats; peers see projection, GM keeps canonical name |
+| 2026-10-04 | Live sheet: all identity/profile fields persist (Race/O.C.C. read-only) + aliases; Join Table **Name at the table** projection on seats; peers see projection, GM keeps canonical name |
 | 2026-09-29 | GM Hub compact chrome: top nav only; Return + Settings icons; units in Settings; Open Table → Table Open hover Players overlay; host Advanced UI hidden |
 | 2026-09-28 | Join Table backlog: Open Table stamp matches publish; leave/kick/Close Table detach party+cache; Party = joined + player name; Cast hosts local add; Return to launcher confirms Close/leave |
 | 2026-09-25 | GM Hub client join first slice: interim `ws`, presence/join envelopes, Join table viewport, interacting sheet |
