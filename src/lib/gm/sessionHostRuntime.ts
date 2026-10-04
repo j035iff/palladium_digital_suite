@@ -15,6 +15,10 @@ import {
   type GmSeat,
 } from './sessionPresence'
 import {
+  resolveGmCanonicalCharacterName,
+  resolveProjectedNameFromSnapshot,
+} from './tableProjectedName'
+import {
   createGmEnvelope,
   gmHelloPayloadFromCampaign,
   isClientToHostType,
@@ -648,11 +652,14 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
     if (envelope.type === 'party.snapshot') {
       const payload = envelope.payload as GmPartySnapshotPayload
       cacheJoinedCharacter(session.id, payload.characterId, payload.characterJson)
-      const json = payload.characterJson as { name?: string } | null
-      const label =
-        json && typeof json.name === 'string' && json.name.trim()
-          ? json.name.trim()
-          : payload.characterId
+      // GM Hub / history always keep the canonical character name.
+      const label = resolveGmCanonicalCharacterName(
+        payload.characterJson,
+        payload.characterId,
+      )
+      const projectedCharacterName = resolveProjectedNameFromSnapshot(
+        payload.characterJson,
+      )
       const seatBefore = findSeat(state.presence, deviceId)
       hooks.applyPartySnapshot(payload.characterId, label, {
         playerLabel: seatBefore?.displayName ?? null,
@@ -662,6 +669,7 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
         state.presence,
         deviceId,
         payload.characterId,
+        projectedCharacterName,
       )
       state = { ...state, presence }
       if (transport) emitPresence(transport, session.id, presence, hooks)

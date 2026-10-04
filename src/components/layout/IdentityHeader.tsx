@@ -16,6 +16,7 @@ import {
   normalizeIdentityProfile,
   sanitizeIdentityHeightInchesInput,
 } from '../../lib/characterIdentity'
+import { normalizeAliases } from '../../lib/characterAliases'
 import {
   creationForgeDetailsButtonClass,
   creationForgeSummaryNameSizeClass,
@@ -241,6 +242,100 @@ function clearPlaceholderNameOnFocus(
     setCharacterName('')
   }
 }
+
+function IdentityAliasesEditor({
+  aliases,
+  aliasDraft,
+  onAliasDraftChange,
+  onAdd,
+  onRename,
+  onRemove,
+  morphusActive,
+}: {
+  aliases: { id: string; name: string }[]
+  aliasDraft: string
+  onAliasDraftChange: (value: string) => void
+  onAdd: () => void
+  onRename: (aliasId: string, name: string) => void
+  onRemove: (aliasId: string) => void
+  morphusActive: boolean
+}) {
+  return (
+    <div className="mt-5 max-w-xl">
+      <p className={identityLabelClass(morphusActive)}>Aliases</p>
+      <p
+        className={`mt-0.5 text-[11px] ${
+          morphusActive ? 'text-violet-200/70' : 'text-slate-500'
+        }`}
+      >
+        Optional other names. On Join Session you can show one of these to other
+        players; the GM always sees your real character name.
+      </p>
+      <ul className="mt-2 space-y-1.5">
+        {aliases.length === 0 ? (
+          <li
+            className={`text-[11px] ${
+              morphusActive ? 'text-violet-300/60' : 'text-slate-400'
+            }`}
+          >
+            No aliases yet.
+          </li>
+        ) : (
+          aliases.map((alias) => (
+            <li key={alias.id} className="flex items-center gap-2">
+              <input
+                type="text"
+                value={alias.name}
+                onChange={(e) => onRename(alias.id, e.target.value)}
+                aria-label="Alias name"
+                className={`min-w-0 flex-1 border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${identityFieldClass(morphusActive)}`}
+              />
+              <button
+                type="button"
+                onClick={() => onRemove(alias.id)}
+                className={
+                  morphusActive
+                    ? 'shrink-0 text-[10px] font-bold uppercase tracking-wide text-violet-300 hover:text-white'
+                    : 'shrink-0 text-[10px] font-bold uppercase tracking-wide text-slate-500 hover:text-slate-800'
+                }
+              >
+                Remove
+              </button>
+            </li>
+          ))
+        )}
+      </ul>
+      <div className="mt-2 flex items-center gap-2">
+        <input
+          type="text"
+          value={aliasDraft}
+          onChange={(e) => onAliasDraftChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              onAdd()
+            }
+          }}
+          placeholder="Add an alias"
+          aria-label="New alias"
+          className={`min-w-0 flex-1 border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${identityFieldClass(morphusActive)}`}
+        />
+        <button
+          type="button"
+          onClick={onAdd}
+          disabled={!aliasDraft.trim()}
+          className={
+            morphusActive
+              ? 'shrink-0 rounded-md border border-violet-400/50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-violet-100 disabled:opacity-40'
+              : 'shrink-0 rounded-md border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-700 disabled:opacity-40'
+          }
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  )
+}
 function formatIdentityOccLabel(
   effectiveOccName: string | undefined,
   occId: string,
@@ -329,7 +424,11 @@ export function IdentityHeader({
     effectiveOcc,
     setCharacterName,
     patchIdentityProfile,
+    addAlias,
+    removeAlias,
+    renameAlias,
   } = useCharacter()
+  const [aliasDraft, setAliasDraft] = useState('')
 
   const isCreation = variant === 'creation'
   const [creationDetailsCollapsed, setCreationDetailsCollapsed] = useState(true)
@@ -567,6 +666,21 @@ export function IdentityHeader({
                 />
               </div>
             </div>
+
+            <IdentityAliasesEditor
+              aliases={normalizeAliases(character.aliases)}
+              aliasDraft={aliasDraft}
+              onAliasDraftChange={setAliasDraft}
+              onAdd={() => {
+                const next = aliasDraft.trim()
+                if (!next) return
+                addAlias(next)
+                setAliasDraft('')
+              }}
+              onRename={renameAlias}
+              onRemove={removeAlias}
+              morphusActive={morphusActive}
+            />
 
             <p
               className="mt-3 font-mono text-[10px] uppercase tracking-wide opacity-70"

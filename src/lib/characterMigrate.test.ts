@@ -111,4 +111,21 @@ describe('migrateCharacterSave', () => {
     expect(second.report.fieldRenames).toEqual([])
     expect(second.report.catalogRemaps).toEqual([])
   })
+
+  it('normalizes aliases and coerces stale tableProjectedAliasId on v2', () => {
+    const base = ensureCharacterRoot(characterFixture, {
+      creationGenreId: 'nightbane',
+      hostGenreId: 'nightbane',
+    })
+    const { character, report } = migrateCharacterSave({
+      ...base,
+      schemaVersion: 1,
+      aliases: [{ id: 'a1', name: '  Crow  ' }],
+      tableProjectedAliasId: 'missing',
+    })
+    expect(character.schemaVersion).toBe(2)
+    expect(character.aliases).toEqual([{ id: 'a1', name: 'Crow' }])
+    expect(character.tableProjectedAliasId).toBeNull()
+    expect(report.fieldRenames).toContain('aliases+tableProjectedAliasId')
+  })
 })

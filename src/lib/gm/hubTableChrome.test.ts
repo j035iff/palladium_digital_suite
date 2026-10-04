@@ -74,5 +74,13 @@ describe('hubTableChrome', () => {
     expect(
       seatOverlayLines({ displayName: 'Ada', characterId: 'char_1' }),
     ).toEqual({ playerLine: 'Ada', characterLine: 'char_1' })
+
+    expect(
+      seatOverlayLines({
+        displayName: 'Ada',
+        characterId: 'char_1',
+        projectedCharacterName: 'Crow',
+      }),
+    ).toEqual({ playerLine: 'Ada', characterLine: 'Crow' })
   })
 })

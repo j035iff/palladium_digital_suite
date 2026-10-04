@@ -13,6 +13,11 @@ import {
   saveCharacterToStorage,
   type CharacterIndexEntry,
 } from '../../lib/characterIndex'
+import {
+  coerceTableProjectedAliasId,
+  listTableProjectionOptions,
+  TABLE_PROJECTED_REAL_NAME_ID,
+} from '../../lib/characterAliases'
 import { createBlankCharacterForGenre } from '../../lib/characterRoot'
 import {
   createBrowserWsTransport,
@@ -62,6 +67,10 @@ export function GmJoinTableViewport() {
   )
   const [playerName, setPlayerName] = useState('')
   const [characterId, setCharacterId] = useState('')
+  /** Empty = real character name; otherwise an alias id. */
+  const [projectedAliasId, setProjectedAliasId] = useState<string>(
+    TABLE_PROJECTED_REAL_NAME_ID,
+  )
   const [sessions, setSessions] = useState<LanSessionAdvertisement[]>([])
   const [browseReason, setBrowseReason] = useState<string | null>(null)
   const browseHost = useMemo(
@@ -110,6 +119,22 @@ export function GmJoinTableViewport() {
   }, [refreshSavedCharacterIndex])
 
   useEffect(() => {
+    if (!characterId) {
+      setProjectedAliasId(TABLE_PROJECTED_REAL_NAME_ID)
+      return
+    }
+    const save = loadCharacterSave(characterId)
+    if (!save) {
+      setProjectedAliasId(TABLE_PROJECTED_REAL_NAME_ID)
+      return
+    }
+    setProjectedAliasId(
+      coerceTableProjectedAliasId(save.aliases, save.tableProjectedAliasId) ??
+        TABLE_PROJECTED_REAL_NAME_ID,
+    )
+  }, [characterId])
+
+  useEffect(() => {
     let cancelled = false
     const refresh = async () => {
       const result = await listLanSessions({ hostHint: browseHost })
@@ -150,6 +175,16 @@ export function GmJoinTableViewport() {
       setDialogError('Character save not found on this device.')
       return
     }
+
+    const nextProjected =
+      projectedAliasId === TABLE_PROJECTED_REAL_NAME_ID
+        ? null
+        : coerceTableProjectedAliasId(save.aliases, projectedAliasId)
+    const saveForJoin = {
+      ...save,
+      tableProjectedAliasId: nextProjected,
+    }
+    saveCharacterToStorage(saveForJoin)
 
     const probe = await probeInterimWsHost(target.wsHost)
     if (!probe.ok) {
@@ -210,7 +245,7 @@ export function GmJoinTableViewport() {
     }
 
     setDialogPhase('attaching')
-    const snap = sendPartySnapshotOnJoin(runtime, characterId, save)
+    const snap = sendPartySnapshotOnJoin(runtime, characterId, saveForJoin)
     if (!snap.ok) {
       setDialogPhase('error')
       setDialogError(snap.reason)
@@ -263,6 +298,10 @@ export function GmJoinTableViewport() {
   const selectedIsDraft = selectedRow
     ? isCharacterIndexInProgress(selectedRow)
     : false
+  const selectedSave = characterId ? loadCharacterSave(characterId) : null
+  const projectionOptions = selectedSave
+    ? listTableProjectionOptions(selectedSave)
+    : []
 
   return (
     <div className="flex h-svh min-h-0 flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
@@ -396,6 +435,30 @@ export function GmJoinTableViewport() {
               </p>
             ) : null}
           </section>
+
+          {selectedSave ? (
+            <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+              Name at the table
+              <select
+                value={projectedAliasId}
+                onChange={(e) => setProjectedAliasId(e.target.value)}
+                className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
+                aria-label="Name at the table"
+              >
+                {projectionOptions.map((opt) => (
+                  <option key={opt.id || 'real'} value={opt.id}>
+                    {opt.isRealName
+                      ? `${opt.label} (real name)`
+                      : opt.label}
+                  </option>
+                ))}
+              </select>
+              <span className="mt-1 block text-[11px] font-normal normal-case tracking-normal text-slate-500">
+                Other players see this name. The GM always sees the real
+                character name.
+              </span>
+            </label>
+          ) : null}
 
           <section>
             <h2 className="text-[10px] font-bold uppercase tracking-wide text-slate-500">

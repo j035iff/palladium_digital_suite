@@ -37,7 +37,11 @@ Player clicks **Join Table** and sees a page with:
    - Defaults to **“Select a character”** — Player cannot join until a real character is selected
    - **Create new character** — pick a setting → blank draft is saved and selected; after Join Session the shared Character Creation Forge opens (same forge path as the launcher — no fork)
    - Player selects their character (complete or draft)
-3. **Join Session**
+3. **Name at the table** (after a character is selected)
+   - Drop-down of the real character name (default) plus any **Aliases** saved on the live Identity expand
+   - Other players see this projected name; the **GM always sees the real character name**
+   - Choice is stored on the character (`tableProjectedAliasId`) and applied on `party.snapshot` → seat `projectedCharacterName`
+4. **Join Session**
    - Populates any sessions available on the network
    - No session yet → “no session available”
    - When a session exists → show its name (**GM Campaign name** only)
@@ -62,14 +66,16 @@ Player clicks **Join Table** and sees a page with:
 - Button greyed out until player name + character are set
 - Player clicks → dialog **“Joining Session”**
 - On success, dialog closes → Player is taken to their **Character Sheet** (spawned) **or** **Character Creation Forge** (draft / Create new)
+- Joined peers can open **At this table** on the sheet chrome to see each seat’s player name + **projected** character name
 
 ### 4. GM sees the joiner
 
 - Player name appears in **Players in Session**
   - Yellow + **“joining”** while connecting
   - Green, no “joining” text, once fully joined
+  - Character line uses the **canonical** character name (not the peer projection)
 - GM **Narrative → People** tab blinks (and/or **PCs** sub-tab when already on People → NPCs); if the GM is on Combat, the Narrative mode control pulses
-- GM opens Narrative → People → PCs → **At the table** sees the player’s character sheet summary with the **player name** upper-right on each joined character box
+- GM opens Narrative → People → PCs → **At the table** sees the player’s character sheet summary (**real character name**) with the **player name** upper-right on each joined character box
 - Each At-the-table card has a **Messages** section (compose + thread) for private notes with that seated player; the GM can also **Create Group Chat** (pick seated players + optional title) for a shared thread. The player sees a **Messages** tray (1:1 GM + groups) on their joined sheet/forge chrome. Campaign history cards are summary-only (no comment field).
 - Opening Narrative → People → PCs clears the blink
 - **At the table** lists **joined players only**; GM adds local-machine characters as **NPCs** under People → NPCs (“Add from this machine”)

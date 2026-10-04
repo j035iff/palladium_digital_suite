@@ -22,6 +22,11 @@ export type GmSeat = {
   lastSeenAtMs: number
   /** Character id attached via party.snapshot, if any. */
   characterId: string | null
+  /**
+   * Peer-facing character name from join projection (alias or real name).
+   * GM Hub continues to use canonical `character.name` from party.snapshot JSON.
+   */
+  projectedCharacterName: string | null
 }
 
 export type GmPresenceState = {
@@ -148,6 +153,7 @@ export function grantOrReclaimSeat(
     joinedAtMs: atMs,
     lastSeenAtMs: atMs,
     characterId: null,
+    projectedCharacterName: null,
   }
   return { ...presence, seats: [...presence.seats, seat] }
 }
@@ -180,18 +186,34 @@ export function kickSeat(
 
 /**
  * Attach character from party.snapshot and complete join (`joining` → `connected`).
+ * `projectedCharacterName` is what peers see; omit / null keeps prior or clears.
  */
 export function attachSeatCharacter(
   presence: GmPresenceState,
   deviceId: string,
   characterId: string,
+  projectedCharacterName?: string | null,
 ): GmPresenceState {
   if (!findSeat(presence, deviceId)) return presence
+  const projected =
+    typeof projectedCharacterName === 'string' && projectedCharacterName.trim()
+      ? projectedCharacterName.trim()
+      : projectedCharacterName === null
+        ? null
+        : undefined
   return {
     ...presence,
     seats: presence.seats.map((s) =>
       s.deviceId === deviceId
-        ? { ...s, characterId, status: 'connected' }
+        ? {
+            ...s,
+            characterId,
+            status: 'connected' as const,
+            projectedCharacterName:
+              projected !== undefined
+                ? projected
+                : s.projectedCharacterName,
+          }
         : s,
     ),
   }
