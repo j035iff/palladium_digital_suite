@@ -23,6 +23,17 @@ import type { GmTransport } from './sessionTransport'
 import { clearJoinedCharacterCache } from './sessionPartyCache'
 import { activePlaySession } from './playSession'
 import { buildJoinUrl } from './sessionClientRuntime'
+import {
+  emptyDmThreadState,
+  type GmDmMessage,
+  type GmDmThreadState,
+} from './sessionDm'
+import {
+  emptyGroupChatState,
+  type GmGroupChat,
+  type GmGroupChatMessage,
+  type GmGroupChatState,
+} from './sessionGroupChat'
 
 export type GmHostListenUiState = {
   listening: boolean
@@ -33,6 +44,10 @@ export type GmHostListenUiState = {
   lanPort: number
   joinUrl: string | null
   lastError: string | null
+  /** Play-session DM threads (seated only). */
+  dm: GmDmThreadState
+  /** Play-session group chats (seated members). */
+  groupChat: GmGroupChatState
 }
 
 export function initialHostListenUiState(): GmHostListenUiState {
@@ -45,6 +60,8 @@ export function initialHostListenUiState(): GmHostListenUiState {
     lanPort: 8765,
     joinUrl: null,
     lastError: null,
+    dm: emptyDmThreadState(),
+    groupChat: emptyGroupChatState(),
   }
 }
 
@@ -55,6 +72,28 @@ export type GmHostListenController = {
   startListen: () => Promise<{ ok: true } | { ok: false; reason: string }>
   stopListen: (reason?: string) => Promise<void>
   kickDevice: (deviceId: string) => void
+  sendDmToCharacter: (
+    characterId: string,
+    text: string,
+  ) => { ok: true; message: GmDmMessage } | { ok: false; reason: string }
+  markDmRead: (characterId: string) => void
+  createGroupChat: (input: {
+    memberCharacterIds: string[]
+    title?: string | null
+  }) => { ok: true; chat: GmGroupChat } | { ok: false; reason: string }
+  addGroupMembers: (
+    groupId: string,
+    characterIds: string[],
+  ) => { ok: true; chat: GmGroupChat } | { ok: false; reason: string }
+  removeGroupMember: (
+    groupId: string,
+    characterId: string,
+  ) => { ok: true; chat: GmGroupChat } | { ok: false; reason: string }
+  sendGroupChatMessage: (
+    groupId: string,
+    text: string,
+  ) => { ok: true; message: GmGroupChatMessage } | { ok: false; reason: string }
+  markGroupChatRead: (groupId: string) => void
   broadcastFromSession: (
     session: GmSessionRecord,
     kind:
@@ -81,6 +120,16 @@ export function createGmHostListenController(
       ui = { ...ui, presence }
       onUi(ui)
       hooks.onPresenceChange?.(presence)
+    },
+    onDmChange: (dm) => {
+      ui = { ...ui, dm }
+      onUi(ui)
+      hooks.onDmChange?.(dm)
+    },
+    onGroupChatChange: (groupChat) => {
+      ui = { ...ui, groupChat }
+      onUi(ui)
+      hooks.onGroupChatChange?.(groupChat)
     },
   })
 
@@ -116,6 +165,7 @@ export function createGmHostListenController(
       presence: null,
       joinUrl: null,
       lastError: null,
+      dm: emptyDmThreadState(),
     })
   }
 
@@ -224,6 +274,7 @@ export function createGmHostListenController(
         shortCode: credentials.shortCode,
       }),
       lastError: null,
+      dm: emptyDmThreadState(),
     })
     return { ok: true }
   }
@@ -288,6 +339,17 @@ export function createGmHostListenController(
     startListen,
     stopListen,
     kickDevice: (deviceId) => runtime.kickDevice(deviceId),
+    sendDmToCharacter: (characterId, text) =>
+      runtime.sendDmToCharacter(characterId, text),
+    markDmRead: (characterId) => runtime.markDmRead(characterId),
+    createGroupChat: (input) => runtime.createGroupChat(input),
+    addGroupMembers: (groupId, characterIds) =>
+      runtime.addGroupMembers(groupId, characterIds),
+    removeGroupMember: (groupId, characterId) =>
+      runtime.removeGroupMember(groupId, characterId),
+    sendGroupChatMessage: (groupId, text) =>
+      runtime.sendGroupChatMessage(groupId, text),
+    markGroupChatRead: (groupId) => runtime.markGroupChatRead(groupId),
     broadcastFromSession,
     dispose: () => stopListen('Host disposed.'),
   }

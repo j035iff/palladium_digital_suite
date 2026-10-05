@@ -52,6 +52,7 @@ interface CharacterRootState {
 7. **Intuitive Depth:** Surface results first, deep math via tap-to-expand.
 8. **Radical Visibility:** NEVER hide restricted options. Gray them out and explain why.
 9. **Unified Path:** Facade, Morphus, and dual-form variants are **modes on one pipeline**—not parallel implementations. Each feature domain gets a single math stack, row assembler, tooltip/diff layer, and UI renderer. Extend the shared builder when adding stats or rows; never fork per-stat or per-form code paths.
+10. **Familiar Surface:** Every screen is as simple and direct as the task allows. Controls follow conventions people already know from other apps — lists, fields, buttons, drag-and-drop — and the interface never requires the player to understand internal systems, ids, or engine terms.
 
 ## AI Interaction Protocol
-Refer to this document and the Master SRS as the absolute Source of Truth. If a proposed change conflicts with these pillars (especially Pillars 6, 8, or 9), flag the conflict and propose an alternative. When adding stats, tooltips, or form-specific behavior, check **`docs/unified_paths.md`** for the canonical pipeline before introducing a new special case.
+Refer to this document and the Master SRS as the absolute Source of Truth. If a proposed change conflicts with these pillars (especially Pillars 6, 8, 9, or 10), flag the conflict and propose an alternative. When adding stats, tooltips, or form-specific behavior, check **`docs/unified_paths.md`** for the canonical pipeline before introducing a new special case.

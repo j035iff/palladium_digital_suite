@@ -9,7 +9,7 @@ Shared inventory forge shell: **Weapons / Armor / Artifacts / Other** lanes on o
 | **Portal library** | Launcher **Gear Forge** / **My Custom Gear** → `viewport: 'gear_forge'` | Custom gear library (`src/lib/gear/customGearLibrary.ts`) |
 | **Creation** | `tab8_gear` (before Review) → `CreationGearForgePanel` + shared shell | Draft character inventory (`inventory` via session + `mergeCharacterWithInventory`) |
 | **Live sheet** | `GearPanel` → shared shell + `kind: 'sheet'` adapter | Active character inventory (same session APIs as Creation) |
-| **GM Hub** | Hub **Gear** tab → `GmGearPanel` + shared shell (`kind: 'gm'`) | Selected **party** character’s local save inventory |
+| **GM Hub** | Narrative → Things → **Gear** → `GmGearPanel` + shared shell (`kind: 'gm'`) | **My Custom Gear** library (same as portal). Optional push copies new saves onto a selected party character save |
 
 ## MVP (shipped)
 
@@ -19,7 +19,7 @@ Shared inventory forge shell: **Weapons / Armor / Artifacts / Other** lanes on o
 - Portal: **Gear Forge** + **My Custom Gear** on `AppLauncher`
 - Creation: **`kind: 'creation'`** adapter (`buildCreationGearForgeAdapter`) on `tab8_gear` — same shell; commits to draft inventory (not the custom library)
 - Live sheet: **`kind: 'sheet'`** adapter (`buildSheetGearForgeAdapter`) on `GearPanel` — same shell; commits to active character inventory
-- GM Hub: **`kind: 'gm'`** adapter (`buildGmGearForgeAdapter`) on Hub **Gear** — same shell; commits to the selected party character save (`gmCharacterInventoryGrant`). Cast Quick-Blocks stay non-grantable with a visible reason (no inventory bags invented). Party / Cast tabs unchanged.
+- GM Hub: **`kind: 'gm'`** adapter (`buildGmGearForgeAdapter`) on Things → **Gear** — same shell; commits to **My Custom Gear** lists. Character push is optional and must not gate library saves. Custom gear **Delete** uses a permanent-confirm dialog. Encounter Quick-Blocks stay non-grantable with a visible reason (no inventory bags invented). People (PCs / NPCs) tabs unchanged.
 
 ## Later
 

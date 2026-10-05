@@ -119,6 +119,14 @@ import {
   resolveIdentityWeightLbs,
 } from '../lib/characterIdentity'
 import {
+  addCharacterAlias,
+  coerceTableProjectedAliasId,
+  normalizeAliases,
+  removeCharacterAlias,
+  renameCharacterAlias,
+  TABLE_PROJECTED_REAL_NAME_ID,
+} from '../lib/characterAliases'
+import {
   deriveMovementStats,
   type DerivedMovementStats,
 } from '../lib/movementDerivation'
@@ -169,6 +177,7 @@ import { isGenreSupernaturalAbilitiesDisallowed } from '../data/genres'
 import { nextCharacterIfAddAbility } from '../lib/creationAbilityPick'
 import { resolvePsychicGateBypassed } from '../lib/creationPhases'
 import { applySpawnSheetHandoff } from '../lib/spawnSheetHandoff'
+import { getSharedGmClientRuntime } from '../lib/gm/sessionClientHandle'
 import { resolveCreationPsychicTier } from '../lib/creationPsychicSkills'
 import type { CreationPhase } from '../lib/creationStep'
 import type { CharacterCreationForgeTabId } from '../types'
@@ -345,6 +354,12 @@ type CharacterContextValue = {
   setCharacterName: (name: string) => void
   setPlayNotes: (notes: string) => void
   patchIdentityProfile: (patch: Partial<CharacterIdentityProfile>) => void
+  /** Live-sheet aliases (Join Table projection list). */
+  addAlias: (name: string) => void
+  removeAlias: (aliasId: string) => void
+  renameAlias: (aliasId: string, name: string) => void
+  /** Empty string / null = project real character name at the table. */
+  setTableProjectedAliasId: (aliasId: string | null) => void
   /** @see getVitalityType — true when active form is on the M.D.C. track (combat_logic.md §1). */
   isMDC: boolean
   /** Psychic Gate tier (psychic_gate.md); drives save target & skill tax. */
@@ -2802,17 +2817,46 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [psychicTier],
   )
 
-  const setAlignment = useCallback((alignment: string) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      primary: { ...prev.primary, alignment },
-      morphus: { ...prev.morphus, alignment },
-    }))
-  }, [])
+  const persistIdentityAndMaybeResnapshot = useCallback(
+    (next: CharacterRootState) => {
+      persistCharacterSave(next)
+      try {
+        const client = getSharedGmClientRuntime()
+        if (client.getState().status === 'joined') {
+          client.sendPartySnapshot(next.id, next)
+        }
+      } catch {
+        /* client runtime optional outside join viewport */
+      }
+    },
+    [persistCharacterSave],
+  )
 
-  const setCharacterName = useCallback((name: string) => {
-    setRawCharacter((prev) => ({ ...prev, name }))
-  }, [])
+  const setAlignment = useCallback(
+    (alignment: string) => {
+      setRawCharacter((prev) => {
+        const next = {
+          ...prev,
+          primary: { ...prev.primary, alignment },
+          morphus: { ...prev.morphus, alignment },
+        }
+        persistIdentityAndMaybeResnapshot(next)
+        return next
+      })
+    },
+    [persistIdentityAndMaybeResnapshot],
+  )
+
+  const setCharacterName = useCallback(
+    (name: string) => {
+      setRawCharacter((prev) => {
+        const next = { ...prev, name }
+        persistIdentityAndMaybeResnapshot(next)
+        return next
+      })
+    },
+    [persistIdentityAndMaybeResnapshot],
+  )
 
   const setPlayNotes = useCallback(
     (notes: string) => {
@@ -2823,16 +2867,88 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [rawCharacter, persistCharacterSave],
   )
 
-  const patchIdentityProfile = useCallback((patch: Partial<CharacterIdentityProfile>) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      identityProfile: {
-        ...EMPTY_CHARACTER_IDENTITY_PROFILE,
-        ...prev.identityProfile,
-        ...patch,
-      },
-    }))
-  }, [])
+  const patchIdentityProfile = useCallback(
+    (patch: Partial<CharacterIdentityProfile>) => {
+      setRawCharacter((prev) => {
+        const next = {
+          ...prev,
+          identityProfile: {
+            ...EMPTY_CHARACTER_IDENTITY_PROFILE,
+            ...prev.identityProfile,
+            ...patch,
+          },
+        }
+        persistIdentityAndMaybeResnapshot(next)
+        return next
+      })
+    },
+    [persistIdentityAndMaybeResnapshot],
+  )
+
+  const addAlias = useCallback(
+    (name: string) => {
+      setRawCharacter((prev) => {
+        const next = {
+          ...prev,
+          aliases: addCharacterAlias(prev.aliases, name),
+        }
+        persistIdentityAndMaybeResnapshot(next)
+        return next
+      })
+    },
+    [persistIdentityAndMaybeResnapshot],
+  )
+
+  const removeAlias = useCallback(
+    (aliasId: string) => {
+      setRawCharacter((prev) => {
+        const aliases = removeCharacterAlias(prev.aliases, aliasId)
+        const next = {
+          ...prev,
+          aliases,
+          tableProjectedAliasId: coerceTableProjectedAliasId(
+            aliases,
+            prev.tableProjectedAliasId,
+          ),
+        }
+        persistIdentityAndMaybeResnapshot(next)
+        return next
+      })
+    },
+    [persistIdentityAndMaybeResnapshot],
+  )
+
+  const renameAlias = useCallback(
+    (aliasId: string, name: string) => {
+      setRawCharacter((prev) => {
+        const next = {
+          ...prev,
+          aliases: renameCharacterAlias(prev.aliases, aliasId, name),
+        }
+        persistIdentityAndMaybeResnapshot(next)
+        return next
+      })
+    },
+    [persistIdentityAndMaybeResnapshot],
+  )
+
+  const setTableProjectedAliasId = useCallback(
+    (aliasId: string | null) => {
+      setRawCharacter((prev) => {
+        const coerced =
+          aliasId == null || aliasId === TABLE_PROJECTED_REAL_NAME_ID
+            ? null
+            : coerceTableProjectedAliasId(
+                normalizeAliases(prev.aliases),
+                aliasId,
+              )
+        const next = { ...prev, tableProjectedAliasId: coerced }
+        persistIdentityAndMaybeResnapshot(next)
+        return next
+      })
+    },
+    [persistIdentityAndMaybeResnapshot],
+  )
 
   const finalizeCharacter = useCallback(() => {
     setRawCharacter((prev) => {
@@ -2852,6 +2968,16 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         psychicTier: resolveCreationPsychicTier(next, psychicTier),
       })
       persistCharacterSave(next)
+      // If joined at a table, refresh host party.snapshot so campaign history
+      // upserts when a draft completes Review & Spawn (Unified Path — no fork).
+      try {
+        const client = getSharedGmClientRuntime()
+        if (client.getState().status === 'joined') {
+          client.sendPartySnapshot(next.id, next)
+        }
+      } catch {
+        /* client runtime optional outside join viewport */
+      }
       return next
     })
   }, [psychicTier, persistCharacterSave])
@@ -3045,6 +3171,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCharacterName,
       setPlayNotes,
       patchIdentityProfile,
+      addAlias,
+      removeAlias,
+      renameAlias,
+      setTableProjectedAliasId,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
@@ -3209,6 +3339,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       setCharacterName,
       setPlayNotes,
       patchIdentityProfile,
+      addAlias,
+      removeAlias,
+      renameAlias,
+      setTableProjectedAliasId,
       isMDC,
       psychicTier,
       skillSlotMultiplier,

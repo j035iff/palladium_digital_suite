@@ -15,6 +15,10 @@ import {
 } from './sessionModel'
 import { createNpcFromArchetype, parseEncounterVital } from './npcInstance'
 import { assembleGmCombatRoster, sortCombatRoster } from './combatRoster'
+import {
+  addCharacterToMelee,
+  addNpcInstanceToMelee,
+} from './meleeEngagement'
 import { DEFAULT_PARTY_OVERLAY } from './sessionTypes'
 import type { CatalogEncounterArchetype } from '../../data/library/encounterArchetypeCatalogLoader'
 import type { GmCombatRosterRow } from './combatRoster'
@@ -48,6 +52,8 @@ function sessionWithParty() {
   s = addPartyMember(s, 'char_alex', 'Alex')
   const npc = createNpcFromArchetype(fodder)
   s = addNpcInstance(s, npc)
+  s = addCharacterToMelee(s, 'char_alex')
+  s = addNpcInstanceToMelee(s, npc.instanceId)
   return { s, npcId: npc.instanceId }
 }
 
@@ -171,6 +177,22 @@ describe('session combat economy', () => {
           hpMax: 10,
           sdcCurrent: 20,
           sdcMax: 20,
+          ppeCurrent: 0,
+          ppeMax: 0,
+          ispCurrent: 0,
+          ispMax: 0,
+          attributes: {
+            iq: 10,
+            me: 10,
+            ma: 10,
+            pp: 10,
+            pe: 10,
+            pb: 10,
+            spd: 10,
+            ps: 10,
+          },
+          hthSkillName: null,
+          abilities: [],
           perceptionBonus: 0,
           trustIntimidate: 0,
           charmImpress: 0,

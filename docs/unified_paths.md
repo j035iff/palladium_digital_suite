@@ -193,25 +193,31 @@ Copy this block when registering a new unified path:
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
 | Transform | `src/utils/genreTransformer.ts` | `transformCharacterToHostEnvironment` | Session `hostGenreId`; saves never written |
-| Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder; joiner `party.snapshot` cache feeds the same builder |
+| Party assemble | `src/lib/gm/partyObserver.ts` | `buildPartyObserverSlice` | Facade / Morphus is a `viewForm` mode on one builder; joiner `party.snapshot` cache feeds the same builder; summary fields include attributes, PPE/ISP, HtH, Abilities |
+| Campaign PC history | `src/lib/gm/campaignPcHistory.ts` | `upsertCampaignPcHistory`, `deleteCampaignPcHistoryEntry` | Unique spawned PCs per campaign (`isFinalized`); latest snapshot only; no history-card comments (live notes = seated DM); persists on `pds:gmSession:*` |
 | Fodder | `src/lib/gm/npcInstance.ts` | `createNpcFromArchetype` | Encounter catalog → instance vitals / APM |
 | Roster | `src/lib/gm/combatRoster.ts` | `assembleGmCombatRoster`, `sortCombatRoster` | One sorted list; `kind: pc \| npc` |
-| Nav | `src/lib/gm/hubTabs.ts` | `buildGmHubTabViews`, `gmHubTabTitle` | Story/Combat modes; Home is Sessions or Combat HUD; optional Party `attention` blink |
+| Nav | `src/lib/gm/hubTabs.ts` + `hubTableChrome.ts` + `hubNavigation.ts` | `buildGmHubTabViews`, `gmHubTabTitle`, `gmHubModeLabel`, `defaultHubTabForMode`, `navigateHubTarget` / `hubNavTargetForContentKind`, table control / Players overlay helpers | Lane-specific tabs: Narrative Story Beats/People/Places/Things/Notes; Combat Melee/Prefabs; optional People `attention` blink; Notes links force Narrative (never People from Combat) |
+| Notes links | `src/lib/gm/contentLinks.ts` + `contentLinkEditorDom.ts` + `narrativePlaceholders.ts` | `segmentContentLinks`, `contentLinksDisplayText`, `findActiveMention`, `replaceMentionWithContentLink`, `searchAllLinkableEntities`, `resolveContentLinkTarget`, `createPlaceholderEntity` | Structured `[[kind:id\|label]]` storage; UI shows clickable labels via shared contentEditable; `@` mention typeahead; `pc` kind resolves joined + **campaign history** PCs; navigate → People → PCs auto-pins history summary (`GmCampaignPcHistorySection` + `hubFocus`); placeholder store; Create? stubs; Radical Visibility for missing targets |
+| UI | `src/components/gm/*` | `GmHubShell`, `GmHubContentPane`, `GmTabBar`, `GmPeoplePanel`, `GmPartyPanel`, `GmSeatDmPanel`, `GmGroupChatSection`, `GmPlayerDmTray`, `GmCampaignPcHistorySection`, `GmThingsPanel`, `GmCombatPanel`, `GmContentLinkedNotesField`, `GmNotesScratchpad`, `GmPlaceholderLane`, `hubTableChrome.ts`, shared `PortalChromeActions` | Compact top nav (no bottom bar); shared content pane scrolls under anchored chrome; Return + Settings icons; units in Settings; Narrative / Combat lane tabs; People/PCs blink on joiner attach; PCs = At the table (+ per-seat Messages + Create Group Chat) + Campaign history; player Messages tray (1:1 + groups) when joined; Melee dropdowns add from People data; shared content-linked notes on Notes / Story Beats / Places / Things / People / cast stubs |
 | Play sitting | `src/lib/gm/playSession.ts` | `openPlaySession`, `playSessionPlayerLabel` | UI **Open Table** stamps sitting + starts listen; date label is event-log / uniqueness (Join Session shows campaign name only) |
 | Session mutators | `src/lib/gm/sessionModel.ts` | `emitHorrorFactor`, `spendNpcApm`, … | H.F. records saves; does not spend PC APM |
-| Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 envelopes including join/presence + combat |
-| Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `seatTrayPresentation`, `seatFlippedToFullyJoined`, `createGmHostRuntime` | Ephemeral seats; yellow joining / green joined tray tokens |
-| Party blink | `src/lib/gm/partyBlink.ts` | `nextPartyTabBlink`, `partyTabBlinkAfterTabChange` | Hub chrome only; clears on Party open / Close Table |
+| Protocol | `src/lib/gm/sessionMessages.ts` | `createGmEnvelope`, `gmHelloPayloadFromCampaign` | v1 envelopes including join/presence + combat + `dm.send` + `dm.group*` |
+| Direct messages | `src/lib/gm/sessionDm.ts` + host/client runtime | `appendDmMessage`, `dmPlayerSenderLabel`, `sendDmToCharacter` / `sendDm` | Play-session scoped; seated only; GM bubbles use join display name; UI `GmSeatDmPanel` / `GmPlayerDmTray` |
+| Group chat | `src/lib/gm/sessionGroupChat.ts` + host/client runtime | `createGroupChat`, `sendGroupChatMessage` / `sendGroupChat`, `dm.group*` | Same session message / host path as DM (Pillar 9); GM creates from At the table; members share one thread; join-name labels; play-session scoped |
+| Presence | `src/lib/gm/sessionPresence.ts` + `sessionHostRuntime.ts` | `grantOrReclaimSeat`, `seatTrayPresentation`, `seatFlippedToFullyJoined`, `createGmHostRuntime` | Ephemeral seats; yellow joining / green joined tray tokens; seat `projectedCharacterName` for peers |
+| Table projection | `src/lib/characterAliases.ts` + `src/lib/gm/tableProjectedName.ts` | `resolveTableProjectedName`, `resolveProjectedNameFromSnapshot`, `resolveGmCanonicalCharacterName` | Aliases + `tableProjectedAliasId` on character save; peers use seat projection; GM Hub / history / observer keep canonical `character.name` |
+| People blink | `src/lib/gm/partyBlink.ts` | `nextPartyTabBlink`, `partyTabBlinkAfterTabChange`, `partyTabBlinkAfterCharactersSubTabChange` | Hub chrome only; clears on Narrative → People → PCs / Close Table |
 | Transport | `src/lib/gm/browserWsTransport.ts` + interim `ws` host | `createBrowserWsTransport`, `npm run gm:ws-host`, `GET /sessions`, `GET /discover` | Interim same-WiFi; desktop sidecar later |
 | Discovery | `src/lib/gm/sessionDiscovery.ts` + `browserLanHints.ts` | `listLanSessions` → local `/discover` (UDP + TCP + lanHints) + browser `/24` probe | Join Session browse; **campaignName** display only; Advanced IP = failure mode only (does not rebind browse) |
-| Join UX | `GmJoinHostChrome`, `GmJoinTableViewport` | hub **Open Table** / **Players in Session**; launcher **Join table** → name + characters (default Select a character) + Join Session list → sheet | One Party/Cast pipeline — no remote fork; Party = joined seats; Cast = local machine add + archetypes; code/QR demoted to Advanced; shared client runtime survives sheet handoff; Return to launcher confirms Close Table (GM) / leave (player) |
+| Join UX | `GmJoinHostChrome`, `GmJoinTableViewport`, `JoinedTablePeerRoster` | hub **Open Table** → **Table Open** hover **Players in Session** overlay (Close Table inside); launcher **Join table** → name + characters + **Name at the table** (real / alias) + **Create new character** + Join Session list → sheet / forge; joined sheet **At this table** shows peer projections | One People pipeline — no remote fork; PCs = joined seats + campaign history; NPCs = local-machine adds + archetypes; host Advanced code/QR hidden this pass (listen intact); player Advanced code/IP = failure fallback; shared client runtime survives sheet handoff; Return to launcher confirms Close Table (GM) / leave (player) |
 | Leave / party | `sessionHostRuntime` + `joinTableLeave.ts` | `applyPartyDetach`, `playerNameForPartyCharacter`, `joinedPartyCharacterIds` | Leave/kick/Close Table clear seat + party id + joiner cache (no Missing saves phantoms) |
-| UI | `src/components/gm/*` | `GmHubShell`, `GmTabBar` | Story / Combat modes; Home + Party + Cast + Gear; Party blink on joiner attach; player name on Party cards |
-| Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Hub Gear → party save; Cast blocked (no inventory) |
+| Melee engagement | `src/lib/gm/meleeEngagement.ts` + `combatRoster.ts` | `listMeleePcCandidates`, `listMeleeNpcCandidates`, `addCharacterToMelee`, `assembleGmCombatRoster` | Opt-in roster from People data; no Combat People tab |
+| Gear grant | `src/lib/gear/gmGearForgeHost.ts` + `customGearLibrary.ts` + `gmCharacterInventoryGrant.ts` | `buildGmGearForgeAdapter` | Things → Gear → My Custom Gear lists; optional push to character save; Quick-Blocks blocked (no inventory) |
 
-**Modes / variants:** Hub `story` / `combat` (Home differs; Party, Cast, and Gear are one pipeline each). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second Party implementation.
+**Modes / variants:** Hub `story` (chrome **Narrative**) / `combat` (distinct tab sets; People is Narrative-only; Melee reuses party/NPC ids via engagement lists). Party `viewForm` (`primary` / `morphus`). Combatant `kind` (`pc` / `npc`) on one roster renderer. Gear uses the shared `GearForgeShell` (`kind: 'gm'`) under Things — do not fork a GM-only forge. Join is a transport/presence mode on this path — not a second People implementation.
 
-**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork Party or Cast per Story/Combat mode. New join envelopes stay on `sessionMessages` v1.
+**Extension guide:** Add observer fields in `buildPartyObserverSlice`, not in tab components. Campaign history cards rebuild from the same builder (store character JSON on `campaignPcHistory` — do not fork a second summary assembler; no history-card comment field). Add combatant columns on `GmCombatRosterRow` rather than forking PC vs NPC tables. Do not fork People panels. Melee engagement stays on `meleeEngagement` + shared roster assembler — never a second combatant list. Notes content links go through `hubNavigation` / `navigateHubTarget` — never open People from Combat. Extend `contentLinks` + `GmContentLinkedNotesField` for mention/render UX — do not fork per-tab editors or per-kind typeahead pipelines. New join envelopes stay on `sessionMessages` v1. Seated DM and group chat stay on `sessionDm` / `sessionGroupChat` + `dm.*` envelopes — never a second websocket stack or history-card comment bridge. Peer-facing table names go through `tableProjectedName` / seat `projectedCharacterName` — never rewrite GM observer `name` or campaign history `characterName` to an alias.
 
 ---
 
@@ -243,14 +249,15 @@ Copy this block when registering a new unified path:
 | Host adapter | `src/lib/gear/gearForgeHost.ts` | `GearForgeHostAdapter` | `library` \| `creation` \| `sheet` \| `gm` |
 | Creation host | `src/lib/gear/creationGearForgeHost.ts` | `buildCreationGearForgeAdapter` | `tab8_gear` → draft inventory |
 | Sheet host | `src/lib/gear/sheetGearForgeHost.ts` | `buildSheetGearForgeAdapter` | Live `GearPanel` → active inventory |
-| GM host | `src/lib/gear/gmGearForgeHost.ts` | `buildGmGearForgeAdapter` | Hub Gear → party character save |
+| GM host | `src/lib/gear/gmGearForgeHost.ts` | `buildGmGearForgeAdapter` | Things → Gear → My Custom Gear library; optional character push |
 | Inventory commit | `src/lib/gear/inventoryWeaponCommit.ts` | `createInventoryWeaponFromPiece` | Shared grant/patch for creation / sheet / GM |
-| GM save grant | `src/lib/gear/gmCharacterInventoryGrant.ts` | `addWeaponToCharacterSave` | Party save write-back; Cast blocked |
-| Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear |
+| GM save grant | `src/lib/gear/gmCharacterInventoryGrant.ts` | `addWeaponToCharacterSave`, `gmGearLibraryBlockedReason` | Optional push write-back; library saves never gated |
+| Custom library | `src/lib/gear/customGearLibrary.ts` | `saveCustomGearWeapon`, `listLibraryWeaponsAsInventory` | Portal My Custom Gear + GM Things → Gear |
+| Permanent delete confirm | `src/lib/gm/permanentDeleteConfirm.ts` | `confirmPermanentDelete` | Hub stubs / custom gear Delete dialogs |
 | Property stack | `src/lib/weaponForgeProperties.ts` | `Weapon.forgeProperties` | Indestructible / quality / multipliers / triggers |
 | UI shell | `src/components/gear/GearForgeShell.tsx` | Portal + creation + sheet + GM `GmGearPanel` | One shell for all hosts |
 
-**Modes / variants:** One shell for all hosts. Portal commits to library; creation and sheet commit to character inventory (draft vs active); GM commits to a selected party character’s local save. Cast Quick-Blocks have no inventory yet (visible why-disabled). Do not fork lane editors per host.
+**Modes / variants:** One shell for all hosts. Portal commits to library; creation and sheet commit to character inventory (draft vs active); GM Things → Gear commits to the same My Custom Gear library, with optional push copies onto a selected party character save (push never gates library saves). Cast Quick-Blocks have no inventory yet (visible why-disabled). Do not fork lane editors per host.
 
 ---
 
@@ -278,7 +285,7 @@ Track work here until promoted to the registry above.
 | Ingest parse | `src/lib/units/parse.ts` | `parseLengthFromProse`, … | Dice lengths ignored for now |
 | Preference | `src/lib/units/preference.ts` + `UnitsPreferenceContext` | `localStorage` `pds:unitsPreference` | Per-user/device; not in character saves |
 | Schema | `palladium-units.schema.json` | `#/$defs/*Measure` | Shared dual structures |
-| UI | `UnitsPreferenceToggle` | Launcher + sheet chrome; Gear Forge field labels | |
+| UI | `UnitsPreferenceToggle` inside `AppSettingsDialog` | Via shared `PortalChromeActions` Settings gear on launcher / sheet / Hub / campaign forge / gear forge / join table; Gear Forge field labels still use preference | |
 
 **Modes / variants:** `standard` \| `metric`  
 **Extension guide:** Add new quantity kinds to schema `$defs` + convert/resolve/format; wire UI through `useUnitsPreference` — never fork per-form converters.
@@ -287,16 +294,43 @@ Track work here until promoted to the registry above.
 
 ---
 
+### Portal chrome (Return + Settings)
+
+**Status:** `complete`  
+**Related spec:** `docs/app_viewport_launcher.md`, `docs/units_preference.md`, `docs/gm_hub.md`
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Icons | `src/components/chrome/PortalChromeIcons.tsx` | `ReturnToLauncherIcon`, `SettingsGearIcon` | One SVG pair |
+| Actions | `src/components/chrome/PortalChromeActions.tsx` | `PortalChromeActions` | Exit + Settings; tones `dark` / `sheet` / `morphus` |
+| Settings | `src/components/chrome/AppSettingsDialog.tsx` | units dial | App-global only — do not invent per-viewport settings |
+| Hosts | Hub / launcher / sheet / campaign forge / gear forge / join table | same component | Launcher: Settings only (`showReturn={false}`) |
+
+**Modes / variants:** Tone is a presentation mode on one control — do not fork per-viewport exit/settings buttons. Confirm dialogs for leave/Close Table stay on the host `onReturnToLauncher` callback.
+
+**Extension guide:** New viewports that need exit or units mount `PortalChromeActions`; do not reintroduce text **Portal** / **Return to launcher** buttons or header `UnitsPreferenceToggle`s.
+
+---
+
 ## Changelog
 
 | Date | Change |
 |------|--------|
+| 2026-10-02 | GM Hub shared `GmHubContentPane`: hub chrome anchored; all Narrative/Combat workspace tabs scroll in one content pane (no per-tab overflow fork) |
+| 2026-09-29 | Portal chrome unified: `PortalChromeActions` Return + Settings icons on launcher / sheet / Hub / campaign forge / gear forge / join table; units only in Settings |
+| 2026-10-04 | Live sheet: all identity/profile fields persist (Race/O.C.C. read-only) + aliases; Join Table **Name at the table** projection on seats; peers see projection, GM keeps canonical name |
+| 2026-09-29 | GM Hub compact chrome: top nav only; Return + Settings icons; units in Settings; Open Table → Table Open hover Players overlay; host Advanced UI hidden |
 | 2026-09-28 | Join Table backlog: Open Table stamp matches publish; leave/kick/Close Table detach party+cache; Party = joined + player name; Cast hosts local add; Return to launcher confirms Close/leave |
 | 2026-09-25 | GM Hub client join first slice: interim `ws`, presence/join envelopes, Join table viewport, interacting sheet |
 | 2026-09-21 | Measurement units path: Standard/Metric preference, dual measure schema, Gear Forge convert-on-edit |
+| 2026-10-01 | GM Things → Gear: library-first My Custom Gear saves; optional character push; Delete + permanent confirm on Hub stubs/custom gear |
 | 2026-09-18 | Gear Forge GM host: Hub **Gear** tab + `kind: 'gm'` adapter on shared shell → selected party character save |
 | 2026-09-18 | Gear Forge Sheet host: live `GearPanel` + `kind: 'sheet'` adapter on shared shell → active inventory |
 | 2026-09-16 | Gear Forge Creation host: `tab8_gear` + `kind: 'creation'` adapter on shared shell; Review → `tab9_review` |
+| 2026-10-01 | GM Hub content-link labels: shared `GmContentLinkedNotesField` renders clickable names (not raw `[[…]]`) on Notes, Story Beats, Places/Things/People stubs, and cast notes |
+| 2026-10-01 | GM Hub Notes `@` mention typeahead: primary authoring via `findActiveMention` + `searchAllLinkableEntities`; storage stays `[[kind:id\|label]]` |
+| 2026-10-01 | GM Hub Notes content links: `[[kind:id\|label]]`, placeholder store, shared `hubNavigation` (no Narrative/Combat fork) |
+| 2026-10-01 | GM Hub lane tabs: Narrative Story Beats/People/Places/Things/Notes; Combat Melee/Prefabs; Melee dropdowns from People data |
 | 2026-08-30 | GM Hub Story/Combat master tabs (Home + Party + Cast), matching live sheet |
 | 2026-08-30 | Play sessions: Open Session stamps `{campaign}: {date}` join name; Sessions landing drops saved-tables / passive matrix |
 | 2026-08-30 | Campaign Creation Forge: conversion rules dropdown (baked in; Sessions is read-only) |

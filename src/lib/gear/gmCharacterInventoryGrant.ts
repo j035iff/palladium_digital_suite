@@ -16,27 +16,56 @@ import {
 } from './inventoryWeaponCommit'
 import type { GearForgeWeaponPatch, GearForgeWeaponPiece } from './gearForgeHost'
 
-/** Radical Visibility: why GM Gear cannot grant yet. */
+/**
+ * Radical Visibility: why GM Things → Gear cannot save to custom gear lists.
+ * Character grant is optional — never gates library saves.
+ */
+export function gmGearLibraryBlockedReason(opts: {
+  campaignOpen: boolean
+}): string | null {
+  if (!opts.campaignOpen) {
+    return 'Open a campaign from the launcher first'
+  }
+  return null
+}
+
+/**
+ * Why optional push-to-character is unavailable (does not block forge saves).
+ */
+export function gmGearGrantBlockedReason(opts: {
+  campaignOpen: boolean
+  targetCharacterId: string | null
+  saveMissing?: boolean
+}): string | null {
+  const libraryBlock = gmGearLibraryBlockedReason({
+    campaignOpen: opts.campaignOpen,
+  })
+  if (libraryBlock) return libraryBlock
+  if (!opts.targetCharacterId?.trim()) {
+    return 'Select a character to push a copy (optional — saves still work)'
+  }
+  if (opts.saveMissing) {
+    return 'That character save is missing on this machine'
+  }
+  return null
+}
+
+/**
+ * @deprecated Prefer {@link gmGearLibraryBlockedReason} for forge saves and
+ * {@link gmGearGrantBlockedReason} for optional character push.
+ * Kept for callers that still treat grant as the forge commit gate.
+ */
 export function gmGearCommitBlockedReason(opts: {
   campaignOpen: boolean
   targetCharacterId: string | null
   saveMissing?: boolean
 }): string | null {
-  if (!opts.campaignOpen) {
-    return 'Open a campaign from the launcher first'
-  }
-  if (!opts.targetCharacterId?.trim()) {
-    return 'Select a party character to grant gear'
-  }
-  if (opts.saveMissing) {
-    return 'That party character save is missing on this machine'
-  }
-  return null
+  return gmGearGrantBlockedReason(opts)
 }
 
-/** Cast Quick-Blocks have no inventory — keep visible in chrome, never invent bags. */
+/** Encounter Quick-Blocks have no inventory — keep visible in chrome, never invent bags. */
 export const GM_CAST_GEAR_BLOCKED_REASON =
-  'Cast Quick-Blocks have no character inventory yet — grant to a party character save'
+  'Encounter Quick-Blocks have no character inventory yet — grant to a character save on the table'
 
 function readInventorySession(characterId: string): InventorySessionState | null {
   const raw = loadCharacterSave(characterId)

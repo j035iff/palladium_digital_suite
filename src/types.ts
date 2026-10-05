@@ -2405,12 +2405,28 @@ export type CharacterIdentityProfile = {
   hair: string
 }
 
+/** Alternate display name the player may project at Join Table (peers see this). */
+export type CharacterAlias = {
+  id: string
+  name: string
+}
+
 export type Character = {
   name: string
   /** Freeform notes captured during live story play. */
   playNotes?: string
   /** Physical description and anthropometrics for leap/encumbrance and Morphus modifiers. */
   identityProfile?: CharacterIdentityProfile
+  /**
+   * Optional aliases managed on the live Identity expand.
+   * Join Session can project one of these to peers; GM always uses {@link name}.
+   */
+  aliases?: CharacterAlias[]
+  /**
+   * Alias id projected at Join Table. `null` / omitted = real {@link name}.
+   * Persisted as last join choice; coerced when the alias is removed.
+   */
+  tableProjectedAliasId?: string | null
   /**
    * Character tier (1..15). Sheet level; ritual modal advances this when XP thresholds are met
    * (master_flow.md progression).

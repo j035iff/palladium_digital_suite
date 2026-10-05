@@ -1,11 +1,24 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import {
+  GENRE_MANIFEST,
+  isGenreId,
+  type GenreId,
+} from '../../data/genres'
+import {
   formatCharacterIndexLabel,
+  isCharacterIndexInProgress,
   loadCharacterSave,
   resolveCharacterIndexRowDisplay,
+  saveCharacterToStorage,
   type CharacterIndexEntry,
 } from '../../lib/characterIndex'
+import {
+  coerceTableProjectedAliasId,
+  listTableProjectionOptions,
+  TABLE_PROJECTED_REAL_NAME_ID,
+} from '../../lib/characterAliases'
+import { createBlankCharacterForGenre } from '../../lib/characterRoot'
 import {
   createBrowserWsTransport,
   defaultInterimWsUrl,
@@ -30,21 +43,22 @@ import {
 } from '../../lib/gm/sessionDiscovery'
 import { PLAYER_RETURN_LEAVES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
 import { resolveJoinSessionGate } from '../../lib/gm/sessionJoinGate'
-import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
+import { PortalChromeActions } from '../chrome/PortalChromeActions'
 
 const SESSION_POLL_MS = 2000
 
 /**
  * Same-SPA “Join table” viewport — Player Name + My Characters + Join Session
- * list (LAN browse). On success: party.snapshot + Character Sheet handoff.
- * Advanced keeps manual code/IP as Radical Visibility fallback.
- * Client runtime is a shared singleton so transport survives sheet handoff.
+ * list (LAN browse). On success: party.snapshot + Character Sheet / Forge handoff.
+ * Picker includes spawned + save-for-later drafts; Create new character starts a
+ * blank draft on the shared forge path. Advanced keeps manual code/IP fallback.
  */
 export function GmJoinTableViewport() {
   const {
     returnToLauncher,
     loadSavedCharacter,
     savedCharacterRows,
+    inProgressCharacterRows,
     refreshSavedCharacterIndex,
   } = useCharacter()
   const runtime = useMemo(() => getSharedGmClientRuntime(), [])
@@ -53,9 +67,12 @@ export function GmJoinTableViewport() {
   )
   const [playerName, setPlayerName] = useState('')
   const [characterId, setCharacterId] = useState('')
+  /** Empty = real character name; otherwise an alias id. */
+  const [projectedAliasId, setProjectedAliasId] = useState<string>(
+    TABLE_PROJECTED_REAL_NAME_ID,
+  )
   const [sessions, setSessions] = useState<LanSessionAdvertisement[]>([])
   const [browseReason, setBrowseReason] = useState<string | null>(null)
-  // Browse always targets this device's interim sidecar — never Advanced GM IP.
   const browseHost = useMemo(
     () =>
       localBrowseHost(
@@ -76,6 +93,19 @@ export function GmJoinTableViewport() {
   const [joiningCampaignName, setJoiningCampaignName] = useState<string | null>(
     null,
   )
+  const [createGenreOpen, setCreateGenreOpen] = useState(false)
+
+  const joinableRows = useMemo(() => {
+    const byId = new Map<string, CharacterIndexEntry>()
+    for (const row of savedCharacterRows) byId.set(row.id, row)
+    for (const row of inProgressCharacterRows) byId.set(row.id, row)
+    return [...byId.values()].sort((a, b) => {
+      const aDraft = isCharacterIndexInProgress(a)
+      const bDraft = isCharacterIndexInProgress(b)
+      if (aDraft !== bDraft) return aDraft ? 1 : -1
+      return a.name.localeCompare(b.name)
+    })
+  }, [savedCharacterRows, inProgressCharacterRows])
 
   const gate = resolveJoinSessionGate({
     playerName,
@@ -87,6 +117,22 @@ export function GmJoinTableViewport() {
   useEffect(() => {
     refreshSavedCharacterIndex()
   }, [refreshSavedCharacterIndex])
+
+  useEffect(() => {
+    if (!characterId) {
+      setProjectedAliasId(TABLE_PROJECTED_REAL_NAME_ID)
+      return
+    }
+    const save = loadCharacterSave(characterId)
+    if (!save) {
+      setProjectedAliasId(TABLE_PROJECTED_REAL_NAME_ID)
+      return
+    }
+    setProjectedAliasId(
+      coerceTableProjectedAliasId(save.aliases, save.tableProjectedAliasId) ??
+        TABLE_PROJECTED_REAL_NAME_ID,
+    )
+  }, [characterId])
 
   useEffect(() => {
     let cancelled = false
@@ -129,6 +175,16 @@ export function GmJoinTableViewport() {
       setDialogError('Character save not found on this device.')
       return
     }
+
+    const nextProjected =
+      projectedAliasId === TABLE_PROJECTED_REAL_NAME_ID
+        ? null
+        : coerceTableProjectedAliasId(save.aliases, projectedAliasId)
+    const saveForJoin = {
+      ...save,
+      tableProjectedAliasId: nextProjected,
+    }
+    saveCharacterToStorage(saveForJoin)
 
     const probe = await probeInterimWsHost(target.wsHost)
     if (!probe.ok) {
@@ -189,7 +245,7 @@ export function GmJoinTableViewport() {
     }
 
     setDialogPhase('attaching')
-    const snap = sendPartySnapshotOnJoin(runtime, characterId, save)
+    const snap = sendPartySnapshotOnJoin(runtime, characterId, saveForJoin)
     if (!snap.ok) {
       setDialogPhase('error')
       setDialogError(snap.reason)
@@ -197,7 +253,7 @@ export function GmJoinTableViewport() {
     }
 
     setDialogPhase('success')
-    // Handoff to Character Sheet (Vector A). Runtime singleton keeps transport.
+    // Shared forge / sheet path — drafts open Character Creation Forge.
     loadSavedCharacter(characterId)
   }
 
@@ -227,10 +283,25 @@ export function GmJoinTableViewport() {
     void runJoin(resolved.target, null)
   }
 
-  const selectedRow = savedCharacterRows.find((r) => r.id === characterId)
+  const onCreateNewCharacter = (genreId: GenreId) => {
+    const blank = createBlankCharacterForGenre(genreId)
+    saveCharacterToStorage(blank)
+    refreshSavedCharacterIndex()
+    setCharacterId(blank.id)
+    setCreateGenreOpen(false)
+  }
+
+  const selectedRow = joinableRows.find((r) => r.id === characterId)
   const selectedDisplay = selectedRow
     ? resolveCharacterIndexRowDisplay(selectedRow)
     : null
+  const selectedIsDraft = selectedRow
+    ? isCharacterIndexInProgress(selectedRow)
+    : false
+  const selectedSave = characterId ? loadCharacterSave(characterId) : null
+  const projectionOptions = selectedSave
+    ? listTableProjectionOptions(selectedSave)
+    : []
 
   return (
     <div className="flex h-svh min-h-0 flex-col overflow-hidden bg-[#0a0c12] text-slate-100">
@@ -243,26 +314,20 @@ export function GmJoinTableViewport() {
             {state.hello?.campaignName ?? 'Join a session'}
           </h1>
           <p className="text-[11px] text-slate-400">
-            Enter your player name, pick a character, then join a LAN session.
+            Enter your player name, pick a character (or create one), then join
+            a LAN session.
           </p>
         </div>
-        <div className="flex min-w-[11rem] flex-col gap-2">
-          <UnitsPreferenceToggle tone="launcher" className="self-end" />
-          <button
-            type="button"
-            onClick={() => {
-              const joined = state.status === 'joined'
-              if (joined && !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)) {
-                return
-              }
-              if (joined) runtime.leave()
-              returnToLauncher()
-            }}
-            className="rounded-lg border border-slate-600 px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-400 hover:text-white"
-          >
-            Return to launcher
-          </button>
-        </div>
+        <PortalChromeActions
+          onReturnToLauncher={() => {
+            const joined = state.status === 'joined'
+            if (joined && !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)) {
+              return
+            }
+            if (joined) runtime.leave()
+            returnToLauncher()
+          }}
+        />
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4">
@@ -279,18 +344,67 @@ export function GmJoinTableViewport() {
           </label>
 
           <section>
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <h2 className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
                 My Characters
               </h2>
-              <button
-                type="button"
-                onClick={() => refreshSavedCharacterIndex()}
-                className="rounded border border-slate-600 px-2 py-0.5 text-[10px] font-bold uppercase text-slate-400 hover:border-slate-400"
-              >
-                Refresh
-              </button>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => refreshSavedCharacterIndex()}
+                  className="rounded border border-slate-600 px-2 py-0.5 text-[10px] font-bold uppercase text-slate-400 hover:border-slate-400"
+                >
+                  Refresh
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCreateGenreOpen((v) => !v)}
+                  className="rounded border border-cyan-700/60 px-2 py-0.5 text-[10px] font-bold uppercase text-cyan-200 hover:border-cyan-400"
+                >
+                  Create new character
+                </button>
+              </div>
             </div>
+            {createGenreOpen ? (
+              <div
+                className="mt-2 rounded-lg border border-slate-700 bg-slate-900/60 p-3"
+                role="group"
+                aria-label="Choose setting for new character"
+              >
+                <p className="text-[11px] text-slate-400">
+                  Choose a setting. A draft is saved and selected — join a
+                  session to open Character Creation Forge at the table.
+                </p>
+                <ul className="mt-2 space-y-1">
+                  {GENRE_MANIFEST.filter((g) => g.playable !== false).map(
+                    (genre) => (
+                      <li key={genre.id}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (!isGenreId(genre.id)) return
+                            onCreateNewCharacter(genre.id)
+                          }}
+                          className="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-left text-sm text-white hover:border-cyan-500"
+                        >
+                          <span className="font-semibold">{genre.label}</span>
+                          <span className="mt-0.5 block text-[11px] text-slate-500">
+                            {genre.description}
+                          </span>
+                        </button>
+                      </li>
+                    ),
+                  )}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => setCreateGenreOpen(false)}
+                  className="mt-2 text-[10px] uppercase text-slate-500 hover:text-slate-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : null}
             <select
               value={characterId}
               onChange={(e) => setCharacterId(e.target.value)}
@@ -298,7 +412,7 @@ export function GmJoinTableViewport() {
               aria-label="My Characters"
             >
               <option value="">Select a character</option>
-              {savedCharacterRows.map((row) => (
+              {joinableRows.map((row) => (
                 <CharacterOption key={row.id} row={row} />
               ))}
             </select>
@@ -308,14 +422,43 @@ export function GmJoinTableViewport() {
                 <sup className="ml-1 text-[9px] font-bold uppercase tracking-wide text-slate-600">
                   {selectedDisplay.genreLabel}
                 </sup>
+                {selectedIsDraft ? (
+                  <span className="ml-2 text-[10px] font-bold uppercase tracking-wide text-amber-400/90">
+                    In progress — opens forge after join
+                  </span>
+                ) : null}
               </p>
-            ) : savedCharacterRows.length === 0 ? (
+            ) : joinableRows.length === 0 ? (
               <p className="mt-2 text-xs text-slate-500">
-                No spawned characters on this device — finish creation and spawn
-                first (same list as the launcher).
+                No characters on this device — create a new character or finish
+                a save-for-later draft (same forge path as the launcher).
               </p>
             ) : null}
           </section>
+
+          {selectedSave ? (
+            <label className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+              Name at the table
+              <select
+                value={projectedAliasId}
+                onChange={(e) => setProjectedAliasId(e.target.value)}
+                className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
+                aria-label="Name at the table"
+              >
+                {projectionOptions.map((opt) => (
+                  <option key={opt.id || 'real'} value={opt.id}>
+                    {opt.isRealName
+                      ? `${opt.label} (real name)`
+                      : opt.label}
+                  </option>
+                ))}
+              </select>
+              <span className="mt-1 block text-[11px] font-normal normal-case tracking-normal text-slate-500">
+                Other players see this name. The GM always sees the real
+                character name.
+              </span>
+            </label>
+          ) : null}
 
           <section>
             <h2 className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
@@ -499,9 +642,10 @@ export function GmJoinTableViewport() {
 
 function CharacterOption({ row }: { row: CharacterIndexEntry }) {
   const { mainLabel, genreLabel } = resolveCharacterIndexRowDisplay(row)
+  const draft = isCharacterIndexInProgress(row)
   return (
     <option value={row.id} title={formatCharacterIndexLabel(row)}>
-      {mainLabel} ({genreLabel})
+      {draft ? `[Draft] ${mainLabel} (${genreLabel})` : `${mainLabel} (${genreLabel})`}
     </option>
   )
 }

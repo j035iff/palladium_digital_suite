@@ -46,6 +46,7 @@ import {
   removePartyMember,
   emitHorrorFactor,
 } from './sessionModel'
+import { upsertCampaignPcHistory } from './campaignPcHistory'
 import type { GmSessionRecord } from './sessionTypes'
 import { resolveJoinListenCapability, openTableDisabledReason } from './desktopHostCapability'
 import {
@@ -135,6 +136,7 @@ describe('presence reduce', () => {
       joinedAtMs: 1,
       lastSeenAtMs: 1,
       characterId: null,
+      projectedCharacterName: null,
     }
     expect(isSeatFullyJoined(seat)).toBe(false)
     expect(isSeatFullyJoined(seat, { requireCharacterId: false })).toBe(true)
@@ -288,8 +290,13 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
       applyPcApmSpend: (characterId, actions) => {
         session = recordPcApmSpendEvent(session, characterId, 'Scout', actions)
       },
-      applyPartySnapshot: (characterId, label) => {
+      applyPartySnapshot: (characterId, label, meta) => {
         session = addPartyMember(session, characterId, label)
+        session = upsertCampaignPcHistory(session, {
+          characterId,
+          characterJson: meta?.characterJson,
+          playerLabel: meta?.playerLabel,
+        })
       },
       applyPartyDetach: (characterId) => {
         session = removePartyMember(session, characterId, characterId)
@@ -356,6 +363,8 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
     const snap = sendPartySnapshotOnJoin(client, 'char_remote', {
       id: 'char_remote',
       name: 'Remote Hero',
+      aliases: [{ id: 'a1', name: 'Crow' }],
+      tableProjectedAliasId: 'a1',
       creationGenreId: 'nightbane',
       hostGenreId: 'nightbane',
     })
@@ -367,6 +376,11 @@ describe('host runtime join + combat round-trip (mock transport)', () => {
     expect(runtime.getState().presence?.seats[0]?.characterId).toBe(
       'char_remote',
     )
+    // Peers see projected alias; GM party label stays canonical (applyPartySnapshot).
+    expect(runtime.getState().presence?.seats[0]?.projectedCharacterName).toBe(
+      'Crow',
+    )
+    expect(session.partyCharacterIds.includes('char_remote')).toBe(true)
 
     client.leave()
     await Promise.resolve()
@@ -428,6 +442,7 @@ describe('party overview join helpers', () => {
         joinedAtMs: 1,
         lastSeenAtMs: 1,
         characterId: 'char_a',
+        projectedCharacterName: 'Crow',
       },
       {
         deviceId: 'd2',
@@ -436,6 +451,7 @@ describe('party overview join helpers', () => {
         joinedAtMs: 1,
         lastSeenAtMs: 1,
         characterId: null,
+        projectedCharacterName: null,
       },
     ]
     expect(playerNameForPartyCharacter(seats, 'char_a')).toBe('Ada')

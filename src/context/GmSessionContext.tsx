@@ -14,7 +14,30 @@ import { listFinalizedCharacters, loadCharacterSave } from '../lib/characterInde
 import type { CharacterIndexEntry } from '../lib/characterIndex'
 import type { CharacterRootState } from '../types'
 import { assembleGmCombatRoster } from '../lib/gm/combatRoster'
-import type { GmHubMode, GmHubTabId } from '../lib/gm/hubTabs'
+import type {
+  GmCharactersSubTabId,
+  GmHubMode,
+  GmHubTabId,
+  GmThingsSubTabId,
+} from '../lib/gm/hubTabs'
+import {
+  defaultHubTabForMode,
+  isViewingNarrativePeoplePcs,
+} from '../lib/gm/hubTabs'
+import {
+  applyHubNavTarget,
+  hubFocusAfterNavChange,
+  hubNavTargetForContentKind,
+  type GmHubFocus,
+  type GmHubNavTarget,
+} from '../lib/gm/hubNavigation'
+import {
+  addPlaceholder,
+  createPlaceholderEntity,
+  patchPlaceholder,
+  removePlaceholder,
+} from '../lib/gm/narrativePlaceholders'
+import type { GmContentLinkKind } from '../lib/gm/contentLinks'
 import { createNpcFromArchetype } from '../lib/gm/npcInstance'
 import {
   addNpcInstance,
@@ -33,6 +56,7 @@ import {
   setNpcInitiativeRoll,
   setPartyInitiativeRoll,
   setScratchpad,
+  setStoryBeats,
   spendNpcApm,
   startNewMeleeRound,
   unlockInitiative,
@@ -53,6 +77,12 @@ import {
   partyHorrorSaveBonus,
   type GmPartyObserverSlice,
 } from '../lib/gm/partyObserver'
+import {
+  addCharacterToMelee,
+  addNpcInstanceToMelee,
+  removeCharacterFromMelee,
+  removeNpcInstanceFromMelee,
+} from '../lib/gm/meleeEngagement'
 import type { ActiveForm } from '../types'
 import type {
   GmConversionPolicy,
@@ -78,21 +108,43 @@ import {
   type GmHostListenUiState,
 } from '../lib/gm/gmHostListenController'
 import { loadCachedJoinedCharacter } from '../lib/gm/sessionPartyCache'
+import {
+  deleteCampaignPcHistoryEntry as removeCampaignPcHistoryEntry,
+  upsertCampaignPcHistory,
+} from '../lib/gm/campaignPcHistory'
 import { activePlaySession } from '../lib/gm/playSession'
 import type { GmJoinCredentials } from '../lib/gm/sessionJoinCode'
 import type { GmPresenceState, GmSeat } from '../lib/gm/sessionPresence'
 import type { GmJoinListenCapability } from '../lib/gm/desktopHostCapability'
 import {
   nextPartyTabBlink,
+  partyTabBlinkAfterCharactersSubTabChange,
   partyTabBlinkAfterTabChange,
 } from '../lib/gm/partyBlink'
+import type { GmDmThreadState } from '../lib/gm/sessionDm'
+import type { GmGroupChatState } from '../lib/gm/sessionGroupChat'
 
 type GmSessionContextValue = {
   hubMode: GmHubMode
   setHubMode: (mode: GmHubMode) => void
   hubTabId: GmHubTabId
   setHubTabId: (tab: GmHubTabId) => void
-  /** True while Party tab should blink after a joiner fully joins. */
+  /** Narrative → People → PCs | NPCs (management only — not on Combat). */
+  charactersSubTabId: GmCharactersSubTabId
+  setCharactersSubTabId: (tab: GmCharactersSubTabId) => void
+  /** Narrative → Things → Notes stub | Gear. */
+  thingsSubTabId: GmThingsSubTabId
+  setThingsSubTabId: (tab: GmThingsSubTabId) => void
+  /** When true, People shows person stub lane (Notes [[person:]] focus). */
+  peopleShowPersonStubs: boolean
+  setPeopleShowPersonStubs: (show: boolean) => void
+  /** Ephemeral focus target from a Notes content link click. */
+  hubFocus: GmHubFocus | null
+  clearHubFocus: () => void
+  /** Shared navigator — People / narrative kinds always force Narrative. */
+  navigateHubTarget: (target: GmHubNavTarget) => void
+  navigateContentLink: (kind: GmContentLinkKind, id: string) => void
+  /** True while Narrative → People → PCs should blink after a joiner fully joins. */
   partyTabBlink: boolean
   sessionList: GmSessionIndexEntry[]
   session: GmSessionRecord | null
@@ -114,12 +166,25 @@ type GmSessionContextValue = {
   removeSession: (id: string) => void
   applySession: (next: GmSessionRecord) => void
   updateScratchpad: (text: string) => void
+  updateStoryBeats: (text: string) => void
+  /** Create a placeholder stub (Create? from Notes links) and return it. */
+  createContentStub: (input: {
+    kind: GmContentLinkKind
+    name: string
+    notes?: string
+  }) => ReturnType<typeof createPlaceholderEntity> | null
+  updatePlaceholderNotes: (id: string, notes: string) => void
+  updatePlaceholderName: (id: string, name: string) => void
+  linkPersonToNpc: (personId: string, npcInstanceId: string | undefined) => void
+  dropPlaceholder: (id: string) => void
   updateSessionName: (name: string) => void
   /** Open Table: stamp play sitting and start LAN listen (one publish action). */
   openPlaySession: () => Promise<void>
   closePlaySession: () => void
   addCharacterToParty: (characterId: string) => void
   dropCharacterFromParty: (characterId: string) => void
+  /** Permanent delete of a history row only (not live seats / saves). */
+  deleteCampaignPcHistoryEntry: (characterId: string) => void
   setViewForm: (characterId: string, form: ActiveForm) => void
   setPcInitiative: (characterId: string, d20: number | null) => void
   spawnArchetype: (archetypeId: string, variantId?: string) => void
@@ -131,6 +196,16 @@ type GmSessionContextValue = {
   lockInit: () => void
   unlockInit: () => void
   newMeleeRound: () => void
+  /** Melee dropdowns — add from People data into the shared combat roster. */
+  addPcToMelee: (characterId: string) => void
+  addNpcToMelee: (input: {
+    characterId?: string
+    npcInstanceId?: string
+  }) => void
+  removeFromMelee: (input: {
+    characterId?: string
+    npcInstanceId?: string
+  }) => void
   emitNpcHf: (instanceId: string) => void
   recordPcHfSave: (characterId: string, d20: number) => void
   recordStrike: (instanceId: string, d20: number, strikeBonus: number) => void
@@ -147,6 +222,32 @@ type GmSessionContextValue = {
   stopJoinListen: () => Promise<void>
   kickJoinedDevice: (deviceId: string) => void
   refreshJoinProbe: () => Promise<void>
+  /** Play-session DM threads (seated only; cleared on Close Table). */
+  joinDm: GmDmThreadState
+  sendDmToCharacter: (
+    characterId: string,
+    text: string,
+  ) => { ok: true } | { ok: false; reason: string }
+  markDmReadForCharacter: (characterId: string) => void
+  /** Play-session group chats (seated members; cleared on Close Table). */
+  joinGroupChat: GmGroupChatState
+  createGroupChat: (input: {
+    memberCharacterIds: string[]
+    title?: string | null
+  }) => { ok: true } | { ok: false; reason: string }
+  addGroupMembers: (
+    groupId: string,
+    characterIds: string[],
+  ) => { ok: true } | { ok: false; reason: string }
+  removeGroupMember: (
+    groupId: string,
+    characterId: string,
+  ) => { ok: true } | { ok: false; reason: string }
+  sendGroupChatMessage: (
+    groupId: string,
+    text: string,
+  ) => { ok: true } | { ok: false; reason: string }
+  markGroupChatRead: (groupId: string) => void
 }
 
 const GmSessionContext = createContext<GmSessionContextValue | null>(null)
@@ -158,9 +259,20 @@ function persist(next: GmSessionRecord): GmSessionRecord {
 
 export function GmSessionProvider({ children }: { children: ReactNode }) {
   const [hubMode, setHubModeState] = useState<GmHubMode>('story')
-  const [hubTabId, setHubTabIdState] = useState<GmHubTabId>('home')
+  const [hubTabId, setHubTabIdState] = useState<GmHubTabId>('story_beats')
+  const [charactersSubTabId, setCharactersSubTabIdState] =
+    useState<GmCharactersSubTabId>('pcs')
+  const [thingsSubTabId, setThingsSubTabIdState] =
+    useState<GmThingsSubTabId>('notes')
+  const [peopleShowPersonStubs, setPeopleShowPersonStubsState] =
+    useState(false)
+  const [hubFocus, setHubFocus] = useState<GmHubFocus | null>(null)
   const [partyTabBlink, setPartyTabBlink] = useState(false)
   const hubTabIdRef = useRef<GmHubTabId>(hubTabId)
+  const charactersSubTabIdRef = useRef<GmCharactersSubTabId>(charactersSubTabId)
+  const thingsSubTabIdRef = useRef<GmThingsSubTabId>(thingsSubTabId)
+  const peopleShowPersonStubsRef = useRef(peopleShowPersonStubs)
+  const hubModeRef = useRef<GmHubMode>(hubMode)
   const partyTabBlinkRef = useRef(false)
   const presenceRef = useRef<GmPresenceState | null>(null)
 
@@ -169,23 +281,136 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
   }, [hubTabId])
 
   useEffect(() => {
+    charactersSubTabIdRef.current = charactersSubTabId
+  }, [charactersSubTabId])
+
+  useEffect(() => {
+    thingsSubTabIdRef.current = thingsSubTabId
+  }, [thingsSubTabId])
+
+  useEffect(() => {
+    peopleShowPersonStubsRef.current = peopleShowPersonStubs
+  }, [peopleShowPersonStubs])
+
+  useEffect(() => {
+    hubModeRef.current = hubMode
+  }, [hubMode])
+
+  useEffect(() => {
     partyTabBlinkRef.current = partyTabBlink
   }, [partyTabBlink])
 
+  const navSnapshot = useCallback(
+    () => ({
+      hubMode: hubModeRef.current,
+      hubTabId: hubTabIdRef.current,
+      charactersSubTabId: charactersSubTabIdRef.current,
+      thingsSubTabId: thingsSubTabIdRef.current,
+      peopleShowPersonStubs: peopleShowPersonStubsRef.current,
+    }),
+    [],
+  )
+
   const setHubTabId = useCallback((tab: GmHubTabId) => {
     setHubTabIdState(tab)
-    setPartyTabBlink((prev) => partyTabBlinkAfterTabChange(tab, prev))
-  }, [])
+    if (tab === 'people') {
+      setPeopleShowPersonStubsState(false)
+      peopleShowPersonStubsRef.current = false
+    }
+    setPartyTabBlink((prev) =>
+      partyTabBlinkAfterTabChange(tab, prev, charactersSubTabIdRef.current),
+    )
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        ...navSnapshot(),
+        hubTabId: tab,
+        peopleShowPersonStubs:
+          tab === 'people' ? false : peopleShowPersonStubsRef.current,
+      }),
+    )
+  }, [navSnapshot])
+
+  const setCharactersSubTabId = useCallback((tab: GmCharactersSubTabId) => {
+    setCharactersSubTabIdState(tab)
+    setPeopleShowPersonStubsState(false)
+    peopleShowPersonStubsRef.current = false
+    setPartyTabBlink((prev) =>
+      partyTabBlinkAfterCharactersSubTabChange(tab, prev),
+    )
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        ...navSnapshot(),
+        charactersSubTabId: tab,
+        peopleShowPersonStubs: false,
+      }),
+    )
+  }, [navSnapshot])
+
+  const setThingsSubTabId = useCallback((tab: GmThingsSubTabId) => {
+    setThingsSubTabIdState(tab)
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        ...navSnapshot(),
+        thingsSubTabId: tab,
+      }),
+    )
+  }, [navSnapshot])
+
+  const setPeopleShowPersonStubs = useCallback((show: boolean) => {
+    setPeopleShowPersonStubsState(show)
+    peopleShowPersonStubsRef.current = show
+    setHubFocus((prev) =>
+      hubFocusAfterNavChange(prev, {
+        ...navSnapshot(),
+        peopleShowPersonStubs: show,
+      }),
+    )
+  }, [navSnapshot])
+
+  const clearHubFocus = useCallback(() => setHubFocus(null), [])
+
+  const navigateHubTarget = useCallback((target: GmHubNavTarget) => {
+    const next = applyHubNavTarget(
+      {
+        ...navSnapshot(),
+        hubFocus: null,
+      },
+      target,
+    )
+    setHubModeState(next.hubMode)
+    setHubTabIdState(next.hubTabId)
+    setCharactersSubTabIdState(next.charactersSubTabId)
+    setThingsSubTabIdState(next.thingsSubTabId)
+    setPeopleShowPersonStubsState(next.peopleShowPersonStubs)
+    peopleShowPersonStubsRef.current = next.peopleShowPersonStubs
+    setHubFocus(next.hubFocus)
+    if (
+      isViewingNarrativePeoplePcs(
+        next.hubMode,
+        next.hubTabId,
+        next.charactersSubTabId,
+      )
+    ) {
+      setPartyTabBlink(false)
+    }
+  }, [navSnapshot])
+
+  const navigateContentLink = useCallback(
+    (kind: GmContentLinkKind, id: string) => {
+      navigateHubTarget(hubNavTargetForContentKind(kind, id))
+    },
+    [navigateHubTarget],
+  )
 
   const goToStoryHome = useCallback(() => {
     setHubModeState('story')
-    setHubTabId('home')
+    setHubTabId('story_beats')
   }, [setHubTabId])
 
   const setHubMode = useCallback(
     (mode: GmHubMode) => {
       setHubModeState(mode)
-      setHubTabId('home')
+      setHubTabId(defaultHubTabForMode(mode))
     },
     [setHubTabId],
   )
@@ -295,10 +520,16 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
             return persist(recordPcApmSpendEvent(prev, characterId, label, actions))
           })
         },
-        applyPartySnapshot: (characterId, label) => {
+        applyPartySnapshot: (characterId, label, meta) => {
           setSession((prev) => {
             if (!prev) return prev
-            return persist(addPartyMember(prev, characterId, label))
+            let next = addPartyMember(prev, characterId, label)
+            next = upsertCampaignPcHistory(next, {
+              characterId,
+              characterJson: meta?.characterJson,
+              playerLabel: meta?.playerLabel,
+            })
+            return persist(next)
           })
         },
         applyPartyDetach: (characterId) => {
@@ -315,7 +546,11 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
             currentlyBlinking: partyTabBlinkRef.current,
             previousPresence: previous,
             nextPresence: presence,
-            viewingPartyTab: hubTabIdRef.current === 'party',
+            viewingCharactersPcs: isViewingNarrativePeoplePcs(
+              hubModeRef.current,
+              hubTabIdRef.current,
+              charactersSubTabIdRef.current,
+            ),
           })
           setPartyTabBlink(nextBlink)
         },
@@ -427,6 +662,53 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     [patchSession],
   )
 
+  const updateStoryBeats = useCallback(
+    (text: string) => {
+      patchSession((s) => setStoryBeats(s, text))
+    },
+    [patchSession],
+  )
+
+  const createContentStub = useCallback(
+    (input: { kind: GmContentLinkKind; name: string; notes?: string }) => {
+      if (!sessionRef.current) return null
+      const entity = createPlaceholderEntity(input)
+      patchSession((s) => addPlaceholder(s, entity))
+      return entity
+    },
+    [patchSession],
+  )
+
+  const updatePlaceholderNotes = useCallback(
+    (id: string, notes: string) => {
+      patchSession((s) => patchPlaceholder(s, id, { notes }))
+    },
+    [patchSession],
+  )
+
+  const updatePlaceholderName = useCallback(
+    (id: string, name: string) => {
+      patchSession((s) => patchPlaceholder(s, id, { name }))
+    },
+    [patchSession],
+  )
+
+  const linkPersonToNpc = useCallback(
+    (personId: string, npcInstanceId: string | undefined) => {
+      patchSession((s) =>
+        patchPlaceholder(s, personId, { linkedNpcId: npcInstanceId }),
+      )
+    },
+    [patchSession],
+  )
+
+  const dropPlaceholder = useCallback(
+    (id: string) => {
+      patchSession((s) => removePlaceholder(s, id))
+    },
+    [patchSession],
+  )
+
   const updateSessionName = useCallback(
     (name: string) => {
       patchSession((s) => renameSession(s, name))
@@ -478,6 +760,83 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     await joinControllerRef.current?.refreshCapabilityProbe()
   }, [])
 
+  const sendDmToCharacter = useCallback(
+    (characterId: string, text: string) => {
+      const result = joinControllerRef.current?.sendDmToCharacter(
+        characterId,
+        text,
+      )
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const markDmReadForCharacter = useCallback((characterId: string) => {
+    joinControllerRef.current?.markDmRead(characterId)
+  }, [])
+
+  const createGroupChat = useCallback(
+    (input: { memberCharacterIds: string[]; title?: string | null }) => {
+      const result = joinControllerRef.current?.createGroupChat(input)
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const addGroupMembers = useCallback(
+    (groupId: string, characterIds: string[]) => {
+      const result = joinControllerRef.current?.addGroupMembers(
+        groupId,
+        characterIds,
+      )
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const removeGroupMember = useCallback(
+    (groupId: string, characterId: string) => {
+      const result = joinControllerRef.current?.removeGroupMember(
+        groupId,
+        characterId,
+      )
+      if (!result) {
+        return { ok: false as const, reason: 'Table is not open for messages.' }
+      }
+      if (!result.ok) return { ok: false as const, reason: result.reason }
+      return { ok: true as const }
+    },
+    [],
+  )
+
+  const sendGroupChatMessage = useCallback((groupId: string, text: string) => {
+    const result = joinControllerRef.current?.sendGroupChatMessage(
+      groupId,
+      text,
+    )
+    if (!result) {
+      return { ok: false as const, reason: 'Table is not open for messages.' }
+    }
+    if (!result.ok) return { ok: false as const, reason: result.reason }
+    return { ok: true as const }
+  }, [])
+
+  const markGroupChatRead = useCallback((groupId: string) => {
+    joinControllerRef.current?.markGroupChatRead(groupId)
+  }, [])
+
   const joinCapability = useMemo(
     () =>
       resolveJoinListenCapability({
@@ -503,6 +862,13 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       patchSession((s) => removePartyMember(s, characterId, label))
     },
     [patchSession, partyLoad.slices],
+  )
+
+  const deleteCampaignPcHistoryEntry = useCallback(
+    (characterId: string) => {
+      patchSession((s) => removeCampaignPcHistoryEntry(s, characterId))
+    },
+    [patchSession],
   )
 
   const setViewForm = useCallback(
@@ -592,6 +958,39 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
     })
   }, [patchSession])
 
+  const addPcToMelee = useCallback(
+    (characterId: string) => {
+      patchSession((s) => addCharacterToMelee(s, characterId))
+    },
+    [patchSession],
+  )
+
+  const addNpcToMelee = useCallback(
+    (input: { characterId?: string; npcInstanceId?: string }) => {
+      patchSession((s) => {
+        if (input.characterId) return addCharacterToMelee(s, input.characterId)
+        if (input.npcInstanceId) {
+          return addNpcInstanceToMelee(s, input.npcInstanceId)
+        }
+        return s
+      })
+    },
+    [patchSession],
+  )
+
+  const removeFromMelee = useCallback(
+    (input: { characterId?: string; npcInstanceId?: string }) => {
+      patchSession((s) => {
+        if (input.characterId) return removeCharacterFromMelee(s, input.characterId)
+        if (input.npcInstanceId) {
+          return removeNpcInstanceFromMelee(s, input.npcInstanceId)
+        }
+        return s
+      })
+    },
+    [patchSession],
+  )
+
   const emitNpcHf = useCallback(
     (instanceId: string) => {
       patchSession((s) => {
@@ -666,6 +1065,16 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       setHubMode,
       hubTabId,
       setHubTabId,
+      charactersSubTabId,
+      setCharactersSubTabId,
+      thingsSubTabId,
+      setThingsSubTabId,
+      peopleShowPersonStubs,
+      setPeopleShowPersonStubs,
+      hubFocus,
+      clearHubFocus,
+      navigateHubTarget,
+      navigateContentLink,
       partyTabBlink,
       sessionList,
       session,
@@ -683,11 +1092,18 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       removeSession,
       applySession,
       updateScratchpad,
+      updateStoryBeats,
+      createContentStub,
+      updatePlaceholderNotes,
+      updatePlaceholderName,
+      linkPersonToNpc,
+      dropPlaceholder,
       updateSessionName,
       openPlaySession,
       closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
+      deleteCampaignPcHistoryEntry,
       setViewForm,
       setPcInitiative,
       spawnArchetype,
@@ -699,6 +1115,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       lockInit,
       unlockInit,
       newMeleeRound,
+      addPcToMelee,
+      addNpcToMelee,
+      removeFromMelee,
       emitNpcHf,
       recordPcHfSave,
       recordStrike,
@@ -716,12 +1135,31 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       stopJoinListen,
       kickJoinedDevice,
       refreshJoinProbe,
+      joinDm: joinUi.dm,
+      sendDmToCharacter,
+      markDmReadForCharacter,
+      joinGroupChat: joinUi.groupChat,
+      createGroupChat,
+      addGroupMembers,
+      removeGroupMember,
+      sendGroupChatMessage,
+      markGroupChatRead,
     }),
     [
       hubMode,
       setHubMode,
       hubTabId,
       setHubTabId,
+      charactersSubTabId,
+      setCharactersSubTabId,
+      thingsSubTabId,
+      setThingsSubTabId,
+      peopleShowPersonStubs,
+      setPeopleShowPersonStubs,
+      hubFocus,
+      clearHubFocus,
+      navigateHubTarget,
+      navigateContentLink,
       partyTabBlink,
       sessionList,
       session,
@@ -738,11 +1176,18 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       removeSession,
       applySession,
       updateScratchpad,
+      updateStoryBeats,
+      createContentStub,
+      updatePlaceholderNotes,
+      updatePlaceholderName,
+      linkPersonToNpc,
+      dropPlaceholder,
       updateSessionName,
       openPlaySession,
       closePlaySession,
       addCharacterToParty,
       dropCharacterFromParty,
+      deleteCampaignPcHistoryEntry,
       setViewForm,
       setPcInitiative,
       spawnArchetype,
@@ -754,6 +1199,9 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       lockInit,
       unlockInit,
       newMeleeRound,
+      addPcToMelee,
+      addNpcToMelee,
+      removeFromMelee,
       emitNpcHf,
       recordPcHfSave,
       recordStrike,
@@ -764,6 +1212,15 @@ export function GmSessionProvider({ children }: { children: ReactNode }) {
       stopJoinListen,
       kickJoinedDevice,
       refreshJoinProbe,
+      joinUi.dm,
+      sendDmToCharacter,
+      markDmReadForCharacter,
+      joinUi.groupChat,
+      createGroupChat,
+      addGroupMembers,
+      removeGroupMember,
+      sendGroupChatMessage,
+      markGroupChatRead,
     ],
   )
 

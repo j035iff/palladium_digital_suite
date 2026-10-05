@@ -13,8 +13,8 @@ import type {
   GearForgeWeaponPiece,
 } from '../../lib/gear/gearForgeHost'
 import { useCharacter } from '../../context/CharacterContext'
+import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { GearForgeShell } from './GearForgeShell'
-import { UnitsPreferenceToggle } from '../units/UnitsPreferenceToggle'
 
 /**
  * Standalone portal host for Gear Forge (`viewport: 'gear_forge'`).
@@ -74,7 +74,6 @@ export function GearForgeViewport() {
           Gear Forge
         </p>
         <div className="flex shrink-0 items-center gap-2">
-          <UnitsPreferenceToggle tone="launcher" />
           <label className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-400">
             Genre
             <select
@@ -91,13 +90,7 @@ export function GearForgeViewport() {
               ))}
             </select>
           </label>
-          <button
-            type="button"
-            onClick={returnToLauncher}
-            className="rounded-full border border-slate-300 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-100 hover:border-white hover:text-white"
-          >
-            Return to launcher
-          </button>
+          <PortalChromeActions onReturnToLauncher={returnToLauncher} />
         </div>
       </header>
 

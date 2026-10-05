@@ -1,5 +1,6 @@
 import type { GenreId } from '../../data/genres'
-import type { ActiveForm } from '../../types'
+import type { ActiveForm, CharacterRootState } from '../../types'
+import type { GmContentLinkKind } from './contentLinks'
 
 /** Session-wide cross-genre policy (view-model only — never writes character saves). */
 export type GmConversionPolicy = 'disable_non_native' | 'apply_conversion'
@@ -37,6 +38,21 @@ export type GmNpcInstance = {
   initiativeRoll: number | null
 }
 
+/**
+ * Placeholder stub for Notes content links (v1) — person / place / thing /
+ * note / npc / pc. Real combat NPCs stay on `npcs`; joined PCs on party ids.
+ */
+export type GmPlaceholderEntity = {
+  id: string
+  kind: GmContentLinkKind
+  name: string
+  /** Freeform stub notes (person rows are note-ish). */
+  notes: string
+  /** Optional person → real Characters NPC deep link. */
+  linkedNpcId?: string
+  createdAtMs: number
+}
+
 export type GmHfEmit = {
   npcInstanceId: string
   saveTarget: number
@@ -49,6 +65,16 @@ export type GmCombatState = {
   round: number
   initiativeLocked: boolean
   activeHfEmit: GmHfEmit | null
+  /**
+   * Character save ids currently in the Melee roster (joined PCs and/or
+   * local-machine NPCs from People). Empty until GM adds via Melee dropdowns.
+   */
+  meleeCharacterIds: string[]
+  /**
+   * Fodder NPC instance ids currently in the Melee roster. Empty until GM adds
+   * via Melee dropdowns. People still owns spawn/management.
+   */
+  meleeNpcInstanceIds: string[]
 }
 
 export type GmSessionEventKind =
@@ -84,6 +110,23 @@ export type GmPlaySession = {
   status: GmPlaySessionStatus
 }
 
+/**
+ * Unique spawned PC that has sat at this campaign’s table (Review & Spawn).
+ * Snapshot JSON refreshes on rejoin. Live notes use seated DM, not history cards.
+ */
+export type GmCampaignPcHistoryEntry = {
+  characterId: string
+  characterName: string
+  /** Player display name when known (from seat / join). */
+  playerLabel: string | null
+  lastSeenAtMs: number
+  /**
+   * Latest character JSON for summary rebuild via party observer
+   * (Facade/Morphus `viewForm` mode — Unified Path).
+   */
+  characterJson: CharacterRootState
+}
+
 export type GmSessionRecord = {
   id: string
   name: string
@@ -93,6 +136,13 @@ export type GmSessionRecord = {
   createdAtMs: number
   updatedAtMs: number
   scratchpad: string
+  /** Narrative → Story Beats pad (same content-link pipeline as Notes). */
+  storyBeats: string
+  /**
+   * Placeholder stubs for Notes content links (person / place / thing / note /
+   * npc / pc). Real combat NPCs stay on `npcs`; joined PCs stay on party ids.
+   */
+  placeholders: GmPlaceholderEntity[]
   partyCharacterIds: string[]
   partyOverlays: Record<string, GmPartyOverlay>
   npcs: GmNpcInstance[]
@@ -101,6 +151,11 @@ export type GmSessionRecord = {
   /** Play sittings players can connect to. Campaign `name` stays separate. */
   playSessions: GmPlaySession[]
   activePlaySessionId: string | null
+  /**
+   * Unique complete PCs ever at this campaign’s table (spawned + joined).
+   * Survives Close Table; drafts never appear until Review & Spawn.
+   */
+  campaignPcHistory: GmCampaignPcHistoryEntry[]
 }
 
 export type GmSessionIndexEntry = {
@@ -121,4 +176,6 @@ export const INITIAL_COMBAT_STATE: GmCombatState = {
   round: 1,
   initiativeLocked: false,
   activeHfEmit: null,
+  meleeCharacterIds: [],
+  meleeNpcInstanceIds: [],
 }

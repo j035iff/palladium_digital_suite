@@ -14,7 +14,7 @@ Engine-wide, **per-user / per-device** measurement preference. Players at the sa
 
 Not written into character saves (see [`master_flow.md`](./master_flow.md) — saves stay free of host/display transforms).
 
-**UI:** `UnitsPreferenceToggle` on the launcher and live-sheet chrome. Context: `UnitsPreferenceProvider` / `useUnitsPreference` (`src/lib/units/`).
+**UI:** Units live under the shared **Settings** gear (`PortalChromeActions` → `AppSettingsDialog` with `UnitsPreferenceToggle`) on the launcher, live sheet, GM Hub, Campaign Creation Forge, Gear Forge, and Join table — not as a header toggle on those surfaces. Context: `UnitsPreferenceProvider` / `useUnitsPreference` (`src/lib/units/`).
 
 ---
 
@@ -24,7 +24,7 @@ Not written into character saves (see [`master_flow.md`](./master_flow.md) — s
 2. **Single side / custom** — convert with the gross factors below and the rounding rules in [`ingest/units.md`](./ingest/units.md).
 3. **Structured fields only** — freeform `description` / `summary` prose is not rewritten by the toggle.
 4. **Yards** — use the yard ladder only when the book (or `standardUnit: "yards"`) explicitly used yards; otherwise feet/inches ↔ cm/m via the inch ladder.
-5. **Character height** — metric shows meters to one decimal (e.g. 5′10″ → 1.8 m); reverse uses nearest whole inch.
+5. **Character height** — metric is **whole centimeters only** (e.g. 5′10″ → 178 cm). Do **not** show meters, or a meters+centimeters compound. Reverse uses nearest whole inch.
 
 ---
 
@@ -58,3 +58,5 @@ Not written into character saves (see [`master_flow.md`](./master_flow.md) — s
 | `src/data/schemas/palladium-units.schema.json` | Shared `$defs` for catalog dual measures |
 
 **Canonical storage today:** inventory / identity still persist US Customary numbers (`weightLbs`, `lengthFeet`, `heightFeet`/`heightInches`) and convert at the UI boundary. Catalog JSON should store dual structured measures when the book prints both.
+
+**Live Identity Expand:** Height and Weight edit fields follow this preference (`src/lib/units/identityMeasures.ts` + `useUnitsPreference`). Standard shows ft/in + lbs; Metric shows **cm** + kg. Persist remains `heightFeet` / `heightInches` / `weightLbs` on the character save — never write a second metric-only persist path. Shared height helpers: `characterHeightToCentimeters` / `centimetersToCharacterHeight` / `formatCharacterHeight`.

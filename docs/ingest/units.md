@@ -35,8 +35,8 @@ Cross-cutting — apply during Pass A/B for **any** catalog that carries measura
 | mph | km/h | × 1.6 | nearest tenth |
 | m³ | ft³ | × 35 | nearest tenth |
 | m² | ft² | × 10.8 | nearest tenth |
-| character height | m | via inches × 2.54 | nearest tenth m (e.g. 5′10″ → 1.8 m) |
-| m → height | ft+in | reverse | nearest whole inch |
+| character height | cm | via inches × 2.54 | nearest whole cm (e.g. 5′10″ → 178 cm) |
+| cm → height | ft+in | reverse | nearest whole inch |
 
 ---
 

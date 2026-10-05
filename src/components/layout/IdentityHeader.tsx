@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { ConfiguratorAlignmentSelect } from '../creation/ConfiguratorAlignmentSelect'
 import { CREATION_PLACEHOLDER_OCC } from '../../lib/characterRoot'
@@ -16,6 +16,18 @@ import {
   normalizeIdentityProfile,
   sanitizeIdentityHeightInchesInput,
 } from '../../lib/characterIdentity'
+import { normalizeAliases } from '../../lib/characterAliases'
+import {
+  identityHeightFromMetricDisplay,
+  identityHeightMetricDisplayError,
+  identityHeightMetricUnitLabel,
+  identityHeightToDisplay,
+  identityWeightDisplayError,
+  identityWeightFromDisplay,
+  identityWeightToDisplay,
+  identityWeightUnitLabel,
+  useUnitsPreference,
+} from '../../lib/units'
 import {
   creationForgeDetailsButtonClass,
   creationForgeSummaryNameSizeClass,
@@ -111,6 +123,74 @@ function IdentityProfileDetailFields({
   heightInchesError: string | null
   weightLbsError: string | null
 }) {
+  const { measurementSystem } = useUnitsPreference()
+  const metric = measurementSystem === 'metric'
+  const heightDisplay = identityHeightToDisplay(
+    profile.heightFeet,
+    profile.heightInches,
+    measurementSystem,
+  )
+  const weightDisplayCanonical = identityWeightToDisplay(
+    profile.weightLbs,
+    measurementSystem,
+  )
+  const [heightCmDraft, setHeightCmDraft] = useState(
+    heightDisplay.system === 'metric' ? heightDisplay.centimeters : '',
+  )
+  const [weightDraft, setWeightDraft] = useState(weightDisplayCanonical)
+  /** Avoid overwriting in-progress metric drafts when persist converts back. */
+  const measureDraftDirtyRef = useRef(false)
+
+  const syncMeasureDraftsFromProfile = () => {
+    const next = identityHeightToDisplay(
+      profile.heightFeet,
+      profile.heightInches,
+      measurementSystem,
+    )
+    setHeightCmDraft(next.system === 'metric' ? next.centimeters : '')
+    setWeightDraft(identityWeightToDisplay(profile.weightLbs, measurementSystem))
+  }
+
+  useEffect(() => {
+    measureDraftDirtyRef.current = false
+    syncMeasureDraftsFromProfile()
+    // Preference toggle always re-derives display from persisted ft/in + lbs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: system flip only
+  }, [measurementSystem])
+
+  useEffect(() => {
+    if (measureDraftDirtyRef.current) return
+    syncMeasureDraftsFromProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- sync when storage profile changes
+  }, [profile.heightFeet, profile.heightInches, profile.weightLbs])
+
+  const metricHeightError = metric
+    ? identityHeightMetricDisplayError(heightCmDraft)
+    : null
+  const weightError = metric
+    ? identityWeightDisplayError(weightDraft, 'metric')
+    : weightLbsError
+  const weightSubLabel = identityWeightUnitLabel(measurementSystem)
+  const heightMetricUnit = identityHeightMetricUnitLabel()
+
+  const onWeightDisplayChange = (raw: string) => {
+    measureDraftDirtyRef.current = true
+    setWeightDraft(raw)
+    if (identityWeightDisplayError(raw, measurementSystem)) return
+    const persisted = identityWeightFromDisplay(raw, measurementSystem)
+    if (persisted == null) return
+    patch({ weightLbs: persisted })
+  }
+
+  const onHeightCmChange = (raw: string) => {
+    measureDraftDirtyRef.current = true
+    setHeightCmDraft(raw)
+    if (identityHeightMetricDisplayError(raw)) return
+    const next = identityHeightFromMetricDisplay(raw)
+    if (next == null) return
+    patch(next)
+  }
+
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
       <div className="flex flex-col gap-2">
@@ -134,20 +214,20 @@ function IdentityProfileDetailFields({
           <span className={`pb-0.5 text-right ${identityLabelClass(morphusActive)}`}>
             Height
           </span>
-          <div className="flex items-end gap-3">
-            <div className="flex-1">
+          {metric ? (
+            <div>
               <input
                 type="text"
                 inputMode="numeric"
-                value={profile.heightFeet}
-                onChange={(e) => patch({ heightFeet: e.target.value })}
-                aria-label="Height feet"
-                aria-invalid={heightFeetError != null}
+                value={heightCmDraft}
+                onChange={(e) => onHeightCmChange(e.target.value)}
+                aria-label="Height centimeters"
+                aria-invalid={metricHeightError != null}
                 aria-describedby={
-                  heightFeetError ? 'identity-height-feet-error' : undefined
+                  metricHeightError ? 'identity-height-cm-error' : undefined
                 }
                 className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
-                  heightFeetError
+                  metricHeightError
                     ? identityInvalidFieldClass(morphusActive)
                     : identityFieldClass(morphusActive)
                 }`}
@@ -157,61 +237,99 @@ function IdentityProfileDetailFields({
                   morphusActive ? 'text-violet-400/70' : 'text-slate-400'
                 }`}
               >
-                Ft.
+                {heightMetricUnit}
               </span>
-              {heightFeetError ? (
+              {metricHeightError ? (
                 <IdentityFieldError
-                  id="identity-height-feet-error"
-                  message={heightFeetError}
+                  id="identity-height-cm-error"
+                  message={metricHeightError}
                   morphusActive={morphusActive}
                 />
               ) : null}
             </div>
-            <div className="flex-1">
-              <input
-                type="text"
-                inputMode="numeric"
-                value={profile.heightInches}
-                onChange={(e) =>
-                  patch({ heightInches: sanitizeIdentityHeightInchesInput(e.target.value) })
-                }
-                aria-label="Height inches"
-                aria-invalid={heightInchesError != null}
-                aria-describedby={
-                  heightInchesError ? 'identity-height-inches-error' : undefined
-                }
-                className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
-                  heightInchesError
-                    ? identityInvalidFieldClass(morphusActive)
-                    : identityFieldClass(morphusActive)
-                }`}
-              />
-              <span
-                className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
-                  morphusActive ? 'text-violet-400/70' : 'text-slate-400'
-                }`}
-              >
-                In.
-              </span>
-              {heightInchesError ? (
-                <IdentityFieldError
-                  id="identity-height-inches-error"
-                  message={heightInchesError}
-                  morphusActive={morphusActive}
+          ) : (
+            <div className="flex items-end gap-3">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={profile.heightFeet}
+                  onChange={(e) => patch({ heightFeet: e.target.value })}
+                  aria-label="Height feet"
+                  aria-invalid={heightFeetError != null}
+                  aria-describedby={
+                    heightFeetError ? 'identity-height-feet-error' : undefined
+                  }
+                  className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
+                    heightFeetError
+                      ? identityInvalidFieldClass(morphusActive)
+                      : identityFieldClass(morphusActive)
+                  }`}
                 />
-              ) : null}
+                <span
+                  className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
+                    morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+                  }`}
+                >
+                  Ft.
+                </span>
+                {heightFeetError ? (
+                  <IdentityFieldError
+                    id="identity-height-feet-error"
+                    message={heightFeetError}
+                    morphusActive={morphusActive}
+                  />
+                ) : null}
+              </div>
+              <div className="flex-1">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={profile.heightInches}
+                  onChange={(e) =>
+                    patch({
+                      heightInches: sanitizeIdentityHeightInchesInput(e.target.value),
+                    })
+                  }
+                  aria-label="Height inches"
+                  aria-invalid={heightInchesError != null}
+                  aria-describedby={
+                    heightInchesError ? 'identity-height-inches-error' : undefined
+                  }
+                  className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
+                    heightInchesError
+                      ? identityInvalidFieldClass(morphusActive)
+                      : identityFieldClass(morphusActive)
+                  }`}
+                />
+                <span
+                  className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
+                    morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+                  }`}
+                >
+                  In.
+                </span>
+                {heightInchesError ? (
+                  <IdentityFieldError
+                    id="identity-height-inches-error"
+                    message={heightInchesError}
+                    morphusActive={morphusActive}
+                  />
+                ) : null}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <UnderlineField
           label="Weight"
-          value={profile.weightLbs}
-          onChange={(weightLbs) => patch({ weightLbs })}
+          value={weightDraft}
+          onChange={onWeightDisplayChange}
           morphusActive={morphusActive}
-          inputMode="numeric"
-          subLabel="Lbs."
-          error={weightLbsError}
-          errorId="identity-weight-lbs-error"
+          inputMode={metric ? 'decimal' : 'numeric'}
+          subLabel={weightSubLabel}
+          error={weightError}
+          errorId="identity-weight-display-error"
+          ariaLabel={metric ? 'Weight kilograms' : 'Weight pounds'}
         />
       </div>
 
@@ -241,6 +359,100 @@ function clearPlaceholderNameOnFocus(
     setCharacterName('')
   }
 }
+
+function IdentityAliasesEditor({
+  aliases,
+  aliasDraft,
+  onAliasDraftChange,
+  onAdd,
+  onRename,
+  onRemove,
+  morphusActive,
+}: {
+  aliases: { id: string; name: string }[]
+  aliasDraft: string
+  onAliasDraftChange: (value: string) => void
+  onAdd: () => void
+  onRename: (aliasId: string, name: string) => void
+  onRemove: (aliasId: string) => void
+  morphusActive: boolean
+}) {
+  return (
+    <div className="mt-5 max-w-xl">
+      <p className={identityLabelClass(morphusActive)}>Aliases</p>
+      <p
+        className={`mt-0.5 text-[11px] ${
+          morphusActive ? 'text-violet-200/70' : 'text-slate-500'
+        }`}
+      >
+        Optional other names. On Join Session you can show one of these to other
+        players; the GM always sees your real character name.
+      </p>
+      <ul className="mt-2 space-y-1.5">
+        {aliases.length === 0 ? (
+          <li
+            className={`text-[11px] ${
+              morphusActive ? 'text-violet-300/60' : 'text-slate-400'
+            }`}
+          >
+            No aliases yet.
+          </li>
+        ) : (
+          aliases.map((alias) => (
+            <li key={alias.id} className="flex items-center gap-2">
+              <input
+                type="text"
+                value={alias.name}
+                onChange={(e) => onRename(alias.id, e.target.value)}
+                aria-label="Alias name"
+                className={`min-w-0 flex-1 border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${identityFieldClass(morphusActive)}`}
+              />
+              <button
+                type="button"
+                onClick={() => onRemove(alias.id)}
+                className={
+                  morphusActive
+                    ? 'shrink-0 text-[10px] font-bold uppercase tracking-wide text-violet-300 hover:text-white'
+                    : 'shrink-0 text-[10px] font-bold uppercase tracking-wide text-slate-500 hover:text-slate-800'
+                }
+              >
+                Remove
+              </button>
+            </li>
+          ))
+        )}
+      </ul>
+      <div className="mt-2 flex items-center gap-2">
+        <input
+          type="text"
+          value={aliasDraft}
+          onChange={(e) => onAliasDraftChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              onAdd()
+            }
+          }}
+          placeholder="Add an alias"
+          aria-label="New alias"
+          className={`min-w-0 flex-1 border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${identityFieldClass(morphusActive)}`}
+        />
+        <button
+          type="button"
+          onClick={onAdd}
+          disabled={!aliasDraft.trim()}
+          className={
+            morphusActive
+              ? 'shrink-0 rounded-md border border-violet-400/50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-violet-100 disabled:opacity-40'
+              : 'shrink-0 rounded-md border border-slate-300 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-700 disabled:opacity-40'
+          }
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  )
+}
 function formatIdentityOccLabel(
   effectiveOccName: string | undefined,
   occId: string,
@@ -266,6 +478,7 @@ function UnderlineField({
   subLabel,
   error,
   errorId,
+  ariaLabel,
 }: {
   label: string
   value: string
@@ -276,6 +489,7 @@ function UnderlineField({
   subLabel?: string
   error?: string | null
   errorId?: string
+  ariaLabel?: string
 }) {
   const invalid = error != null
   return (
@@ -289,6 +503,7 @@ function UnderlineField({
           inputMode={inputMode}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          aria-label={ariaLabel ?? label}
           aria-invalid={invalid}
           aria-describedby={invalid && errorId ? errorId : undefined}
           className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
@@ -329,7 +544,11 @@ export function IdentityHeader({
     effectiveOcc,
     setCharacterName,
     patchIdentityProfile,
+    addAlias,
+    removeAlias,
+    renameAlias,
   } = useCharacter()
+  const [aliasDraft, setAliasDraft] = useState('')
 
   const isCreation = variant === 'creation'
   const [creationDetailsCollapsed, setCreationDetailsCollapsed] = useState(true)
@@ -567,6 +786,21 @@ export function IdentityHeader({
                 />
               </div>
             </div>
+
+            <IdentityAliasesEditor
+              aliases={normalizeAliases(character.aliases)}
+              aliasDraft={aliasDraft}
+              onAliasDraftChange={setAliasDraft}
+              onAdd={() => {
+                const next = aliasDraft.trim()
+                if (!next) return
+                addAlias(next)
+                setAliasDraft('')
+              }}
+              onRename={renameAlias}
+              onRemove={removeAlias}
+              morphusActive={morphusActive}
+            />
 
             <p
               className="mt-3 font-mono text-[10px] uppercase tracking-wide opacity-70"

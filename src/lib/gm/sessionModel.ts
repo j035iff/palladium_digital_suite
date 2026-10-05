@@ -5,6 +5,8 @@ import {
   createPlaySessionRecord,
   hydratePlaySessions,
 } from './playSession'
+import { emptyCampaignPcHistory } from './campaignPcHistory'
+import { emptyPlaceholders } from './narrativePlaceholders'
 import {
   DEFAULT_PARTY_OVERLAY,
   INITIAL_COMBAT_STATE,
@@ -59,6 +61,8 @@ export function createGmSession(input: {
     createdAtMs: now,
     updatedAtMs: now,
     scratchpad: '',
+    storyBeats: '',
+    placeholders: emptyPlaceholders(),
     partyCharacterIds: [],
     partyOverlays: {},
     npcs: [],
@@ -66,6 +70,7 @@ export function createGmSession(input: {
     eventLog: [],
     playSessions: [],
     activePlaySessionId: null,
+    campaignPcHistory: emptyCampaignPcHistory(),
   }
   return pushEvent(
     session,
@@ -136,6 +141,13 @@ export function setScratchpad(
   return touch({ ...session, scratchpad })
 }
 
+export function setStoryBeats(
+  session: GmSessionRecord,
+  storyBeats: string,
+): GmSessionRecord {
+  return touch({ ...session, storyBeats })
+}
+
 export function setConversionPolicy(
   session: GmSessionRecord,
   conversionPolicy: GmConversionPolicy,
@@ -180,12 +192,20 @@ export function removePartyMember(
   label: string,
 ): GmSessionRecord {
   const { [characterId]: _removed, ...rest } = session.partyOverlays
+  const meleeCharacterIds = (session.combat.meleeCharacterIds ?? []).filter(
+    (id) => id !== characterId,
+  )
   return touch(
     pushEvent(
       {
         ...session,
         partyCharacterIds: session.partyCharacterIds.filter((id) => id !== characterId),
         partyOverlays: rest,
+        combat: {
+          ...session.combat,
+          meleeCharacterIds,
+          meleeNpcInstanceIds: session.combat.meleeNpcInstanceIds ?? [],
+        },
       },
       'party_removed',
       `Removed ${label}`,
@@ -241,12 +261,20 @@ export function removeNpcInstance(
     session.combat.activeHfEmit?.npcInstanceId === instanceId
       ? null
       : session.combat.activeHfEmit
+  const meleeNpcInstanceIds = (
+    session.combat.meleeNpcInstanceIds ?? []
+  ).filter((id) => id !== instanceId)
   return touch(
     pushEvent(
       {
         ...session,
         npcs: session.npcs.filter((n) => n.instanceId !== instanceId),
-        combat: { ...session.combat, activeHfEmit: activeHf },
+        combat: {
+          ...session.combat,
+          activeHfEmit: activeHf,
+          meleeCharacterIds: session.combat.meleeCharacterIds ?? [],
+          meleeNpcInstanceIds,
+        },
       },
       'npc_removed',
       `Removed ${npc.displayName}`,
@@ -320,9 +348,12 @@ export function startNewMeleeRound(session: GmSessionRecord): GmSessionRecord {
         ...session,
         npcs,
         combat: {
+          ...session.combat,
           round: session.combat.round + 1,
           initiativeLocked: false,
           activeHfEmit: null,
+          meleeCharacterIds: session.combat.meleeCharacterIds ?? [],
+          meleeNpcInstanceIds: session.combat.meleeNpcInstanceIds ?? [],
         },
       },
       'new_melee_round',

@@ -1,10 +1,15 @@
-import { getLibraryOccById } from '../../data/library/registry'
+import { getLibraryOccById, getRaceById, raceCatalogGenreId } from '../../data/library/registry'
 import { formatGenreSlug } from '../../data/genres'
 import type { GenreId } from '../../data/genres'
 import { getIqBonuses, getMaBonuses, getPbBonuses } from '../attributeBonuses'
 import { aggregateAllPassiveModifiers } from '../featureEngine'
 import { resolveHandToHandCombatProfile } from '../handToHandPipeline'
+import {
+  buildLiveSheetAbilitySections,
+  type LiveSheetAbilityCategoryId,
+} from '../liveSheetAbilities'
 import { resolveCharacterMaxApm } from '../meleeCombat'
+import { resolveActiveMorphusTraits } from '../morphusPassiveBridge'
 import { resolveEffectivePalladiumOcc } from '../occComposition'
 import { resolveCreationPsychicTier } from '../creationPsychicSkills'
 import { saveVsPsionicsForTier } from '../psychicGate'
@@ -19,6 +24,24 @@ import { ensureCharacterRoot } from '../characterRoot'
 import { transformCharacterToHostEnvironment } from '../../utils/genreTransformer'
 import type { ActiveForm, CharacterRootState, DerivedSheetSkill } from '../../types'
 import type { GmConversionPolicy } from './sessionTypes'
+
+/** Compact ability names for GM observer / campaign history cards. */
+export type GmPartyAbilitySummary = {
+  id: LiveSheetAbilityCategoryId
+  label: string
+  names: string[]
+}
+
+export type GmPartyObserverAttributes = {
+  iq: number
+  me: number
+  ma: number
+  pp: number
+  pe: number
+  pb: number
+  spd: number
+  ps: number
+}
 
 export type GmPartyObserverSlice = {
   characterId: string
@@ -38,6 +61,13 @@ export type GmPartyObserverSlice = {
   hpMax: number
   sdcCurrent: number
   sdcMax: number
+  ppeCurrent: number
+  ppeMax: number
+  ispCurrent: number
+  ispMax: number
+  attributes: GmPartyObserverAttributes
+  hthSkillName: string | null
+  abilities: GmPartyAbilitySummary[]
   perceptionBonus: number
   trustIntimidate: number
   charmImpress: number
@@ -77,6 +107,21 @@ function horrorSaveBonusFromPassive(
   return base + (passive.save_nightbane_horror_factor ?? 0)
 }
 
+function abilitySummariesFromSections(
+  sections: ReturnType<typeof buildLiveSheetAbilitySections>,
+): GmPartyAbilitySummary[] {
+  const out: GmPartyAbilitySummary[] = []
+  for (const section of sections) {
+    const names = [
+      ...(section.naturalRows ?? []).map((row) => row.name),
+      ...(section.catalogRows ?? []).map((row) => row.name),
+    ]
+    if (names.length === 0) continue
+    out.push({ id: section.id, label: section.label, names })
+  }
+  return out
+}
+
 export function loadPartyCharacterRoot(
   raw: CharacterRootState,
 ): CharacterRootState {
@@ -101,6 +146,10 @@ export function buildPartyObserverSlice(
   const occ = lib
     ? resolveEffectivePalladiumOcc(lib, derived.occSpecializationId)
     : undefined
+  const race = getRaceById(
+    derived.raceId ?? '',
+    raceCatalogGenreId(derived.hostGenreId, derived.creationGenreId),
+  )
   const hth = resolveHandToHandCombatProfile(derived, form, occ)
   const passive = aggregateAllPassiveModifiers(derived, form)
   const scalars = computeDisplayScalars(derived, form, passive)
@@ -132,6 +181,16 @@ export function buildPartyObserverSlice(
     derived.creationGenreId.toLowerCase() !== hostGenreId.toLowerCase()
   const creationLabel = formatGenreSlug(derived.creationGenreId)
   const hostLabel = formatGenreSlug(hostGenreId)
+  const morphusTraits = resolveActiveMorphusTraits(derived)
+  const abilitySections = buildLiveSheetAbilitySections({
+    race,
+    occ,
+    characterLevel: derived.level ?? 1,
+    selectedAbilityIds: derived.selectedAbilities ?? [],
+    activeForm: form,
+    genreId: derived.creationGenreId,
+    morphusTraits,
+  })
 
   return {
     characterId: derived.id,
@@ -156,6 +215,22 @@ export function buildPartyObserverSlice(
     hpMax: branch.hitPoints.maximum,
     sdcCurrent: branch.structuralDamageCapacity.current,
     sdcMax: branch.structuralDamageCapacity.maximum,
+    ppeCurrent: derived.ppe?.current ?? 0,
+    ppeMax: derived.ppe?.maximum ?? 0,
+    ispCurrent: branch.isp?.current ?? 0,
+    ispMax: branch.isp?.maximum ?? 0,
+    attributes: {
+      iq: scalars.iq,
+      me: scalars.me,
+      ma: scalars.ma,
+      pp: scalars.pp,
+      pe: scalars.pe,
+      pb: scalars.pb,
+      spd: scalars.spd,
+      ps: scalars.psScore,
+    },
+    hthSkillName: hth.skillName?.trim() || null,
+    abilities: abilitySummariesFromSections(abilitySections),
     perceptionBonus: getIqBonuses(scalars.iq).perceptionBonus,
     trustIntimidate: getMaBonuses(scalars.ma).trustIntimidate,
     charmImpress: getPbBonuses(scalars.pb).charmImpress,

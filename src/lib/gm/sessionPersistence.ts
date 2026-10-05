@@ -1,4 +1,7 @@
 import { isGenreId } from '../../data/genres'
+import { hydrateCampaignPcHistory } from './campaignPcHistory'
+import { hydrateMeleeEngagement } from './meleeEngagement'
+import { hydratePlaceholders } from './narrativePlaceholders'
 import { hydratePlaySessions } from './playSession'
 import type { GmSessionIndexEntry, GmSessionRecord } from './sessionTypes'
 
@@ -49,6 +52,12 @@ function isSessionRecord(value: unknown): value is GmSessionRecord {
   )
 }
 
+/** Older saves may omit storyBeats — default empty string. */
+export function hydrateStoryBeats(session: GmSessionRecord): GmSessionRecord {
+  if (typeof session.storyBeats === 'string') return session
+  return { ...session, storyBeats: '' }
+}
+
 export function listGmSessions(): GmSessionIndexEntry[] {
   return [...readIndex()].sort((a, b) => b.updatedAtMs - a.updatedAtMs)
 }
@@ -59,7 +68,13 @@ export function loadGmSession(id: string): GmSessionRecord | null {
     if (!raw) return null
     const parsed = JSON.parse(raw) as unknown
     if (!isSessionRecord(parsed)) return null
-    return hydratePlaySessions(parsed)
+    return hydrateCampaignPcHistory(
+      hydrateMeleeEngagement(
+        hydratePlaceholders(
+          hydratePlaySessions(hydrateStoryBeats(parsed as GmSessionRecord)),
+        ),
+      ),
+    )
   } catch {
     return null
   }
