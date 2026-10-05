@@ -258,7 +258,7 @@ function StoryNotes({
         }`}
       />
       <p className={`text-[11px] ${morphus ? 'text-violet-300/80' : 'text-slate-500'}`}>
-        Notes save when you leave the field.
+        Notes apply when you leave the field — press Save to write the character file.
       </p>
     </section>
   )
