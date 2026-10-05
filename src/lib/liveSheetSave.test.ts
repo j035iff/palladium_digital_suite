@@ -12,6 +12,7 @@ import {
   liveSheetSaveStatus,
   liveSheetSaveStatusLabel,
   shouldGuardLiveSheetLeave,
+  shouldPushJoinedPartySnapshotOnLiveMutation,
 } from './liveSheetSave'
 
 const finalizedFixture = ensureCharacterRoot(
@@ -55,5 +56,9 @@ describe('liveSheetSave', () => {
     expect(LIVE_SHEET_CONTINUE_WITHOUT_SAVING_LABEL.toLowerCase()).toContain(
       'without saving',
     )
+  })
+
+  it('defers joined party.snapshot until explicit Save (not per dirty edit)', () => {
+    expect(shouldPushJoinedPartySnapshotOnLiveMutation()).toBe(false)
   })
 })

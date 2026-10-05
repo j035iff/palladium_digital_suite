@@ -936,7 +936,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inventoryItems, equippedArmorId, readyWeaponIds, ammoReserves])
 
-  const maybeResnapshotJoinedParty = useCallback((next: CharacterRootState) => {
+  /**
+   * Push `party.snapshot` when joined. Only call from Save / spawn finalize —
+   * never from dirty live mutations (Unified Path with `liveSheetSave`).
+   */
+  const flushJoinedPartySnapshot = useCallback((next: CharacterRootState) => {
     try {
       const client = getSharedGmClientRuntime()
       if (client.getState().status === 'joined') {
@@ -950,7 +954,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const saveCharacter = useCallback(() => {
     persistCharacterSave(rawCharacter)
     markLiveSheetBaseline(rawCharacter, inventorySession)
-    maybeResnapshotJoinedParty(
+    // Explicit Save flushes file + joined-table peer snapshot together.
+    flushJoinedPartySnapshot(
       mergeCharacterWithInventory(rawCharacter, inventorySession),
     )
   }, [
@@ -958,7 +963,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     inventorySession,
     persistCharacterSave,
     markLiveSheetBaseline,
-    maybeResnapshotJoinedParty,
+    flushJoinedPartySnapshot,
   ])
 
   const hydrateLoadedCharacter = useCallback((loaded: CharacterRootState) => {
@@ -2906,130 +2911,80 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [psychicTier],
   )
 
-  const persistIdentityAndMaybeResnapshot = useCallback(
-    (next: CharacterRootState) => {
-      // Live-sheet identity edits stay dirty until explicit Save (file persist).
-      // Joined-table peers still get a live party snapshot (session wire ≠ save file).
-      maybeResnapshotJoinedParty(next)
-    },
-    [maybeResnapshotJoinedParty],
-  )
+  // Identity / notes / aliases: in-memory only until Save. Never push
+  // party.snapshot on dirty edits — same gate as the character file
+  // (`shouldPushJoinedPartySnapshotOnLiveMutation` in liveSheetSave).
 
-  const setAlignment = useCallback(
-    (alignment: string) => {
-      setRawCharacter((prev) => {
-        const next = {
-          ...prev,
-          primary: { ...prev.primary, alignment },
-          morphus: { ...prev.morphus, alignment },
-        }
-        persistIdentityAndMaybeResnapshot(next)
-        return next
-      })
-    },
-    [persistIdentityAndMaybeResnapshot],
-  )
+  const setAlignment = useCallback((alignment: string) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      primary: { ...prev.primary, alignment },
+      morphus: { ...prev.morphus, alignment },
+    }))
+  }, [])
 
-  const setCharacterName = useCallback(
-    (name: string) => {
-      setRawCharacter((prev) => {
-        const next = { ...prev, name }
-        persistIdentityAndMaybeResnapshot(next)
-        return next
-      })
-    },
-    [persistIdentityAndMaybeResnapshot],
-  )
+  const setCharacterName = useCallback((name: string) => {
+    setRawCharacter((prev) => ({ ...prev, name }))
+  }, [])
 
-  const setPlayNotes = useCallback(
-    (notes: string) => {
-      setRawCharacter((prev) => ({ ...prev, playNotes: notes }))
+  const setPlayNotes = useCallback((notes: string) => {
+    setRawCharacter((prev) => ({ ...prev, playNotes: notes }))
+  }, [])
+
+  const patchIdentityProfile = useCallback(
+    (patch: Partial<CharacterIdentityProfile>) => {
+      setRawCharacter((prev) => ({
+        ...prev,
+        identityProfile: {
+          ...EMPTY_CHARACTER_IDENTITY_PROFILE,
+          ...prev.identityProfile,
+          ...patch,
+        },
+      }))
     },
     [],
   )
 
-  const patchIdentityProfile = useCallback(
-    (patch: Partial<CharacterIdentityProfile>) => {
-      setRawCharacter((prev) => {
-        const next = {
-          ...prev,
-          identityProfile: {
-            ...EMPTY_CHARACTER_IDENTITY_PROFILE,
-            ...prev.identityProfile,
-            ...patch,
-          },
-        }
-        persistIdentityAndMaybeResnapshot(next)
-        return next
-      })
-    },
-    [persistIdentityAndMaybeResnapshot],
-  )
+  const addAlias = useCallback((name: string) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      aliases: addCharacterAlias(prev.aliases, name),
+    }))
+  }, [])
 
-  const addAlias = useCallback(
-    (name: string) => {
-      setRawCharacter((prev) => {
-        const next = {
-          ...prev,
-          aliases: addCharacterAlias(prev.aliases, name),
-        }
-        persistIdentityAndMaybeResnapshot(next)
-        return next
-      })
-    },
-    [persistIdentityAndMaybeResnapshot],
-  )
-
-  const removeAlias = useCallback(
-    (aliasId: string) => {
-      setRawCharacter((prev) => {
-        const aliases = removeCharacterAlias(prev.aliases, aliasId)
-        const next = {
-          ...prev,
+  const removeAlias = useCallback((aliasId: string) => {
+    setRawCharacter((prev) => {
+      const aliases = removeCharacterAlias(prev.aliases, aliasId)
+      return {
+        ...prev,
+        aliases,
+        tableProjectedAliasId: coerceTableProjectedAliasId(
           aliases,
-          tableProjectedAliasId: coerceTableProjectedAliasId(
-            aliases,
-            prev.tableProjectedAliasId,
-          ),
-        }
-        persistIdentityAndMaybeResnapshot(next)
-        return next
-      })
-    },
-    [persistIdentityAndMaybeResnapshot],
-  )
+          prev.tableProjectedAliasId,
+        ),
+      }
+    })
+  }, [])
 
-  const renameAlias = useCallback(
-    (aliasId: string, name: string) => {
-      setRawCharacter((prev) => {
-        const next = {
-          ...prev,
-          aliases: renameCharacterAlias(prev.aliases, aliasId, name),
-        }
-        persistIdentityAndMaybeResnapshot(next)
-        return next
-      })
-    },
-    [persistIdentityAndMaybeResnapshot],
-  )
+  const renameAlias = useCallback((aliasId: string, name: string) => {
+    setRawCharacter((prev) => ({
+      ...prev,
+      aliases: renameCharacterAlias(prev.aliases, aliasId, name),
+    }))
+  }, [])
 
-  const setTableProjectedAliasId = useCallback(
-    (aliasId: string | null) => {
-      setRawCharacter((prev) => {
-        const coerced =
-          aliasId == null || aliasId === TABLE_PROJECTED_REAL_NAME_ID
-            ? null
-            : coerceTableProjectedAliasId(
-                normalizeAliases(prev.aliases),
-                aliasId,
-              )
-        const next = { ...prev, tableProjectedAliasId: coerced }
-        persistIdentityAndMaybeResnapshot(next)
-        return next
-      })
-    },
-    [persistIdentityAndMaybeResnapshot],
-  )
+  const setTableProjectedAliasId = useCallback((aliasId: string | null) => {
+    setRawCharacter((prev) => {
+      const coerced =
+        aliasId == null || aliasId === TABLE_PROJECTED_REAL_NAME_ID
+          ? null
+          : coerceTableProjectedAliasId(
+              normalizeAliases(prev.aliases),
+              aliasId,
+            )
+      return { ...prev, tableProjectedAliasId: coerced }
+    })
+  }, [])
 
   const finalizeCharacter = useCallback(() => {
     setRawCharacter((prev) => {
@@ -3052,7 +3007,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       // live edits require explicit Save (Character Sheet Project owns post-spawn).
       persistCharacterSave(next)
       markLiveSheetBaseline(next, inventorySession)
-      maybeResnapshotJoinedParty(next)
+      // Review & Spawn while joined: commit snapshot so campaign history upserts.
+      flushJoinedPartySnapshot(next)
       return next
     })
   }, [
@@ -3060,7 +3016,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     persistCharacterSave,
     markLiveSheetBaseline,
     inventorySession,
-    maybeResnapshotJoinedParty,
+    flushJoinedPartySnapshot,
   ])
 
   const addSelectedAbility = useCallback(

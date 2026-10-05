@@ -79,7 +79,7 @@ Spawn **does not** auto-write to disk until Confirm (then one handoff write so O
 3. Index refresh for launcher **Open Character** list.
 4. Dirty tracking (`src/lib/liveSheetSave.ts`) compares the would-be save fingerprint to the last Save; Persistent Core shows Saved / Unsaved + Save. Portal leave with unsaved edits → dialog (Save / Continue without saving).
 
-Live-sheet edits (identity, notes, gear, vitality, etc.) stay in memory until Save — **no auto-persist** after `isFinalized`. Creation **Save for Later** remains its own explicit draft write.
+Live-sheet edits (identity, notes, gear, vitality, etc.) stay in memory until Save — **no auto-persist** after `isFinalized`. While joined at a table, the same Save also flushes `party.snapshot` to peers (dirty edits do not live-push the seated snapshot). Creation **Save for Later** remains its own explicit draft write.
 
 **Rule:** The save file stores the character in **`creationGenreId` native layout** without host-derived transforms. Reloading applies `transformCharacterToHostEnvironment` for display.
 

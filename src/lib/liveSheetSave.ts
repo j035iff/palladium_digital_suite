@@ -62,3 +62,15 @@ export function shouldGuardLiveSheetLeave(
 ): boolean {
   return isFinalized === true && dirty === true
 }
+
+/**
+ * Joined-table peer sync (`party.snapshot`) follows the same explicit-Save gate
+ * as the character file. In-memory live mutations (identity, notes, gear, …)
+ * must **not** push a snapshot until Save.
+ *
+ * Flush points (not covered here): Save, Review & Spawn finalize while joined,
+ * and Join Session attach (`sendPartySnapshotOnJoin`).
+ */
+export function shouldPushJoinedPartySnapshotOnLiveMutation(): boolean {
+  return false
+}

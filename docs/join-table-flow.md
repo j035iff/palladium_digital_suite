@@ -41,6 +41,7 @@ Player clicks **Join Table** and sees a page with:
    - Drop-down of the real character name (default) plus any **Aliases** saved on the live Identity expand
    - Other players see this projected name; the **GM always sees the real character name**
    - Choice is stored on the character (`tableProjectedAliasId`) and applied on `party.snapshot` → seat `projectedCharacterName`
+   - After join, changing aliases / projected name / other identity on the live sheet does **not** refresh `party.snapshot` until the player presses **Save** (same dirty/save pipeline as the character file)
 4. **Join Session**
    - Populates any sessions available on the network
    - No session yet → “no session available”
@@ -87,4 +88,5 @@ Player clicks **Join Table** and sees a page with:
 - GM **Return to launcher** with a table open → confirm → **Close Table** (unpublish + stop listen) → launcher
 - Joined player **Return to launcher** (Join table or live-sheet exit icon) → confirm → detach (`session.leave`) → launcher
 - Live sheet with **unsaved edits**: Portal leave opens Save / Continue without saving first (then the join-leave confirm if still joined) — same dirty guard as offline sheet (`liveSheetSave`)
+- Joined dirty edits (including identity / Name at the table) stay local until **Save**; Save writes the character file and flushes `party.snapshot` together. Discard / Continue without saving reloads the last saved snapshot peers already see.
 - Leave/kick removes the seat and clears that character from PCs / joiner cache (no phantom Missing saves)

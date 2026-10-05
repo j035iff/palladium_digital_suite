@@ -315,15 +315,17 @@ Track work here until promoted to the registry above.
 ## Live sheet explicit Save (dirty pipeline)
 
 **Status:** `complete`  
-**Related spec:** `docs/ui_wireframe.md`, `docs/character_spawn_handoff.md`
+**Related spec:** `docs/ui_wireframe.md`, `docs/character_spawn_handoff.md`, `docs/join-table-flow.md`
 
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
-| Fingerprint / copy | `src/lib/liveSheetSave.ts` | `liveSheetSaveFingerprint`, `shouldGuardLiveSheetLeave` | One dirty pipeline for Story + Combat |
-| Context | `src/context/CharacterContext.tsx` | `isLiveSheetDirty`, `saveCharacter`, `discardLiveSheetEdits` | No auto-persist after `isFinalized` |
+| Fingerprint / copy | `src/lib/liveSheetSave.ts` | `liveSheetSaveFingerprint`, `shouldGuardLiveSheetLeave`, `shouldPushJoinedPartySnapshotOnLiveMutation` | One dirty pipeline for Story + Combat; joined `party.snapshot` deferred until Save |
+| Context | `src/context/CharacterContext.tsx` | `isLiveSheetDirty`, `saveCharacter`, `discardLiveSheetEdits`, `flushJoinedPartySnapshot` | No auto-persist after `isFinalized`; Save flushes file + table snapshot |
 | Chrome | `LiveSheetSaveControls`, `UnsavedEditsDialog` | Persistent Core next to Portal | Familiar Surface Save + Saved/Unsaved |
 
-**Extension guide:** Mark dirty via fingerprint only — do not add Story-only or Combat-only save forks. Creation **Save for Later** stays on its own path.
+**Modes / variants:** Offline sheet and joined-at-table sheet share one Save gate. Join Session attach and Review & Spawn finalize still push `party.snapshot` as commit points (not dirty edits).
+
+**Extension guide:** Mark dirty via fingerprint only — do not add Story-only or Combat-only save forks. Do not push `party.snapshot` from live mutators; flush only from Save (and spawn/join attach). Creation **Save for Later** stays on its own path.
 
 ---
 
@@ -331,7 +333,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
-| 2026-10-05 | Live sheet explicit Save: dirty fingerprint, Save + Saved/Unsaved chrome, Portal leave guard (no post-`isFinalized` auto-persist) |
+| 2026-10-05 | Live sheet explicit Save: dirty fingerprint, Save + Saved/Unsaved chrome, Portal leave guard; joined `party.snapshot` also waits for Save (no live identity resnapshot) |
 | 2026-10-02 | GM Hub shared `GmHubContentPane`: hub chrome anchored; all Narrative/Combat workspace tabs scroll in one content pane (no per-tab overflow fork) |
 | 2026-09-29 | Portal chrome unified: `PortalChromeActions` Return + Settings icons on launcher / sheet / Hub / campaign forge / gear forge / join table; units only in Settings |
 | 2026-10-04 | Live sheet: all identity/profile fields editable (Race/O.C.C. read-only) + aliases; Join Table **Name at the table** projection on seats; peers see projection, GM keeps canonical name |
