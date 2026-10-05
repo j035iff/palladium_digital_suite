@@ -1,12 +1,15 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CreationFlowShell } from '../creation/CreationFlowShell'
 import { IdentityXpBar } from '../live/IdentityXpBar'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { LiveSheetTabBody } from '../live/LiveSheetTabBody'
+import { LiveSheetSaveControls } from '../live/LiveSheetSaveControls'
+import { UnsavedEditsDialog } from '../live/UnsavedEditsDialog'
 import { useCharacter } from '../../context/CharacterContext'
 import { getIqBonuses } from '../../lib/attributeBonuses'
 import { PLAYER_RETURN_LEAVES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
 import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
+import { shouldGuardLiveSheetLeave } from '../../lib/liveSheetSave'
 import {
   buildLiveSheetTabViews,
   isLiveSheetTabId,
@@ -26,11 +29,15 @@ export function MainLayout() {
   const [identityCollapsed, setIdentityCollapsed] = useState(true)
   const [sheetMode, setSheetMode] = useState<LiveSheetMode>('story')
   const [sheetTabId, setSheetTabId] = useState<LiveSheetTabId>('home')
+  const [unsavedLeaveOpen, setUnsavedLeaveOpen] = useState(false)
   const {
     character,
     creationGenreId,
     hostGenreId,
     returnToLauncher,
+    isLiveSheetDirty,
+    saveCharacter,
+    discardLiveSheetEdits,
     morphusSurfaceType,
     setMorphusSurfaceType,
     morphusStanceType,
@@ -64,6 +71,53 @@ export function MainLayout() {
   const armorAr = equippedArmor && equippedArmor.currentSdc > 0 ? equippedArmor.ar : null
   const defenseAr = armorAr ?? morphusNaturalAr ?? null
   const horrorFactor = saveProfileDerived.horrorFactor.total
+
+  useEffect(() => {
+    if (!shouldGuardLiveSheetLeave(character.isFinalized === true, isLiveSheetDirty)) {
+      return
+    }
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+    window.addEventListener('beforeunload', onBeforeUnload)
+    return () => window.removeEventListener('beforeunload', onBeforeUnload)
+  }, [character.isFinalized, isLiveSheetDirty])
+
+  const leaveSheetToLauncher = (opts?: {
+    saveFirst?: boolean
+    discardFirst?: boolean
+  }) => {
+    if (opts?.saveFirst) saveCharacter()
+    const runtime = getSharedGmClientRuntime()
+    const joined = runtime.getState().status === 'joined'
+    if (joined && !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)) {
+      return
+    }
+    if (opts?.discardFirst) discardLiveSheetEdits()
+    if (joined) runtime.leave()
+    returnToLauncher()
+  }
+
+  const requestReturnToLauncher = () => {
+    if (
+      shouldGuardLiveSheetLeave(character.isFinalized === true, isLiveSheetDirty)
+    ) {
+      setUnsavedLeaveOpen(true)
+      return
+    }
+    leaveSheetToLauncher()
+  }
+
+  const handleUnsavedSaveAndLeave = () => {
+    setUnsavedLeaveOpen(false)
+    leaveSheetToLauncher({ saveFirst: true })
+  }
+
+  const handleUnsavedContinueWithoutSaving = () => {
+    setUnsavedLeaveOpen(false)
+    leaveSheetToLauncher({ discardFirst: true })
+  }
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -179,20 +233,14 @@ export function MainLayout() {
               </div>
 
               <div className="flex shrink-0 flex-wrap items-center gap-2">
+                <LiveSheetSaveControls
+                  dirty={isLiveSheetDirty}
+                  onSave={saveCharacter}
+                  morphusActive={morphusActive}
+                />
                 <PortalChromeActions
                   tone={morphusActive ? 'morphus' : 'sheet'}
-                  onReturnToLauncher={() => {
-                    const runtime = getSharedGmClientRuntime()
-                    const joined = runtime.getState().status === 'joined'
-                    if (
-                      joined &&
-                      !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)
-                    ) {
-                      return
-                    }
-                    if (joined) runtime.leave()
-                    returnToLauncher()
-                  }}
+                  onReturnToLauncher={requestReturnToLauncher}
                 />
                 {supportsDualForm ? (
                   <button
@@ -447,6 +495,12 @@ export function MainLayout() {
       </div>
       <JoinedTablePeerRoster />
       <GmPlayerDmTray />
+      <UnsavedEditsDialog
+        open={unsavedLeaveOpen}
+        onSave={handleUnsavedSaveAndLeave}
+        onContinueWithoutSaving={handleUnsavedContinueWithoutSaving}
+        onStay={() => setUnsavedLeaveOpen(false)}
+      />
     </div>
   )
 }

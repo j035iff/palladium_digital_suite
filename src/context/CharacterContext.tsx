@@ -90,7 +90,12 @@ import { serializeCharacterRootForSave } from '../lib/characterSave'
 import {
   hydrateInventorySession,
   mergeCharacterWithInventory,
+  type InventorySessionState,
 } from '../lib/inventoryPersistence'
+import {
+  liveSheetIsDirty,
+  liveSheetSaveFingerprint,
+} from '../lib/liveSheetSave'
 import {
   applyInventoryWeaponPatch,
   createInventoryWeaponFromPiece,
@@ -280,7 +285,18 @@ type CharacterContextValue = {
   hostGenreId: string
   setHostGenreId: (genreId: string) => void
   derivedInventoryItems: DerivedInventoryItem[]
+  /**
+   * Live sheet (post-`isFinalized`): true when in-memory edits differ from the
+   * last explicit Save. Creation drafts are never dirty via this flag.
+   */
+  isLiveSheetDirty: boolean
+  /** Persist the live sheet (or draft via Save for Later paths). Clears dirty. */
   saveCharacter: () => void
+  /**
+   * Reload the open finalized character from storage, discarding unsaved edits.
+   * Used by leave-guard “Continue without saving”.
+   */
+  discardLiveSheetEdits: () => void
   loadSavedCharacter: (id: string) => void
   startCreation: (genreId: GenreId) => void
   enterGmHub: () => void
@@ -872,12 +888,44 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [inventorySession, refreshSavedCharacterIndex],
   )
 
+  const lastSavedFingerprintRef = useRef<string | null>(null)
+  const [isLiveSheetDirty, setIsLiveSheetDirty] = useState(false)
+
+  const markLiveSheetBaseline = useCallback(
+    (state: CharacterRootState, session: InventorySessionState) => {
+      if (state.isFinalized !== true) {
+        lastSavedFingerprintRef.current = null
+        setIsLiveSheetDirty(false)
+        return
+      }
+      lastSavedFingerprintRef.current = liveSheetSaveFingerprint(state, session)
+      setIsLiveSheetDirty(false)
+    },
+    [],
+  )
+
+  // Unified Path dirty tracking — one fingerprint for the whole post-finalized sheet.
   useEffect(() => {
-    if (rawCharacter.isFinalized === true) {
-      persistCharacterSave(rawCharacter)
+    if (rawCharacter.isFinalized !== true) {
+      lastSavedFingerprintRef.current = null
+      setIsLiveSheetDirty(false)
       return
     }
-    // Mirror session inventory onto the draft root so Gear tab snapshots / yellow detection work.
+    const current = liveSheetSaveFingerprint(rawCharacter, inventorySession)
+    if (lastSavedFingerprintRef.current == null) {
+      lastSavedFingerprintRef.current = current
+      setIsLiveSheetDirty(false)
+      return
+    }
+    setIsLiveSheetDirty(
+      liveSheetIsDirty(current, lastSavedFingerprintRef.current),
+    )
+  }, [rawCharacter, inventorySession])
+
+  // Creation drafts only: mirror gear session onto the root for yellow detection.
+  // Finalized live sheets do NOT auto-persist — explicit Save only.
+  useEffect(() => {
+    if (rawCharacter.isFinalized === true) return
     setRawCharacter((prev) => {
       const merged = mergeCharacterWithInventory(prev, inventorySession)
       const prevKey = JSON.stringify(prev.inventory ?? null)
@@ -888,13 +936,32 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inventoryItems, equippedArmorId, readyWeaponIds, ammoReserves])
 
+  const maybeResnapshotJoinedParty = useCallback((next: CharacterRootState) => {
+    try {
+      const client = getSharedGmClientRuntime()
+      if (client.getState().status === 'joined') {
+        client.sendPartySnapshot(next.id, next)
+      }
+    } catch {
+      /* client runtime optional outside join viewport */
+    }
+  }, [])
+
   const saveCharacter = useCallback(() => {
     persistCharacterSave(rawCharacter)
-  }, [rawCharacter, persistCharacterSave])
+    markLiveSheetBaseline(rawCharacter, inventorySession)
+    maybeResnapshotJoinedParty(
+      mergeCharacterWithInventory(rawCharacter, inventorySession),
+    )
+  }, [
+    rawCharacter,
+    inventorySession,
+    persistCharacterSave,
+    markLiveSheetBaseline,
+    maybeResnapshotJoinedParty,
+  ])
 
-  const loadSavedCharacter = useCallback((id: string) => {
-    const loaded = loadCharacterSave(id)
-    if (!loaded) return
+  const hydrateLoadedCharacter = useCallback((loaded: CharacterRootState) => {
     const hydrated = hydrateCharacterFromStorage(
       ensureCharacterRoot(loaded, {
         creationGenreId: loaded.creationGenreId,
@@ -910,12 +977,34 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setReadyWeaponIds([inv.readyWeaponIds[0], inv.readyWeaponIds[1]])
     setAmmoReserves(inv.ammoReserves)
     setPsychicTierState(resolveCreationPsychicTier(hydrated))
-    setViewport('sheet')
     setActiveForm('primary')
     setXpHistory(loadXpHistory(hydrated.name))
     setLevelUpQueue(outstandingLevelUpTargets(hydrated))
     prevMorphusLedgerUnlockedRef.current = null
-  }, [])
+    markLiveSheetBaseline(hydrated, inv)
+  }, [markLiveSheetBaseline])
+
+  const loadSavedCharacter = useCallback((id: string) => {
+    const loaded = loadCharacterSave(id)
+    if (!loaded) return
+    hydrateLoadedCharacter(loaded)
+    setViewport('sheet')
+  }, [hydrateLoadedCharacter])
+
+  const discardLiveSheetEdits = useCallback(() => {
+    if (rawCharacter.isFinalized !== true) return
+    const loaded = loadCharacterSave(rawCharacter.id)
+    if (!loaded) {
+      markLiveSheetBaseline(rawCharacter, inventorySession)
+      return
+    }
+    hydrateLoadedCharacter(loaded)
+  }, [
+    rawCharacter,
+    inventorySession,
+    hydrateLoadedCharacter,
+    markLiveSheetBaseline,
+  ])
 
   const startCreation = useCallback((genreId: GenreId) => {
     applyFreshCreationSession(createBlankCharacterForGenre(genreId))
@@ -2819,17 +2908,11 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const persistIdentityAndMaybeResnapshot = useCallback(
     (next: CharacterRootState) => {
-      persistCharacterSave(next)
-      try {
-        const client = getSharedGmClientRuntime()
-        if (client.getState().status === 'joined') {
-          client.sendPartySnapshot(next.id, next)
-        }
-      } catch {
-        /* client runtime optional outside join viewport */
-      }
+      // Live-sheet identity edits stay dirty until explicit Save (file persist).
+      // Joined-table peers still get a live party snapshot (session wire ≠ save file).
+      maybeResnapshotJoinedParty(next)
     },
-    [persistCharacterSave],
+    [maybeResnapshotJoinedParty],
   )
 
   const setAlignment = useCallback(
@@ -2860,11 +2943,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const setPlayNotes = useCallback(
     (notes: string) => {
-      const next = { ...rawCharacter, playNotes: notes }
-      setRawCharacter(next)
-      persistCharacterSave(next)
+      setRawCharacter((prev) => ({ ...prev, playNotes: notes }))
     },
-    [rawCharacter, persistCharacterSave],
+    [],
   )
 
   const patchIdentityProfile = useCallback(
@@ -2967,20 +3048,20 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       next = applySpawnSheetHandoff(next, {
         psychicTier: resolveCreationPsychicTier(next, psychicTier),
       })
+      // Spawn handoff writes once so Open Character can find the sheet; further
+      // live edits require explicit Save (Character Sheet Project owns post-spawn).
       persistCharacterSave(next)
-      // If joined at a table, refresh host party.snapshot so campaign history
-      // upserts when a draft completes Review & Spawn (Unified Path — no fork).
-      try {
-        const client = getSharedGmClientRuntime()
-        if (client.getState().status === 'joined') {
-          client.sendPartySnapshot(next.id, next)
-        }
-      } catch {
-        /* client runtime optional outside join viewport */
-      }
+      markLiveSheetBaseline(next, inventorySession)
+      maybeResnapshotJoinedParty(next)
       return next
     })
-  }, [psychicTier, persistCharacterSave])
+  }, [
+    psychicTier,
+    persistCharacterSave,
+    markLiveSheetBaseline,
+    inventorySession,
+    maybeResnapshotJoinedParty,
+  ])
 
   const addSelectedAbility = useCallback(
     (id: string) => {
@@ -3114,7 +3195,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       hostGenreId,
       setHostGenreId,
       derivedInventoryItems,
+      isLiveSheetDirty,
       saveCharacter,
+      discardLiveSheetEdits,
       loadSavedCharacter,
       startCreation,
       enterGmHub,
@@ -3287,7 +3370,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       hostGenreId,
       setHostGenreId,
       derivedInventoryItems,
+      isLiveSheetDirty,
       saveCharacter,
+      discardLiveSheetEdits,
       loadSavedCharacter,
       startCreation,
       enterGmHub,

@@ -306,9 +306,24 @@ Track work here until promoted to the registry above.
 | Settings | `src/components/chrome/AppSettingsDialog.tsx` | units dial | App-global only — do not invent per-viewport settings |
 | Hosts | Hub / launcher / sheet / campaign forge / gear forge / join table | same component | Launcher: Settings only (`showReturn={false}`) |
 
-**Modes / variants:** Tone is a presentation mode on one control — do not fork per-viewport exit/settings buttons. Confirm dialogs for leave/Close Table stay on the host `onReturnToLauncher` callback.
+**Modes / variants:** Tone is a presentation mode on one control — do not fork per-viewport exit/settings buttons. Confirm dialogs for leave/Close Table stay on the host `onReturnToLauncher` callback. Live-sheet hosts also run the unsaved-edits leave guard before leave/Close confirms.
 
 **Extension guide:** New viewports that need exit or units mount `PortalChromeActions`; do not reintroduce text **Portal** / **Return to launcher** buttons or header `UnitsPreferenceToggle`s.
+
+---
+
+## Live sheet explicit Save (dirty pipeline)
+
+**Status:** `complete`  
+**Related spec:** `docs/ui_wireframe.md`, `docs/character_spawn_handoff.md`
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Fingerprint / copy | `src/lib/liveSheetSave.ts` | `liveSheetSaveFingerprint`, `shouldGuardLiveSheetLeave` | One dirty pipeline for Story + Combat |
+| Context | `src/context/CharacterContext.tsx` | `isLiveSheetDirty`, `saveCharacter`, `discardLiveSheetEdits` | No auto-persist after `isFinalized` |
+| Chrome | `LiveSheetSaveControls`, `UnsavedEditsDialog` | Persistent Core next to Portal | Familiar Surface Save + Saved/Unsaved |
+
+**Extension guide:** Mark dirty via fingerprint only — do not add Story-only or Combat-only save forks. Creation **Save for Later** stays on its own path.
 
 ---
 
@@ -316,9 +331,10 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-05 | Live sheet explicit Save: dirty fingerprint, Save + Saved/Unsaved chrome, Portal leave guard (no post-`isFinalized` auto-persist) |
 | 2026-10-02 | GM Hub shared `GmHubContentPane`: hub chrome anchored; all Narrative/Combat workspace tabs scroll in one content pane (no per-tab overflow fork) |
 | 2026-09-29 | Portal chrome unified: `PortalChromeActions` Return + Settings icons on launcher / sheet / Hub / campaign forge / gear forge / join table; units only in Settings |
-| 2026-10-04 | Live sheet: all identity/profile fields persist (Race/O.C.C. read-only) + aliases; Join Table **Name at the table** projection on seats; peers see projection, GM keeps canonical name |
+| 2026-10-04 | Live sheet: all identity/profile fields editable (Race/O.C.C. read-only) + aliases; Join Table **Name at the table** projection on seats; peers see projection, GM keeps canonical name |
 | 2026-09-29 | GM Hub compact chrome: top nav only; Return + Settings icons; units in Settings; Open Table → Table Open hover Players overlay; host Advanced UI hidden |
 | 2026-09-28 | Join Table backlog: Open Table stamp matches publish; leave/kick/Close Table detach party+cache; Party = joined + player name; Cast hosts local add; Return to launcher confirms Close/leave |
 | 2026-09-25 | GM Hub client join first slice: interim `ws`, presence/join envelopes, Join table viewport, interacting sheet |

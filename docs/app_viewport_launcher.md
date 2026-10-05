@@ -64,7 +64,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
    - Viewport → `sheet`; creation chrome visible (`MainLayout` shows `CreationFlowShell` while `isFinalized !== true`).
 3. **Downstream** — User completes the [Character Creation Forge](./forge/character_creation.md); spawn is specified in [character_spawn_handoff.md](./character_spawn_handoff.md).
 
-**Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists. Finalized characters persist gear in the save file's `inventory` block; changes auto-save while the live sheet is open.
+**Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists. Finalized characters store gear in the save file's `inventory` block; live-sheet edits (including gear) stay dirty until the player presses **Save** on the Persistent Core.
 
 ### Genre manifest flags
 

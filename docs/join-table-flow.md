@@ -86,4 +86,5 @@ Player clicks **Join Table** and sees a page with:
 
 - GM **Return to launcher** with a table open → confirm → **Close Table** (unpublish + stop listen) → launcher
 - Joined player **Return to launcher** (Join table or live-sheet exit icon) → confirm → detach (`session.leave`) → launcher
+- Live sheet with **unsaved edits**: Portal leave opens Save / Continue without saving first (then the join-leave confirm if still joined) — same dirty guard as offline sheet (`liveSheetSave`)
 - Leave/kick removes the seat and clears that character from PCs / joiner cache (no phantom Missing saves)
