@@ -2,11 +2,13 @@ import { describe, expect, it } from 'vitest'
 import {
   addCharacterAlias,
   coerceTableProjectedAliasId,
+  commitJoinTableNewAlias,
   listTableProjectionOptions,
   normalizeAliases,
   removeCharacterAlias,
   renameCharacterAlias,
   resolveTableProjectedName,
+  TABLE_ADD_ALIAS_OPTION_ID,
   TABLE_PROJECTED_REAL_NAME_ID,
 } from './characterAliases'
 
@@ -52,6 +54,11 @@ describe('characterAliases', () => {
       label: 'Rook',
     })
     expect(options[1]).toMatchObject({ id: 'a1', label: 'Crow', isRealName: false })
+    expect(options[options.length - 1]).toMatchObject({
+      id: TABLE_ADD_ALIAS_OPTION_ID,
+      isAddAlias: true,
+      label: 'Add alias',
+    })
 
     expect(coerceTableProjectedAliasId([{ id: 'a1', name: 'Crow' }], 'a1')).toBe(
       'a1',
@@ -59,5 +66,26 @@ describe('characterAliases', () => {
     expect(coerceTableProjectedAliasId([{ id: 'a1', name: 'Crow' }], 'gone')).toBe(
       null,
     )
+    expect(
+      coerceTableProjectedAliasId(
+        [{ id: 'a1', name: 'Crow' }],
+        TABLE_ADD_ALIAS_OPTION_ID,
+      ),
+    ).toBe(null)
+  })
+
+  it('commits a join-table new alias onto projection', () => {
+    const base = {
+      name: 'Rook',
+      aliases: [] as { id: string; name: string }[],
+      tableProjectedAliasId: null as string | null,
+    }
+    expect(commitJoinTableNewAlias(base, '   ')).toBeNull()
+    const next = commitJoinTableNewAlias(base, '  Crow  ', 'a-new')
+    expect(next).toEqual({
+      name: 'Rook',
+      aliases: [{ id: 'a-new', name: 'Crow' }],
+      tableProjectedAliasId: 'a-new',
+    })
   })
 })

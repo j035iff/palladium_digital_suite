@@ -14,8 +14,13 @@ import {
   type CharacterIndexEntry,
 } from '../../lib/characterIndex'
 import {
+  commitJoinTableNewAlias,
   coerceTableProjectedAliasId,
+  JOIN_ADD_ALIAS_CANCEL_LABEL,
+  JOIN_ADD_ALIAS_ENTER_LABEL,
+  JOIN_ADD_ALIAS_OPTION_LABEL,
   listTableProjectionOptions,
+  TABLE_ADD_ALIAS_OPTION_ID,
   TABLE_PROJECTED_REAL_NAME_ID,
 } from '../../lib/characterAliases'
 import { createBlankCharacterForGenre } from '../../lib/characterRoot'
@@ -71,6 +76,9 @@ export function GmJoinTableViewport() {
   const [projectedAliasId, setProjectedAliasId] = useState<string>(
     TABLE_PROJECTED_REAL_NAME_ID,
   )
+  const [addAliasOpen, setAddAliasOpen] = useState(false)
+  const [addAliasDraft, setAddAliasDraft] = useState('')
+  const [addAliasError, setAddAliasError] = useState<string | null>(null)
   const [sessions, setSessions] = useState<LanSessionAdvertisement[]>([])
   const [browseReason, setBrowseReason] = useState<string | null>(null)
   const browseHost = useMemo(
@@ -291,6 +299,29 @@ export function GmJoinTableViewport() {
     setCreateGenreOpen(false)
   }
 
+  const closeAddAliasDialog = () => {
+    setAddAliasOpen(false)
+    setAddAliasDraft('')
+    setAddAliasError(null)
+  }
+
+  const onConfirmAddAlias = () => {
+    const save = characterId ? loadCharacterSave(characterId) : null
+    if (!save) {
+      setAddAliasError('Character save not found on this device.')
+      return
+    }
+    const next = commitJoinTableNewAlias(save, addAliasDraft)
+    if (!next) {
+      setAddAliasError('Enter an alias name.')
+      return
+    }
+    saveCharacterToStorage(next)
+    refreshSavedCharacterIndex()
+    setProjectedAliasId(next.tableProjectedAliasId)
+    closeAddAliasDialog()
+  }
+
   const selectedRow = joinableRows.find((r) => r.id === characterId)
   const selectedDisplay = selectedRow
     ? resolveCharacterIndexRowDisplay(selectedRow)
@@ -441,15 +472,26 @@ export function GmJoinTableViewport() {
               Name at the table
               <select
                 value={projectedAliasId}
-                onChange={(e) => setProjectedAliasId(e.target.value)}
+                onChange={(e) => {
+                  const next = e.target.value
+                  if (next === TABLE_ADD_ALIAS_OPTION_ID) {
+                    setAddAliasDraft('')
+                    setAddAliasError(null)
+                    setAddAliasOpen(true)
+                    return
+                  }
+                  setProjectedAliasId(next)
+                }}
                 className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
                 aria-label="Name at the table"
               >
                 {projectionOptions.map((opt) => (
                   <option key={opt.id || 'real'} value={opt.id}>
-                    {opt.isRealName
-                      ? `${opt.label} (real name)`
-                      : opt.label}
+                    {opt.isAddAlias
+                      ? JOIN_ADD_ALIAS_OPTION_LABEL
+                      : opt.isRealName
+                        ? `${opt.label} (real name)`
+                        : opt.label}
                   </option>
                 ))}
               </select>
@@ -591,6 +633,76 @@ export function GmJoinTableViewport() {
           </details>
         </div>
       </div>
+
+      {addAliasOpen ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="join-add-alias-title"
+        >
+          <div className="w-full max-w-sm rounded-xl border border-slate-700 bg-slate-950 p-5 shadow-2xl">
+            <h2
+              id="join-add-alias-title"
+              className="text-sm font-black uppercase tracking-[0.2em] text-cyan-300"
+            >
+              Add alias
+            </h2>
+            <p className="mt-2 text-xs text-slate-400">
+              Other players will see this name at the table. The GM still sees
+              your real character name.
+            </p>
+            <label className="mt-4 block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+              Alias
+              <input
+                autoFocus
+                value={addAliasDraft}
+                onChange={(e) => {
+                  setAddAliasDraft(e.target.value)
+                  if (addAliasError) setAddAliasError(null)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    onConfirmAddAlias()
+                  }
+                  if (e.key === 'Escape') {
+                    e.preventDefault()
+                    closeAddAliasDialog()
+                  }
+                }}
+                placeholder="Enter an alias"
+                className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
+                aria-label="Alias name"
+              />
+            </label>
+            {addAliasError ? (
+              <p
+                className="mt-2 rounded-lg border border-red-900/60 bg-red-950/40 px-3 py-2 text-xs text-red-200"
+                role="status"
+              >
+                {addAliasError}
+              </p>
+            ) : null}
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row-reverse">
+              <button
+                type="button"
+                onClick={onConfirmAddAlias}
+                className="w-full rounded-lg bg-cyan-700 px-4 py-3 text-xs font-black uppercase tracking-wide text-white hover:bg-cyan-600 sm:w-auto"
+              >
+                {JOIN_ADD_ALIAS_ENTER_LABEL}
+              </button>
+              <button
+                type="button"
+                onClick={closeAddAliasDialog}
+                className="w-full rounded-lg border border-slate-600 px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-200 hover:border-slate-400 sm:w-auto"
+              >
+                {JOIN_ADD_ALIAS_CANCEL_LABEL}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {dialogOpen ? (
         <div

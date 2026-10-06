@@ -38,7 +38,8 @@ Player clicks **Join Table** and sees a page with:
    - **Create new character** — pick a setting → blank draft is saved and selected; after Join Session the shared Character Creation Forge opens (same forge path as the launcher — no fork)
    - Player selects their character (complete or draft)
 3. **Name at the table** (after a character is selected)
-   - Drop-down of the real character name (default) plus any **Aliases** saved on the live Identity expand
+   - Drop-down of the real character name (default) plus any **Aliases**, plus **Add alias**
+   - **Add alias** opens a text dialog → **Enter table with alias** (saves the alias, selects it as the projected name, returns to the normal Join Table screen) or **Cancel** (back to the normal Join Table screen with no change)
    - Other players see this projected name; the **GM always sees the real character name**
    - Choice is stored on the character (`tableProjectedAliasId`) and applied on `party.snapshot` → seat `projectedCharacterName`
    - After join, changing aliases / projected name / other identity on the live sheet does **not** refresh `party.snapshot` until the player presses **Save** (same dirty/save pipeline as the character file)

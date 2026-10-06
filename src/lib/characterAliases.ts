@@ -10,6 +10,13 @@ import { isCharacterNameFilled } from './characterIdentity'
 /** Sentinel select value — project the real character name at the table. */
 export const TABLE_PROJECTED_REAL_NAME_ID = '' as const
 
+/** Sentinel select value — open Add alias dialog on Join Table (not a projection id). */
+export const TABLE_ADD_ALIAS_OPTION_ID = '__add_alias__' as const
+
+export const JOIN_ADD_ALIAS_ENTER_LABEL = 'Enter table with alias'
+export const JOIN_ADD_ALIAS_CANCEL_LABEL = 'Cancel'
+export const JOIN_ADD_ALIAS_OPTION_LABEL = 'Add alias'
+
 export function newAliasId(): string {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return `alias_${crypto.randomUUID()}`
@@ -76,10 +83,12 @@ export function resolveTableProjectedName(
 }
 
 export type TableProjectionOption = {
-  /** Empty string = real character name. */
+  /** Empty string = real character name; {@link TABLE_ADD_ALIAS_OPTION_ID} = add flow. */
   id: string
   label: string
   isRealName: boolean
+  /** True for the Join Table “Add alias” row (not a projection target). */
+  isAddAlias?: boolean
 }
 
 /** Familiar Surface options for Join Session “Name at the table” picker. */
@@ -99,7 +108,32 @@ export function listTableProjectionOptions(
   for (const alias of normalizeAliases(character.aliases)) {
     options.push({ id: alias.id, label: alias.name, isRealName: false })
   }
+  options.push({
+    id: TABLE_ADD_ALIAS_OPTION_ID,
+    label: JOIN_ADD_ALIAS_OPTION_LABEL,
+    isRealName: false,
+    isAddAlias: true,
+  })
   return options
+}
+
+/**
+ * Add a new alias on Join Table and select it as the projected name.
+ * Returns null when the draft name is empty after trim.
+ */
+export function commitJoinTableNewAlias<
+  T extends Pick<Character, 'aliases' | 'tableProjectedAliasId'>,
+>(character: T, aliasName: string, id = newAliasId()): (T & {
+  aliases: CharacterAlias[]
+  tableProjectedAliasId: string
+}) | null {
+  const trimmed = aliasName.trim()
+  if (!trimmed) return null
+  return {
+    ...character,
+    aliases: addCharacterAlias(character.aliases, trimmed, id),
+    tableProjectedAliasId: id,
+  }
 }
 
 /** Persist-safe default when an alias was deleted. */
