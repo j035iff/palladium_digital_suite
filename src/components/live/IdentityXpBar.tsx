@@ -38,7 +38,7 @@ export function IdentityXpBar() {
     : 'linear-gradient(90deg,#3b82f6,#1d4ed8)'
 
   return (
-    <div ref={rootRef} className="relative mt-2 w-full max-w-md">
+    <div ref={rootRef} className="relative w-full max-w-md">
       <button
         type="button"
         className={`w-full rounded-lg border-2 px-2 py-1.5 text-left transition-[box-shadow] duration-300 ${
@@ -63,6 +63,13 @@ export function IdentityXpBar() {
             }`}
           >
             Experience
+          </span>
+          <span
+            className={`text-[11px] font-bold ${
+              morphus ? 'text-violet-100' : 'text-slate-800'
+            }`}
+          >
+            Level {character.level}
           </span>
           <span
             className={`font-mono text-xs font-bold tabular-nums ${

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
+import { getIqBonuses } from '../../lib/attributeBonuses'
 import { unarmedDamageLabel } from '../../lib/strikeEngine'
 import { formatBonus } from '../../lib/combatQuickBonuses'
 import { ManualRollField } from '../combat/ManualRollField'
@@ -143,13 +144,15 @@ type CombatBubbleId = 'unarmed' | 'ancient' | 'modern'
 /**
  * Combat Home tactical HUD (master_flow.md, combat_logic.md, ui_wireframe.md §3).
  * Max A.P.M. comes from {@link CharacterContext} (`attacksPerMelee.max`).
- * Vitality bars live on the Persistent Core header, not here.
+ * Panel layout includes vitals cards (quick-ref stays on the Persistent Core strip).
  * `panel` — Active Zone combat mode; `sidebar` — legacy dock.
  */
 export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   const {
     character,
     activeForm,
+    activeFormState: form,
+    activeStats,
     supportsDualForm,
     hostGenreId,
     inventoryItems,
@@ -169,9 +172,17 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
     spendWeaponAmmo,
     reloadWeapon,
     ammoReserves,
+    morphusNaturalAr,
+    saveProfileDerived,
+    psychicTier,
   } = useCharacter()
 
   const morphus = supportsDualForm && activeForm === 'morphus'
+  const showIsp = psychicTier !== 'none' || form.isp.maximum > 0
+  const perceptionBonus = getIqBonuses(form.attributes.iq).perceptionBonus
+  const armorAr = equippedArmor && equippedArmor.currentSdc > 0 ? equippedArmor.ar : null
+  const defenseAr = armorAr ?? morphusNaturalAr ?? null
+  const horrorFactor = saveProfileDerived.horrorFactor.total
   const [amount, setAmount] = useState('4')
   const [mode, setMode] = useState<'damage' | 'heal'>('damage')
   const [resolveOpen, setResolveOpen] = useState(false)
@@ -417,25 +428,99 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           </div>
         ) : (
           <>
+        {layout === 'panel' ? (
+          <div className="mb-3 space-y-3" aria-label="Combat vitals">
+            <div
+              className={`grid gap-2 sm:grid-cols-3 ${showIsp ? 'lg:grid-cols-4' : ''}`}
+            >
+              <CombatVitalCard
+                label="HP"
+                current={activeStats.hitPoints.current}
+                max={activeStats.hitPoints.maximum}
+                morphus={morphus}
+              />
+              <CombatVitalCard
+                label="SDC"
+                current={activeStats.structuralDamageCapacity.current}
+                max={activeStats.structuralDamageCapacity.maximum}
+                morphus={morphus}
+              />
+              <CombatVitalCard
+                label="PPE"
+                current={character.ppe.current}
+                max={character.ppe.maximum}
+                morphus={morphus}
+              />
+              {showIsp ? (
+                <CombatVitalCard
+                  label="ISP"
+                  current={form.isp.current}
+                  max={form.isp.maximum}
+                  morphus={morphus}
+                />
+              ) : null}
+            </div>
+            <div className="flex flex-wrap gap-2" aria-label="Defensive stats">
+              <CombatDefenseChip
+                label="A.R."
+                value={defenseAr != null ? String(defenseAr) : '—'}
+                morphus={morphus}
+              />
+              <CombatDefenseChip
+                label="H.F."
+                value={horrorFactor != null ? String(horrorFactor) : 'N/A'}
+                morphus={morphus}
+              />
+              <CombatDefenseChip
+                label="Perception"
+                value={perceptionBonus > 0 ? `+${perceptionBonus}` : '—'}
+                morphus={morphus}
+              />
+            </div>
+          </div>
+        ) : null}
+
         <div className={`mb-3 rounded-lg border-2 p-3 ${sub}`}>
-          <div className="mb-2 flex flex-wrap items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <h3
-                className={`text-[10px] font-black uppercase tracking-wider ${
-                  morphus ? 'text-violet-200' : 'text-blue-900'
-                }`}
-              >
-                Melee — A.P.M. ({curApm} / {maxApm})
-              </h3>
-              <p className={`mt-1 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-                Tap a remaining action to spend <strong>1</strong> A.P.M.
-                {handToHandCombatProfile.attackApmCost > 1
-                  ? ` Untrained attacks cost ${handToHandCombatProfile.attackApmCost} actions.`
-                  : null}
-              </p>
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
+              <div>
+                <h3
+                  className={`text-[10px] font-black uppercase tracking-wider ${
+                    morphus ? 'text-violet-200' : 'text-blue-900'
+                  }`}
+                >
+                  APM {curApm}/{maxApm}
+                </h3>
+                <p
+                  className={`mt-0.5 text-[10px] leading-snug ${
+                    morphus ? 'text-violet-300/90' : 'text-slate-600'
+                  }`}
+                >
+                  Tap a remaining action to spend <strong>1</strong> A.P.M.
+                  {handToHandCombatProfile.attackApmCost > 1
+                    ? ` Untrained attacks cost ${handToHandCombatProfile.attackApmCost} actions.`
+                    : null}
+                </p>
+              </div>
+              <ApmPipRow
+                morphus={morphus}
+                maxApm={maxApm}
+                actionsUsed={actionsUsed}
+                size="full"
+                onSpendOne={spendOneAction}
+              />
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <InitiativeChip detail={sheetCombatDerived.initiative} morphus={morphus} />
+              <button
+                type="button"
+                title="New melee round"
+                onClick={resetMeleeRound}
+                className={`shrink-0 rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide ${btn}`}
+                aria-label="New melee round"
+              >
+                ↻ Melee
+              </button>
               <button
                 type="button"
                 className={btnCompact}
@@ -446,28 +531,14 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               </button>
             </div>
           </div>
-          <ApmPipRow
-            morphus={morphus}
-            maxApm={maxApm}
-            actionsUsed={actionsUsed}
-            size="full"
-            onSpendOne={spendOneAction}
-          />
           {curApm <= 0 && maxApm > 0 ? (
             <p
-              className={`mb-3 text-[10px] font-bold ${morphus ? 'text-amber-200' : 'text-amber-800'}`}
+              className={`text-[10px] font-bold ${morphus ? 'text-amber-200' : 'text-amber-800'}`}
               role="status"
             >
               Out of actions — strike and dodge are spent; parry is still free.
             </p>
           ) : null}
-          <button
-            type="button"
-            onClick={resetMeleeRound}
-            className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide ${btn}`}
-          >
-            New melee round
-          </button>
         </div>
 
         {strikeBanner ? (
@@ -828,5 +899,94 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
         )}
       </div>
     </aside>
+  )
+}
+
+function CombatVitalCard({
+  label,
+  current,
+  max,
+  morphus,
+}: {
+  label: string
+  current: number
+  max: number
+  morphus: boolean
+}) {
+  const pct = max > 0 ? Math.min(100, (current / max) * 100) : 0
+  return (
+    <div
+      className={`rounded-lg border-2 p-3 ${
+        morphus
+          ? 'border-violet-500/80 bg-slate-950/90'
+          : 'border-blue-300 bg-white'
+      }`}
+    >
+      <p
+        className={`text-[10px] font-black uppercase tracking-wide ${
+          morphus ? 'text-violet-200' : 'text-blue-900'
+        }`}
+      >
+        {label}
+      </p>
+      <p
+        className={`mt-1 font-mono text-xl font-black tabular-nums ${
+          morphus ? 'text-violet-50' : 'text-slate-900'
+        }`}
+      >
+        {current}
+        <span className="opacity-60"> / </span>
+        {max}
+      </p>
+      <div
+        className={`mt-2 h-2 w-full overflow-hidden rounded-full ${
+          morphus ? 'bg-slate-900' : 'bg-blue-100'
+        }`}
+        role="progressbar"
+        aria-valuenow={current}
+        aria-valuemin={0}
+        aria-valuemax={max}
+        aria-label={`${label} pool`}
+      >
+        <div
+          className="h-full rounded-full transition-[width] duration-300"
+          style={{
+            width: `${pct}%`,
+            background: morphus
+              ? 'linear-gradient(90deg,#a78bfa,#5b21b6)'
+              : 'linear-gradient(90deg,#60a5fa,#1d4ed8)',
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function CombatDefenseChip({
+  label,
+  value,
+  morphus,
+}: {
+  label: string
+  value: string
+  morphus: boolean
+}) {
+  return (
+    <div
+      className={`min-w-[4.5rem] rounded-md border-2 px-3 py-1.5 ${
+        morphus
+          ? 'border-violet-600/80 bg-slate-950/80 text-violet-50'
+          : 'border-blue-300 bg-white text-slate-900'
+      }`}
+    >
+      <p
+        className={`text-[9px] font-black uppercase tracking-wide ${
+          morphus ? 'text-violet-300' : 'text-blue-800'
+        }`}
+      >
+        {label}
+      </p>
+      <p className="font-mono text-sm font-black tabular-nums">{value}</p>
+    </div>
   )
 }

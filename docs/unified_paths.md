@@ -221,6 +221,24 @@ Copy this block when registering a new unified path:
 
 ---
 
+### Live sheet chrome (Campaigns / Combat + overlays)
+
+**Status:** `partial`  
+**Related spec:** `docs/ui_wireframe.md` §1–3
+
+| Stage | Module | Entry point(s) | Notes |
+|-------|--------|----------------|-------|
+| Mode / tabs | `src/lib/liveSheetTabs.ts` | `liveSheetModeLabel`, `buildLiveSheetOverlayTabViews`, `liveSheetTabTitle` | Chrome **Campaigns** / **Combat**; internal mode id `story` \| `combat`; strip = Stats…Gear (no Home pill) |
+| Campaigns pills | `src/lib/liveSheetCampaigns.ts` | `buildCampaignPills`, `rememberJoinedCampaign` | Table/`campaignName` from join; device-local multi-pill memory — not GM Hub wiki |
+| Chrome UI | `MainLayout`, `LiveSheetChromeStrip`, `LiveSheetTabOverlay` | Identity → strip → mode → body | Overlay reuses `LiveSheetTabBody` |
+| Mode Homes | `CampaignsHome`, `CombatHUD` | PPTN stubs + Notes; combat vitals + bubbles | One body pipeline per tab id |
+
+**Modes / variants:** Facade/Morphus via existing live stack. Overlay tabs are mode-agnostic projections of the same panels. Do not fork Story vs Combat math or a second joined-sheet shell.
+
+**Extension guide:** Add strip overlays via `LIVE_SHEET_OVERLAY_TAB_ORDER` + `LiveSheetTabBody` branches — never a parallel panel host. Campaign wiki depth coordinates with GM Hub; extend `liveSheetCampaigns` only for sheet-side join pills, not host narrative storage.
+
+---
+
 ### Combat Home category bubbles
 
 **Status:** `partial`  
@@ -319,13 +337,13 @@ Track work here until promoted to the registry above.
 
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
-| Fingerprint / copy | `src/lib/liveSheetSave.ts` | `liveSheetSaveFingerprint`, `shouldGuardLiveSheetLeave`, `shouldPushJoinedPartySnapshotOnLiveMutation` | One dirty pipeline for Story + Combat; joined `party.snapshot` deferred until Save |
+| Fingerprint / copy | `src/lib/liveSheetSave.ts` | `liveSheetSaveFingerprint`, `shouldGuardLiveSheetLeave`, `shouldPushJoinedPartySnapshotOnLiveMutation` | One dirty pipeline for Campaigns (`story`) + Combat; joined `party.snapshot` deferred until Save |
 | Context | `src/context/CharacterContext.tsx` | `isLiveSheetDirty`, `saveCharacter`, `discardLiveSheetEdits`, `flushJoinedPartySnapshot` | No auto-persist after `isFinalized`; Save flushes file + table snapshot |
 | Chrome | `LiveSheetSaveControls`, `UnsavedEditsDialog` | Persistent Core next to Portal | Familiar Surface Save + Saved/Unsaved |
 
 **Modes / variants:** Offline sheet and joined-at-table sheet share one Save gate. Join Session attach and Review & Spawn finalize still push `party.snapshot` as commit points (not dirty edits).
 
-**Extension guide:** Mark dirty via fingerprint only — do not add Story-only or Combat-only save forks. Do not push `party.snapshot` from live mutators; flush only from Save (and spawn/join attach). Creation **Save for Later** stays on its own path.
+**Extension guide:** Mark dirty via fingerprint only — do not add Campaigns-only or Combat-only save forks. Do not push `party.snapshot` from live mutators; flush only from Save (and spawn/join attach). Creation **Save for Later** stays on its own path.
 
 ---
 
@@ -333,6 +351,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-07 | Live sheet layout pass 1: Identity → strip (overlays) → Campaigns\|Combat; Campaigns pills + PPTN stubs; CombatHUD vitals rearrange; `liveSheetTabs` / `liveSheetCampaigns` |
 | 2026-10-05 | Live sheet explicit Save: dirty fingerprint, Save + Saved/Unsaved chrome, Portal leave guard; joined `party.snapshot` also waits for Save (no live identity resnapshot) |
 | 2026-10-02 | GM Hub shared `GmHubContentPane`: hub chrome anchored; all Narrative/Combat workspace tabs scroll in one content pane (no per-tab overflow fork) |
 | 2026-09-29 | Portal chrome unified: `PortalChromeActions` Return + Settings icons on launcher / sheet / Hub / campaign forge / gear forge / join table; units only in Settings |
