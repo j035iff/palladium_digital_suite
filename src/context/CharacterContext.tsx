@@ -369,6 +369,13 @@ type CharacterContextValue = {
   identityResolvedWeightLbs: number | undefined
   setCharacterName: (name: string) => void
   setPlayNotes: (notes: string) => void
+  /**
+   * Replace the full sheet campaign journal list (Campaigns Home PPTN).
+   * Prefer helpers in `liveSheetCampaigns.ts` then call this.
+   */
+  setSheetCampaigns: (
+    campaigns: import('../lib/liveSheetCampaigns').LiveSheetCampaign[],
+  ) => void
   patchIdentityProfile: (patch: Partial<CharacterIdentityProfile>) => void
   /** Live-sheet aliases (Join Table projection list). */
   addAlias: (name: string) => void
@@ -2931,6 +2938,18 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setRawCharacter((prev) => ({ ...prev, playNotes: notes }))
   }, [])
 
+  const setSheetCampaigns = useCallback(
+    (
+      campaigns: import('../lib/liveSheetCampaigns').LiveSheetCampaign[],
+    ) => {
+      setRawCharacter((prev) => ({
+        ...prev,
+        sheetCampaigns: campaigns,
+      }))
+    },
+    [],
+  )
+
   const patchIdentityProfile = useCallback(
     (patch: Partial<CharacterIdentityProfile>) => {
       setRawCharacter((prev) => ({
@@ -3209,6 +3228,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       identityResolvedWeightLbs,
       setCharacterName,
       setPlayNotes,
+      setSheetCampaigns,
       patchIdentityProfile,
       addAlias,
       removeAlias,
@@ -3379,6 +3399,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       identityResolvedWeightLbs,
       setCharacterName,
       setPlayNotes,
+      setSheetCampaigns,
       patchIdentityProfile,
       addAlias,
       removeAlias,

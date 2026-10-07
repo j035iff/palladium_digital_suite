@@ -69,6 +69,7 @@ Player clicks **Join Table** and sees a page with:
 - Player clicks → dialog **“Joining Session”**
 - On success, dialog closes → Player is taken to their **Character Sheet** (spawned) **or** **Character Creation Forge** (draft / Create new)
 - Joined peers can open **At this table** on the sheet chrome to see each seat’s player name + **projected** character name
+- **Campaigns Home tab:** joining stamps / reuses a forever campaign tab keyed by the table’s **campaign name** (`ensureSheetCampaignForJoin`). Same name on a later session/day reuses that tab and its People/Places/Things/Notes; a different name creates a new tab. Players may **Delete** (permanent) or **Merge** tabs on the sheet — not on GM Hub host chrome.
 
 ### 4. GM sees the joiner
 

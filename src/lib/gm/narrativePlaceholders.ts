@@ -12,6 +12,45 @@ import type { GmPlaceholderEntity, GmSessionRecord } from './sessionTypes'
 
 export type { GmPlaceholderEntity }
 
+/**
+ * Minimal wiki bag for resolve / search / @ typeahead.
+ * GM Hub passes the live `GmSessionRecord`; sheet Campaigns pass placeholders only.
+ */
+export type ContentLinkWikiBag = {
+  placeholders: GmPlaceholderEntity[]
+  npcs: Array<{ instanceId: string; displayName: string }>
+  partyCharacterIds: string[]
+  campaignPcHistory?: Array<{ characterId: string; characterName: string }>
+}
+
+export function wikiBagFromPlaceholders(
+  placeholders: GmPlaceholderEntity[],
+): ContentLinkWikiBag {
+  return {
+    placeholders,
+    npcs: [],
+    partyCharacterIds: [],
+    campaignPcHistory: [],
+  }
+}
+
+export function wikiBagFromSession(
+  session: GmSessionRecord,
+): ContentLinkWikiBag {
+  return {
+    placeholders: hydratePlaceholders(session).placeholders,
+    npcs: session.npcs.map((n) => ({
+      instanceId: n.instanceId,
+      displayName: n.displayName,
+    })),
+    partyCharacterIds: [...session.partyCharacterIds],
+    campaignPcHistory: (session.campaignPcHistory ?? []).map((row) => ({
+      characterId: row.characterId,
+      characterName: row.characterName,
+    })),
+  }
+}
+
 export function emptyPlaceholders(): GmPlaceholderEntity[] {
   return []
 }
@@ -104,22 +143,24 @@ export function removePlaceholder(
 }
 
 export function placeholdersOfKind(
-  session: GmSessionRecord,
+  bag: ContentLinkWikiBag | GmSessionRecord,
   kind: GmContentLinkKind,
 ): GmPlaceholderEntity[] {
-  return hydratePlaceholders(session).placeholders.filter(
-    (row) => row.kind === kind,
-  )
+  const placeholders = Array.isArray(bag.placeholders)
+    ? bag.placeholders
+    : []
+  return placeholders.filter((row) => row.kind === kind)
 }
 
 export function findPlaceholder(
-  session: GmSessionRecord,
+  bag: ContentLinkWikiBag | GmSessionRecord,
   kind: GmContentLinkKind,
   id: string,
 ): GmPlaceholderEntity | undefined {
-  return hydratePlaceholders(session).placeholders.find(
-    (row) => row.kind === kind && row.id === id,
-  )
+  const placeholders = Array.isArray(bag.placeholders)
+    ? bag.placeholders
+    : []
+  return placeholders.find((row) => row.kind === kind && row.id === id)
 }
 
 export type GmResolvedContentTarget =
@@ -143,13 +184,13 @@ export type GmResolvedContentTarget =
  * campaign PC history (same `pc` kind — Unified Path).
  */
 export function resolveContentLinkTarget(
-  session: GmSessionRecord,
+  bag: ContentLinkWikiBag | GmSessionRecord,
   kind: GmContentLinkKind,
   id: string,
   label: string,
   opts: { partyNamesById?: ReadonlyMap<string, string> } = {},
 ): GmResolvedContentTarget {
-  const stub = findPlaceholder(session, kind, id)
+  const stub = findPlaceholder(bag, kind, id)
   if (stub) {
     return {
       status: 'ok',
@@ -161,7 +202,7 @@ export function resolveContentLinkTarget(
   }
 
   if (kind === 'npc') {
-    const npc = session.npcs.find((row) => row.instanceId === id)
+    const npc = bag.npcs.find((row) => row.instanceId === id)
     if (npc) {
       return {
         status: 'ok',
@@ -174,7 +215,7 @@ export function resolveContentLinkTarget(
   }
 
   if (kind === 'pc') {
-    if (session.partyCharacterIds.includes(id)) {
+    if (bag.partyCharacterIds.includes(id)) {
       const name = opts.partyNamesById?.get(id) ?? label
       return {
         status: 'ok',
@@ -184,7 +225,7 @@ export function resolveContentLinkTarget(
         source: 'pc',
       }
     }
-    const history = (session.campaignPcHistory ?? []).find(
+    const history = (bag.campaignPcHistory ?? []).find(
       (row) => row.characterId === id,
     )
     if (history) {
@@ -222,7 +263,7 @@ export type GmLinkableEntityHit = {
 
 /** Case-insensitive name search across placeholders (+ live NPCs/PCs for those kinds). */
 export function searchLinkableEntities(
-  session: GmSessionRecord,
+  bag: ContentLinkWikiBag | GmSessionRecord,
   kind: GmContentLinkKind,
   query: string,
   opts: {
@@ -236,14 +277,14 @@ export function searchLinkableEntities(
     source: 'placeholder' | 'npc' | 'pc'
   }> = []
 
-  for (const stub of placeholdersOfKind(session, kind)) {
+  for (const stub of placeholdersOfKind(bag, kind)) {
     if (!q || stub.name.toLowerCase().includes(q)) {
       rows.push({ id: stub.id, name: stub.name, source: 'placeholder' })
     }
   }
 
   if (kind === 'npc') {
-    for (const npc of session.npcs) {
+    for (const npc of bag.npcs) {
       if (rows.some((row) => row.id === npc.instanceId)) continue
       if (!q || npc.displayName.toLowerCase().includes(q)) {
         rows.push({
@@ -256,14 +297,14 @@ export function searchLinkableEntities(
   }
 
   if (kind === 'pc') {
-    for (const characterId of session.partyCharacterIds) {
+    for (const characterId of bag.partyCharacterIds) {
       if (rows.some((row) => row.id === characterId)) continue
       const name = opts.partyNamesById?.get(characterId) ?? characterId
       if (!q || name.toLowerCase().includes(q)) {
         rows.push({ id: characterId, name, source: 'pc' })
       }
     }
-    for (const entry of session.campaignPcHistory ?? []) {
+    for (const entry of bag.campaignPcHistory ?? []) {
       if (rows.some((row) => row.id === entry.characterId)) continue
       const name = entry.characterName.trim() || entry.characterId
       if (!q || name.toLowerCase().includes(q)) {
@@ -280,7 +321,7 @@ export function searchLinkableEntities(
  * Prefers names that start with the query, then includes substring hits.
  */
 export function searchAllLinkableEntities(
-  session: GmSessionRecord,
+  bag: ContentLinkWikiBag | GmSessionRecord,
   query: string,
   opts: {
     partyNamesById?: ReadonlyMap<string, string>
@@ -294,7 +335,7 @@ export function searchAllLinkableEntities(
   const hits: GmLinkableEntityHit[] = []
 
   for (const kind of kinds) {
-    for (const row of searchLinkableEntities(session, kind, query, opts)) {
+    for (const row of searchLinkableEntities(bag, kind, query, opts)) {
       hits.push({ kind, id: row.id, name: row.name, source: row.source })
     }
   }

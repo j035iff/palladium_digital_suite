@@ -263,3 +263,24 @@ export function storageOffsetToDisplayOffset(
   }
   return displayCursor
 }
+
+/**
+ * Rewrite `[[kind:id|label]]` ids using `idMap` (kind:id → new id).
+ * Used when merging wiki bags that collide on placeholder ids.
+ * Unmapped links pass through unchanged.
+ */
+export function remapContentLinkIds(
+  text: string,
+  idMap: ReadonlyMap<string, string>,
+): string {
+  if (idMap.size === 0) return text
+  return segmentContentLinks(text)
+    .map((seg) => {
+      if (seg.type === 'text') return seg.text
+      const mapKey = `${seg.ref.kind}:${seg.ref.id}`
+      const nextId = idMap.get(mapKey)
+      if (!nextId || nextId === seg.ref.id) return seg.raw
+      return serializeContentLink({ ...seg.ref, id: nextId })
+    })
+    .join('')
+}

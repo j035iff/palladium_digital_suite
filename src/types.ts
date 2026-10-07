@@ -2411,10 +2411,41 @@ export type CharacterAlias = {
   name: string
 }
 
+/**
+ * Per-campaign People / Places / Things / Notes on the live sheet
+ * (`LiveSheetCampaign` in `liveSheetCampaigns.ts`). Keyed by normalized
+ * table/campaign name; wiki tokens share GM Hub’s `[[kind:id|label]]` model.
+ */
+export type CharacterSheetCampaign = {
+  key: string
+  name: string
+  notes: string
+  placeholders: Array<{
+    id: string
+    kind: string
+    name: string
+    notes: string
+    linkedNpcId?: string
+    createdAtMs: number
+  }>
+  lastJoinSessionId?: string
+  createdAtMs: number
+  updatedAtMs: number
+}
+
 export type Character = {
   name: string
-  /** Freeform notes captured during live story play. */
+  /**
+   * Legacy freeform notes (pre–pass-2). Campaigns Home uses
+   * {@link sheetCampaigns} per campaign; this field may seed the first
+   * campaign’s notes on join/migration and is no longer the campaign notes store.
+   */
   playNotes?: string
+  /**
+   * Forever campaign tabs + per-campaign PPTN/wiki journals (pass 2).
+   * New tab only when join table **name** differs; delete/merge are explicit.
+   */
+  sheetCampaigns?: CharacterSheetCampaign[]
   /** Physical description and anthropometrics for leap/encumbrance and Morphus modifiers. */
   identityProfile?: CharacterIdentityProfile
   /**

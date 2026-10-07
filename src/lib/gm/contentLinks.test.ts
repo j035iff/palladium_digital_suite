@@ -6,6 +6,7 @@ import {
   insertContentLink,
   isGmContentLinkKind,
   parseContentLinkAt,
+  remapContentLinkIds,
   replaceMentionWithContentLink,
   segmentContentLinks,
   serializeContentLink,
@@ -119,5 +120,12 @@ describe('contentLinks', () => {
         'See [[place:p1|Dock]]'.length,
       ),
     ).toBe(afterLabelDisplay)
+  })
+
+  it('remaps wiki link ids for campaign merge', () => {
+    const map = new Map([['person:old', 'person_new']])
+    expect(
+      remapContentLinkIds('Meet [[person:old|Kai]] at home.', map),
+    ).toBe('Meet [[person:person_new|Kai]] at home.')
   })
 })

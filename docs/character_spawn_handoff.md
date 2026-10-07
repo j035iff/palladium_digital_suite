@@ -64,7 +64,7 @@ Per form branch (`finalizeFormBranch`):
 | `isFinalized` | Behavior |
 |---------------|----------|
 | `false` | Renders `CreationFlowShell` (Forge: Identity tab + eight step tabs) at the top of the creation viewport (global header hidden) |
-| `true` | Hides Forge; shows live sheet **Persistent Core** (Identity → Stats…Gear strip + quick-ref/XP → **Campaigns \| Combat** mode switch), with shared overlay tabs via `LiveSheetTabBody`. Mode switch opens that mode's Home: Campaigns (pills + PPTN/Notes) or `CombatHUD`. |
+| `true` | Hides Forge; shows live sheet **Persistent Core** (Identity → Stats…Gear strip + quick-ref/XP → **Campaigns \| Combat** mode switch), with shared overlay tabs via `LiveSheetTabBody`. Mode switch opens that mode's Home: Campaigns (forever name-keyed pills + per-campaign PPTN/Notes wiki) or `CombatHUD`. |
 
 Level-up queue and XP rituals activate when `isFinalized` and O.C.C. XP table floors exist.
 

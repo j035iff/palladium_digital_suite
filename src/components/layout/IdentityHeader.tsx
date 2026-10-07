@@ -802,6 +802,37 @@ export function IdentityHeader({
               morphusActive={morphusActive}
             />
 
+            {/*
+              Description / Personality / Character Image: no persisted Character
+              fields yet — Radical Visibility placeholders (do not invent schema).
+            */}
+            <div className="mt-4 grid max-w-xl gap-3 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <p className={identityLabelClass(morphusActive)}>Description</p>
+                <p
+                  className={`mt-1 rounded-lg border border-dashed px-3 py-2 text-sm ${
+                    morphusActive
+                      ? 'border-violet-700 text-violet-300/80'
+                      : 'border-slate-300 text-slate-500'
+                  }`}
+                >
+                  No saved description field on this character yet.
+                </p>
+              </div>
+              <div className="sm:col-span-2">
+                <p className={identityLabelClass(morphusActive)}>Personality</p>
+                <p
+                  className={`mt-1 rounded-lg border border-dashed px-3 py-2 text-sm ${
+                    morphusActive
+                      ? 'border-violet-700 text-violet-300/80'
+                      : 'border-slate-300 text-slate-500'
+                  }`}
+                >
+                  No saved personality field on this character yet.
+                </p>
+              </div>
+            </div>
+
             <p
               className="mt-3 font-mono text-[10px] uppercase tracking-wide opacity-70"
               style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
@@ -813,13 +844,22 @@ export function IdentityHeader({
       </div>
 
       {!collapsed ? (
-        <div
-          className={`hidden shrink-0 sm:block ${
-            morphusActive ? 'border-violet-800' : 'border-slate-200'
-          } h-36 w-28 border-2 bg-black`}
-          role="img"
-          aria-label="Character portrait placeholder"
-        />
+        <div className="hidden shrink-0 flex-col items-center gap-1 sm:flex">
+          <div
+            className={`h-36 w-28 border-2 bg-black ${
+              morphusActive ? 'border-violet-800' : 'border-slate-200'
+            }`}
+            role="img"
+            aria-label="Character image placeholder — no saved image field yet"
+          />
+          <p
+            className={`text-[9px] font-semibold uppercase tracking-wide ${
+              morphusActive ? 'text-violet-400/80' : 'text-slate-400'
+            }`}
+          >
+            Character Image
+          </p>
+        </div>
       ) : null}
     </div>
   )
