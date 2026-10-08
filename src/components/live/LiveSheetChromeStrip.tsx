@@ -68,7 +68,8 @@ export function LiveSheetChromeStrip({
       aria-label="Sheet tools and quick reference"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-3 gap-y-2">
-        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+        {/* Shrink-wrap overlays + Morphus so TABLE stays centered (Pillar 6). */}
+        <div className="flex min-w-0 shrink-0 flex-nowrap items-center gap-2">
           <div className="min-w-0">
             <ForgeNavigationBar
               tabs={tabs}
@@ -104,7 +105,7 @@ export function LiveSheetChromeStrip({
         </div>
 
         <div
-          className="flex min-w-[8rem] flex-1 flex-col items-center justify-center px-2 text-center"
+          className="flex min-w-[8rem] flex-1 basis-[8rem] flex-col items-center justify-center px-2 text-center"
           aria-label={seated ? 'Current table' : 'Join table'}
         >
           <span
