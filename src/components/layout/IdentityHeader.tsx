@@ -410,38 +410,50 @@ function clearPlaceholderNameOnFocus(
   }
 }
 
-function IdentityPlaceholderBox({
+function IdentityFreeformTextBox({
   label,
+  value,
+  onChange,
+  placeholder,
   morphusActive,
 }: {
   label: string
+  value: string
+  onChange: (value: string) => void
+  placeholder: string
   morphusActive: boolean
 }) {
+  const fieldId = `identity-${label.toLowerCase().replace(/\s+/g, '-')}`
   return (
     <div
       className={`flex min-h-[7.5rem] flex-1 flex-col rounded-md border-2 ${
         morphusActive
-          ? 'border-violet-700 bg-slate-950/40'
-          : 'border-slate-800 bg-white'
+          ? 'border-violet-500 bg-slate-950/50'
+          : 'border-slate-700 bg-white'
       }`}
-      aria-label={`${label} placeholder — no saved field yet`}
     >
-      <p
+      <label
+        htmlFor={fieldId}
         className={`border-b px-2 py-1 text-[10px] font-black uppercase tracking-wider ${
           morphusActive
-            ? 'border-violet-800 text-violet-300'
-            : 'border-slate-200 text-slate-600'
+            ? 'border-violet-800 text-violet-200'
+            : 'border-slate-200 text-slate-700'
         }`}
       >
         {label}
-      </p>
-      <div
-        className={`flex flex-1 items-center justify-center px-3 py-4 text-center text-xs font-semibold uppercase tracking-[0.2em] ${
-          morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+      </label>
+      <textarea
+        id={fieldId}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        rows={5}
+        className={`min-h-[6rem] flex-1 resize-y bg-transparent px-3 py-2 text-sm leading-relaxed outline-none placeholder:italic ${
+          morphusActive
+            ? 'text-violet-50 placeholder:text-violet-400/70'
+            : 'text-slate-900 placeholder:text-slate-400'
         }`}
-      >
-        Text box
-      </div>
+      />
     </div>
   )
 }
@@ -903,9 +915,9 @@ export function IdentityHeader({
           </div>
 
           {/*
-            Mock Identity Expand: left traits + aliases, center Description /
-            Personality placeholders, right Character Image. No persisted
-            Description/Personality/Image fields — Radical Visibility placeholders.
+            Identity Expand: left traits + aliases, center freeform Description /
+            Personality (persisted on identityProfile), right Character Image
+            placeholder (no image field yet).
           */}
           <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)]">
             <div className="min-w-0">
@@ -942,12 +954,18 @@ export function IdentityHeader({
             </div>
 
             <div className="flex min-h-[16rem] flex-col gap-3">
-              <IdentityPlaceholderBox
+              <IdentityFreeformTextBox
                 label="Description"
+                value={profile.description ?? ''}
+                onChange={(description) => patch({ description })}
+                placeholder="Physical appearance — build, features, clothing, distinguishing marks…"
                 morphusActive={morphusActive}
               />
-              <IdentityPlaceholderBox
+              <IdentityFreeformTextBox
                 label="Personality"
+                value={profile.personality ?? ''}
+                onChange={(personality) => patch({ personality })}
+                placeholder="Temperament, habits, quirks, how they act at the table…"
                 morphusActive={morphusActive}
               />
             </div>

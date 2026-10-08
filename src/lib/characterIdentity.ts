@@ -21,12 +21,21 @@ export const EMPTY_CHARACTER_IDENTITY_PROFILE: CharacterIdentityProfile = {
   weightLbs: '',
   eyes: '',
   hair: '',
+  description: '',
+  personality: '',
 }
 
 export function normalizeIdentityProfile(
   profile?: CharacterIdentityProfile,
 ): CharacterIdentityProfile {
-  return { ...EMPTY_CHARACTER_IDENTITY_PROFILE, ...profile }
+  return {
+    ...EMPTY_CHARACTER_IDENTITY_PROFILE,
+    ...profile,
+    description:
+      typeof profile?.description === 'string' ? profile.description : '',
+    personality:
+      typeof profile?.personality === 'string' ? profile.personality : '',
+  }
 }
 
 export function collectMorphusHeightModifiers(

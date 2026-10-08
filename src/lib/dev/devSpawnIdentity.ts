@@ -42,6 +42,8 @@ export function withDevSpawnIdentity(prev: CharacterRootState): CharacterRootSta
         DEV_SKIP_TO_REVIEW_IDENTITY_PROFILE.weightLbs,
       eyes: filled(existing?.eyes) ?? DEV_SKIP_TO_REVIEW_IDENTITY_PROFILE.eyes,
       hair: filled(existing?.hair) ?? DEV_SKIP_TO_REVIEW_IDENTITY_PROFILE.hair,
+      description: existing?.description ?? '',
+      personality: existing?.personality ?? '',
     },
     primary: {
       ...prev.primary,

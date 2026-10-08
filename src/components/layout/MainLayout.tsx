@@ -232,35 +232,14 @@ export function MainLayout() {
                   tone={morphusActive ? 'morphus' : 'sheet'}
                   onReturnToLauncher={requestReturnToLauncher}
                 />
-                {supportsDualForm ? (
-                  <button
-                    type="button"
-                    onClick={toggleForm}
-                    className="shrink-0 rounded-lg border-4 px-4 py-2 text-sm font-bold uppercase tracking-wide shadow-lg outline-none ring-offset-2 focus-visible:ring-4"
-                    style={{
-                      borderColor: morphusActive ? '#fbbf24' : '#0f172a',
-                      backgroundColor: morphusActive ? '#4c1d95' : '#eff6ff',
-                      color: morphusActive ? '#fef9c3' : '#0f172a',
-                      ...(morphusActive
-                        ? { boxShadow: '0 0 0 2px #7c3aed' }
-                        : { boxShadow: '0 0 0 2px #3b82f6' }),
-                    }}
-                    aria-pressed={morphusActive}
-                    aria-label={
-                      morphusActive
-                        ? 'Become Facade: switch to human presentation'
-                        : 'Become Morphus: switch to morphus form'
-                    }
-                  >
-                    Become {morphusActive ? 'Facade' : 'Morphus'}
-                  </button>
-                ) : null}
               </div>
             </div>
           </header>
 
           <LiveSheetChromeStrip
             morphusActive={morphusActive}
+            supportsDualForm={supportsDualForm}
+            onToggleForm={toggleForm}
             activeOverlayTabId={overlayTabId}
             onSelectOverlayTab={(id) => {
               setOverlayTabId((cur) => (cur === id ? null : id))
@@ -318,36 +297,6 @@ export function MainLayout() {
                     </button>
                   )
                 })}
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  aria-pressed={overlayTabId == null}
-                  title={
-                    overlayTabId == null
-                      ? `${liveSheetModeLabel(sheetMode)} Home`
-                      : 'Return to mode Home'
-                  }
-                  onClick={() => setOverlayTabId(null)}
-                  className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wide transition ${
-                    overlayTabId == null
-                      ? morphusActive
-                        ? 'bg-violet-600 text-white'
-                        : 'bg-blue-600 text-white'
-                      : morphusActive
-                        ? 'border border-violet-600 text-violet-200 hover:bg-violet-900/40'
-                        : 'border border-blue-300 text-blue-800 hover:bg-blue-50'
-                  }`}
-                >
-                  Home
-                </button>
-                <p
-                  className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${
-                    morphusActive ? 'text-violet-400/80' : 'text-slate-400'
-                  }`}
-                >
-                  {sheetMode === 'combat' ? 'Combat HUD' : 'Campaigns Home'}
-                </p>
               </div>
             </div>
           </div>

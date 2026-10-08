@@ -2403,6 +2403,13 @@ export type CharacterIdentityProfile = {
   weightLbs: string
   eyes: string
   hair: string
+  /**
+   * Freeform physical / appearance description (player text on the live sheet —
+   * not a Palladium catalog field).
+   */
+  description?: string
+  /** Freeform personality notes (player text; not a catalog field). */
+  personality?: string
 }
 
 /** Alternate display name the player may project at Join Table (peers see this). */
