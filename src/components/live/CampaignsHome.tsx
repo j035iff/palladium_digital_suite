@@ -21,12 +21,14 @@ import {
   campaignsSubTabEmptyCopy,
   campaignsSubTabForContentKind,
   campaignsSubTabKind,
+  CAMPAIGN_AT_TABLE_LOCK_TOOLTIP,
   confirmDeleteSheetCampaign,
   confirmMergeSheetCampaigns,
   deleteSheetCampaign,
   ensureSheetCampaignForJoin,
   findSheetCampaign,
   hydrateSheetCampaigns,
+  isSheetCampaignAtJoinedTable,
   mergeSheetCampaigns,
   patchSheetCampaign,
   patchSheetCampaignPlaceholder,
@@ -186,16 +188,22 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
   const otherCampaigns = campaigns.filter(
     (c) => c.key !== activeCampaign?.key,
   )
+  const activeIsAtTable = Boolean(
+    activeCampaign &&
+      joined &&
+      isSheetCampaignAtJoinedTable(activeCampaign.key, joined.name),
+  )
+  const deleteMergeLocked = activeIsAtTable
 
   const handleDelete = () => {
-    if (!activeCampaign) return
+    if (!activeCampaign || deleteMergeLocked) return
     if (!confirmDeleteSheetCampaign(activeCampaign.name)) return
     setSheetCampaigns(deleteSheetCampaign(campaigns, activeCampaign.key))
     setMergeOpen(false)
   }
 
   const handleMerge = () => {
-    if (!activeCampaign || !mergeTargetKey) return
+    if (!activeCampaign || !mergeTargetKey || deleteMergeLocked) return
     const target = findSheetCampaign(campaigns, mergeTargetKey)
     if (!target) return
     if (!confirmMergeSheetCampaigns(activeCampaign.name, target.name)) return
@@ -240,25 +248,33 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
           >
             {pills.map((pill) => {
               const active = pill.key === activeCampaignKey
+              const atTable = Boolean(
+                joined && isSheetCampaignAtJoinedTable(pill.key, joined.name),
+              )
               return (
                 <button
                   key={pill.key}
                   type="button"
                   role="tab"
                   aria-selected={active}
+                  title={atTable ? 'Currently at this table' : undefined}
                   onClick={() => {
                     setActiveCampaignKey(pill.key)
                     setMergeOpen(false)
                     setFocusStubId(null)
                   }}
                   className={`rounded-full px-3 py-1.5 text-xs font-black uppercase tracking-wide transition ${
-                    active
-                      ? morphus
-                        ? 'bg-violet-700 text-white shadow'
-                        : 'bg-blue-700 text-white shadow'
-                      : morphus
-                        ? 'border border-violet-600 text-violet-200 hover:bg-violet-900/50'
-                        : 'border border-blue-300 text-blue-900 hover:bg-blue-50'
+                    atTable
+                      ? active
+                        ? 'bg-emerald-600 text-white shadow'
+                        : 'border-2 border-emerald-500 bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
+                      : active
+                        ? morphus
+                          ? 'bg-violet-700 text-white shadow'
+                          : 'bg-blue-700 text-white shadow'
+                        : morphus
+                          ? 'border border-violet-600 text-violet-200 hover:bg-violet-900/50'
+                          : 'border border-blue-300 text-blue-900 hover:bg-blue-50'
                   }`}
                 >
                   {pill.name}
@@ -267,49 +283,7 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
             })}
           </div>
 
-          {activeCampaign ? (
-            <div className="flex flex-wrap items-center gap-2">
-              <p
-                className={`text-[11px] font-semibold uppercase tracking-wide ${
-                  morphus ? 'text-violet-300/90' : 'text-slate-500'
-                }`}
-              >
-                {activeCampaign.name}
-                {joined &&
-                normalizeJoinMatch(joined.name, activeCampaign.key)
-                  ? ' · At this table'
-                  : ''}
-              </p>
-              <button
-                type="button"
-                onClick={handleDelete}
-                className={`rounded border px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${
-                  morphus
-                    ? 'border-red-800/80 text-red-300 hover:bg-red-950/40'
-                    : 'border-red-300 text-red-700 hover:bg-red-50'
-                }`}
-              >
-                Delete campaign
-              </button>
-              <button
-                type="button"
-                disabled={otherCampaigns.length === 0}
-                onClick={() => {
-                  setMergeOpen((open) => !open)
-                  setMergeTargetKey(otherCampaigns[0]?.key ?? '')
-                }}
-                className={`rounded border px-2 py-1 text-[10px] font-bold uppercase tracking-wide disabled:cursor-not-allowed disabled:opacity-40 ${
-                  morphus
-                    ? 'border-violet-600 text-violet-200 hover:bg-violet-900/40'
-                    : 'border-blue-300 text-blue-800 hover:bg-blue-50'
-                }`}
-              >
-                Merge…
-              </button>
-            </div>
-          ) : null}
-
-          {mergeOpen && activeCampaign ? (
+          {mergeOpen && activeCampaign && !deleteMergeLocked ? (
             <div
               className={`rounded-lg border-2 px-3 py-3 ${
                 morphus
@@ -368,7 +342,7 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
       )}
 
       <div
-        className="flex flex-wrap gap-1.5 rounded-md bg-slate-900 px-2 py-2"
+        className="flex flex-wrap items-center gap-1.5 rounded-md bg-slate-900 px-2 py-2"
         role="tablist"
         aria-label="Campaign sections"
       >
@@ -394,6 +368,42 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
             </button>
           )
         })}
+        {activeCampaign ? (
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              disabled={deleteMergeLocked}
+              title={
+                deleteMergeLocked
+                  ? CAMPAIGN_AT_TABLE_LOCK_TOOLTIP
+                  : `Delete ${activeCampaign.name}`
+              }
+              onClick={handleDelete}
+              className="rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-red-300 hover:bg-red-950/40 disabled:cursor-not-allowed disabled:text-slate-500 disabled:opacity-50 disabled:hover:bg-transparent"
+            >
+              Delete campaign
+            </button>
+            <button
+              type="button"
+              disabled={deleteMergeLocked || otherCampaigns.length === 0}
+              title={
+                deleteMergeLocked
+                  ? CAMPAIGN_AT_TABLE_LOCK_TOOLTIP
+                  : otherCampaigns.length === 0
+                    ? 'No other campaign to merge into'
+                    : `Merge ${activeCampaign.name} into another campaign`
+              }
+              onClick={() => {
+                if (deleteMergeLocked) return
+                setMergeOpen((open) => !open)
+                setMergeTargetKey(otherCampaigns[0]?.key ?? '')
+              }}
+              className="rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-sky-300 hover:bg-slate-800 disabled:cursor-not-allowed disabled:text-slate-500 disabled:opacity-50 disabled:hover:bg-transparent"
+            >
+              Merge…
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {!activeCampaign ? null : subTab === 'notes' ? (
@@ -577,11 +587,5 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
         </div>
       )}
     </section>
-  )
-}
-
-function normalizeJoinMatch(joinedName: string, campaignKey: string): boolean {
-  return (
-    joinedName.trim().replace(/\s+/g, ' ').toLowerCase() === campaignKey
   )
 }

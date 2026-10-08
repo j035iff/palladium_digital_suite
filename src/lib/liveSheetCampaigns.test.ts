@@ -9,11 +9,13 @@ import {
   emptyLiveSheetCampaign,
   ensureSheetCampaignForJoin,
   hydrateSheetCampaigns,
+  isSheetCampaignAtJoinedTable,
   listRememberedCampaigns,
   mergeSheetCampaigns,
   normalizeCampaignName,
   rememberJoinedCampaign,
   addSheetCampaignPlaceholder,
+  CAMPAIGN_AT_TABLE_LOCK_TOOLTIP,
 } from './liveSheetCampaigns'
 
 const memory = new Map<string, string>()
@@ -231,6 +233,17 @@ describe('liveSheetCampaigns', () => {
     expect(campaignsSubTabForContentKind('place')).toBe('places')
     expect(campaignsSubTabForContentKind('thing')).toBe('things')
     expect(campaignsSubTabForContentKind('note')).toBe('notes')
+  })
+
+  it('detects the seated-table campaign for Delete/Merge lock + green pill', () => {
+    expect(isSheetCampaignAtJoinedTable('the second day', 'The Second Day')).toBe(
+      true,
+    )
+    expect(isSheetCampaignAtJoinedTable('the beginning', 'The Second Day')).toBe(
+      false,
+    )
+    expect(isSheetCampaignAtJoinedTable('the second day', null)).toBe(false)
+    expect(CAMPAIGN_AT_TABLE_LOCK_TOOLTIP).toMatch(/currently at that table/i)
   })
 
   it('hydrates sheet campaigns from save JSON', () => {

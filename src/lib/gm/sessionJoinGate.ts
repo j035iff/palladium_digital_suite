@@ -3,6 +3,8 @@
  * Pure predicates — Join Table UI greys rows and shows why when disabled.
  *
  * Session row enabled iff player name (trimmed) and a character id are set.
+ * In-sheet join passes {@link JOIN_PLAYER_NAME_PLACEHOLDER} until launch
+ * sign-in populates a real peer-visible display name (no Player Name field UX).
  */
 
 export type GmJoinSessionGateInput = {

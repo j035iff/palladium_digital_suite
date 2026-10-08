@@ -260,7 +260,6 @@ export type AppViewport =
   | 'gm'
   | 'campaign_forge'
   | 'gear_forge'
-  | 'join_table'
 
 /** Active-form combat sheet slice (vitality pools + attribute bonuses). */
 type ActiveStats = {
@@ -301,8 +300,6 @@ type CharacterContextValue = {
   startCreation: (genreId: GenreId) => void
   enterGmHub: () => void
   enterCampaignForge: () => void
-  /** Player device: join an open play sitting (same SPA). */
-  enterJoinTable: () => void
   /**
    * Open the standalone Gear Forge (custom gear library).
    * Pass `libraryId` to focus an existing My Custom Gear entry after open.
@@ -1029,10 +1026,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const enterCampaignForge = useCallback(() => {
     setViewport('campaign_forge')
-  }, [])
-
-  const enterJoinTable = useCallback(() => {
-    setViewport('join_table')
   }, [])
 
   const enterGearForge = useCallback((opts?: { libraryId?: string }) => {
@@ -3177,7 +3170,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       startCreation,
       enterGmHub,
       enterCampaignForge,
-      enterJoinTable,
       enterGearForge,
       gearForgeLibraryId,
       returnToLauncher,
@@ -3353,7 +3345,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       startCreation,
       enterGmHub,
       enterCampaignForge,
-      enterJoinTable,
       enterGearForge,
       gearForgeLibraryId,
       returnToLauncher,

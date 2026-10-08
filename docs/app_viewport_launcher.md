@@ -18,14 +18,13 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 
 | Viewport | UI | Entry |
 |----------|-----|--------|
-| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** icon from sheet header, GM Hub, Campaign Creation Forge, Gear Forge, or Join table |
-| `sheet` | `MainLayout` — live sheet + optional creation chrome | **Open Character** or **Create Character** |
+| `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** icon from sheet header, GM Hub, Campaign Creation Forge, or Gear Forge |
+| `sheet` | `MainLayout` — live sheet + optional creation chrome; in-sheet **Join table** drawer | **Open Character** or **Create Character**; join only from sheet TABLE strip |
 | `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
 | `gear_forge` | `GearForgeViewport` — shared Gear Forge → custom gear library | **Gear Forge** or **My Custom Gear** on the launcher |
 | `gm` | `GmHubShell` — Narrative / Combat lane tabs (Story Beats·People·Places·Things·Notes / Melee·Prefabs) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
-| `join_table` | `GmJoinTableViewport` — Player Name, My Characters, Join Session LAN list; success → Character Sheet | **Join table** on the launcher |
 
-`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, `GmJoinTableViewport` when `viewport === 'join_table'`, otherwise `MainLayout`.
+`App.tsx` renders `AppLauncher` when `viewport === 'launcher'`, `CampaignCreationForge` when `viewport === 'campaign_forge'`, `GearForgeViewport` when `viewport === 'gear_forge'`, `GmHubShell` when `viewport === 'gm'`, otherwise `MainLayout`. There is **no** `join_table` viewport — players open a character and join from the sheet.
 
 **Units preference:** Every viewport opens units via the shared **Settings** gear (`PortalChromeActions` → `AppSettingsDialog`; see `docs/units_preference.md`). Preference is local to the device/user (`localStorage`), not part of character saves or GM session state. The launcher shows Settings only (already home); other viewports show Return + Settings.
 
@@ -91,7 +90,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 
 - **Radical visibility:** Roadmap genres remain visible but clearly non-selectable.
 - **Megaversal bridge:** `creationGenreId` is stamped at creation and preserved in saves; `hostGenreId` may diverge for cross-setting play.
-- **No hidden launcher paths:** My Characters, Create Character, Campaigns, New Campaign, **Join table**, **Gear Forge**, and **My Custom Gear** are all on the portal. Roadmap genres stay visible but non-selectable.
+- **No hidden launcher paths:** My Characters, Create Character, Campaigns, New Campaign, **Gear Forge**, and **My Custom Gear** are all on the portal. **Join table** is not on the launcher — it lives on the live sheet TABLE strip only. Roadmap genres stay visible but non-selectable.
 
 ---
 
@@ -101,8 +100,8 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 |---------|----------|
 | Launcher UI | `src/components/dashboard/AppLauncher.tsx` |
 | Portal chrome | `src/components/chrome/PortalChromeActions.tsx` + `AppSettingsDialog.tsx` — Return + Settings icons (launcher: Settings only) |
-| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGearForge`, `enterGmHub`, `enterJoinTable`, `returnToLauncher`) |
-| Join table | [gm_hub.md](./gm_hub.md) / [join-table-flow.md](./join-table-flow.md) — `GmJoinTableViewport`, `listLanSessions`, `resolveJoinSessionGate` |
+| Viewport switch | `src/App.tsx`, `CharacterContext` (`startCreation`, `loadSavedCharacter`, `enterCampaignForge`, `enterGearForge`, `enterGmHub`, `returnToLauncher`) |
+| Join table | [gm_hub.md](./gm_hub.md) / [join-table-flow.md](./join-table-flow.md) — in-sheet `SheetJoinTableDrawer` + `JoinTablePanel`, `listLanSessions`, `resolveJoinSessionGate` |
 | Campaign Creation Forge | `src/lib/gm/campaignForge.ts`, `src/components/gm/CampaignCreationForge.tsx` |
 | Gear Forge (portal) | [forge/gear_forge.md](./forge/gear_forge.md) — `GearForgeViewport`, `customGearLibrary.ts` |
 | GM Hub | [gm_hub.md](./gm_hub.md) — `src/components/gm/`, `src/context/GmSessionContext.tsx` |

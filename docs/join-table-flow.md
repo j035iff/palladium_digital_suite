@@ -7,9 +7,9 @@ Most simple version of the Join Table user story. This is the target LAN UX stor
 - Anyone on the same Wi-Fi can see and join any active session on the network without restriction
 - GM and Players are all on the same Wi-Fi
 - GM has already created a Campaign for the session
-- Player has a character native to the GM Campaign’s genre **or** will create one from Join Table (Create new character / save-for-later draft)
+- Player opens a character on their device (launcher **Open Character** / create path), then joins from the **live sheet** — there is no launcher **Join table** button and no `join_table` viewport
 
-Related: [gm_hub.md](./gm_hub.md) · [app_viewport_launcher.md](./app_viewport_launcher.md)
+Related: [gm_hub.md](./gm_hub.md) · [app_viewport_launcher.md](./app_viewport_launcher.md) · [ui_wireframe.md](./ui_wireframe.md)
 
 ---
 
@@ -25,30 +25,27 @@ They land on the Launcher Landing Page.
 - Campaign Interface opens
 - Top of the main page shows an **Open Table** button
 
-#### 1b. Player — Join Table
+#### 1b. Player — Join Table (in-sheet only)
 
-Player clicks **Join Table** and sees a page with:
+Player opens a character → live sheet. Persistent Core strip middle shows **TABLE**. When not seated: **Join table** opens an in-sheet drawer (`SheetJoinTableDrawer` + `JoinTablePanel`). When seated: TABLE shows the campaign/table name.
 
-1. **Player Name**
-   - Text box for the **player** name (not character name)
-   - Visible to everyone in the session
-2. **My Characters**
-   - Character drop-down: **spawned** characters **and** in-progress **save-for-later** forge drafts (drafts labeled `[Draft]`)
-   - Defaults to **“Select a character”** — Player cannot join until a real character is selected
-   - **Create new character** — pick a setting → blank draft is saved and selected; after Join Session the shared Character Creation Forge opens (same forge path as the launcher — no fork)
-   - Player selects their character (complete or draft)
-3. **Name at the table** (after a character is selected)
+1. **Player Name (placeholder)**
+   - No editable Player Name field on the sheet join UI
+   - Join uses `JOIN_PLAYER_NAME_PLACEHOLDER` (`Player`) for `runtime.join({ displayName })` until a later launch “sign in” populates the peer-visible name
+   - Stub is labeled on the join drawer so Radical Visibility stays clear
+2. **Character**
+   - Locked to the open sheet character (Unified Path — no second join shell / character picker on a separate page)
+3. **Name at the table**
    - Drop-down of the real character name (default) plus any **Aliases**, plus **Add alias**
-   - **Add alias** opens a text dialog → **Enter table with alias** (saves the alias, selects it as the projected name, returns to the normal Join Table screen) or **Cancel** (back to the normal Join Table screen with no change)
+   - **Add alias** opens a text dialog → **Enter table with alias** or **Cancel**
    - Other players see this projected name; the **GM always sees the real character name**
    - Choice is stored on the character (`tableProjectedAliasId`) and applied on `party.snapshot` → seat `projectedCharacterName`
-   - After join, changing aliases / projected name / other identity on the live sheet does **not** refresh `party.snapshot` until the player presses **Save** (same dirty/save pipeline as the character file)
+   - After join, changing aliases / projected name / other identity on the live sheet does **not** refresh `party.snapshot` until the player presses **Save**
 4. **Join Session**
    - Populates any sessions available on the network
    - No session yet → “no session available”
    - When a session exists → show its name (**GM Campaign name** only)
-   - Browse always polls this device’s interim listener **`GET /discover`** (never the Advanced GM IP field). Discover UDP-beacons the LAN, TCP-probes ARP + `/24` peers (including browser-visible LAN hints for WSL/VPN), and if still empty the client probes the same `/24` over browser TCP — the plane Advanced IP already uses. Players keep their own device/app so **My Characters** stays local.
-   - If Player Name or Character is missing → section tells them they must enter name + select character before joining
+   - Browse always polls this device’s interim listener **`GET /discover`** (never the Advanced GM IP field). Discover UDP-beacons the LAN, TCP-probes ARP + `/24` peers (including browser-visible LAN hints for WSL/VPN), and if still empty the client probes the same `/24` over browser TCP — the plane Advanced IP already uses.
    - If browse cannot find the GM → Advanced short code + GM Wi‑Fi IP (Radical Visibility **failure mode only** — not the happy path)
 
 ### 2. GM clicks Start Session
@@ -65,11 +62,10 @@ Player clicks **Join Table** and sees a page with:
 ### 3. Player joins
 
 - Session appears as a button on Join Session (campaign name only — **no date/time**)
-- Button greyed out until player name + character are set
 - Player clicks → dialog **“Joining Session”**
-- On success, dialog closes → Player is taken to their **Character Sheet** (spawned) **or** **Character Creation Forge** (draft / Create new)
+- On success, drawer closes; sheet stays open with TABLE showing the campaign name (same shared client runtime / `party.snapshot` path)
 - Joined peers can open **At this table** on the sheet chrome to see each seat’s player name + **projected** character name
-- **Campaigns Home tab:** joining stamps / reuses a forever campaign tab keyed by the table’s **campaign name** (`ensureSheetCampaignForJoin`). Same name on a later session/day reuses that tab and its People/Places/Things/Notes; a different name creates a new tab. Players may **Delete** (permanent) or **Merge** tabs on the sheet — not on GM Hub host chrome.
+- **Campaigns Home:** joining stamps / reuses a forever campaign tab keyed by the table’s **campaign name** (`ensureSheetCampaignForJoin`). The seated table’s campaign pill is **green**. Same name on a later session/day reuses that tab and its People/Places/Things/Notes; a different name creates a new tab. **Delete** / **Merge** on the seated campaign are greyed with tooltip (*cannot delete or merge a campaign if you’re currently at that table*); other campaigns stay deletable and can be merged **into** the current-table campaign. Player journal content is never synced to GM Hub.
 
 ### 4. GM sees the joiner
 
@@ -88,7 +84,7 @@ Player clicks **Join Table** and sees a page with:
 ### 5. Leave
 
 - GM **Return to launcher** with a table open → confirm → **Close Table** (unpublish + stop listen) → launcher
-- Joined player **Return to launcher** (Join table or live-sheet exit icon) → confirm → detach (`session.leave`) → launcher
+- Joined player **Return to launcher** (live-sheet Portal exit) → confirm → detach (`session.leave`) → launcher
 - Live sheet with **unsaved edits**: Portal leave opens Save / Continue without saving first (then the join-leave confirm if still joined) — same dirty guard as offline sheet (`liveSheetSave`)
 - Joined dirty edits (including identity / Name at the table) stay local until **Save**; Save writes the character file and flushes `party.snapshot` together. Discard / Continue without saving reloads the last saved snapshot peers already see.
 - Leave/kick removes the seat and clears that character from PCs / joiner cache (no phantom Missing saves)

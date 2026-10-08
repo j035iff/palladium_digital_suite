@@ -27,11 +27,15 @@ type Props = {
   onSelectOverlayTab: (id: LiveSheetOverlayTabId) => void
   quickRef: QuickRef
   vitalityFlash: 'damage' | 'heal' | 'none' | null
+  /** When seated: table/campaign name shown under TABLE. */
+  tableName: string | null
+  /** Opens in-sheet Join drawer when not seated. */
+  onJoinTable: () => void
 }
 
 /**
- * Persistent Core strip: Stats/Saves/Skills/Abilities/Gear (+ optional Become
- * Morphus after Gear) + quick-ref pools + XP.
+ * Persistent Core strip: Stats…Gear (+ optional Become Morphus after Gear) ·
+ * middle TABLE status / Join table · quick-ref pools · XP.
  * Identity Expand pushes this strip down (Visual Continuity).
  */
 export function LiveSheetChromeStrip({
@@ -42,8 +46,11 @@ export function LiveSheetChromeStrip({
   onSelectOverlayTab,
   quickRef,
   vitalityFlash,
+  tableName,
+  onJoinTable,
 }: Props) {
   const tabs = buildLiveSheetOverlayTabViews(activeOverlayTabId)
+  const seated = Boolean(tableName?.trim())
 
   return (
     <div
@@ -95,6 +102,42 @@ export function LiveSheetChromeStrip({
             </button>
           ) : null}
         </div>
+
+        <div
+          className="flex min-w-[8rem] flex-1 flex-col items-center justify-center px-2 text-center"
+          aria-label={seated ? 'Current table' : 'Join table'}
+        >
+          <span
+            className={`text-[10px] font-black uppercase tracking-[0.22em] ${
+              morphusActive ? 'text-violet-400' : 'text-blue-600'
+            }`}
+          >
+            Table
+          </span>
+          {seated ? (
+            <span
+              className={`mt-0.5 max-w-[14rem] truncate text-sm font-black uppercase tracking-wide sm:max-w-xs sm:text-base ${
+                morphusActive ? 'text-violet-50' : 'text-slate-900'
+              }`}
+              title={tableName ?? undefined}
+            >
+              {tableName}
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={onJoinTable}
+              className={`mt-0.5 rounded-full border-2 px-3 py-0.5 text-[11px] font-black uppercase tracking-wide transition ${
+                morphusActive
+                  ? 'border-violet-400 bg-violet-900/50 text-violet-50 hover:bg-violet-800'
+                  : 'border-blue-600 bg-blue-50 text-blue-900 hover:bg-blue-100'
+              }`}
+            >
+              Join table
+            </button>
+          )}
+        </div>
+
         <div
           className={`flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border-2 px-3 py-1.5 font-mono text-xs font-bold tabular-nums ${
             morphusActive
@@ -118,7 +161,7 @@ export function LiveSheetChromeStrip({
             </span>
           ) : null}
         </div>
-        <div className="w-full min-w-[12rem] sm:ml-auto sm:w-auto sm:max-w-xs">
+        <div className="w-full min-w-[12rem] sm:w-auto sm:max-w-xs">
           <IdentityXpBar />
         </div>
       </div>

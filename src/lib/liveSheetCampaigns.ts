@@ -72,6 +72,19 @@ export function normalizeCampaignName(name: string): string {
   return name.trim().replace(/\s+/g, ' ').toLowerCase()
 }
 
+/** Tooltip when Delete / Merge are locked for the campaign of the seated table. */
+export const CAMPAIGN_AT_TABLE_LOCK_TOOLTIP =
+  "Cannot delete or merge a campaign if you're currently at that table."
+
+/** True when this campaign pill is the table the player is currently seated at. */
+export function isSheetCampaignAtJoinedTable(
+  campaignKey: string,
+  joinedName: string | null | undefined,
+): boolean {
+  if (!joinedName?.trim() || !campaignKey.trim()) return false
+  return normalizeCampaignName(campaignKey) === normalizeCampaignName(joinedName)
+}
+
 export function emptyLiveSheetCampaign(
   name: string,
   opts: { notes?: string; lastJoinSessionId?: string; nowMs?: number } = {},

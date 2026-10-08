@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CreationFlowShell } from '../creation/CreationFlowShell'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { LiveSheetTabBody } from '../live/LiveSheetTabBody'
 import { LiveSheetChromeStrip } from '../live/LiveSheetChromeStrip'
 import { LiveSheetTabOverlay } from '../live/LiveSheetTabOverlay'
 import { LiveSheetSaveControls } from '../live/LiveSheetSaveControls'
+import { SheetJoinTableDrawer } from '../live/SheetJoinTableDrawer'
 import { UnsavedEditsDialog } from '../live/UnsavedEditsDialog'
 import { useCharacter } from '../../context/CharacterContext'
 import { PLAYER_RETURN_LEAVES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
 import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
+import type { GmClientRuntimeState } from '../../lib/gm/sessionClientRuntime'
 import { shouldGuardLiveSheetLeave } from '../../lib/liveSheetSave'
 import {
   liveSheetModeLabel,
@@ -30,6 +32,11 @@ export function MainLayout() {
     null,
   )
   const [unsavedLeaveOpen, setUnsavedLeaveOpen] = useState(false)
+  const [joinDrawerOpen, setJoinDrawerOpen] = useState(false)
+  const gmClientRuntime = useMemo(() => getSharedGmClientRuntime(), [])
+  const [gmClientState, setGmClientState] = useState<GmClientRuntimeState>(() =>
+    gmClientRuntime.getState(),
+  )
   const {
     character,
     creationGenreId,
@@ -59,6 +66,19 @@ export function MainLayout() {
   const morphusActive = supportsDualForm && activeForm === 'morphus'
   const showCreation = character.isFinalized !== true
   const showIsp = psychicTier !== 'none' || form.isp.maximum > 0
+
+  useEffect(() => gmClientRuntime.subscribe(setGmClientState), [gmClientRuntime])
+
+  const seatedTableName =
+    gmClientState.status === 'joined' && gmClientState.hello
+      ? gmClientState.hello.campaignName?.trim() ||
+        gmClientState.hello.sessionName?.trim() ||
+        'Campaign'
+      : null
+
+  useEffect(() => {
+    if (seatedTableName) setJoinDrawerOpen(false)
+  }, [seatedTableName])
 
   useEffect(() => {
     if (!shouldGuardLiveSheetLeave(character.isFinalized === true, isLiveSheetDirty)) {
@@ -245,6 +265,11 @@ export function MainLayout() {
               setOverlayTabId((cur) => (cur === id ? null : id))
             }}
             vitalityFlash={vitalityFlash}
+            tableName={seatedTableName}
+            onJoinTable={() => {
+              setOverlayTabId(null)
+              setJoinDrawerOpen(true)
+            }}
             quickRef={{
               hpCurrent: activeStats.hitPoints.current,
               hpMax: activeStats.hitPoints.maximum,
@@ -339,6 +364,14 @@ export function MainLayout() {
           tabId={overlayTabId}
           morphusActive={morphusActive}
           onClose={() => setOverlayTabId(null)}
+        />
+      ) : null}
+      {!showCreation ? (
+        <SheetJoinTableDrawer
+          open={joinDrawerOpen}
+          characterId={character.id}
+          morphusActive={morphusActive}
+          onClose={() => setJoinDrawerOpen(false)}
         />
       ) : null}
       <JoinedTablePeerRoster />
