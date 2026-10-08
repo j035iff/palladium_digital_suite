@@ -56,24 +56,24 @@ export function IdentityXpBar() {
         aria-label={`Experience and XP history — ${progressionTitle}`}
         onClick={() => setOpen((v) => !v)}
       >
-        <div className="mb-1 flex items-baseline justify-between gap-2">
+        <span
+          className={`block text-[10px] font-black uppercase tracking-wider ${
+            morphus ? 'text-violet-200' : 'text-blue-800'
+          }`}
+        >
+          Experience
+        </span>
+        <div className="mt-0.5 flex items-baseline justify-between gap-2">
           <span
-            className={`text-[10px] font-black uppercase tracking-wider ${
-              morphus ? 'text-violet-200' : 'text-blue-900'
-            }`}
-          >
-            Experience
-          </span>
-          <span
-            className={`text-[11px] font-bold ${
-              morphus ? 'text-violet-100' : 'text-slate-800'
+            className={`text-sm font-black leading-tight ${
+              morphus ? 'text-violet-50' : 'text-slate-900'
             }`}
           >
             Level {character.level}
           </span>
           <span
-            className={`font-mono text-xs font-bold tabular-nums ${
-              morphus ? 'text-amber-200' : 'text-slate-900'
+            className={`shrink-0 font-mono text-xs font-bold tabular-nums ${
+              morphus ? 'text-amber-200' : 'text-slate-800'
             }`}
           >
             {character.xp.toLocaleString()} XP
@@ -88,7 +88,7 @@ export function IdentityXpBar() {
           </span>
         </div>
         <div
-          className={`h-2.5 w-full overflow-hidden rounded-full ${track}`}
+          className={`mt-1.5 h-2 w-full overflow-hidden rounded-full ${track}`}
           role="progressbar"
           aria-valuenow={xpProgress.pct}
           aria-valuemin={0}

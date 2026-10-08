@@ -47,6 +47,11 @@ type IdentityHeaderProps = {
   collapsed?: boolean
   onCollapsedChange?: (collapsed: boolean) => void
   /**
+   * When false, Expand/Minimize is owned by the Persistent Core utility cluster
+   * (mockup fidelity — sits with Save / Portal). Default true.
+   */
+  showExpandToggle?: boolean
+  /**
    * Creation only: short-viewport chrome — auto-collapse identity and use
    * tighter summary typography. Expand remains available.
    */
@@ -102,12 +107,6 @@ function identityLabelClass(morphusActive: boolean): string {
     : 'text-[10px] font-semibold uppercase tracking-wider text-slate-500'
 }
 
-function identityValueClass(morphusActive: boolean): string {
-  return morphusActive
-    ? 'text-sm font-semibold uppercase tracking-wide text-violet-100'
-    : 'text-sm font-semibold uppercase tracking-wide text-slate-800'
-}
-
 function IdentityProfileDetailFields({
   profile,
   patch,
@@ -115,6 +114,7 @@ function IdentityProfileDetailFields({
   heightFeetError,
   heightInchesError,
   weightLbsError,
+  layout = 'grid',
 }: {
   profile: CharacterIdentityProfile
   patch: (fields: Partial<CharacterIdentityProfile>) => void
@@ -122,6 +122,8 @@ function IdentityProfileDetailFields({
   heightFeetError: string | null
   heightInchesError: string | null
   weightLbsError: string | null
+  /** `stack` = mock Identity Expand left column; `grid` = legacy 3-col. */
+  layout?: 'grid' | 'stack'
 }) {
   const { measurementSystem } = useUnitsPreference()
   const metric = measurementSystem === 'metric'
@@ -191,6 +193,163 @@ function IdentityProfileDetailFields({
     patch(next)
   }
 
+  const heightBlock = (
+    <div className="grid grid-cols-[4.5rem_1fr] items-end gap-x-2">
+      <span className={`pb-0.5 text-right ${identityLabelClass(morphusActive)}`}>
+        Height
+      </span>
+      {metric ? (
+        <div>
+          <input
+            type="text"
+            inputMode="numeric"
+            value={heightCmDraft}
+            onChange={(e) => onHeightCmChange(e.target.value)}
+            aria-label="Height centimeters"
+            aria-invalid={metricHeightError != null}
+            aria-describedby={
+              metricHeightError ? 'identity-height-cm-error' : undefined
+            }
+            className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
+              metricHeightError
+                ? identityInvalidFieldClass(morphusActive)
+                : identityFieldClass(morphusActive)
+            }`}
+          />
+          <span
+            className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
+              morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+            }`}
+          >
+            {heightMetricUnit}
+          </span>
+          {metricHeightError ? (
+            <IdentityFieldError
+              id="identity-height-cm-error"
+              message={metricHeightError}
+              morphusActive={morphusActive}
+            />
+          ) : null}
+        </div>
+      ) : (
+        <div className="flex items-end gap-3">
+          <div className="flex-1">
+            <input
+              type="text"
+              inputMode="numeric"
+              value={profile.heightFeet}
+              onChange={(e) => patch({ heightFeet: e.target.value })}
+              aria-label="Height feet"
+              aria-invalid={heightFeetError != null}
+              aria-describedby={
+                heightFeetError ? 'identity-height-feet-error' : undefined
+              }
+              className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
+                heightFeetError
+                  ? identityInvalidFieldClass(morphusActive)
+                  : identityFieldClass(morphusActive)
+              }`}
+            />
+            <span
+              className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
+                morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+              }`}
+            >
+              Ft.
+            </span>
+            {heightFeetError ? (
+              <IdentityFieldError
+                id="identity-height-feet-error"
+                message={heightFeetError}
+                morphusActive={morphusActive}
+              />
+            ) : null}
+          </div>
+          <div className="flex-1">
+            <input
+              type="text"
+              inputMode="numeric"
+              value={profile.heightInches}
+              onChange={(e) =>
+                patch({
+                  heightInches: sanitizeIdentityHeightInchesInput(e.target.value),
+                })
+              }
+              aria-label="Height inches"
+              aria-invalid={heightInchesError != null}
+              aria-describedby={
+                heightInchesError ? 'identity-height-inches-error' : undefined
+              }
+              className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
+                heightInchesError
+                  ? identityInvalidFieldClass(morphusActive)
+                  : identityFieldClass(morphusActive)
+              }`}
+            />
+            <span
+              className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
+                morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+              }`}
+            >
+              In.
+            </span>
+            {heightInchesError ? (
+              <IdentityFieldError
+                id="identity-height-inches-error"
+                message={heightInchesError}
+                morphusActive={morphusActive}
+              />
+            ) : null}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+
+  if (layout === 'stack') {
+    return (
+      <div className="flex flex-col gap-2.5">
+        <UnderlineField
+          label="Sex"
+          value={profile.sex}
+          onChange={(sex) => patch({ sex })}
+          morphusActive={morphusActive}
+        />
+        <UnderlineField
+          label="Age"
+          value={profile.age}
+          onChange={(age) => patch({ age })}
+          morphusActive={morphusActive}
+          inputMode="numeric"
+        />
+        {heightBlock}
+        <UnderlineField
+          label="Weight"
+          value={weightDraft}
+          onChange={onWeightDisplayChange}
+          morphusActive={morphusActive}
+          inputMode={metric ? 'decimal' : 'numeric'}
+          subLabel={weightSubLabel}
+          error={weightError}
+          errorId="identity-weight-display-error"
+          ariaLabel={metric ? 'Weight kilograms' : 'Weight pounds'}
+        />
+        <UnderlineField
+          label="Eyes"
+          value={profile.eyes}
+          onChange={(eyes) => patch({ eyes })}
+          morphusActive={morphusActive}
+        />
+        <UnderlineField
+          label="Hair"
+          value={profile.hair}
+          onChange={(hair) => patch({ hair })}
+          morphusActive={morphusActive}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
       <div className="flex flex-col gap-2">
@@ -210,116 +369,7 @@ function IdentityProfileDetailFields({
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="grid grid-cols-[4.5rem_1fr] items-end gap-x-2">
-          <span className={`pb-0.5 text-right ${identityLabelClass(morphusActive)}`}>
-            Height
-          </span>
-          {metric ? (
-            <div>
-              <input
-                type="text"
-                inputMode="numeric"
-                value={heightCmDraft}
-                onChange={(e) => onHeightCmChange(e.target.value)}
-                aria-label="Height centimeters"
-                aria-invalid={metricHeightError != null}
-                aria-describedby={
-                  metricHeightError ? 'identity-height-cm-error' : undefined
-                }
-                className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
-                  metricHeightError
-                    ? identityInvalidFieldClass(morphusActive)
-                    : identityFieldClass(morphusActive)
-                }`}
-              />
-              <span
-                className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
-                  morphusActive ? 'text-violet-400/70' : 'text-slate-400'
-                }`}
-              >
-                {heightMetricUnit}
-              </span>
-              {metricHeightError ? (
-                <IdentityFieldError
-                  id="identity-height-cm-error"
-                  message={metricHeightError}
-                  morphusActive={morphusActive}
-                />
-              ) : null}
-            </div>
-          ) : (
-            <div className="flex items-end gap-3">
-              <div className="flex-1">
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={profile.heightFeet}
-                  onChange={(e) => patch({ heightFeet: e.target.value })}
-                  aria-label="Height feet"
-                  aria-invalid={heightFeetError != null}
-                  aria-describedby={
-                    heightFeetError ? 'identity-height-feet-error' : undefined
-                  }
-                  className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
-                    heightFeetError
-                      ? identityInvalidFieldClass(morphusActive)
-                      : identityFieldClass(morphusActive)
-                  }`}
-                />
-                <span
-                  className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
-                    morphusActive ? 'text-violet-400/70' : 'text-slate-400'
-                  }`}
-                >
-                  Ft.
-                </span>
-                {heightFeetError ? (
-                  <IdentityFieldError
-                    id="identity-height-feet-error"
-                    message={heightFeetError}
-                    morphusActive={morphusActive}
-                  />
-                ) : null}
-              </div>
-              <div className="flex-1">
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={profile.heightInches}
-                  onChange={(e) =>
-                    patch({
-                      heightInches: sanitizeIdentityHeightInchesInput(e.target.value),
-                    })
-                  }
-                  aria-label="Height inches"
-                  aria-invalid={heightInchesError != null}
-                  aria-describedby={
-                    heightInchesError ? 'identity-height-inches-error' : undefined
-                  }
-                  className={`w-full border-0 border-b-2 px-0 py-0.5 text-sm font-medium outline-none transition-colors ${
-                    heightInchesError
-                      ? identityInvalidFieldClass(morphusActive)
-                      : identityFieldClass(morphusActive)
-                  }`}
-                />
-                <span
-                  className={`mt-0.5 block text-[9px] font-semibold uppercase tracking-wide ${
-                    morphusActive ? 'text-violet-400/70' : 'text-slate-400'
-                  }`}
-                >
-                  In.
-                </span>
-                {heightInchesError ? (
-                  <IdentityFieldError
-                    id="identity-height-inches-error"
-                    message={heightInchesError}
-                    morphusActive={morphusActive}
-                  />
-                ) : null}
-              </div>
-            </div>
-          )}
-        </div>
+        {heightBlock}
         <UnderlineField
           label="Weight"
           value={weightDraft}
@@ -360,6 +410,42 @@ function clearPlaceholderNameOnFocus(
   }
 }
 
+function IdentityPlaceholderBox({
+  label,
+  morphusActive,
+}: {
+  label: string
+  morphusActive: boolean
+}) {
+  return (
+    <div
+      className={`flex min-h-[7.5rem] flex-1 flex-col rounded-md border-2 ${
+        morphusActive
+          ? 'border-violet-700 bg-slate-950/40'
+          : 'border-slate-800 bg-white'
+      }`}
+      aria-label={`${label} placeholder — no saved field yet`}
+    >
+      <p
+        className={`border-b px-2 py-1 text-[10px] font-black uppercase tracking-wider ${
+          morphusActive
+            ? 'border-violet-800 text-violet-300'
+            : 'border-slate-200 text-slate-600'
+        }`}
+      >
+        {label}
+      </p>
+      <div
+        className={`flex flex-1 items-center justify-center px-3 py-4 text-center text-xs font-semibold uppercase tracking-[0.2em] ${
+          morphusActive ? 'text-violet-400/70' : 'text-slate-400'
+        }`}
+      >
+        Text box
+      </div>
+    </div>
+  )
+}
+
 function IdentityAliasesEditor({
   aliases,
   aliasDraft,
@@ -368,6 +454,7 @@ function IdentityAliasesEditor({
   onRename,
   onRemove,
   morphusActive,
+  compact = false,
 }: {
   aliases: { id: string; name: string }[]
   aliasDraft: string
@@ -376,10 +463,13 @@ function IdentityAliasesEditor({
   onRename: (aliasId: string, name: string) => void
   onRemove: (aliasId: string) => void
   morphusActive: boolean
+  /** Mock Expand left column — shorter helper copy. */
+  compact?: boolean
 }) {
   return (
-    <div className="mt-5 max-w-xl">
+    <div className={compact ? 'mt-4' : 'mt-5 max-w-xl'}>
       <p className={identityLabelClass(morphusActive)}>Aliases</p>
+      {compact ? null : (
       <p
         className={`mt-0.5 text-[11px] ${
           morphusActive ? 'text-violet-200/70' : 'text-slate-500'
@@ -388,6 +478,7 @@ function IdentityAliasesEditor({
         Optional other names. On Join Session you can show one of these to other
         players; the GM always sees your real character name.
       </p>
+      )}
       <ul className="mt-2 space-y-1.5">
         {aliases.length === 0 ? (
           <li
@@ -536,6 +627,7 @@ export function IdentityHeader({
   variant = 'header',
   collapsed: collapsedProp = false,
   onCollapsedChange,
+  showExpandToggle = true,
   compactChrome = false,
 }: IdentityHeaderProps) {
   const {
@@ -671,7 +763,7 @@ export function IdentityHeader({
   }
 
   const nameInputClass = collapsed
-    ? 'max-w-[14rem] border-0 bg-transparent text-lg font-bold tracking-tight outline-none sm:max-w-xs sm:text-xl'
+    ? 'max-w-[12rem] shrink-0 border-0 bg-transparent text-lg font-bold tracking-tight outline-none sm:max-w-[16rem] sm:text-xl'
     : 'mt-0.5 w-full max-w-xl border-0 border-b-2 bg-transparent text-2xl font-bold tracking-tight outline-none transition-colors sm:text-3xl'
   const nameInputToneClass = morphusActive
     ? collapsed
@@ -681,37 +773,44 @@ export function IdentityHeader({
       ? 'text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:underline focus:decoration-blue-600'
       : 'border-transparent text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-600'
 
-  return (
-    <div className="flex min-w-0 flex-1 gap-4">
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center justify-between gap-2">
-          <p
-            className="text-[10px] font-semibold uppercase tracking-widest"
-            style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
-          >
-            Identity
-          </p>
-          <button
-            type="button"
-            className={toggleButtonClass}
-            aria-expanded={!collapsed}
-            aria-controls="identity-header-details"
-            onClick={toggleCollapsed}
-          >
-            {collapsed ? 'Expand' : 'Minimize'}
-          </button>
-        </div>
+  const summaryMetaClass = morphusActive
+    ? 'shrink-0 text-[11px] font-semibold uppercase tracking-wide text-violet-200/90 sm:text-xs'
+    : 'shrink-0 text-[11px] font-semibold uppercase tracking-wide text-slate-500 sm:text-xs'
 
-        {collapsed ? (
+  return (
+    <div className="min-w-0 flex-1">
+      {collapsed ? (
+        <>
+          <div className="flex items-center justify-between gap-2">
+            <p
+              className="text-[10px] font-semibold uppercase tracking-widest"
+              style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
+            >
+              Identity
+            </p>
+            {showExpandToggle ? (
+              <button
+                type="button"
+                className={toggleButtonClass}
+                aria-expanded={!collapsed}
+                aria-controls="identity-header-details"
+                onClick={toggleCollapsed}
+              >
+                Expand
+              </button>
+            ) : null}
+          </div>
           <div
             id="identity-header-details"
-            className="mt-1 flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1"
+            className="mt-1 flex min-w-0 flex-nowrap items-baseline gap-x-2 overflow-x-auto pb-0.5"
           >
             <input
               type="text"
               value={character.name}
               onChange={(e) => setCharacterName(e.target.value)}
-              onFocus={(e) => clearPlaceholderNameOnFocus(e.currentTarget.value, setCharacterName)}
+              onFocus={(e) =>
+                clearPlaceholderNameOnFocus(e.currentTarget.value, setCharacterName)
+              }
               placeholder={CHARACTER_NAME_PLACEHOLDER}
               aria-label="Character name"
               className={`${nameInputClass} ${nameInputToneClass}`}
@@ -722,20 +821,14 @@ export function IdentityHeader({
             >
               ·
             </span>
-            <span
-              className={`text-sm font-semibold uppercase tracking-wide ${identityValueClass(morphusActive)}`}
-            >
-              {raceLabel}
-            </span>
+            <span className={summaryMetaClass}>{raceLabel}</span>
             <span
               className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
               aria-hidden
             >
               ·
             </span>
-            <span
-              className={`text-sm font-semibold uppercase tracking-wide ${identityValueClass(morphusActive)}`}
-            >
+            <span className={`${summaryMetaClass} max-w-[14rem] truncate`} title={occLabel}>
               {occLabel}
             </span>
             <span
@@ -744,123 +837,138 @@ export function IdentityHeader({
             >
               ·
             </span>
-            <span
-              className={`text-sm font-semibold uppercase tracking-wide ${identityValueClass(morphusActive)}`}
-            >
-              {alignmentLabel}
-            </span>
+            <span className={summaryMetaClass}>{alignmentLabel}</span>
           </div>
-        ) : (
-          <>
-            <input
-              type="text"
-              value={character.name}
-              onChange={(e) => setCharacterName(e.target.value)}
-              onFocus={(e) => clearPlaceholderNameOnFocus(e.currentTarget.value, setCharacterName)}
-              placeholder={CHARACTER_NAME_PLACEHOLDER}
-              aria-label="Character name"
-              className={`${nameInputClass} ${nameInputToneClass}`}
-            />
-
-            <div id="identity-header-details" className="mt-4 flex flex-wrap gap-x-10 gap-y-4">
-              <div className="flex min-w-[9rem] flex-col gap-3">
-                <div>
-                  <p className={identityLabelClass(morphusActive)}>Race</p>
-                  <p className={identityValueClass(morphusActive)}>{raceLabel}</p>
-                </div>
-                <div>
-                  <p className={identityLabelClass(morphusActive)}>O.C.C.</p>
-                  <p className={identityValueClass(morphusActive)}>{occLabel}</p>
-                </div>
-                <ConfiguratorAlignmentSelect morphus={morphusActive} variant="identity" />
-              </div>
-
-              <div className="min-w-[12rem] flex-1 sm:max-w-md">
-                <IdentityProfileDetailFields
-                  profile={profile}
-                  patch={patch}
-                  morphusActive={morphusActive}
-                  heightFeetError={heightFeetError}
-                  heightInchesError={heightInchesError}
-                  weightLbsError={weightLbsError}
+        </>
+      ) : (
+        <div id="identity-header-details">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-1">
+              <input
+                type="text"
+                value={character.name}
+                onChange={(e) => setCharacterName(e.target.value)}
+                onFocus={(e) =>
+                  clearPlaceholderNameOnFocus(
+                    e.currentTarget.value,
+                    setCharacterName,
+                  )
+                }
+                placeholder={CHARACTER_NAME_PLACEHOLDER}
+                aria-label="Character name"
+                className={`${nameInputClass} ${nameInputToneClass}`}
+              />
+              <span
+                className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
+                aria-hidden
+              >
+                ·
+              </span>
+              <span className={summaryMetaClass} title={raceLabel}>
+                {raceLabel}
+              </span>
+              <span
+                className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
+                aria-hidden
+              >
+                ·
+              </span>
+              <span className={summaryMetaClass} title={occLabel}>
+                {occLabel}
+              </span>
+              <span
+                className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
+                aria-hidden
+              >
+                ·
+              </span>
+              <div className="min-w-[10rem] max-w-xs">
+                <ConfiguratorAlignmentSelect
+                  morphus={morphusActive}
+                  variant="identity"
                 />
               </div>
             </div>
+            {showExpandToggle ? (
+              <button
+                type="button"
+                className={toggleButtonClass}
+                aria-expanded={!collapsed}
+                aria-controls="identity-header-details"
+                onClick={toggleCollapsed}
+              >
+                Minimize
+              </button>
+            ) : null}
+          </div>
 
-            <IdentityAliasesEditor
-              aliases={normalizeAliases(character.aliases)}
-              aliasDraft={aliasDraft}
-              onAliasDraftChange={setAliasDraft}
-              onAdd={() => {
-                const next = aliasDraft.trim()
-                if (!next) return
-                addAlias(next)
-                setAliasDraft('')
-              }}
-              onRename={renameAlias}
-              onRemove={removeAlias}
-              morphusActive={morphusActive}
-            />
-
-            {/*
-              Description / Personality / Character Image: no persisted Character
-              fields yet — Radical Visibility placeholders (do not invent schema).
-            */}
-            <div className="mt-4 grid max-w-xl gap-3 sm:grid-cols-2">
-              <div className="sm:col-span-2">
-                <p className={identityLabelClass(morphusActive)}>Description</p>
-                <p
-                  className={`mt-1 rounded-lg border border-dashed px-3 py-2 text-sm ${
-                    morphusActive
-                      ? 'border-violet-700 text-violet-300/80'
-                      : 'border-slate-300 text-slate-500'
-                  }`}
-                >
-                  No saved description field on this character yet.
-                </p>
-              </div>
-              <div className="sm:col-span-2">
-                <p className={identityLabelClass(morphusActive)}>Personality</p>
-                <p
-                  className={`mt-1 rounded-lg border border-dashed px-3 py-2 text-sm ${
-                    morphusActive
-                      ? 'border-violet-700 text-violet-300/80'
-                      : 'border-slate-300 text-slate-500'
-                  }`}
-                >
-                  No saved personality field on this character yet.
-                </p>
-              </div>
+          {/*
+            Mock Identity Expand: left traits + aliases, center Description /
+            Personality placeholders, right Character Image. No persisted
+            Description/Personality/Image fields — Radical Visibility placeholders.
+          */}
+          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)]">
+            <div className="min-w-0">
+              <IdentityProfileDetailFields
+                profile={profile}
+                patch={patch}
+                morphusActive={morphusActive}
+                heightFeetError={heightFeetError}
+                heightInchesError={heightInchesError}
+                weightLbsError={weightLbsError}
+                layout="stack"
+              />
+              <IdentityAliasesEditor
+                aliases={normalizeAliases(character.aliases)}
+                aliasDraft={aliasDraft}
+                onAliasDraftChange={setAliasDraft}
+                onAdd={() => {
+                  const next = aliasDraft.trim()
+                  if (!next) return
+                  addAlias(next)
+                  setAliasDraft('')
+                }}
+                onRename={renameAlias}
+                onRemove={removeAlias}
+                morphusActive={morphusActive}
+                compact
+              />
+              <p
+                className="mt-4 font-mono text-[10px] uppercase tracking-wide opacity-70"
+                style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
+              >
+                {genreStamp}
+              </p>
             </div>
 
-            <p
-              className="mt-3 font-mono text-[10px] uppercase tracking-wide opacity-70"
-              style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
-            >
-              {genreStamp}
-            </p>
-          </>
-        )}
-      </div>
+            <div className="flex min-h-[16rem] flex-col gap-3">
+              <IdentityPlaceholderBox
+                label="Description"
+                morphusActive={morphusActive}
+              />
+              <IdentityPlaceholderBox
+                label="Personality"
+                morphusActive={morphusActive}
+              />
+            </div>
 
-      {!collapsed ? (
-        <div className="hidden shrink-0 flex-col items-center gap-1 sm:flex">
-          <div
-            className={`h-36 w-28 border-2 bg-black ${
-              morphusActive ? 'border-violet-800' : 'border-slate-200'
-            }`}
-            role="img"
-            aria-label="Character image placeholder — no saved image field yet"
-          />
-          <p
-            className={`text-[9px] font-semibold uppercase tracking-wide ${
-              morphusActive ? 'text-violet-400/80' : 'text-slate-400'
-            }`}
-          >
-            Character Image
-          </p>
+            <div className="flex min-h-[16rem] flex-col">
+              <div
+                className={`flex flex-1 flex-col overflow-hidden rounded-md border-2 bg-black ${
+                  morphusActive ? 'border-violet-800' : 'border-slate-800'
+                }`}
+                role="img"
+                aria-label="Character image placeholder — no saved image field yet"
+              >
+                <p className="border-b border-white/10 px-2 py-1 text-center text-[9px] font-semibold uppercase tracking-wide text-white/70">
+                  Character Image
+                </p>
+                <div className="min-h-[12rem] flex-1 bg-black" />
+              </div>
+            </div>
+          </div>
         </div>
-      ) : null}
+      )}
     </div>
   )
 }

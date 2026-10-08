@@ -149,6 +149,7 @@ export function MainLayout() {
                   hostGenreId={hostGenreId}
                   collapsed={identityCollapsed}
                   onCollapsedChange={setIdentityCollapsed}
+                  showExpandToggle={false}
                 />
                 {!identityCollapsed && morphusActive ? (
                   <div className="mt-2 flex flex-wrap items-center gap-3">
@@ -209,6 +210,19 @@ export function MainLayout() {
               </div>
 
               <div className="flex shrink-0 flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  className={
+                    morphusActive
+                      ? 'shrink-0 rounded-md border-2 border-violet-300 bg-violet-800 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-violet-700'
+                      : 'shrink-0 rounded-md border-2 border-blue-600 bg-blue-600 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
+                  }
+                  aria-expanded={!identityCollapsed}
+                  aria-controls="identity-header-details"
+                  onClick={() => setIdentityCollapsed((value) => !value)}
+                >
+                  {identityCollapsed ? 'Expand' : 'Minimize'}
+                </button>
                 <LiveSheetSaveControls
                   dirty={isLiveSheetDirty}
                   onSave={saveCharacter}
@@ -273,13 +287,9 @@ export function MainLayout() {
             }`}
             aria-label="Live sheet mode"
           >
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-1.5">
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-2">
               <div
-                className="flex w-fit rounded-lg border-2 p-1"
-                style={{
-                  borderColor: morphusActive ? '#6d28d9' : '#93c5fd',
-                  backgroundColor: morphusActive ? '#0f172a' : '#eff6ff',
-                }}
+                className="flex flex-wrap items-center gap-2"
                 role="group"
                 aria-label="Character sheet mode"
               >
@@ -294,20 +304,50 @@ export function MainLayout() {
                         setSheetMode(mode)
                         setOverlayTabId(null)
                       }}
-                      className={`rounded-md px-4 py-1.5 text-xs font-black uppercase tracking-wide transition ${
+                      className={`rounded-full px-5 py-1.5 text-xs font-black uppercase tracking-wide transition ${
                         active
                           ? morphusActive
                             ? 'bg-violet-700 text-white shadow'
                             : 'bg-blue-700 text-white shadow'
                           : morphusActive
-                            ? 'text-violet-300 hover:bg-violet-900/60'
-                            : 'text-blue-900 hover:bg-blue-100'
+                            ? 'border-2 border-violet-500 bg-transparent text-violet-200 hover:bg-violet-900/50'
+                            : 'border-2 border-blue-500 bg-white text-blue-800 hover:bg-blue-50'
                       }`}
                     >
                       {liveSheetModeLabel(mode)}
                     </button>
                   )
                 })}
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  aria-pressed={overlayTabId == null}
+                  title={
+                    overlayTabId == null
+                      ? `${liveSheetModeLabel(sheetMode)} Home`
+                      : 'Return to mode Home'
+                  }
+                  onClick={() => setOverlayTabId(null)}
+                  className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wide transition ${
+                    overlayTabId == null
+                      ? morphusActive
+                        ? 'bg-violet-600 text-white'
+                        : 'bg-blue-600 text-white'
+                      : morphusActive
+                        ? 'border border-violet-600 text-violet-200 hover:bg-violet-900/40'
+                        : 'border border-blue-300 text-blue-800 hover:bg-blue-50'
+                  }`}
+                >
+                  Home
+                </button>
+                <p
+                  className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${
+                    morphusActive ? 'text-violet-400/80' : 'text-slate-400'
+                  }`}
+                >
+                  {sheetMode === 'combat' ? 'Combat HUD' : 'Campaigns Home'}
+                </p>
               </div>
             </div>
           </div>

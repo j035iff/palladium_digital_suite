@@ -460,7 +460,10 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                 />
               ) : null}
             </div>
-            <div className="flex flex-wrap gap-2" aria-label="Defensive stats">
+            <div
+              className="grid grid-cols-3 gap-2 sm:max-w-lg"
+              aria-label="Defensive stats"
+            >
               <CombatDefenseChip
                 label="A.R."
                 value={defenseAr != null ? String(defenseAr) : '—'}
@@ -516,7 +519,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                 type="button"
                 title="New melee round"
                 onClick={resetMeleeRound}
-                className={`shrink-0 rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide ${btn}`}
+                className={`shrink-0 rounded-full px-4 py-2 text-xs font-black uppercase tracking-wide ${btn}`}
                 aria-label="New melee round"
               >
                 ↻ Melee
@@ -973,7 +976,7 @@ function CombatDefenseChip({
 }) {
   return (
     <div
-      className={`min-w-[4.5rem] rounded-md border-2 px-3 py-1.5 ${
+      className={`rounded-lg border-2 px-3 py-2.5 ${
         morphus
           ? 'border-violet-600/80 bg-slate-950/80 text-violet-50'
           : 'border-blue-300 bg-white text-slate-900'
@@ -986,7 +989,9 @@ function CombatDefenseChip({
       >
         {label}
       </p>
-      <p className="font-mono text-sm font-black tabular-nums">{value}</p>
+      <p className="mt-1 font-mono text-lg font-black tabular-nums leading-none">
+        {value}
+      </p>
     </div>
   )
 }

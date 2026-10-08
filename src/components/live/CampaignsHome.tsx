@@ -368,7 +368,7 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
       )}
 
       <div
-        className="flex flex-wrap gap-1 rounded-lg bg-slate-900 p-1"
+        className="flex flex-wrap gap-1.5 rounded-md bg-slate-900 px-2 py-2"
         role="tablist"
         aria-label="Campaign sections"
       >
@@ -384,10 +384,10 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
                 setSubTab(id)
                 setFocusStubId(null)
               }}
-              className={`rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide ${
+              className={`rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-wide ${
                 active
-                  ? 'bg-white text-slate-900'
-                  : 'text-slate-200 hover:bg-slate-800'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'bg-transparent text-white hover:bg-slate-800'
               }`}
             >
               {CAMPAIGNS_SUB_TAB_LABELS[id]}
@@ -398,20 +398,45 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
 
       {!activeCampaign ? null : subTab === 'notes' ? (
         wikiAdapter ? (
-          <ContentLinkedNotesField
-            id={`sheet-campaign-notes-${activeCampaign.key}`}
-            value={activeCampaign.notes}
-            onChange={(notes) =>
-              setSheetCampaigns(
-                patchSheetCampaign(campaigns, activeCampaign.key, { notes }),
-              )
-            }
-            wiki={wikiAdapter}
-            density="scratchpad"
-            label="Campaign notes"
-            aria-label={`${activeCampaign.name} notes`}
-            placeholder="Type @ to link people, places, things…"
-          />
+          <div className="space-y-2">
+            <div>
+              <p
+                className={`text-[10px] font-bold uppercase tracking-[0.18em] ${
+                  morphus ? 'text-violet-400' : 'text-slate-400'
+                }`}
+              >
+                Campaign notes
+              </p>
+              <h2
+                className={`mt-0.5 text-lg font-black tracking-tight ${
+                  morphus ? 'text-violet-50' : 'text-slate-900'
+                }`}
+              >
+                Notes
+              </h2>
+              <p
+                className={`mt-1 max-w-xl text-sm ${
+                  morphus ? 'text-violet-200/80' : 'text-slate-500'
+                }`}
+              >
+                Capture clues, names, objectives, and events during play.
+              </p>
+            </div>
+            <ContentLinkedNotesField
+              id={`sheet-campaign-notes-${activeCampaign.key}`}
+              value={activeCampaign.notes}
+              onChange={(notes) =>
+                setSheetCampaigns(
+                  patchSheetCampaign(campaigns, activeCampaign.key, { notes }),
+                )
+              }
+              wiki={wikiAdapter}
+              density="scratchpad"
+              surface="sheet"
+              aria-label={`${activeCampaign.name} notes`}
+              placeholder="Write story notes…"
+            />
+          </div>
         ) : null
       ) : (
         <div className="space-y-3">
@@ -539,6 +564,7 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
                           }
                           wiki={wikiAdapter}
                           density="compact"
+                          surface="sheet"
                           aria-label={`${row.name} notes`}
                         />
                       </div>

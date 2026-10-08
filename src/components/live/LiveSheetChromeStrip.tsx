@@ -68,8 +68,10 @@ export function LiveSheetChromeStrip({
           />
         </div>
         <div
-          className={`flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs font-bold tabular-nums ${
-            morphusActive ? 'text-violet-100' : 'text-slate-800'
+          className={`flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border-2 px-3 py-1.5 font-mono text-xs font-bold tabular-nums ${
+            morphusActive
+              ? 'border-violet-500 bg-violet-950 text-violet-50'
+              : 'border-blue-600 bg-blue-600 text-white'
           }`}
           aria-label="Quick reference pools"
         >

@@ -67,6 +67,11 @@ export type ContentLinkedNotesFieldProps = {
   placeholder?: string
   /** Scratchpad = tall + Insert link chrome; compact = stub/description fields. */
   density?: 'scratchpad' | 'compact'
+  /**
+   * Visual chrome only — same wiki storage/editor. `hub` = dark GM Notes;
+   * `sheet` = light Campaigns mock surface (Familiar Surface).
+   */
+  surface?: 'hub' | 'sheet'
   /** Show Insert link… fallback (default true for scratchpad, false for compact). */
   showInsertLink?: boolean
   className?: string
@@ -86,6 +91,7 @@ export function ContentLinkedNotesField({
   label,
   placeholder = 'Type @ to link places, NPCs, PCs, things…',
   density = 'compact',
+  surface = 'hub',
   showInsertLink,
   className = '',
   'aria-label': ariaLabel,
@@ -97,6 +103,7 @@ export function ContentLinkedNotesField({
 
   const insertLinkEnabled = showInsertLink ?? density === 'scratchpad'
   const partyNamesById = wiki.partyNamesById
+  const sheet = surface === 'sheet'
 
   const [linkerOpen, setLinkerOpen] = useState(false)
   const [linkKind, setLinkKind] = useState<GmContentLinkKind>('npc')
@@ -387,7 +394,9 @@ export function ContentLinkedNotesField({
       {label ? (
         <label
           htmlFor={id}
-          className="text-[10px] font-bold uppercase tracking-wide text-slate-500"
+          className={`text-[10px] font-bold uppercase tracking-wide ${
+            sheet ? 'text-slate-500' : 'text-slate-500'
+          }`}
         >
           {label}
         </label>
@@ -403,6 +412,7 @@ export function ContentLinkedNotesField({
           contentEditable
           suppressContentEditableWarning
           data-placeholder={placeholder}
+          data-surface={surface}
           onInput={handleEditorInput}
           onKeyDown={handleEditorKeyDown}
           onKeyUp={handleEditorSelect}
@@ -423,21 +433,35 @@ export function ContentLinkedNotesField({
             const text = e.clipboardData.getData('text/plain')
             document.execCommand('insertText', false, text)
           }}
-          className={`gm-content-linked-notes whitespace-pre-wrap break-words rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 font-sans text-slate-100 outline-none focus:border-cyan-700/60 ${
+          className={`gm-content-linked-notes whitespace-pre-wrap break-words rounded-lg border px-3 py-2 font-sans outline-none ${
+            sheet
+              ? 'border-blue-500 bg-white text-slate-900 focus:border-blue-600 empty:before:text-slate-400'
+              : 'border-slate-600 bg-slate-950 text-slate-100 focus:border-cyan-700/60 empty:before:text-slate-500'
+          } ${
             density === 'scratchpad'
               ? 'min-h-[10rem] flex-1 text-sm'
               : 'min-h-[2.5rem] w-full text-xs'
-          } empty:before:pointer-events-none empty:before:text-slate-500 empty:before:content-[attr(data-placeholder)]`}
+          } empty:before:pointer-events-none empty:before:content-[attr(data-placeholder)]`}
         />
 
         {mentionUi ? (
           <div
-            className="absolute z-30 w-[min(18rem,calc(100%-1rem))] overflow-hidden rounded-lg border border-slate-600 bg-slate-950 shadow-lg shadow-black/40"
+            className={`absolute z-30 w-[min(18rem,calc(100%-1rem))] overflow-hidden rounded-lg border shadow-lg ${
+              sheet
+                ? 'border-blue-200 bg-white shadow-slate-200/80'
+                : 'border-slate-600 bg-slate-950 shadow-black/40'
+            }`}
             style={{ top: mentionUi.top, left: mentionUi.left }}
             role="listbox"
             aria-label="Link existing entity"
           >
-            <p className="border-b border-slate-800 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500">
+            <p
+              className={`border-b px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide ${
+                sheet
+                  ? 'border-slate-200 text-slate-500'
+                  : 'border-slate-800 text-slate-500'
+              }`}
+            >
               Link @{mentionUi.mention.query || '…'}
             </p>
             <ul ref={mentionListRef} className="max-h-48 overflow-y-auto">
@@ -462,8 +486,12 @@ export function ContentLinkedNotesField({
                         onMouseEnter={() => setMentionIndex(index)}
                         className={`flex w-full items-center justify-between gap-2 px-2.5 py-1.5 text-left text-sm ${
                           active
-                            ? 'bg-cyan-950/70 text-cyan-50'
-                            : 'text-slate-200 hover:bg-slate-900'
+                            ? sheet
+                              ? 'bg-blue-50 text-blue-900'
+                              : 'bg-cyan-950/70 text-cyan-50'
+                            : sheet
+                              ? 'text-slate-800 hover:bg-slate-50'
+                              : 'text-slate-200 hover:bg-slate-900'
                         }`}
                       >
                         <span className="truncate">{hit.name}</span>
@@ -477,8 +505,16 @@ export function ContentLinkedNotesField({
               )}
             </ul>
 
-            <div className="border-t border-slate-800 px-2.5 py-2">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-amber-200/80">
+            <div
+              className={`border-t px-2.5 py-2 ${
+                sheet ? 'border-slate-200' : 'border-slate-800'
+              }`}
+            >
+              <p
+                className={`text-[10px] font-bold uppercase tracking-wide ${
+                  sheet ? 'text-amber-700' : 'text-amber-200/80'
+                }`}
+              >
                 Create?
               </p>
               <div className="mt-1.5 flex flex-wrap items-center gap-2">
@@ -488,7 +524,11 @@ export function ContentLinkedNotesField({
                     setMentionCreateKind(e.target.value as GmContentLinkKind)
                   }
                   onMouseDown={(ev) => ev.stopPropagation()}
-                  className="rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-xs text-slate-100"
+                  className={
+                    sheet
+                      ? 'rounded border border-slate-300 bg-white px-1.5 py-1 text-xs text-slate-900'
+                      : 'rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-xs text-slate-100'
+                  }
                   aria-label="Create stub kind"
                 >
                   {GM_CONTENT_LINK_KINDS.map((kind) => (
@@ -503,7 +543,11 @@ export function ContentLinkedNotesField({
                     ev.preventDefault()
                     createFromMention()
                   }}
-                  className="rounded border border-dashed border-amber-700/70 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-100 hover:border-amber-500"
+                  className={
+                    sheet
+                      ? 'rounded border border-dashed border-amber-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-800 hover:border-amber-600'
+                      : 'rounded border border-dashed border-amber-700/70 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-100 hover:border-amber-500'
+                  }
                 >
                   Create {contentLinkKindLabel(mentionCreateKind)} “
                   {mentionCreateName}”
@@ -524,13 +568,26 @@ export function ContentLinkedNotesField({
               const selected = readSelectionOrQuery()
               if (selected) setLinkQuery(selected)
             }}
-            className="rounded-lg border border-slate-700 bg-slate-950/40 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-500"
+            className={
+              sheet
+                ? 'rounded-lg border border-blue-400 bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-blue-800 hover:border-blue-500'
+                : 'rounded-lg border border-slate-700 bg-slate-950/40 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-300 hover:border-slate-500'
+            }
           >
             Insert link…
           </button>
-          <p className="text-[11px] normal-case tracking-normal text-slate-500">
-            Type <span className="font-semibold text-slate-400">@</span> to link.
-            Names show as clickable links in this field — not raw ids or{' '}
+          <p
+            className={`text-[11px] normal-case tracking-normal ${
+              sheet ? 'text-slate-500' : 'text-slate-500'
+            }`}
+          >
+            Type{' '}
+            <span
+              className={`font-semibold ${sheet ? 'text-slate-700' : 'text-slate-400'}`}
+            >
+              @
+            </span>{' '}
+            to link. Names show as clickable links in this field — not raw ids or{' '}
             <span className="font-mono text-[10px]">[[…]]</span> markup.
           </p>
         </div>
