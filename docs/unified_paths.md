@@ -229,7 +229,7 @@ Copy this block when registering a new unified path:
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
 | Mode / tabs | `src/lib/liveSheetTabs.ts` | `liveSheetModeLabel`, `buildLiveSheetOverlayTabViews`, `liveSheetTabTitle` | Chrome **Campaigns** / **Combat**; internal mode id `story` \| `combat`; strip = Stats…Gear (+ Become Morphus after Gear when dual-form); no Home under mode switch |
-| Campaigns journals | `src/lib/liveSheetCampaigns.ts` | `ensureSheetCampaignForJoin`, `buildCampaignPills`, `deleteSheetCampaign`, `mergeSheetCampaigns`, `hydrateSheetCampaigns` | Forever tabs on `character.sheetCampaigns`; key = normalized table **name**; per-campaign PPTN/wiki; delete permanent; merge source→target then drop source |
+| Campaigns journals | `src/lib/liveSheetCampaigns.ts` | `ensureSheetCampaignForJoin`, `buildCampaignPills`, `sortSheetCampaignsByLastAtTable`, `deleteSheetCampaign`, `mergeSheetCampaigns`, `hydrateSheetCampaigns` | Forever tabs on `character.sheetCampaigns`; key = normalized table **name**; `lastAtTableMs` per character (pill sort most-recent→oldest); per-campaign PPTN/wiki; delete permanent; merge source→target then drop source |
 | Wiki editor | `ContentLinkedNotesField` + `contentLinks` / `contentLinkEditorDom` / `narrativePlaceholders` | `ContentLinkWikiAdapter`, `wikiBagFromPlaceholders`, `remapContentLinkIds` | Same `[[kind:id\|label]]` pipeline as Hub; sheet injects adapter; Hub wraps via `GmContentLinkedNotesField` |
 | Chrome UI | `MainLayout`, `LiveSheetChromeStrip`, `LiveSheetTabOverlay` | Identity → strip → mode → body | Overlay reuses `LiveSheetTabBody` |
 | Mode Homes | `CampaignsHome`, `CombatHUD` | Per-campaign PPTN + Notes; combat vitals + bubbles | One body pipeline per tab id; vitals in strip **and** Combat Home |
@@ -352,6 +352,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-08 | Campaign pills sort per character by `sheetCampaigns[].lastAtTableMs` (join/rejoin stamp; most recent / seated left → oldest right); not device-wide |
 | 2026-10-08 | Mockup fidelity Joe rulings: keep strip overlays; remove Home under mode switch; `identityProfile.description` / `personality` freeform persist; Become Morphus after Gear (no gap when omitted) |
 | 2026-10-07 | Live sheet layout pass 2: forever name-keyed `sheetCampaigns` + per-campaign PPTN/wiki (`ContentLinkedNotesField` shared with Hub); delete/merge tabs; Identity Description/Personality/Image placeholders; dual vitals kept |
 | 2026-10-07 | Live sheet layout pass 1: Identity → strip (overlays) → Campaigns\|Combat; Campaigns pills + PPTN stubs; CombatHUD vitals rearrange; `liveSheetTabs` / `liveSheetCampaigns` |

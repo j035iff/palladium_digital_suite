@@ -15,6 +15,7 @@ import {
   normalizeCampaignName,
   rememberJoinedCampaign,
   addSheetCampaignPlaceholder,
+  sortSheetCampaignsByLastAtTable,
   CAMPAIGN_AT_TABLE_LOCK_TOOLTIP,
 } from './liveSheetCampaigns'
 
@@ -102,41 +103,118 @@ describe('liveSheetCampaigns', () => {
     expect(campaign.notes).toBe('Clue from yesterday')
   })
 
-  it('does not rewrite when join name and session are unchanged', () => {
+  it('stamps lastAtTableMs on same-session rejoin', () => {
     const first = ensureSheetCampaignForJoin([], {
       name: 'Stable',
       joinSessionId: 's1',
       nowMs: 1,
     })
+    expect(first.campaign.lastAtTableMs).toBe(1)
     const second = ensureSheetCampaignForJoin(first.campaigns, {
       name: 'Stable',
       joinSessionId: 's1',
       nowMs: 99,
     })
-    expect(second.campaigns).toBe(first.campaigns)
+    expect(second.created).toBe(false)
+    expect(second.campaign.lastAtTableMs).toBe(99)
+    expect(second.campaigns[0]!.lastAtTableMs).toBe(99)
   })
 
-  it('remembers joins in device memory keyed by normalized name', () => {
+  it('sorts pills by lastAtTableMs (most recent left, oldest right)', () => {
+    const older = emptyLiveSheetCampaign('Oldest', {
+      nowMs: 1,
+      lastAtTableMs: 10,
+    })
+    const mid = emptyLiveSheetCampaign('Middle', {
+      nowMs: 2,
+      lastAtTableMs: 20,
+    })
+    const newer = emptyLiveSheetCampaign('Newest', {
+      nowMs: 3,
+      lastAtTableMs: 30,
+    })
+    // Persist order is not creation order — sort must use lastAtTableMs.
+    const campaigns = [older, newer, mid]
+    expect(sortSheetCampaignsByLastAtTable(campaigns).map((c) => c.name)).toEqual(
+      ['Newest', 'Middle', 'Oldest'],
+    )
+    expect(
+      buildCampaignPills({ campaigns }).map((p) => p.name),
+    ).toEqual(['Newest', 'Middle', 'Oldest'])
+  })
+
+  it('puts currently seated campaign first even when others were visited more recently in save order', () => {
+    const recent = emptyLiveSheetCampaign('Recent Offline', {
+      nowMs: 1,
+      lastAtTableMs: 1000,
+    })
+    const seated = emptyLiveSheetCampaign('Seated Table', {
+      nowMs: 2,
+      lastAtTableMs: 100,
+    })
+    const pills = buildCampaignPills({
+      campaigns: [recent, seated],
+      joined: { name: 'Seated Table', sessionId: 'live' },
+      nowMs: 2000,
+    })
+    expect(pills.map((p) => p.name)).toEqual([
+      'Seated Table',
+      'Recent Offline',
+    ])
+    expect(pills[0]!.lastAtTableMs).toBe(2000)
+  })
+
+  it('keeps lastAtTableMs independent per character save list', () => {
+    const charA = ensureSheetCampaignForJoin(
+      [
+        emptyLiveSheetCampaign('Shared Name', {
+          nowMs: 1,
+          lastAtTableMs: 50,
+        }),
+        emptyLiveSheetCampaign('Only A', { nowMs: 1, lastAtTableMs: 10 }),
+      ],
+      { name: 'Only A', joinSessionId: 'a1', nowMs: 500 },
+    )
+    const charB = ensureSheetCampaignForJoin(
+      [
+        emptyLiveSheetCampaign('Shared Name', {
+          nowMs: 1,
+          lastAtTableMs: 50,
+        }),
+        emptyLiveSheetCampaign('Only B', { nowMs: 1, lastAtTableMs: 10 }),
+      ],
+      { name: 'Shared Name', joinSessionId: 'b1', nowMs: 500 },
+    )
+    expect(charA.campaigns.map((c) => c.name)).toEqual(['Only A', 'Shared Name'])
+    expect(charB.campaigns.map((c) => c.name)).toEqual(['Shared Name', 'Only B'])
+  })
+
+  it('remembers joins in device memory keyed by character then normalized name', () => {
     rememberJoinedCampaign('char_a', { id: 'camp_1', name: 'Night City' })
     rememberJoinedCampaign('char_a', {
       id: 'camp_1b',
       name: 'night city',
     })
     rememberJoinedCampaign('char_a', { id: 'camp_2', name: 'Rifts Earth' })
+    rememberJoinedCampaign('char_b', { id: 'camp_x', name: 'Solo Table' })
     expect(listRememberedCampaigns('char_a').map((p) => p.name)).toEqual([
       'Rifts Earth',
       'night city',
     ])
+    expect(listRememberedCampaigns('char_b').map((p) => p.name)).toEqual([
+      'Solo Table',
+    ])
   })
 
-  it('builds pills from character journals', () => {
+  it('builds pills from character journals with seated first', () => {
     const campaigns = [
-      emptyLiveSheetCampaign('Alpha', { nowMs: 1 }),
-      emptyLiveSheetCampaign('Beta', { nowMs: 2 }),
+      emptyLiveSheetCampaign('Alpha', { nowMs: 1, lastAtTableMs: 1 }),
+      emptyLiveSheetCampaign('Beta', { nowMs: 2, lastAtTableMs: 2 }),
     ]
     const pills = buildCampaignPills({
       campaigns,
       joined: { name: 'Alpha', sessionId: 'live' },
+      nowMs: 99,
     })
     expect(pills.map((p) => p.name)).toEqual(['Alpha', 'Beta'])
   })
@@ -256,8 +334,29 @@ describe('liveSheetCampaigns', () => {
         createdAtMs: 1,
         updatedAtMs: 1,
       },
+      {
+        key: 'legacy',
+        name: 'Legacy',
+        notes: '',
+        placeholders: [],
+        createdAtMs: 5,
+        updatedAtMs: 9,
+        // no lastAtTableMs — fall back to updatedAtMs
+      },
+      {
+        key: 'stamped',
+        name: 'Stamped',
+        notes: '',
+        placeholders: [],
+        createdAtMs: 1,
+        updatedAtMs: 2,
+        lastAtTableMs: 42,
+      },
     ])
     expect(rows[0]!.key).toBe('night city')
+    expect(rows[0]!.lastAtTableMs).toBe(1)
+    expect(rows[1]!.lastAtTableMs).toBe(9)
+    expect(rows[2]!.lastAtTableMs).toBe(42)
   })
 })
 

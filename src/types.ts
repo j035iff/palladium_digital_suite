@@ -2436,6 +2436,11 @@ export type CharacterSheetCampaign = {
     createdAtMs: number
   }>
   lastJoinSessionId?: string
+  /**
+   * Last time **this character** sat at this table (join/rejoin).
+   * Campaign pills sort left→right by this per character — never global/device-wide.
+   */
+  lastAtTableMs?: number
   createdAtMs: number
   updatedAtMs: number
 }

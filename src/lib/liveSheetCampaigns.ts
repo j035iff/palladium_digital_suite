@@ -3,8 +3,10 @@
  *
  * Tabs persist on the character save forever until the player deletes (or merges
  * away) them. Join reuses an existing tab when the **table/campaign name** matches
- * (normalized); a new name creates a new tab. Wiki tokens share GM Hub’s
- * `[[kind:id|label]]` model — do not fork.
+ * (normalized); a new name creates a new tab. Pill order is **per character**:
+ * each `sheetCampaigns[].lastAtTableMs` lives on that character’s save — Character A’s
+ * order is independent of Character B’s (never a global/device-wide tab order).
+ * Wiki tokens share GM Hub’s `[[kind:id|label]]` model — do not fork.
  */
 
 import {
@@ -22,6 +24,8 @@ export type LiveSheetCampaignPill = {
   name: string
   /** Last join session id when known (highlights “At this table”). */
   lastJoinSessionId?: string
+  /** Last time the player sat at this table (pill sort key). */
+  lastAtTableMs?: number
 }
 
 /** Per-campaign People / Places / Things / Notes wiki bag on the character save. */
@@ -33,6 +37,12 @@ export type LiveSheetCampaign = {
   /** Shared stub type with GM Hub (`GmPlaceholderEntity`). */
   placeholders: GmPlaceholderEntity[]
   lastJoinSessionId?: string
+  /**
+   * Last time the player joined / sat at this table.
+   * Campaign pills sort left→right by this (most recent first).
+   * Distinct from {@link updatedAtMs} (notes/wiki edits).
+   */
+  lastAtTableMs: number
   createdAtMs: number
   updatedAtMs: number
 }
@@ -62,7 +72,11 @@ const KIND_BY_SUB: Record<
   things: 'thing',
 }
 
-/** Device-local join memory (pass-1); seeds character journals once. */
+/**
+ * Device-local join memory (pass-1); seeds empty character journals once only.
+ * Not the authority for pill sort — that is `lastAtTableMs` on each character’s
+ * `sheetCampaigns`.
+ */
 const STORAGE_KEY = 'pds:liveSheetCampaignJoins'
 
 type JoinMemoryStore = Record<string, Array<{ id: string; name: string }>>
@@ -87,7 +101,12 @@ export function isSheetCampaignAtJoinedTable(
 
 export function emptyLiveSheetCampaign(
   name: string,
-  opts: { notes?: string; lastJoinSessionId?: string; nowMs?: number } = {},
+  opts: {
+    notes?: string
+    lastJoinSessionId?: string
+    lastAtTableMs?: number
+    nowMs?: number
+  } = {},
 ): LiveSheetCampaign {
   const display = name.trim() || 'Campaign'
   const now = opts.nowMs ?? Date.now()
@@ -97,9 +116,25 @@ export function emptyLiveSheetCampaign(
     notes: opts.notes ?? '',
     placeholders: [],
     lastJoinSessionId: opts.lastJoinSessionId,
+    lastAtTableMs: opts.lastAtTableMs ?? now,
     createdAtMs: now,
     updatedAtMs: now,
   }
+}
+
+/**
+ * Sort one character’s campaign list: most recently visited table on the left;
+ * oldest on the right. Stable tie-break by normalized name. Caller always passes
+ * that character’s `sheetCampaigns` only.
+ */
+export function sortSheetCampaignsByLastAtTable(
+  campaigns: LiveSheetCampaign[],
+): LiveSheetCampaign[] {
+  return [...campaigns].sort((a, b) => {
+    const delta = b.lastAtTableMs - a.lastAtTableMs
+    if (delta !== 0) return delta
+    return a.key.localeCompare(b.key)
+  })
 }
 
 export function hydrateSheetCampaigns(raw: unknown): LiveSheetCampaign[] {
@@ -127,6 +162,15 @@ export function hydrateSheetCampaigns(raw: unknown): LiveSheetCampaign[] {
             typeof p.createdAtMs === 'number',
         )
       : []
+    const createdAtMs =
+      typeof r.createdAtMs === 'number' ? r.createdAtMs : Date.now()
+    const updatedAtMs =
+      typeof r.updatedAtMs === 'number' ? r.updatedAtMs : createdAtMs
+    const lastAtTableMs =
+      typeof r.lastAtTableMs === 'number'
+        ? r.lastAtTableMs
+        : // Pre–last-at-table saves: prefer updatedAt, then created.
+          updatedAtMs
     out.push({
       key,
       name: r.name.trim(),
@@ -136,10 +180,9 @@ export function hydrateSheetCampaigns(raw: unknown): LiveSheetCampaign[] {
         typeof r.lastJoinSessionId === 'string'
           ? r.lastJoinSessionId
           : undefined,
-      createdAtMs:
-        typeof r.createdAtMs === 'number' ? r.createdAtMs : Date.now(),
-      updatedAtMs:
-        typeof r.updatedAtMs === 'number' ? r.updatedAtMs : Date.now(),
+      lastAtTableMs,
+      createdAtMs,
+      updatedAtMs,
     })
   }
   return out
@@ -192,17 +235,23 @@ export function seedSheetCampaignsFromJoinMemory(
   const seeds = listRememberedCampaignSeeds(characterId)
   if (seeds.length === 0) return existing
   const notes = legacyPlayNotes?.trim() ?? ''
+  const now = Date.now()
+  // Device memory is most-recent-first; preserve that as lastAtTableMs order.
   return seeds.map((seed, index) =>
     emptyLiveSheetCampaign(seed.name, {
       lastJoinSessionId: seed.lastJoinSessionId,
       notes: index === 0 ? notes : '',
+      nowMs: now,
+      lastAtTableMs: now - index,
     }),
   )
 }
 
 /**
  * Join / rejoin: reuse tab when normalized **name** matches; else create.
- * Optionally seeds notes from legacy global `playNotes` on first campaign.
+ * Always stamps {@link LiveSheetCampaign.lastAtTableMs} (including same-session
+ * rejoin). Optionally seeds notes from legacy global `playNotes` on first campaign.
+ * Returned list is sorted most-recent-at-table first.
  */
 export function ensureSheetCampaignForJoin(
   campaigns: LiveSheetCampaign[],
@@ -220,20 +269,32 @@ export function ensureSheetCampaignForJoin(
   if (existing) {
     const nextSessionId =
       input.joinSessionId ?? existing.lastJoinSessionId
-    if (
-      existing.name === display &&
-      existing.lastJoinSessionId === nextSessionId
-    ) {
-      return { campaigns, campaign: existing, created: false }
-    }
     const next: LiveSheetCampaign = {
       ...existing,
       name: display,
       lastJoinSessionId: nextSessionId,
+      lastAtTableMs: now,
       updatedAtMs: now,
     }
+    const unchanged =
+      existing.name === display &&
+      existing.lastJoinSessionId === nextSessionId &&
+      existing.lastAtTableMs === now
+    if (unchanged) {
+      const sorted = sortSheetCampaignsByLastAtTable(campaigns)
+      const sameOrder =
+        sorted.length === campaigns.length &&
+        sorted.every((c, i) => c === campaigns[i])
+      return {
+        campaigns: sameOrder ? campaigns : sorted,
+        campaign: existing,
+        created: false,
+      }
+    }
     return {
-      campaigns: campaigns.map((c) => (c.key === key ? next : c)),
+      campaigns: sortSheetCampaignsByLastAtTable(
+        campaigns.map((c) => (c.key === key ? next : c)),
+      ),
       campaign: next,
       created: false,
     }
@@ -248,7 +309,7 @@ export function ensureSheetCampaignForJoin(
     nowMs: now,
   })
   return {
-    campaigns: [created, ...campaigns],
+    campaigns: sortSheetCampaignsByLastAtTable([created, ...campaigns]),
     campaign: created,
     created: true,
   }
@@ -284,22 +345,29 @@ export function rememberJoinedCampaign(
 
 /**
  * Pills for Campaigns mode from character journals (+ optional live join bump).
+ * Order: last time at that table, most recent → oldest (left → right).
+ * Currently seated is stamped as now so it stays first.
  */
 export function buildCampaignPills(opts: {
   campaigns: LiveSheetCampaign[]
   joined?: { name: string; sessionId?: string } | null
+  nowMs?: number
 }): LiveSheetCampaignPill[] {
   let list = opts.campaigns
   if (opts.joined?.name.trim()) {
     list = ensureSheetCampaignForJoin(list, {
       name: opts.joined.name,
       joinSessionId: opts.joined.sessionId,
+      nowMs: opts.nowMs,
     }).campaigns
+  } else {
+    list = sortSheetCampaignsByLastAtTable(list)
   }
   return list.map((c) => ({
     key: c.key,
     name: c.name,
     lastJoinSessionId: c.lastJoinSessionId,
+    lastAtTableMs: c.lastAtTableMs,
   }))
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import {
   ContentLinkedNotesField,
@@ -30,6 +30,7 @@ import {
   hydrateSheetCampaigns,
   isSheetCampaignAtJoinedTable,
   mergeSheetCampaigns,
+  normalizeCampaignName,
   patchSheetCampaign,
   patchSheetCampaignPlaceholder,
   rememberJoinedCampaign,
@@ -42,6 +43,7 @@ import {
 /**
  * Campaigns mode Home — forever campaign pills (name-keyed) + per-campaign
  * People/Places/Things/Notes with shared GM Hub wiki-link editor.
+ * Pill order is per character (`sheetCampaigns[].lastAtTableMs` on this save).
  */
 export function CampaignsHome({ morphus }: { morphus: boolean }) {
   const { character, setSheetCampaigns } = useCharacter()
@@ -56,6 +58,8 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
   const [focusStubId, setFocusStubId] = useState<string | null>(null)
   const [mergeOpen, setMergeOpen] = useState(false)
   const [mergeTargetKey, setMergeTargetKey] = useState('')
+  /** One stamp per sit for this character (avoids re-save loops while seated). */
+  const lastJoinStampKeyRef = useRef<string | null>(null)
 
   useEffect(() => runtime.subscribe(setClientState), [runtime])
 
@@ -102,12 +106,20 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
       !clientState.hello ||
       !character.id
     ) {
+      lastJoinStampKeyRef.current = null
       return
     }
     const name =
       clientState.hello.campaignName?.trim() ||
       clientState.hello.sessionName?.trim() ||
       'Campaign'
+    const campaignKey = normalizeCampaignName(name)
+    const stampKey = `${character.id}\0${clientState.campaignId}\0${campaignKey}`
+    if (lastJoinStampKeyRef.current === stampKey) {
+      setActiveCampaignKey(campaignKey)
+      return
+    }
+    lastJoinStampKeyRef.current = stampKey
     rememberJoinedCampaign(character.id, {
       id: clientState.campaignId,
       name,
@@ -118,9 +130,7 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
       joinSessionId: clientState.campaignId,
       legacyPlayNotes: character.playNotes,
     })
-    if (result.campaigns !== current) {
-      setSheetCampaigns(result.campaigns)
-    }
+    setSheetCampaigns(result.campaigns)
     setActiveCampaignKey(result.campaign.key)
   }, [
     character.id,
