@@ -3,6 +3,7 @@ import { characterFixture } from '../data/characterFixture'
 import {
   buildLiveBonusesOverlay,
   formatLiveBonusesOverlayPrimary,
+  OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
 } from './liveBonusesOverlay'
 
 describe('buildLiveBonusesOverlay', () => {
@@ -21,10 +22,10 @@ describe('buildLiveBonusesOverlay', () => {
     expect(view.bonusCards.every((c) => c.outline === 'bonus')).toBe(true)
   })
 
-  it('keeps the fixed ten SAVING THROWS cards then optional extras', () => {
+  it('keeps exactly the fixed ten SAVING THROWS cards', () => {
     const view = buildLiveBonusesOverlay(characterFixture, 'primary', 15, false)
-    const fixed = view.saveCards.slice(0, 10)
-    expect(fixed.map((c) => c.id)).toEqual([
+    expect(view.fixedSaveCards).toHaveLength(10)
+    expect(view.fixedSaveCards.map((c) => c.id)).toEqual([
       'magic',
       'horror_factor',
       'poison_toxins',
@@ -36,32 +37,54 @@ describe('buildLiveBonusesOverlay', () => {
       'possession',
       'mind_control',
     ])
-    expect(fixed.every((c) => c.outline === 'save')).toBe(true)
-    expect(fixed.find((c) => c.id === 'magic')?.footnotes).toEqual([
+    expect(view.fixedSaveCards.every((c) => c.outline === 'save')).toBe(true)
+    expect(view.fixedSaveCards.find((c) => c.id === 'magic')?.footnotes).toEqual([
       { label: 'Spell', text: '12+' },
       { label: 'Ritual', text: '16+' },
     ])
-    expect(fixed.find((c) => c.id === 'horror_factor')?.footnotes).toEqual([])
-    expect(fixed.find((c) => c.id === 'psionics')?.footnotes).toEqual([
+    expect(view.fixedSaveCards.find((c) => c.id === 'horror_factor')?.footnotes).toEqual([
+      OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
+    ])
+    expect(view.fixedSaveCards.find((c) => c.id === 'coma_death')?.footnotes).toEqual([
+      OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
+    ])
+    expect(view.fixedSaveCards.find((c) => c.id === 'illusions')?.footnotes).toEqual([
+      OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
+    ])
+    expect(view.fixedSaveCards.find((c) => c.id === 'possession')?.footnotes).toEqual([
+      OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
+    ])
+    // Disease TN not in SoT — omit (do not invent 14+).
+    expect(view.fixedSaveCards.find((c) => c.id === 'disease')?.footnotes).toEqual([])
+    expect(view.fixedSaveCards.find((c) => c.id === 'psionics')?.footnotes).toEqual([
       { label: '', text: '15+' },
     ])
   })
 
-  it('shows empty dash when attribute bonuses are zero (fixture human)', () => {
+  it('hides the dynamic extras row when there are no extra saves', () => {
+    const view = buildLiveBonusesOverlay(characterFixture, 'primary', 15, false)
+    expect(view.extraSaveCards).toEqual([])
+  })
+
+  it('shows empty dash when attribute bonuses are zero (never +0)', () => {
     const view = buildLiveBonusesOverlay(characterFixture, 'primary', 15, false)
     const perception = view.bonusCards.find((c) => c.id === 'perception')
     expect(formatLiveBonusesOverlayPrimary(perception!.primary)).toBe('—')
+    const magic = view.fixedSaveCards.find((c) => c.id === 'magic')
+    expect(formatLiveBonusesOverlayPrimary(magic!.primary)).toBe('—')
   })
 
-  it('marks Nightbane mind control Immune', () => {
+  it('marks Nightbane mind control Impervious on the overlay', () => {
     const nightbane = {
       ...characterFixture,
       lineage: 'nightbane' as const,
       raceId: 'race_nightbane',
     }
     const view = buildLiveBonusesOverlay(nightbane, 'primary', 15, true)
-    const mind = view.saveCards.find((c) => c.id === 'mind_control')
-    expect(mind?.primary).toEqual({ kind: 'special', text: 'Immune' })
+    const mind = view.fixedSaveCards.find((c) => c.id === 'mind_control')
+    expect(mind?.primary).toEqual({ kind: 'special', text: 'Impervious' })
+    // Becoming is a dual-form extra → dynamic row visible.
+    expect(view.extraSaveCards.some((c) => c.id === 'vs_becoming')).toBe(true)
   })
 
   it('surfaces high-attribute bonuses as signed / percent primaries', () => {
@@ -102,8 +125,10 @@ describe('buildLiveBonusesOverlay', () => {
         view.bonusCards.find((c) => c.id === 'base_ps_damage')!.primary,
       ),
     ).toBe('+5')
-    const coma = view.saveCards.find((c) => c.id === 'coma_death')
+    const coma = view.fixedSaveCards.find((c) => c.id === 'coma_death')
     expect(formatLiveBonusesOverlayPrimary(coma!.primary)).toBe('+5%')
+    // High P.E. also surfaces Harmful Drugs (registry extra with PE bonus).
+    expect(view.extraSaveCards.some((c) => c.id === 'harmful_drugs')).toBe(true)
   })
 
   it('marks P.E. 30+ disease as Impervious', () => {
@@ -118,7 +143,7 @@ describe('buildLiveBonusesOverlay', () => {
       },
     }
     const view = buildLiveBonusesOverlay(tank, 'primary', 15, false)
-    const disease = view.saveCards.find((c) => c.id === 'disease')
+    const disease = view.fixedSaveCards.find((c) => c.id === 'disease')
     expect(disease?.primary).toEqual({ kind: 'special', text: 'Impervious' })
   })
 })

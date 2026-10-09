@@ -48,9 +48,19 @@ export type LiveBonusesOverlayCard = {
 
 export type LiveBonusesOverlayView = {
   bonusCards: readonly LiveBonusesOverlayCard[]
-  /** Fixed mock set (10) followed by dynamic extras. */
+  /** Exactly the mock fixed set of 10. */
+  fixedSaveCards: readonly LiveBonusesOverlayCard[]
+  /** Dynamic 3rd row only — empty when there are no extras (row hidden in UI). */
+  extraSaveCards: readonly LiveBonusesOverlayCard[]
+  /** @deprecated Prefer {@link fixedSaveCards} + {@link extraSaveCards}. */
   saveCards: readonly LiveBonusesOverlayCard[]
 }
+
+/** Bottom footnote for situational saves (GM-called / no fixed sheet TN). */
+export const OVERLAY_SITUATIONAL_TARGET_FOOTNOTE = {
+  label: '',
+  text: 'varies',
+} as const
 
 const MAGIC_KEYS = [
   'save_magic',
@@ -111,6 +121,7 @@ function exceptionalAmount(
 }
 
 function signedPrimary(amount: number): OverlayCardPrimary {
+  // Joe: no bonus / +0 → black dash (never print +0).
   if (amount === 0) return { kind: 'empty' }
   return { kind: 'signed', amount }
 }
@@ -382,8 +393,8 @@ export function buildLiveBonusesOverlay(
       supportsDualForm,
       race,
       keys: HF_SAVE_KEYS,
-      // Situational — GM calls HF number; no fixed sheet target.
-      footnotes: [],
+      // Situational — GM calls HF number (Joe: print "varies", not a fake TN).
+      footnotes: [OVERLAY_SITUATIONAL_TARGET_FOOTNOTE],
       tooltipTarget: null,
     }),
     attributedSaveCard({
@@ -418,7 +429,7 @@ export function buildLiveBonusesOverlay(
           supportsDualForm,
           race,
           keys: DISEASE_KEYS,
-          // Target not listed in combat_logic.md §4 — omit until Joe confirms.
+          // Disease 14+ not in combat_logic / registry SoT — omit TN (do not invent).
           footnotes: [],
           tooltipTarget: null,
         }),
@@ -431,7 +442,7 @@ export function buildLiveBonusesOverlay(
       race,
       keys: [],
       percentAmount: pe.comaDeathPercent,
-      footnotes: [],
+      footnotes: [OVERLAY_SITUATIONAL_TARGET_FOOTNOTE],
     }),
     attributedSaveCard({
       id: 'psionics',
@@ -454,7 +465,8 @@ export function buildLiveBonusesOverlay(
       race,
       keys: ILLUSION_KEYS,
       exceptional: iqIllusion,
-      footnotes: [],
+      // No SoT TN — situational-style footnote (do not invent a number).
+      footnotes: [OVERLAY_SITUATIONAL_TARGET_FOOTNOTE],
       tooltipTarget: null,
     }),
     attributedSaveCard({
@@ -478,16 +490,19 @@ export function buildLiveBonusesOverlay(
       race,
       keys: POSSESSION_KEYS,
       exceptional: mePossession,
-      footnotes: [],
+      // No SoT TN — situational-style footnote (do not invent a number).
+      footnotes: [OVERLAY_SITUATIONAL_TARGET_FOOTNOTE],
       tooltipTarget: null,
     }),
     dualForm
       ? {
           id: 'mind_control',
           label: 'SAVE VS. Mind Control',
-          primary: formatOverlaySpecial('Immune'),
+          // Engine ledger says Immune; overlay shows Impervious (Joe / Familiar Surface).
+          primary: formatOverlaySpecial('Impervious'),
           footnotes: [],
-          tooltipEquation: 'Nightbane — immune to mind control (both forms).',
+          tooltipEquation:
+            'Nightbane — impervious to mind control (both forms; active form sheet).',
           outline: 'save' as const,
         }
       : attributedSaveCard({
@@ -498,7 +513,7 @@ export function buildLiveBonusesOverlay(
           supportsDualForm,
           race,
           keys: MIND_CONTROL_KEYS,
-          footnotes: [],
+          footnotes: [OVERLAY_SITUATIONAL_TARGET_FOOTNOTE],
           tooltipTarget: null,
         }),
   ]
@@ -577,16 +592,19 @@ export function buildLiveBonusesOverlay(
     if (card) extras.push(card)
   }
 
-  // Drop empty extras that add noise (keep fixed ten even when empty dashes).
+  // Joe: hide dynamic row until there is at least one real extra save.
+  // Keep Becoming when dual-form (always a character save); drop empty dashes otherwise.
   const dynamicExtras = extras.filter((c) => {
-    if (c.id === 'vs_becoming') return true
     if (c.primary.kind === 'special') return true
+    if (c.id === 'vs_becoming') return supportsDualForm
     if (c.primary.kind === 'empty') return false
     return true
   })
 
   return {
     bonusCards,
+    fixedSaveCards: fixedSaves,
+    extraSaveCards: dynamicExtras,
     saveCards: [...fixedSaves, ...dynamicExtras],
   }
 }

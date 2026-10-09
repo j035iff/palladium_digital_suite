@@ -126,9 +126,6 @@ export function SavingThrowsPanel() {
     supportsDualForm,
   )
 
-  const fixedSaves = view.saveCards.slice(0, 10)
-  const extraSaves = view.saveCards.slice(10)
-
   return (
     <section aria-labelledby="bonuses-overlay-heading" className="space-y-6">
       <h2 id="bonuses-overlay-heading" className="sr-only">
@@ -162,18 +159,18 @@ export function SavingThrowsPanel() {
           Saving Throws
         </h3>
         <p className={`mb-2 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-          Roll d20 and add the listed bonus. The GM calls the save number when it is not printed
-          on the card.
+          Active form only. Roll d20 and add the listed bonus. Targets marked varies are set by the
+          GM at the table.
           {DEFENDER_WINS_TIES ? ' You win ties.' : ''}
         </p>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-          {fixedSaves.map((card) => (
+          {view.fixedSaveCards.map((card) => (
             <BonusOverlayCard key={card.id} card={card} morphus={morphus} />
           ))}
         </div>
-        {extraSaves.length > 0 ? (
+        {view.extraSaveCards.length > 0 ? (
           <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-5">
-            {extraSaves.map((card) => (
+            {view.extraSaveCards.map((card) => (
               <BonusOverlayCard key={card.id} card={card} morphus={morphus} />
             ))}
           </div>

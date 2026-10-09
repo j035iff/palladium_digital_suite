@@ -47,7 +47,7 @@ Palladium uses a "Melee Round" (15 seconds) divided into individual "Attacks Per
 
 ## 4. The Save System (Dynamic Targets)
 
-The GM calls the save number from the book (e.g. “save vs magic 12”). The player rolls **d20 + save bonuses** and needs a total **≥ the called number**. The character sheet Bonuses overlay shows the **total bonus** most prominently, with book targets as card footnotes when known — not a pre-reduced “you need X” number. Situational saves (Horror Factor, Coma/Death %) omit a fixed target.
+The GM calls the save number from the book (e.g. “save vs magic 12”). The player rolls **d20 + save bonuses** and needs a total **≥ the called number**. The character sheet Bonuses overlay (active form only) shows the **total bonus** most prominently, with book targets as card footnotes when known — not a pre-reduced “you need X” number. No bonus / +0 prints as **—**. Situational / no-SoT targets (Horror Factor, Coma/Death, Illusions, Possession) print **varies** at the bottom of the card — never a fake TN. Disease omits a TN until one is documented in this table / the registry.
 
 | Save Type | Base Target (Human) |
 | :--- | :--- |
