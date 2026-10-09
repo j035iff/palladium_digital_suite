@@ -576,32 +576,50 @@ export function buildLiveBonusesOverlay(
     }
   }
 
-  const primaryPassive = supportsDualForm
-    ? aggregateAllPassiveModifiers(character, 'primary')
-    : passive
-  const primaryAttrs = supportsDualForm
-    ? buildDisplayAttributesForLiveEngine(character, 'primary', primaryPassive)
-    : displayAttrs
+  const isNightbane = characterHasDualForms(character)
+  const primaryPassive =
+    isNightbane || supportsDualForm
+      ? aggregateAllPassiveModifiers(character, 'primary')
+      : passive
+  const primaryAttrs =
+    isNightbane || supportsDualForm
+      ? buildDisplayAttributesForLiveEngine(character, 'primary', primaryPassive)
+      : displayAttrs
   const attributeSaves = computeAttributeSaveProfile(
     displayAttrs.pe,
     displayAttrs.me,
     character.level ?? 1,
-    supportsDualForm,
+    isNightbane || supportsDualForm,
     { primaryMe: primaryAttrs.me },
   )
+
+  let becomingCard: LiveBonusesOverlayCard | null = null
   for (const entry of attributeSaves) {
     const card = attributeSaveToExtraCard(entry)
-    if (card) extras.push(card)
+    if (!card) continue
+    if (card.id === 'vs_becoming') {
+      becomingCard = card
+      continue
+    }
+    extras.push(card)
   }
 
-  // Joe: hide dynamic row until there is at least one real extra save.
-  // Keep Becoming when dual-form (always a character save); drop empty dashes otherwise.
-  const dynamicExtras = extras.filter((c) => {
+  // Non-empty extras only (Becoming handled separately for Nightbane).
+  const otherExtras = extras.filter((c) => {
+    if (c.id === 'vs_becoming') return false
     if (c.primary.kind === 'special') return true
-    if (c.id === 'vs_becoming') return supportsDualForm
     if (c.primary.kind === 'empty') return false
     return true
   })
+
+  // Joe: Nightbane always shows Save vs Becoming first on the dynamic row
+  // (row appears even when Becoming is the only extra). Non-Nightbane: hide
+  // until there is a real extra.
+  const dynamicExtras: LiveBonusesOverlayCard[] = isNightbane
+    ? becomingCard
+      ? [becomingCard, ...otherExtras]
+      : otherExtras
+    : otherExtras
 
   return {
     bonusCards,

@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { DEFENDER_WINS_TIES } from '../../lib/opposedRollRules'
 import {
@@ -5,6 +6,7 @@ import {
   formatLiveBonusesOverlayPrimary,
   type LiveBonusesOverlayCard,
 } from '../../lib/liveBonusesOverlay'
+import { clampOverlayTooltipPosition } from '../../lib/overlayTooltipPosition'
 import {
   overlayPrimaryTone,
   type OverlayCardPrimary,
@@ -36,6 +38,42 @@ function BonusOverlayCard({
   card: LiveBonusesOverlayCard
   morphus: boolean
 }) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const tipRef = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState(false)
+  const [pos, setPos] = useState<{
+    top: number
+    left: number
+    maxWidth: number
+  } | null>(null)
+
+  useLayoutEffect(() => {
+    if (!open) return
+    const cardEl = cardRef.current
+    const tipEl = tipRef.current
+    if (!cardEl || !tipEl) return
+
+    const place = () => {
+      const dialog = cardEl.closest('[role="dialog"]')
+      const bounds = dialog?.getBoundingClientRect() ?? null
+      const tipRect = tipEl.getBoundingClientRect()
+      const next = clampOverlayTooltipPosition(
+        cardEl.getBoundingClientRect(),
+        { width: tipRect.width || 352, height: tipRect.height || 48 },
+        bounds,
+      )
+      setPos({ top: next.top, left: next.left, maxWidth: next.maxWidth })
+    }
+
+    place()
+    window.addEventListener('resize', place)
+    window.addEventListener('scroll', place, true)
+    return () => {
+      window.removeEventListener('resize', place)
+      window.removeEventListener('scroll', place, true)
+    }
+  }, [open, card.tooltipEquation])
+
   const outline =
     card.outline === 'bonus'
       ? morphus
@@ -53,8 +91,12 @@ function BonusOverlayCard({
 
   return (
     <div
-      className={`group relative flex min-h-[5.5rem] flex-col rounded-xl border-2 px-2 py-2 ${outline}`}
-      title={card.tooltipEquation}
+      ref={cardRef}
+      className={`relative flex min-h-[5.5rem] flex-col rounded-xl border-2 px-2 py-2 ${outline}`}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setOpen(false)}
     >
       <p
         className={`text-center text-[10px] font-black uppercase leading-tight tracking-wide ${labelClass}`}
@@ -92,16 +134,25 @@ function BonusOverlayCard({
       ) : (
         <div className="mt-auto min-h-[0.75rem]" />
       )}
-      <div
-        role="tooltip"
-        className={`pointer-events-none invisible absolute bottom-full left-0 right-0 z-20 mb-2 max-h-48 overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100 sm:left-1/2 sm:right-auto sm:w-[min(100vw-2rem,22rem)] sm:-translate-x-1/2 ${
-          morphus
-            ? 'border-indigo-600/90 bg-black/95 text-violet-50'
-            : 'border-slate-400 bg-white text-slate-900'
-        }`}
-      >
-        {card.tooltipEquation}
-      </div>
+      {open ? (
+        <div
+          ref={tipRef}
+          role="tooltip"
+          className={`pointer-events-none fixed z-[60] max-h-48 overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug shadow-lg ${
+            morphus
+              ? 'border-indigo-600/90 bg-black/95 text-violet-50'
+              : 'border-slate-400 bg-white text-slate-900'
+          }`}
+          style={{
+            top: pos?.top ?? -9999,
+            left: pos?.left ?? -9999,
+            maxWidth: pos?.maxWidth ?? 352,
+            visibility: pos ? 'visible' : 'hidden',
+          }}
+        >
+          {card.tooltipEquation}
+        </div>
+      ) : null}
     </div>
   )
 }
