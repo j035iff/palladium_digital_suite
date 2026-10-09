@@ -55,6 +55,8 @@ describe('liveSheetTabs', () => {
       buildLiveSheetOverlayTabViews(null).find((t) => t.id === 'bonuses')
         ?.label,
     ).toBe('Bonuses')
-    expect(liveSheetTabTitle('combat', 'bonuses')).toBe('Saving throws')
+    expect(liveSheetTabTitle('combat', 'bonuses')).toBe(
+      'Bonuses & saving throws',
+    )
   })
 })

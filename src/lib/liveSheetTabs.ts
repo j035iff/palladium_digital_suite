@@ -47,7 +47,7 @@ export const LIVE_SHEET_TAB_LABELS: Record<LiveSheetTabId, string> = {
 
 const SHARED_TAB_TITLES: Record<LiveSheetOverlayTabId, string> = {
   stats: 'Attributes & movement',
-  bonuses: 'Saving throws',
+  bonuses: 'Bonuses & saving throws',
   skills: 'Skills',
   abilities: 'Magic, psionics & talents',
   gear: 'Weapons, armor & load',

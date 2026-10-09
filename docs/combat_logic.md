@@ -47,7 +47,7 @@ Palladium uses a "Melee Round" (15 seconds) divided into individual "Attacks Per
 
 ## 4. The Save System (Dynamic Targets)
 
-The GM calls the save number from the book (e.g. “save vs magic 12”). The player rolls **d20 + save bonuses** and needs a total **≥ the called number**. The character sheet shows the **base target** and the **total bonus to add to the roll** — not a pre-reduced threshold.
+The GM calls the save number from the book (e.g. “save vs magic 12”). The player rolls **d20 + save bonuses** and needs a total **≥ the called number**. The character sheet Bonuses overlay shows the **total bonus** most prominently, with book targets as card footnotes when known — not a pre-reduced “you need X” number. Situational saves (Horror Factor, Coma/Death %) omit a fixed target.
 
 | Save Type | Base Target (Human) |
 | :--- | :--- |
@@ -55,6 +55,9 @@ The GM calls the save number from the book (e.g. “save vs magic 12”). The pl
 | **Non-Lethal Poison** | 16+ |
 | **Magic (Standard)** | 12+ |
 | **Magic (Ritual)** | 16+ |
+| **Insanity** | 12+ |
+| **Psionics** | Psychic Gate tier (15 / 12 / 10) |
+| **Harmful Drugs** | 15+ |
 
 ### 4.1 Defender wins ties (global)
 

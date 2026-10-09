@@ -1,167 +1,184 @@
 import { useCharacter } from '../../context/CharacterContext'
-import {
-  formatAttributeSaveChipBonus,
-  formatAttributeSaveChipValue,
-  type AttributeSaveEntry,
-} from '../../lib/attributeSaves'
 import { DEFENDER_WINS_TIES } from '../../lib/opposedRollRules'
-import { formatSaveRollBonus, formatSaveVsTarget } from '../../lib/saveRollDisplay'
-import type { SaveRollEntry } from '../../lib/saveProfile'
+import {
+  buildLiveBonusesOverlay,
+  formatLiveBonusesOverlayPrimary,
+  type LiveBonusesOverlayCard,
+} from '../../lib/liveBonusesOverlay'
+import {
+  overlayPrimaryTone,
+  type OverlayCardPrimary,
+} from '../../lib/saveRollDisplay'
 
-function AttributeSaveChip({
-  entry,
-  morphus,
-}: {
-  entry: AttributeSaveEntry
-  morphus: boolean
-}) {
-  const rollBonus = formatAttributeSaveChipBonus(entry)
-
-  return (
-    <div
-      className={`group relative min-h-[4.25rem] rounded-lg border-2 px-2 py-2 pb-8 sm:pb-2 ${
-        morphus
-          ? 'border-indigo-800/80 bg-violet-950/65'
-          : 'border-emerald-300/90 bg-white shadow-sm'
-      }`}
-    >
-      <p
-        className={`text-[10px] font-black uppercase leading-tight ${
-          morphus ? 'text-violet-300' : 'text-emerald-900'
-        }`}
-      >
-        {entry.sheetLabel}
-      </p>
-      <p
-        className={`mt-1 font-mono text-lg font-black tabular-nums ${
-          morphus ? 'text-amber-300' : 'text-emerald-950'
-        }`}
-      >
-        {formatAttributeSaveChipValue(entry)}
-        {rollBonus ? (
-          <span className={`ml-2 text-sm font-bold ${morphus ? 'text-violet-200' : 'text-emerald-800'}`}>
-            ({rollBonus})
-          </span>
-        ) : null}
-      </p>
-      {entry.notes ? (
-        <p className={`mt-1 text-[9px] leading-snug ${morphus ? 'text-violet-300/80' : 'text-slate-600'}`}>
-          {entry.notes}
-        </p>
-      ) : null}
-      <div
-        role="tooltip"
-        className={`pointer-events-none invisible absolute bottom-full left-0 right-0 z-20 mb-2 max-h-48 overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100 sm:left-1/2 sm:right-auto sm:w-[min(100vw-2rem,22rem)] sm:-translate-x-1/2 ${
-          morphus ? 'border-indigo-600/90 bg-black/95 text-violet-50' : 'border-emerald-600 bg-white text-slate-900'
-        }`}
-      >
-        {entry.tooltipEquation}
-      </div>
-    </div>
-  )
+function primaryText(primary: OverlayCardPrimary): string {
+  return formatLiveBonusesOverlayPrimary(primary)
 }
 
-function SaveChip({
-  entry,
+function primaryClass(
+  primary: OverlayCardPrimary,
+  morphus: boolean,
+): string {
+  const tone = overlayPrimaryTone(primary)
+  if (morphus) {
+    if (tone === 'negative') return 'text-red-400'
+    if (tone === 'neutral') return 'text-violet-100'
+    return 'text-emerald-300'
+  }
+  if (tone === 'negative') return 'text-red-600'
+  if (tone === 'neutral') return 'text-slate-900'
+  return 'text-emerald-600'
+}
+
+function BonusOverlayCard({
+  card,
   morphus,
 }: {
-  entry: SaveRollEntry
+  card: LiveBonusesOverlayCard
   morphus: boolean
 }) {
+  const outline =
+    card.outline === 'bonus'
+      ? morphus
+        ? 'border-violet-200/80 bg-violet-950/50'
+        : 'border-slate-900 bg-white'
+      : morphus
+        ? 'border-sky-400/70 bg-violet-950/50'
+        : 'border-sky-400 bg-white'
+
+  const labelClass = morphus
+    ? 'text-violet-200'
+    : card.outline === 'bonus'
+      ? 'text-slate-800'
+      : 'text-slate-700'
+
   return (
     <div
-      className={`group relative min-h-[4.25rem] rounded-lg border-2 px-2 py-2 pb-8 sm:pb-2 ${
-        morphus
-          ? 'border-indigo-800/80 bg-violet-950/65'
-          : 'border-sky-300/90 bg-white shadow-sm'
-      }`}
+      className={`group relative flex min-h-[5.5rem] flex-col rounded-xl border-2 px-2 py-2 ${outline}`}
+      title={card.tooltipEquation}
     >
       <p
-        className={`text-[10px] font-black uppercase leading-tight ${
-          morphus ? 'text-violet-300' : 'text-slate-800'
-        }`}
+        className={`text-center text-[10px] font-black uppercase leading-tight tracking-wide ${labelClass}`}
       >
-        {entry.sheetLabel}
+        {card.label}
       </p>
-      <p className={`mt-1 font-mono text-lg font-black tabular-nums ${morphus ? 'text-amber-300' : 'text-sky-900'}`}>
-        {formatSaveVsTarget(entry.baseTarget)}
-        <span className={`ml-2 text-sm font-bold ${morphus ? 'text-violet-200' : 'text-sky-800'}`}>
-          ({formatSaveRollBonus(entry.totalBonus)})
-        </span>
+      <p
+        className={`mt-1 flex flex-1 items-center justify-center text-center font-mono text-2xl font-black tabular-nums sm:text-3xl ${primaryClass(card.primary, morphus)}`}
+      >
+        {primaryText(card.primary)}
       </p>
-      <p className={`hidden text-[9px] opacity-70 sm:block ${morphus ? 'text-violet-400' : 'text-slate-500'}`}>
-        Hover for bonus breakdown
-      </p>
+      {card.footnotes.length > 0 ? (
+        <div
+          className={`mt-auto space-y-0.5 text-center text-[10px] font-semibold leading-tight ${
+            morphus ? 'text-violet-300/90' : 'text-slate-600'
+          }`}
+        >
+          {card.footnotes.map((fn, i) => (
+            <p key={`${card.id}-fn-${i}`}>
+              {fn.label ? (
+                <>
+                  {fn.label}{' '}
+                  <span className={morphus ? 'text-violet-100' : 'text-slate-800'}>
+                    {fn.text}
+                  </span>
+                </>
+              ) : (
+                <span className={morphus ? 'text-violet-100' : 'text-slate-800'}>
+                  {fn.text}
+                </span>
+              )}
+            </p>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-auto min-h-[0.75rem]" />
+      )}
       <div
         role="tooltip"
         className={`pointer-events-none invisible absolute bottom-full left-0 right-0 z-20 mb-2 max-h-48 overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100 sm:left-1/2 sm:right-auto sm:w-[min(100vw-2rem,22rem)] sm:-translate-x-1/2 ${
-          morphus ? 'border-indigo-600/90 bg-black/95 text-violet-50' : 'border-sky-600 bg-white text-slate-900'
+          morphus
+            ? 'border-indigo-600/90 bg-black/95 text-violet-50'
+            : 'border-slate-400 bg-white text-slate-900'
         }`}
       >
-        {entry.tooltipEquation}
+        {card.tooltipEquation}
       </div>
     </div>
   )
 }
 
 /**
- * Sheet-first saving throw targets (manual d20).
+ * Bonuses overlay — attribute BONUSES (black) + SAVING THROWS (blue).
+ * Math from {@link buildLiveBonusesOverlay}; UI stays presentation-only.
  */
 export function SavingThrowsPanel() {
-  const { saveProfileDerived: profile, activeForm, supportsDualForm } = useCharacter()
+  const {
+    character,
+    activeForm,
+    supportsDualForm,
+    saveVsPsionicsTarget,
+  } = useCharacter()
   const morphus = supportsDualForm && activeForm === 'morphus'
 
+  const view = buildLiveBonusesOverlay(
+    character,
+    activeForm,
+    saveVsPsionicsTarget,
+    supportsDualForm,
+  )
+
+  const fixedSaves = view.saveCards.slice(0, 10)
+  const extraSaves = view.saveCards.slice(10)
+
   return (
-    <section aria-labelledby="saves-heading">
-      <h2
-        id="saves-heading"
-        className="mb-2 text-sm font-semibold uppercase tracking-wide"
-        style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
-      >
-        Saving throws
+    <section aria-labelledby="bonuses-overlay-heading" className="space-y-6">
+      <h2 id="bonuses-overlay-heading" className="sr-only">
+        Bonuses and saving throws
       </h2>
 
-      <p className={`mb-2 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-        The GM calls the save number (e.g. “save vs magic 12”). Roll d20 and add your listed bonus.
-        {DEFENDER_WINS_TIES ? ' You win ties.' : ''} Psionics uses your Psychic Gate tier target before other
-        bonuses.
-      </p>
-      <p className={`mb-3 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-        Hover a row for the full bonus breakdown. Opposed combat defenses use the same tie rule — the defender wins
-        when totals match.
-      </p>
-
-      <div className="mb-4">
+      <div>
         <h3
-          className={`mb-2 text-xs font-semibold uppercase tracking-wide ${
-            morphus ? 'text-emerald-300' : 'text-emerald-800'
-          }`}
+          className="mb-2 text-sm font-black uppercase tracking-wide"
+          style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
         >
-          Attribute-only saves
+          Bonuses
         </h3>
-        <p className={`mb-2 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
-          Base P.E. and M.E. exceptional bonuses with no racial, O.C.C., or skill save modifiers.
-          {supportsDualForm ? (
-            <>
-              {' '}
-              Nightbane also track Save vs Becoming (Facade M.E. + level progression) for Facade ↔
-              Morphus shifts.
-            </>
-          ) : null}
-        </p>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {profile.attributeSaves.map((s) => (
-            <AttributeSaveChip key={s.id} entry={s} morphus={morphus} />
+        <div className="grid grid-cols-3 gap-2">
+          {view.bonusCards.slice(0, 3).map((card) => (
+            <BonusOverlayCard key={card.id} card={card} morphus={morphus} />
+          ))}
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-5">
+          {view.bonusCards.slice(3).map((card) => (
+            <BonusOverlayCard key={card.id} card={card} morphus={morphus} />
           ))}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-        {profile.saves.map((s) => (
-          <SaveChip key={s.id} entry={s} morphus={morphus} />
-        ))}
+      <div>
+        <h3
+          className="mb-2 text-sm font-black uppercase tracking-wide"
+          style={{ color: morphus ? '#c4b5fd' : '#1e40af' }}
+        >
+          Saving Throws
+        </h3>
+        <p className={`mb-2 text-xs ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}>
+          Roll d20 and add the listed bonus. The GM calls the save number when it is not printed
+          on the card.
+          {DEFENDER_WINS_TIES ? ' You win ties.' : ''}
+        </p>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+          {fixedSaves.map((card) => (
+            <BonusOverlayCard key={card.id} card={card} morphus={morphus} />
+          ))}
+        </div>
+        {extraSaves.length > 0 ? (
+          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-5">
+            {extraSaves.map((card) => (
+              <BonusOverlayCard key={card.id} card={card} morphus={morphus} />
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   )
 }
-
