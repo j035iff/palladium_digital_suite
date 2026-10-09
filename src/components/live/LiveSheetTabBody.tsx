@@ -52,7 +52,7 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
     return <CampaignsHome morphus={morphusActive} />
   }
 
-  if (tabId === 'saves') {
+  if (tabId === 'bonuses') {
     return <SavingThrowsPanel />
   }
 

@@ -14,14 +14,14 @@ describe('liveSheetTabs', () => {
     expect(LIVE_SHEET_TAB_ORDER).toEqual([
       'home',
       'stats',
-      'saves',
+      'bonuses',
       'skills',
       'abilities',
       'gear',
     ])
     expect(LIVE_SHEET_OVERLAY_TAB_ORDER).toEqual([
       'stats',
-      'saves',
+      'bonuses',
       'skills',
       'abilities',
       'gear',
@@ -48,5 +48,13 @@ describe('liveSheetTabs', () => {
     expect(liveSheetTabTitle('story', 'home')).toBe('Campaign notes')
     expect(liveSheetTabTitle('combat', 'home')).toBe('Combat HUD')
     expect(liveSheetTabTitle('combat', 'skills')).toBe('Skills')
+  })
+
+  it('labels the bonuses overlay Bonuses (not Saves)', () => {
+    expect(
+      buildLiveSheetOverlayTabViews(null).find((t) => t.id === 'bonuses')
+        ?.label,
+    ).toBe('Bonuses')
+    expect(liveSheetTabTitle('combat', 'bonuses')).toBe('Saving throws')
   })
 })
