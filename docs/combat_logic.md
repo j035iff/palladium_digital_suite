@@ -47,7 +47,7 @@ Palladium uses a "Melee Round" (15 seconds) divided into individual "Attacks Per
 
 ## 4. The Save System (Dynamic Targets)
 
-The GM calls the save number from the book (e.g. “save vs magic 12”). The player rolls **d20 + save bonuses** and needs a total **≥ the called number**. The character sheet Bonuses overlay (active form only) shows the **total bonus** most prominently, with book targets as card footnotes when known — not a pre-reduced “you need X” number. No bonus / +0 prints as **—**. Situational / no-SoT targets (Horror Factor, Coma/Death, Illusions, Possession) print **varies** at the bottom of the card — never a fake TN. Disease omits a TN until one is documented in this table / the registry.
+The GM calls the save number from the book (e.g. “save vs magic 12”). The player rolls **d20 + save bonuses** and needs a total **≥ the called number**. The character sheet Bonuses overlay (active form only) shows the **total bonus** most prominently, with book targets as card footnotes when known — not a pre-reduced “you need X” number. No bonus / +0 prints as **—**. Situational targets (Horror Factor, Coma/Death) print **varies** at the bottom of the card — never a fake TN. Illusions / Possession omit a bottom TN until SoT documents one. Save vs Horror Factor on the Bonuses overlay is the **save bonus** only — Horror Factor **aura** stays on CombatHUD.
 
 | Save Type | Base Target (Human) |
 | :--- | :--- |
@@ -55,6 +55,7 @@ The GM calls the save number from the book (e.g. “save vs magic 12”). The pl
 | **Non-Lethal Poison** | 16+ |
 | **Magic (Standard)** | 12+ |
 | **Magic (Ritual)** | 16+ |
+| **Disease** | 14+ |
 | **Insanity** | 12+ |
 | **Psionics** | Psychic Gate tier (15 / 12 / 10) |
 | **Harmful Drugs** | 15+ |

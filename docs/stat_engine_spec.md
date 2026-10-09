@@ -192,7 +192,7 @@ Save roll bonus = Attr>16 (where applicable) + Race + OCC + Skills + misc
 
 **Implementation:** `buildCreationSavesBlock()`, `saveProfile.ts`, `computeAttributeSaveProfile()`, `saveRollDisplay.ts`, `attributeSaves.ts`, `nightbaneBecomingSave.ts`.
 
-**Status:** ✅ Creation ledger · ✅ Live Bonuses overlay (`buildLiveBonusesOverlay` → `SavingThrowsPanel`: BONUSES + fixed 10 SAVING THROWS + dynamic extras) · Nightbane Mind Control: ledger **Immune** / overlay **Impervious** (Familiar Surface) · P.E. 30+ Disease: **Impervious**
+**Status:** ✅ Creation ledger · ✅ Live Bonuses overlay (`buildLiveBonusesOverlay` → `SavingThrowsPanel`: BONUSES + fixed 10 SAVING THROWS + dynamic extras) · Disease TN **14** (`DISEASE_SAVE_BASE_TARGET` / `combat_logic.md` §4) · Nightbane Mind Control: **Immune** · P.E. 30+ Disease: **Impervious**
 
 ### 4.5 Hand-to-hand combat
 

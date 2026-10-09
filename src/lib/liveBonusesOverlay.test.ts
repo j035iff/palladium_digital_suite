@@ -48,14 +48,12 @@ describe('buildLiveBonusesOverlay', () => {
     expect(view.fixedSaveCards.find((c) => c.id === 'coma_death')?.footnotes).toEqual([
       OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
     ])
-    expect(view.fixedSaveCards.find((c) => c.id === 'illusions')?.footnotes).toEqual([
-      OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
+    // Illusions / Possession — no SoT TN yet; omit bottom target.
+    expect(view.fixedSaveCards.find((c) => c.id === 'illusions')?.footnotes).toEqual([])
+    expect(view.fixedSaveCards.find((c) => c.id === 'possession')?.footnotes).toEqual([])
+    expect(view.fixedSaveCards.find((c) => c.id === 'disease')?.footnotes).toEqual([
+      { label: '', text: '14+' },
     ])
-    expect(view.fixedSaveCards.find((c) => c.id === 'possession')?.footnotes).toEqual([
-      OVERLAY_SITUATIONAL_TARGET_FOOTNOTE,
-    ])
-    // Disease TN not in SoT — omit (do not invent 14+).
-    expect(view.fixedSaveCards.find((c) => c.id === 'disease')?.footnotes).toEqual([])
     expect(view.fixedSaveCards.find((c) => c.id === 'psionics')?.footnotes).toEqual([
       { label: '', text: '15+' },
     ])
@@ -74,7 +72,7 @@ describe('buildLiveBonusesOverlay', () => {
     expect(formatLiveBonusesOverlayPrimary(magic!.primary)).toBe('—')
   })
 
-  it('marks Nightbane mind control Impervious on the overlay', () => {
+  it('marks Nightbane mind control Immune on the overlay (engine wording)', () => {
     const nightbane = {
       ...characterFixture,
       lineage: 'nightbane' as const,
@@ -82,7 +80,7 @@ describe('buildLiveBonusesOverlay', () => {
     }
     const view = buildLiveBonusesOverlay(nightbane, 'primary', 15, true)
     const mind = view.fixedSaveCards.find((c) => c.id === 'mind_control')
-    expect(mind?.primary).toEqual({ kind: 'special', text: 'Impervious' })
+    expect(mind?.primary).toEqual({ kind: 'special', text: 'Immune' })
     // Becoming is a dual-form extra → dynamic row visible.
     expect(view.extraSaveCards.some((c) => c.id === 'vs_becoming')).toBe(true)
   })
