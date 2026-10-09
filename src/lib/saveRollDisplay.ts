@@ -41,21 +41,23 @@ export function formatAdditiveSaveTooltip(
   return parts.join(' ')
 }
 
-/** Mock-style signed bonus (`+2`, `−1`); callers treat `0` as empty dash separately. */
+/** Mock-style signed bonus (`+2`, `−1`). Zero → dash (never `+0`). */
 export function formatOverlaySigned(amount: number): string {
+  if (amount === 0) return '—'
   if (amount > 0) return `+${amount}`
   return `${amount}`
 }
 
-/** Signed percent bonus (`+8%`). */
+/** Signed percent bonus (`+8%`). Zero → dash (never `+0%`). */
 export function formatOverlaySignedPercent(amount: number): string {
+  if (amount === 0) return '—'
   if (amount > 0) return `+${amount}%`
-  if (amount < 0) return `${amount}%`
-  return '0%'
+  return `${amount}%`
 }
 
-/** Absolute percent chance (Trust / Charm) — `45%`. */
+/** Absolute percent chance (Trust / Charm) — `45%`. Zero → dash. */
 export function formatOverlayChancePercent(amount: number): string {
+  if (amount === 0) return '—'
   return `${amount}%`
 }
 
