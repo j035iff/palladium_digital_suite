@@ -229,7 +229,7 @@ Copy this block when registering a new unified path:
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
 | Mode / tabs | `src/lib/liveSheetTabs.ts` | `liveSheetModeLabel`, `buildLiveSheetOverlayTabViews`, `liveSheetTabTitle` | Chrome **Campaigns** / **Combat**; internal mode id `story` \| `combat`; strip = Stats · Bonuses · Skills · Abilities · Gear (+ Become Morphus after Gear when dual-form); overlay id `bonuses` → `SavingThrowsPanel` via `buildLiveBonusesOverlay`; no Home under mode switch |
-| Bonuses overlay | `src/lib/liveBonusesOverlay.ts` | `buildLiveBonusesOverlay` | Active-form BONUSES + fixed 10 SAVING THROWS + `extraSaveCards` (row hidden when empty); `—` for +0; Disease **14+**; situational HF/Coma footnotes `varies`; Illusions/Possession omit TN; immunity wording from engine (**Immune** / **Impervious**); HF save-bonus only; UI in `SavingThrowsPanel` |
+| Bonuses overlay | `src/lib/liveBonusesOverlay.ts` | `buildLiveBonusesOverlay` | Active-form BONUSES + fixed 10 SAVING THROWS + `extraSaveCards`; Nightbane always pins **Save vs Becoming** first (row shows with Becoming alone); non-Nightbane row hidden when empty; `—` for +0; Disease **14+**; HF/Coma `varies`; Illusions/Possession omit TN; UI in `SavingThrowsPanel` |
 | Campaigns journals | `src/lib/liveSheetCampaigns.ts` | `ensureSheetCampaignForJoin`, `buildCampaignPills`, `sortSheetCampaignsByLastAtTable`, `deleteSheetCampaign`, `mergeSheetCampaigns`, `hydrateSheetCampaigns` | Forever tabs on `character.sheetCampaigns`; key = normalized table **name**; `lastAtTableMs` per character (pill sort most-recent→oldest); per-campaign PPTN/wiki; delete permanent; merge source→target then drop source |
 | Wiki editor | `ContentLinkedNotesField` + `contentLinks` / `contentLinkEditorDom` / `narrativePlaceholders` | `ContentLinkWikiAdapter`, `wikiBagFromPlaceholders`, `remapContentLinkIds` | Same `[[kind:id\|label]]` pipeline as Hub; sheet injects adapter; Hub wraps via `GmContentLinkedNotesField` |
 | Chrome UI | `MainLayout`, `LiveSheetChromeStrip`, `LiveSheetTabOverlay` | Identity → strip → mode → body | Overlay reuses `LiveSheetTabBody` |
@@ -353,6 +353,8 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-09 | Bonuses: Nightbane extras pin **Save vs Becoming** first; overlay tooltips clamp/flip via `clampOverlayTooltipPosition` (no spill) |
+| 2026-10-09 | Bonuses: Nightbane dynamic extras always pin **Save vs Becoming** first (row shows even if alone); non-Nightbane unchanged |
 | 2026-10-09 | Bonuses: Disease TN **14** in SoT + overlay; Mind Control **Immune**; Illusions/Possession omit TN; HF save-bonus only; extras row stays hidden until needed |
 | 2026-10-09 | Bonuses overlay Joe rulings: `—` for +0; fixed 10 only; situational HF/Coma footnotes `varies`; active form only; hide extras row until needed |
 | 2026-10-09 | Live sheet Bonuses overlay mock layout: `buildLiveBonusesOverlay` (BONUSES black cards + SAVING THROWS blue cards + dynamic extras); strip tab **Saves → Bonuses** |

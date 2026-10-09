@@ -81,8 +81,40 @@ describe('buildLiveBonusesOverlay', () => {
     const view = buildLiveBonusesOverlay(nightbane, 'primary', 15, true)
     const mind = view.fixedSaveCards.find((c) => c.id === 'mind_control')
     expect(mind?.primary).toEqual({ kind: 'special', text: 'Immune' })
-    // Becoming is a dual-form extra → dynamic row visible.
-    expect(view.extraSaveCards.some((c) => c.id === 'vs_becoming')).toBe(true)
+  })
+
+  it('always pins Save vs Becoming first on the Nightbane extras row', () => {
+    const nightbane = {
+      ...characterFixture,
+      lineage: 'nightbane' as const,
+      raceId: 'race_nightbane',
+      primary: {
+        ...characterFixture.primary,
+        attributes: {
+          ...characterFixture.primary.attributes,
+          // High P.E. also surfaces Harmful Drugs as a later extra.
+          pe: 17,
+        },
+      },
+    }
+    const view = buildLiveBonusesOverlay(nightbane, 'primary', 15, true)
+    expect(view.extraSaveCards.length).toBeGreaterThanOrEqual(1)
+    expect(view.extraSaveCards[0]?.id).toBe('vs_becoming')
+    expect(view.extraSaveCards[0]?.label).toBe('Save vs Becoming')
+    const drugsIdx = view.extraSaveCards.findIndex((c) => c.id === 'harmful_drugs')
+    if (drugsIdx >= 0) {
+      expect(drugsIdx).toBeGreaterThan(0)
+    }
+  })
+
+  it('shows the Nightbane extras row with only Becoming when no other extras', () => {
+    const nightbane = {
+      ...characterFixture,
+      lineage: 'nightbane' as const,
+      raceId: 'race_nightbane',
+    }
+    const view = buildLiveBonusesOverlay(nightbane, 'primary', 15, true)
+    expect(view.extraSaveCards.map((c) => c.id)).toEqual(['vs_becoming'])
   })
 
   it('surfaces high-attribute bonuses as signed / percent primaries', () => {
