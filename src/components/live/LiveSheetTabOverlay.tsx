@@ -15,7 +15,7 @@ type Props = {
 }
 
 /**
- * Overlay host for shared Stats/Saves/Skills/Abilities/Gear — reuses
+ * Overlay host for shared Stats/Bonuses/Skills/Abilities/Gear — reuses
  * `LiveSheetTabBody` (Unified Path; no forked panel math).
  */
 export function LiveSheetTabOverlay({
