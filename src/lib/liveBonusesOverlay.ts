@@ -3,7 +3,10 @@
  * BONUSES + SAVING THROWS cards — values from attribute / save engines only.
  */
 import type { ActiveForm, Character, CharacterAttributes, Race } from '../types'
-import { SAVING_THROW_REGISTRY } from '../data/constants'
+import {
+  DISEASE_SAVE_BASE_TARGET,
+  SAVING_THROW_REGISTRY,
+} from '../data/constants'
 import { aggregateAllPassiveModifiers } from './featureEngine'
 import {
   getIqBonuses,
@@ -418,7 +421,7 @@ export function buildLiveBonusesOverlay(
           label: 'SAVE VS. Disease',
           primary: formatOverlaySpecial('Impervious'),
           footnotes: [],
-          tooltipEquation: 'P.E. 30+ — immune to disease; no save required.',
+          tooltipEquation: 'P.E. 30+ — impervious to disease; no save required.',
           outline: 'save' as const,
         }
       : attributedSaveCard({
@@ -429,9 +432,8 @@ export function buildLiveBonusesOverlay(
           supportsDualForm,
           race,
           keys: DISEASE_KEYS,
-          // Disease 14+ not in combat_logic / registry SoT — omit TN (do not invent).
-          footnotes: [],
-          tooltipTarget: null,
+          footnotes: [{ label: '', text: `${DISEASE_SAVE_BASE_TARGET}+` }],
+          tooltipTarget: DISEASE_SAVE_BASE_TARGET,
         }),
     attributedSaveCard({
       id: 'coma_death',
@@ -465,8 +467,8 @@ export function buildLiveBonusesOverlay(
       race,
       keys: ILLUSION_KEYS,
       exceptional: iqIllusion,
-      // No SoT TN — situational-style footnote (do not invent a number).
-      footnotes: [OVERLAY_SITUATIONAL_TARGET_FOOTNOTE],
+      // No SoT TN yet — omit bottom target (Joe 2026-10-09).
+      footnotes: [],
       tooltipTarget: null,
     }),
     attributedSaveCard({
@@ -490,19 +492,19 @@ export function buildLiveBonusesOverlay(
       race,
       keys: POSSESSION_KEYS,
       exceptional: mePossession,
-      // No SoT TN — situational-style footnote (do not invent a number).
-      footnotes: [OVERLAY_SITUATIONAL_TARGET_FOOTNOTE],
+      // No SoT TN yet — omit bottom target (Joe 2026-10-09).
+      footnotes: [],
       tooltipTarget: null,
     }),
     dualForm
       ? {
           id: 'mind_control',
           label: 'SAVE VS. Mind Control',
-          // Engine ledger says Immune; overlay shows Impervious (Joe / Familiar Surface).
-          primary: formatOverlaySpecial('Impervious'),
+          // Match engine / creation ledger wording (Joe: Immune is fine).
+          primary: formatOverlaySpecial('Immune'),
           footnotes: [],
           tooltipEquation:
-            'Nightbane — impervious to mind control (both forms; active form sheet).',
+            'Nightbane — immune to mind control (both forms; active form sheet).',
           outline: 'save' as const,
         }
       : attributedSaveCard({

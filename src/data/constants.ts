@@ -84,6 +84,16 @@ export const SAVING_THROW_REGISTRY: readonly SaveRowDefinition[] = [
     featureModifierKeys: ['save_insanity'],
   },
   {
+    id: 'disease',
+    sheetLabel: 'Save vs. Disease',
+    /** Standard Palladium disease save TN (Joe 2026-10-09). */
+    baseTarget: 14,
+    usePsionicsTierBase: false,
+    appliesPhysicalEnduranceBonus: false,
+    appliesMentalEnduranceBonus: false,
+    featureModifierKeys: ['save_disease'],
+  },
+  {
     id: 'psionics',
     sheetLabel: 'Save vs. Psionics',
     baseTarget: 12,
@@ -93,3 +103,6 @@ export const SAVING_THROW_REGISTRY: readonly SaveRowDefinition[] = [
     featureModifierKeys: ['save_psionics', 'save_isp'],
   },
 ]
+
+/** Standard Save vs Disease target — Bonuses overlay / combat_logic.md §4. */
+export const DISEASE_SAVE_BASE_TARGET = 14 as const
