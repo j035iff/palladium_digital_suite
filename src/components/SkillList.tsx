@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useCharacter } from '../context/CharacterContext'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
@@ -8,6 +8,7 @@ import {
   resolveLiveSkillPercent,
   resolveLiveSkillRollTarget,
 } from '../lib/liveSkillEngine'
+import { clampOverlayTooltipPosition } from '../lib/overlayTooltipPosition'
 import {
   formatPhysicalSkillBonusSummary,
   resolveSkillCatalogDescription,
@@ -23,7 +24,7 @@ export type SkillListProps = {
 /**
  * Pillar 8 — Radical Visibility (docs/vision.md): restricted options stay visible,
  * grayed out, with explicit rationale (gating per docs/skill_selection.md).
- * Percentile skills: list shows % without select; tap → breakdown + book description.
+ * Percentile skills: list shows %; hover % → source breakdown tooltip; click → description.
  * Stats-only Physical training: no self % — show catalog bonus summary instead.
  */
 export function SkillList({
@@ -136,7 +137,6 @@ export function SkillList({
                     setOpenSkillId((id) => (id === skill.id ? null : skill.id))
                   }
                   morphusResolved={morphusResolved}
-                  rollTarget={rollTarget}
                   percentDetail={percentDetail}
                   description={resolveSkillCatalogDescription(
                     catalog?.description,
@@ -160,7 +160,6 @@ function SkillRow({
   open,
   onToggle,
   morphusResolved,
-  rollTarget,
   percentDetail,
   description,
 }: {
@@ -172,7 +171,6 @@ function SkillRow({
   open: boolean
   onToggle: () => void
   morphusResolved: ReturnType<typeof resolveLiveSkillPercent> | null
-  rollTarget: ReturnType<typeof resolveLiveSkillRollTarget> | null
   percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
   description: ReturnType<typeof resolveSkillCatalogDescription>
 }) {
@@ -242,20 +240,22 @@ function SkillRow({
 
   return (
     <li className="relative">
-      <button
-        type="button"
-        className="flex w-full items-baseline justify-between gap-3 rounded-md border px-3 py-2 text-left font-medium transition-[box-shadow,transform] duration-150 hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      <div
+        className="flex w-full items-stretch gap-0 rounded-md border transition-[box-shadow,transform] duration-150"
         style={{
           borderColor: morphusActive ? '#5b21b6' : '#93c5fd',
           backgroundColor: morphusActive ? '#312e81' : '#ffffff',
           color: text,
-          outlineColor: morphusActive ? '#c4b5fd' : '#2563eb',
         }}
-        aria-expanded={open}
-        aria-controls={`${skill.id}-detail`}
-        onClick={onToggle}
       >
-        <span className="min-w-0 flex-1">
+        <button
+          type="button"
+          className="min-w-0 flex-1 rounded-l-md px-3 py-2 text-left font-medium hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          style={{ outlineColor: morphusActive ? '#c4b5fd' : '#2563eb' }}
+          aria-expanded={open}
+          aria-controls={`${skill.id}-detail`}
+          onClick={onToggle}
+        >
           <span>{skill.name}</span>
           {impossible ? (
             <span
@@ -273,21 +273,19 @@ function SkillRow({
               {bonusSummary}
             </span>
           ) : null}
-        </span>
-        {listPercent != null ? (
-          <span
-            className="shrink-0 font-mono text-base font-bold tabular-nums"
-            style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
-            aria-label={`${listPercent} percent`}
-          >
-            {listPercent}%
-          </span>
+        </button>
+        {listPercent != null && percentDetail ? (
+          <SkillPercentHover
+            skillId={skill.id}
+            listPercent={listPercent}
+            tooltipEquation={percentDetail.tooltipEquation}
+            morphusActive={morphusActive}
+          />
         ) : null}
-      </button>
+      </div>
       {open && impossible ? (
         <div
           id={`${skill.id}-detail`}
-          role="tooltip"
           className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
           style={{
             borderColor: morphusActive ? '#f87171' : '#dc2626',
@@ -305,13 +303,13 @@ function SkillRow({
           <SkillDescriptionBlock
             description={description}
             morphusActive={morphusActive}
+            bordered={false}
           />
         </div>
       ) : null}
       {open && statsOnlyPhysical ? (
         <div
           id={`${skill.id}-detail`}
-          role="tooltip"
           className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
           style={detailPanelStyle}
         >
@@ -330,50 +328,16 @@ function SkillRow({
           />
         </div>
       ) : null}
-      {open && rollTarget && percentDetail && !statsOnlyPhysical ? (
+      {open && !statsOnlyPhysical && !impossible ? (
         <div
           id={`${skill.id}-detail`}
-          role="tooltip"
           className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border-2 px-3 py-2 shadow-lg"
           style={detailPanelStyle}
         >
-          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
-            Skill %
-          </p>
-          <p className="mt-1 font-mono text-lg font-black tabular-nums">
-            {percentDetail.listPercent}%
-            <span className="ml-2 text-xs font-semibold uppercase tracking-wide opacity-80">
-              Roll ≤ {rollTarget.target}%
-            </span>
-          </p>
-          <p className="mt-2 text-[10px] font-black uppercase tracking-wide opacity-90">
-            Where it comes from
-          </p>
-          <ul className="mt-1 space-y-0.5 text-[11px] leading-snug">
-            {percentDetail.breakdownLines.map((line) => (
-              <li
-                key={`${line.label}-${line.value}`}
-                className="flex justify-between gap-3 font-mono tabular-nums"
-              >
-                <span className="min-w-0 truncate font-sans opacity-90">
-                  {line.label}
-                </span>
-                <span>
-                  {line.value > 0 ? '+' : ''}
-                  {line.value}%
-                </span>
-              </li>
-            ))}
-          </ul>
-          {percentDetail.morphusTotal != null &&
-          percentDetail.morphusTotal !== rollTarget.target ? (
-            <p className="mt-1 text-[11px] leading-snug opacity-90">
-              Morphus total {percentDetail.morphusTotal}%
-            </p>
-          ) : null}
           <SkillDescriptionBlock
             description={description}
             morphusActive={morphusActive}
+            bordered={false}
           />
         </div>
       ) : null}
@@ -381,15 +345,117 @@ function SkillRow({
   )
 }
 
+/**
+ * Hover/focus on the list % — Bonuses-overlay style fixed tooltip
+ * (`clampOverlayTooltipPosition`) with bracketed source equation.
+ */
+function SkillPercentHover({
+  skillId,
+  listPercent,
+  tooltipEquation,
+  morphusActive,
+}: {
+  skillId: string
+  listPercent: number
+  tooltipEquation: string
+  morphusActive: boolean
+}) {
+  const anchorRef = useRef<HTMLSpanElement>(null)
+  const tipRef = useRef<HTMLDivElement>(null)
+  const [tipOpen, setTipOpen] = useState(false)
+  const [pos, setPos] = useState<{
+    top: number
+    left: number
+    maxWidth: number
+  } | null>(null)
+
+  useLayoutEffect(() => {
+    if (!tipOpen) return
+    const anchorEl = anchorRef.current
+    const tipEl = tipRef.current
+    if (!anchorEl || !tipEl) return
+
+    const place = () => {
+      const dialog = anchorEl.closest('[role="dialog"]')
+      const bounds = dialog?.getBoundingClientRect() ?? null
+      const tipRect = tipEl.getBoundingClientRect()
+      const next = clampOverlayTooltipPosition(
+        anchorEl.getBoundingClientRect(),
+        { width: tipRect.width || 352, height: tipRect.height || 48 },
+        bounds,
+      )
+      setPos({ top: next.top, left: next.left, maxWidth: next.maxWidth })
+    }
+
+    place()
+    window.addEventListener('resize', place)
+    window.addEventListener('scroll', place, true)
+    return () => {
+      window.removeEventListener('resize', place)
+      window.removeEventListener('scroll', place, true)
+    }
+  }, [tipOpen, tooltipEquation])
+
+  return (
+    <>
+      <span
+        ref={anchorRef}
+        className="flex shrink-0 items-center rounded-r-md px-3 py-2 font-mono text-base font-bold tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        style={{
+          color: morphusActive ? '#c4b5fd' : '#1d4ed8',
+          outlineColor: morphusActive ? '#c4b5fd' : '#2563eb',
+        }}
+        tabIndex={0}
+        aria-label={`${listPercent} percent. ${tooltipEquation}`}
+        onMouseEnter={() => setTipOpen(true)}
+        onMouseLeave={() => setTipOpen(false)}
+        onFocus={() => setTipOpen(true)}
+        onBlur={() => setTipOpen(false)}
+      >
+        {listPercent}%
+      </span>
+      {tipOpen ? (
+        <div
+          ref={tipRef}
+          id={`${skillId}-percent-tip`}
+          role="tooltip"
+          className={`pointer-events-none fixed z-[60] max-h-48 overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug shadow-lg ${
+            morphusActive
+              ? 'border-indigo-600/90 bg-black/95 text-violet-50'
+              : 'border-slate-400 bg-white text-slate-900'
+          }`}
+          style={{
+            top: pos?.top ?? -9999,
+            left: pos?.left ?? -9999,
+            maxWidth: pos?.maxWidth ?? 352,
+            visibility: pos ? 'visible' : 'hidden',
+          }}
+        >
+          {tooltipEquation}
+        </div>
+      ) : null}
+    </>
+  )
+}
+
 function SkillDescriptionBlock({
   description,
   morphusActive,
+  bordered = true,
 }: {
   description: ReturnType<typeof resolveSkillCatalogDescription>
   morphusActive: boolean
+  bordered?: boolean
 }) {
   return (
-    <div className="mt-2 border-t pt-2" style={{ borderColor: morphusActive ? '#4c1d95' : '#cbd5e1' }}>
+    <div
+      className={bordered ? 'mt-2 border-t pt-2' : undefined}
+      style={
+        bordered
+          ? { borderColor: morphusActive ? '#4c1d95' : '#cbd5e1' }
+          : undefined
+      }
+    >
       <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
         Description
       </p>

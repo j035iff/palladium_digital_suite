@@ -128,7 +128,7 @@ describe('resolveLiveSkillRollTarget', () => {
 })
 
 describe('buildLiveSkillPercentDetail', () => {
-  it('exposes list % and Base / Level / I.Q. lines from the quick-roll target', () => {
+  it('exposes list % and bracketed tooltip from the quick-roll target', () => {
     const roll = resolveLiveSkillRollTarget({
       character: characterFixture,
       activeForm: 'primary',
@@ -140,11 +140,17 @@ describe('buildLiveSkillPercentDetail', () => {
     expect(detail.morphusTotal).toBeNull()
     expect(detail.breakdownLines.map((l) => l.label)).toEqual([
       'Base',
+      'IQ',
       'Level',
-      'I.Q.',
     ])
     expect(detail.breakdownLines[0]?.value).toBe(40)
-    expect(detail.breakdownLines[1]?.value).toBe(occSkillLevelBonusPercent(3))
+    expect(detail.breakdownLines[2]?.value).toBe(occSkillLevelBonusPercent(3))
+    // Zero IQ omitted from tooltip (Base always kept).
+    expect(detail.tooltipEquation).toBe(
+      roll.iqBonus === 0
+        ? `[Base: 40] + [Level: ${roll.levelBonus}]`
+        : `[Base: 40] + [IQ: ${roll.iqBonus}] + [Level: ${roll.levelBonus}]`,
+    )
   })
 
   it('prefers Morphus total for the closed-row % when usable', () => {
@@ -167,6 +173,7 @@ describe('buildLiveSkillPercentDetail', () => {
     expect(detail.breakdownLines.some((l) => l.label === 'Morphus (this skill)')).toBe(
       true,
     )
+    expect(detail.tooltipEquation).toContain('[Morphus (this skill): 10]')
   })
 })
 

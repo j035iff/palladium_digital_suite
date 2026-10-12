@@ -50,15 +50,29 @@ export type LiveSkillRollTarget = {
   iqBonus: number
 }
 
-/** Inspectable lines for the live Skills detail panel (Familiar Surface labels). */
+/** Inspectable source lines for the live Skills % hover tooltip. */
 export type LiveSkillPercentBreakdownLine = {
   label: string
   value: number
 }
 
 /**
- * List % + breakdown for a percentile skill on the live Skills overlay.
+ * Bracketed source equation for % hover tooltips (same shape as weapon/stat
+ * breakdowns — e.g. `[Base: 35] + [IQ: 5] + [Level: 10]`).
+ */
+export function formatLiveSkillPercentTooltip(
+  lines: readonly LiveSkillPercentBreakdownLine[],
+): string {
+  const parts = lines
+    .filter((l) => l.label === 'Base' || l.value !== 0)
+    .map((l) => `[${l.label}: ${l.value}]`)
+  return parts.join(' + ')
+}
+
+/**
+ * List % + hover-tooltip breakdown for a percentile skill on the live Skills overlay.
  * Uses {@link resolveLiveSkillRollTarget} components; Morphus total when provided.
+ * OCC is not a separate sheet field today — spawn bakes it into Base when present.
  */
 export function buildLiveSkillPercentDetail(opts: {
   rollTarget: LiveSkillRollTarget
@@ -67,6 +81,8 @@ export function buildLiveSkillPercentDetail(opts: {
   /** Closed-row % (Morphus total when usable in Morphus; else quick-roll target). */
   listPercent: number
   breakdownLines: readonly LiveSkillPercentBreakdownLine[]
+  /** Hover tooltip equation (`[Base: n] + [IQ: n] + …`). */
+  tooltipEquation: string
   /** Morphus engine total when form is Morphus and skill is usable. */
   morphusTotal: number | null
 } {
@@ -77,8 +93,8 @@ export function buildLiveSkillPercentDetail(opts: {
       : null
   const breakdownLines: LiveSkillPercentBreakdownLine[] = [
     { label: 'Base', value: rollTarget.base },
+    { label: 'IQ', value: rollTarget.iqBonus },
     { label: 'Level', value: rollTarget.levelBonus },
-    { label: 'I.Q.', value: rollTarget.iqBonus },
   ]
   if (morphusUsable) {
     for (const line of morphusUsable.lines) {
@@ -89,6 +105,7 @@ export function buildLiveSkillPercentDetail(opts: {
   return {
     listPercent: morphusUsable ? morphusUsable.total : rollTarget.target,
     breakdownLines,
+    tooltipEquation: formatLiveSkillPercentTooltip(breakdownLines),
     morphusTotal: morphusUsable ? morphusUsable.total : null,
   }
 }
