@@ -6,7 +6,11 @@ import {
   buildLiveSkillContext,
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
+  filterLiveSkillSections,
   isHandToHandSheetSkill,
+  isWeaponProficiencySheetSkill,
+  listLiveSkillFilterCategoryOptions,
+  LIVE_SKILL_FILTER_ALL_CATEGORIES,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
   occSkillLevelBonusPercent,
@@ -371,6 +375,104 @@ describe('buildLiveSkillSections', () => {
     const names = sections.flatMap((s) => s.skills.map((sk) => sk.name))
     expect(names).toEqual(['Climbing'])
     expect(names.some((n) => /hand to hand/i.test(n))).toBe(false)
+  })
+})
+
+describe('isWeaponProficiencySheetSkill', () => {
+  it('detects wp_ catalog and instance-backed W.P. rows', () => {
+    expect(
+      isWeaponProficiencySheetSkill({
+        id: 'wp_sword',
+        catalogSkillId: 'wp_sword',
+      }),
+    ).toBe(true)
+    expect(
+      isWeaponProficiencySheetSkill({
+        id: 'inst-wp',
+        catalogSkillId: 'wp_knife',
+      }),
+    ).toBe(true)
+    expect(
+      isWeaponProficiencySheetSkill({
+        id: 'skill_acrobatics',
+        catalogSkillId: 'skill_acrobatics',
+      }),
+    ).toBe(false)
+  })
+})
+
+describe('filterLiveSkillSections / listLiveSkillFilterCategoryOptions', () => {
+  const row = (
+    id: string,
+    name: string,
+    opts?: Partial<SheetSkill>,
+  ): SheetSkill => ({
+    id,
+    name,
+    restricted: false,
+    catalogSkillId: id.startsWith('skill_') || id.startsWith('wp_') ? id : undefined,
+    ...opts,
+  })
+
+  const sampleSections = () =>
+    buildLiveSkillSections([
+      row('skill_radio_basic', 'Radio: Basic', { basePercent: 50 }),
+      row('skill_computer_operation', 'Computer Operation', {
+        basePercent: 40,
+      }),
+      row('skill_climbing', 'Climbing', { basePercent: 45 }),
+      row('wp_sword', 'W.P. Sword'),
+    ])
+
+  it('lists All plus present category labels', () => {
+    const options = listLiveSkillFilterCategoryOptions(sampleSections())
+    expect(options[0]).toEqual({
+      value: LIVE_SKILL_FILTER_ALL_CATEGORIES,
+      label: 'All categories',
+    })
+    expect(options.map((o) => o.label)).toEqual(
+      expect.arrayContaining(['Communications', 'Physical', 'WP: Ancient']),
+    )
+  })
+
+  it('filters by category alone', () => {
+    const filtered = filterLiveSkillSections(sampleSections(), {
+      category: 'Communications',
+    })
+    expect(filtered.map((s) => s.label)).toEqual(['Communications'])
+    expect(filtered[0]!.skills.map((s) => s.name)).toEqual(
+      expect.arrayContaining(['Radio: Basic']),
+    )
+  })
+
+  it('filters by name substring (case-insensitive)', () => {
+    const filtered = filterLiveSkillSections(sampleSections(), {
+      nameQuery: 'computer',
+    })
+    const names = filtered.flatMap((s) => s.skills.map((sk) => sk.name))
+    expect(names).toEqual(['Computer Operation'])
+  })
+
+  it('AND-combines category and name filters', () => {
+    const filtered = filterLiveSkillSections(sampleSections(), {
+      category: 'Communications',
+      nameQuery: 'computer',
+    })
+    // Computer Operation is Technical, not Communications
+    expect(filtered).toEqual([])
+    const both = filterLiveSkillSections(sampleSections(), {
+      category: 'Technical',
+      nameQuery: 'computer',
+    })
+    expect(both.flatMap((s) => s.skills.map((sk) => sk.name))).toEqual([
+      'Computer Operation',
+    ])
+  })
+
+  it('drops empty sections when nothing matches', () => {
+    expect(
+      filterLiveSkillSections(sampleSections(), { nameQuery: 'zzz-nope' }),
+    ).toEqual([])
   })
 })
 

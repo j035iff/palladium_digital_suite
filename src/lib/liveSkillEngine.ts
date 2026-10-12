@@ -7,7 +7,9 @@ import type {
 import { getLibraryOccById } from '../data/library/registry'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
+import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
 import { getSkillById } from '../data/skillLibrary'
+import { isWeaponProficiencySkill } from './skillDisplayDetails'
 import { CREATION_SKILL_FILTER_CATEGORY_ORDER } from './creationSkillCatalog'
 import {
   creationSkillIdsSet,
@@ -178,6 +180,20 @@ export function isHandToHandSheetSkill(
     return true
   }
   return /^hand\s*to\s*hand\b/i.test(skill.name.trim())
+}
+
+/**
+ * Weapon proficiencies are not percentile skills — no list % / fake d100
+ * (Joe 2026-10-12; same spirit as stats-only Physical).
+ */
+export function isWeaponProficiencySheetSkill(
+  skill: Pick<SheetSkill, 'id' | 'catalogSkillId'>,
+): boolean {
+  const catalogId = resolveSheetSkillCatalogId(skill)
+  if (catalogId.startsWith('wp_')) return true
+  if (getWeaponProficiencyCatalogEntryById(catalogId)) return true
+  const def = getSkillById(catalogId)
+  return def ? isWeaponProficiencySkill(def) : false
 }
 
 /** Owned catalog skill ids for synergy partners (sheet rows + creation picks). */
@@ -563,4 +579,61 @@ export function buildLiveSkillSections(
   }
 
   return sections
+}
+
+/** Familiar Surface — category dropdown “All” value. */
+export const LIVE_SKILL_FILTER_ALL_CATEGORIES = 'all'
+
+export type LiveSkillListFilter = {
+  /** Section label (e.g. Communications) or {@link LIVE_SKILL_FILTER_ALL_CATEGORIES}. */
+  category?: string | null
+  /** Case-insensitive substring match on skill display name. */
+  nameQuery?: string | null
+}
+
+/**
+ * Category dropdown options from the character’s current sections
+ * (unique labels in list order) plus All.
+ */
+export function listLiveSkillFilterCategoryOptions(
+  sections: readonly LiveSkillSection[],
+): readonly { value: string; label: string }[] {
+  const seen = new Set<string>()
+  const options: { value: string; label: string }[] = [
+    { value: LIVE_SKILL_FILTER_ALL_CATEGORIES, label: 'All categories' },
+  ]
+  for (const section of sections) {
+    if (seen.has(section.label)) continue
+    seen.add(section.label)
+    options.push({ value: section.label, label: section.label })
+  }
+  return options
+}
+
+/**
+ * Filter live Skills sections by category label and/or name query (AND when both set).
+ * Empty sections are dropped; H2H is already excluded from {@link buildLiveSkillSections}.
+ */
+export function filterLiveSkillSections(
+  sections: readonly LiveSkillSection[],
+  filter: LiveSkillListFilter = {},
+): LiveSkillSection[] {
+  const category = filter.category?.trim() || LIVE_SKILL_FILTER_ALL_CATEGORIES
+  const query = filter.nameQuery?.trim().toLowerCase() ?? ''
+
+  return sections
+    .filter(
+      (section) =>
+        category === LIVE_SKILL_FILTER_ALL_CATEGORIES ||
+        section.label === category,
+    )
+    .map((section) => {
+      if (!query) return section
+      const skills = section.skills.filter((skill) =>
+        skill.name.toLowerCase().includes(query),
+      )
+      if (skills.length === section.skills.length) return section
+      return { ...section, skills }
+    })
+    .filter((section) => section.skills.length > 0)
 }

@@ -1,9 +1,14 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useCharacter } from '../context/CharacterContext'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
+import { getSkillById } from '../data/skillLibrary'
 import {
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
+  filterLiveSkillSections,
+  isWeaponProficiencySheetSkill,
+  listLiveSkillFilterCategoryOptions,
+  LIVE_SKILL_FILTER_ALL_CATEGORIES,
   resolveSheetSkillCatalogId,
   type LiveSkillPercentBreakdownLine,
 } from '../lib/liveSkillEngine'
@@ -11,6 +16,7 @@ import { clampOverlayTooltipPosition } from '../lib/overlayTooltipPosition'
 import {
   formatPhysicalSkillBonusSummary,
   resolveSkillCatalogDescription,
+  resolveSkillCatalogDisplayDetails,
 } from '../lib/skillDisplayDetails'
 import type { SheetSkill } from '../types'
 
@@ -24,7 +30,8 @@ export type SkillListProps = {
  * Pillar 8 — Radical Visibility (docs/vision.md): restricted options stay visible,
  * grayed out, with explicit rationale (gating per docs/skill_selection.md).
  * Percentile skills: list shows %; hover % → source breakdown tooltip; click → description.
- * Stats-only Physical training: no self % — show catalog bonus summary instead.
+ * Stats-only Physical / W.P.: no self % — bonus summary instead.
+ * Category dropdown + name search (AND when both set).
  */
 export function SkillList({
   skills,
@@ -36,9 +43,25 @@ export function SkillList({
   const text = morphusActive ? '#e2e8f0' : '#0f172a'
   const heading = morphusActive ? '#c4b5fd' : '#1e40af'
   const [openSkillId, setOpenSkillId] = useState<string | null>(null)
+  const [categoryFilter, setCategoryFilter] = useState(
+    LIVE_SKILL_FILTER_ALL_CATEGORIES,
+  )
+  const [nameQuery, setNameQuery] = useState('')
   const rootRef = useRef<HTMLDivElement>(null)
 
-  const sections = useMemo(() => buildLiveSkillSections(skills), [skills])
+  const allSections = useMemo(() => buildLiveSkillSections(skills), [skills])
+  const categoryOptions = useMemo(
+    () => listLiveSkillFilterCategoryOptions(allSections),
+    [allSections],
+  )
+  const sections = useMemo(
+    () =>
+      filterLiveSkillSections(allSections, {
+        category: categoryFilter,
+        nameQuery,
+      }),
+    [allSections, categoryFilter, nameQuery],
+  )
 
   useEffect(() => {
     if (!openSkillId) return
@@ -50,7 +73,23 @@ export function SkillList({
     return () => document.removeEventListener('mousedown', onDoc)
   }, [openSkillId])
 
-  if (sections.length === 0) {
+  useEffect(() => {
+    if (
+      categoryFilter !== LIVE_SKILL_FILTER_ALL_CATEGORIES &&
+      !categoryOptions.some((o) => o.value === categoryFilter)
+    ) {
+      setCategoryFilter(LIVE_SKILL_FILTER_ALL_CATEGORIES)
+    }
+  }, [categoryFilter, categoryOptions])
+
+  const fieldClass = morphusActive
+    ? 'rounded-md border border-violet-700 bg-slate-950/80 px-2 py-1.5 text-sm text-violet-50 outline-none focus-visible:ring-2 focus-visible:ring-violet-400'
+    : 'rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900 outline-none focus-visible:ring-2 focus-visible:ring-blue-500'
+  const labelClass = morphusActive
+    ? 'text-[10px] font-bold uppercase tracking-wide text-violet-300'
+    : 'text-[10px] font-bold uppercase tracking-wide text-slate-600'
+
+  if (allSections.length === 0) {
     return (
       <p className="text-sm" style={{ color: muted }}>
         No skills on this form.
@@ -60,56 +99,108 @@ export function SkillList({
 
   return (
     <div ref={rootRef} className="space-y-4">
-      {sections.map((section) => (
-        <section
-          key={section.id}
-          aria-labelledby={`skill-cat-${section.id}`}
-          className="space-y-2"
-        >
-          <h3
-            id={`skill-cat-${section.id}`}
-            className="text-xs font-semibold uppercase tracking-wide"
-            style={{ color: heading }}
+      <div
+        className="grid gap-2 sm:grid-cols-2"
+        role="search"
+        aria-label="Filter skills"
+      >
+        <label className="flex min-w-0 flex-col gap-1">
+          <span className={labelClass}>Category</span>
+          <select
+            className={fieldClass}
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            aria-label="Filter by skill category"
           >
-            {section.label}
-          </h3>
-          <ul className="space-y-2" role="list">
-            {section.skills.map((skill) => {
-              const catalogId = resolveSheetSkillCatalogId(skill)
-              const catalog = getPalladiumSkillCatalogEntryById(catalogId)
-              const percentDetail =
-                !section.statsOnlyPhysical && !skill.restricted
-                  ? buildLiveSkillPercentDetail({
-                      character,
-                      activeForm,
-                      skill,
-                      ownedSkills: skills,
-                      characterLevel,
-                      morphusSurfaceType,
-                    })
-                  : null
-              return (
-                <SkillRow
-                  key={skill.id}
-                  skill={skill}
-                  statsOnlyPhysical={Boolean(section.statsOnlyPhysical)}
-                  morphusActive={morphusActive}
-                  muted={muted}
-                  text={text}
-                  open={openSkillId === skill.id}
-                  onToggle={() =>
-                    setOpenSkillId((id) => (id === skill.id ? null : skill.id))
-                  }
-                  percentDetail={percentDetail}
-                  description={resolveSkillCatalogDescription(
-                    catalog?.description,
-                  )}
-                />
-              )
-            })}
-          </ul>
-        </section>
-      ))}
+            {categoryOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex min-w-0 flex-col gap-1">
+          <span className={labelClass}>Search</span>
+          <input
+            type="search"
+            className={fieldClass}
+            value={nameQuery}
+            onChange={(e) => setNameQuery(e.target.value)}
+            placeholder="Skill name"
+            aria-label="Search skills by name"
+          />
+        </label>
+      </div>
+
+      {sections.length === 0 ? (
+        <p className="text-sm" style={{ color: muted }}>
+          No skills match these filters.
+        </p>
+      ) : (
+        sections.map((section) => (
+          <section
+            key={section.id}
+            aria-labelledby={`skill-cat-${section.id}`}
+            className="space-y-2"
+          >
+            <h3
+              id={`skill-cat-${section.id}`}
+              className="text-xs font-semibold uppercase tracking-wide"
+              style={{ color: heading }}
+            >
+              {section.label}
+            </h3>
+            <ul className="space-y-2" role="list">
+              {section.skills.map((skill) => {
+                const catalogId = resolveSheetSkillCatalogId(skill)
+                const catalog = getPalladiumSkillCatalogEntryById(catalogId)
+                const weaponProficiency = isWeaponProficiencySheetSkill(skill)
+                const def = getSkillById(catalogId)
+                const weaponBonusSummary =
+                  weaponProficiency && def
+                    ? resolveSkillCatalogDisplayDetails(def, characterLevel)
+                        .weaponBonusSummary
+                    : null
+                const percentDetail =
+                  !section.statsOnlyPhysical &&
+                  !weaponProficiency &&
+                  !skill.restricted
+                    ? buildLiveSkillPercentDetail({
+                        character,
+                        activeForm,
+                        skill,
+                        ownedSkills: skills,
+                        characterLevel,
+                        morphusSurfaceType,
+                      })
+                    : null
+                return (
+                  <SkillRow
+                    key={skill.id}
+                    skill={skill}
+                    statsOnlyPhysical={Boolean(section.statsOnlyPhysical)}
+                    weaponProficiency={weaponProficiency}
+                    weaponBonusSummary={weaponBonusSummary}
+                    morphusActive={morphusActive}
+                    muted={muted}
+                    text={text}
+                    open={openSkillId === skill.id}
+                    onToggle={() =>
+                      setOpenSkillId((id) =>
+                        id === skill.id ? null : skill.id,
+                      )
+                    }
+                    percentDetail={percentDetail}
+                    description={resolveSkillCatalogDescription(
+                      catalog?.description,
+                    )}
+                  />
+                )
+              })}
+            </ul>
+          </section>
+        ))
+      )}
     </div>
   )
 }
@@ -117,6 +208,8 @@ export function SkillList({
 function SkillRow({
   skill,
   statsOnlyPhysical,
+  weaponProficiency,
+  weaponBonusSummary,
   morphusActive,
   muted,
   text,
@@ -127,6 +220,8 @@ function SkillRow({
 }: {
   skill: SheetSkill
   statsOnlyPhysical: boolean
+  weaponProficiency: boolean
+  weaponBonusSummary: string | null
   morphusActive: boolean
   muted: string
   text: string
@@ -144,6 +239,12 @@ function SkillRow({
           ?.physicalSkillBonuses,
       )
     : null
+  const closedSummary = statsOnlyPhysical
+    ? bonusSummary
+    : weaponProficiency
+      ? weaponBonusSummary
+      : null
+  const nonPercentile = statsOnlyPhysical || weaponProficiency
 
   if (skill.restricted) {
     return (
@@ -194,7 +295,7 @@ function SkillRow({
 
   const impossible = Boolean(percentDetail?.impossibleInMorphus)
   const listPercent =
-    !statsOnlyPhysical && !impossible ? percentDetail?.listPercent ?? null : null
+    !nonPercentile && !impossible ? percentDetail?.listPercent ?? null : null
   const detailPanelStyle = {
     borderColor: morphusActive ? '#a78bfa' : '#3b82f6',
     backgroundColor: morphusActive ? '#1e1b4b' : '#f8fafc',
@@ -228,12 +329,12 @@ function SkillRow({
               Impossible
             </span>
           ) : null}
-          {statsOnlyPhysical && bonusSummary && !open ? (
+          {closedSummary && !open ? (
             <span
               className="mt-1 block text-xs font-normal leading-snug"
               style={{ color: muted }}
             >
-              {bonusSummary}
+              {closedSummary}
             </span>
           ) : null}
         </button>
@@ -293,7 +394,28 @@ function SkillRow({
           />
         </div>
       ) : null}
-      {open && !statsOnlyPhysical && !impossible ? (
+      {open && weaponProficiency ? (
+        <div
+          id={`${skill.id}-detail`}
+          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
+          style={detailPanelStyle}
+        >
+          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
+            Weapon proficiency
+          </p>
+          <p className="mt-1 text-sm font-semibold leading-snug">
+            {weaponBonusSummary ?? 'Combat bonuses by level (no skill %).'}
+          </p>
+          <p className="mt-1 text-[11px] leading-snug opacity-90">
+            No d100 roll — W.P.s grant strike/parry (and related) bonuses.
+          </p>
+          <SkillDescriptionBlock
+            description={description}
+            morphusActive={morphusActive}
+          />
+        </div>
+      ) : null}
+      {open && !nonPercentile && !impossible ? (
         <div
           id={`${skill.id}-detail`}
           className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border-2 px-3 py-2 shadow-lg"
