@@ -11,6 +11,7 @@ import {
   occSkillLevelBonusPercent,
   resolveLiveSkillPercent,
   resolveLiveSkillRollTarget,
+  resolveLiveSkillTemporaryPercentLines,
 } from './liveSkillEngine'
 import { resolveLiveIqSkillBonus } from './liveStatEngine'
 import type { SheetSkill } from '../types'
@@ -127,53 +128,125 @@ describe('resolveLiveSkillRollTarget', () => {
   })
 })
 
+describe('resolveLiveSkillTemporaryPercentLines', () => {
+  it('omits zero status and keeps named temporary ability lines', () => {
+    expect(resolveLiveSkillTemporaryPercentLines()).toEqual([])
+    expect(resolveLiveSkillTemporaryPercentLines({ statusModifiers: 0 })).toEqual(
+      [],
+    )
+    expect(
+      resolveLiveSkillTemporaryPercentLines({ statusModifiers: -10 }),
+    ).toEqual([{ label: 'Temporary', value: -10 }])
+    expect(
+      resolveLiveSkillTemporaryPercentLines({
+        temporaryLines: [
+          { label: 'Armor of Ithan', value: 0 },
+          { label: 'Blessed', value: 10 },
+        ],
+      }),
+    ).toEqual([{ label: 'Blessed', value: 10 }])
+  })
+})
+
 describe('buildLiveSkillPercentDetail', () => {
-  it('exposes list % and bracketed tooltip from the quick-roll target', () => {
-    const roll = resolveLiveSkillRollTarget({
+  const literacy: SheetSkill = {
+    id: 'skill_literacy',
+    name: 'Literacy',
+    restricted: false,
+    basePercent: 40,
+  }
+
+  it('orders non-zero portions Base → IQ → OCC → Synergies → Other → Level → Temporary', () => {
+    const detail = buildLiveSkillPercentDetail({
       character: characterFixture,
       activeForm: 'primary',
-      skillBasePercent: 40,
+      skill: literacy,
+      ownedSkills: [literacy],
       characterLevel: 3,
+      temporaryLines: [{ label: 'Blessed', value: 10 }],
     })
-    const detail = buildLiveSkillPercentDetail({ rollTarget: roll })
-    expect(detail.listPercent).toBe(roll.target)
-    expect(detail.morphusTotal).toBeNull()
-    expect(detail.breakdownLines.map((l) => l.label)).toEqual([
-      'Base',
-      'IQ',
-      'Level',
-    ])
-    expect(detail.breakdownLines[0]?.value).toBe(40)
-    expect(detail.breakdownLines[2]?.value).toBe(occSkillLevelBonusPercent(3))
-    // Zero IQ omitted from tooltip (Base always kept).
-    expect(detail.tooltipEquation).toBe(
-      roll.iqBonus === 0
-        ? `[Base: 40] + [Level: ${roll.levelBonus}]`
-        : `[Base: 40] + [IQ: ${roll.iqBonus}] + [Level: ${roll.levelBonus}]`,
-    )
+    const groups = detail.breakdownLines.map((l) => l.group)
+    const order = ['base', 'iq', 'occ', 'synergy', 'other', 'level', 'temporary']
+    let last = -1
+    for (const g of groups) {
+      const idx = order.indexOf(g)
+      expect(idx).toBeGreaterThanOrEqual(last)
+      last = idx
+    }
+    expect(detail.breakdownLines.every((l) => l.value !== 0)).toBe(true)
+    expect(detail.breakdownLines.at(-1)).toMatchObject({
+      label: 'Blessed',
+      value: 10,
+      group: 'temporary',
+      tone: 'bonus',
+    })
+    expect(detail.breakdownLines.some((l) => l.label === 'Level')).toBe(true)
+    expect(detail.tooltipEquation).toContain('[Blessed: 10]')
+    expect(detail.listPercentTone).toBe('bonus')
+    expect(detail.temporaryNet).toBe(10)
   })
 
-  it('prefers Morphus total for the closed-row % when usable', () => {
-    const roll = resolveLiveSkillRollTarget({
+  it('colors penalties red-tone, omits zero IQ, and tints list % from Temporary', () => {
+    const detail = buildLiveSkillPercentDetail({
       character: characterFixture,
       activeForm: 'primary',
-      skillBasePercent: 30,
+      skill: literacy,
+      ownedSkills: [literacy],
+      characterLevel: 1,
+      statusModifiers: -15,
+    })
+    const iq = detail.breakdownLines.find((l) => l.group === 'iq')
+    expect(iq).toBeUndefined()
+    const temp = detail.breakdownLines.find((l) => l.group === 'temporary')
+    expect(temp).toMatchObject({
+      label: 'Temporary',
+      value: -15,
+      tone: 'penalty',
+    })
+    expect(detail.listPercentTone).toBe('penalty')
+    expect(detail.temporaryNet).toBe(-15)
+  })
+
+  it('keeps default (blue) list % tone when Temporary is absent', () => {
+    const detail = buildLiveSkillPercentDetail({
+      character: characterFixture,
+      activeForm: 'primary',
+      skill: literacy,
+      ownedSkills: [literacy],
       characterLevel: 1,
     })
+    expect(detail.temporaryNet).toBe(0)
+    expect(detail.listPercentTone).toBe('default')
+  })
+
+  it('places Morphus lines in Other before Level', () => {
     const detail = buildLiveSkillPercentDetail({
-      rollTarget: roll,
+      character: characterFixture,
+      activeForm: 'morphus',
+      skill: literacy,
+      ownedSkills: [literacy],
+      characterLevel: 1,
       morphusResolved: {
         equationPercent: 30,
         lines: [{ label: 'Morphus (this skill)', value: 10 }],
         total: 55,
       },
     })
-    expect(detail.listPercent).toBe(55)
     expect(detail.morphusTotal).toBe(55)
-    expect(detail.breakdownLines.some((l) => l.label === 'Morphus (this skill)')).toBe(
-      true,
-    )
-    expect(detail.tooltipEquation).toContain('[Morphus (this skill): 10]')
+    const labels = detail.breakdownLines.map((l) => l.label)
+    const morphusIdx = labels.indexOf('Morphus (this skill)')
+    const levelIdx = labels.indexOf('Level')
+    expect(morphusIdx).toBeGreaterThanOrEqual(0)
+    // Level omitted when 0 at character level 1
+    if (levelIdx >= 0) expect(morphusIdx).toBeLessThan(levelIdx)
+    expect(
+      detail.breakdownLines.find((l) => l.label === 'Morphus (this skill)')
+        ?.group,
+    ).toBe('other')
+    expect(
+      detail.breakdownLines.find((l) => l.label === 'Morphus (this skill)')
+        ?.tone,
+    ).toBe('bonus')
   })
 })
 

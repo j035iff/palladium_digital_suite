@@ -4,16 +4,30 @@ import type {
   MorphusSurfaceType,
   SheetSkill,
 } from '../types'
+import { getLibraryOccById } from '../data/library/registry'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
+import { getSkillById } from '../data/skillLibrary'
 import { CREATION_SKILL_FILTER_CATEGORY_ORDER } from './creationSkillCatalog'
+import {
+  creationSkillIdsSet,
+  flattenCreationSkillIds,
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
+import {
+  resolveCreationPsychicTier,
+  resolveOccSkillBonusPercent,
+} from './creationPsychicSkills'
 import { aggregateAllPassiveModifiers } from './featureEngine'
 import {
   buildDisplayAttributesForLiveEngine,
   resolveLiveIqSkillBonus,
 } from './liveStatEngine'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
+import { resolveOccCoreVoucherSkillBonus } from './occCoreSkillVouchers'
 import { hasPhysicalTrainingProgression } from './skillCatalogProgression'
+import { resolveActiveSynergyBonusLines } from './skillCreationDisplay'
 import type { SkillPercentAttributeScores } from './skillPercentAttributeModifiers'
 import { type SkillEquationSkill } from './skillEquation'
 import {
@@ -50,63 +64,296 @@ export type LiveSkillRollTarget = {
   iqBonus: number
 }
 
-/** Inspectable source lines for the live Skills % hover tooltip. */
-export type LiveSkillPercentBreakdownLine = {
+/**
+ * Joe portion buckets — tooltip order is
+ * Base → IQ → OCC → Synergies → Other → Level → Temporary.
+ */
+export type LiveSkillPercentPortionGroup =
+  | 'base'
+  | 'iq'
+  | 'occ'
+  | 'synergy'
+  | 'other'
+  | 'level'
+  | 'temporary'
+
+export type LiveSkillTemporaryPercentLine = {
   label: string
   value: number
 }
 
 /**
- * Bracketed source equation for % hover tooltips (same shape as weapon/stat
- * breakdowns — e.g. `[Base: 35] + [IQ: 5] + [Level: 10]`).
+ * Temporary skill % from abilities / status (master equation `statusModifiers`,
+ * skill_selection.md §3). Live cast→skill % duration pipeline is not fully
+ * wired yet (`docs/sn_abilities_selection.md`); when the runtime provides
+ * named lines or a non-zero status total, surface them as Temporary portions.
+ */
+export function resolveLiveSkillTemporaryPercentLines(opts?: {
+  statusModifiers?: number
+  temporaryLines?: readonly LiveSkillTemporaryPercentLine[]
+}): LiveSkillTemporaryPercentLine[] {
+  if (opts?.temporaryLines?.length) {
+    return opts.temporaryLines.filter((l) => l.value !== 0)
+  }
+  const n = opts?.statusModifiers ?? 0
+  if (n === 0) return []
+  return [{ label: 'Temporary', value: n }]
+}
+
+/** Inspectable source lines for the live Skills % hover tooltip. */
+export type LiveSkillPercentBreakdownLine = {
+  label: string
+  value: number
+  group: LiveSkillPercentPortionGroup
+  /** Positive → green; negative → red; Base → neutral (Familiar Surface). */
+  tone: 'neutral' | 'bonus' | 'penalty'
+}
+
+export function toneForLiveSkillPercentPortion(
+  group: LiveSkillPercentPortionGroup,
+  value: number,
+): LiveSkillPercentBreakdownLine['tone'] {
+  if (group === 'base') return 'neutral'
+  if (value < 0) return 'penalty'
+  if (value > 0) return 'bonus'
+  return 'neutral'
+}
+
+function pushPortion(
+  lines: LiveSkillPercentBreakdownLine[],
+  group: LiveSkillPercentPortionGroup,
+  label: string,
+  value: number,
+): void {
+  if (value === 0) return
+  lines.push({
+    label,
+    value,
+    group,
+    tone: toneForLiveSkillPercentPortion(group, value),
+  })
+}
+
+/**
+ * Bracketed source equation for % hover tooltips (plain-text / aria).
+ * UI renders {@link LiveSkillPercentBreakdownLine} with green/red tones.
  */
 export function formatLiveSkillPercentTooltip(
   lines: readonly LiveSkillPercentBreakdownLine[],
 ): string {
-  const parts = lines
-    .filter((l) => l.label === 'Base' || l.value !== 0)
+  return lines
+    .filter((l) => l.value !== 0)
     .map((l) => `[${l.label}: ${l.value}]`)
-  return parts.join(' + ')
+    .join(' + ')
+}
+
+/** Owned catalog skill ids for synergy partners (sheet rows + creation picks). */
+export function collectLiveOwnedSkillIds(
+  character: Character,
+  ownedSkills: readonly SheetSkill[],
+): Set<string> {
+  const related = getCreationRelatedPicks(character)
+  const secondary = getCreationSecondaryPicks(character)
+  const fromCreation = creationSkillIdsSet(
+    character.creationOccSkillIds ?? [],
+    related,
+    secondary,
+  )
+  const ids = new Set<string>(fromCreation)
+  for (const row of ownedSkills) {
+    if (getPalladiumSkillCatalogEntryById(row.id)) ids.add(row.id)
+    const def = getSkillById(row.id)
+    if (def) ids.add(def.id)
+  }
+  return ids
+}
+
+/**
+ * O.C.C. % bonus for a live sheet skill — same resolvers as spawn handoff
+ * (`resolveOccSkillBonusPercent` / voucher core). Returns 0 when unknown.
+ */
+export function resolveLiveSkillOccBonusPercent(
+  character: Character,
+  skillId: string,
+): number {
+  const occ = getLibraryOccById(character.occ.id) ?? undefined
+  if (!occ) return 0
+  const related = getCreationRelatedPicks(character)
+  const secondary = getCreationSecondaryPicks(character)
+  const relatedIds = new Set(flattenCreationSkillIds(related))
+  const selected = creationSkillIdsSet(
+    character.creationOccSkillIds ?? [],
+    related,
+    secondary,
+  )
+  const psychicTier = resolveCreationPsychicTier(character)
+  const isRelated = relatedIds.has(skillId)
+  const relatedForBonus = isRelated
+    ? new Set([...relatedIds, skillId])
+    : relatedIds
+  let occBonus = resolveOccSkillBonusPercent(
+    occ,
+    skillId,
+    relatedForBonus,
+    psychicTier,
+    character.occSpecializationId,
+  )
+  if (
+    occBonus === 0 &&
+    (character.creationOccSkillIds ?? []).includes(skillId)
+  ) {
+    occBonus = resolveOccCoreVoucherSkillBonus(
+      occ,
+      character.occSpecializationId,
+      skillId,
+      character.creationOccCoreVoucherPicks,
+      psychicTier,
+    )
+  }
+  if (occBonus === 0 && selected.has(skillId) && !isRelated) {
+    occBonus = resolveOccCoreVoucherSkillBonus(
+      occ,
+      character.occSpecializationId,
+      skillId,
+      character.creationOccCoreVoucherPicks,
+      psychicTier,
+    )
+  }
+  return occBonus
 }
 
 /**
  * List % + hover-tooltip breakdown for a percentile skill on the live Skills overlay.
- * Uses {@link resolveLiveSkillRollTarget} components; Morphus total when provided.
- * OCC is not a separate sheet field today — spawn bakes it into Base when present.
+ * Portion order (non-zero only): Base → IQ → OCC → Synergies → Other → Level → Temporary.
  */
 export function buildLiveSkillPercentDetail(opts: {
-  rollTarget: LiveSkillRollTarget
+  character: Character
+  activeForm: ActiveForm
+  skill: SheetSkill
+  ownedSkills: readonly SheetSkill[]
+  characterLevel?: number
+  morphusSurfaceType?: MorphusSurfaceType
+  /**
+   * Optional precomputed Morphus/attr resolution — when omitted, resolved from
+   * book base + OCC + synergies via {@link resolveLiveSkillPercent}.
+   */
   morphusResolved?: SkillPercentBreakdown | null
+  /**
+   * Runtime temporary skill % (abilities / status). Feeds equation
+   * `statusModifiers` and the Temporary tooltip bucket (after Level).
+   */
+  statusModifiers?: number
+  temporaryLines?: readonly LiveSkillTemporaryPercentLine[]
 }): {
-  /** Closed-row % (Morphus total when usable in Morphus; else quick-roll target). */
+  /** Closed-row % (engine total + level stair; Morphus total when usable). */
   listPercent: number
+  /**
+   * List-row % color: blue default; green/red when Temporary net ≠ 0
+   * (Joe — Bonuses-style positive/negative).
+   */
+  listPercentTone: 'default' | 'bonus' | 'penalty'
+  /** Net Temporary portion total (0 when none). */
+  temporaryNet: number
   breakdownLines: readonly LiveSkillPercentBreakdownLine[]
-  /** Hover tooltip equation (`[Base: n] + [IQ: n] + …`). */
+  /** Plain-text hover equation for aria / fallbacks. */
   tooltipEquation: string
   /** Morphus engine total when form is Morphus and skill is usable. */
   morphusTotal: number | null
+  impossibleInMorphus: boolean
 } {
-  const { rollTarget, morphusResolved } = opts
+  const {
+    character,
+    activeForm,
+    skill,
+    ownedSkills,
+    morphusSurfaceType,
+  } = opts
+  const level = opts.characterLevel ?? character.level
+  const levelBonus = occSkillLevelBonusPercent(level)
+  const catalog = catalogForSkillId(skill.id)
+  const def = getSkillById(skill.id)
+  const bookBase =
+    def?.basePercent ??
+    (typeof catalog?.basePercent === 'number' ? catalog.basePercent : 0)
+  const iqBonus = resolveLiveIqSkillBonus(character, activeForm)
+  const occBonus = resolveLiveSkillOccBonusPercent(character, skill.id)
+  const ownedIds = collectLiveOwnedSkillIds(character, ownedSkills)
+  const synergyLines = def
+    ? resolveActiveSynergyBonusLines(def, ownedIds, [])
+    : []
+  const synergyTotal = synergyLines.reduce((s, l) => s + l.value, 0)
+  const scaledAtt = def?.scaledAttBonuses ?? 0
+  const temporaryLines = resolveLiveSkillTemporaryPercentLines({
+    statusModifiers: opts.statusModifiers,
+    temporaryLines: opts.temporaryLines,
+  })
+  const temporaryTotal = temporaryLines.reduce((s, l) => s + l.value, 0)
+
+  const resolved =
+    opts.morphusResolved ??
+    resolveLiveSkillPercent(
+      {
+        id: skill.id,
+        basePercent: bookBase,
+        perLevel: 0,
+        acquisitionLevel: 1,
+        occBonus,
+        synergyBonuses: synergyTotal,
+        scaledAttBonuses: scaledAtt,
+        statusModifiers: temporaryTotal,
+      },
+      character,
+      activeForm,
+      catalog,
+      { morphusSurfaceType },
+    )
+
+  const impossibleInMorphus = Boolean(resolved.impossibleInMorphus)
   const morphusUsable =
-    morphusResolved && !morphusResolved.impossibleInMorphus
-      ? morphusResolved
-      : null
-  const breakdownLines: LiveSkillPercentBreakdownLine[] = [
-    { label: 'Base', value: rollTarget.base },
-    { label: 'IQ', value: rollTarget.iqBonus },
-    { label: 'Level', value: rollTarget.levelBonus },
-  ]
-  if (morphusUsable) {
-    for (const line of morphusUsable.lines) {
-      if (line.value === 0 && !/grant floor/i.test(line.label)) continue
-      breakdownLines.push({ label: line.label, value: line.value })
+    !impossibleInMorphus && activeForm === 'morphus' ? resolved : null
+
+  const breakdownLines: LiveSkillPercentBreakdownLine[] = []
+  pushPortion(breakdownLines, 'base', 'Base', bookBase)
+  pushPortion(breakdownLines, 'iq', 'IQ', iqBonus)
+  pushPortion(breakdownLines, 'occ', 'OCC', occBonus)
+  for (const line of synergyLines) {
+    pushPortion(breakdownLines, 'synergy', line.label, line.value)
+  }
+  pushPortion(breakdownLines, 'other', 'Attribute (skill)', scaledAtt)
+  if (!impossibleInMorphus) {
+    for (const line of resolved.lines) {
+      if (line.value === 0) continue
+      pushPortion(breakdownLines, 'other', line.label, line.value)
     }
   }
+  pushPortion(breakdownLines, 'level', 'Level', levelBonus)
+  for (const line of temporaryLines) {
+    pushPortion(breakdownLines, 'temporary', line.label, line.value)
+  }
+
+  // When morphusResolved is injected without status baked in, still add Temporary.
+  const resolvedIncludesTemporary =
+    opts.morphusResolved == null || temporaryTotal === 0
+  const stackTotal = impossibleInMorphus
+    ? 0
+    : resolved.total +
+      levelBonus +
+      (resolvedIncludesTemporary ? 0 : temporaryTotal)
+  const listPercent = impossibleInMorphus
+    ? 0
+    : Math.min(98, Math.max(1, Math.round(stackTotal)))
+
+  const listPercentTone: 'default' | 'bonus' | 'penalty' =
+    temporaryTotal > 0 ? 'bonus' : temporaryTotal < 0 ? 'penalty' : 'default'
+
   return {
-    listPercent: morphusUsable ? morphusUsable.total : rollTarget.target,
+    listPercent,
+    listPercentTone,
+    temporaryNet: temporaryTotal,
     breakdownLines,
     tooltipEquation: formatLiveSkillPercentTooltip(breakdownLines),
     morphusTotal: morphusUsable ? morphusUsable.total : null,
+    impossibleInMorphus,
   }
 }
 

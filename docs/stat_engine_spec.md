@@ -313,7 +313,7 @@ Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + attr
 |-------|--------|------|
 | **Core equation** | `skillEquation.ts` — `calculateSkillPercent()` |
 | **Context modifiers** | `skillPercentResolution.ts` — catalog attr mods, Morphus skill traits |
-| **Live/creation adapter** | `liveSkillEngine.ts` — I.Q. via `resolveLiveIqSkillBonus()`; per-skill M.A./P.B. via catalog `skillPercentAttributeModifiers`; Skills tab sections via `buildLiveSkillSections` (stats-only Physical last); list % / detail via `buildLiveSkillPercentDetail` |
+| **Live/creation adapter** | `liveSkillEngine.ts` — I.Q. via `resolveLiveIqSkillBonus()`; per-skill M.A./P.B. via catalog `skillPercentAttributeModifiers`; Skills tab sections via `buildLiveSkillSections` (stats-only Physical last); list % / tooltip via `buildLiveSkillPercentDetail` (Temporary last; list % blue/green/red) |
 | **Spawn projection** | `spawnSheetHandoff.ts` → `projectCreationSkillsToSheet()` |
 | **Creation UI** | `skillCreationDisplay.ts`, `SkillEngine.tsx` |
 | **Live sheet** | `SkillList.tsx`, `weaponBonuses.ts` (W.P. dice bonus), `levelUpSkillSummary.ts` |

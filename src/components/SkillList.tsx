@@ -2,11 +2,9 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useCharacter } from '../context/CharacterContext'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
-  buildLiveSkillContext,
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
-  resolveLiveSkillPercent,
-  resolveLiveSkillRollTarget,
+  type LiveSkillPercentBreakdownLine,
 } from '../lib/liveSkillEngine'
 import { clampOverlayTooltipPosition } from '../lib/overlayTooltipPosition'
 import {
@@ -40,16 +38,6 @@ export function SkillList({
   const rootRef = useRef<HTMLDivElement>(null)
 
   const sections = useMemo(() => buildLiveSkillSections(skills), [skills])
-
-  const morphusSkillCtx = useMemo(
-    () =>
-      morphusActive
-        ? buildLiveSkillContext(character, activeForm, {
-            morphusSurfaceType,
-          })
-        : null,
-    [morphusActive, character, activeForm, morphusSurfaceType],
-  )
 
   useEffect(() => {
     if (!openSkillId) return
@@ -87,41 +75,15 @@ export function SkillList({
           <ul className="space-y-2" role="list">
             {section.skills.map((skill) => {
               const catalog = getPalladiumSkillCatalogEntryById(skill.id)
-              const morphusResolved =
-                morphusActive && morphusSkillCtx && catalog
-                  ? resolveLiveSkillPercent(
-                      {
-                        id: skill.id,
-                        basePercent: skill.basePercent ?? catalog.basePercent ?? 0,
-                        perLevel: catalog.percentPerLevel ?? 0,
-                        acquisitionLevel: 1,
-                        occBonus: 0,
-                        synergyBonuses: 0,
-                        scaledAttBonuses: 0,
-                        statusModifiers: 0,
-                      },
-                      character,
-                      activeForm,
-                      catalog,
-                      { morphusSurfaceType },
-                    )
-                  : null
-              const rollTarget =
-                !section.statsOnlyPhysical &&
-                !skill.restricted &&
-                !morphusResolved?.impossibleInMorphus
-                  ? resolveLiveSkillRollTarget({
-                      character,
-                      activeForm,
-                      skillBasePercent: skill.basePercent,
-                      characterLevel,
-                    })
-                  : null
               const percentDetail =
-                rollTarget != null
+                !section.statsOnlyPhysical && !skill.restricted
                   ? buildLiveSkillPercentDetail({
-                      rollTarget,
-                      morphusResolved,
+                      character,
+                      activeForm,
+                      skill,
+                      ownedSkills: skills,
+                      characterLevel,
+                      morphusSurfaceType,
                     })
                   : null
               return (
@@ -136,7 +98,6 @@ export function SkillList({
                   onToggle={() =>
                     setOpenSkillId((id) => (id === skill.id ? null : skill.id))
                   }
-                  morphusResolved={morphusResolved}
                   percentDetail={percentDetail}
                   description={resolveSkillCatalogDescription(
                     catalog?.description,
@@ -159,7 +120,6 @@ function SkillRow({
   text,
   open,
   onToggle,
-  morphusResolved,
   percentDetail,
   description,
 }: {
@@ -170,7 +130,6 @@ function SkillRow({
   text: string
   open: boolean
   onToggle: () => void
-  morphusResolved: ReturnType<typeof resolveLiveSkillPercent> | null
   percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
   description: ReturnType<typeof resolveSkillCatalogDescription>
 }) {
@@ -229,7 +188,7 @@ function SkillRow({
     )
   }
 
-  const impossible = Boolean(morphusResolved?.impossibleInMorphus)
+  const impossible = Boolean(percentDetail?.impossibleInMorphus)
   const listPercent =
     !statsOnlyPhysical && !impossible ? percentDetail?.listPercent ?? null : null
   const detailPanelStyle = {
@@ -278,6 +237,8 @@ function SkillRow({
           <SkillPercentHover
             skillId={skill.id}
             listPercent={listPercent}
+            listPercentTone={percentDetail.listPercentTone}
+            breakdownLines={percentDetail.breakdownLines}
             tooltipEquation={percentDetail.tooltipEquation}
             morphusActive={morphusActive}
           />
@@ -349,14 +310,45 @@ function SkillRow({
  * Hover/focus on the list % — Bonuses-overlay style fixed tooltip
  * (`clampOverlayTooltipPosition`) with bracketed source equation.
  */
+function portionToneClass(
+  tone: LiveSkillPercentBreakdownLine['tone'],
+  morphusActive: boolean,
+): string {
+  if (tone === 'bonus') {
+    return morphusActive ? 'text-emerald-300' : 'text-emerald-700'
+  }
+  if (tone === 'penalty') {
+    return morphusActive ? 'text-rose-300' : 'text-rose-600'
+  }
+  return morphusActive ? 'text-violet-50' : 'text-slate-900'
+}
+
+function listPercentColorClass(
+  tone: 'default' | 'bonus' | 'penalty',
+  morphusActive: boolean,
+): string {
+  if (tone === 'bonus') {
+    return morphusActive ? 'text-emerald-300' : 'text-emerald-700'
+  }
+  if (tone === 'penalty') {
+    return morphusActive ? 'text-rose-300' : 'text-rose-600'
+  }
+  // Joe default: blue
+  return morphusActive ? 'text-sky-300' : 'text-blue-700'
+}
+
 function SkillPercentHover({
   skillId,
   listPercent,
+  listPercentTone,
+  breakdownLines,
   tooltipEquation,
   morphusActive,
 }: {
   skillId: string
   listPercent: number
+  listPercentTone: 'default' | 'bonus' | 'penalty'
+  breakdownLines: readonly LiveSkillPercentBreakdownLine[]
   tooltipEquation: string
   morphusActive: boolean
 }) {
@@ -400,9 +392,8 @@ function SkillPercentHover({
     <>
       <span
         ref={anchorRef}
-        className="flex shrink-0 items-center rounded-r-md px-3 py-2 font-mono text-base font-bold tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        className={`flex shrink-0 items-center rounded-r-md px-3 py-2 font-mono text-base font-bold tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${listPercentColorClass(listPercentTone, morphusActive)}`}
         style={{
-          color: morphusActive ? '#c4b5fd' : '#1d4ed8',
           outlineColor: morphusActive ? '#c4b5fd' : '#2563eb',
         }}
         tabIndex={0}
@@ -421,8 +412,8 @@ function SkillPercentHover({
           role="tooltip"
           className={`pointer-events-none fixed z-[60] max-h-48 overflow-y-auto rounded-md border-2 px-2 py-2 font-mono text-[10px] font-semibold leading-snug shadow-lg ${
             morphusActive
-              ? 'border-indigo-600/90 bg-black/95 text-violet-50'
-              : 'border-slate-400 bg-white text-slate-900'
+              ? 'border-indigo-600/90 bg-black/95'
+              : 'border-slate-400 bg-white'
           }`}
           style={{
             top: pos?.top ?? -9999,
@@ -431,7 +422,22 @@ function SkillPercentHover({
             visibility: pos ? 'visible' : 'hidden',
           }}
         >
-          {tooltipEquation}
+          {breakdownLines.map((line, index) => (
+            <span key={`${line.group}-${line.label}-${index}`}>
+              {index > 0 ? (
+                <span
+                  className={
+                    morphusActive ? 'text-violet-200/80' : 'text-slate-500'
+                  }
+                >
+                  {' + '}
+                </span>
+              ) : null}
+              <span className={portionToneClass(line.tone, morphusActive)}>
+                [{line.label}: {line.value}]
+              </span>
+            </span>
+          ))}
         </div>
       ) : null}
     </>
