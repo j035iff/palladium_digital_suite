@@ -7,9 +7,11 @@ import {
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
   filterLiveSkillSections,
+  formatLiveSkillSubRowDisplayName,
   isHandToHandSheetSkill,
   isWeaponProficiencySheetSkill,
   listLiveSkillFilterCategoryOptions,
+  listLiveSkillSubPercentTracks,
   LIVE_SKILL_FILTER_ALL_CATEGORIES,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
@@ -19,6 +21,7 @@ import {
   resolveLiveSkillTemporaryPercentLines,
   resolveSheetSkillCatalogId,
 } from './liveSkillEngine'
+import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import { resolveLiveIqSkillBonus } from './liveStatEngine'
 import type { SheetSkill } from '../types'
 
@@ -289,6 +292,22 @@ describe('resolveSheetSkillCatalogId / isHandToHandSheetSkill', () => {
   })
 })
 
+describe('listLiveSkillSubPercentTracks', () => {
+  it('reads Acrobatics subTasks from catalog', () => {
+    const tracks = listLiveSkillSubPercentTracks(
+      getPalladiumSkillCatalogEntryById('skill_acrobatics'),
+    )
+    expect(tracks.map((t) => t.name)).toEqual([
+      'Sense of balance',
+      'Walk tightrope or high wire',
+      'Climb rope',
+      'Back flip',
+    ])
+    expect(tracks[0]?.basePercent).toBe(60)
+    expect(tracks[0]?.percentPerLevel).toBe(5)
+  })
+})
+
 describe('buildLiveSkillSections', () => {
   const row = (
     id: string,
@@ -317,16 +336,17 @@ describe('buildLiveSkillSections', () => {
       'Technical',
       LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
     ])
-    expect(sections[0]!.skills.map((s) => s.id)).toEqual([
-      'skill_climbing',
-      'skill_swimming',
+    expect(sections[0]!.rows.map((r) => r.displayName)).toEqual([
+      'Climbing',
+      'Climbing (Rappelling)',
+      'Swimming',
     ])
     expect(sections[0]!.statsOnlyPhysical).toBeUndefined()
     const bottom = sections[sections.length - 1]!
     expect(bottom.id).toBe(LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID)
     expect(bottom.label).toBe(LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL)
     expect(bottom.statsOnlyPhysical).toBe(true)
-    expect(bottom.skills.map((s) => s.id)).toEqual([
+    expect(bottom.rows.map((r) => r.skill.id)).toEqual([
       'skill_boxing',
       'skill_running',
     ])
@@ -359,7 +379,11 @@ describe('buildLiveSkillSections', () => {
       LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
     ])
     expect(sections.some((s) => s.label === 'Other')).toBe(false)
-    expect(sections[0]!.skills.map((s) => s.name)).toEqual(['Acrobatics'])
+    expect(sections[0]!.rows.map((r) => r.displayName)).toEqual(
+      expect.arrayContaining([
+        formatLiveSkillSubRowDisplayName('Acrobatics', 'Sense of balance'),
+      ]),
+    )
   })
 
   it('excludes Hand-to-Hand styles from category sections', () => {
@@ -372,9 +396,54 @@ describe('buildLiveSkillSections', () => {
       }),
       row('skill_climbing', 'Climbing', { basePercent: 40 }),
     ])
-    const names = sections.flatMap((s) => s.skills.map((sk) => sk.name))
-    expect(names).toEqual(['Climbing'])
+    const names = sections.flatMap((s) => s.rows.map((r) => r.displayName))
+    expect(names).toEqual(['Climbing', 'Climbing (Rappelling)'])
     expect(names.some((n) => /hand to hand/i.test(n))).toBe(false)
+  })
+
+  it('expands Acrobatics/Gymnastics to Parent (Sub) rows and dual Physical bottom', () => {
+    const sections = buildLiveSkillSections([
+      row('skill_acrobatics', 'Acrobatics'),
+      row('skill_gymnastics', 'Gymnastics'),
+      row('skill_boxing', 'Boxing'),
+    ])
+    const physical = sections.find(
+      (s) => s.label === 'Physical' && !s.statsOnlyPhysical,
+    )!
+    const bottom = sections.find((s) => s.statsOnlyPhysical)!
+    expect(physical.rows.map((r) => r.displayName)).toEqual([
+      'Acrobatics (Back flip)',
+      'Acrobatics (Climb rope)',
+      'Acrobatics (Sense of balance)',
+      'Acrobatics (Walk tightrope or high wire)',
+      'Gymnastics (Back flip)',
+      'Gymnastics (Climb rope)',
+      'Gymnastics (Sense of balance)',
+      'Gymnastics (Work parallel bars & rings)',
+    ])
+    expect(physical.rows.every((r) => r.subPercentTrack != null)).toBe(true)
+    expect(physical.rows.some((r) => r.displayName === 'Acrobatics')).toBe(
+      false,
+    )
+    expect(bottom.rows.map((r) => r.displayName)).toEqual([
+      'Acrobatics',
+      'Boxing',
+      'Gymnastics',
+    ])
+    expect(bottom.rows.every((r) => r.subPercentTrack == null)).toBe(true)
+  })
+
+  it('keeps Climbing root % plus Climbing (Rappelling)', () => {
+    const sections = buildLiveSkillSections([
+      row('skill_climbing', 'Climbing', { basePercent: 40 }),
+    ])
+    expect(sections).toHaveLength(1)
+    expect(sections[0]!.rows.map((r) => r.displayName)).toEqual([
+      'Climbing',
+      'Climbing (Rappelling)',
+    ])
+    expect(sections[0]!.rows[0]!.subPercentTrack).toBeUndefined()
+    expect(sections[0]!.rows[1]!.subPercentTrack?.name).toBe('Rappelling')
   })
 })
 
@@ -440,7 +509,7 @@ describe('filterLiveSkillSections / listLiveSkillFilterCategoryOptions', () => {
       category: 'Communications',
     })
     expect(filtered.map((s) => s.label)).toEqual(['Communications'])
-    expect(filtered[0]!.skills.map((s) => s.name)).toEqual(
+    expect(filtered[0]!.rows.map((r) => r.displayName)).toEqual(
       expect.arrayContaining(['Radio: Basic']),
     )
   })
@@ -449,7 +518,7 @@ describe('filterLiveSkillSections / listLiveSkillFilterCategoryOptions', () => {
     const filtered = filterLiveSkillSections(sampleSections(), {
       nameQuery: 'computer',
     })
-    const names = filtered.flatMap((s) => s.skills.map((sk) => sk.name))
+    const names = filtered.flatMap((s) => s.rows.map((r) => r.displayName))
     expect(names).toEqual(['Computer Operation'])
   })
 
@@ -464,8 +533,21 @@ describe('filterLiveSkillSections / listLiveSkillFilterCategoryOptions', () => {
       category: 'Technical',
       nameQuery: 'computer',
     })
-    expect(both.flatMap((s) => s.skills.map((sk) => sk.name))).toEqual([
+    expect(both.flatMap((s) => s.rows.map((r) => r.displayName))).toEqual([
       'Computer Operation',
+    ])
+  })
+
+  it('matches Parent (Sub) display names in search', () => {
+    const sections = buildLiveSkillSections([
+      row('skill_acrobatics', 'Acrobatics'),
+      row('skill_literacy', 'Literacy', { basePercent: 40 }),
+    ])
+    const filtered = filterLiveSkillSections(sections, {
+      nameQuery: 'sense of balance',
+    })
+    expect(filtered.flatMap((s) => s.rows.map((r) => r.displayName))).toEqual([
+      'Acrobatics (Sense of balance)',
     ])
   })
 
@@ -473,6 +555,36 @@ describe('filterLiveSkillSections / listLiveSkillFilterCategoryOptions', () => {
     expect(
       filterLiveSkillSections(sampleSections(), { nameQuery: 'zzz-nope' }),
     ).toEqual([])
+  })
+})
+
+describe('buildLiveSkillPercentDetail sub-track Base/Level', () => {
+  it('uses sub-track base and percentPerLevel for Parent (Sub) rows', () => {
+    const skill: SheetSkill = {
+      id: 'skill_acrobatics',
+      name: 'Acrobatics',
+      restricted: false,
+      catalogSkillId: 'skill_acrobatics',
+    }
+    const track = listLiveSkillSubPercentTracks(
+      getPalladiumSkillCatalogEntryById('skill_acrobatics'),
+    ).find((t) => t.name === 'Climb rope')!
+    expect(track.basePercent).toBe(80)
+    expect(track.percentPerLevel).toBe(2)
+
+    const detail = buildLiveSkillPercentDetail({
+      character: characterFixture,
+      activeForm: 'primary',
+      skill,
+      ownedSkills: [skill],
+      characterLevel: 3,
+      subPercentTrack: track,
+    })
+    const baseLine = detail.breakdownLines.find((l) => l.group === 'base')
+    const levelLine = detail.breakdownLines.find((l) => l.group === 'level')
+    expect(baseLine?.value).toBe(80)
+    // Level 3 → (3-1)*2 = 4
+    expect(levelLine?.value).toBe(4)
   })
 })
 

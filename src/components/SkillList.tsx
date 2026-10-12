@@ -30,6 +30,8 @@ export type SkillListProps = {
  * Pillar 8 — Radical Visibility (docs/vision.md): restricted options stay visible,
  * grayed out, with explicit rationale (gating per docs/skill_selection.md).
  * Percentile skills: list shows %; hover % → source breakdown tooltip; click → description.
+ * Sub-% tracks expand to `Parent (Sub)` rows; dual-nature physical parents also
+ * appear in bottom Physical with bonus summary.
  * Stats-only Physical / W.P.: no self % — bonus summary instead.
  * Category dropdown + name search (AND when both set).
  */
@@ -42,7 +44,7 @@ export function SkillList({
   const muted = morphusActive ? '#64748b' : '#94a3b8'
   const text = morphusActive ? '#e2e8f0' : '#0f172a'
   const heading = morphusActive ? '#c4b5fd' : '#1e40af'
-  const [openSkillId, setOpenSkillId] = useState<string | null>(null)
+  const [openRowId, setOpenRowId] = useState<string | null>(null)
   const [categoryFilter, setCategoryFilter] = useState(
     LIVE_SKILL_FILTER_ALL_CATEGORIES,
   )
@@ -64,14 +66,14 @@ export function SkillList({
   )
 
   useEffect(() => {
-    if (!openSkillId) return
+    if (!openRowId) return
     const onDoc = (e: MouseEvent) => {
       if (rootRef.current?.contains(e.target as Node)) return
-      setOpenSkillId(null)
+      setOpenRowId(null)
     }
     document.addEventListener('mousedown', onDoc)
     return () => document.removeEventListener('mousedown', onDoc)
-  }, [openSkillId])
+  }, [openRowId])
 
   useEffect(() => {
     if (
@@ -151,7 +153,8 @@ export function SkillList({
               {section.label}
             </h3>
             <ul className="space-y-2" role="list">
-              {section.skills.map((skill) => {
+              {section.rows.map((row) => {
+                const { skill, displayName, subPercentTrack } = row
                 const catalogId = resolveSheetSkillCatalogId(skill)
                 const catalog = getPalladiumSkillCatalogEntryById(catalogId)
                 const weaponProficiency = isWeaponProficiencySheetSkill(skill)
@@ -172,27 +175,32 @@ export function SkillList({
                         ownedSkills: skills,
                         characterLevel,
                         morphusSurfaceType,
+                        subPercentTrack,
                       })
                     : null
+                const descriptionSource =
+                  subPercentTrack?.description ?? catalog?.description
                 return (
                   <SkillRow
-                    key={skill.id}
+                    key={row.rowId}
+                    rowId={row.rowId}
                     skill={skill}
+                    displayName={displayName}
                     statsOnlyPhysical={Boolean(section.statsOnlyPhysical)}
                     weaponProficiency={weaponProficiency}
                     weaponBonusSummary={weaponBonusSummary}
                     morphusActive={morphusActive}
                     muted={muted}
                     text={text}
-                    open={openSkillId === skill.id}
+                    open={openRowId === row.rowId}
                     onToggle={() =>
-                      setOpenSkillId((id) =>
-                        id === skill.id ? null : skill.id,
+                      setOpenRowId((id) =>
+                        id === row.rowId ? null : row.rowId,
                       )
                     }
                     percentDetail={percentDetail}
                     description={resolveSkillCatalogDescription(
-                      catalog?.description,
+                      descriptionSource,
                     )}
                   />
                 )
@@ -206,7 +214,9 @@ export function SkillList({
 }
 
 function SkillRow({
+  rowId,
   skill,
+  displayName,
   statsOnlyPhysical,
   weaponProficiency,
   weaponBonusSummary,
@@ -218,7 +228,9 @@ function SkillRow({
   percentDetail,
   description,
 }: {
+  rowId: string
   skill: SheetSkill
+  displayName: string
   statsOnlyPhysical: boolean
   weaponProficiency: boolean
   weaponBonusSummary: string | null
@@ -245,6 +257,7 @@ function SkillRow({
       ? weaponBonusSummary
       : null
   const nonPercentile = statsOnlyPhysical || weaponProficiency
+  const detailId = `${rowId}-detail`
 
   if (skill.restricted) {
     return (
@@ -259,8 +272,8 @@ function SkillRow({
             color: muted,
           }}
           role="group"
-          aria-label={`Restricted skill: ${skill.name}`}
-          aria-describedby={`${skill.id}-why`}
+          aria-label={`Restricted skill: ${displayName}`}
+          aria-describedby={`${rowId}-why`}
           title={
             skill.restrictionReason
               ? `${skill.restrictionReason} (skill_selection.md: AND/OR gates, O.C.C. tags, secondary rules.)`
@@ -272,7 +285,7 @@ function SkillRow({
             style={{ color: muted }}
             aria-disabled="true"
           >
-            {skill.name}
+            {displayName}
           </span>
           <span
             className="mt-1 text-xs font-semibold uppercase tracking-wide"
@@ -283,7 +296,7 @@ function SkillRow({
           <p
             className="mt-1 text-xs leading-snug"
             style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
-            id={`${skill.id}-why`}
+            id={`${rowId}-why`}
           >
             {skill.restrictionReason ??
               'Gated by the dependency engine (prerequisites, O.C.C. tags, or synergy rules).'}
@@ -317,10 +330,10 @@ function SkillRow({
           className="min-w-0 flex-1 rounded-l-md px-3 py-2 text-left font-medium hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           style={{ outlineColor: morphusActive ? '#c4b5fd' : '#2563eb' }}
           aria-expanded={open}
-          aria-controls={`${skill.id}-detail`}
+          aria-controls={detailId}
           onClick={onToggle}
         >
-          <span>{skill.name}</span>
+          <span>{displayName}</span>
           {impossible ? (
             <span
               className="ml-2 text-xs font-semibold uppercase tracking-wide"
@@ -340,7 +353,7 @@ function SkillRow({
         </button>
         {listPercent != null && percentDetail ? (
           <SkillPercentHover
-            skillId={skill.id}
+            skillId={rowId}
             listPercent={listPercent}
             listPercentTone={percentDetail.listPercentTone}
             breakdownLines={percentDetail.breakdownLines}
@@ -351,7 +364,7 @@ function SkillRow({
       </div>
       {open && impossible ? (
         <div
-          id={`${skill.id}-detail`}
+          id={detailId}
           className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
           style={{
             borderColor: morphusActive ? '#f87171' : '#dc2626',
@@ -375,7 +388,7 @@ function SkillRow({
       ) : null}
       {open && statsOnlyPhysical ? (
         <div
-          id={`${skill.id}-detail`}
+          id={detailId}
           className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
           style={detailPanelStyle}
         >
@@ -396,7 +409,7 @@ function SkillRow({
       ) : null}
       {open && weaponProficiency ? (
         <div
-          id={`${skill.id}-detail`}
+          id={detailId}
           className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
           style={detailPanelStyle}
         >
@@ -417,7 +430,7 @@ function SkillRow({
       ) : null}
       {open && !nonPercentile && !impossible ? (
         <div
-          id={`${skill.id}-detail`}
+          id={detailId}
           className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border-2 px-3 py-2 shadow-lg"
           style={detailPanelStyle}
         >

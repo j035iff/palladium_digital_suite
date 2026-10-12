@@ -47,10 +47,32 @@ export const LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID = 'physical_stats_only'
 /** Joe / Familiar Surface — book category name for stats-only physical training. */
 export const LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL = 'Physical'
 
+/**
+ * Catalog sub-task / sub-skill with its own percentile column
+ * (`subTasks[]` / `subSkills[]` — see palladium-skill.schema).
+ */
+export type LiveSkillSubPercentTrack = {
+  /** Stable key within the parent (catalog `id` or slug from name). */
+  trackKey: string
+  name: string
+  basePercent: number
+  percentPerLevel: number
+  description?: string
+}
+
+/** One Skills-list row (parent, `Parent (Sub)`, or stats-only Physical). */
+export type LiveSkillListRow = {
+  rowId: string
+  skill: SheetSkill
+  displayName: string
+  /** When set, list % / tooltip use this sub-track’s base and %/level. */
+  subPercentTrack?: LiveSkillSubPercentTrack
+}
+
 export type LiveSkillSection = {
   id: string
   label: string
-  skills: SheetSkill[]
+  rows: LiveSkillListRow[]
   /** Stats-only physical training (no self %) — pinned last on the Skills tab. */
   statsOnlyPhysical?: boolean
 }
@@ -284,6 +306,11 @@ export function buildLiveSkillPercentDetail(opts: {
   characterLevel?: number
   morphusSurfaceType?: MorphusSurfaceType
   /**
+   * When set (list `Parent (Sub)` row), Base and Level come from the catalog
+   * sub-track — not the parent root %.
+   */
+  subPercentTrack?: LiveSkillSubPercentTrack | null
+  /**
    * Optional precomputed Morphus/attr resolution — when omitted, resolved from
    * book base + OCC + synergies via {@link resolveLiveSkillPercent}.
    */
@@ -317,15 +344,19 @@ export function buildLiveSkillPercentDetail(opts: {
     skill,
     ownedSkills,
     morphusSurfaceType,
+    subPercentTrack,
   } = opts
   const level = opts.characterLevel ?? character.level
-  const levelBonus = occSkillLevelBonusPercent(level)
   const catalogId = resolveSheetSkillCatalogId(skill)
   const catalog = catalogForSkillId(catalogId)
   const def = getSkillById(catalogId)
-  const bookBase =
-    def?.basePercent ??
-    (typeof catalog?.basePercent === 'number' ? catalog.basePercent : 0)
+  const bookBase = subPercentTrack
+    ? subPercentTrack.basePercent
+    : (def?.basePercent ??
+      (typeof catalog?.basePercent === 'number' ? catalog.basePercent : 0))
+  const levelBonus = subPercentTrack
+    ? Math.max(0, Math.floor(level) - 1) * subPercentTrack.percentPerLevel
+    : occSkillLevelBonusPercent(level)
   const iqBonus = resolveLiveIqSkillBonus(character, activeForm)
   const occBonus = resolveLiveSkillOccBonusPercent(character, catalogId)
   const ownedIds = collectLiveOwnedSkillIds(character, ownedSkills)
@@ -527,40 +558,182 @@ function categorySortIndex(label: string): number {
   return idx >= 0 ? idx : CREATION_SKILL_FILTER_CATEGORY_ORDER.length
 }
 
+function slugTrackKey(name: string): string {
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '')
+}
+
+/**
+ * Percentile sub-tracks from catalog `subTasks[]` / `subSkills[]`
+ * (same discovery as creation `listSubPercentLines`).
+ */
+export function listLiveSkillSubPercentTracks(
+  catalog: PalladiumSkillCatalogEntry | undefined,
+): LiveSkillSubPercentTrack[] {
+  if (!catalog) return []
+  const entry = catalog as PalladiumSkillCatalogEntry & {
+    subTasks?: readonly {
+      id?: string
+      name?: string
+      basePercent?: number
+      percentPerLevel?: number
+      description?: string
+    }[]
+    subSkills?: readonly {
+      id?: string
+      name?: string
+      basePercent?: number
+      percentPerLevel?: number
+      description?: string
+    }[]
+  }
+  const tracks: LiveSkillSubPercentTrack[] = []
+  const push = (
+    row: {
+      id?: string
+      name?: string
+      basePercent?: number
+      percentPerLevel?: number
+      description?: string
+    },
+    fallbackKey: string,
+  ) => {
+    if (typeof row.basePercent !== 'number') return
+    const name = row.name?.trim() || 'Sub-skill'
+    tracks.push({
+      trackKey: row.id?.trim() || slugTrackKey(name) || fallbackKey,
+      name,
+      basePercent: row.basePercent,
+      percentPerLevel:
+        typeof row.percentPerLevel === 'number' ? row.percentPerLevel : 5,
+      description: row.description?.trim() || undefined,
+    })
+  }
+  ;(entry.subTasks ?? []).forEach((row, i) => push(row, `sub_task_${i}`))
+  ;(entry.subSkills ?? []).forEach((row, i) => push(row, `sub_skill_${i}`))
+  return tracks
+}
+
+/** Parent has a scalar root % column (not only sub-tracks / split maps). */
+export function hasLiveSkillRootScalarPercent(
+  catalog: PalladiumSkillCatalogEntry | undefined,
+  catalogId: string,
+): boolean {
+  if (typeof catalog?.basePercent === 'number') return true
+  const def = getSkillById(catalogId)
+  return typeof def?.basePercent === 'number' && def.basePercent > 0
+}
+
+/**
+ * Attribute / combat training side present on the catalog row
+ * (`physicalSkillBonuses` or related training markers).
+ */
+export function hasLiveSkillPhysicalBonusSide(
+  catalog: PalladiumSkillCatalogEntry | undefined,
+): boolean {
+  if (!catalog) return false
+  const entry = catalog as PalladiumSkillCatalogEntry & {
+    physicalSkillBonuses?: unknown
+    naturalRollOutcomes?: readonly unknown[] | null
+    mechanicProgressions?: readonly unknown[] | null
+  }
+  return (
+    entry.physicalSkillBonuses != null ||
+    (entry.naturalRollOutcomes?.length ?? 0) > 0 ||
+    (entry.mechanicProgressions?.length ?? 0) > 0
+  )
+}
+
+export function formatLiveSkillSubRowDisplayName(
+  parentName: string,
+  subName: string,
+): string {
+  return `${parentName} (${subName})`
+}
+
+function makeParentListRow(skill: SheetSkill): LiveSkillListRow {
+  return {
+    rowId: skill.id,
+    skill,
+    displayName: skill.name,
+  }
+}
+
+function makeSubListRow(
+  skill: SheetSkill,
+  track: LiveSkillSubPercentTrack,
+): LiveSkillListRow {
+  return {
+    rowId: `${skill.id}::${track.trackKey}`,
+    skill,
+    displayName: formatLiveSkillSubRowDisplayName(skill.name, track.name),
+    subPercentTrack: track,
+  }
+}
+
 /**
  * Live Skills tab sections: book categories in creation filter order, with
- * stats-only physical training (`hasPhysicalTrainingProgression`) pulled into
- * their own **Physical** section pinned at the bottom.
+ * stats-only physical training pinned at the bottom.
+ * Sub-% tracks (`subTasks` / `subSkills`) expand to `Parent (Sub)` rows.
+ * Dual-nature skills (sub-% + physical bonuses) also appear in bottom Physical.
  * Hand-to-Hand styles are omitted (dedicated H2H control at top of Skills).
  */
 export function buildLiveSkillSections(
   skills: readonly SheetSkill[],
 ): LiveSkillSection[] {
-  const byCategory = new Map<string, SheetSkill[]>()
-  const statsOnly: SheetSkill[] = []
+  const byCategory = new Map<string, LiveSkillListRow[]>()
+  const statsOnly: LiveSkillListRow[] = []
 
   for (const skill of skills) {
     if (isHandToHandSheetSkill(skill)) continue
     const catalogId = resolveSheetSkillCatalogId(skill)
     const catalog = catalogForSkillId(catalogId)
-    if (catalog && hasPhysicalTrainingProgression(catalog)) {
-      statsOnly.push(skill)
+    const subTracks = listLiveSkillSubPercentTracks(catalog)
+    const pureStatsOnly = Boolean(
+      catalog && hasPhysicalTrainingProgression(catalog),
+    )
+    const dualPhysAndSub =
+      subTracks.length > 0 && hasLiveSkillPhysicalBonusSide(catalog)
+
+    if (pureStatsOnly || dualPhysAndSub) {
+      statsOnly.push(makeParentListRow(skill))
+    }
+
+    if (pureStatsOnly && subTracks.length === 0) {
       continue
     }
+
     const label = primaryBookCategory(catalogId)
     const bucket = byCategory.get(label) ?? []
-    bucket.push(skill)
-    byCategory.set(label, bucket)
+    const hasRoot = hasLiveSkillRootScalarPercent(catalog, catalogId)
+
+    if (subTracks.length > 0) {
+      if (hasRoot) {
+        bucket.push(makeParentListRow(skill))
+      }
+      for (const track of subTracks) {
+        bucket.push(makeSubListRow(skill, track))
+      }
+    } else if (!pureStatsOnly) {
+      bucket.push(makeParentListRow(skill))
+    }
+
+    if (bucket.length > 0) byCategory.set(label, bucket)
   }
 
-  const sortByName = (a: SheetSkill, b: SheetSkill) =>
-    a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
+  const sortByName = (a: LiveSkillListRow, b: LiveSkillListRow) =>
+    a.displayName.localeCompare(b.displayName, undefined, {
+      sensitivity: 'base',
+    })
 
   const sections: LiveSkillSection[] = [...byCategory.entries()]
     .map(([label, rows]) => ({
       id: label,
       label,
-      skills: [...rows].sort(sortByName),
+      rows: [...rows].sort(sortByName),
     }))
     .sort((a, b) => {
       const ai = categorySortIndex(a.label)
@@ -573,7 +746,7 @@ export function buildLiveSkillSections(
     sections.push({
       id: LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
       label: LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
-      skills: [...statsOnly].sort(sortByName),
+      rows: [...statsOnly].sort(sortByName),
       statsOnlyPhysical: true,
     })
   }
@@ -629,11 +802,11 @@ export function filterLiveSkillSections(
     )
     .map((section) => {
       if (!query) return section
-      const skills = section.skills.filter((skill) =>
-        skill.name.toLowerCase().includes(query),
+      const rows = section.rows.filter((row) =>
+        row.displayName.toLowerCase().includes(query),
       )
-      if (skills.length === section.skills.length) return section
-      return { ...section, skills }
+      if (rows.length === section.rows.length) return section
+      return { ...section, rows }
     })
-    .filter((section) => section.skills.length > 0)
+    .filter((section) => section.rows.length > 0)
 }
