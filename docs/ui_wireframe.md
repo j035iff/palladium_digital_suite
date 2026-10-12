@@ -35,6 +35,7 @@ The Unarmed bubble **label** is the active Hand-to-Hand style (`Hand to Hand: EX
 B. APM & Hand-to-Hand Tracker
 APM Tracker: Remaining pips are tappable. Each tap spends **1** A.P.M. (left → right). Spent pips are not toggles — **New melee round** is the only refill. Multi-cost maneuvers (untrained Hand-to-Hand, power punch) = one tap per action. Implementation: `CombatHUD` `ApmPipRow`.
 Hand-to-Hand Dashboard: style name replaces the Unarmed bubble title; punch/kick/specials live in the Unarmed expand. Owned styles also list on the **Skills** tab (not as percentile `SkillList` rows).
+**Skills overlay** (`skills` → `SkillList` via `buildLiveSkillSections`): sheet skills group by book category (creation filter order). Stats-only physical training — catalog rows with `hasPhysicalTrainingProgression` / no self % (Boxing, Running, Athletics (general), etc.) — land in their own **Physical** section pinned at the **bottom** after other categories. Percentile Physical skills (Climbing, Swimming, …) stay under **Physical** in normal category order. Stats-only rows show attribute/combat bonus summaries (no fake d100 Quick Roll).
 
 **Current Combat Home:** `CombatHUD` `layout="panel"` — vitals cards (HP/SDC/PPE/(ISP)) + A.R./H.F./Perception, tap-to-spend APM + Initiative + Melee refresh, Unarmed (HtH name) / Ancient / Modern bubbles, apply damage/heal, narrative log. Strip quick-ref stays visible above. One-tap ready-weapon icon strip is still later polish.
 4. Visual Transition & Continuity Rules

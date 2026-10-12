@@ -2,15 +2,18 @@ import type {
   ActiveForm,
   Character,
   MorphusSurfaceType,
+  SheetSkill,
 } from '../types'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
+import { CREATION_SKILL_FILTER_CATEGORY_ORDER } from './creationSkillCatalog'
 import { aggregateAllPassiveModifiers } from './featureEngine'
 import {
   buildDisplayAttributesForLiveEngine,
   resolveLiveIqSkillBonus,
 } from './liveStatEngine'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
+import { hasPhysicalTrainingProgression } from './skillCatalogProgression'
 import type { SkillPercentAttributeScores } from './skillPercentAttributeModifiers'
 import { type SkillEquationSkill } from './skillEquation'
 import {
@@ -20,6 +23,20 @@ import {
 } from './skillPercentResolution'
 
 export type { SkillPercentBreakdown, SkillPercentResolutionContext }
+
+/** Internal id for the bottom stats-only Physical bucket (label is book "Physical"). */
+export const LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID = 'physical_stats_only'
+
+/** Joe / Familiar Surface — book category name for stats-only physical training. */
+export const LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL = 'Physical'
+
+export type LiveSkillSection = {
+  id: string
+  label: string
+  skills: SheetSkill[]
+  /** Stats-only physical training (no self %) — pinned last on the Skills tab. */
+  statsOnlyPhysical?: boolean
+}
 
 export type LiveSkillContext = SkillPercentResolutionContext & {
   iqBonus: number
@@ -133,4 +150,67 @@ export function resolveLiveSkillRollTarget(opts: {
   const iqBonus = resolveLiveIqSkillBonus(opts.character, opts.activeForm)
   const target = Math.min(98, Math.max(1, base + levelBonus + iqBonus))
   return { target, base, levelBonus, iqBonus }
+}
+
+function primaryBookCategory(
+  catalog: PalladiumSkillCatalogEntry | undefined,
+): string {
+  const cat = catalog?.categories?.[0]?.trim()
+  return cat && cat.length > 0 ? cat : 'Other'
+}
+
+function categorySortIndex(label: string): number {
+  const idx = CREATION_SKILL_FILTER_CATEGORY_ORDER.indexOf(label)
+  return idx >= 0 ? idx : CREATION_SKILL_FILTER_CATEGORY_ORDER.length
+}
+
+/**
+ * Live Skills tab sections: book categories in creation filter order, with
+ * stats-only physical training (`hasPhysicalTrainingProgression`) pulled into
+ * their own **Physical** section pinned at the bottom.
+ */
+export function buildLiveSkillSections(
+  skills: readonly SheetSkill[],
+): LiveSkillSection[] {
+  const byCategory = new Map<string, SheetSkill[]>()
+  const statsOnly: SheetSkill[] = []
+
+  for (const skill of skills) {
+    const catalog = catalogForSkillId(skill.id)
+    if (catalog && hasPhysicalTrainingProgression(catalog)) {
+      statsOnly.push(skill)
+      continue
+    }
+    const label = primaryBookCategory(catalog)
+    const bucket = byCategory.get(label) ?? []
+    bucket.push(skill)
+    byCategory.set(label, bucket)
+  }
+
+  const sortByName = (a: SheetSkill, b: SheetSkill) =>
+    a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
+
+  const sections: LiveSkillSection[] = [...byCategory.entries()]
+    .map(([label, rows]) => ({
+      id: label,
+      label,
+      skills: [...rows].sort(sortByName),
+    }))
+    .sort((a, b) => {
+      const ai = categorySortIndex(a.label)
+      const bi = categorySortIndex(b.label)
+      if (ai !== bi) return ai - bi
+      return a.label.localeCompare(b.label, undefined, { sensitivity: 'base' })
+    })
+
+  if (statsOnly.length > 0) {
+    sections.push({
+      id: LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
+      label: LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
+      skills: [...statsOnly].sort(sortByName),
+      statsOnlyPhysical: true,
+    })
+  }
+
+  return sections
 }

@@ -3,6 +3,7 @@ declare module '../../scripts/skill-engine-contract.mjs' {
   export const SKILL_PASS_B_KEYS: readonly string[]
   export function hasCatalogProgression(row: unknown): boolean
   export function hasPercentileProgression(row: unknown): boolean
+  export function hasPhysicalTrainingProgression(row: unknown): boolean
   export function isDocumentedSynergyOnlySkill(row: unknown): boolean
   export function isPassACatalogComplete(row: unknown): boolean
   export function loadSchemaPropertyKeys(): Set<string>
