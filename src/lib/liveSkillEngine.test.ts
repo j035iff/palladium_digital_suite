@@ -4,6 +4,7 @@ import { characterFixture } from '../data/characterFixture'
 import { getIqBonuses } from './attributeBonuses'
 import {
   buildLiveSkillContext,
+  buildLiveSkillPercentDetail,
   buildLiveSkillSections,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
@@ -123,6 +124,49 @@ describe('resolveLiveSkillRollTarget', () => {
     })
     expect(roll.iqBonus).toBe(getIqBonuses(17).skillBonus)
     expect(roll.iqBonus).toBe(3)
+  })
+})
+
+describe('buildLiveSkillPercentDetail', () => {
+  it('exposes list % and Base / Level / I.Q. lines from the quick-roll target', () => {
+    const roll = resolveLiveSkillRollTarget({
+      character: characterFixture,
+      activeForm: 'primary',
+      skillBasePercent: 40,
+      characterLevel: 3,
+    })
+    const detail = buildLiveSkillPercentDetail({ rollTarget: roll })
+    expect(detail.listPercent).toBe(roll.target)
+    expect(detail.morphusTotal).toBeNull()
+    expect(detail.breakdownLines.map((l) => l.label)).toEqual([
+      'Base',
+      'Level',
+      'I.Q.',
+    ])
+    expect(detail.breakdownLines[0]?.value).toBe(40)
+    expect(detail.breakdownLines[1]?.value).toBe(occSkillLevelBonusPercent(3))
+  })
+
+  it('prefers Morphus total for the closed-row % when usable', () => {
+    const roll = resolveLiveSkillRollTarget({
+      character: characterFixture,
+      activeForm: 'primary',
+      skillBasePercent: 30,
+      characterLevel: 1,
+    })
+    const detail = buildLiveSkillPercentDetail({
+      rollTarget: roll,
+      morphusResolved: {
+        equationPercent: 30,
+        lines: [{ label: 'Morphus (this skill)', value: 10 }],
+        total: 55,
+      },
+    })
+    expect(detail.listPercent).toBe(55)
+    expect(detail.morphusTotal).toBe(55)
+    expect(detail.breakdownLines.some((l) => l.label === 'Morphus (this skill)')).toBe(
+      true,
+    )
   })
 })
 

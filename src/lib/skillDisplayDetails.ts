@@ -62,6 +62,28 @@ function formatSignedBonus(raw: unknown): string | null {
   return null
 }
 
+/**
+ * Temporary copy when catalog `description` is empty.
+ * Full book skill write-ups still need a dedicated ingest pass
+ * (see docs/ingest/skills.md — Book descriptions gap).
+ */
+export const SKILL_DESCRIPTION_NOT_INGESTED_PLACEHOLDER =
+  'Book description not ingested yet. Check your rulebook for the full skill write-up.'
+
+/** Catalog description for live/creation UI — placeholder when missing. */
+export function resolveSkillCatalogDescription(
+  description: string | undefined | null,
+): { text: string; isPlaceholder: boolean } {
+  const trimmed = typeof description === 'string' ? description.trim() : ''
+  if (trimmed.length > 0) {
+    return { text: trimmed, isPlaceholder: false }
+  }
+  return {
+    text: SKILL_DESCRIPTION_NOT_INGESTED_PLACEHOLDER,
+    isPlaceholder: true,
+  }
+}
+
 export function formatPhysicalSkillBonusSummary(
   bonuses: Record<string, unknown> | undefined,
 ): string | null {

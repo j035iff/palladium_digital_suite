@@ -3,9 +3,23 @@ import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
 import {
   formatPhysicalSkillBonusSummary,
   resolveCreationLibrarySkillPreview,
+  resolveSkillCatalogDescription,
+  SKILL_DESCRIPTION_NOT_INGESTED_PLACEHOLDER,
 } from './skillDisplayDetails'
 
 describe('skillDisplayDetails', () => {
+  it('returns catalog description when present, else ingest placeholder', () => {
+    expect(resolveSkillCatalogDescription('  Climb ropes and walls.  ')).toEqual({
+      text: 'Climb ropes and walls.',
+      isPlaceholder: false,
+    })
+    expect(resolveSkillCatalogDescription('')).toEqual({
+      text: SKILL_DESCRIPTION_NOT_INGESTED_PLACEHOLDER,
+      isPlaceholder: true,
+    })
+    expect(resolveSkillCatalogDescription(undefined).isPlaceholder).toBe(true)
+  })
+
   it('formats Athletics (general) physical bonuses', () => {
     const summary = formatPhysicalSkillBonusSummary({
       ps: 1,

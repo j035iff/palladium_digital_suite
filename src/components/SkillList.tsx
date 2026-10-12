@@ -3,11 +3,15 @@ import { useCharacter } from '../context/CharacterContext'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import {
   buildLiveSkillContext,
+  buildLiveSkillPercentDetail,
   buildLiveSkillSections,
   resolveLiveSkillPercent,
   resolveLiveSkillRollTarget,
 } from '../lib/liveSkillEngine'
-import { formatPhysicalSkillBonusSummary } from '../lib/skillDisplayDetails'
+import {
+  formatPhysicalSkillBonusSummary,
+  resolveSkillCatalogDescription,
+} from '../lib/skillDisplayDetails'
 import type { SheetSkill } from '../types'
 
 export type SkillListProps = {
@@ -19,7 +23,7 @@ export type SkillListProps = {
 /**
  * Pillar 8 — Radical Visibility (docs/vision.md): restricted options stay visible,
  * grayed out, with explicit rationale (gating per docs/skill_selection.md).
- * Quick Roll (vision.md — speed): d100 target = base + level bonus + I.Q. skill bonus.
+ * Percentile skills: list shows % without select; tap → breakdown + book description.
  * Stats-only Physical training: no self % — show catalog bonus summary instead.
  */
 export function SkillList({
@@ -112,6 +116,13 @@ export function SkillList({
                       characterLevel,
                     })
                   : null
+              const percentDetail =
+                rollTarget != null
+                  ? buildLiveSkillPercentDetail({
+                      rollTarget,
+                      morphusResolved,
+                    })
+                  : null
               return (
                 <SkillRow
                   key={skill.id}
@@ -126,6 +137,10 @@ export function SkillList({
                   }
                   morphusResolved={morphusResolved}
                   rollTarget={rollTarget}
+                  percentDetail={percentDetail}
+                  description={resolveSkillCatalogDescription(
+                    catalog?.description,
+                  )}
                 />
               )
             })}
@@ -146,6 +161,8 @@ function SkillRow({
   onToggle,
   morphusResolved,
   rollTarget,
+  percentDetail,
+  description,
 }: {
   skill: SheetSkill
   statsOnlyPhysical: boolean
@@ -156,6 +173,8 @@ function SkillRow({
   onToggle: () => void
   morphusResolved: ReturnType<typeof resolveLiveSkillPercent> | null
   rollTarget: ReturnType<typeof resolveLiveSkillRollTarget> | null
+  percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
+  description: ReturnType<typeof resolveSkillCatalogDescription>
 }) {
   const catalog = getPalladiumSkillCatalogEntryById(skill.id)
   const bonusSummary = statsOnlyPhysical
@@ -213,13 +232,19 @@ function SkillRow({
   }
 
   const impossible = Boolean(morphusResolved?.impossibleInMorphus)
-  const canExpand = statsOnlyPhysical || !impossible || Boolean(rollTarget)
+  const listPercent =
+    !statsOnlyPhysical && !impossible ? percentDetail?.listPercent ?? null : null
+  const detailPanelStyle = {
+    borderColor: morphusActive ? '#a78bfa' : '#3b82f6',
+    backgroundColor: morphusActive ? '#1e1b4b' : '#f8fafc',
+    color: morphusActive ? '#ede9fe' : '#0f172a',
+  } as const
 
   return (
     <li className="relative">
       <button
         type="button"
-        className="w-full rounded-md border px-3 py-2 text-left font-medium transition-[box-shadow,transform] duration-150 hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        className="flex w-full items-baseline justify-between gap-3 rounded-md border px-3 py-2 text-left font-medium transition-[box-shadow,transform] duration-150 hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
         style={{
           borderColor: morphusActive ? '#5b21b6' : '#93c5fd',
           backgroundColor: morphusActive ? '#312e81' : '#ffffff',
@@ -228,23 +253,34 @@ function SkillRow({
         }}
         aria-expanded={open}
         aria-controls={`${skill.id}-detail`}
-        onClick={canExpand ? onToggle : undefined}
+        onClick={onToggle}
       >
-        <span>{skill.name}</span>
-        {impossible ? (
+        <span className="min-w-0 flex-1">
+          <span>{skill.name}</span>
+          {impossible ? (
+            <span
+              className="ml-2 text-xs font-semibold uppercase tracking-wide"
+              style={{ color: morphusActive ? '#fca5a5' : '#b91c1c' }}
+            >
+              Impossible
+            </span>
+          ) : null}
+          {statsOnlyPhysical && bonusSummary && !open ? (
+            <span
+              className="mt-1 block text-xs font-normal leading-snug"
+              style={{ color: muted }}
+            >
+              {bonusSummary}
+            </span>
+          ) : null}
+        </span>
+        {listPercent != null ? (
           <span
-            className="ml-2 text-xs font-semibold uppercase tracking-wide"
-            style={{ color: morphusActive ? '#fca5a5' : '#b91c1c' }}
+            className="shrink-0 font-mono text-base font-bold tabular-nums"
+            style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
+            aria-label={`${listPercent} percent`}
           >
-            Impossible
-          </span>
-        ) : null}
-        {statsOnlyPhysical && bonusSummary && !open ? (
-          <span
-            className="mt-1 block text-xs font-normal leading-snug"
-            style={{ color: muted }}
-          >
-            {bonusSummary}
+            {listPercent}%
           </span>
         ) : null}
       </button>
@@ -266,6 +302,10 @@ function SkillRow({
           <p className="mt-1 text-[11px] leading-snug opacity-90">
             This skill cannot be used in Morphus form.
           </p>
+          <SkillDescriptionBlock
+            description={description}
+            morphusActive={morphusActive}
+          />
         </div>
       ) : null}
       {open && statsOnlyPhysical ? (
@@ -273,11 +313,7 @@ function SkillRow({
           id={`${skill.id}-detail`}
           role="tooltip"
           className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
-          style={{
-            borderColor: morphusActive ? '#a78bfa' : '#3b82f6',
-            backgroundColor: morphusActive ? '#1e1b4b' : '#f8fafc',
-            color: morphusActive ? '#ede9fe' : '#0f172a',
-          }}
+          style={detailPanelStyle}
         >
           <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
             Physical bonuses
@@ -288,34 +324,82 @@ function SkillRow({
           <p className="mt-1 text-[11px] leading-snug opacity-90">
             No d100 roll — bonuses apply to attributes and combat stats.
           </p>
+          <SkillDescriptionBlock
+            description={description}
+            morphusActive={morphusActive}
+          />
         </div>
       ) : null}
-      {open && rollTarget && !statsOnlyPhysical ? (
+      {open && rollTarget && percentDetail && !statsOnlyPhysical ? (
         <div
           id={`${skill.id}-detail`}
           role="tooltip"
-          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
-          style={{
-            borderColor: morphusActive ? '#a78bfa' : '#3b82f6',
-            backgroundColor: morphusActive ? '#1e1b4b' : '#f8fafc',
-            color: morphusActive ? '#ede9fe' : '#0f172a',
-          }}
+          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border-2 px-3 py-2 shadow-lg"
+          style={detailPanelStyle}
         >
           <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
-            Quick roll (d100)
+            Skill %
           </p>
           <p className="mt-1 font-mono text-lg font-black tabular-nums">
-            Roll ≤ {rollTarget.target}%
+            {percentDetail.listPercent}%
+            <span className="ml-2 text-xs font-semibold uppercase tracking-wide opacity-80">
+              Roll ≤ {rollTarget.target}%
+            </span>
           </p>
-          <p className="mt-1 text-[11px] leading-snug opacity-90">
-            Base {rollTarget.base}% + Level {rollTarget.levelBonus}% + I.Q.{' '}
-            {rollTarget.iqBonus}%
-            {morphusResolved && !morphusResolved.impossibleInMorphus
-              ? ` → Morphus ${morphusResolved.total}%`
-              : ''}
+          <p className="mt-2 text-[10px] font-black uppercase tracking-wide opacity-90">
+            Where it comes from
           </p>
+          <ul className="mt-1 space-y-0.5 text-[11px] leading-snug">
+            {percentDetail.breakdownLines.map((line) => (
+              <li
+                key={`${line.label}-${line.value}`}
+                className="flex justify-between gap-3 font-mono tabular-nums"
+              >
+                <span className="min-w-0 truncate font-sans opacity-90">
+                  {line.label}
+                </span>
+                <span>
+                  {line.value > 0 ? '+' : ''}
+                  {line.value}%
+                </span>
+              </li>
+            ))}
+          </ul>
+          {percentDetail.morphusTotal != null &&
+          percentDetail.morphusTotal !== rollTarget.target ? (
+            <p className="mt-1 text-[11px] leading-snug opacity-90">
+              Morphus total {percentDetail.morphusTotal}%
+            </p>
+          ) : null}
+          <SkillDescriptionBlock
+            description={description}
+            morphusActive={morphusActive}
+          />
         </div>
       ) : null}
     </li>
+  )
+}
+
+function SkillDescriptionBlock({
+  description,
+  morphusActive,
+}: {
+  description: ReturnType<typeof resolveSkillCatalogDescription>
+  morphusActive: boolean
+}) {
+  return (
+    <div className="mt-2 border-t pt-2" style={{ borderColor: morphusActive ? '#4c1d95' : '#cbd5e1' }}>
+      <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
+        Description
+      </p>
+      <p
+        className={`mt-1 text-[11px] leading-snug ${
+          description.isPlaceholder ? 'italic opacity-80' : 'opacity-90'
+        }`}
+      >
+        {description.text}
+      </p>
+    </div>
   )
 }

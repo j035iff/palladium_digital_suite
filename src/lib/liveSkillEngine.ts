@@ -50,6 +50,49 @@ export type LiveSkillRollTarget = {
   iqBonus: number
 }
 
+/** Inspectable lines for the live Skills detail panel (Familiar Surface labels). */
+export type LiveSkillPercentBreakdownLine = {
+  label: string
+  value: number
+}
+
+/**
+ * List % + breakdown for a percentile skill on the live Skills overlay.
+ * Uses {@link resolveLiveSkillRollTarget} components; Morphus total when provided.
+ */
+export function buildLiveSkillPercentDetail(opts: {
+  rollTarget: LiveSkillRollTarget
+  morphusResolved?: SkillPercentBreakdown | null
+}): {
+  /** Closed-row % (Morphus total when usable in Morphus; else quick-roll target). */
+  listPercent: number
+  breakdownLines: readonly LiveSkillPercentBreakdownLine[]
+  /** Morphus engine total when form is Morphus and skill is usable. */
+  morphusTotal: number | null
+} {
+  const { rollTarget, morphusResolved } = opts
+  const morphusUsable =
+    morphusResolved && !morphusResolved.impossibleInMorphus
+      ? morphusResolved
+      : null
+  const breakdownLines: LiveSkillPercentBreakdownLine[] = [
+    { label: 'Base', value: rollTarget.base },
+    { label: 'Level', value: rollTarget.levelBonus },
+    { label: 'I.Q.', value: rollTarget.iqBonus },
+  ]
+  if (morphusUsable) {
+    for (const line of morphusUsable.lines) {
+      if (line.value === 0 && !/grant floor/i.test(line.label)) continue
+      breakdownLines.push({ label: line.label, value: line.value })
+    }
+  }
+  return {
+    listPercent: morphusUsable ? morphusUsable.total : rollTarget.target,
+    breakdownLines,
+    morphusTotal: morphusUsable ? morphusUsable.total : null,
+  }
+}
+
 function catalogForSkillId(skillId: string): PalladiumSkillCatalogEntry | undefined {
   return getPalladiumSkillCatalogEntryById(skillId)
 }

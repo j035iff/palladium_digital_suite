@@ -123,6 +123,14 @@ Flag when you see:
 
 **Do not block Pass A on:** `physicalSkillBonuses`, `specialAttacks`, `mechanicProgressions`, `combatToolBonuses`, `failureResults`, `conditionalRelatedSkills` — unless the batch scope explicitly includes Pass B mechanics.
 
+### Book descriptions gap (live Skills UI)
+
+The live Skills overlay shows catalog `description` when a skill is expanded. Many rows already have a short Pass A blurb, but **full book skill write-ups are not yet systematically ingested**. Until a dedicated description pass lands:
+
+- Prefer the printed book text (or a faithful paraphrase) in `description` on Pass A / correction batches.
+- Empty `description` → UI shows a temporary placeholder (`SKILL_DESCRIPTION_NOT_INGESTED_PLACEHOLDER` in `skillDisplayDetails.ts`).
+- **Follow-up for Content Ingest:** schedule a book-description ingest pass across skill category files so the sheet can show the real write-up (not stubs). Flag this in batch notes when you only touch mechanics.
+
 ### Pass B — Mechanical depth (optional)
 
 **Goal:** Chargen ledger, spawn handoff physical applies, combat/skill-roll consumers, sub-skill breakdowns.
