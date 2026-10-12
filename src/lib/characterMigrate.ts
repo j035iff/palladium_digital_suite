@@ -12,11 +12,25 @@
  */
 import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import { getMorphusCharacteristicById } from '../data/library/morphusTableCatalogLoader'
+import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
+import { getSkillById } from '../data/skillLibrary'
 import {
   coerceTableProjectedAliasId,
   normalizeAliases,
 } from './characterAliases'
-import type { Character, CharacterRootState, MorphusTraitSlotResolution } from '../types'
+import {
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from './creationSkillPicks'
+import { sheetSkillIdForCreationHandToHandTier } from './creationHandToHandChoice'
+import type {
+  Character,
+  CharacterRootState,
+  CreationSkillPick,
+  FormState,
+  MorphusTraitSlotResolution,
+  SheetSkill,
+} from '../types'
 
 /** Current save schema version stamped on migrate + serialize. */
 export const CHARACTER_SAVE_SCHEMA_VERSION = 2
@@ -300,6 +314,82 @@ function normalizeIdentityAliasFields(input: CharacterRootState): CharacterRootS
   }
 }
 
+function collectCreationPickCatalogIndex(
+  character: CharacterRootState,
+): Map<string, string> {
+  const byInstance = new Map<string, string>()
+  const add = (pick: CreationSkillPick | undefined) => {
+    if (!pick?.instanceId || !pick.skillId) return
+    byInstance.set(pick.instanceId, pick.skillId)
+  }
+  for (const pick of getCreationRelatedPicks(character)) add(pick)
+  for (const pick of getCreationSecondaryPicks(character)) add(pick)
+  for (const pick of Object.values(character.creationOccGrantPickDetails ?? {})) {
+    add(pick)
+  }
+  for (const slots of Object.values(character.creationOccCoreVoucherPicks ?? {})) {
+    for (const slot of slots ?? []) {
+      if (slot && typeof slot === 'object') add(slot as CreationSkillPick)
+    }
+  }
+  for (const slots of Object.values(
+    character.creationOccRelatedVoucherPicks ?? {},
+  )) {
+    for (const slot of slots ?? []) {
+      if (slot && typeof slot === 'object') add(slot as CreationSkillPick)
+    }
+  }
+  const hthId = sheetSkillIdForCreationHandToHandTier(
+    character.creationHandToHandTier,
+  )
+  if (hthId) byInstance.set(hthId, hthId)
+  for (const id of character.creationOccSkillIds ?? []) {
+    byInstance.set(id, id)
+  }
+  return byInstance
+}
+
+function resolveCatalogSkillIdForSheetRow(
+  skill: SheetSkill,
+  pickIndex: Map<string, string>,
+): string | undefined {
+  if (skill.catalogSkillId?.trim()) return skill.catalogSkillId.trim()
+  const fromPick = pickIndex.get(skill.id)
+  if (fromPick) return fromPick
+  if (getPalladiumSkillCatalogEntryById(skill.id) || getSkillById(skill.id)) {
+    return skill.id
+  }
+  return undefined
+}
+
+function backfillFormSkillCatalogIds(
+  branch: FormState,
+  pickIndex: Map<string, string>,
+): FormState {
+  let changed = false
+  const skills = branch.skills.map((skill) => {
+    const catalogSkillId = resolveCatalogSkillIdForSheetRow(skill, pickIndex)
+    if (!catalogSkillId || catalogSkillId === skill.catalogSkillId) return skill
+    changed = true
+    return { ...skill, catalogSkillId }
+  })
+  return changed ? { ...branch, skills } : branch
+}
+
+/**
+ * Stamp {@link SheetSkill.catalogSkillId} on live form skills when missing.
+ * Fixes Skills overlay "Other" dumps for creation instance-id rows (idempotent).
+ */
+export function backfillSheetSkillCatalogIds(
+  input: CharacterRootState,
+): CharacterRootState {
+  const pickIndex = collectCreationPickCatalogIndex(input)
+  const primary = backfillFormSkillCatalogIds(input.primary, pickIndex)
+  const morphus = backfillFormSkillCatalogIds(input.morphus, pickIndex)
+  if (primary === input.primary && morphus === input.morphus) return input
+  return { ...input, primary, morphus }
+}
+
 /**
  * Apply all pending save migrations up to {@link CHARACTER_SAVE_SCHEMA_VERSION}.
  *
@@ -336,6 +426,8 @@ export function migrateCharacterSave(
     // Keep aliases/projection coerce idempotent on current saves.
     next = normalizeIdentityAliasFields(next)
   }
+
+  next = backfillSheetSkillCatalogIds(next)
 
   next = {
     ...next,

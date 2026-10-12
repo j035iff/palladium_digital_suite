@@ -157,6 +157,7 @@ export function projectCreationSkillsToSheet(
 
     rows.push({
       id: pick.instanceId,
+      catalogSkillId: def.id,
       name: formatCreationSkillPickLabel(pick, def.name),
       restricted,
       restrictionReason,

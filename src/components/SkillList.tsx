@@ -4,6 +4,7 @@ import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalog
 import {
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
+  resolveSheetSkillCatalogId,
   type LiveSkillPercentBreakdownLine,
 } from '../lib/liveSkillEngine'
 import { clampOverlayTooltipPosition } from '../lib/overlayTooltipPosition'
@@ -74,7 +75,8 @@ export function SkillList({
           </h3>
           <ul className="space-y-2" role="list">
             {section.skills.map((skill) => {
-              const catalog = getPalladiumSkillCatalogEntryById(skill.id)
+              const catalogId = resolveSheetSkillCatalogId(skill)
+              const catalog = getPalladiumSkillCatalogEntryById(catalogId)
               const percentDetail =
                 !section.statsOnlyPhysical && !skill.restricted
                   ? buildLiveSkillPercentDetail({
@@ -133,7 +135,9 @@ function SkillRow({
   percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
   description: ReturnType<typeof resolveSkillCatalogDescription>
 }) {
-  const catalog = getPalladiumSkillCatalogEntryById(skill.id)
+  const catalog = getPalladiumSkillCatalogEntryById(
+    resolveSheetSkillCatalogId(skill),
+  )
   const bonusSummary = statsOnlyPhysical
     ? formatPhysicalSkillBonusSummary(
         (catalog as { physicalSkillBonuses?: Record<string, unknown> } | undefined)

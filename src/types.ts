@@ -2309,7 +2309,17 @@ export type CreationSkillPick = {
 }
 
 export type SheetSkill = {
+  /**
+   * Sheet row id — usually creation pick `instanceId` (may be a UUID for
+   * specialized / multi-instance skills). Prefer {@link catalogSkillId} for
+   * catalog lookups.
+   */
   id: string
+  /**
+   * Canonical Palladium skill catalog id (`skill_*`). Required for category /
+   * % resolution when {@link id} is a creation instance id.
+   */
+  catalogSkillId?: string
   name: string
   /** When true, skill is shown but unusable (docs/vision.md Pillar 8). */
   restricted: boolean

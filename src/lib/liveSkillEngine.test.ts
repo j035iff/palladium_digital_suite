@@ -6,12 +6,14 @@ import {
   buildLiveSkillContext,
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
+  isHandToHandSheetSkill,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
   occSkillLevelBonusPercent,
   resolveLiveSkillPercent,
   resolveLiveSkillRollTarget,
   resolveLiveSkillTemporaryPercentLines,
+  resolveSheetSkillCatalogId,
 } from './liveSkillEngine'
 import { resolveLiveIqSkillBonus } from './liveStatEngine'
 import type { SheetSkill } from '../types'
@@ -250,6 +252,39 @@ describe('buildLiveSkillPercentDetail', () => {
   })
 })
 
+describe('resolveSheetSkillCatalogId / isHandToHandSheetSkill', () => {
+  it('prefers catalogSkillId over instance id', () => {
+    expect(
+      resolveSheetSkillCatalogId({
+        id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+        catalogSkillId: 'skill_acrobatics',
+      }),
+    ).toBe('skill_acrobatics')
+  })
+
+  it('detects Hand-to-Hand sheet and library ids', () => {
+    expect(
+      isHandToHandSheetSkill({
+        id: 'skill_hand_to_hand_expert',
+        name: 'Hand to Hand: Expert',
+      }),
+    ).toBe(true)
+    expect(
+      isHandToHandSheetSkill({
+        id: 'uuid-hth',
+        catalogSkillId: 'skill_hand_to_hand_basic',
+        name: 'Hand to Hand: Basic',
+      }),
+    ).toBe(true)
+    expect(
+      isHandToHandSheetSkill({
+        id: 'skill_acrobatics',
+        name: 'Acrobatics',
+      }),
+    ).toBe(false)
+  })
+})
+
 describe('buildLiveSkillSections', () => {
   const row = (
     id: string,
@@ -259,6 +294,8 @@ describe('buildLiveSkillSections', () => {
     id,
     name,
     restricted: false,
+    catalogSkillId:
+      id.startsWith('skill_') || id.startsWith('hth_') ? id : undefined,
     ...opts,
   })
 
@@ -283,7 +320,7 @@ describe('buildLiveSkillSections', () => {
     expect(sections[0]!.statsOnlyPhysical).toBeUndefined()
     const bottom = sections[sections.length - 1]!
     expect(bottom.id).toBe(LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID)
-    expect(bottom.label).toBe('Physical')
+    expect(bottom.label).toBe(LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL)
     expect(bottom.statsOnlyPhysical).toBe(true)
     expect(bottom.skills.map((s) => s.id)).toEqual([
       'skill_boxing',
@@ -298,6 +335,42 @@ describe('buildLiveSkillSections', () => {
     ])
     expect(sections.map((s) => s.id)).toEqual(['Physical', 'Technical'])
     expect(sections.every((s) => !s.statsOnlyPhysical)).toBe(true)
+  })
+
+  it('categorizes creation instance-id rows via catalogSkillId (not Other)', () => {
+    const sections = buildLiveSkillSections([
+      row('inst-acro', 'Acrobatics', {
+        catalogSkillId: 'skill_acrobatics',
+        basePercent: 40,
+      }),
+      row('inst-box', 'Boxing', { catalogSkillId: 'skill_boxing' }),
+      row('inst-lit', 'Literacy', {
+        catalogSkillId: 'skill_literacy',
+        basePercent: 50,
+      }),
+    ])
+    expect(sections.map((s) => s.label)).toEqual([
+      'Physical',
+      'Technical',
+      LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
+    ])
+    expect(sections.some((s) => s.label === 'Other')).toBe(false)
+    expect(sections[0]!.skills.map((s) => s.name)).toEqual(['Acrobatics'])
+  })
+
+  it('excludes Hand-to-Hand styles from category sections', () => {
+    const sections = buildLiveSkillSections([
+      row('skill_hand_to_hand_expert', 'Hand to Hand: Expert', {
+        basePercent: 22,
+      }),
+      row('inst-hth', 'Hand to Hand: Basic', {
+        catalogSkillId: 'skill_hand_to_hand_basic',
+      }),
+      row('skill_climbing', 'Climbing', { basePercent: 40 }),
+    ])
+    const names = sections.flatMap((s) => s.skills.map((sk) => sk.name))
+    expect(names).toEqual(['Climbing'])
+    expect(names.some((n) => /hand to hand/i.test(n))).toBe(false)
   })
 })
 

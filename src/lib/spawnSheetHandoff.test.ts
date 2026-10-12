@@ -32,9 +32,11 @@ describe('spawnSheetHandoff', () => {
     expect(rows.length).toBeGreaterThan(5)
     const intel = rows.find((r) => r.id === 'skill_intelligence')
     expect(intel?.name).toBeTruthy()
+    expect(intel?.catalogSkillId).toBe('skill_intelligence')
     expect(intel?.basePercent).toBeGreaterThan(0)
     const related = rows.find((r) => r.id === 'skill_pick_locks')
     expect(related).toBeDefined()
+    expect(related?.catalogSkillId).toBe('skill_pick_locks')
   })
 
   it('applySpawnSheetHandoff copies skills to facade and morphus', () => {

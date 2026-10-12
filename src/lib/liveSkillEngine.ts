@@ -25,6 +25,7 @@ import {
   resolveLiveIqSkillBonus,
 } from './liveStatEngine'
 import { resolveActiveMorphusTraits } from './morphusPassiveBridge'
+import { mapSheetSkillIdToHandToHandCatalogId } from './handToHandPipeline'
 import { resolveOccCoreVoucherSkillBonus } from './occCoreSkillVouchers'
 import { hasPhysicalTrainingProgression } from './skillCatalogProgression'
 import { resolveActiveSynergyBonusLines } from './skillCreationDisplay'
@@ -147,6 +148,38 @@ export function formatLiveSkillPercentTooltip(
     .join(' + ')
 }
 
+/**
+ * Canonical catalog id for a live sheet skill row.
+ * Creation picks often store UUID `instanceId` on {@link SheetSkill.id}; category
+ * and % math must use {@link SheetSkill.catalogSkillId} (Pillar 9).
+ */
+export function resolveSheetSkillCatalogId(
+  skill: Pick<SheetSkill, 'id' | 'catalogSkillId'>,
+): string {
+  const stamped = skill.catalogSkillId?.trim()
+  if (stamped) return stamped
+  return skill.id
+}
+
+/**
+ * Hand-to-Hand combat styles belong in the dedicated H2H control — not the
+ * percentile category list (Joe 2026-10-12).
+ */
+export function isHandToHandSheetSkill(
+  skill: Pick<SheetSkill, 'id' | 'name' | 'catalogSkillId'>,
+): boolean {
+  const catalogId = resolveSheetSkillCatalogId(skill)
+  const mapped = mapSheetSkillIdToHandToHandCatalogId(catalogId)
+  if (mapped.startsWith('hth_')) return true
+  if (
+    catalogId.startsWith('skill_hand_to_hand_') ||
+    catalogId.startsWith('hand_to_hand_')
+  ) {
+    return true
+  }
+  return /^hand\s*to\s*hand\b/i.test(skill.name.trim())
+}
+
 /** Owned catalog skill ids for synergy partners (sheet rows + creation picks). */
 export function collectLiveOwnedSkillIds(
   character: Character,
@@ -161,8 +194,9 @@ export function collectLiveOwnedSkillIds(
   )
   const ids = new Set<string>(fromCreation)
   for (const row of ownedSkills) {
-    if (getPalladiumSkillCatalogEntryById(row.id)) ids.add(row.id)
-    const def = getSkillById(row.id)
+    const catalogId = resolveSheetSkillCatalogId(row)
+    if (getPalladiumSkillCatalogEntryById(catalogId)) ids.add(catalogId)
+    const def = getSkillById(catalogId)
     if (def) ids.add(def.id)
   }
   return ids
@@ -270,13 +304,14 @@ export function buildLiveSkillPercentDetail(opts: {
   } = opts
   const level = opts.characterLevel ?? character.level
   const levelBonus = occSkillLevelBonusPercent(level)
-  const catalog = catalogForSkillId(skill.id)
-  const def = getSkillById(skill.id)
+  const catalogId = resolveSheetSkillCatalogId(skill)
+  const catalog = catalogForSkillId(catalogId)
+  const def = getSkillById(catalogId)
   const bookBase =
     def?.basePercent ??
     (typeof catalog?.basePercent === 'number' ? catalog.basePercent : 0)
   const iqBonus = resolveLiveIqSkillBonus(character, activeForm)
-  const occBonus = resolveLiveSkillOccBonusPercent(character, skill.id)
+  const occBonus = resolveLiveSkillOccBonusPercent(character, catalogId)
   const ownedIds = collectLiveOwnedSkillIds(character, ownedSkills)
   const synergyLines = def
     ? resolveActiveSynergyBonusLines(def, ownedIds, [])
@@ -293,7 +328,7 @@ export function buildLiveSkillPercentDetail(opts: {
     opts.morphusResolved ??
     resolveLiveSkillPercent(
       {
-        id: skill.id,
+        id: catalogId,
         basePercent: bookBase,
         perLevel: 0,
         acquisitionLevel: 1,
@@ -459,11 +494,16 @@ export function resolveLiveSkillRollTarget(opts: {
   return { target, base, levelBonus, iqBonus }
 }
 
-function primaryBookCategory(
-  catalog: PalladiumSkillCatalogEntry | undefined,
-): string {
+function primaryBookCategory(catalogId: string): string {
+  const catalog = catalogForSkillId(catalogId)
   const cat = catalog?.categories?.[0]?.trim()
-  return cat && cat.length > 0 ? cat : 'Other'
+  if (cat && cat.length > 0) return cat
+  const def = getSkillById(catalogId)
+  const bookCat = def?.bookCategories?.[0]?.trim()
+  if (bookCat) return bookCat
+  const legacy = def?.category?.trim()
+  if (legacy && legacy !== 'Misc' && legacy !== 'Other') return legacy
+  return 'Other'
 }
 
 function categorySortIndex(label: string): number {
@@ -475,6 +515,7 @@ function categorySortIndex(label: string): number {
  * Live Skills tab sections: book categories in creation filter order, with
  * stats-only physical training (`hasPhysicalTrainingProgression`) pulled into
  * their own **Physical** section pinned at the bottom.
+ * Hand-to-Hand styles are omitted (dedicated H2H control at top of Skills).
  */
 export function buildLiveSkillSections(
   skills: readonly SheetSkill[],
@@ -483,12 +524,14 @@ export function buildLiveSkillSections(
   const statsOnly: SheetSkill[] = []
 
   for (const skill of skills) {
-    const catalog = catalogForSkillId(skill.id)
+    if (isHandToHandSheetSkill(skill)) continue
+    const catalogId = resolveSheetSkillCatalogId(skill)
+    const catalog = catalogForSkillId(catalogId)
     if (catalog && hasPhysicalTrainingProgression(catalog)) {
       statsOnly.push(skill)
       continue
     }
-    const label = primaryBookCategory(catalog)
+    const label = primaryBookCategory(catalogId)
     const bucket = byCategory.get(label) ?? []
     bucket.push(skill)
     byCategory.set(label, bucket)
