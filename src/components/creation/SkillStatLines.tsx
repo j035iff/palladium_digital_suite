@@ -45,11 +45,20 @@ export function SkillStatLines({
         <p className="font-mono tabular-nums">{display.physicalBonusSummary}</p>
       ) : null}
 
+      {display.similarSkillNote ? (
+        <p className={`${hasPhysical ? 'mt-1' : ''} leading-snug`}>{display.similarSkillNote}</p>
+      ) : null}
+
       {hasSubPercents ? (
-        <ul className={`space-y-0.5 ${hasPhysical ? 'mt-1' : ''}`}>
+        <ul className={`space-y-0.5 ${hasPhysical || display.similarSkillNote ? 'mt-1' : ''}`}>
           {display.subPercentLines.map((line) => (
             <li key={line.name} className="font-mono tabular-nums">
               {line.name}: {line.basePercent}% +{line.perLevel}%/level
+              {line.overlapNote ? (
+                <span className="mt-0.5 block font-sans leading-snug opacity-80">
+                  {line.overlapNote}
+                </span>
+              ) : null}
             </li>
           ))}
         </ul>

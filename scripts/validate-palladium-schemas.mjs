@@ -39,6 +39,9 @@ const weaponProficiencySchema = loadJson(
 const standardModernWeaponProgressionSchema = loadJson(
   join(schemasDir, 'standard-modern-weapon-progression.schema.json'),
 )
+const skillGlobalRulesSchema = loadJson(
+  join(schemasDir, 'palladium-skill-global-rules.schema.json'),
+)
 const handToHandSchema = loadJson(join(schemasDir, 'palladium-hth.schema.json'))
 const talentSchema = loadJson(join(schemasDir, 'palladium-talent.schema.json'))
 const psionicSchema = loadJson(join(schemasDir, 'palladium-psionic.schema.json'))
@@ -83,6 +86,7 @@ for (const [label, schema] of [
   ['palladium-race.schema.json', raceSchema],
   ['palladium-weapon-proficiency.schema.json', weaponProficiencySchema],
   ['standard-modern-weapon-progression.schema.json', standardModernWeaponProgressionSchema],
+  ['palladium-skill-global-rules.schema.json', skillGlobalRulesSchema],
   ['palladium-occ.schema.json', occSchema],
   ['palladium-hth.schema.json', handToHandSchema],
   ['palladium-talent.schema.json', talentSchema],
@@ -110,6 +114,7 @@ for (const [label, schema] of [
 const validateSkillRow = ajv.compile(skillSchema)
 const validateWeaponProficiencyRow = ajv.compile(weaponProficiencySchema)
 const validateProgressionDoc = ajv.compile(standardModernWeaponProgressionSchema)
+const validateSkillGlobalRulesDoc = ajv.compile(skillGlobalRulesSchema)
 const validateRaceRow = ajv.compile(raceSchema)
 const validateOccRow = ajv.compile(occSchema)
 const validateHandToHandRow = ajv.compile(handToHandSchema)
@@ -258,6 +263,38 @@ if (!validateProgressionDoc(progressionJson)) {
   )
 } else {
   console.log('OK  skills/utils/standard_modern_weapon_progression.json — document validates')
+}
+
+const skillGlobalRules = loadJson(join(skillsDir, 'utils/skill_global_rules.json'))
+if (!validateSkillGlobalRulesDoc(skillGlobalRules)) {
+  failed = true
+  console.error(
+    'ERR skills/utils/skill_global_rules.json:',
+    validateSkillGlobalRulesDoc.errors,
+  )
+} else {
+  const knownSkillIds = new Set(palladiumSkills.map((row) => row.id))
+  let missing = 0
+  for (const group of skillGlobalRules.similarSkillGroups ?? []) {
+    for (const skillId of [
+      ...(group.skillIds ?? []),
+      ...(group.bundledSkills ?? []).map((row) => row.skillId),
+    ]) {
+      if (!knownSkillIds.has(skillId)) {
+        missing++
+        console.error(
+          `ERR skills/utils/skill_global_rules.json — unknown skill id ${skillId}`,
+        )
+      }
+    }
+  }
+  if (missing === 0) {
+    console.log(
+      'OK  skills/utils/skill_global_rules.json — document validates; skill ids match the catalog',
+    )
+  } else {
+    failed = true
+  }
 }
 
 const racesDir = join(contentDir, 'races')

@@ -31,6 +31,11 @@ import { mapSheetSkillIdToHandToHandCatalogId } from './handToHandPipeline'
 import { resolveOccCoreVoucherSkillBonus } from './occCoreSkillVouchers'
 import { hasPhysicalTrainingProgression } from './skillCatalogProgression'
 import { resolveActiveSynergyBonusLines } from './skillCreationDisplay'
+import { resolveGrantPerLevel } from './conditionalRelatedSkills'
+import {
+  duplicateAbilityOverlapNote,
+  similarSkillGroupPlayerNote,
+} from './skillGlobalRules'
 import type { SkillPercentAttributeScores } from './skillPercentAttributeModifiers'
 import { type SkillEquationSkill } from './skillEquation'
 import {
@@ -334,6 +339,8 @@ export function buildLiveSkillPercentDetail(opts: {
   breakdownLines: readonly LiveSkillPercentBreakdownLine[]
   /** Plain-text hover equation for aria / fallbacks. */
   tooltipEquation: string
+  /** Similar-skill combination note (best ability, or bonuses-add). */
+  overlapNote: string | null
   /** Morphus engine total when form is Morphus and skill is usable. */
   morphusTotal: number | null
   impossibleInMorphus: boolean
@@ -350,18 +357,43 @@ export function buildLiveSkillPercentDetail(opts: {
   const catalogId = resolveSheetSkillCatalogId(skill)
   const catalog = catalogForSkillId(catalogId)
   const def = getSkillById(catalogId)
-  const bookBase = subPercentTrack
+  const creationPicks = [
+    ...getCreationRelatedPicks(character),
+    ...getCreationSecondaryPicks(character),
+  ]
+  const skillPick =
+    creationPicks.find((pick) => pick.skillId === catalogId && !pick.grantedBySkillId) ??
+    creationPicks.find((pick) => pick.skillId === catalogId && pick.grantedBySkillId)
+  const grant =
+    skillPick?.grantedBySkillId && skillPick.conditionalGrantStartingPercent != null
+      ? skillPick
+      : undefined
+  let bookBase = subPercentTrack
     ? subPercentTrack.basePercent
     : (def?.basePercent ??
       (typeof catalog?.basePercent === 'number' ? catalog.basePercent : 0))
-  const levelBonus = subPercentTrack
+  let levelBonus = subPercentTrack
     ? Math.max(0, Math.floor(level) - 1) * subPercentTrack.percentPerLevel
     : occSkillLevelBonusPercent(level)
+  if (
+    !subPercentTrack &&
+    grant?.grantedBySkillId &&
+    grant.conditionalGrantStartingPercent != null
+  ) {
+    bookBase = grant.conditionalGrantStartingPercent
+    levelBonus =
+      Math.max(0, Math.floor(level) - 1) *
+      resolveGrantPerLevel(
+        grant.grantedBySkillId,
+        catalogId,
+        def?.perLevel ?? 0,
+      )
+  }
   const iqBonus = resolveLiveIqSkillBonus(character, activeForm)
   const occBonus = resolveLiveSkillOccBonusPercent(character, catalogId)
   const ownedIds = collectLiveOwnedSkillIds(character, ownedSkills)
   const synergyLines = def
-    ? resolveActiveSynergyBonusLines(def, ownedIds, [])
+    ? resolveActiveSynergyBonusLines(def, ownedIds, creationPicks, skillPick)
     : []
   const synergyTotal = synergyLines.reduce((s, l) => s + l.value, 0)
   const scaledAtt = def?.scaledAttBonuses ?? 0
@@ -428,12 +460,24 @@ export function buildLiveSkillPercentDetail(opts: {
   const listPercentTone: 'default' | 'bonus' | 'penalty' =
     temporaryTotal > 0 ? 'bonus' : temporaryTotal < 0 ? 'penalty' : 'default'
 
+  const overlapNote = subPercentTrack
+    ? duplicateAbilityOverlapNote(
+        catalogId,
+        subPercentTrack.name,
+        [...ownedIds],
+        level,
+      )
+    : similarSkillGroupPlayerNote(catalogId, [...ownedIds])
+  const tooltipEquation = formatLiveSkillPercentTooltip(breakdownLines)
   return {
     listPercent,
     listPercentTone,
     temporaryNet: temporaryTotal,
     breakdownLines,
-    tooltipEquation: formatLiveSkillPercentTooltip(breakdownLines),
+    tooltipEquation: overlapNote
+      ? `${tooltipEquation}\n${overlapNote}`
+      : tooltipEquation,
+    overlapNote,
     morphusTotal: morphusUsable ? morphusUsable.total : null,
     impossibleInMorphus,
   }

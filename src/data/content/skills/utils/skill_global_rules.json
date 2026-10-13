@@ -1,0 +1,26 @@
+{
+  "description": "Cross-skill rules for one character. Each catalog row still stores that skill's own numbers. This document says how those numbers combine when more than one of the listed skills is selected.",
+  "similarSkillGroups": [
+    {
+      "id": "acrobatics_gymnastics",
+      "label": "Acrobatics and Gymnastics",
+      "skillIds": ["skill_acrobatics", "skill_gymnastics"],
+      "stackPhysicalBonuses": true,
+      "duplicateAbilities": {
+        "resolution": "best",
+        "educationalBonus": "once"
+      },
+      "bundledSkills": [
+        {
+          "skillId": "skill_climbing",
+          "increasesWithLevelOnlyIfSelected": true
+        },
+        {
+          "skillId": "skill_prowl",
+          "increasesWithLevelOnlyIfSelected": true
+        }
+      ],
+      "notes": "Acrobatics and Gymnastics provide similar abilities and bonuses. If both are selected, add the bonuses and pluses (physicalSkillBonuses, including attribute bonuses, S.D.C., and combat pluses such as roll with punch/fall/impact) to the character. Abilities that appear on both skills, such as back flip, climb rope, and sense of balance, are not added together. Take the best proficiency of a duplicated ability (the higher percentage at the character's current level, using that copy's own base and percent per level). Apply the normal educational bonus (I.Q. skill bonus) once to that proficiency. Prowl and Climb granted by these skills are part of the physical skill: they do not increase with level unless Prowl and/or Climbing are also selected as separate skills. If both skills grant the same missing Prowl or Climb, keep the higher starting percent only. If the separate skill is selected, each skill's bonus-if-already-have still adds, and the educational bonus is still applied once."
+    }
+  ]
+}

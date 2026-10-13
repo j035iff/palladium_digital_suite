@@ -9,6 +9,9 @@ export const PALLADIUM_CONTENT_DIR = 'src/data/content' as const
 export const PALLADIUM_SKILL_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-skill.schema.json` as const
 
+export const PALLADIUM_SKILL_GLOBAL_RULES_SCHEMA_PATH =
+  `${PALLADIUM_SCHEMAS_DIR}/palladium-skill-global-rules.schema.json` as const
+
 export const PALLADIUM_RACE_SCHEMA_PATH =
   `${PALLADIUM_SCHEMAS_DIR}/palladium-race.schema.json` as const
 
@@ -51,6 +54,9 @@ export const PALLADIUM_MORPHUS_FORGE_ROUTING_SCHEMA_PATH =
 /** `$id` inside `palladium-skill.schema.json` — use for `$schema` pointers in skill JSON. */
 export const PALLADIUM_SKILL_SCHEMA_ID =
   'https://megaverse-companion.local/schemas/palladium-skill.schema.json' as const
+
+export const PALLADIUM_SKILL_GLOBAL_RULES_SCHEMA_ID =
+  'https://megaverse-companion.local/schemas/palladium-skill-global-rules.schema.json' as const
 
 /** `$id` inside `palladium-race.schema.json`. */
 export const PALLADIUM_RACE_SCHEMA_ID =
@@ -203,6 +209,9 @@ export const PALLADIUM_MORPHUS_FORGE_DIR =
 
 export const SKILL_TRAIT_REGISTRY_JSON_PATH =
   `${PALLADIUM_SKILLS_UTILS_DIR}/skill_trait_registry.json` as const
+
+export const SKILL_GLOBAL_RULES_JSON_PATH =
+  `${PALLADIUM_SKILLS_UTILS_DIR}/skill_global_rules.json` as const
 
 export const MAGIC_SCHOOLS_JSON_PATH =
   `${PALLADIUM_MAGIC_UTILS_DIR}/magic_schools.json` as const

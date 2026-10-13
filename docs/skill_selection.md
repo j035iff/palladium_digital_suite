@@ -54,3 +54,18 @@ Physical skill bonuses (S.D.C., attributes) are staged, then committed in phases
 | **Commit to sheet** | Tab 8 — Spawn | `applySpawnSheetHandoff()` projects skill %, applies physical skill attribute/SDC deltas to `primary` / `morphus` branches, sets `isFinalized: true`. |
 
 **Rule:** Phase A ledger preview must match post-spawn sheet values for the same inputs (`stat_engine_spec.md` §2).
+
+---
+
+## 5. Similar skills (Acrobatics and Gymnastics)
+
+Authority: `src/data/content/skills/utils/skill_global_rules.json`.
+
+Acrobatics and Gymnastics give similar abilities and bonuses. When both are selected:
+
+- **Bonuses and pluses add.** Every `physicalSkillBonuses` entry from both skills is added to the character (attributes, S.D.C. dice, roll with punch/fall/impact, and the other combat pluses on those rows).
+- **Duplicated abilities do not add.** Shared percentile abilities (back flip, climb rope, sense of balance, and any other ability with the same name on both skills) keep the **best** proficiency at the character's current level: that copy's base plus its own percent per level. The other copy stays visible and is not added in.
+- **Educational bonus once.** The I.Q. skill bonus is applied once, on that best proficiency.
+- **Bundled Prowl and Climb do not rise with level** unless Prowl and/or Climbing are also selected as their own skills. A grant uses the fixed starting percent (Climbing: Acrobatics 40% or Gymnastics 25%, whichever source is present and higher; Prowl: 30% from either). If the separate skill is selected, use that skill's own ladder, add each physical skill's bonus-if-already-have (+15% / +7% Climbing, +5% Prowl from each), and apply the educational bonus once.
+
+Abilities that exist on only one of the two skills (tightrope, parallel bars and rings) stay on that skill.

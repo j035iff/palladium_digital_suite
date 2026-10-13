@@ -219,7 +219,8 @@ Content is **JSON-first**, validated by Ajv:
 
 | Schema | Content file(s) |
 |--------|-----------------|
-| `palladium-skill.schema.json` | `skills/*.json` (14 category files; loader: `skillsCatalogLoader.ts`) — ingest: [`docs/ingest/skills.md`](ingest/skills.md) |
+| `palladium-skill.schema.json` | `skills/*.json` (14 category files; loader: `skillsCatalogLoader.ts`); combination rules in `skills/utils/skill_global_rules.json` — ingest: [`docs/ingest/skills.md`](ingest/skills.md); runtime: [`docs/skill_selection.md`](skill_selection.md) §5 |
+| `palladium-skill-global-rules.schema.json` | `skills/utils/skill_global_rules.json` |
 | `palladium-occ.schema.json` | `occs/<genre>/*.json` — ingest: [`docs/ingest/occs.md`](ingest/occs.md) |
 | `palladium-race.schema.json` | `races/<genre>/{player,npc,gm_approval}.json` — ingest: [`docs/ingest/races.md`](ingest/races.md) |
 | `palladium-talent.schema.json` | `talents/common.json`, `talents/elite.json` — ingest: [`docs/ingest/talents.md`](ingest/talents.md) |

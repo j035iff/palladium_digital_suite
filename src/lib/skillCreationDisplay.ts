@@ -1,6 +1,7 @@
 import type { EngineSkillDef } from '../data/skillLibrary'
 import {
   resolveConditionalRelatedSynergyLines,
+  resolveGrantPerLevel,
   resolvePickBasePercentAtLevel,
 } from './conditionalRelatedSkills'
 import type { CreationSkillPick, PalladiumOcc, PsychicTier } from '../types'
@@ -28,6 +29,10 @@ import {
   resolveSkillCatalogDisplayDetails,
   type SkillCatalogDisplayDetails,
 } from './skillDisplayDetails'
+import {
+  duplicateAbilityOverlapNote,
+  similarSkillGroupPlayerNote,
+} from './skillGlobalRules'
 
 export type SkillPickDisplayTier =
   | 'occ'
@@ -73,6 +78,8 @@ export type SkillCreationDisplayInfo = SkillCatalogDisplayDetails & {
   equationBonuses: readonly SkillBonusLine[]
   contextBonuses: readonly SkillBonusLine[]
   percentSummary?: SkillPercentSummary
+  /** Set when another skill in the same similar-skill group is also selected. */
+  similarSkillNote?: string | null
 }
 
 function effectiveSkillLevel(
@@ -271,11 +278,16 @@ function buildEquationInput(
     pick?.conditionalGrantStartingPercent != null
       ? pick.conditionalGrantStartingPercent
       : def.basePercent
+  const perLevel =
+    pick?.grantedBySkillId != null
+      ? resolveGrantPerLevel(pick.grantedBySkillId, def.id, def.perLevel)
+      : def.perLevel
   return {
     synergyLines,
+    perLevel,
     input: {
       basePercent: basePercentForEquation,
-      perLevel: def.perLevel,
+      perLevel,
       acquisitionLevel: def.acquisitionLevel,
       occBonus,
       synergyBonuses: synergy,
@@ -427,7 +439,7 @@ export function resolveSkillCreationDisplay(
     opts.voucherPicks,
     opts.relatedVoucherPicks,
   )
-  const { synergyLines, input, baseAtLevel } = buildEquationInput(
+  const { synergyLines, input, baseAtLevel, perLevel } = buildEquationInput(
     def,
     opts.allSelectedIds,
     occBonus,
@@ -460,7 +472,7 @@ export function resolveSkillCreationDisplay(
     catalogDetails.showMainPercentLine && !catalogDetails.isWeaponProficiency
       ? {
           baseAtLevel,
-          perLevel: def.perLevel,
+          perLevel,
           total: resolved.total,
           parts: buildPercentBreakdownParts(
             baseAtLevel,
@@ -476,8 +488,20 @@ export function resolveSkillCreationDisplay(
 
   return {
     ...catalogDetails,
-    basePercent: def.basePercent,
-    perLevel: def.perLevel,
+    basePercent: input.basePercent,
+    perLevel,
+    similarSkillNote: similarSkillGroupPlayerNote(def.id, [
+      ...opts.allSelectedIds,
+    ]),
+    subPercentLines: catalogDetails.subPercentLines.map((line) => ({
+      ...line,
+      overlapNote: duplicateAbilityOverlapNote(
+        def.id,
+        line.name,
+        [...opts.allSelectedIds],
+        opts.skillPercentCtx.characterLevel,
+      ),
+    })),
     total: resolved.total,
     impossibleInMorphus: resolved.impossibleInMorphus,
     equationBonuses: catalogDetails.isWeaponProficiency ? [] : equationBonuses,

@@ -24,7 +24,7 @@ import {
   appendCreationSkillPickWithConditionalGrants,
   grantedBySkillLabel,
   hasConditionalGrantForSkill,
-  removeCreationSkillPickWithConditionalCascade,
+  removeCreationSkillPickFromTiers,
   replaceConditionalGrantWithPaidPick,
 } from '../../lib/conditionalRelatedSkills'
 
@@ -2127,16 +2127,14 @@ export function SkillEngine() {
           )
         }}
         renderRelatedRow={(pick) =>
-          renderSelectedRow(pick, 'related', (instanceId) =>
-            setCreationSkillPicks(
-              occSkillIds,
-              removeCreationSkillPickWithConditionalCascade(
-                relatedSelected,
-                instanceId,
-              ),
+          renderSelectedRow(pick, 'related', (instanceId) => {
+            const next = removeCreationSkillPickFromTiers(
+              relatedSelected,
               secondarySelected,
-            ),
-          )
+              instanceId,
+            )
+            setCreationSkillPicks(occSkillIds, next.related, next.secondary)
+          })
         }
         specializationVoucherTasks={vocationalFocusTasks}
         creationVoucherRelatedTasks={creationVoucherRelatedTasks}
@@ -2149,16 +2147,14 @@ export function SkillEngine() {
           setCreationOccRelatedVoucherCluster(voucherId, categoryName)
         }
         renderSecondaryRow={(pick) =>
-          renderSelectedRow(pick, 'secondary', (instanceId) =>
-            setCreationSkillPicks(
-              occSkillIds,
+          renderSelectedRow(pick, 'secondary', (instanceId) => {
+            const next = removeCreationSkillPickFromTiers(
               relatedSelected,
-              removeCreationSkillPickWithConditionalCascade(
-                secondarySelected,
-                instanceId,
-              ),
-            ),
-          )
+              secondarySelected,
+              instanceId,
+            )
+            setCreationSkillPicks(occSkillIds, next.related, next.secondary)
+          })
         }
         shellMode
       />

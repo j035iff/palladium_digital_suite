@@ -583,7 +583,7 @@
     },
     "conditionalRelatedSkills": {
       "type": "array",
-      "description": "Target skill receives either a percentile bonus when the character already has it, or is granted at fixed starting value(s) when they do not—common on physical skills (e.g. Acrobatics with Prowl or Climbing). An entry may include both `bonusIfAlreadyHave` and `grantIfMissing`; engines apply **one** branch depending on whether the character already has `skillId` when this rule fires. **Bonus path:** adds to the character's existing effective % for that skill (does not replace base). **Grant path:** see `grantIfMissing`—use `startingPercent` or `startingSplitBase` to set initial %; both ignore the target's book base(s) for that initial state while per-level growth still comes from the target definition unless overridden there.",
+      "description": "Target skill receives either a percentile bonus when the character already has it, or is granted at fixed starting value(s) when they do not—common on physical skills (e.g. Acrobatics with Prowl or Climbing). An entry may include both `bonusIfAlreadyHave` and `grantIfMissing`; engines apply **one** branch depending on whether the character already has `skillId` when this rule fires. **Bonus path:** adds to the character's existing effective % for that skill (does not replace base). **Grant path:** see `grantIfMissing`. When two skills are in the same `skill_global_rules.json` group, bundled grants of the same skill keep the higher starting percent only, and those grants do not gain percent-per-level unless the skill is also selected on its own.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -611,7 +611,7 @@
             }
           },
           "grantIfMissing": {
-            "description": "Applied when the character does not already have the target skill—typically grants it without spending another selection. **UI / logic engines:** use exactly one of `startingPercent` (single-track targets) or `startingSplitBase` (targets whose `basePercent` uses `splitBase`). In both cases, granted values are **fixed starting points** that **replace** the target's book base(s) for the **initial** state only—not offsets. **Per-level growth** still uses the target skill's `percentPerLevel` unless `grantIfMissing.percentPerLevel` overrides it. Example (single-track): grant Climbing at 40% while its definition says 30%. Example (split-base): grant Medical Doctor with diagnosis 55 / treatment 45 while the definition says 60 / 50.",
+            "description": "Applied when the character does not already have the target skill—typically grants it without spending another selection. **UI / logic engines:** use exactly one of `startingPercent` (single-track targets) or `startingSplitBase` (targets whose `basePercent` uses `splitBase`). In both cases, granted values are **fixed starting points** that **replace** the target's book base(s) for the **initial** state only—not offsets. **Per-level growth** still uses the target skill's `percentPerLevel` unless `grantIfMissing.percentPerLevel` overrides it, except a bundled skill in `skills/utils/skill_global_rules.json` with `increasesWithLevelOnlyIfSelected`: an omitted `percentPerLevel` stays 0 until the character selects that skill on its own. Example (single-track): grant Climbing at 40% while its definition says 30%. Example (split-base): grant Medical Doctor with diagnosis 55 / treatment 45 while the definition says 60 / 50.",
             "oneOf": [
               {
                 "type": "object",
@@ -627,7 +627,7 @@
                   "percentPerLevel": {
                     "type": "number",
                     "minimum": 0,
-                    "description": "If present, **overrides** per-level growth for this granted instance. If **omitted**, inherit the target skill's `percentPerLevel` when advancing the granted skill."
+                    "description": "If present, **overrides** per-level growth for this granted instance. If **omitted**, inherit the target skill's `percentPerLevel`, unless `skill_global_rules.json` lists this target as a bundled skill that does not increase with level."
                   }
                 }
               },
@@ -807,7 +807,7 @@
     },
     "physicalSkillBonuses": {
       "type": "object",
-      "description": "Direct attribute or combat bonuses granted by this physical (or similar) skill, when the rules award fixed bonuses rather than percentile-only progression. Includes strike/parry/dodge and **flat or conditional damage** on specific maneuvers (e.g. `chargingDamage` +4 when charging from horseback). Use integers or `{ value, condition }` for book rules that give a numeric damage bonus—not only dice on S.D.C./kicks. Omit entirely if the skill grants none. Stacking is per book/GM. Also embedded under **`combatToolBonuses[].modifiers`** for tool-scoped bonuses.",
+      "description": "Direct attribute or combat bonuses granted by this physical (or similar) skill, when the rules award fixed bonuses rather than percentile-only progression. Includes strike/parry/dodge and **flat or conditional damage** on specific maneuvers (e.g. `chargingDamage` +4 when charging from horseback). Use integers or `{ value, condition }` for book rules that give a numeric damage bonus—not only dice on S.D.C./kicks. Omit entirely if the skill grants none. Stacking is per book/GM (`skills/utils/skill_global_rules.json` adds every bonus when a similar-skill group sets `stackPhysicalBonuses`). Also embedded under **`combatToolBonuses[].modifiers`** for tool-scoped bonuses.",
       "additionalProperties": false,
       "properties": {
         "ps": {

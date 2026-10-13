@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import {
   appendCreationSkillPickWithConditionalGrants,
+  removeCreationSkillPickFromTiers,
   removeCreationSkillPickWithConditionalCascade,
   replaceConditionalGrantWithPaidPick,
   resolveConditionalRelatedSynergyLines,
+  resolveGrantPerLevel,
   resolvePickBasePercentAtLevel,
 } from './conditionalRelatedSkills'
 import {
@@ -101,7 +103,80 @@ describe('resolvePickBasePercentAtLevel', () => {
       conditionalGrantStartingPercent: 40,
     }
     expect(resolvePickBasePercentAtLevel(def, pick, 1)).toBe(40)
+    expect(resolvePickBasePercentAtLevel(def, pick, 4)).toBe(40)
+    expect(resolveGrantPerLevel('skill_acrobatics', 'skill_climbing', def.perLevel)).toBe(0)
     expect(resolvePickBasePercentAtLevel(def, undefined, 1)).toBe(def.basePercent)
+  })
+})
+
+describe('Acrobatics and Gymnastics bundled Prowl and Climb', () => {
+  it('keeps the higher Climb grant and does not add the two starting percents', () => {
+    const gymnastics = buildCreationSkillPick('skill_gymnastics', {})
+    const afterGym = appendCreationSkillPickWithConditionalGrants(
+      gymnastics,
+      'related',
+      new Set(),
+      [],
+      [],
+    )
+    const acrobatics = buildCreationSkillPick('skill_acrobatics', {})
+    const selected = new Set(afterGym.related.map((pick) => pick.skillId))
+    const afterBoth = appendCreationSkillPickWithConditionalGrants(
+      acrobatics,
+      'related',
+      selected,
+      afterGym.related,
+      [],
+    )
+    const climbs = afterBoth.related.filter((pick) => pick.skillId === 'skill_climbing')
+    expect(climbs).toHaveLength(1)
+    expect(climbs[0]?.conditionalGrantStartingPercent).toBe(40)
+    expect(climbs[0]?.grantedBySkillId).toBe('skill_acrobatics')
+    const prowls = afterBoth.related.filter((pick) => pick.skillId === 'skill_prowl')
+    expect(prowls).toHaveLength(1)
+    expect(prowls[0]?.conditionalGrantStartingPercent).toBe(30)
+  })
+
+  it('restores the remaining skill grant when the better source is removed', () => {
+    const gymnastics = buildCreationSkillPick('skill_gymnastics', {})
+    const afterGym = appendCreationSkillPickWithConditionalGrants(
+      gymnastics,
+      'secondary',
+      new Set(),
+      [],
+      [],
+    )
+    const acrobatics = buildCreationSkillPick('skill_acrobatics', {})
+    const afterBoth = appendCreationSkillPickWithConditionalGrants(
+      acrobatics,
+      'related',
+      new Set(afterGym.secondary.map((pick) => pick.skillId)),
+      [],
+      afterGym.secondary,
+    )
+    const next = removeCreationSkillPickFromTiers(
+      afterBoth.related,
+      afterBoth.secondary,
+      acrobatics.instanceId,
+    )
+    const climb = [...next.related, ...next.secondary].find(
+      (pick) => pick.skillId === 'skill_climbing',
+    )
+    expect(climb?.grantedBySkillId).toBe('skill_gymnastics')
+    expect(climb?.conditionalGrantStartingPercent).toBe(25)
+  })
+
+  it('adds both skill bonuses once Climbing is selected, without a second educational bonus', () => {
+    const climbing = buildCreationSkillPick('skill_climbing', {})
+    const acrobatics = buildCreationSkillPick('skill_acrobatics', {})
+    const gymnastics = buildCreationSkillPick('skill_gymnastics', {})
+    const lines = resolveConditionalRelatedSynergyLines(
+      'skill_climbing',
+      new Set(['skill_climbing', 'skill_acrobatics', 'skill_gymnastics']),
+      [climbing, acrobatics, gymnastics],
+      climbing,
+    )
+    expect(lines.map((line) => line.value).sort((a, b) => a - b)).toEqual([7, 15])
   })
 })
 

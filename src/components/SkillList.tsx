@@ -5,6 +5,7 @@ import { getSkillById } from '../data/skillLibrary'
 import {
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
+  collectLiveOwnedSkillIds,
   filterLiveSkillSections,
   isWeaponProficiencySheetSkill,
   listLiveSkillFilterCategoryOptions,
@@ -12,6 +13,7 @@ import {
   resolveSheetSkillCatalogId,
   type LiveSkillPercentBreakdownLine,
 } from '../lib/liveSkillEngine'
+import { similarSkillGroupPlayerNote } from '../lib/skillGlobalRules'
 import { clampOverlayTooltipPosition } from '../lib/overlayTooltipPosition'
 import {
   formatPhysicalSkillBonusSummary,
@@ -180,6 +182,13 @@ export function SkillList({
                     : null
                 const descriptionSource =
                   subPercentTrack?.description ?? catalog?.description
+                const overlapNote =
+                  percentDetail?.overlapNote ??
+                  (section.statsOnlyPhysical
+                    ? similarSkillGroupPlayerNote(catalogId, [
+                        ...collectLiveOwnedSkillIds(character, skills),
+                      ])
+                    : null)
                 return (
                   <SkillRow
                     key={row.rowId}
@@ -199,6 +208,7 @@ export function SkillList({
                       )
                     }
                     percentDetail={percentDetail}
+                    overlapNote={overlapNote}
                     description={resolveSkillCatalogDescription(
                       descriptionSource,
                     )}
@@ -226,6 +236,7 @@ function SkillRow({
   open,
   onToggle,
   percentDetail,
+  overlapNote,
   description,
 }: {
   rowId: string
@@ -240,6 +251,7 @@ function SkillRow({
   open: boolean
   onToggle: () => void
   percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
+  overlapNote: string | null
   description: ReturnType<typeof resolveSkillCatalogDescription>
 }) {
   const catalog = getPalladiumSkillCatalogEntryById(
@@ -334,6 +346,14 @@ function SkillRow({
           onClick={onToggle}
         >
           <span>{displayName}</span>
+          {overlapNote ? (
+            <span
+              className="mt-1 block text-xs font-normal leading-snug"
+              style={{ color: muted }}
+            >
+              {overlapNote}
+            </span>
+          ) : null}
           {impossible ? (
             <span
               className="ml-2 text-xs font-semibold uppercase tracking-wide"

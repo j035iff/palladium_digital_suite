@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://megaverse-companion.local/schemas/palladium-skill-global-rules.schema.json",
+  "title": "Global skill combination rules",
+  "description": "How similar skills combine on one character. Catalog rows stay separate. See skills/utils/skill_global_rules.json and docs/skill_selection.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["similarSkillGroups"],
+  "properties": {
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "similarSkillGroups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/similarSkillGroup"
+      }
+    }
+  },
+  "$defs": {
+    "similarSkillGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "skillIds",
+        "stackPhysicalBonuses",
+        "duplicateAbilities",
+        "bundledSkills",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "skillIds": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^skill_[a-z][a-z0-9_]*$"
+          },
+          "description": "Catalog skill ids that share this combination rule."
+        },
+        "stackPhysicalBonuses": {
+          "type": "boolean",
+          "description": "When true and more than one skill in skillIds is selected, add every physicalSkillBonuses entry. Do not average or take the best plus."
+        },
+        "duplicateAbilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["resolution", "educationalBonus"],
+          "properties": {
+            "resolution": {
+              "type": "string",
+              "const": "best",
+              "description": "Shared named percentile abilities (matched by normalized name across subTasks and subSkills) use the highest proficiency at the current character level. They are not summed."
+            },
+            "educationalBonus": {
+              "type": "string",
+              "const": "once",
+              "description": "The I.Q. educational bonus is applied once to the best proficiency, not once per copy."
+            }
+          }
+        },
+        "bundledSkills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["skillId", "increasesWithLevelOnlyIfSelected"],
+            "properties": {
+              "skillId": {
+                "type": "string",
+                "pattern": "^skill_[a-z][a-z0-9_]*$"
+              },
+              "increasesWithLevelOnlyIfSelected": {
+                "type": "boolean",
+                "description": "When true, a grant of this skill from the group does not gain percent-per-level. Growth uses the skill's own ladder only after the character selects it as its own skill."
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

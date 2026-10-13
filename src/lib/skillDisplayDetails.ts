@@ -6,6 +6,8 @@ export type SkillSubPercentLine = {
   name: string
   basePercent: number
   perLevel: number
+  /** Set when a similar skill duplicates this ability. */
+  overlapNote?: string | null
 }
 
 export type SkillCatalogDisplayDetails = {
