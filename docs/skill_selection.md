@@ -78,3 +78,4 @@ Abilities that exist on only one of the two skills (tightrope, parallel bars and
 - **Language & Literacy** — Language and Literacy rows pin to a top Familiar Surface section labeled **Language & Literacy** (creation library still browses them under Technical).
 - **Weapon proficiencies** — name only on the closed skill box (no % and no bonus/summary text).
 - **Hand-to-Hand** — not on the Skills overlay at all (no top control, no category rows). Styles are managed in Combat Unarmed.
+- **% tooltip OCC/RCC** — base package skills show `[OCC: N]` / `[RCC: N]`; Related picks show `[OCC Related: N]` / `[RCC Related: N]` (creation related / related-voucher tier; R.C.C. via race composition).

@@ -17,6 +17,7 @@ import {
   LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
   occSkillLevelBonusPercent,
+  resolveLiveSkillOccPackageLabel,
   resolveLiveSkillPercent,
   resolveLiveSkillRollTarget,
   resolveLiveSkillTemporaryPercentLines,
@@ -165,6 +166,93 @@ describe('buildLiveSkillPercentDetail', () => {
     restricted: false,
     basePercent: 40,
   }
+
+  it('labels base OCC vs Related OCC portions in the tooltip', () => {
+    const intel: SheetSkill = {
+      id: 'skill_intelligence',
+      catalogSkillId: 'skill_intelligence',
+      name: 'Intelligence',
+      restricted: false,
+      basePercent: 32,
+    }
+    const electronics: SheetSkill = {
+      id: 'skill_basic_electronics',
+      catalogSkillId: 'skill_basic_electronics',
+      name: 'Basic Electronics',
+      restricted: false,
+      basePercent: 30,
+    }
+    const character = {
+      ...characterFixture,
+      creationRelatedSkillPicks: [
+        {
+          instanceId: 'skill_basic_electronics',
+          skillId: 'skill_basic_electronics',
+        },
+      ],
+    }
+    const core = buildLiveSkillPercentDetail({
+      character,
+      activeForm: 'primary',
+      skill: intel,
+      ownedSkills: [intel, electronics],
+      characterLevel: 1,
+    })
+    const related = buildLiveSkillPercentDetail({
+      character,
+      activeForm: 'primary',
+      skill: electronics,
+      ownedSkills: [intel, electronics],
+      characterLevel: 1,
+    })
+    expect(core.breakdownLines.find((l) => l.group === 'occ')).toMatchObject({
+      label: 'OCC',
+      value: 15,
+      tone: 'bonus',
+    })
+    expect(related.breakdownLines.find((l) => l.group === 'occ')).toMatchObject(
+      {
+        label: 'OCC Related',
+        value: 5,
+        tone: 'bonus',
+      },
+    )
+    expect(related.tooltipEquation).toContain('[OCC Related: 5]')
+  })
+
+  it('uses RCC / RCC Related labels for R.C.C. builds', () => {
+    const electronics: SheetSkill = {
+      id: 'skill_basic_electronics',
+      catalogSkillId: 'skill_basic_electronics',
+      name: 'Basic Electronics',
+      restricted: false,
+      basePercent: 30,
+    }
+    const rccCharacter = {
+      ...characterFixture,
+      raceId: 'race_wild_vampire',
+      hostGenreId: 'nightbane',
+      creationRelatedSkillPicks: [
+        {
+          instanceId: 'skill_basic_electronics',
+          skillId: 'skill_basic_electronics',
+        },
+      ],
+    }
+    expect(resolveLiveSkillOccPackageLabel(rccCharacter)).toBe('RCC')
+    const detail = buildLiveSkillPercentDetail({
+      character: rccCharacter,
+      activeForm: 'primary',
+      skill: electronics,
+      ownedSkills: [electronics],
+      characterLevel: 1,
+    })
+    expect(detail.breakdownLines.find((l) => l.group === 'occ')).toMatchObject({
+      label: 'RCC Related',
+      value: 5,
+      tone: 'bonus',
+    })
+  })
 
   it('orders non-zero portions Base → IQ → OCC → Synergies → Other → Level → Temporary', () => {
     const detail = buildLiveSkillPercentDetail({

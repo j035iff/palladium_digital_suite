@@ -4,7 +4,7 @@ import type {
   MorphusSurfaceType,
   SheetSkill,
 } from '../types'
-import { getLibraryOccById } from '../data/library/registry'
+import { getLibraryOccById, getRaceById } from '../data/library/registry'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
@@ -24,6 +24,11 @@ import {
   resolveCreationPsychicTier,
   resolveOccSkillBonusPercent,
 } from './creationPsychicSkills'
+import { isRccRace } from './raceComposition'
+import {
+  flattenRelatedVoucherPicks,
+  listOccRelatedVoucherTasks,
+} from './occRelatedSkillVouchers'
 import { aggregateAllPassiveModifiers } from './featureEngine'
 import {
   buildDisplayAttributesForLiveEngine,
@@ -137,7 +142,7 @@ export type LiveSkillRollTarget = {
 
 /**
  * Joe portion buckets — tooltip order is
- * Base → IQ → OCC → Synergies → Other → Level → Temporary.
+ * Base → IQ → OCC/Related → Synergies → Other → Level → Temporary.
  */
 export type LiveSkillPercentPortionGroup =
   | 'base'
@@ -147,6 +152,14 @@ export type LiveSkillPercentPortionGroup =
   | 'other'
   | 'level'
   | 'temporary'
+
+/** Familiar Surface OCC/RCC package stem for % tooltip labels. */
+export type LiveSkillOccPackageLabel = 'OCC' | 'RCC'
+
+/** Tooltip label for the OCC/RCC % portion (base vs Related). */
+export type LiveSkillOccBonusTooltipLabel =
+  | LiveSkillOccPackageLabel
+  | `${LiveSkillOccPackageLabel} Related`
 
 export type LiveSkillTemporaryPercentLine = {
   label: string
@@ -287,23 +300,77 @@ export function collectLiveOwnedSkillIds(
 }
 
 /**
- * O.C.C. % bonus for a live sheet skill — same resolvers as spawn handoff
- * (`resolveOccSkillBonusPercent` / voucher core). Returns 0 when unknown.
+ * Familiar Surface package label: R.C.C. builds use RCC; otherwise OCC.
+ * Uses race composition (`isRccRace`) — not invented book text.
  */
-export function resolveLiveSkillOccBonusPercent(
+export function resolveLiveSkillOccPackageLabel(character: {
+  raceId?: string
+  hostGenreId?: string
+}): LiveSkillOccPackageLabel {
+  const race = character.raceId
+    ? getRaceById(character.raceId, character.hostGenreId)
+    : undefined
+  return isRccRace(race) ? 'RCC' : 'OCC'
+}
+
+/**
+ * Whether a catalog skill was taken as Related (related picks / related vouchers).
+ * Base O.C.C./R.C.C. core and core vouchers are not Related.
+ */
+export function isLiveSkillRelatedPick(
   character: Character,
   skillId: string,
-): number {
+): boolean {
+  const related = getCreationRelatedPicks(character)
+  if (flattenCreationSkillIds(related).includes(skillId)) return true
   const occ = getLibraryOccById(character.occ.id) ?? undefined
-  if (!occ) return 0
+  if (!occ) return false
+  const voucherPicks = flattenRelatedVoucherPicks(
+    listOccRelatedVoucherTasks(occ, character.occSpecializationId),
+    character.creationOccRelatedVoucherPicks,
+  )
+  return flattenCreationSkillIds(voucherPicks).includes(skillId)
+}
+
+export type LiveSkillOccBonusPortion = {
+  bonus: number
+  /** Tooltip label when {@link bonus} ≠ 0 — e.g. `OCC Related`, `RCC`. */
+  label: LiveSkillOccBonusTooltipLabel
+  isRelated: boolean
+}
+
+/**
+ * O.C.C./R.C.C. % bonus for a live sheet skill — same resolvers as spawn handoff
+ * (`resolveOccSkillBonusPercent` / voucher core). Labels distinguish base package
+ * skills from Related picks (Joe 2026-10-13).
+ */
+export function resolveLiveSkillOccBonusPortion(
+  character: Character,
+  skillId: string,
+): LiveSkillOccBonusPortion {
+  const packageLabel = resolveLiveSkillOccPackageLabel(character)
+  const occ = getLibraryOccById(character.occ.id) ?? undefined
+  if (!occ) {
+    return { bonus: 0, label: packageLabel, isRelated: false }
+  }
   const related = getCreationRelatedPicks(character)
   const secondary = getCreationSecondaryPicks(character)
-  const relatedIds = new Set(flattenCreationSkillIds(related))
+  const relatedVoucherPicks = flattenRelatedVoucherPicks(
+    listOccRelatedVoucherTasks(occ, character.occSpecializationId),
+    character.creationOccRelatedVoucherPicks,
+  )
+  const relatedIds = new Set([
+    ...flattenCreationSkillIds(related),
+    ...flattenCreationSkillIds(relatedVoucherPicks),
+  ])
   const selected = creationSkillIdsSet(
     character.creationOccSkillIds ?? [],
     related,
     secondary,
   )
+  for (const id of flattenCreationSkillIds(relatedVoucherPicks)) {
+    selected.add(id)
+  }
   const psychicTier = resolveCreationPsychicTier(character)
   const isRelated = relatedIds.has(skillId)
   const relatedForBonus = isRelated
@@ -315,6 +382,7 @@ export function resolveLiveSkillOccBonusPercent(
     relatedForBonus,
     psychicTier,
     character.occSpecializationId,
+    character.creationOccRelatedVoucherPicks,
   )
   if (
     occBonus === 0 &&
@@ -337,12 +405,26 @@ export function resolveLiveSkillOccBonusPercent(
       psychicTier,
     )
   }
-  return occBonus
+  const label: LiveSkillOccBonusTooltipLabel = isRelated
+    ? `${packageLabel} Related`
+    : packageLabel
+  return { bonus: occBonus, label, isRelated }
+}
+
+/**
+ * O.C.C. % bonus for a live sheet skill — same resolvers as spawn handoff
+ * (`resolveOccSkillBonusPercent` / voucher core). Returns 0 when unknown.
+ */
+export function resolveLiveSkillOccBonusPercent(
+  character: Character,
+  skillId: string,
+): number {
+  return resolveLiveSkillOccBonusPortion(character, skillId).bonus
 }
 
 /**
  * List % + hover-tooltip breakdown for a percentile skill on the live Skills overlay.
- * Portion order (non-zero only): Base → IQ → OCC → Synergies → Other → Level → Temporary.
+ * Portion order (non-zero only): Base → IQ → OCC/Related → Synergies → Other → Level → Temporary.
  */
 export function buildLiveSkillPercentDetail(opts: {
   character: Character
@@ -431,7 +513,8 @@ export function buildLiveSkillPercentDetail(opts: {
       )
   }
   const iqBonus = resolveLiveIqSkillBonus(character, activeForm)
-  const occBonus = resolveLiveSkillOccBonusPercent(character, catalogId)
+  const occPortion = resolveLiveSkillOccBonusPortion(character, catalogId)
+  const occBonus = occPortion.bonus
   const ownedIds = collectLiveOwnedSkillIds(character, ownedSkills)
   const synergyLines = def
     ? resolveActiveSynergyBonusLines(def, ownedIds, creationPicks, skillPick)
@@ -470,7 +553,7 @@ export function buildLiveSkillPercentDetail(opts: {
   const breakdownLines: LiveSkillPercentBreakdownLine[] = []
   pushPortion(breakdownLines, 'base', 'Base', bookBase)
   pushPortion(breakdownLines, 'iq', 'IQ', iqBonus)
-  pushPortion(breakdownLines, 'occ', 'OCC', occBonus)
+  pushPortion(breakdownLines, 'occ', occPortion.label, occBonus)
   for (const line of synergyLines) {
     pushPortion(breakdownLines, 'synergy', line.label, line.value)
   }
