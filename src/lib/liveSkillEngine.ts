@@ -65,13 +65,40 @@ export type LiveSkillSubPercentTrack = {
   description?: string
 }
 
-/** One Skills-list row (parent, `Parent (Sub)`, or stats-only Physical). */
+/** One Skills-list row (parent box, nested sub, or stats-only Physical). */
 export type LiveSkillListRow = {
   rowId: string
   skill: SheetSkill
+  /** Search / aria name — parent name, or `Parent (Sub)` for nested rows. */
   displayName: string
+  /**
+   * Nested sub-% rows rendered inside the same parent box
+   * (Joe mockup — indented `⇨ (Sub name)`).
+   */
+  subRows?: LiveSkillListRow[]
+  /**
+   * Nested-line label e.g. `(Back flip)` — Familiar Surface; mock arrow
+   * is UI-only.
+   */
+  nestedLabel?: string
   /** When set, list % / tooltip use this sub-track’s base and %/level. */
   subPercentTrack?: LiveSkillSubPercentTrack
+}
+
+/** Flatten parent + nested sub rows (search, overlap winner lookup). */
+export function flattenLiveSkillListRows(
+  rows: readonly LiveSkillListRow[],
+): LiveSkillListRow[] {
+  const out: LiveSkillListRow[] = []
+  for (const row of rows) {
+    out.push(row)
+    if (row.subRows?.length) out.push(...row.subRows)
+  }
+  return out
+}
+
+export function formatLiveSkillNestedSubLabel(subName: string): string {
+  return `(${subName})`
 }
 
 export type LiveSkillSection = {
@@ -698,11 +725,15 @@ export function formatLiveSkillSubRowDisplayName(
   return `${parentName} (${subName})`
 }
 
-function makeParentListRow(skill: SheetSkill): LiveSkillListRow {
+function makeParentListRow(
+  skill: SheetSkill,
+  subRows?: LiveSkillListRow[],
+): LiveSkillListRow {
   return {
     rowId: skill.id,
     skill,
     displayName: skill.name,
+    ...(subRows?.length ? { subRows } : {}),
   }
 }
 
@@ -714,6 +745,7 @@ function makeSubListRow(
     rowId: `${skill.id}::${track.trackKey}`,
     skill,
     displayName: formatLiveSkillSubRowDisplayName(skill.name, track.name),
+    nestedLabel: formatLiveSkillNestedSubLabel(track.name),
     subPercentTrack: track,
   }
 }
@@ -721,7 +753,7 @@ function makeSubListRow(
 /**
  * Live Skills tab sections: book categories in creation filter order, with
  * stats-only physical training pinned at the bottom.
- * Sub-% tracks (`subTasks` / `subSkills`) expand to `Parent (Sub)` rows.
+ * Sub-% tracks (`subTasks` / `subSkills`) nest under one parent box.
  * Dual-nature skills (sub-% + physical bonuses) also appear in bottom Physical.
  * Hand-to-Hand styles are omitted (dedicated H2H control at top of Skills).
  */
@@ -730,6 +762,11 @@ export function buildLiveSkillSections(
 ): LiveSkillSection[] {
   const byCategory = new Map<string, LiveSkillListRow[]>()
   const statsOnly: LiveSkillListRow[] = []
+
+  const sortByName = (a: LiveSkillListRow, b: LiveSkillListRow) =>
+    a.displayName.localeCompare(b.displayName, undefined, {
+      sensitivity: 'base',
+    })
 
   for (const skill of skills) {
     if (isHandToHandSheetSkill(skill)) continue
@@ -752,26 +789,23 @@ export function buildLiveSkillSections(
 
     const label = primaryBookCategory(catalogId)
     const bucket = byCategory.get(label) ?? []
-    const hasRoot = hasLiveSkillRootScalarPercent(catalog, catalogId)
 
     if (subTracks.length > 0) {
-      if (hasRoot) {
-        bucket.push(makeParentListRow(skill))
-      }
-      for (const track of subTracks) {
-        bucket.push(makeSubListRow(skill, track))
-      }
+      const nested = subTracks.map((track) => makeSubListRow(skill, track)).sort(
+        (a, b) =>
+          (a.nestedLabel ?? a.displayName).localeCompare(
+            b.nestedLabel ?? b.displayName,
+            undefined,
+            { sensitivity: 'base' },
+          ),
+      )
+      bucket.push(makeParentListRow(skill, nested))
     } else if (!pureStatsOnly) {
       bucket.push(makeParentListRow(skill))
     }
 
     if (bucket.length > 0) byCategory.set(label, bucket)
   }
-
-  const sortByName = (a: LiveSkillListRow, b: LiveSkillListRow) =>
-    a.displayName.localeCompare(b.displayName, undefined, {
-      sensitivity: 'base',
-    })
 
   const sections: LiveSkillSection[] = [...byCategory.entries()]
     .map(([label, rows]) => ({
@@ -827,8 +861,20 @@ export function listLiveSkillFilterCategoryOptions(
   return options
 }
 
+function liveSkillRowMatchesQuery(
+  row: LiveSkillListRow,
+  query: string,
+): boolean {
+  if (row.displayName.toLowerCase().includes(query)) return true
+  if (row.nestedLabel?.toLowerCase().includes(query)) return true
+  return Boolean(
+    row.subRows?.some((sub) => liveSkillRowMatchesQuery(sub, query)),
+  )
+}
+
 /**
  * Filter live Skills sections by category label and/or name query (AND when both set).
+ * Name search matches parent or nested `Parent (Sub)` / `(Sub)` labels.
  * Empty sections are dropped; H2H is already excluded from {@link buildLiveSkillSections}.
  */
 export function filterLiveSkillSections(
@@ -846,10 +892,25 @@ export function filterLiveSkillSections(
     )
     .map((section) => {
       if (!query) return section
-      const rows = section.rows.filter((row) =>
-        row.displayName.toLowerCase().includes(query),
-      )
-      if (rows.length === section.rows.length) return section
+      const rows = section.rows
+        .filter((row) => liveSkillRowMatchesQuery(row, query))
+        .map((row) => {
+          if (!row.subRows?.length) return row
+          if (row.displayName.toLowerCase().includes(query)) return row
+          const subRows = row.subRows.filter((sub) =>
+            liveSkillRowMatchesQuery(sub, query),
+          )
+          return { ...row, subRows }
+        })
+      if (
+        rows.length === section.rows.length &&
+        rows.every(
+          (row, i) =>
+            row.subRows?.length === section.rows[i]?.subRows?.length,
+        )
+      ) {
+        return section
+      }
       return { ...section, rows }
     })
     .filter((section) => section.rows.length > 0)

@@ -1,16 +1,26 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react'
 import { useCharacter } from '../context/CharacterContext'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
-import { getSkillById } from '../data/skillLibrary'
 import {
   buildLiveSkillPercentDetail,
   buildLiveSkillSections,
   collectLiveOwnedSkillIds,
   filterLiveSkillSections,
+  flattenLiveSkillListRows,
+  hasLiveSkillRootScalarPercent,
   isWeaponProficiencySheetSkill,
   listLiveSkillFilterCategoryOptions,
   LIVE_SKILL_FILTER_ALL_CATEGORIES,
   resolveSheetSkillCatalogId,
+  type LiveSkillListRow,
   type LiveSkillPercentBreakdownLine,
 } from '../lib/liveSkillEngine'
 import {
@@ -27,7 +37,6 @@ import { clampOverlayTooltipPosition } from '../lib/overlayTooltipPosition'
 import {
   formatPhysicalSkillBonusSummary,
   resolveSkillCatalogDescription,
-  resolveSkillCatalogDisplayDetails,
 } from '../lib/skillDisplayDetails'
 import type { SheetSkill } from '../types'
 
@@ -41,11 +50,12 @@ export type SkillListProps = {
  * Pillar 8 — Radical Visibility (docs/vision.md): restricted options stay visible,
  * grayed out, with explicit rationale (gating per docs/skill_selection.md).
  * Percentile skills: list shows %; hover % → source breakdown tooltip; click → description.
- * Sub-% tracks expand to `Parent (Sub)` rows; dual-nature physical parents also
- * appear in bottom Physical with bonus summary.
- * Acrobatics/Gymnastics overlap: best sub-% wins; loser shows See {Other};
- * grant-only Climb/Prowl note (does not increase per level).
- * Stats-only Physical / W.P.: no self % — bonus summary instead.
+ * Sub-% tracks nest under the parent in one skill box (`⇨ (Sub name)`).
+ * Dual-nature physical parents also appear in bottom Physical with bonus summary.
+ * Acrobatics/Gymnastics overlap: best sub-% wins; loser shows a black dash
+ * with hover tooltip “See {Other}”; grant-only Climb/Prowl note is a tooltip on %.
+ * Stats-only Physical: no self % — bonus summary on the closed row.
+ * Weapon proficiencies: name only (no %, no bonus/summary text in the box).
  * Category dropdown + name search (AND when both set).
  */
 export function SkillList({
@@ -88,7 +98,7 @@ export function SkillList({
   ): string | undefined => {
     const key = normalizeAbilityName(abilityName)
     for (const section of allSections) {
-      for (const row of section.rows) {
+      for (const row of flattenLiveSkillListRows(section.rows)) {
         if (!row.subPercentTrack) continue
         if (resolveSheetSkillCatalogId(row.skill) !== winnerSkillId) continue
         if (normalizeAbilityName(row.subPercentTrack.name) !== key) continue
@@ -203,94 +213,23 @@ export function SkillList({
               {section.label}
             </h3>
             <ul className="space-y-2" role="list">
-              {section.rows.map((row) => {
-                const { skill, displayName, subPercentTrack } = row
-                const catalogId = resolveSheetSkillCatalogId(skill)
-                const catalog = getPalladiumSkillCatalogEntryById(catalogId)
-                const weaponProficiency = isWeaponProficiencySheetSkill(skill)
-                const def = getSkillById(catalogId)
-                const weaponBonusSummary =
-                  weaponProficiency && def
-                    ? resolveSkillCatalogDisplayDetails(def, characterLevel)
-                        .weaponBonusSummary
-                    : null
-                const seeOtherRaw =
-                  subPercentTrack && !section.statsOnlyPhysical
-                    ? resolveDuplicateAbilitySeeOther(
-                        catalogId,
-                        subPercentTrack.name,
-                        ownedCatalogIds,
-                        characterLevel,
-                      )
-                    : null
-                const seeOtherParent = seeOtherRaw
-                  ? {
-                      skillId: seeOtherRaw.winnerSkillId,
-                      displayName: seeOtherRaw.winnerSkillName,
-                      winnerRowId:
-                        findWinnerRowId(
-                          seeOtherRaw.winnerSkillId,
-                          subPercentTrack!.name,
-                        ) ?? row.rowId,
-                    }
-                  : undefined
-                const providedByNote =
-                  !section.statsOnlyPhysical && !weaponProficiency
-                    ? resolveProvidedByNote(catalogId)
-                    : null
-                const percentDetail =
-                  !section.statsOnlyPhysical &&
-                  !weaponProficiency &&
-                  !skill.restricted &&
-                  !seeOtherParent
-                    ? buildLiveSkillPercentDetail({
-                        character,
-                        activeForm,
-                        skill,
-                        ownedSkills: skills,
-                        characterLevel,
-                        morphusSurfaceType,
-                        subPercentTrack,
-                      })
-                    : null
-                const descriptionSource =
-                  subPercentTrack?.description ?? catalog?.description
-                const overlapNote =
-                  section.statsOnlyPhysical
-                    ? similarSkillGroupPlayerNote(catalogId, ownedCatalogIds)
-                    : null
-                return (
-                  <SkillRow
-                    key={row.rowId}
-                    rowId={row.rowId}
-                    skill={skill}
-                    displayName={displayName}
-                    statsOnlyPhysical={Boolean(section.statsOnlyPhysical)}
-                    weaponProficiency={weaponProficiency}
-                    weaponBonusSummary={weaponBonusSummary}
-                    seeOtherParent={seeOtherParent}
-                    providedByNote={providedByNote}
-                    morphusActive={morphusActive}
-                    muted={muted}
-                    text={text}
-                    open={openRowId === row.rowId}
-                    onToggle={() =>
-                      setOpenRowId((id) =>
-                        id === row.rowId ? null : row.rowId,
-                      )
-                    }
-                    onSeeOther={() => {
-                      if (!seeOtherParent) return
-                      setOpenRowId(seeOtherParent.winnerRowId)
-                    }}
-                    percentDetail={percentDetail}
-                    overlapNote={overlapNote}
-                    description={resolveSkillCatalogDescription(
-                      descriptionSource,
-                    )}
-                  />
-                )
-              })}
+              {section.rows.map((row) => (
+                <SkillBox
+                  key={row.rowId}
+                  row={row}
+                  statsOnlyPhysical={Boolean(section.statsOnlyPhysical)}
+                  skills={skills}
+                  characterLevel={characterLevel}
+                  ownedCatalogIds={ownedCatalogIds}
+                  morphusActive={morphusActive}
+                  muted={muted}
+                  text={text}
+                  openRowId={openRowId}
+                  setOpenRowId={setOpenRowId}
+                  findWinnerRowId={findWinnerRowId}
+                  resolveProvidedByNote={resolveProvidedByNote}
+                />
+              ))}
             </ul>
           </section>
         ))
@@ -299,63 +238,111 @@ export function SkillList({
   )
 }
 
-function SkillRow({
-  rowId,
-  skill,
-  displayName,
+type SeeOtherRef = {
+  skillId: string
+  displayName: string
+  winnerRowId: string
+}
+
+function SkillBox({
+  row,
   statsOnlyPhysical,
-  weaponProficiency,
-  weaponBonusSummary,
-  seeOtherParent,
-  providedByNote,
+  skills,
+  characterLevel,
+  ownedCatalogIds,
   morphusActive,
   muted,
   text,
-  open,
-  onToggle,
-  onSeeOther,
-  percentDetail,
-  overlapNote,
-  description,
+  openRowId,
+  setOpenRowId,
+  findWinnerRowId,
+  resolveProvidedByNote,
 }: {
-  rowId: string
-  skill: SheetSkill
-  displayName: string
+  row: LiveSkillListRow
   statsOnlyPhysical: boolean
-  weaponProficiency: boolean
-  weaponBonusSummary: string | null
-  seeOtherParent?: {
-    skillId: string
-    displayName: string
-    winnerRowId: string
-  }
-  providedByNote?: string | null
+  skills: SheetSkill[]
+  characterLevel: number
+  ownedCatalogIds: readonly string[]
   morphusActive: boolean
   muted: string
   text: string
-  open: boolean
-  onToggle: () => void
-  onSeeOther: () => void
-  percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
-  overlapNote: string | null
-  description: ReturnType<typeof resolveSkillCatalogDescription>
+  openRowId: string | null
+  setOpenRowId: Dispatch<SetStateAction<string | null>>
+  findWinnerRowId: (
+    winnerSkillId: string,
+    abilityName: string,
+  ) => string | undefined
+  resolveProvidedByNote: (catalogId: string) => string | null
 }) {
-  const catalog = getPalladiumSkillCatalogEntryById(
-    resolveSheetSkillCatalogId(skill),
-  )
+  const { character, activeForm, morphusSurfaceType } = useCharacter()
+  const { skill, displayName, subRows } = row
+  const catalogId = resolveSheetSkillCatalogId(skill)
+  const catalog = getPalladiumSkillCatalogEntryById(catalogId)
+  const weaponProficiency = isWeaponProficiencySheetSkill(skill)
   const bonusSummary = statsOnlyPhysical
     ? formatPhysicalSkillBonusSummary(
         (catalog as { physicalSkillBonuses?: Record<string, unknown> } | undefined)
           ?.physicalSkillBonuses,
       )
     : null
-  const closedSummary = statsOnlyPhysical
-    ? bonusSummary
-    : weaponProficiency
-      ? weaponBonusSummary
+  /** Stats-only Physical keeps bonus summary; W.P. boxes are name-only (Joe). */
+  const closedSummary = statsOnlyPhysical ? bonusSummary : null
+  const overlapNote = statsOnlyPhysical
+    ? similarSkillGroupPlayerNote(catalogId, ownedCatalogIds)
+    : null
+  const providedByNote =
+    !statsOnlyPhysical && !weaponProficiency
+      ? resolveProvidedByNote(catalogId)
       : null
-  const nonPercentile = statsOnlyPhysical || weaponProficiency
-  const detailId = `${rowId}-detail`
+  const parentShowsPercent =
+    !statsOnlyPhysical &&
+    !weaponProficiency &&
+    !skill.restricted &&
+    (!subRows?.length || hasLiveSkillRootScalarPercent(catalog, catalogId))
+
+  const resolveLine = (lineRow: LiveSkillListRow) => {
+    const track = lineRow.subPercentTrack
+    const seeOtherRaw =
+      track && !statsOnlyPhysical
+        ? resolveDuplicateAbilitySeeOther(
+            catalogId,
+            track.name,
+            ownedCatalogIds,
+            characterLevel,
+          )
+        : null
+    const seeOtherParent: SeeOtherRef | undefined = seeOtherRaw
+      ? {
+          skillId: seeOtherRaw.winnerSkillId,
+          displayName: seeOtherRaw.winnerSkillName,
+          winnerRowId:
+            findWinnerRowId(seeOtherRaw.winnerSkillId, track!.name) ??
+            lineRow.rowId,
+        }
+      : undefined
+    const showPercent =
+      lineRow === row ? parentShowsPercent : Boolean(track)
+    const percentDetail =
+      showPercent &&
+      !weaponProficiency &&
+      !skill.restricted &&
+      !seeOtherParent &&
+      !statsOnlyPhysical
+        ? buildLiveSkillPercentDetail({
+            character,
+            activeForm,
+            skill,
+            ownedSkills: skills,
+            characterLevel,
+            morphusSurfaceType,
+            subPercentTrack: track,
+          })
+        : null
+    const description = resolveSkillCatalogDescription(
+      track?.description ?? catalog?.description,
+    )
+    return { seeOtherParent, percentDetail, description }
+  }
 
   if (skill.restricted) {
     return (
@@ -371,7 +358,7 @@ function SkillRow({
           }}
           role="group"
           aria-label={`Restricted skill: ${displayName}`}
-          aria-describedby={`${rowId}-why`}
+          aria-describedby={`${row.rowId}-why`}
           title={
             skill.restrictionReason
               ? `${skill.restrictionReason} (skill_selection.md: AND/OR gates, O.C.C. tags, secondary rules.)`
@@ -394,7 +381,7 @@ function SkillRow({
           <p
             className="mt-1 text-xs leading-snug"
             style={{ color: morphusActive ? '#94a3b8' : '#64748b' }}
-            id={`${rowId}-why`}
+            id={`${row.rowId}-why`}
           >
             {skill.restrictionReason ??
               'Gated by the dependency engine (prerequisites, O.C.C. tags, or synergy rules).'}
@@ -404,98 +391,166 @@ function SkillRow({
     )
   }
 
-  const impossible = Boolean(percentDetail?.impossibleInMorphus)
-  const listPercent =
-    !nonPercentile && !impossible && !seeOtherParent
-      ? percentDetail?.listPercent ?? null
-      : null
+  const parentResolved = resolveLine(row)
   const detailPanelStyle = {
     borderColor: morphusActive ? '#a78bfa' : '#3b82f6',
     backgroundColor: morphusActive ? '#1e1b4b' : '#f8fafc',
     color: morphusActive ? '#ede9fe' : '#0f172a',
   } as const
+  const openLine =
+    openRowId == null
+      ? null
+      : openRowId === row.rowId
+        ? row
+        : (subRows ?? []).find((sub) => sub.rowId === openRowId) ?? null
+  const openResolved = openLine ? resolveLine(openLine) : null
+
+  const toggle = (id: string) =>
+    setOpenRowId((cur) => (cur === id ? null : id))
 
   return (
     <li className="relative">
       <div
-        className="flex w-full items-stretch gap-0 rounded-md border transition-[box-shadow,transform] duration-150"
+        className="overflow-hidden rounded-md border transition-[box-shadow,transform] duration-150"
         style={{
           borderColor: morphusActive ? '#5b21b6' : '#93c5fd',
           backgroundColor: morphusActive ? '#312e81' : '#ffffff',
           color: text,
         }}
       >
-        <button
-          type="button"
-          className="min-w-0 flex-1 rounded-l-md px-3 py-2 text-left font-medium hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-          style={{ outlineColor: morphusActive ? '#c4b5fd' : '#2563eb' }}
-          aria-expanded={open}
-          aria-controls={detailId}
-          onClick={onToggle}
+        <SkillLine
+          rowId={row.rowId}
+          label={displayName}
+          nested={false}
+          morphusActive={morphusActive}
+          muted={muted}
+          open={openRowId === row.rowId}
+          onToggle={() => toggle(row.rowId)}
+          seeOtherParent={undefined}
+          onSeeOther={() => undefined}
+          percentDetail={parentResolved.percentDetail}
+          closedSummary={closedSummary}
+          overlapNote={overlapNote}
+          impossible={Boolean(parentResolved.percentDetail?.impossibleInMorphus)}
+          providedByTooltip={
+            parentShowsPercent ? providedByNote : null
+          }
+          roundedTop
+          roundedBottom={!subRows?.length}
+        />
+        {(subRows ?? []).map((sub, index) => {
+          const resolved = resolveLine(sub)
+          return (
+            <SkillLine
+              key={sub.rowId}
+              rowId={sub.rowId}
+              label={sub.nestedLabel ?? sub.displayName}
+              nested
+              morphusActive={morphusActive}
+              muted={muted}
+              open={openRowId === sub.rowId}
+              onToggle={() => toggle(sub.rowId)}
+              seeOtherParent={resolved.seeOtherParent}
+              onSeeOther={() => {
+                if (!resolved.seeOtherParent) return
+                setOpenRowId(resolved.seeOtherParent.winnerRowId)
+              }}
+              percentDetail={resolved.percentDetail}
+              closedSummary={null}
+              overlapNote={null}
+              impossible={Boolean(resolved.percentDetail?.impossibleInMorphus)}
+              providedByTooltip={null}
+              roundedTop={false}
+              roundedBottom={index === (subRows?.length ?? 0) - 1}
+            />
+          )
+        })}
+      </div>
+      {openLine && openResolved && statsOnlyPhysical ? (
+        <div
+          id={`${openLine.rowId}-detail`}
+          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
+          style={detailPanelStyle}
         >
-          <span>{displayName}</span>
-          {overlapNote ? (
-            <span
-              className="mt-1 block text-xs font-normal leading-snug"
-              style={{ color: muted }}
-            >
-              {overlapNote}
-            </span>
-          ) : null}
-          {impossible ? (
-            <span
-              className="ml-2 text-xs font-semibold uppercase tracking-wide"
-              style={{ color: morphusActive ? '#fca5a5' : '#b91c1c' }}
-            >
-              Impossible
-            </span>
-          ) : null}
-          {closedSummary && !open ? (
-            <span
-              className="mt-1 block text-xs font-normal leading-snug"
-              style={{ color: muted }}
-            >
-              {closedSummary}
-            </span>
-          ) : null}
-          {providedByNote && !open ? (
-            <span
-              className="mt-1 block text-xs font-normal leading-snug"
-              style={{ color: muted }}
-            >
-              {providedByNote}
-            </span>
-          ) : null}
-        </button>
-        {seeOtherParent ? (
-          <button
-            type="button"
-            className={`flex shrink-0 items-center rounded-r-md px-3 py-2 text-sm font-semibold underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-              morphusActive ? 'text-sky-300' : 'text-blue-700'
-            }`}
-            style={{ outlineColor: morphusActive ? '#c4b5fd' : '#2563eb' }}
-            aria-label={`See ${seeOtherParent.displayName} for this ability`}
-            onClick={(e) => {
-              e.stopPropagation()
-              onSeeOther()
-            }}
-          >
-            See {seeOtherParent.displayName}
-          </button>
-        ) : listPercent != null && percentDetail ? (
-          <SkillPercentHover
-            skillId={rowId}
-            listPercent={listPercent}
-            listPercentTone={percentDetail.listPercentTone}
-            breakdownLines={percentDetail.breakdownLines}
-            tooltipEquation={percentDetail.tooltipEquation}
+          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
+            Physical bonuses
+          </p>
+          <p className="mt-1 text-sm font-semibold leading-snug">
+            {bonusSummary ?? 'Attribute / S.D.C. training (no skill %).'}
+          </p>
+          <p className="mt-1 text-[11px] leading-snug opacity-90">
+            No d100 roll — bonuses apply to attributes and combat stats.
+          </p>
+          <SkillDescriptionBlock
+            description={openResolved.description}
             morphusActive={morphusActive}
           />
-        ) : null}
-      </div>
-      {open && impossible ? (
+        </div>
+      ) : null}
+      {openLine && openResolved && weaponProficiency ? (
         <div
-          id={detailId}
+          id={`${openLine.rowId}-detail`}
+          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
+          style={detailPanelStyle}
+        >
+          <SkillDescriptionBlock
+            description={openResolved.description}
+            morphusActive={morphusActive}
+            bordered={false}
+          />
+        </div>
+      ) : null}
+      {openLine && openResolved?.seeOtherParent ? (
+        <div
+          id={`${openLine.rowId}-detail`}
+          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
+          style={detailPanelStyle}
+        >
+          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
+            Best proficiency
+          </p>
+          <p className="mt-1 text-sm font-semibold leading-snug">
+            Use {openResolved.seeOtherParent.displayName} for this ability
+            (educational bonus once).
+          </p>
+          <button
+            type="button"
+            className={`mt-2 text-sm font-semibold underline-offset-2 hover:underline ${
+              morphusActive ? 'text-sky-300' : 'text-blue-700'
+            }`}
+            onClick={() =>
+              setOpenRowId(openResolved.seeOtherParent!.winnerRowId)
+            }
+          >
+            See {openResolved.seeOtherParent.displayName}
+          </button>
+          <SkillDescriptionBlock
+            description={openResolved.description}
+            morphusActive={morphusActive}
+          />
+        </div>
+      ) : null}
+      {openLine &&
+      openResolved &&
+      !statsOnlyPhysical &&
+      !weaponProficiency &&
+      !openResolved.seeOtherParent &&
+      !openResolved.percentDetail?.impossibleInMorphus ? (
+        <div
+          id={`${openLine.rowId}-detail`}
+          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border-2 px-3 py-2 shadow-lg"
+          style={detailPanelStyle}
+        >
+          <SkillDescriptionBlock
+            description={openResolved.description}
+            morphusActive={morphusActive}
+            bordered={false}
+          />
+        </div>
+      ) : null}
+      {openLine && openResolved?.percentDetail?.impossibleInMorphus ? (
+        <div
+          id={`${openLine.rowId}-detail`}
           className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
           style={{
             borderColor: morphusActive ? '#f87171' : '#dc2626',
@@ -511,104 +566,129 @@ function SkillRow({
             This skill cannot be used in Morphus form.
           </p>
           <SkillDescriptionBlock
-            description={description}
-            morphusActive={morphusActive}
-            bordered={false}
-          />
-        </div>
-      ) : null}
-      {open && statsOnlyPhysical ? (
-        <div
-          id={detailId}
-          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
-          style={detailPanelStyle}
-        >
-          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
-            Physical bonuses
-          </p>
-          <p className="mt-1 text-sm font-semibold leading-snug">
-            {bonusSummary ?? 'Attribute / S.D.C. training (no skill %).'}
-          </p>
-          <p className="mt-1 text-[11px] leading-snug opacity-90">
-            No d100 roll — bonuses apply to attributes and combat stats.
-          </p>
-          <SkillDescriptionBlock
-            description={description}
-            morphusActive={morphusActive}
-          />
-        </div>
-      ) : null}
-      {open && weaponProficiency ? (
-        <div
-          id={detailId}
-          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
-          style={detailPanelStyle}
-        >
-          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
-            Weapon proficiency
-          </p>
-          <p className="mt-1 text-sm font-semibold leading-snug">
-            {weaponBonusSummary ?? 'Combat bonuses by level (no skill %).'}
-          </p>
-          <p className="mt-1 text-[11px] leading-snug opacity-90">
-            No d100 roll — W.P.s grant strike/parry (and related) bonuses.
-          </p>
-          <SkillDescriptionBlock
-            description={description}
-            morphusActive={morphusActive}
-          />
-        </div>
-      ) : null}
-      {open && seeOtherParent ? (
-        <div
-          id={detailId}
-          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
-          style={detailPanelStyle}
-        >
-          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
-            Best proficiency
-          </p>
-          <p className="mt-1 text-sm font-semibold leading-snug">
-            Use {seeOtherParent.displayName} for this ability (educational bonus
-            once).
-          </p>
-          <button
-            type="button"
-            className={`mt-2 text-sm font-semibold underline-offset-2 hover:underline ${
-              morphusActive ? 'text-sky-300' : 'text-blue-700'
-            }`}
-            onClick={onSeeOther}
-          >
-            See {seeOtherParent.displayName}
-          </button>
-          <SkillDescriptionBlock
-            description={description}
-            morphusActive={morphusActive}
-          />
-        </div>
-      ) : null}
-      {open && !nonPercentile && !impossible && !seeOtherParent ? (
-        <div
-          id={detailId}
-          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border-2 px-3 py-2 shadow-lg"
-          style={detailPanelStyle}
-        >
-          {providedByNote ? (
-            <p
-              className="mb-2 text-[11px] font-semibold leading-snug"
-              style={{ color: morphusActive ? '#c4b5fd' : '#1e40af' }}
-            >
-              {providedByNote}
-            </p>
-          ) : null}
-          <SkillDescriptionBlock
-            description={description}
+            description={openResolved.description}
             morphusActive={morphusActive}
             bordered={false}
           />
         </div>
       ) : null}
     </li>
+  )
+}
+
+function SkillLine({
+  rowId,
+  label,
+  nested,
+  morphusActive,
+  muted,
+  open,
+  onToggle,
+  seeOtherParent,
+  onSeeOther,
+  percentDetail,
+  closedSummary,
+  overlapNote,
+  impossible,
+  providedByTooltip,
+  roundedTop,
+  roundedBottom,
+}: {
+  rowId: string
+  label: string
+  nested: boolean
+  morphusActive: boolean
+  muted: string
+  open: boolean
+  onToggle: () => void
+  seeOtherParent?: SeeOtherRef
+  onSeeOther: () => void
+  percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
+  closedSummary: string | null
+  overlapNote: string | null
+  impossible: boolean
+  providedByTooltip: string | null
+  roundedTop: boolean
+  roundedBottom: boolean
+}) {
+  const listPercent =
+    !impossible && !seeOtherParent ? percentDetail?.listPercent ?? null : null
+  const roundL = nested
+    ? ''
+    : `${roundedTop ? 'rounded-tl-md ' : ''}${roundedBottom ? 'rounded-bl-md ' : ''}`
+  const roundR = `${roundedTop ? 'rounded-tr-md ' : ''}${roundedBottom ? 'rounded-br-md ' : ''}`
+
+  return (
+    <div
+      className={`flex w-full items-stretch gap-0 ${
+        nested ? (morphusActive ? 'border-t border-violet-800/60' : 'border-t border-slate-200') : ''
+      }`}
+    >
+      <button
+        type="button"
+        className={`min-w-0 flex-1 px-3 py-2 text-left font-medium hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${roundL}`}
+        style={{ outlineColor: morphusActive ? '#c4b5fd' : '#2563eb' }}
+        aria-expanded={open}
+        aria-controls={`${rowId}-detail`}
+        onClick={onToggle}
+      >
+        <span className={nested ? 'flex items-baseline gap-1.5 pl-3 text-sm font-normal' : undefined}>
+          {nested ? (
+            <>
+              <span aria-hidden="true" style={{ color: muted }}>
+                ⇨
+              </span>
+              <span>{label}</span>
+            </>
+          ) : (
+            label
+          )}
+        </span>
+        {overlapNote ? (
+          <span
+            className="mt-1 block text-xs font-normal leading-snug"
+            style={{ color: muted }}
+          >
+            {overlapNote}
+          </span>
+        ) : null}
+        {impossible ? (
+          <span
+            className="ml-2 text-xs font-semibold uppercase tracking-wide"
+            style={{ color: morphusActive ? '#fca5a5' : '#b91c1c' }}
+          >
+            Impossible
+          </span>
+        ) : null}
+        {closedSummary && !open ? (
+          <span
+            className="mt-1 block text-xs font-normal leading-snug"
+            style={{ color: muted }}
+          >
+            {closedSummary}
+          </span>
+        ) : null}
+      </button>
+      {seeOtherParent ? (
+        <SeeOtherDash
+          seeLabel={`See ${seeOtherParent.displayName}`}
+          morphusActive={morphusActive}
+          roundedClassName={roundR}
+          onActivate={onSeeOther}
+        />
+      ) : listPercent != null && percentDetail ? (
+        <SkillPercentHover
+          skillId={rowId}
+          listPercent={listPercent}
+          listPercentTone={percentDetail.listPercentTone}
+          breakdownLines={percentDetail.breakdownLines}
+          tooltipEquation={percentDetail.tooltipEquation}
+          morphusActive={morphusActive}
+          providedByNote={providedByTooltip}
+          roundedClassName={roundR}
+        />
+      ) : null}
+    </div>
   )
 }
 
@@ -643,6 +723,100 @@ function listPercentColorClass(
   return morphusActive ? 'text-sky-300' : 'text-blue-700'
 }
 
+/** Best-of loser: black dash; hover/focus tip = “See {OtherParent}”. */
+function SeeOtherDash({
+  seeLabel,
+  morphusActive,
+  roundedClassName,
+  onActivate,
+}: {
+  seeLabel: string
+  morphusActive: boolean
+  roundedClassName: string
+  onActivate: () => void
+}) {
+  const anchorRef = useRef<HTMLButtonElement>(null)
+  const tipRef = useRef<HTMLDivElement>(null)
+  const [tipOpen, setTipOpen] = useState(false)
+  const [pos, setPos] = useState<{
+    top: number
+    left: number
+    maxWidth: number
+  } | null>(null)
+
+  useLayoutEffect(() => {
+    if (!tipOpen) return
+    const anchorEl = anchorRef.current
+    const tipEl = tipRef.current
+    if (!anchorEl || !tipEl) return
+
+    const place = () => {
+      const dialog = anchorEl.closest('[role="dialog"]')
+      const bounds = dialog?.getBoundingClientRect() ?? null
+      const tipRect = tipEl.getBoundingClientRect()
+      const next = clampOverlayTooltipPosition(
+        anchorEl.getBoundingClientRect(),
+        { width: tipRect.width || 160, height: tipRect.height || 28 },
+        bounds,
+      )
+      setPos({ top: next.top, left: next.left, maxWidth: next.maxWidth })
+    }
+
+    place()
+    window.addEventListener('resize', place)
+    window.addEventListener('scroll', place, true)
+    return () => {
+      window.removeEventListener('resize', place)
+      window.removeEventListener('scroll', place, true)
+    }
+  }, [tipOpen, seeLabel])
+
+  return (
+    <>
+      <button
+        ref={anchorRef}
+        type="button"
+        className={`flex shrink-0 items-center px-3 py-2 font-mono text-base font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${roundedClassName}`}
+        style={{
+          color: morphusActive ? '#f8fafc' : '#0f172a',
+          outlineColor: morphusActive ? '#c4b5fd' : '#2563eb',
+        }}
+        aria-label={seeLabel}
+        title={seeLabel}
+        onClick={(e) => {
+          e.stopPropagation()
+          onActivate()
+        }}
+        onMouseEnter={() => setTipOpen(true)}
+        onMouseLeave={() => setTipOpen(false)}
+        onFocus={() => setTipOpen(true)}
+        onBlur={() => setTipOpen(false)}
+      >
+        —
+      </button>
+      {tipOpen ? (
+        <div
+          ref={tipRef}
+          role="tooltip"
+          className={`pointer-events-none fixed z-[60] rounded-md border-2 px-2 py-1.5 text-xs font-semibold leading-snug shadow-lg ${
+            morphusActive
+              ? 'border-indigo-600/90 bg-black/95 text-violet-50'
+              : 'border-slate-400 bg-white text-slate-900'
+          }`}
+          style={{
+            top: pos?.top ?? -9999,
+            left: pos?.left ?? -9999,
+            maxWidth: pos?.maxWidth ?? 220,
+            visibility: pos ? 'visible' : 'hidden',
+          }}
+        >
+          {seeLabel}
+        </div>
+      ) : null}
+    </>
+  )
+}
+
 function SkillPercentHover({
   skillId,
   listPercent,
@@ -650,6 +824,8 @@ function SkillPercentHover({
   breakdownLines,
   tooltipEquation,
   morphusActive,
+  providedByNote,
+  roundedClassName,
 }: {
   skillId: string
   listPercent: number
@@ -657,6 +833,8 @@ function SkillPercentHover({
   breakdownLines: readonly LiveSkillPercentBreakdownLine[]
   tooltipEquation: string
   morphusActive: boolean
+  providedByNote?: string | null
+  roundedClassName?: string
 }) {
   const anchorRef = useRef<HTMLSpanElement>(null)
   const tipRef = useRef<HTMLDivElement>(null)
@@ -666,6 +844,7 @@ function SkillPercentHover({
     left: number
     maxWidth: number
   } | null>(null)
+  const ariaExtra = providedByNote ? ` ${providedByNote}` : ''
 
   useLayoutEffect(() => {
     if (!tipOpen) return
@@ -692,18 +871,19 @@ function SkillPercentHover({
       window.removeEventListener('resize', place)
       window.removeEventListener('scroll', place, true)
     }
-  }, [tipOpen, tooltipEquation])
+  }, [tipOpen, tooltipEquation, providedByNote])
 
   return (
     <>
       <span
         ref={anchorRef}
-        className={`flex shrink-0 items-center rounded-r-md px-3 py-2 font-mono text-base font-bold tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${listPercentColorClass(listPercentTone, morphusActive)}`}
+        className={`flex shrink-0 items-center px-3 py-2 font-mono text-base font-bold tabular-nums focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${roundedClassName ?? 'rounded-r-md'} ${listPercentColorClass(listPercentTone, morphusActive)}`}
         style={{
           outlineColor: morphusActive ? '#c4b5fd' : '#2563eb',
         }}
         tabIndex={0}
-        aria-label={`${listPercent} percent. ${tooltipEquation}`}
+        aria-label={`${listPercent} percent.${ariaExtra} ${tooltipEquation}`}
+        title={providedByNote ?? undefined}
         onMouseEnter={() => setTipOpen(true)}
         onMouseLeave={() => setTipOpen(false)}
         onFocus={() => setTipOpen(true)}
@@ -728,6 +908,15 @@ function SkillPercentHover({
             visibility: pos ? 'visible' : 'hidden',
           }}
         >
+          {providedByNote ? (
+            <p
+              className={`mb-1 font-sans text-[11px] font-semibold ${
+                morphusActive ? 'text-violet-200' : 'text-slate-800'
+              }`}
+            >
+              {providedByNote}
+            </p>
+          ) : null}
           {breakdownLines.map((line, index) => (
             <span key={`${line.group}-${line.label}-${index}`}>
               {index > 0 ? (
