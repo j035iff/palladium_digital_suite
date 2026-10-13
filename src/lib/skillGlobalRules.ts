@@ -150,6 +150,31 @@ function formatProficiency(copy: DuplicateAbilityCopy): string {
   return `${copy.skillName} ${copy.name} (${copy.basePercent}% +${copy.percentPerLevel}%/level)`
 }
 
+/**
+ * Live Skills mockup — loser of a duplicated ability points at the winning
+ * parent (`See Gymnastics` / `See Acrobatics`) instead of a second %.
+ */
+export function resolveDuplicateAbilitySeeOther(
+  skillId: string,
+  abilityName: string,
+  ownedSkillIds: readonly string[],
+  characterLevel: number,
+): { winnerSkillId: string; winnerSkillName: string } | null {
+  const resolved = resolveDuplicateAbilityCopies(
+    abilityName,
+    ownedSkillIds,
+    characterLevel,
+  )
+  if (!resolved) return null
+  if (resolved.best.some((copy) => copy.skillId === skillId)) return null
+  const best = resolved.best[0]
+  if (!best) return null
+  return {
+    winnerSkillId: best.skillId,
+    winnerSkillName: best.skillName,
+  }
+}
+
 /** Player-facing note for one ability row. Null when the ability is not duplicated. */
 export function duplicateAbilityOverlapNote(
   skillId: string,
@@ -179,6 +204,21 @@ export function duplicateAbilityOverlapNote(
   const best = resolved.best[0]
   if (!best) return null
   return `Not added. Best proficiency is ${formatProficiency(best)}. Educational bonus applies on that one only.`
+}
+
+/**
+ * Familiar Surface note when Climbing/Prowl is only a bundled grant from a
+ * similar-skill group parent (does not increase per level).
+ */
+export function bundledGrantProvidedByNote(
+  sourceSkillId: string | undefined,
+  targetSkillId: string,
+): string | null {
+  if (!sourceSkillId) return null
+  if (!bundledSkillOmitsLevelGrowth(sourceSkillId, targetSkillId)) return null
+  const name =
+    getPalladiumSkillCatalogEntryById(sourceSkillId)?.name ?? sourceSkillId
+  return `Provided by ${name}: does not increase per level`
 }
 
 /** Shown on each selected skill in the group once another group skill is also selected. */

@@ -13,7 +13,16 @@ import {
   resolveSheetSkillCatalogId,
   type LiveSkillPercentBreakdownLine,
 } from '../lib/liveSkillEngine'
-import { similarSkillGroupPlayerNote } from '../lib/skillGlobalRules'
+import {
+  bundledGrantProvidedByNote,
+  normalizeAbilityName,
+  resolveDuplicateAbilitySeeOther,
+  similarSkillGroupPlayerNote,
+} from '../lib/skillGlobalRules'
+import {
+  getCreationRelatedPicks,
+  getCreationSecondaryPicks,
+} from '../lib/creationSkillPicks'
 import { clampOverlayTooltipPosition } from '../lib/overlayTooltipPosition'
 import {
   formatPhysicalSkillBonusSummary,
@@ -34,6 +43,8 @@ export type SkillListProps = {
  * Percentile skills: list shows %; hover % → source breakdown tooltip; click → description.
  * Sub-% tracks expand to `Parent (Sub)` rows; dual-nature physical parents also
  * appear in bottom Physical with bonus summary.
+ * Acrobatics/Gymnastics overlap: best sub-% wins; loser shows See {Other};
+ * grant-only Climb/Prowl note (does not increase per level).
  * Stats-only Physical / W.P.: no self % — bonus summary instead.
  * Category dropdown + name search (AND when both set).
  */
@@ -54,6 +65,10 @@ export function SkillList({
   const rootRef = useRef<HTMLDivElement>(null)
 
   const allSections = useMemo(() => buildLiveSkillSections(skills), [skills])
+  const ownedCatalogIds = useMemo(
+    () => [...collectLiveOwnedSkillIds(character, skills)],
+    [character, skills],
+  )
   const categoryOptions = useMemo(
     () => listLiveSkillFilterCategoryOptions(allSections),
     [allSections],
@@ -66,6 +81,39 @@ export function SkillList({
       }),
     [allSections, categoryFilter, nameQuery],
   )
+
+  const findWinnerRowId = (
+    winnerSkillId: string,
+    abilityName: string,
+  ): string | undefined => {
+    const key = normalizeAbilityName(abilityName)
+    for (const section of allSections) {
+      for (const row of section.rows) {
+        if (!row.subPercentTrack) continue
+        if (resolveSheetSkillCatalogId(row.skill) !== winnerSkillId) continue
+        if (normalizeAbilityName(row.subPercentTrack.name) !== key) continue
+        return row.rowId
+      }
+    }
+    return undefined
+  }
+
+  const resolveProvidedByNote = (catalogId: string): string | null => {
+    const picks = [
+      ...getCreationRelatedPicks(character),
+      ...getCreationSecondaryPicks(character),
+    ]
+    const paid = picks.some(
+      (p) => p.skillId === catalogId && !p.grantedBySkillId,
+    )
+    if (paid || (character.creationOccSkillIds ?? []).includes(catalogId)) {
+      return null
+    }
+    const grant = picks.find(
+      (p) => p.skillId === catalogId && p.grantedBySkillId,
+    )
+    return bundledGrantProvidedByNote(grant?.grantedBySkillId, catalogId)
+  }
 
   useEffect(() => {
     if (!openRowId) return
@@ -166,10 +214,35 @@ export function SkillList({
                     ? resolveSkillCatalogDisplayDetails(def, characterLevel)
                         .weaponBonusSummary
                     : null
+                const seeOtherRaw =
+                  subPercentTrack && !section.statsOnlyPhysical
+                    ? resolveDuplicateAbilitySeeOther(
+                        catalogId,
+                        subPercentTrack.name,
+                        ownedCatalogIds,
+                        characterLevel,
+                      )
+                    : null
+                const seeOtherParent = seeOtherRaw
+                  ? {
+                      skillId: seeOtherRaw.winnerSkillId,
+                      displayName: seeOtherRaw.winnerSkillName,
+                      winnerRowId:
+                        findWinnerRowId(
+                          seeOtherRaw.winnerSkillId,
+                          subPercentTrack!.name,
+                        ) ?? row.rowId,
+                    }
+                  : undefined
+                const providedByNote =
+                  !section.statsOnlyPhysical && !weaponProficiency
+                    ? resolveProvidedByNote(catalogId)
+                    : null
                 const percentDetail =
                   !section.statsOnlyPhysical &&
                   !weaponProficiency &&
-                  !skill.restricted
+                  !skill.restricted &&
+                  !seeOtherParent
                     ? buildLiveSkillPercentDetail({
                         character,
                         activeForm,
@@ -183,12 +256,9 @@ export function SkillList({
                 const descriptionSource =
                   subPercentTrack?.description ?? catalog?.description
                 const overlapNote =
-                  percentDetail?.overlapNote ??
-                  (section.statsOnlyPhysical
-                    ? similarSkillGroupPlayerNote(catalogId, [
-                        ...collectLiveOwnedSkillIds(character, skills),
-                      ])
-                    : null)
+                  section.statsOnlyPhysical
+                    ? similarSkillGroupPlayerNote(catalogId, ownedCatalogIds)
+                    : null
                 return (
                   <SkillRow
                     key={row.rowId}
@@ -198,6 +268,8 @@ export function SkillList({
                     statsOnlyPhysical={Boolean(section.statsOnlyPhysical)}
                     weaponProficiency={weaponProficiency}
                     weaponBonusSummary={weaponBonusSummary}
+                    seeOtherParent={seeOtherParent}
+                    providedByNote={providedByNote}
                     morphusActive={morphusActive}
                     muted={muted}
                     text={text}
@@ -207,6 +279,10 @@ export function SkillList({
                         id === row.rowId ? null : row.rowId,
                       )
                     }
+                    onSeeOther={() => {
+                      if (!seeOtherParent) return
+                      setOpenRowId(seeOtherParent.winnerRowId)
+                    }}
                     percentDetail={percentDetail}
                     overlapNote={overlapNote}
                     description={resolveSkillCatalogDescription(
@@ -230,11 +306,14 @@ function SkillRow({
   statsOnlyPhysical,
   weaponProficiency,
   weaponBonusSummary,
+  seeOtherParent,
+  providedByNote,
   morphusActive,
   muted,
   text,
   open,
   onToggle,
+  onSeeOther,
   percentDetail,
   overlapNote,
   description,
@@ -245,11 +324,18 @@ function SkillRow({
   statsOnlyPhysical: boolean
   weaponProficiency: boolean
   weaponBonusSummary: string | null
+  seeOtherParent?: {
+    skillId: string
+    displayName: string
+    winnerRowId: string
+  }
+  providedByNote?: string | null
   morphusActive: boolean
   muted: string
   text: string
   open: boolean
   onToggle: () => void
+  onSeeOther: () => void
   percentDetail: ReturnType<typeof buildLiveSkillPercentDetail> | null
   overlapNote: string | null
   description: ReturnType<typeof resolveSkillCatalogDescription>
@@ -320,7 +406,9 @@ function SkillRow({
 
   const impossible = Boolean(percentDetail?.impossibleInMorphus)
   const listPercent =
-    !nonPercentile && !impossible ? percentDetail?.listPercent ?? null : null
+    !nonPercentile && !impossible && !seeOtherParent
+      ? percentDetail?.listPercent ?? null
+      : null
   const detailPanelStyle = {
     borderColor: morphusActive ? '#a78bfa' : '#3b82f6',
     backgroundColor: morphusActive ? '#1e1b4b' : '#f8fafc',
@@ -370,8 +458,31 @@ function SkillRow({
               {closedSummary}
             </span>
           ) : null}
+          {providedByNote && !open ? (
+            <span
+              className="mt-1 block text-xs font-normal leading-snug"
+              style={{ color: muted }}
+            >
+              {providedByNote}
+            </span>
+          ) : null}
         </button>
-        {listPercent != null && percentDetail ? (
+        {seeOtherParent ? (
+          <button
+            type="button"
+            className={`flex shrink-0 items-center rounded-r-md px-3 py-2 text-sm font-semibold underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+              morphusActive ? 'text-sky-300' : 'text-blue-700'
+            }`}
+            style={{ outlineColor: morphusActive ? '#c4b5fd' : '#2563eb' }}
+            aria-label={`See ${seeOtherParent.displayName} for this ability`}
+            onClick={(e) => {
+              e.stopPropagation()
+              onSeeOther()
+            }}
+          >
+            See {seeOtherParent.displayName}
+          </button>
+        ) : listPercent != null && percentDetail ? (
           <SkillPercentHover
             skillId={rowId}
             listPercent={listPercent}
@@ -448,12 +559,48 @@ function SkillRow({
           />
         </div>
       ) : null}
-      {open && !nonPercentile && !impossible ? (
+      {open && seeOtherParent ? (
+        <div
+          id={detailId}
+          className="absolute left-0 right-0 top-full z-50 mt-1 rounded-md border-2 px-3 py-2 shadow-lg"
+          style={detailPanelStyle}
+        >
+          <p className="text-[10px] font-black uppercase tracking-wide opacity-90">
+            Best proficiency
+          </p>
+          <p className="mt-1 text-sm font-semibold leading-snug">
+            Use {seeOtherParent.displayName} for this ability (educational bonus
+            once).
+          </p>
+          <button
+            type="button"
+            className={`mt-2 text-sm font-semibold underline-offset-2 hover:underline ${
+              morphusActive ? 'text-sky-300' : 'text-blue-700'
+            }`}
+            onClick={onSeeOther}
+          >
+            See {seeOtherParent.displayName}
+          </button>
+          <SkillDescriptionBlock
+            description={description}
+            morphusActive={morphusActive}
+          />
+        </div>
+      ) : null}
+      {open && !nonPercentile && !impossible && !seeOtherParent ? (
         <div
           id={detailId}
           className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[min(70vh,28rem)] overflow-y-auto rounded-md border-2 px-3 py-2 shadow-lg"
           style={detailPanelStyle}
         >
+          {providedByNote ? (
+            <p
+              className="mb-2 text-[11px] font-semibold leading-snug"
+              style={{ color: morphusActive ? '#c4b5fd' : '#1e40af' }}
+            >
+              {providedByNote}
+            </p>
+          ) : null}
           <SkillDescriptionBlock
             description={description}
             morphusActive={morphusActive}

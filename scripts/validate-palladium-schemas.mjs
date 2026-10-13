@@ -1151,6 +1151,7 @@ if (morphusTableFiles.length > 0) {
 }
 
 const exampleValidators = [
+  { prefix: 'palladium-skill-global-rules', compile: validateSkillGlobalRulesDoc },
   { prefix: 'palladium-skill', compile: validateSkillRow },
   { prefix: 'palladium-race', compile: validateRaceRow },
   { prefix: 'palladium-occ', compile: validateOccRow },
@@ -1207,7 +1208,10 @@ if (exampleFiles.length > 0) {
   let exampleBad = 0
   for (const file of exampleFiles) {
     const doc = stripSchemaPointer(loadJson(join(schemaExamplesDir, file)))
-    const rule = exampleValidators.find((v) => file.startsWith(v.prefix))
+    // Longest prefix wins — e.g. palladium-skill-global-rules before palladium-skill.
+    const rule = exampleValidators
+      .filter((v) => file.startsWith(v.prefix))
+      .sort((a, b) => b.prefix.length - a.prefix.length)[0]
     if (!rule) {
       exampleBad++
       if (exampleBad <= 5) {

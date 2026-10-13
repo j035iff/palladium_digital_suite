@@ -1,0 +1,27 @@
+{
+  "$schema": "../palladium-skill-global-rules.schema.json",
+  "description": "Example cross-skill combination rules. Catalog rows keep their own numbers; this document says how they combine when more than one listed skill is selected.",
+  "similarSkillGroups": [
+    {
+      "id": "acrobatics_gymnastics",
+      "label": "Acrobatics and Gymnastics",
+      "skillIds": ["skill_acrobatics", "skill_gymnastics"],
+      "stackPhysicalBonuses": true,
+      "duplicateAbilities": {
+        "resolution": "best",
+        "educationalBonus": "once"
+      },
+      "bundledSkills": [
+        {
+          "skillId": "skill_climbing",
+          "increasesWithLevelOnlyIfSelected": true
+        },
+        {
+          "skillId": "skill_prowl",
+          "increasesWithLevelOnlyIfSelected": true
+        }
+      ],
+      "notes": "If both selected, add physical bonuses. Duplicated abilities use the best proficiency; educational bonus once. Bundled Prowl/Climb do not increase with level unless separately selected."
+    }
+  ]
+}

@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest'
 import { aggregatePhysicalSkillCombatBonuses } from './skillPhysicalBonuses'
 import {
   abilityProficiencyAtLevel,
+  bundledGrantProvidedByNote,
   duplicateAbilityOverlapNote,
   resolveDuplicateAbilityCopies,
+  resolveDuplicateAbilitySeeOther,
   similarSkillGroupPlayerNote,
 } from './skillGlobalRules'
 
@@ -67,5 +69,47 @@ describe('Acrobatics and Gymnastics global rules', () => {
     expect(similarSkillGroupPlayerNote('skill_gymnastics', both)).toMatch(
       /do not increase with level/,
     )
+  })
+
+  it('points losers at See Other parent (mockup)', () => {
+    expect(
+      resolveDuplicateAbilitySeeOther(
+        'skill_acrobatics',
+        'Back flip',
+        both,
+        1,
+      ),
+    ).toEqual({
+      winnerSkillId: 'skill_gymnastics',
+      winnerSkillName: 'Gymnastics',
+    })
+    expect(
+      resolveDuplicateAbilitySeeOther(
+        'skill_gymnastics',
+        'Back flip',
+        both,
+        1,
+      ),
+    ).toBeNull()
+    expect(
+      resolveDuplicateAbilitySeeOther(
+        'skill_gymnastics',
+        'Climb rope',
+        both,
+        1,
+      ),
+    ).toEqual({
+      winnerSkillId: 'skill_acrobatics',
+      winnerSkillName: 'Acrobatics',
+    })
+  })
+
+  it('formats provided-by note for bundled Climb/Prowl grants', () => {
+    expect(
+      bundledGrantProvidedByNote('skill_acrobatics', 'skill_climbing'),
+    ).toBe('Provided by Acrobatics: does not increase per level')
+    expect(
+      bundledGrantProvidedByNote('skill_literacy', 'skill_climbing'),
+    ).toBeNull()
   })
 })
