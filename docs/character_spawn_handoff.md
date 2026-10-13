@@ -40,6 +40,7 @@ For each form branch (`primary`, `morphus`):
   - Master Equation / `resolveSkillPercent` with O.C.C. and psychic-tier bonuses (`resolveOccSkillBonusPercent` — Major halves related bonuses).
   - Prerequisite checks → `restricted` + `restrictionReason` when unmet.
   - Morphus impossibility flags when applicable.
+  - Copy `CreationSkillPick.selectionCategory` → `SheetSkill.selectionCategory` when the player browsed a book category at pick time (multi-category skills on the live Skills list).
 
 ### 2. Physical skill modifiers
 

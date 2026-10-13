@@ -2298,6 +2298,11 @@ export type CreationSkillPick = {
   /** Stable instance id (unique per pick, including multiple Language instances). */
   instanceId: string
   skillId: string
+  /**
+   * Book category the player browsed when selecting this pick (e.g. Rogue vs
+   * Physical for multi-category skills like Prowl). Omitted for grants / All.
+   */
+  selectionCategory?: string
   /** User-defined language, instrument, literacy script, etc. (min 1 char when required). */
   specialization?: string
   /** Second skill slot spent for professional / tailoring tier (+category or rank bonus). */
@@ -2320,6 +2325,11 @@ export type SheetSkill = {
    * % resolution when {@link id} is a creation instance id.
    */
   catalogSkillId?: string
+  /**
+   * Book category chosen at creation for this row (multi-category skills).
+   * Live Skills list groups by this when set; otherwise catalog primary.
+   */
+  selectionCategory?: string
   name: string
   /** When true, skill is shown but unusable (docs/vision.md Pillar 8). */
   restricted: boolean

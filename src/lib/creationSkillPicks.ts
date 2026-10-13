@@ -394,11 +394,17 @@ export function validateSpecializationInput(value: string): boolean {
 
 export function buildCreationSkillPick(
   skillId: string,
-  opts: { specialization?: string; professionalQuality?: boolean },
+  opts: {
+    specialization?: string
+    professionalQuality?: boolean
+    selectionCategory?: string
+  },
 ): CreationSkillPick {
+  const selectionCategory = opts.selectionCategory?.trim()
   return {
     instanceId: newCreationSkillPickInstanceId(),
     skillId,
+    ...(selectionCategory ? { selectionCategory } : {}),
     ...(opts.specialization?.trim()
       ? { specialization: opts.specialization.trim() }
       : {}),

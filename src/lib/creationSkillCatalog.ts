@@ -300,6 +300,23 @@ export function getSkillBookCategories(skillId: string): readonly string[] {
   return []
 }
 
+/**
+ * Book category the player was browsing when adding a pick. Returns undefined
+ * for All / empty / non-book library modes, or when the skill is not listed
+ * under that category.
+ */
+export function resolveCreationPickSelectionCategory(
+  skillId: string,
+  browseCategory: string | undefined | null,
+): string | undefined {
+  const cat = browseCategory?.trim()
+  if (!cat || cat === 'All') return undefined
+  // Creation library chrome labels — not book categories.
+  if (cat === 'Vouchers' || cat === 'Vocational Focus') return undefined
+  const cats = getSkillBookCategories(skillId)
+  return cats.includes(cat) ? cat : undefined
+}
+
 export function weaponProficiencyEraForSkillId(
   skillId: string,
 ): WeaponProficiencyEra | undefined {

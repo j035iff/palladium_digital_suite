@@ -16,6 +16,8 @@ import {
 
   partitionCreationSkillLibrary,
 
+  resolveCreationPickSelectionCategory,
+
 } from '../../lib/creationSkillCatalog'
 
 import { resolveCreationLibrarySkillPreview } from '../../lib/skillDisplayDetails'
@@ -1363,6 +1365,10 @@ export function SkillEngine() {
 
 
 
+  function selectionCategoryForSkill(skillId: string): string | undefined {
+    return resolveCreationPickSelectionCategory(skillId, category)
+  }
+
   function commitSkillPickAdd(
     pick: CreationSkillPick,
     tier: 'related' | 'secondary',
@@ -1427,7 +1433,10 @@ export function SkillEngine() {
     setOccVoucherSlotPick(
       taskId,
       slot,
-      buildCreationSkillPick(skillId, { specialization }),
+      buildCreationSkillPick(skillId, {
+        specialization,
+        selectionCategory: selectionCategoryForSkill(skillId),
+      }),
       choiceCount,
     )
   }
@@ -1462,7 +1471,10 @@ export function SkillEngine() {
     setRelatedVoucherSlotPick(
       taskId,
       slot,
-      buildCreationSkillPick(skillId, { specialization }),
+      buildCreationSkillPick(skillId, {
+        specialization,
+        selectionCategory: selectionCategoryForSkill(skillId),
+      }),
       choiceCount,
     )
   }
@@ -1628,7 +1640,10 @@ export function SkillEngine() {
 
       if (isCreationSkillIdentityTaken(allCreationPicks, skillId)) return
 
-      const pick = buildCreationSkillPick(skillId, { professionalQuality: false })
+      const pick = buildCreationSkillPick(skillId, {
+        professionalQuality: false,
+        selectionCategory: selectionCategoryForSkill(skillId),
+      })
 
       commitSkillPickAdd(pick, action)
 
@@ -1697,6 +1712,8 @@ export function SkillEngine() {
       specialization: result.specialization,
 
       professionalQuality: result.professionalQuality,
+
+      selectionCategory: selectionCategoryForSkill(skillId),
 
     })
 

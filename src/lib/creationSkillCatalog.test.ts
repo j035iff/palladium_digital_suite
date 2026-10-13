@@ -5,6 +5,7 @@ import {
   getEngineSkillDefFromCatalog,
   listCreationSkillLibrary,
   matchesSkillBookCategoryFilter,
+  resolveCreationPickSelectionCategory,
   sortCreationSkillLibraryResults,
   partitionCreationSkillLibrary,
   sortCreationSkillLibraryWithSelectableFirst,
@@ -162,6 +163,26 @@ describe('creationSkillCatalog technical pinning', () => {
     const sorted = sortCreationSkillLibraryResults(technical, 'Technical')
     expect(sorted[0]?.id).toBe('skill_language')
     expect(sorted[1]?.id).toBe('skill_literacy')
+  })
+})
+
+describe('resolveCreationPickSelectionCategory', () => {
+  it('records Rogue or Physical for multi-category Prowl', () => {
+    expect(resolveCreationPickSelectionCategory('skill_prowl', 'Rogue')).toBe(
+      'Rogue',
+    )
+    expect(
+      resolveCreationPickSelectionCategory('skill_prowl', 'Physical'),
+    ).toBe('Physical')
+    expect(resolveCreationPickSelectionCategory('skill_prowl', 'All')).toBe(
+      undefined,
+    )
+    expect(
+      resolveCreationPickSelectionCategory('skill_prowl', 'Vouchers'),
+    ).toBeUndefined()
+    expect(
+      resolveCreationPickSelectionCategory('skill_prowl', 'Science'),
+    ).toBeUndefined()
   })
 })
 

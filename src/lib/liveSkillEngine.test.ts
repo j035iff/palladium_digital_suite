@@ -13,6 +13,7 @@ import {
   listLiveSkillFilterCategoryOptions,
   listLiveSkillSubPercentTracks,
   LIVE_SKILL_FILTER_ALL_CATEGORIES,
+  LIVE_SKILL_LANGUAGE_LITERACY_LABEL,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
   LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID,
   occSkillLevelBonusPercent,
@@ -332,18 +333,19 @@ describe('buildLiveSkillSections', () => {
     ])
 
     expect(sections.map((s) => s.label)).toEqual([
+      LIVE_SKILL_LANGUAGE_LITERACY_LABEL,
       'Physical',
-      'Technical',
       LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
     ])
-    expect(sections[0]!.rows.map((r) => r.displayName)).toEqual([
+    expect(sections[0]!.rows.map((r) => r.displayName)).toEqual(['Literacy'])
+    expect(sections[1]!.rows.map((r) => r.displayName)).toEqual([
       'Climbing',
       'Swimming',
     ])
-    expect(sections[0]!.rows[0]!.subRows?.map((r) => r.nestedLabel)).toEqual([
+    expect(sections[1]!.rows[0]!.subRows?.map((r) => r.nestedLabel)).toEqual([
       '(Rappelling)',
     ])
-    expect(sections[0]!.statsOnlyPhysical).toBeUndefined()
+    expect(sections[1]!.statsOnlyPhysical).toBeUndefined()
     const bottom = sections[sections.length - 1]!
     expect(bottom.id).toBe(LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID)
     expect(bottom.label).toBe(LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL)
@@ -359,7 +361,10 @@ describe('buildLiveSkillSections', () => {
       row('skill_literacy', 'Literacy', { basePercent: 30 }),
       row('skill_climbing', 'Climbing', { basePercent: 40 }),
     ])
-    expect(sections.map((s) => s.id)).toEqual(['Physical', 'Technical'])
+    expect(sections.map((s) => s.label)).toEqual([
+      LIVE_SKILL_LANGUAGE_LITERACY_LABEL,
+      'Physical',
+    ])
     expect(sections.every((s) => !s.statsOnlyPhysical)).toBe(true)
   })
 
@@ -376,17 +381,55 @@ describe('buildLiveSkillSections', () => {
       }),
     ])
     expect(sections.map((s) => s.label)).toEqual([
+      LIVE_SKILL_LANGUAGE_LITERACY_LABEL,
       'Physical',
-      'Technical',
       LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL,
     ])
     expect(sections.some((s) => s.label === 'Other')).toBe(false)
-    const acro = sections[0]!.rows.find((r) => r.displayName === 'Acrobatics')
+    const acro = sections[1]!.rows.find((r) => r.displayName === 'Acrobatics')
     expect(acro?.subRows?.map((r) => r.displayName)).toEqual(
       expect.arrayContaining([
         formatLiveSkillSubRowDisplayName('Acrobatics', 'Sense of balance'),
       ]),
     )
+  })
+
+  it('groups multi-category skills by creation selectionCategory', () => {
+    const sections = buildLiveSkillSections([
+      row('inst-prowl-rogue', 'Prowl', {
+        catalogSkillId: 'skill_prowl',
+        selectionCategory: 'Rogue',
+        basePercent: 30,
+      }),
+      row('inst-prowl-phys', 'Prowl', {
+        catalogSkillId: 'skill_prowl',
+        selectionCategory: 'Physical',
+        basePercent: 30,
+      }),
+    ])
+    expect(sections.map((s) => s.label)).toEqual(['Physical', 'Rogue'])
+    expect(sections[0]!.rows.map((r) => r.skill.id)).toEqual(['inst-prowl-phys'])
+    expect(sections[1]!.rows.map((r) => r.skill.id)).toEqual([
+      'inst-prowl-rogue',
+    ])
+  })
+
+  it('pins Language and Literacy under Language & Literacy at the top', () => {
+    const sections = buildLiveSkillSections([
+      row('skill_prowl', 'Prowl', {
+        selectionCategory: 'Rogue',
+        basePercent: 25,
+      }),
+      row('skill_language', 'Language: Spanish', { basePercent: 50 }),
+      row('skill_literacy', 'Literacy: English', { basePercent: 40 }),
+    ])
+    expect(sections[0]!.label).toBe(LIVE_SKILL_LANGUAGE_LITERACY_LABEL)
+    expect(sections[0]!.rows.map((r) => r.skill.id)).toEqual([
+      'skill_language',
+      'skill_literacy',
+    ])
+    expect(sections.map((s) => s.label)).toContain('Rogue')
+    expect(sections.some((s) => s.label === 'Technical')).toBe(false)
   })
 
   it('excludes Hand-to-Hand styles from category sections', () => {

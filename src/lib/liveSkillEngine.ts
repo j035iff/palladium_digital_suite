@@ -10,7 +10,10 @@ import type { PalladiumSkillCatalogEntry } from '../data/library/catalogTypes'
 import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
 import { getSkillById } from '../data/skillLibrary'
 import { isWeaponProficiencySkill } from './skillDisplayDetails'
-import { CREATION_SKILL_FILTER_CATEGORY_ORDER } from './creationSkillCatalog'
+import {
+  CREATION_SKILL_FILTER_CATEGORY_ORDER,
+  getSkillBookCategories,
+} from './creationSkillCatalog'
 import {
   creationSkillIdsSet,
   flattenCreationSkillIds,
@@ -48,6 +51,17 @@ export type { SkillPercentBreakdown, SkillPercentResolutionContext }
 
 /** Internal id for the bottom stats-only Physical bucket (label is book "Physical"). */
 export const LIVE_SKILL_STATS_ONLY_PHYSICAL_SECTION_ID = 'physical_stats_only'
+
+/**
+ * Familiar Surface live-list section for Language / Literacy (Joe 2026-10-13).
+ * Catalog book category remains Technical; creation still browses them there.
+ */
+export const LIVE_SKILL_LANGUAGE_LITERACY_LABEL = 'Language & Literacy'
+
+const LIVE_SKILL_LANGUAGE_LITERACY_CATALOG_IDS: ReadonlySet<string> = new Set([
+  'skill_language',
+  'skill_literacy',
+])
 
 /** Joe / Familiar Surface — book category name for stats-only physical training. */
 export const LIVE_SKILL_STATS_ONLY_PHYSICAL_LABEL = 'Physical'
@@ -624,7 +638,25 @@ function primaryBookCategory(catalogId: string): string {
   return 'Other'
 }
 
+/**
+ * Live Skills section label for a sheet row: Language & Literacy pin, else
+ * creation {@link SheetSkill.selectionCategory} when valid, else catalog primary.
+ */
+export function resolveLiveSkillListCategory(skill: SheetSkill): string {
+  const catalogId = resolveSheetSkillCatalogId(skill)
+  if (LIVE_SKILL_LANGUAGE_LITERACY_CATALOG_IDS.has(catalogId)) {
+    return LIVE_SKILL_LANGUAGE_LITERACY_LABEL
+  }
+  const selected = skill.selectionCategory?.trim()
+  if (selected) {
+    const cats = getSkillBookCategories(catalogId)
+    if (cats.includes(selected)) return selected
+  }
+  return primaryBookCategory(catalogId)
+}
+
 function categorySortIndex(label: string): number {
+  if (label === LIVE_SKILL_LANGUAGE_LITERACY_LABEL) return -1
   const idx = CREATION_SKILL_FILTER_CATEGORY_ORDER.indexOf(label)
   return idx >= 0 ? idx : CREATION_SKILL_FILTER_CATEGORY_ORDER.length
 }
@@ -787,7 +819,7 @@ export function buildLiveSkillSections(
       continue
     }
 
-    const label = primaryBookCategory(catalogId)
+    const label = resolveLiveSkillListCategory(skill)
     const bucket = byCategory.get(label) ?? []
 
     if (subTracks.length > 0) {

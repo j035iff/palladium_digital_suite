@@ -314,13 +314,13 @@ function normalizeIdentityAliasFields(input: CharacterRootState): CharacterRootS
   }
 }
 
-function collectCreationPickCatalogIndex(
+function forEachCreationPick(
   character: CharacterRootState,
-): Map<string, string> {
-  const byInstance = new Map<string, string>()
+  visit: (pick: CreationSkillPick) => void,
+): void {
   const add = (pick: CreationSkillPick | undefined) => {
     if (!pick?.instanceId || !pick.skillId) return
-    byInstance.set(pick.instanceId, pick.skillId)
+    visit(pick)
   }
   for (const pick of getCreationRelatedPicks(character)) add(pick)
   for (const pick of getCreationSecondaryPicks(character)) add(pick)
@@ -339,6 +339,15 @@ function collectCreationPickCatalogIndex(
       if (slot && typeof slot === 'object') add(slot as CreationSkillPick)
     }
   }
+}
+
+function collectCreationPickCatalogIndex(
+  character: CharacterRootState,
+): Map<string, string> {
+  const byInstance = new Map<string, string>()
+  forEachCreationPick(character, (pick) => {
+    byInstance.set(pick.instanceId, pick.skillId)
+  })
   const hthId = sheetSkillIdForCreationHandToHandTier(
     character.creationHandToHandTier,
   )
@@ -346,6 +355,17 @@ function collectCreationPickCatalogIndex(
   for (const id of character.creationOccSkillIds ?? []) {
     byInstance.set(id, id)
   }
+  return byInstance
+}
+
+function collectCreationPickSelectionCategoryIndex(
+  character: CharacterRootState,
+): Map<string, string> {
+  const byInstance = new Map<string, string>()
+  forEachCreationPick(character, (pick) => {
+    const cat = pick.selectionCategory?.trim()
+    if (cat) byInstance.set(pick.instanceId, cat)
+  })
   return byInstance
 }
 
@@ -390,6 +410,42 @@ export function backfillSheetSkillCatalogIds(
   return { ...input, primary, morphus }
 }
 
+function backfillFormSkillSelectionCategories(
+  branch: FormState,
+  selectionIndex: Map<string, string>,
+): FormState {
+  let changed = false
+  const skills = branch.skills.map((skill) => {
+    if (skill.selectionCategory?.trim()) return skill
+    const fromPick = selectionIndex.get(skill.id)
+    if (!fromPick) return skill
+    changed = true
+    return { ...skill, selectionCategory: fromPick }
+  })
+  return changed ? { ...branch, skills } : branch
+}
+
+/**
+ * Stamp {@link SheetSkill.selectionCategory} from creation picks when missing
+ * (multi-category skills — e.g. Prowl under Rogue vs Physical).
+ */
+export function backfillSheetSkillSelectionCategories(
+  input: CharacterRootState,
+): CharacterRootState {
+  const selectionIndex = collectCreationPickSelectionCategoryIndex(input)
+  if (selectionIndex.size === 0) return input
+  const primary = backfillFormSkillSelectionCategories(
+    input.primary,
+    selectionIndex,
+  )
+  const morphus = backfillFormSkillSelectionCategories(
+    input.morphus,
+    selectionIndex,
+  )
+  if (primary === input.primary && morphus === input.morphus) return input
+  return { ...input, primary, morphus }
+}
+
 /**
  * Apply all pending save migrations up to {@link CHARACTER_SAVE_SCHEMA_VERSION}.
  *
@@ -428,6 +484,7 @@ export function migrateCharacterSave(
   }
 
   next = backfillSheetSkillCatalogIds(next)
+  next = backfillSheetSkillSelectionCategories(next)
 
   next = {
     ...next,

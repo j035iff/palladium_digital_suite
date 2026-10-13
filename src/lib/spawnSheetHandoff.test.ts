@@ -39,6 +39,29 @@ describe('spawnSheetHandoff', () => {
     expect(related?.catalogSkillId).toBe('skill_pick_locks')
   })
 
+  it('projects selectionCategory onto sheet rows for multi-category picks', () => {
+    const occLib = getLibraryOccById('occ_ex_government_agent')
+    expect(occLib).toBeDefined()
+
+    let root = createBlankCharacterForGenre('nightbane')
+    root = {
+      ...root,
+      occ: snapshotOccForCharacter(occLib!),
+      creationRelatedSkillPicks: [
+        {
+          instanceId: 'prowl-rogue',
+          skillId: 'skill_prowl',
+          selectionCategory: 'Rogue',
+        },
+      ],
+    }
+
+    const rows = projectCreationSkillsToSheet(root, occLib)
+    const prowl = rows.find((r) => r.id === 'prowl-rogue')
+    expect(prowl?.catalogSkillId).toBe('skill_prowl')
+    expect(prowl?.selectionCategory).toBe('Rogue')
+  })
+
   it('applySpawnSheetHandoff copies skills to facade and morphus', () => {
     const occLib = getLibraryOccById('occ_ex_government_agent')
     const occView = getOccById('occ_ex_government_agent')

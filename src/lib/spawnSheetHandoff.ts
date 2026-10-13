@@ -162,6 +162,9 @@ export function projectCreationSkillsToSheet(
       restricted,
       restrictionReason,
       basePercent: restricted ? equation.basePercent : resolved.total,
+      ...(pick.selectionCategory?.trim()
+        ? { selectionCategory: pick.selectionCategory.trim() }
+        : {}),
     })
   }
 
