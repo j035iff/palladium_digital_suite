@@ -431,7 +431,7 @@ type CharacterContextValue = {
    * Drives A.P.M. ceiling and sheet combat badge lines.
    */
   handToHandCombatProfile: HandToHandCombatProfile
-  /** Owned HtH catalog styles for Combat Home / Skills tab (may be more than one). */
+  /** Owned HtH catalog styles for Combat Home Unarmed (may be more than one). */
   ownedHandToHandStyles: readonly OwnedHandToHandStyle[]
   setActiveCombatHandToHandSkillId: (catalogId: string) => void
   /** False for self-contained R.C.C.s — O.C.C. selection UI is locked. */

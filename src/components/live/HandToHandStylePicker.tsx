@@ -13,7 +13,7 @@ type Props = {
 }
 
 /**
- * Shared Hand-to-Hand roster — Combat Unarmed expand and Skills tab.
+ * Hand-to-Hand roster for Combat Unarmed expand (not the Skills overlay).
  * Multiple owned styles (rare) switch like a weapon slot.
  */
 export function HandToHandStylePicker({

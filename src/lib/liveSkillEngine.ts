@@ -232,8 +232,8 @@ export function resolveSheetSkillCatalogId(
 }
 
 /**
- * Hand-to-Hand combat styles belong in the dedicated H2H control — not the
- * percentile category list (Joe 2026-10-12).
+ * Hand-to-Hand combat styles belong in Combat (Unarmed) — not the Skills
+ * overlay or percentile category list (Joe 2026-10-12 / 2026-10-13).
  */
 export function isHandToHandSheetSkill(
   skill: Pick<SheetSkill, 'id' | 'name' | 'catalogSkillId'>,
@@ -787,7 +787,7 @@ function makeSubListRow(
  * stats-only physical training pinned at the bottom.
  * Sub-% tracks (`subTasks` / `subSkills`) nest under one parent box.
  * Dual-nature skills (sub-% + physical bonuses) also appear in bottom Physical.
- * Hand-to-Hand styles are omitted (dedicated H2H control at top of Skills).
+ * Hand-to-Hand styles are omitted (Combat Unarmed only — Joe 2026-10-13).
  */
 export function buildLiveSkillSections(
   skills: readonly SheetSkill[],

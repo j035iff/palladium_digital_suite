@@ -189,7 +189,7 @@ function sortOwnedHandToHandIds(ids: Iterable<string>): string[] {
 /**
  * Hand-to-Hand styles this form actually has — unlocked sheet/HTH skill ids, creation tier,
  * and a granted O.C.C. default. `hth_none` is listed only when no trained style is owned.
- * Same list feeds Combat Home Unarmed expand and the Skills tab roster.
+ * Same list feeds Combat Home Unarmed expand (Skills overlay has no HtH UI).
  */
 export function listOwnedHandToHandStyles(
   character: Character,

@@ -77,3 +77,4 @@ Abilities that exist on only one of the two skills (tightrope, parallel bars and
 - **Selection category** — Skills listed under more than one book category (e.g. Prowl: Espionage / Physical / Rogue) appear on the live Skills list under the **category from which they were selected** during creation (`CreationSkillPick.selectionCategory` → `SheetSkill.selectionCategory`). Not a single canonical dump.
 - **Language & Literacy** — Language and Literacy rows pin to a top Familiar Surface section labeled **Language & Literacy** (creation library still browses them under Technical).
 - **Weapon proficiencies** — name only on the closed skill box (no % and no bonus/summary text).
+- **Hand-to-Hand** — not on the Skills overlay at all (no top control, no category rows). Styles are managed in Combat Unarmed.

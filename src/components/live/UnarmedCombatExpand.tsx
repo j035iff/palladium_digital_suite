@@ -153,7 +153,7 @@ export function UnarmedCombatExpand({
         singleStyleHint={
           morphus
             ? `${ownedStyles[0]?.name ?? 'Hand-to-Hand: Martial Arts'} — innate Morphus style (Facade Hand-to-Hand does not apply).`
-            : `${ownedStyles[0]?.name ?? 'Hand-to-Hand: None'} — listed on the Skills tab. A second style (rare) unlocks a switcher here.`
+            : `${ownedStyles[0]?.name ?? 'Hand-to-Hand: None'} — active Unarmed style. A second style (rare) unlocks a switcher here.`
         }
       />
 
