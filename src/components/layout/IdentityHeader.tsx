@@ -28,7 +28,6 @@ import {
   identityProfileWithPortrait,
   ingestPortraitFile,
   PORTRAIT_ACCEPT_ATTR,
-  portraitFormKeysForCharacter,
   portraitSlotLabel,
   type CharacterPortraitFormKey,
 } from '../../lib/characterPortraits'
@@ -627,19 +626,20 @@ function IdentityPortraitColumn({
   morphusActive: boolean
   onSetPortrait: (formKey: CharacterPortraitFormKey, dataUrl: string | undefined) => void
 }) {
-  const keys = portraitFormKeysForCharacter(dualForm)
+  // Dual-form: one Character Image slot that swaps with active form (Facade ↔ Morphus),
+  // matching description/personality — not a stacked pair of both images.
+  const formKey: CharacterPortraitFormKey =
+    dualForm && morphusActive ? 'morphus' : 'primary'
   return (
     <div className="flex min-h-[16rem] flex-col gap-3">
-      {keys.map((formKey) => (
-        <IdentityPortraitSlot
-          key={formKey}
-          formKey={formKey}
-          dualForm={dualForm}
-          dataUrl={portraits[formKey]}
-          morphusActive={morphusActive}
-          onSetDataUrl={(dataUrl) => onSetPortrait(formKey, dataUrl)}
-        />
-      ))}
+      <IdentityPortraitSlot
+        key={formKey}
+        formKey={formKey}
+        dualForm={dualForm}
+        dataUrl={portraits[formKey]}
+        morphusActive={morphusActive}
+        onSetDataUrl={(dataUrl) => onSetPortrait(formKey, dataUrl)}
+      />
     </div>
   )
 }
@@ -1269,17 +1269,37 @@ export function IdentityHeader({
 
             <div className="flex min-h-[16rem] flex-col gap-3">
               <IdentityFreeformTextBox
-                label="Description"
+                label={
+                  supportsDualForm
+                    ? morphusActive
+                      ? 'Morphus description'
+                      : 'Facade description'
+                    : 'Description'
+                }
                 value={displayProfile.description ?? ''}
                 onChange={(description) => patch({ description })}
-                placeholder="Physical appearance — build, features, clothing, distinguishing marks…"
+                placeholder={
+                  morphusActive
+                    ? 'Morphus appearance — build, features, clothing, distinguishing marks…'
+                    : 'Physical appearance — build, features, clothing, distinguishing marks…'
+                }
                 morphusActive={morphusActive}
               />
               <IdentityFreeformTextBox
-                label="Personality"
+                label={
+                  supportsDualForm
+                    ? morphusActive
+                      ? 'Morphus personality'
+                      : 'Facade personality'
+                    : 'Personality'
+                }
                 value={displayProfile.personality ?? ''}
                 onChange={(personality) => patch({ personality })}
-                placeholder="Temperament, habits, quirks, how they act at the table…"
+                placeholder={
+                  morphusActive
+                    ? 'How the Morphus acts at the table…'
+                    : 'Temperament, habits, quirks, how they act at the table…'
+                }
                 morphusActive={morphusActive}
               />
             </div>

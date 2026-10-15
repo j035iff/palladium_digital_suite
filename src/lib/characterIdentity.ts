@@ -133,7 +133,9 @@ export function hasMorphusWeightOverride(
 
 /**
  * Resolve presentation identity for one form.
- * Morphus unset fields fall back to Facade (root fields).
+ * Morphus unset anthropometrics (sex/age/height/weight/eyes/hair) fall back to Facade.
+ * Description + personality are **fully independent** per form (Joe 2026-10-15):
+ * Morphus never inherits Facade prose — empty Morphus stays empty until filled.
  */
 export function resolveIdentityFormFields(
   profile: CharacterIdentityProfile | undefined,
@@ -156,12 +158,11 @@ export function resolveIdentityFormFields(
       : facade.weightLbs,
     eyes: identityTextSet(overlay.eyes) ? overlay.eyes! : facade.eyes,
     hair: identityTextSet(overlay.hair) ? overlay.hair! : facade.hair,
-    description: identityTextSet(overlay.description)
-      ? overlay.description!
-      : facade.description,
-    personality: identityTextSet(overlay.personality)
-      ? overlay.personality!
-      : facade.personality,
+    // Independent Morphus prose — do not fall back to Facade text.
+    description:
+      typeof overlay.description === 'string' ? overlay.description : '',
+    personality:
+      typeof overlay.personality === 'string' ? overlay.personality : '',
   }
 }
 

@@ -22,13 +22,39 @@ const facade = {
 }
 
 describe('dual-form identity pipeline', () => {
-  it('falls back unset Morphus fields to Facade', () => {
+  it('falls back unset Morphus anthropometrics to Facade', () => {
     const profile = { ...facade, morphus: { eyes: 'Gold' } }
     const morphus = resolveIdentityFormFields(profile, 'morphus')
     expect(morphus.eyes).toBe('Gold')
     expect(morphus.hair).toBe('Black')
     expect(morphus.heightFeet).toBe('6')
     expect(resolveIdentityFormFields(profile, 'primary').eyes).toBe('Brown')
+  })
+
+  it('keeps Morphus description and personality independent of Facade', () => {
+    const profile = {
+      ...facade,
+      description: 'Facade look',
+      personality: 'Quiet',
+    }
+    const morphusUnset = resolveIdentityFormFields(profile, 'morphus')
+    expect(morphusUnset.description).toBe('')
+    expect(morphusUnset.personality).toBe('')
+    expect(resolveIdentityFormFields(profile, 'primary').description).toBe(
+      'Facade look',
+    )
+
+    const withMorphusProse = patchIdentityProfileForForm(profile, 'morphus', {
+      description: 'Beast form',
+      personality: 'Feral',
+    })
+    expect(withMorphusProse.description).toBe('Facade look')
+    expect(withMorphusProse.personality).toBe('Quiet')
+    expect(withMorphusProse.morphus?.description).toBe('Beast form')
+    expect(withMorphusProse.morphus?.personality).toBe('Feral')
+    const morphusView = resolveIdentityFormFields(withMorphusProse, 'morphus')
+    expect(morphusView.description).toBe('Beast form')
+    expect(morphusView.personality).toBe('Feral')
   })
 
   it('patches Morphus overlay without touching Facade', () => {
