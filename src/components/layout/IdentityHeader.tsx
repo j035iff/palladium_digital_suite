@@ -1,5 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
+import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
+import type { GmClientRuntimeState } from '../../lib/gm/sessionClientRuntime'
+import { isSeatFullyJoined } from '../../lib/gm/sessionPresence'
+import { isPortraitSharedWithPeer } from '../../lib/characterPortraits'
+import { peerFacingCharacterName } from '../../lib/gm/tableProjectedName'
 import { ConfiguratorAlignmentSelect } from '../creation/ConfiguratorAlignmentSelect'
 import { CREATION_PLACEHOLDER_OCC } from '../../lib/characterRoot'
 import {
@@ -16,6 +21,14 @@ import {
   normalizeIdentityProfile,
   sanitizeIdentityHeightInchesInput,
 } from '../../lib/characterIdentity'
+import {
+  identityProfileWithPortrait,
+  ingestPortraitFile,
+  PORTRAIT_ACCEPT_ATTR,
+  portraitFormKeysForCharacter,
+  portraitSlotLabel,
+  type CharacterPortraitFormKey,
+} from '../../lib/characterPortraits'
 import { normalizeAliases } from '../../lib/characterAliases'
 import {
   identityHeightFromMetricDisplay,
@@ -410,6 +423,136 @@ function clearPlaceholderNameOnFocus(
   }
 }
 
+function IdentityPortraitSlot({
+  formKey,
+  dualForm,
+  dataUrl,
+  morphusActive,
+  onSetDataUrl,
+}: {
+  formKey: CharacterPortraitFormKey
+  dualForm: boolean
+  dataUrl: string | undefined
+  morphusActive: boolean
+  onSetDataUrl: (dataUrl: string | undefined) => void
+}) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const label = portraitSlotLabel(formKey, dualForm)
+  const inputId = `identity-portrait-${formKey}`
+
+  const borderClass = morphusActive ? 'border-violet-800' : 'border-slate-800'
+  const buttonClass = morphusActive
+    ? 'rounded border border-violet-600 bg-violet-950/80 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-violet-100 hover:bg-violet-900 disabled:opacity-50'
+    : 'rounded border border-slate-600 bg-slate-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-800 hover:bg-slate-200 disabled:opacity-50'
+
+  const pickFile = () => {
+    setError(null)
+    inputRef.current?.click()
+  }
+
+  const onFileChange = async (file: File | undefined) => {
+    if (!file) return
+    setBusy(true)
+    setError(null)
+    const result = await ingestPortraitFile(file)
+    setBusy(false)
+    if (!result.ok) {
+      setError(result.error)
+      return
+    }
+    onSetDataUrl(result.dataUrl)
+    if (inputRef.current) inputRef.current.value = ''
+  }
+
+  return (
+    <div
+      className={`flex flex-1 flex-col overflow-hidden rounded-md border-2 bg-black ${borderClass}`}
+    >
+      <p className="border-b border-white/10 px-2 py-1 text-center text-[9px] font-semibold uppercase tracking-wide text-white/70">
+        {label}
+      </p>
+      <div className="relative flex min-h-[10rem] flex-1 items-center justify-center bg-black">
+        {dataUrl ? (
+          <img
+            src={dataUrl}
+            alt={label}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <p className="px-3 text-center text-[11px] text-white/40">No image yet</p>
+        )}
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-2 border-t border-white/10 bg-black/80 px-2 py-2">
+        <input
+          ref={inputRef}
+          id={inputId}
+          type="file"
+          accept={PORTRAIT_ACCEPT_ATTR}
+          className="sr-only"
+          aria-label={`Choose ${label} from device`}
+          onChange={(e) => void onFileChange(e.target.files?.[0])}
+        />
+        <button
+          type="button"
+          className={buttonClass}
+          disabled={busy}
+          onClick={pickFile}
+        >
+          {busy ? 'Working…' : dataUrl ? 'Change image' : 'Choose image'}
+        </button>
+        {dataUrl ? (
+          <button
+            type="button"
+            className={buttonClass}
+            disabled={busy}
+            onClick={() => {
+              setError(null)
+              onSetDataUrl(undefined)
+            }}
+          >
+            Clear
+          </button>
+        ) : null}
+      </div>
+      {error ? (
+        <p className="border-t border-rose-900/60 bg-rose-950/80 px-2 py-1 text-center text-[10px] text-rose-200">
+          {error}
+        </p>
+      ) : null}
+    </div>
+  )
+}
+
+function IdentityPortraitColumn({
+  dualForm,
+  portraits,
+  morphusActive,
+  onSetPortrait,
+}: {
+  dualForm: boolean
+  portraits: { primary?: string; morphus?: string }
+  morphusActive: boolean
+  onSetPortrait: (formKey: CharacterPortraitFormKey, dataUrl: string | undefined) => void
+}) {
+  const keys = portraitFormKeysForCharacter(dualForm)
+  return (
+    <div className="flex min-h-[16rem] flex-col gap-3">
+      {keys.map((formKey) => (
+        <IdentityPortraitSlot
+          key={formKey}
+          formKey={formKey}
+          dualForm={dualForm}
+          dataUrl={portraits[formKey]}
+          morphusActive={morphusActive}
+          onSetDataUrl={(dataUrl) => onSetPortrait(formKey, dataUrl)}
+        />
+      ))}
+    </div>
+  )
+}
+
 function IdentityFreeformTextBox({
   label,
   value,
@@ -646,13 +789,29 @@ export function IdentityHeader({
     character,
     activeRace,
     effectiveOcc,
+    supportsDualForm,
     setCharacterName,
     patchIdentityProfile,
+    setPortraitShareForPeer,
     addAlias,
     removeAlias,
     renameAlias,
   } = useCharacter()
   const [aliasDraft, setAliasDraft] = useState('')
+  const joinRuntime = useMemo(() => getSharedGmClientRuntime(), [])
+  const [joinState, setJoinState] = useState<GmClientRuntimeState>(() =>
+    joinRuntime.getState(),
+  )
+  useEffect(() => joinRuntime.subscribe(setJoinState), [joinRuntime])
+  const peerShareSeats =
+    joinState.status === 'joined'
+      ? joinState.seats.filter(
+          (s) =>
+            isSeatFullyJoined(s) &&
+            s.characterId &&
+            s.characterId !== character.id,
+        )
+      : []
 
   const isCreation = variant === 'creation'
   const [creationDetailsCollapsed, setCreationDetailsCollapsed] = useState(true)
@@ -917,7 +1076,7 @@ export function IdentityHeader({
           {/*
             Identity Expand: left traits + aliases, center freeform Description /
             Personality (persisted on identityProfile), right Character Image
-            placeholder (no image field yet).
+            (device picker; Nightbane = independent Facade + Morphus portraits).
           */}
           <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)]">
             <div className="min-w-0">
@@ -970,19 +1129,84 @@ export function IdentityHeader({
               />
             </div>
 
-            <div className="flex min-h-[16rem] flex-col">
-              <div
-                className={`flex flex-1 flex-col overflow-hidden rounded-md border-2 bg-black ${
-                  morphusActive ? 'border-violet-800' : 'border-slate-800'
-                }`}
-                role="img"
-                aria-label="Character image placeholder — no saved image field yet"
-              >
-                <p className="border-b border-white/10 px-2 py-1 text-center text-[9px] font-semibold uppercase tracking-wide text-white/70">
-                  Character Image
-                </p>
-                <div className="min-h-[12rem] flex-1 bg-black" />
-              </div>
+            <div className="flex min-h-[16rem] flex-col gap-3">
+              <IdentityPortraitColumn
+                dualForm={supportsDualForm}
+                portraits={profile.portraits ?? {}}
+                morphusActive={morphusActive}
+                onSetPortrait={(formKey, dataUrl) =>
+                  patch(identityProfileWithPortrait(profile, formKey, dataUrl))
+                }
+              />
+              {peerShareSeats.length > 0 ? (
+                <div
+                  className={`rounded-md border-2 px-2 py-2 ${
+                    morphusActive
+                      ? 'border-violet-800 bg-slate-950/60'
+                      : 'border-slate-300 bg-slate-50'
+                  }`}
+                >
+                  <p
+                    className={`text-[9px] font-bold uppercase tracking-wide ${
+                      morphusActive ? 'text-violet-300' : 'text-slate-600'
+                    }`}
+                  >
+                    Show my image to…
+                  </p>
+                  <p
+                    className={`mt-0.5 text-[10px] ${
+                      morphusActive ? 'text-violet-200/80' : 'text-slate-500'
+                    }`}
+                  >
+                    Off until you allow each player. Save to share at the table.
+                  </p>
+                  <ul className="mt-2 space-y-1.5">
+                    {peerShareSeats.map((seat) => {
+                      const peerId = seat.characterId!
+                      const label =
+                        peerFacingCharacterName(seat) ?? seat.displayName
+                      const allowed = isPortraitSharedWithPeer(
+                        character.portraitShareAllowCharacterIds,
+                        peerId,
+                      )
+                      return (
+                        <li
+                          key={peerId}
+                          className="flex items-center justify-between gap-2"
+                        >
+                          <span
+                            className={`truncate text-[11px] font-semibold ${
+                              morphusActive ? 'text-violet-50' : 'text-slate-800'
+                            }`}
+                          >
+                            {label}
+                          </span>
+                          <button
+                            type="button"
+                            role="switch"
+                            aria-checked={allowed}
+                            aria-label={`Show my image to ${label}`}
+                            onClick={() =>
+                              setPortraitShareForPeer(peerId, !allowed)
+                            }
+                            className={`shrink-0 rounded px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ${
+                              allowed
+                                ? morphusActive
+                                  ? 'bg-violet-600 text-white'
+                                  : 'bg-emerald-600 text-white'
+                                : morphusActive
+                                  ? 'bg-slate-800 text-violet-300'
+                                  : 'bg-slate-200 text-slate-600'
+                            }`}
+                          >
+                            {allowed ? 'On' : 'Off'}
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

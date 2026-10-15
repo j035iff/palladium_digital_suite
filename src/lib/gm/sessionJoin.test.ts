@@ -137,6 +137,7 @@ describe('presence reduce', () => {
       lastSeenAtMs: 1,
       characterId: null,
       projectedCharacterName: null,
+      portraitProjection: null,
     }
     expect(isSeatFullyJoined(seat)).toBe(false)
     expect(isSeatFullyJoined(seat, { requireCharacterId: false })).toBe(true)
@@ -443,6 +444,7 @@ describe('party overview join helpers', () => {
         lastSeenAtMs: 1,
         characterId: 'char_a',
         projectedCharacterName: 'Crow',
+        portraitProjection: null,
       },
       {
         deviceId: 'd2',
@@ -452,6 +454,7 @@ describe('party overview join helpers', () => {
         lastSeenAtMs: 1,
         characterId: null,
         projectedCharacterName: null,
+        portraitProjection: null,
       },
     ]
     expect(playerNameForPartyCharacter(seats, 'char_a')).toBe('Ada')

@@ -51,6 +51,7 @@ function slice(characterId: string, name: string): GmPartyObserverSlice {
     lockedSkillCount: 0,
     supportsDualForm: false,
     viewForm: 'primary',
+    portraitDataUrl: undefined,
     level: 1,
     hpCurrent: 10,
     hpMax: 10,

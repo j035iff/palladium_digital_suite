@@ -2430,6 +2430,15 @@ export type CharacterIdentityProfile = {
   description?: string
   /** Freeform personality notes (player text; not a catalog field). */
   personality?: string
+  /**
+   * Device-picked portraits (data URLs). Unified Path: `primary` = single-form
+   * character image or Nightbane Facade; `morphus` = Nightbane Morphus only.
+   * Active-form display resolves via `resolveActivePortrait`.
+   */
+  portraits?: {
+    primary?: string
+    morphus?: string
+  }
 }
 
 /** Alternate display name the player may project at Join Table (peers see this). */
@@ -2490,6 +2499,12 @@ export type Character = {
    * Persisted as last join choice; coerced when the alias is removed.
    */
   tableProjectedAliasId?: string | null
+  /**
+   * Peer character ids allowed to see this character’s portrait on their sheet
+   * People list. Empty / omitted = off (safer default). Save-gated; projects
+   * onto the join seat via party.snapshot like other peer-visible identity.
+   */
+  portraitShareAllowCharacterIds?: string[]
   /**
    * Character tier (1..15). Sheet level; ritual modal advances this when XP thresholds are met
    * (master_flow.md progression).

@@ -21,6 +21,7 @@ import {
 import { computeSaveProfile } from '../saveProfile'
 import { migrateCharacterSave } from '../characterMigrate'
 import { ensureCharacterRoot } from '../characterRoot'
+import { resolveActivePortrait } from '../characterPortraits'
 import { transformCharacterToHostEnvironment } from '../../utils/genreTransformer'
 import type { ActiveForm, CharacterRootState, DerivedSheetSkill } from '../../types'
 import type { GmConversionPolicy } from './sessionTypes'
@@ -56,6 +57,8 @@ export type GmPartyObserverSlice = {
   lockedSkillCount: number
   supportsDualForm: boolean
   viewForm: ActiveForm
+  /** Active-form portrait data URL (GM Hub always shows; peers use allowlist). */
+  portraitDataUrl: string | undefined
   level: number
   hpCurrent: number
   hpMax: number
@@ -210,6 +213,10 @@ export function buildPartyObserverSlice(
     lockedSkillCount,
     supportsDualForm,
     viewForm: form,
+    portraitDataUrl: resolveActivePortrait(
+      derived.identityProfile?.portraits,
+      form,
+    ),
     level: derived.level ?? 1,
     hpCurrent: branch.hitPoints.current,
     hpMax: branch.hitPoints.maximum,

@@ -39,6 +39,10 @@ import {
   type CampaignsSubTabId,
   type LiveSheetCampaign,
 } from '../../lib/liveSheetCampaigns'
+import { isSeatFullyJoined } from '../../lib/gm/sessionPresence'
+import { resolvePeerVisiblePortrait } from '../../lib/characterPortraits'
+import { peerFacingCharacterName } from '../../lib/gm/tableProjectedName'
+import { CharacterPortraitThumb } from './CharacterPortraitThumb'
 
 /**
  * Campaigns mode Home — forever campaign pills (name-keyed) + per-campaign
@@ -51,6 +55,16 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
   const [clientState, setClientState] = useState<GmClientRuntimeState>(() =>
     runtime.getState(),
   )
+  const viewerCharacterId = character.id
+  const tablePeerSeats =
+    clientState.status === 'joined'
+      ? clientState.seats.filter(
+          (s) =>
+            isSeatFullyJoined(s) &&
+            s.characterId &&
+            s.characterId !== viewerCharacterId,
+        )
+      : []
   const [activeCampaignKey, setActiveCampaignKey] = useState<string | null>(
     null,
   )
@@ -415,6 +429,61 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
           </div>
         ) : null}
       </div>
+
+      {subTab === 'people' && tablePeerSeats.length > 0 ? (
+        <div className="space-y-2">
+          <h2
+            className={`text-xs font-black uppercase tracking-[0.2em] ${
+              morphus ? 'text-violet-300' : 'text-blue-800'
+            }`}
+          >
+            At this table
+          </h2>
+          <ul className="space-y-2" aria-label="Players at this table">
+            {tablePeerSeats.map((seat) => {
+              const name =
+                peerFacingCharacterName(seat) ?? seat.displayName
+              const portrait = resolvePeerVisiblePortrait(
+                {
+                  portraits: seat.portraitProjection?.portraits,
+                  portraitShareAllowCharacterIds:
+                    seat.portraitProjection?.portraitShareAllowCharacterIds,
+                },
+                viewerCharacterId,
+                'primary',
+              )
+              return (
+                <li
+                  key={seat.deviceId}
+                  className={`flex items-center gap-3 rounded-xl border-2 px-3 py-2 ${
+                    morphus
+                      ? 'border-violet-800 bg-slate-950/60'
+                      : 'border-slate-200 bg-white'
+                  }`}
+                >
+                  <CharacterPortraitThumb dataUrl={portrait} label={name} />
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className={`truncate text-sm font-semibold ${
+                        morphus ? 'text-violet-50' : 'text-slate-900'
+                      }`}
+                    >
+                      {name}
+                    </p>
+                    <p
+                      className={`text-[10px] ${
+                        morphus ? 'text-violet-300/80' : 'text-slate-500'
+                      }`}
+                    >
+                      {seat.displayName}
+                    </p>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ) : null}
 
       {!activeCampaign ? null : subTab === 'notes' ? (
         wikiAdapter ? (

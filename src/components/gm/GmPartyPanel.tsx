@@ -12,6 +12,7 @@ import { GmContentLinkedNotesField } from './GmContentLinkedNotesField'
 import { GmGroupChatSection } from './GmGroupChatSection'
 import { GmPartySummaryFields } from './GmPartySummaryFields'
 import { GmSeatDmPanel } from './GmSeatDmPanel'
+import { CharacterPortraitThumb } from '../live/CharacterPortraitThumb'
 
 export function GmPartyPanel() {
   const {
@@ -166,12 +167,19 @@ export function GmPartyPanel() {
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-bold text-white">{pc.name}</p>
-                      <p className="text-[10px] uppercase tracking-wide text-slate-500">
-                        Lv {pc.level} · {pc.creationGenreLabel}
-                        {pc.crossGenre ? ` → ${pc.hostGenreLabel}` : ''}
-                      </p>
+                    <div className="flex min-w-0 flex-1 items-start gap-2">
+                      <CharacterPortraitThumb
+                        dataUrl={pc.portraitDataUrl}
+                        label={pc.name}
+                        sizeClass="h-14 w-14"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-bold text-white">{pc.name}</p>
+                        <p className="text-[10px] uppercase tracking-wide text-slate-500">
+                          Lv {pc.level} · {pc.creationGenreLabel}
+                          {pc.crossGenre ? ` → ${pc.hostGenreLabel}` : ''}
+                        </p>
+                      </div>
                     </div>
                     <div className="flex shrink-0 flex-col items-end gap-1">
                       {playerName ? (

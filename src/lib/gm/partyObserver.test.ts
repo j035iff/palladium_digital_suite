@@ -29,6 +29,10 @@ describe('GM party observer', () => {
     expect(Array.isArray(slice.abilities)).toBe(true)
     expect(typeof slice.ppeMax).toBe('number')
     expect(typeof slice.ispMax).toBe('number')
+    expect(
+      slice.portraitDataUrl === undefined ||
+        typeof slice.portraitDataUrl === 'string',
+    ).toBe(true)
   })
 
   it('apply_conversion still refuses to claim structural mapping exists', () => {

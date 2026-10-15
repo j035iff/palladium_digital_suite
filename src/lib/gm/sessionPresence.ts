@@ -11,7 +11,15 @@
  * attached (`party.snapshot`). Socket-up without `characterId` stays `joining`.
  */
 
+import type { CharacterIdentityPortraits } from '../characterPortraits'
+
 export type GmSeatStatus = 'joining' | 'connected' | 'reconnecting'
+
+/** Peer-facing portrait projection carried on presence (from party.snapshot). */
+export type GmSeatPortraitProjection = {
+  portraits: CharacterIdentityPortraits
+  portraitShareAllowCharacterIds: string[]
+}
 
 /** Wire `connected` = fully joined at the table (UI maps to green). */
 export type GmSeat = {
@@ -27,6 +35,11 @@ export type GmSeat = {
    * GM Hub continues to use canonical `character.name` from party.snapshot JSON.
    */
   projectedCharacterName: string | null
+  /**
+   * Peer-facing portraits + per-peer allowlist from the joiner’s last
+   * party.snapshot (Save-gated). Clients filter with {@link resolvePeerVisiblePortrait}.
+   */
+  portraitProjection: GmSeatPortraitProjection | null
 }
 
 export type GmPresenceState = {
@@ -154,6 +167,7 @@ export function grantOrReclaimSeat(
     lastSeenAtMs: atMs,
     characterId: null,
     projectedCharacterName: null,
+    portraitProjection: null,
   }
   return { ...presence, seats: [...presence.seats, seat] }
 }
@@ -186,13 +200,14 @@ export function kickSeat(
 
 /**
  * Attach character from party.snapshot and complete join (`joining` → `connected`).
- * `projectedCharacterName` is what peers see; omit / null keeps prior or clears.
+ * `projectedCharacterName` / portrait projection are what peers see; omit keeps prior.
  */
 export function attachSeatCharacter(
   presence: GmPresenceState,
   deviceId: string,
   characterId: string,
   projectedCharacterName?: string | null,
+  portraitProjection?: GmSeatPortraitProjection | null,
 ): GmPresenceState {
   if (!findSeat(presence, deviceId)) return presence
   const projected =
@@ -201,6 +216,10 @@ export function attachSeatCharacter(
       : projectedCharacterName === null
         ? null
         : undefined
+  const portraits =
+    portraitProjection === undefined
+      ? undefined
+      : portraitProjection
   return {
     ...presence,
     seats: presence.seats.map((s) =>
@@ -213,6 +232,8 @@ export function attachSeatCharacter(
               projected !== undefined
                 ? projected
                 : s.projectedCharacterName,
+            portraitProjection:
+              portraits !== undefined ? portraits : s.portraitProjection,
           }
         : s,
     ),

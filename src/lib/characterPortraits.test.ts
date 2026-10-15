@@ -1,0 +1,134 @@
+import { describe, expect, it } from 'vitest'
+import {
+  extractPeerPortraitProjection,
+  identityProfileWithPortrait,
+  isAcceptedPortraitMimeType,
+  isPortraitSharedWithPeer,
+  normalizeIdentityPortraits,
+  normalizePortraitShareAllowIds,
+  portraitFormKeysForCharacter,
+  portraitSlotLabel,
+  resolveActivePortrait,
+  resolvePeerVisiblePortrait,
+  setPortraitShareForPeer,
+  withPortraitForForm,
+  PORTRAIT_TYPE_ERROR,
+  ingestPortraitFile,
+} from './characterPortraits'
+
+describe('characterPortraits', () => {
+  it('accepts jpeg/png/webp only', () => {
+    expect(isAcceptedPortraitMimeType('image/jpeg')).toBe(true)
+    expect(isAcceptedPortraitMimeType('image/png')).toBe(true)
+    expect(isAcceptedPortraitMimeType('image/webp')).toBe(true)
+    expect(isAcceptedPortraitMimeType('image/gif')).toBe(false)
+    expect(isAcceptedPortraitMimeType('application/pdf')).toBe(false)
+    expect(isAcceptedPortraitMimeType('')).toBe(false)
+  })
+
+  it('normalizes missing or invalid portrait payloads', () => {
+    expect(normalizeIdentityPortraits(undefined)).toEqual({})
+    expect(
+      normalizeIdentityPortraits({
+        primary: 'not-a-data-url',
+        morphus: 'data:image/jpeg;base64,abc',
+      }),
+    ).toEqual({ morphus: 'data:image/jpeg;base64,abc' })
+  })
+
+  it('resolves active-form portrait (Facade vs Morphus)', () => {
+    const portraits = {
+      primary: 'data:image/jpeg;base64,facade',
+      morphus: 'data:image/jpeg;base64,morphus',
+    }
+    expect(resolveActivePortrait(portraits, 'primary')).toBe(
+      'data:image/jpeg;base64,facade',
+    )
+    expect(resolveActivePortrait(portraits, 'morphus')).toBe(
+      'data:image/jpeg;base64,morphus',
+    )
+    expect(resolveActivePortrait({ primary: portraits.primary }, 'morphus')).toBe(
+      undefined,
+    )
+  })
+
+  it('sets Facade and Morphus portraits independently', () => {
+    const facade = withPortraitForForm({}, 'primary', 'data:image/jpeg;base64,a')
+    const both = withPortraitForForm(facade, 'morphus', 'data:image/jpeg;base64,b')
+    expect(both).toEqual({
+      primary: 'data:image/jpeg;base64,a',
+      morphus: 'data:image/jpeg;base64,b',
+    })
+    const clearedMorphus = withPortraitForForm(both, 'morphus', undefined)
+    expect(clearedMorphus).toEqual({ primary: 'data:image/jpeg;base64,a' })
+  })
+
+  it('labels slots for Familiar Surface (no engine form keys)', () => {
+    expect(portraitSlotLabel('primary', false)).toBe('Character Image')
+    expect(portraitSlotLabel('primary', true)).toBe('Facade Image')
+    expect(portraitSlotLabel('morphus', true)).toBe('Morphus Image')
+    expect(portraitFormKeysForCharacter(false)).toEqual(['primary'])
+    expect(portraitFormKeysForCharacter(true)).toEqual(['primary', 'morphus'])
+  })
+
+  it('patches identityProfile.portraits without wiping the other form', () => {
+    const patch = identityProfileWithPortrait(
+      {
+        sex: '',
+        age: '',
+        heightFeet: '',
+        heightInches: '',
+        weightLbs: '',
+        eyes: '',
+        hair: '',
+        portraits: { primary: 'data:image/jpeg;base64,a' },
+      },
+      'morphus',
+      'data:image/jpeg;base64,b',
+    )
+    expect(patch.portraits).toEqual({
+      primary: 'data:image/jpeg;base64,a',
+      morphus: 'data:image/jpeg;base64,b',
+    })
+  })
+
+  it('rejects unsupported device file types before decode', async () => {
+    const file = new File(['x'], 'notes.txt', { type: 'text/plain' })
+    const result = await ingestPortraitFile(file)
+    expect(result).toEqual({ ok: false, error: PORTRAIT_TYPE_ERROR })
+  })
+
+  it('defaults portrait share allowlist to off (safer)', () => {
+    expect(normalizePortraitShareAllowIds(undefined)).toEqual([])
+    expect(isPortraitSharedWithPeer(undefined, 'char_b')).toBe(false)
+    expect(isPortraitSharedWithPeer(['char_b'], 'char_b')).toBe(true)
+    expect(setPortraitShareForPeer([], 'char_b', true)).toEqual(['char_b'])
+    expect(setPortraitShareForPeer(['char_b'], 'char_b', false)).toEqual([])
+  })
+
+  it('resolves peer-visible portrait only when allowlisted', () => {
+    const subject = {
+      portraits: { primary: 'data:image/jpeg;base64,a' },
+      portraitShareAllowCharacterIds: ['char_b'],
+    }
+    expect(resolvePeerVisiblePortrait(subject, 'char_b')).toBe(
+      'data:image/jpeg;base64,a',
+    )
+    expect(resolvePeerVisiblePortrait(subject, 'char_c')).toBeUndefined()
+    expect(resolvePeerVisiblePortrait(subject, 'char_b', 'morphus')).toBeUndefined()
+  })
+
+  it('extracts portrait projection from party.snapshot JSON', () => {
+    expect(
+      extractPeerPortraitProjection({
+        identityProfile: {
+          portraits: { primary: 'data:image/jpeg;base64,x' },
+        },
+        portraitShareAllowCharacterIds: ['peer_1'],
+      }),
+    ).toEqual({
+      portraits: { primary: 'data:image/jpeg;base64,x' },
+      portraitShareAllowCharacterIds: ['peer_1'],
+    })
+  })
+})

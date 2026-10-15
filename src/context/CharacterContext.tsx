@@ -131,6 +131,7 @@ import {
   renameCharacterAlias,
   TABLE_PROJECTED_REAL_NAME_ID,
 } from '../lib/characterAliases'
+import { setPortraitShareForPeer as nextPortraitShareAllowIds } from '../lib/characterPortraits'
 import {
   deriveMovementStats,
   type DerivedMovementStats,
@@ -380,6 +381,8 @@ type CharacterContextValue = {
   renameAlias: (aliasId: string, name: string) => void
   /** Empty string / null = project real character name at the table. */
   setTableProjectedAliasId: (aliasId: string | null) => void
+  /** Per-peer portrait allowlist (People thumbnails); dirty until Save. */
+  setPortraitShareForPeer: (peerCharacterId: string, allowed: boolean) => void
   /** @see getVitalityType — true when active form is on the M.D.C. track (combat_logic.md §1). */
   isMDC: boolean
   /** Psychic Gate tier (psychic_gate.md); drives save target & skill tax. */
@@ -2998,6 +3001,20 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const setPortraitShareForPeer = useCallback(
+    (peerCharacterId: string, allowed: boolean) => {
+      setRawCharacter((prev) => ({
+        ...prev,
+        portraitShareAllowCharacterIds: nextPortraitShareAllowIds(
+          prev.portraitShareAllowCharacterIds,
+          peerCharacterId,
+          allowed,
+        ),
+      }))
+    },
+    [],
+  )
+
   const finalizeCharacter = useCallback(() => {
     setRawCharacter((prev) => {
       const race = getRaceById(
@@ -3226,6 +3243,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeAlias,
       renameAlias,
       setTableProjectedAliasId,
+      setPortraitShareForPeer,
       isMDC,
       psychicTier,
       skillSlotMultiplier,
@@ -3396,6 +3414,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       removeAlias,
       renameAlias,
       setTableProjectedAliasId,
+      setPortraitShareForPeer,
       isMDC,
       psychicTier,
       skillSlotMultiplier,

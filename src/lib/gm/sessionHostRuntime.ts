@@ -18,6 +18,7 @@ import {
   resolveGmCanonicalCharacterName,
   resolveProjectedNameFromSnapshot,
 } from './tableProjectedName'
+import { extractPeerPortraitProjection } from '../characterPortraits'
 import {
   createGmEnvelope,
   gmHelloPayloadFromCampaign,
@@ -660,6 +661,9 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
       const projectedCharacterName = resolveProjectedNameFromSnapshot(
         payload.characterJson,
       )
+      const portraitProjection = extractPeerPortraitProjection(
+        payload.characterJson,
+      )
       const seatBefore = findSeat(state.presence, deviceId)
       hooks.applyPartySnapshot(payload.characterId, label, {
         playerLabel: seatBefore?.displayName ?? null,
@@ -670,6 +674,7 @@ export function createGmHostRuntime(hooks: GmHostRuntimeHooks): GmHostRuntime {
         deviceId,
         payload.characterId,
         projectedCharacterName,
+        portraitProjection,
       )
       state = { ...state, presence }
       if (transport) emitPresence(transport, session.id, presence, hooks)

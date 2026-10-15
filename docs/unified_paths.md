@@ -235,8 +235,9 @@ Copy this block when registering a new unified path:
 | Wiki editor | `ContentLinkedNotesField` + `contentLinks` / `contentLinkEditorDom` / `narrativePlaceholders` | `ContentLinkWikiAdapter`, `wikiBagFromPlaceholders`, `remapContentLinkIds` | Same `[[kind:id\|label]]` pipeline as Hub; sheet injects adapter; Hub wraps via `GmContentLinkedNotesField` |
 | Chrome UI | `MainLayout`, `LiveSheetChromeStrip`, `LiveSheetTabOverlay` | Identity → strip → mode → body | Overlay reuses `LiveSheetTabBody` |
 | Mode Homes | `CampaignsHome`, `CombatHUD` | Per-campaign PPTN + Notes; combat vitals + bubbles | One body pipeline per tab id; vitals in strip **and** Combat Home |
+| Identity portraits | `src/lib/characterPortraits.ts` | `normalizeIdentityPortraits`, `resolveActivePortrait`, `resolvePeerVisiblePortrait`, `ingestPortraitFile`, `identityProfileWithPortrait`, `extractPeerPortraitProjection` | Device picker on Identity Expand; `identityProfile.portraits.primary` (+ `.morphus` for Nightbane); per-peer allowlist `portraitShareAllowCharacterIds` (default off); seat `portraitProjection` from party.snapshot; sheet People + GM At-the-table thumbs |
 
-**Modes / variants:** Facade/Morphus via existing live stack. Overlay tabs are mode-agnostic projections of the same panels. Do not fork Story vs Combat math or a second joined-sheet shell.
+**Modes / variants:** Facade/Morphus via existing live stack. Overlay tabs are mode-agnostic projections of the same panels. Do not fork Story vs Combat math or a second joined-sheet shell. Identity portraits: single-form uses `primary` only; dual-form stores Facade/Morphus independently and resolves the active form via `resolveActivePortrait`.
 
 **Extension guide:** Add strip overlays via `LIVE_SHEET_OVERLAY_TAB_ORDER` + `LiveSheetTabBody` branches — never a parallel panel host. Extend `ContentLinkedNotesField` + shared content-link builders for wiki UX — do not fork a sheet-only editor or Hub host chrome. Campaign tab CRUD stays in `liveSheetCampaigns` + character `sheetCampaigns` (player-side journals are not `pds:gmSession:*`).
 
@@ -354,6 +355,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-15 | Identity Character Image: device picker + Nightbane Facade/Morphus; per-peer People share allowlist (default off); party.snapshot → seat `portraitProjection`; sheet People + GM At-the-table thumbs |
 | 2026-10-09 | Bonuses: Nightbane extras pin **Save vs Becoming** first; overlay tooltips clamp/flip via `clampOverlayTooltipPosition` (no spill) |
 | 2026-10-09 | Bonuses: Nightbane dynamic extras always pin **Save vs Becoming** first (row shows even if alone); non-Nightbane unchanged |
 | 2026-10-09 | Bonuses: Disease TN **14** in SoT + overlay; Mind Control **Immune**; Illusions/Possession omit TN; HF save-bonus only; extras row stays hidden until needed |

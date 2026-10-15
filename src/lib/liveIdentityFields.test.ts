@@ -18,6 +18,7 @@ describe('live identity field inventory', () => {
       'heightFeet',
       'heightInches',
       'personality',
+      'portraits',
       'sex',
       'weightLbs',
     ])
@@ -35,13 +36,22 @@ describe('live identity field inventory', () => {
     })
     expect(legacy.description).toBe('')
     expect(legacy.personality).toBe('')
+    expect(legacy.portraits).toEqual({})
 
     const filled = normalizeIdentityProfile({
       ...legacy,
       description: 'Tall scout',
       personality: 'Dry wit',
+      portraits: {
+        primary: 'data:image/jpeg;base64,facade',
+        morphus: 'data:image/jpeg;base64,morphus',
+      },
     })
     expect(filled.description).toBe('Tall scout')
     expect(filled.personality).toBe('Dry wit')
+    expect(filled.portraits).toEqual({
+      primary: 'data:image/jpeg;base64,facade',
+      morphus: 'data:image/jpeg;base64,morphus',
+    })
   })
 })

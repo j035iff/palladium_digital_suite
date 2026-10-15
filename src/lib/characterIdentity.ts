@@ -3,6 +3,7 @@ import type {
   MorphusCharacteristic,
   MorphusPolymorphicModifier,
 } from '../types'
+import { normalizeIdentityPortraits } from './characterPortraits'
 import { resolveStatWithPolymorphicModifiers } from './morphusPolymorphicResolver'
 
 export const CHARACTER_NAME_PLACEHOLDER = 'Enter Character Name'
@@ -23,6 +24,7 @@ export const EMPTY_CHARACTER_IDENTITY_PROFILE: CharacterIdentityProfile = {
   hair: '',
   description: '',
   personality: '',
+  portraits: {},
 }
 
 export function normalizeIdentityProfile(
@@ -35,6 +37,7 @@ export function normalizeIdentityProfile(
       typeof profile?.description === 'string' ? profile.description : '',
     personality:
       typeof profile?.personality === 'string' ? profile.personality : '',
+    portraits: normalizeIdentityPortraits(profile?.portraits),
   }
 }
 
