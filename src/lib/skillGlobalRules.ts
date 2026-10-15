@@ -96,6 +96,7 @@ function catalogAbilities(skillId: string): CatalogAbility[] {
 /**
  * Named abilities shared by two or more selected skills in one similar-skill group.
  * Returns null when this name is not duplicated.
+ * Copies are unique per skillId (overlapping groups do not double-count).
  */
 export function resolveDuplicateAbilityCopies(
   abilityName: string,
@@ -105,13 +106,14 @@ export function resolveDuplicateAbilityCopies(
   const key = normalizeAbilityName(abilityName)
   if (!key) return null
   const owned = new Set(ownedSkillIds)
-  const copies: DuplicateAbilityCopy[] = []
+  const bySkillId = new Map<string, DuplicateAbilityCopy>()
 
   for (const group of groups) {
     if (group.duplicateAbilities.resolution !== 'best') continue
     const present = group.skillIds.filter((id) => owned.has(id))
     if (present.length < 2) continue
     for (const skillId of present) {
+      if (bySkillId.has(skillId)) continue
       const skillName =
         getPalladiumSkillCatalogEntryById(skillId)?.name ?? skillId
       for (const ability of catalogAbilities(skillId)) {
@@ -122,7 +124,7 @@ export function resolveDuplicateAbilityCopies(
           typeof ability.percentPerLevel === 'number'
             ? ability.percentPerLevel
             : 5
-        copies.push({
+        bySkillId.set(skillId, {
           skillId,
           skillName,
           name,
@@ -134,10 +136,12 @@ export function resolveDuplicateAbilityCopies(
             characterLevel,
           ),
         })
+        break
       }
     }
   }
 
+  const copies = [...bySkillId.values()]
   if (copies.length < 2) return null
   const top = Math.max(...copies.map((copy) => copy.proficiency))
   return {
@@ -231,5 +235,5 @@ export function similarSkillGroupPlayerNote(
   const owned = new Set(ownedSkillIds)
   const present = group.skillIds.filter((id) => owned.has(id))
   if (present.length < 2) return null
-  return `${group.label}: bonuses and pluses are added. Shared abilities such as back flip and climb rope use the best proficiency only, and the educational bonus is applied once. Prowl and Climb from these skills do not increase with level unless Prowl or Climbing is also selected.`
+  return `${group.label}: bonuses and pluses are added. Shared abilities (including Sense of Balance) use the best proficiency only, and the educational bonus is applied once. Prowl and Climb from Acrobatics/Gymnastics do not increase with level unless Prowl or Climbing is also selected.`
 }

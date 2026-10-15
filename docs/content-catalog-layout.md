@@ -29,7 +29,7 @@ Where authored JSON lives under `src/data/content/`, how loaders discover it, an
 | `hand_to_hand.json` | `skills/` (root) | Hand-to-Hand combat catalog — **exception:** first-class pool at root |
 | `weapon_proficiencies.json` | `skills/` (root) | W.P. catalog — **exception:** first-class pool at root |
 | `skill_trait_registry.json` | `skills/utils/` | Trait id definitions for Morphus / penalties |
-| `skill_global_rules.json` | `skills/utils/` | How similar skills combine (Acrobatics and Gymnastics: bonuses add, duplicated abilities take the best, bundled Prowl/Climb do not rise with level) |
+| `skill_global_rules.json` | `skills/utils/` | How similar skills combine (Acrobatics/Gymnastics bonuses add; duplicated abilities take the best; Aerobic Athletics Sense of Balance joins that pool; bundled Prowl/Climb do not rise with level) |
 | `standard_modern_weapon_progression.json` | `skills/utils/` | Shared modern W.P. level ladder document |
 
 Loaders: `skillsCatalogLoader.ts` skips root ancillary files via `isSkillCategoryCatalogFile()` (`hand_to_hand.json`, `weapon_proficiencies.json` only).

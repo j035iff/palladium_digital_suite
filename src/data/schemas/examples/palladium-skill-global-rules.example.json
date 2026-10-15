@@ -4,8 +4,12 @@
   "similarSkillGroups": [
     {
       "id": "acrobatics_gymnastics",
-      "label": "Acrobatics and Gymnastics",
-      "skillIds": ["skill_acrobatics", "skill_gymnastics"],
+      "label": "Acrobatics, Gymnastics, and Aerobic Athletics",
+      "skillIds": [
+        "skill_acrobatics",
+        "skill_gymnastics",
+        "skill_aerobic_athletics"
+      ],
       "stackPhysicalBonuses": true,
       "duplicateAbilities": {
         "resolution": "best",
@@ -21,7 +25,7 @@
           "increasesWithLevelOnlyIfSelected": true
         }
       ],
-      "notes": "If both selected, add physical bonuses. Duplicated abilities use the best proficiency; educational bonus once. Bundled Prowl/Climb do not increase with level unless separately selected."
+      "notes": "If Acrobatics and Gymnastics are selected, add physical bonuses. Duplicated abilities use the best proficiency; educational bonus once. Sense of Balance from Aerobic Athletics joins that best-of pool. Bundled Prowl/Climb from Acrobatics/Gymnastics do not increase with level unless separately selected."
     }
   ]
 }

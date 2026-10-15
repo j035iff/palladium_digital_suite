@@ -35,16 +35,55 @@ describe('Acrobatics and Gymnastics global rules', () => {
     expect(balance?.best[0]?.proficiency).toBeLessThan(summed)
   })
 
-  it('leaves a unique ability and a skill outside the group alone', () => {
+  it('leaves a unique ability alone', () => {
     expect(
       resolveDuplicateAbilityCopies('Walk tightrope or high wire', both, 1),
     ).toBeNull()
+  })
+
+  it('puts Aerobic Athletics Sense of Balance in the same best-of pool', () => {
+    const acroAerobic = resolveDuplicateAbilityCopies(
+      'Sense of Balance',
+      ['skill_acrobatics', 'skill_aerobic_athletics'],
+      1,
+    )
+    expect(acroAerobic?.copies).toHaveLength(2)
+    expect(acroAerobic?.best.map((copy) => copy.skillId)).toEqual([
+      'skill_acrobatics',
+    ])
+    expect(acroAerobic?.best[0]?.proficiency).toBe(60)
     expect(
-      resolveDuplicateAbilityCopies('Sense of balance', [
-        'skill_acrobatics',
+      resolveDuplicateAbilitySeeOther(
         'skill_aerobic_athletics',
-      ], 1),
-    ).toBeNull()
+        'Sense of Balance',
+        ['skill_acrobatics', 'skill_aerobic_athletics'],
+        1,
+      ),
+    ).toEqual({
+      winnerSkillId: 'skill_acrobatics',
+      winnerSkillName: 'Acrobatics',
+    })
+
+    const allThree = resolveDuplicateAbilityCopies(
+      'sense of balance',
+      ['skill_acrobatics', 'skill_gymnastics', 'skill_aerobic_athletics'],
+      1,
+    )
+    expect(allThree?.copies).toHaveLength(3)
+    expect(allThree?.best.map((copy) => copy.skillId)).toEqual([
+      'skill_acrobatics',
+    ])
+    expect(
+      resolveDuplicateAbilitySeeOther(
+        'skill_gymnastics',
+        'Sense of balance',
+        ['skill_acrobatics', 'skill_gymnastics', 'skill_aerobic_athletics'],
+        1,
+      ),
+    ).toEqual({
+      winnerSkillId: 'skill_acrobatics',
+      winnerSkillName: 'Acrobatics',
+    })
   })
 
   it('states that the educational bonus applies once on the best proficiency', () => {

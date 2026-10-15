@@ -57,7 +57,7 @@ Physical skill bonuses (S.D.C., attributes) are staged, then committed in phases
 
 ---
 
-## 5. Similar skills (Acrobatics and Gymnastics)
+## 5. Similar skills (Acrobatics, Gymnastics, Aerobic Athletics)
 
 Authority: `src/data/content/skills/utils/skill_global_rules.json`.
 
@@ -69,6 +69,8 @@ Acrobatics and Gymnastics give similar abilities and bonuses. When both are sele
 - **Bundled Prowl and Climb do not rise with level** unless Prowl and/or Climbing are also selected as their own skills. A grant uses the fixed starting percent (Climbing: Acrobatics 40% or Gymnastics 25%, whichever source is present and higher; Prowl: 30% from either). If the separate skill is selected, use that skill's own ladder, add each physical skill's bonus-if-already-have (+15% / +7% Climbing, +5% Prowl from each), and apply the educational bonus once.
 
 Abilities that exist on only one of the two skills (tightrope, parallel bars and rings) stay on that skill.
+
+**Sense of Balance (Joe 2026-10-15):** Aerobic Athletics Sense of Balance joins the same best-of pool as Acrobatics / Gymnastics Sense of Balance. If more than one of these skills is known, use the highest proficiency; losers use the black-dash **See {winner}** UI.
 
 ---
 

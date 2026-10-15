@@ -306,7 +306,7 @@ See `skill_history` in `technical.json`.
 
 Parent may still carry `physicalSkillBonuses` at root. See `skill_acrobatics` in `physical.json`.
 
-**Acrobatics and Gymnastics together:** do not sum shared sub-task percentages in the catalog. Combination rules live in `skills/utils/skill_global_rules.json` (best proficiency, educational bonus once, bundled Prowl/Climb do not gain percent-per-level unless selected as their own skills). See `docs/skill_selection.md` §5.
+**Acrobatics / Gymnastics / Aerobic Athletics:** do not sum shared sub-task percentages in the catalog. Combination rules live in `skills/utils/skill_global_rules.json` (best proficiency, educational bonus once; Sense of Balance also includes Aerobic Athletics; bundled Prowl/Climb from Acrobatics/Gymnastics do not gain percent-per-level unless selected as their own skills). See `docs/skill_selection.md` §5.
 
 **Master equation at runtime:** `../skill_selection.md`, `src/lib/skillPercentResolution.ts`.
 
