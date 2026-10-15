@@ -3,8 +3,14 @@
  * Single-form characters use `primary` only; Nightbane dual-form stores
  * Facade (`primary`) and Morphus (`morphus`) independently. Active-form
  * display resolves through {@link resolveActivePortrait}.
+ * Portrait window size (corner-drag + aspect fit on pick) lives on
+ * `identityProfile.portraitWindows` — Save-gated with the character.
  */
-import type { ActiveForm, CharacterIdentityProfile } from '../types'
+import type {
+  ActiveForm,
+  CharacterIdentityProfile,
+  CharacterPortraitWindowSize,
+} from '../types'
 
 export type CharacterPortraitFormKey = 'primary' | 'morphus'
 
@@ -13,6 +19,26 @@ export type CharacterIdentityPortraits = {
   primary?: string
   morphus?: string
 }
+
+/** Per-form Character Image window sizes. */
+export type CharacterPortraitWindows = {
+  primary?: CharacterPortraitWindowSize
+  morphus?: CharacterPortraitWindowSize
+}
+
+/**
+ * Default Identity Expand portrait window.
+ * Joe 2026-10-15: at least **double** the prior ~11rem×10rem (~176×160) default → 352×320.
+ */
+export const PORTRAIT_WINDOW_DEFAULT: CharacterPortraitWindowSize = {
+  widthPx: 352,
+  heightPx: 320,
+}
+
+export const PORTRAIT_WINDOW_MIN_WIDTH_PX = 120
+export const PORTRAIT_WINDOW_MIN_HEIGHT_PX = 120
+export const PORTRAIT_WINDOW_MAX_WIDTH_PX = 480
+export const PORTRAIT_WINDOW_MAX_HEIGHT_PX = 560
 
 export const ACCEPTED_PORTRAIT_MIME_TYPES = [
   'image/jpeg',
@@ -65,6 +91,141 @@ export function normalizeIdentityPortraits(
   if (primary) out.primary = primary
   if (morphus) out.morphus = morphus
   return out
+}
+
+function clampInt(value: number, min: number, max: number): number {
+  if (!Number.isFinite(value)) return min
+  return Math.min(max, Math.max(min, Math.round(value)))
+}
+
+/** Clamp a portrait window to sheet-safe min/max. */
+export function clampPortraitWindowSize(
+  size: CharacterPortraitWindowSize | undefined | null,
+  fallback: CharacterPortraitWindowSize = PORTRAIT_WINDOW_DEFAULT,
+): CharacterPortraitWindowSize {
+  const widthPx = clampInt(
+    size?.widthPx ?? fallback.widthPx,
+    PORTRAIT_WINDOW_MIN_WIDTH_PX,
+    PORTRAIT_WINDOW_MAX_WIDTH_PX,
+  )
+  const heightPx = clampInt(
+    size?.heightPx ?? fallback.heightPx,
+    PORTRAIT_WINDOW_MIN_HEIGHT_PX,
+    PORTRAIT_WINDOW_MAX_HEIGHT_PX,
+  )
+  return { widthPx, heightPx }
+}
+
+export function normalizePortraitWindowSize(
+  size?: CharacterPortraitWindowSize | null,
+): CharacterPortraitWindowSize | undefined {
+  if (!size || typeof size !== 'object') return undefined
+  if (typeof size.widthPx !== 'number' || typeof size.heightPx !== 'number') {
+    return undefined
+  }
+  if (!Number.isFinite(size.widthPx) || !Number.isFinite(size.heightPx)) {
+    return undefined
+  }
+  return clampPortraitWindowSize(size)
+}
+
+export function normalizePortraitWindows(
+  windows?: CharacterPortraitWindows | null,
+): CharacterPortraitWindows {
+  const primary = normalizePortraitWindowSize(windows?.primary)
+  const morphus = normalizePortraitWindowSize(windows?.morphus)
+  const out: CharacterPortraitWindows = {}
+  if (primary) out.primary = primary
+  if (morphus) out.morphus = morphus
+  return out
+}
+
+export function resolvePortraitWindowSize(
+  windows: CharacterPortraitWindows | undefined,
+  formKey: CharacterPortraitFormKey,
+): CharacterPortraitWindowSize {
+  return clampPortraitWindowSize(windows?.[formKey], PORTRAIT_WINDOW_DEFAULT)
+}
+
+export function withPortraitWindowForForm(
+  windows: CharacterPortraitWindows | undefined,
+  formKey: CharacterPortraitFormKey,
+  size: CharacterPortraitWindowSize | undefined,
+): CharacterPortraitWindows {
+  const next = { ...normalizePortraitWindows(windows) }
+  const normalized = normalizePortraitWindowSize(size)
+  if (normalized) next[formKey] = normalized
+  else delete next[formKey]
+  return next
+}
+
+/**
+ * Aspect-aware window size for a newly picked image.
+ * Fits inside max box (prefer filling the larger axis) then clamps to min —
+ * extreme ratios may slightly break aspect at the hard clamp ("within reason").
+ */
+export function fitPortraitWindowToImageAspect(
+  naturalWidth: number,
+  naturalHeight: number,
+): CharacterPortraitWindowSize {
+  const nw = Math.max(1, naturalWidth)
+  const nh = Math.max(1, naturalHeight)
+  const aspect = nw / nh
+
+  let width = PORTRAIT_WINDOW_MAX_WIDTH_PX
+  let height = width / aspect
+  if (height > PORTRAIT_WINDOW_MAX_HEIGHT_PX) {
+    height = PORTRAIT_WINDOW_MAX_HEIGHT_PX
+    width = height * aspect
+  }
+
+  // Prefer a comfortable default long-edge when the max box would look huge
+  // for near-square images — scale down toward DEFAULT long edge when larger.
+  const longEdge = Math.max(width, height)
+  const defaultLong = Math.max(
+    PORTRAIT_WINDOW_DEFAULT.widthPx,
+    PORTRAIT_WINDOW_DEFAULT.heightPx,
+  )
+  if (longEdge > defaultLong * 1.35) {
+    const scale = (defaultLong * 1.35) / longEdge
+    width *= scale
+    height *= scale
+  }
+
+  if (width < PORTRAIT_WINDOW_MIN_WIDTH_PX) {
+    width = PORTRAIT_WINDOW_MIN_WIDTH_PX
+    height = width / aspect
+  }
+  if (height < PORTRAIT_WINDOW_MIN_HEIGHT_PX) {
+    height = PORTRAIT_WINDOW_MIN_HEIGHT_PX
+    width = height * aspect
+  }
+
+  return clampPortraitWindowSize({
+    widthPx: width,
+    heightPx: height,
+  })
+}
+
+export type PortraitCorner = 'nw' | 'ne' | 'sw' | 'se'
+
+/**
+ * Apply a corner-drag delta to a portrait window (Familiar Surface resize).
+ * Opposite corner stays conceptually anchored.
+ */
+export function applyPortraitCornerDrag(
+  start: CharacterPortraitWindowSize,
+  corner: PortraitCorner,
+  deltaX: number,
+  deltaY: number,
+): CharacterPortraitWindowSize {
+  let width = start.widthPx
+  let height = start.heightPx
+  if (corner === 'se' || corner === 'ne') width += deltaX
+  else width -= deltaX
+  if (corner === 'se' || corner === 'sw') height += deltaY
+  else height -= deltaY
+  return clampPortraitWindowSize({ widthPx: width, heightPx: height })
 }
 
 /**
@@ -134,10 +295,19 @@ function loadHtmlImage(src: string): Promise<HTMLImageElement> {
   })
 }
 
+export type ResizedPortraitBitmap = {
+  dataUrl: string
+  width: number
+  height: number
+}
+
 /**
  * Downscale to {@link PORTRAIT_MAX_EDGE_PX} and encode as JPEG for compact saves.
+ * Returns intrinsic pixel size of the persisted bitmap (for aspect-fit window).
  */
-export async function resizePortraitDataUrl(dataUrl: string): Promise<string> {
+export async function resizePortraitDataUrl(
+  dataUrl: string,
+): Promise<ResizedPortraitBitmap> {
   const img = await loadHtmlImage(dataUrl)
   const scale = Math.min(
     1,
@@ -151,11 +321,22 @@ export async function resizePortraitDataUrl(dataUrl: string): Promise<string> {
   const ctx = canvas.getContext('2d')
   if (!ctx) throw new Error(PORTRAIT_READ_ERROR)
   ctx.drawImage(img, 0, 0, width, height)
-  return canvas.toDataURL('image/jpeg', PORTRAIT_JPEG_QUALITY)
+  return {
+    dataUrl: canvas.toDataURL('image/jpeg', PORTRAIT_JPEG_QUALITY),
+    width,
+    height,
+  }
 }
 
 export type PortraitIngestResult =
-  | { ok: true; dataUrl: string }
+  | {
+      ok: true
+      dataUrl: string
+      width: number
+      height: number
+      /** Aspect-fit window suggestion for this pick. */
+      windowSize: CharacterPortraitWindowSize
+    }
   | { ok: false; error: string }
 
 /** Validate + resize a device file into a persistable portrait data URL. */
@@ -166,10 +347,16 @@ export async function ingestPortraitFile(file: File): Promise<PortraitIngestResu
   try {
     const raw = await readFileAsDataUrl(file)
     const resized = await resizePortraitDataUrl(raw)
-    if (resized.length > PORTRAIT_MAX_DATA_URL_CHARS) {
+    if (resized.dataUrl.length > PORTRAIT_MAX_DATA_URL_CHARS) {
       return { ok: false, error: PORTRAIT_SIZE_ERROR }
     }
-    return { ok: true, dataUrl: resized }
+    return {
+      ok: true,
+      dataUrl: resized.dataUrl,
+      width: resized.width,
+      height: resized.height,
+      windowSize: fitPortraitWindowToImageAspect(resized.width, resized.height),
+    }
   } catch {
     return { ok: false, error: PORTRAIT_READ_ERROR }
   }
@@ -180,10 +367,30 @@ export function identityProfileWithPortrait(
   profile: CharacterIdentityProfile | undefined,
   formKey: CharacterPortraitFormKey,
   dataUrl: string | undefined,
-): Pick<CharacterIdentityProfile, 'portraits'> {
-  return {
-    portraits: withPortraitForForm(profile?.portraits, formKey, dataUrl),
+  windowSize?: CharacterPortraitWindowSize,
+): Pick<CharacterIdentityProfile, 'portraits' | 'portraitWindows'> {
+  const portraits = withPortraitForForm(profile?.portraits, formKey, dataUrl)
+  if (dataUrl == null) {
+    return {
+      portraits,
+      portraitWindows: withPortraitWindowForForm(
+        profile?.portraitWindows,
+        formKey,
+        undefined,
+      ),
+    }
   }
+  if (windowSize) {
+    return {
+      portraits,
+      portraitWindows: withPortraitWindowForForm(
+        profile?.portraitWindows,
+        formKey,
+        windowSize,
+      ),
+    }
+  }
+  return { portraits }
 }
 
 /** Normalize peer allowlist — default empty (share off until explicitly allowed). */

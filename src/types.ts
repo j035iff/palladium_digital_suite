@@ -2440,6 +2440,12 @@ export type CharacterIdentityFormFields = {
   personality?: string
 }
 
+/** Identity Character Image window size (CSS px); Save-gated on the character. */
+export type CharacterPortraitWindowSize = {
+  widthPx: number
+  heightPx: number
+}
+
 /** Player-entered identity details (sheet header); height/weight feed movement engines. */
 export type CharacterIdentityProfile = CharacterIdentityFormFields & {
   /**
@@ -2450,6 +2456,14 @@ export type CharacterIdentityProfile = CharacterIdentityFormFields & {
   portraits?: {
     primary?: string
     morphus?: string
+  }
+  /**
+   * Per-form Character Image window size (corner-drag + aspect fit on pick).
+   * Omitted → default window; Save-gated like other identity fields.
+   */
+  portraitWindows?: {
+    primary?: CharacterPortraitWindowSize
+    morphus?: CharacterPortraitWindowSize
   }
   /**
    * Nightbane Morphus identity overlay. Unset / empty fields fall back to Facade

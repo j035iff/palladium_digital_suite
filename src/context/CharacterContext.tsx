@@ -377,11 +377,11 @@ type CharacterContextValue = {
   ) => void
   /**
    * Patch identity for the active form (Morphus → overlay; Facade → root).
-   * `portraits` always merge on the shared portraits map.
+   * `portraits` / `portraitWindows` always merge on the shared maps.
    */
   patchIdentityProfile: (
     patch: Partial<CharacterIdentityFormFields> &
-      Pick<CharacterIdentityProfile, 'portraits'>,
+      Pick<CharacterIdentityProfile, 'portraits' | 'portraitWindows'>,
   ) => void
   /** Live-sheet aliases for the active form (Facade vs Morphus lists). */
   addAlias: (name: string) => void
@@ -2979,12 +2979,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   const patchIdentityProfile = useCallback(
     (
       patch: Partial<CharacterIdentityFormFields> &
-        Pick<CharacterIdentityProfile, 'portraits'>,
+        Pick<CharacterIdentityProfile, 'portraits' | 'portraitWindows'>,
     ) => {
       setRawCharacter((prev) => {
         const dual = characterHasDualForms(prev)
         const form = normalizePresentedForm(activeForm, dual)
-        const { portraits, ...formPatch } = patch
+        const { portraits, portraitWindows, ...formPatch } = patch
         let identityProfile = normalizeIdentityProfile(prev.identityProfile)
         if (Object.keys(formPatch).length > 0) {
           identityProfile = patchIdentityProfileForForm(
@@ -2997,6 +2997,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
           identityProfile = {
             ...identityProfile,
             portraits,
+          }
+        }
+        if (portraitWindows !== undefined) {
+          identityProfile = {
+            ...identityProfile,
+            portraitWindows,
           }
         }
         return { ...prev, identityProfile }

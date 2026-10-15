@@ -1,4 +1,10 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
 import type { GmClientRuntimeState } from '../../lib/gm/sessionClientRuntime'
@@ -25,12 +31,17 @@ import {
   type IdentityTraitModifierSource,
 } from '../../lib/characterIdentity'
 import {
+  applyPortraitCornerDrag,
   identityProfileWithPortrait,
   ingestPortraitFile,
   PORTRAIT_ACCEPT_ATTR,
   portraitSlotLabel,
+  resolvePortraitWindowSize,
+  withPortraitWindowForForm,
   type CharacterPortraitFormKey,
+  type PortraitCorner,
 } from '../../lib/characterPortraits'
+import type { CharacterPortraitWindowSize } from '../../types'
 import { aliasesForForm } from '../../lib/characterAliases'
 import { buildLiveMorphusIdentityTraitBreakdown } from '../../lib/liveMorphusIdentityTraits'
 import { resolveActiveMorphusTraits } from '../../lib/morphusPassiveBridge'
@@ -513,29 +524,82 @@ function clearPlaceholderNameOnFocus(
   }
 }
 
+const PORTRAIT_CORNERS: {
+  corner: PortraitCorner
+  className: string
+  cursor: string
+  label: string
+}[] = [
+  {
+    corner: 'nw',
+    className: 'left-0 top-0 -translate-x-1/2 -translate-y-1/2',
+    cursor: 'nwse-resize',
+    label: 'Resize from top-left',
+  },
+  {
+    corner: 'ne',
+    className: 'right-0 top-0 translate-x-1/2 -translate-y-1/2',
+    cursor: 'nesw-resize',
+    label: 'Resize from top-right',
+  },
+  {
+    corner: 'sw',
+    className: 'bottom-0 left-0 -translate-x-1/2 translate-y-1/2',
+    cursor: 'nesw-resize',
+    label: 'Resize from bottom-left',
+  },
+  {
+    corner: 'se',
+    className: 'bottom-0 right-0 translate-x-1/2 translate-y-1/2',
+    cursor: 'nwse-resize',
+    label: 'Resize from bottom-right',
+  },
+]
+
 function IdentityPortraitSlot({
   formKey,
   dualForm,
   dataUrl,
+  windowSize,
   morphusActive,
-  onSetDataUrl,
+  onSetPortrait,
+  onWindowSizeChange,
 }: {
   formKey: CharacterPortraitFormKey
   dualForm: boolean
   dataUrl: string | undefined
+  windowSize: CharacterPortraitWindowSize
   morphusActive: boolean
-  onSetDataUrl: (dataUrl: string | undefined) => void
+  onSetPortrait: (
+    dataUrl: string | undefined,
+    windowSize?: CharacterPortraitWindowSize,
+  ) => void
+  onWindowSizeChange: (size: CharacterPortraitWindowSize) => void
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [liveSize, setLiveSize] = useState(windowSize)
+  const dragRef = useRef<{
+    corner: PortraitCorner
+    startX: number
+    startY: number
+    startSize: CharacterPortraitWindowSize
+  } | null>(null)
   const label = portraitSlotLabel(formKey, dualForm)
   const inputId = `identity-portrait-${formKey}`
+
+  useEffect(() => {
+    setLiveSize(windowSize)
+  }, [windowSize.widthPx, windowSize.heightPx])
 
   const borderClass = morphusActive ? 'border-violet-800' : 'border-slate-800'
   const buttonClass = morphusActive
     ? 'rounded border border-violet-600 bg-violet-950/80 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-violet-100 hover:bg-violet-900 disabled:opacity-50'
     : 'rounded border border-slate-600 bg-slate-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-800 hover:bg-slate-200 disabled:opacity-50'
+  const handleClass = morphusActive
+    ? 'border-violet-300 bg-violet-700'
+    : 'border-slate-200 bg-slate-600'
 
   const pickFile = () => {
     setError(null)
@@ -552,27 +616,96 @@ function IdentityPortraitSlot({
       setError(result.error)
       return
     }
-    onSetDataUrl(result.dataUrl)
+    onSetPortrait(result.dataUrl, result.windowSize)
+    setLiveSize(result.windowSize)
     if (inputRef.current) inputRef.current.value = ''
+  }
+
+  const onCornerPointerDown = (
+    corner: PortraitCorner,
+    e: ReactPointerEvent<HTMLButtonElement>,
+  ) => {
+    if (e.button !== 0) return
+    e.preventDefault()
+    e.stopPropagation()
+    const startSize = { ...liveSize }
+    dragRef.current = {
+      corner,
+      startX: e.clientX,
+      startY: e.clientY,
+      startSize,
+    }
+    const target = e.currentTarget
+    target.setPointerCapture(e.pointerId)
+    document.body.style.userSelect = 'none'
+
+    const onMove = (ev: PointerEvent) => {
+      const drag = dragRef.current
+      if (!drag) return
+      const next = applyPortraitCornerDrag(
+        drag.startSize,
+        drag.corner,
+        ev.clientX - drag.startX,
+        ev.clientY - drag.startY,
+      )
+      setLiveSize(next)
+    }
+
+    const onUp = (ev: PointerEvent) => {
+      const drag = dragRef.current
+      dragRef.current = null
+      document.body.style.userSelect = ''
+      target.releasePointerCapture(ev.pointerId)
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      if (!drag) return
+      const next = applyPortraitCornerDrag(
+        drag.startSize,
+        drag.corner,
+        ev.clientX - drag.startX,
+        ev.clientY - drag.startY,
+      )
+      setLiveSize(next)
+      onWindowSizeChange(next)
+    }
+
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
   }
 
   return (
     <div
-      className={`flex flex-1 flex-col overflow-hidden rounded-md border-2 bg-black ${borderClass}`}
+      className={`relative flex flex-col overflow-visible rounded-md border-2 bg-black ${borderClass}`}
+      style={{ width: liveSize.widthPx }}
     >
       <p className="border-b border-white/10 px-2 py-1 text-center text-[9px] font-semibold uppercase tracking-wide text-white/70">
         {label}
       </p>
-      <div className="relative flex min-h-[10rem] flex-1 items-center justify-center bg-black">
+      <div
+        className="relative flex items-center justify-center bg-black"
+        style={{ width: liveSize.widthPx, height: liveSize.heightPx }}
+      >
         {dataUrl ? (
           <img
             src={dataUrl}
             alt={label}
             className="absolute inset-0 h-full w-full object-cover"
+            draggable={false}
           />
         ) : (
           <p className="px-3 text-center text-[11px] text-white/40">No image yet</p>
         )}
+        {PORTRAIT_CORNERS.map((handle) => (
+          <button
+            key={handle.corner}
+            type="button"
+            aria-label={handle.label}
+            title={handle.label}
+            onPointerDown={(e) => onCornerPointerDown(handle.corner, e)}
+            className={`absolute z-10 h-3.5 w-3.5 rounded-sm border-2 shadow ${handle.className} ${handleClass}`}
+            style={{ cursor: handle.cursor, touchAction: 'none' }}
+          />
+        ))}
       </div>
       <div className="flex flex-wrap items-center justify-center gap-2 border-t border-white/10 bg-black/80 px-2 py-2">
         <input
@@ -599,7 +732,7 @@ function IdentityPortraitSlot({
             disabled={busy}
             onClick={() => {
               setError(null)
-              onSetDataUrl(undefined)
+              onSetPortrait(undefined)
             }}
           >
             Clear
@@ -618,27 +751,43 @@ function IdentityPortraitSlot({
 function IdentityPortraitColumn({
   dualForm,
   portraits,
+  portraitWindows,
   morphusActive,
   onSetPortrait,
+  onWindowSizeChange,
 }: {
   dualForm: boolean
   portraits: { primary?: string; morphus?: string }
+  portraitWindows: { primary?: CharacterPortraitWindowSize; morphus?: CharacterPortraitWindowSize }
   morphusActive: boolean
-  onSetPortrait: (formKey: CharacterPortraitFormKey, dataUrl: string | undefined) => void
+  onSetPortrait: (
+    formKey: CharacterPortraitFormKey,
+    dataUrl: string | undefined,
+    windowSize?: CharacterPortraitWindowSize,
+  ) => void
+  onWindowSizeChange: (
+    formKey: CharacterPortraitFormKey,
+    size: CharacterPortraitWindowSize,
+  ) => void
 }) {
   // Dual-form: one Character Image slot that swaps with active form (Facade ↔ Morphus),
   // matching description/personality — not a stacked pair of both images.
   const formKey: CharacterPortraitFormKey =
     dualForm && morphusActive ? 'morphus' : 'primary'
+  const windowSize = resolvePortraitWindowSize(portraitWindows, formKey)
   return (
-    <div className="flex min-h-[16rem] flex-col gap-3">
+    <div className="flex flex-col gap-3">
       <IdentityPortraitSlot
         key={formKey}
         formKey={formKey}
         dualForm={dualForm}
         dataUrl={portraits[formKey]}
+        windowSize={windowSize}
         morphusActive={morphusActive}
-        onSetDataUrl={(dataUrl) => onSetPortrait(formKey, dataUrl)}
+        onSetPortrait={(dataUrl, nextWindow) =>
+          onSetPortrait(formKey, dataUrl, nextWindow)
+        }
+        onWindowSizeChange={(size) => onWindowSizeChange(formKey, size)}
       />
     </div>
   )
@@ -1222,8 +1371,8 @@ export function IdentityHeader({
           <div
             className={`mt-4 grid grid-cols-1 gap-4 ${
               morphusActive && supportsDualForm
-                ? 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)_minmax(10rem,14rem)]'
-                : 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)]'
+                ? 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(14rem,max-content)_minmax(10rem,14rem)]'
+                : 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(14rem,max-content)]'
             }`}
           >
             <div className="min-w-0">
@@ -1308,15 +1457,26 @@ export function IdentityHeader({
               <IdentityPortraitColumn
                 dualForm={supportsDualForm}
                 portraits={storedProfile.portraits ?? {}}
+                portraitWindows={storedProfile.portraitWindows ?? {}}
                 morphusActive={morphusActive}
-                onSetPortrait={(portraitFormKey, dataUrl) =>
+                onSetPortrait={(portraitFormKey, dataUrl, windowSize) =>
                   patchIdentityProfile(
                     identityProfileWithPortrait(
                       storedProfile,
                       portraitFormKey,
                       dataUrl,
+                      windowSize,
                     ),
                   )
+                }
+                onWindowSizeChange={(portraitFormKey, size) =>
+                  patchIdentityProfile({
+                    portraitWindows: withPortraitWindowForForm(
+                      storedProfile.portraitWindows,
+                      portraitFormKey,
+                      size,
+                    ),
+                  })
                 }
               />
               {peerShareSeats.length > 0 ? (

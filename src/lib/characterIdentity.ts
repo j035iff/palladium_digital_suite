@@ -5,7 +5,10 @@ import type {
   MorphusCharacteristic,
   MorphusPolymorphicModifier,
 } from '../types'
-import { normalizeIdentityPortraits } from './characterPortraits'
+import {
+  normalizeIdentityPortraits,
+  normalizePortraitWindows,
+} from './characterPortraits'
 import {
   formatPolymorphicModifier,
   hasPolymorphicPayload,
@@ -106,9 +109,11 @@ export function normalizeIdentityProfile(
 ): CharacterIdentityProfile {
   const facade = normalizeFormFields(profile)
   const morphus = normalizeMorphusOverlay(profile?.morphus)
+  const portraitWindows = normalizePortraitWindows(profile?.portraitWindows)
   return {
     ...facade,
     portraits: normalizeIdentityPortraits(profile?.portraits),
+    ...(Object.keys(portraitWindows).length > 0 ? { portraitWindows } : {}),
     ...(morphus ? { morphus } : {}),
   }
 }
