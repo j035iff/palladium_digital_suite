@@ -34,6 +34,19 @@ describe('tableProjectedName', () => {
     ).toBe('Rook')
   })
 
+  it('resolves Morphus peer projection from presentedForm + morphusAliases', () => {
+    expect(
+      resolveProjectedNameFromSnapshot({
+        name: 'Rook',
+        aliases: [{ id: 'a1', name: 'Crow' }],
+        morphusAliases: [{ id: 'm1', name: 'Beak' }],
+        tableProjectedAliasId: 'a1',
+        morphusTableProjectedAliasId: 'm1',
+        presentedForm: 'morphus',
+      }),
+    ).toBe('Beak')
+  })
+
   it('peer roster uses seat projection; GM map wins when provided', () => {
     const seat = {
       displayName: 'Ada',

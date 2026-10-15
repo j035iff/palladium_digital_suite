@@ -24,7 +24,7 @@ describe('live identity field inventory', () => {
     ])
   })
 
-  it('normalizes missing description/personality to empty strings', () => {
+  it('normalizes missing description/personality and Morphus overlay', () => {
     const legacy = normalizeIdentityProfile({
       sex: 'M',
       age: '28',
@@ -37,6 +37,7 @@ describe('live identity field inventory', () => {
     expect(legacy.description).toBe('')
     expect(legacy.personality).toBe('')
     expect(legacy.portraits).toEqual({})
+    expect(legacy.morphus).toBeUndefined()
 
     const filled = normalizeIdentityProfile({
       ...legacy,
@@ -46,6 +47,7 @@ describe('live identity field inventory', () => {
         primary: 'data:image/jpeg;base64,facade',
         morphus: 'data:image/jpeg;base64,morphus',
       },
+      morphus: { eyes: 'Gold', hair: 'None' },
     })
     expect(filled.description).toBe('Tall scout')
     expect(filled.personality).toBe('Dry wit')
@@ -53,5 +55,6 @@ describe('live identity field inventory', () => {
       primary: 'data:image/jpeg;base64,facade',
       morphus: 'data:image/jpeg;base64,morphus',
     })
+    expect(filled.morphus).toEqual({ eyes: 'Gold', hair: 'None' })
   })
 })

@@ -15,9 +15,13 @@ export function ConfiguratorAlignmentSelect({
   morphus: boolean
   variant?: 'forge' | 'identity' | 'creation'
 }) {
-  const { character, activeRace, activeOcc, setAlignment } = useCharacter()
+  const { character, activeRace, activeOcc, setAlignment, supportsDualForm } =
+    useCharacter()
 
-  const currentAlignment = effectiveConfiguratorAlignment(character.primary.alignment)
+  // Nightbane: alignment is per-form (Facade vs Morphus may differ when GM allows).
+  const alignmentBranch =
+    supportsDualForm && morphus ? character.morphus : character.primary
+  const currentAlignment = effectiveConfiguratorAlignment(alignmentBranch.alignment)
 
   const options = useMemo(
     () =>

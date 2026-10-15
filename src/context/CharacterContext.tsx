@@ -116,17 +116,17 @@ import {
   type MorphusDerivedSheetSlice,
 } from '../lib/morphusPassiveBridge'
 import {
-  collectMorphusHeightModifiers,
-  collectMorphusWeightModifiers,
-  EMPTY_CHARACTER_IDENTITY_PROFILE,
   normalizeIdentityProfile,
-  resolveIdentityHeightInches,
-  resolveIdentityWeightLbs,
+  patchIdentityProfileForForm,
+  resolveActiveFormIdentityHeightInches,
+  resolveActiveFormIdentityWeightLbs,
 } from '../lib/characterIdentity'
 import {
   addCharacterAlias,
+  aliasesForForm,
   coerceTableProjectedAliasId,
   normalizeAliases,
+  normalizePresentedForm,
   removeCharacterAlias,
   renameCharacterAlias,
   TABLE_PROJECTED_REAL_NAME_ID,
@@ -146,6 +146,7 @@ import type {
   Armor,
   AttacksPerMeleeState,
   Character,
+  CharacterIdentityFormFields,
   CharacterIdentityProfile,
   CharacterRootState,
   CreationSkillPick,
@@ -374,12 +375,19 @@ type CharacterContextValue = {
   setSheetCampaigns: (
     campaigns: import('../lib/liveSheetCampaigns').LiveSheetCampaign[],
   ) => void
-  patchIdentityProfile: (patch: Partial<CharacterIdentityProfile>) => void
-  /** Live-sheet aliases (Join Table projection list). */
+  /**
+   * Patch identity for the active form (Morphus → overlay; Facade → root).
+   * `portraits` always merge on the shared portraits map.
+   */
+  patchIdentityProfile: (
+    patch: Partial<CharacterIdentityFormFields> &
+      Pick<CharacterIdentityProfile, 'portraits'>,
+  ) => void
+  /** Live-sheet aliases for the active form (Facade vs Morphus lists). */
   addAlias: (name: string) => void
   removeAlias: (aliasId: string) => void
   renameAlias: (aliasId: string, name: string) => void
-  /** Empty string / null = project real character name at the table. */
+  /** Empty string / null = project real character name at the table (active form). */
   setTableProjectedAliasId: (aliasId: string | null) => void
   /** Per-peer portrait allowlist (People thumbnails); dirty until Save. */
   setPortraitShareForPeer: (peerCharacterId: string, allowed: boolean) => void
@@ -989,7 +997,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     setReadyWeaponIds([inv.readyWeaponIds[0], inv.readyWeaponIds[1]])
     setAmmoReserves(inv.ammoReserves)
     setPsychicTierState(resolveCreationPsychicTier(hydrated))
-    setActiveForm('primary')
+    setActiveForm(
+      normalizePresentedForm(
+        hydrated.presentedForm,
+        characterHasDualForms(hydrated),
+      ),
+    )
     setXpHistory(loadXpHistory(hydrated.name))
     setLevelUpQueue(outstandingLevelUpTargets(hydrated))
     prevMorphusLedgerUnlockedRef.current = null
@@ -1148,12 +1161,25 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     prevMorphusLedgerUnlockedRef.current = morphusLedgerUnlocked
 
     if (!morphusLedgerUnlocked) {
-      setActiveForm((form) => (form === 'morphus' ? 'primary' : form))
+      setActiveForm((form) => {
+        if (form !== 'morphus') return form
+        setRawCharacter((prevChar) =>
+          prevChar.presentedForm === 'primary'
+            ? prevChar
+            : { ...prevChar, presentedForm: 'primary' },
+        )
+        return 'primary'
+      })
       return
     }
 
     if (prev === false) {
       setActiveForm('morphus')
+      setRawCharacter((prevChar) =>
+        prevChar.presentedForm === 'morphus'
+          ? prevChar
+          : { ...prevChar, presentedForm: 'morphus' },
+      )
     }
   }, [morphusLedgerUnlocked, supportsDualForm])
 
@@ -1432,38 +1458,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [character, sheetActiveForm, saveVsPsionicsTarget, supportsDualForm],
   )
 
-  const morphusHeightModifiers = useMemo(
-    () =>
-      sheetActiveForm === 'morphus'
-        ? collectMorphusHeightModifiers(morphusTraitRows)
-        : [],
-    [sheetActiveForm, morphusTraitRows],
-  )
-
-  const morphusWeightModifiers = useMemo(
-    () =>
-      sheetActiveForm === 'morphus'
-        ? collectMorphusWeightModifiers(morphusTraitRows)
-        : [],
-    [sheetActiveForm, morphusTraitRows],
-  )
-
   const identityResolvedHeightInches = useMemo(
     () =>
-      resolveIdentityHeightInches(
+      resolveActiveFormIdentityHeightInches(
         rawCharacter.identityProfile,
-        morphusHeightModifiers,
+        sheetActiveForm,
+        morphusTraitRows,
       ),
-    [rawCharacter.identityProfile, morphusHeightModifiers],
+    [rawCharacter.identityProfile, sheetActiveForm, morphusTraitRows],
   )
 
   const identityResolvedWeightLbs = useMemo(
     () =>
-      resolveIdentityWeightLbs(
+      resolveActiveFormIdentityWeightLbs(
         rawCharacter.identityProfile,
-        morphusWeightModifiers,
+        sheetActiveForm,
+        morphusTraitRows,
       ),
-    [rawCharacter.identityProfile, morphusWeightModifiers],
+    [rawCharacter.identityProfile, sheetActiveForm, morphusTraitRows],
   )
 
   const movementDerived = useMemo(
@@ -1910,7 +1922,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const toggleForm = useCallback(() => {
     if (!characterHasDualForms(character)) return
-    setActiveForm((f) => (f === 'primary' ? 'morphus' : 'primary'))
+    setActiveForm((f) => {
+      const next: ActiveForm = f === 'primary' ? 'morphus' : 'primary'
+      setRawCharacter((prev) =>
+        prev.presentedForm === next ? prev : { ...prev, presentedForm: next },
+      )
+      return next
+    })
   }, [character])
 
   const stripPsionicSelections = useCallback((ids: readonly string[]) => {
@@ -2918,13 +2936,25 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   // party.snapshot on dirty edits — same gate as the character file
   // (`shouldPushJoinedPartySnapshotOnLiveMutation` in liveSheetSave).
 
-  const setAlignment = useCallback((alignment: string) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      primary: { ...prev.primary, alignment },
-      morphus: { ...prev.morphus, alignment },
-    }))
-  }, [])
+  const setAlignment = useCallback(
+    (alignment: string) => {
+      setRawCharacter((prev) => {
+        if (!characterHasDualForms(prev)) {
+          return {
+            ...prev,
+            primary: { ...prev.primary, alignment },
+            morphus: { ...prev.morphus, alignment },
+          }
+        }
+        const form = normalizePresentedForm(activeForm, true)
+        if (form === 'morphus') {
+          return { ...prev, morphus: { ...prev.morphus, alignment } }
+        }
+        return { ...prev, primary: { ...prev.primary, alignment } }
+      })
+    },
+    [activeForm],
+  )
 
   const setCharacterName = useCallback((name: string) => {
     setRawCharacter((prev) => ({ ...prev, name }))
@@ -2947,59 +2977,126 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
   )
 
   const patchIdentityProfile = useCallback(
-    (patch: Partial<CharacterIdentityProfile>) => {
-      setRawCharacter((prev) => ({
-        ...prev,
-        identityProfile: {
-          ...EMPTY_CHARACTER_IDENTITY_PROFILE,
-          ...prev.identityProfile,
-          ...patch,
-        },
-      }))
+    (
+      patch: Partial<CharacterIdentityFormFields> &
+        Pick<CharacterIdentityProfile, 'portraits'>,
+    ) => {
+      setRawCharacter((prev) => {
+        const dual = characterHasDualForms(prev)
+        const form = normalizePresentedForm(activeForm, dual)
+        const { portraits, ...formPatch } = patch
+        let identityProfile = normalizeIdentityProfile(prev.identityProfile)
+        if (Object.keys(formPatch).length > 0) {
+          identityProfile = patchIdentityProfileForForm(
+            identityProfile,
+            form,
+            formPatch,
+          )
+        }
+        if (portraits !== undefined) {
+          identityProfile = {
+            ...identityProfile,
+            portraits,
+          }
+        }
+        return { ...prev, identityProfile }
+      })
     },
-    [],
+    [activeForm],
   )
 
-  const addAlias = useCallback((name: string) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      aliases: addCharacterAlias(prev.aliases, name),
-    }))
-  }, [])
+  const addAlias = useCallback(
+    (name: string) => {
+      setRawCharacter((prev) => {
+        const dual = characterHasDualForms(prev)
+        const form = normalizePresentedForm(activeForm, dual)
+        if (form === 'morphus') {
+          return {
+            ...prev,
+            morphusAliases: addCharacterAlias(prev.morphusAliases, name),
+          }
+        }
+        return {
+          ...prev,
+          aliases: addCharacterAlias(prev.aliases, name),
+        }
+      })
+    },
+    [activeForm],
+  )
 
-  const removeAlias = useCallback((aliasId: string) => {
-    setRawCharacter((prev) => {
-      const aliases = removeCharacterAlias(prev.aliases, aliasId)
-      return {
-        ...prev,
-        aliases,
-        tableProjectedAliasId: coerceTableProjectedAliasId(
+  const removeAlias = useCallback(
+    (aliasId: string) => {
+      setRawCharacter((prev) => {
+        const dual = characterHasDualForms(prev)
+        const form = normalizePresentedForm(activeForm, dual)
+        if (form === 'morphus') {
+          const morphusAliases = removeCharacterAlias(prev.morphusAliases, aliasId)
+          return {
+            ...prev,
+            morphusAliases,
+            morphusTableProjectedAliasId: coerceTableProjectedAliasId(
+              morphusAliases,
+              prev.morphusTableProjectedAliasId,
+            ),
+          }
+        }
+        const aliases = removeCharacterAlias(prev.aliases, aliasId)
+        return {
+          ...prev,
           aliases,
-          prev.tableProjectedAliasId,
-        ),
-      }
-    })
-  }, [])
+          tableProjectedAliasId: coerceTableProjectedAliasId(
+            aliases,
+            prev.tableProjectedAliasId,
+          ),
+        }
+      })
+    },
+    [activeForm],
+  )
 
-  const renameAlias = useCallback((aliasId: string, name: string) => {
-    setRawCharacter((prev) => ({
-      ...prev,
-      aliases: renameCharacterAlias(prev.aliases, aliasId, name),
-    }))
-  }, [])
-
-  const setTableProjectedAliasId = useCallback((aliasId: string | null) => {
-    setRawCharacter((prev) => {
-      const coerced =
-        aliasId == null || aliasId === TABLE_PROJECTED_REAL_NAME_ID
-          ? null
-          : coerceTableProjectedAliasId(
-              normalizeAliases(prev.aliases),
+  const renameAlias = useCallback(
+    (aliasId: string, name: string) => {
+      setRawCharacter((prev) => {
+        const dual = characterHasDualForms(prev)
+        const form = normalizePresentedForm(activeForm, dual)
+        if (form === 'morphus') {
+          return {
+            ...prev,
+            morphusAliases: renameCharacterAlias(
+              prev.morphusAliases,
               aliasId,
-            )
-      return { ...prev, tableProjectedAliasId: coerced }
-    })
-  }, [])
+              name,
+            ),
+          }
+        }
+        return {
+          ...prev,
+          aliases: renameCharacterAlias(prev.aliases, aliasId, name),
+        }
+      })
+    },
+    [activeForm],
+  )
+
+  const setTableProjectedAliasId = useCallback(
+    (aliasId: string | null) => {
+      setRawCharacter((prev) => {
+        const dual = characterHasDualForms(prev)
+        const form = normalizePresentedForm(activeForm, dual)
+        const list = aliasesForForm(prev, form)
+        const coerced =
+          aliasId == null || aliasId === TABLE_PROJECTED_REAL_NAME_ID
+            ? null
+            : coerceTableProjectedAliasId(list, aliasId)
+        if (form === 'morphus') {
+          return { ...prev, morphusTableProjectedAliasId: coerced }
+        }
+        return { ...prev, tableProjectedAliasId: coerced }
+      })
+    },
+    [activeForm],
+  )
 
   const setPortraitShareForPeer = useCallback(
     (peerCharacterId: string, allowed: boolean) => {
@@ -3032,6 +3129,21 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       next = applySpawnSheetHandoff(next, {
         psychicTier: resolveCreationPsychicTier(next, psychicTier),
       })
+      if (dual) {
+        // Morphus identity defaults from Facade (overlay empty = runtime fallback).
+        // Alignment lives on FormState — seed Morphus from Facade when unset.
+        if (!next.morphus.alignment?.trim()) {
+          next = {
+            ...next,
+            morphus: { ...next.morphus, alignment: next.primary.alignment },
+          }
+        }
+        next = {
+          ...next,
+          presentedForm: normalizePresentedForm(next.presentedForm, true),
+          morphusAliases: normalizeAliases(next.morphusAliases),
+        }
+      }
       // Spawn handoff writes once so Open Character can find the sheet; further
       // live edits require explicit Save (Character Sheet Project owns post-spawn).
       persistCharacterSave(next)

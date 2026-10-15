@@ -355,6 +355,7 @@ Update this table when closing gaps.
 | Live saves / HF | ✅ Creation ledger | ✅ `computeSaveProfile()` + `horror_factor_flat` stack | Attribute-only saves via engine |
 | Weapon / unarmed strike | ✅ Creation ledger | ✅ `weaponBonuses` / `strikeEngine` via `liveStatEngine` | |
 | Live attribute display (physical skills) | ✅ `skillAttributeFlatBonusTotal` / staging | ✅ `computeDisplayScalars()` + spawn bake | Catalog `physicalSkillBonuses` → `getSkillById().modifiers`; Stats tab uses `sheetDisplayScalars`; `physicalSkillModsApplied` avoids double-count after spawn |
+| Dual-form identity height/weight | — | ✅ `resolveFormIdentityHeight` / `Weight` | Morphus overlay + deterministic trait mods; dice mods are fill-ins (Pillar 5), never auto-rolled |
 
 ---
 

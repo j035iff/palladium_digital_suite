@@ -2414,9 +2414,17 @@ export type DerivedActiveState = CharacterRootState & {
 
 export type DerivedInventoryItem = InventoryItem & HostGenreRuntimeFlags
 
-/** Player-entered identity details (sheet header); height/weight feed movement engines. */
-export type CharacterIdentityProfile = {
+/**
+ * Per-form presentation identity fields (height/weight/eyes/… / freeform text).
+ * Shared across forms: character name, Race, O.C.C. only.
+ * Unified Path: Facade = root fields; Morphus = {@link CharacterIdentityProfile.morphus} overlay.
+ */
+export type CharacterIdentityFormFields = {
   sex: string
+  /**
+   * Apparent age for this form (may differ from chronological age / other form).
+   * Nightbane Facade can look mortal while immortal; Morphus may differ.
+   */
   age: string
   heightFeet: string
   heightInches: string
@@ -2430,6 +2438,10 @@ export type CharacterIdentityProfile = {
   description?: string
   /** Freeform personality notes (player text; not a catalog field). */
   personality?: string
+}
+
+/** Player-entered identity details (sheet header); height/weight feed movement engines. */
+export type CharacterIdentityProfile = CharacterIdentityFormFields & {
   /**
    * Device-picked portraits (data URLs). Unified Path: `primary` = single-form
    * character image or Nightbane Facade; `morphus` = Nightbane Morphus only.
@@ -2439,6 +2451,11 @@ export type CharacterIdentityProfile = {
     primary?: string
     morphus?: string
   }
+  /**
+   * Nightbane Morphus identity overlay. Unset / empty fields fall back to Facade
+   * (root fields). Trait auto-apply and player edits write here — never mutate Facade.
+   */
+  morphus?: Partial<CharacterIdentityFormFields>
 }
 
 /** Alternate display name the player may project at Join Table (peers see this). */
@@ -2490,15 +2507,30 @@ export type Character = {
   /** Physical description and anthropometrics for leap/encumbrance and Morphus modifiers. */
   identityProfile?: CharacterIdentityProfile
   /**
-   * Optional aliases managed on the live Identity expand.
+   * Facade / single-form aliases managed on the live Identity expand.
    * Join Session can project one of these to peers; GM always uses {@link name}.
    */
   aliases?: CharacterAlias[]
   /**
-   * Alias id projected at Join Table. `null` / omitted = real {@link name}.
+   * Nightbane Morphus-only aliases (separate list from {@link aliases}).
+   * Unset / empty = no Morphus aliases (projection falls back to real {@link name}).
+   */
+  morphusAliases?: CharacterAlias[]
+  /**
+   * Facade / single-form alias id projected at Join Table. `null` / omitted = real {@link name}.
    * Persisted as last join choice; coerced when the alias is removed.
    */
   tableProjectedAliasId?: string | null
+  /**
+   * Morphus alias id projected when {@link presentedForm} is `morphus`.
+   * `null` / omitted = real {@link name} while presenting Morphus.
+   */
+  morphusTableProjectedAliasId?: string | null
+  /**
+   * Last form presented on the live sheet (Facade = `primary`). Save-gated;
+   * peers / People resolve portrait + projected name from this form.
+   */
+  presentedForm?: ActiveForm
   /**
    * Peer character ids allowed to see this character’s portrait on their sheet
    * People list. Empty / omitted = off (safer default). Save-gated; projects

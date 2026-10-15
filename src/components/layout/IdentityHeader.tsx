@@ -18,8 +18,11 @@ import {
   identityHeightInchesError,
   identityWeightLbsError,
   isLegacyCreationNameValue,
+  listMorphusIdentityFillInCallouts,
   normalizeIdentityProfile,
+  resolveIdentityDisplayProfile,
   sanitizeIdentityHeightInchesInput,
+  type IdentityTraitModifierSource,
 } from '../../lib/characterIdentity'
 import {
   identityProfileWithPortrait,
@@ -29,7 +32,9 @@ import {
   portraitSlotLabel,
   type CharacterPortraitFormKey,
 } from '../../lib/characterPortraits'
-import { normalizeAliases } from '../../lib/characterAliases'
+import { aliasesForForm } from '../../lib/characterAliases'
+import { buildLiveMorphusIdentityTraitBreakdown } from '../../lib/liveMorphusIdentityTraits'
+import { resolveActiveMorphusTraits } from '../../lib/morphusPassiveBridge'
 import {
   identityHeightFromMetricDisplay,
   identityHeightMetricDisplayError,
@@ -49,7 +54,7 @@ import {
   CreationForgeDetailsGrid,
 } from '../creation/CreationForgeSettingCell'
 import { getOccSpecialization } from '../../lib/occComposition'
-import type { CharacterIdentityProfile, PalladiumOcc } from '../../types'
+import type { CharacterIdentityFormFields, PalladiumOcc } from '../../types'
 
 type IdentityHeaderProps = {
   morphusActive: boolean
@@ -120,6 +125,44 @@ function identityLabelClass(morphusActive: boolean): string {
     : 'text-[10px] font-semibold uppercase tracking-wider text-slate-500'
 }
 
+function IdentityTraitSourceNote({
+  sources,
+  altered,
+  needsFillIn,
+  fillInLabels,
+  morphusActive,
+}: {
+  sources: IdentityTraitModifierSource[]
+  altered: boolean
+  needsFillIn: boolean
+  fillInLabels: string[]
+  morphusActive: boolean
+}) {
+  if (!sources.length && !needsFillIn) return null
+  const tone = morphusActive ? 'text-amber-200/90' : 'text-amber-800'
+  const fillTone = morphusActive
+    ? 'border-amber-400/50 bg-amber-950/40 text-amber-100'
+    : 'border-amber-500 bg-amber-50 text-amber-900'
+  return (
+    <div className="col-span-2 mt-0.5 space-y-1">
+      {needsFillIn ? (
+        <p
+          className={`rounded border px-1.5 py-1 text-[10px] font-semibold leading-snug ${fillTone}`}
+          role="status"
+        >
+          Fill in from trait roll: {fillInLabels.join('; ')}
+        </p>
+      ) : null}
+      {altered && sources.length > 0 ? (
+        <p className={`text-[9px] font-medium leading-snug ${tone}`}>
+          Altered by:{' '}
+          {sources.map((s) => `${s.traitName} (${s.label})`).join('; ')}
+        </p>
+      ) : null}
+    </div>
+  )
+}
+
 function IdentityProfileDetailFields({
   profile,
   patch,
@@ -128,15 +171,31 @@ function IdentityProfileDetailFields({
   heightInchesError,
   weightLbsError,
   layout = 'grid',
+  heightTraitSources = [],
+  weightTraitSources = [],
+  heightNeedsFillIn = false,
+  weightNeedsFillIn = false,
+  heightFillInLabels = [],
+  weightFillInLabels = [],
+  heightTraitAltered = false,
+  weightTraitAltered = false,
 }: {
-  profile: CharacterIdentityProfile
-  patch: (fields: Partial<CharacterIdentityProfile>) => void
+  profile: CharacterIdentityFormFields
+  patch: (fields: Partial<CharacterIdentityFormFields>) => void
   morphusActive: boolean
   heightFeetError: string | null
   heightInchesError: string | null
   weightLbsError: string | null
   /** `stack` = mock Identity Expand left column; `grid` = legacy 3-col. */
   layout?: 'grid' | 'stack'
+  heightTraitSources?: IdentityTraitModifierSource[]
+  weightTraitSources?: IdentityTraitModifierSource[]
+  heightNeedsFillIn?: boolean
+  weightNeedsFillIn?: boolean
+  heightFillInLabels?: string[]
+  weightFillInLabels?: string[]
+  heightTraitAltered?: boolean
+  weightTraitAltered?: boolean
 }) {
   const { measurementSystem } = useUnitsPreference()
   const metric = measurementSystem === 'metric'
@@ -316,8 +375,28 @@ function IdentityProfileDetailFields({
           </div>
         </div>
       )}
+      {morphusActive ? (
+        <IdentityTraitSourceNote
+          sources={heightTraitSources}
+          altered={heightTraitAltered}
+          needsFillIn={heightNeedsFillIn}
+          fillInLabels={heightFillInLabels}
+          morphusActive={morphusActive}
+        />
+      ) : null}
     </div>
   )
+
+  const weightNotes =
+    morphusActive ? (
+      <IdentityTraitSourceNote
+        sources={weightTraitSources}
+        altered={weightTraitAltered}
+        needsFillIn={weightNeedsFillIn}
+        fillInLabels={weightFillInLabels}
+        morphusActive={morphusActive}
+      />
+    ) : null
 
   if (layout === 'stack') {
     return (
@@ -329,24 +408,30 @@ function IdentityProfileDetailFields({
           morphusActive={morphusActive}
         />
         <UnderlineField
-          label="Age"
+          label="Apparent age"
           value={profile.age}
           onChange={(age) => patch({ age })}
           morphusActive={morphusActive}
           inputMode="numeric"
         />
         {heightBlock}
-        <UnderlineField
-          label="Weight"
-          value={weightDraft}
-          onChange={onWeightDisplayChange}
-          morphusActive={morphusActive}
-          inputMode={metric ? 'decimal' : 'numeric'}
-          subLabel={weightSubLabel}
-          error={weightError}
-          errorId="identity-weight-display-error"
-          ariaLabel={metric ? 'Weight kilograms' : 'Weight pounds'}
-        />
+        <div>
+          <UnderlineField
+            label="Weight"
+            value={weightDraft}
+            onChange={onWeightDisplayChange}
+            morphusActive={morphusActive}
+            inputMode={metric ? 'decimal' : 'numeric'}
+            subLabel={weightSubLabel}
+            error={
+              weightError ??
+              (weightNeedsFillIn ? 'Trait roll needs a Morphus weight' : null)
+            }
+            errorId="identity-weight-display-error"
+            ariaLabel={metric ? 'Weight kilograms' : 'Weight pounds'}
+          />
+          {weightNotes}
+        </div>
         <UnderlineField
           label="Eyes"
           value={profile.eyes}
@@ -373,7 +458,7 @@ function IdentityProfileDetailFields({
           morphusActive={morphusActive}
         />
         <UnderlineField
-          label="Age"
+          label="Apparent age"
           value={profile.age}
           onChange={(age) => patch({ age })}
           morphusActive={morphusActive}
@@ -383,17 +468,23 @@ function IdentityProfileDetailFields({
 
       <div className="flex flex-col gap-2">
         {heightBlock}
-        <UnderlineField
-          label="Weight"
-          value={weightDraft}
-          onChange={onWeightDisplayChange}
-          morphusActive={morphusActive}
-          inputMode={metric ? 'decimal' : 'numeric'}
-          subLabel={weightSubLabel}
-          error={weightError}
-          errorId="identity-weight-display-error"
-          ariaLabel={metric ? 'Weight kilograms' : 'Weight pounds'}
-        />
+        <div>
+          <UnderlineField
+            label="Weight"
+            value={weightDraft}
+            onChange={onWeightDisplayChange}
+            morphusActive={morphusActive}
+            inputMode={metric ? 'decimal' : 'numeric'}
+            subLabel={weightSubLabel}
+            error={
+              weightError ??
+              (weightNeedsFillIn ? 'Trait roll needs a Morphus weight' : null)
+            }
+            errorId="identity-weight-display-error"
+            ariaLabel={metric ? 'Weight kilograms' : 'Weight pounds'}
+          />
+          {weightNotes}
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -623,7 +714,9 @@ function IdentityAliasesEditor({
 }) {
   return (
     <div className={compact ? 'mt-4' : 'mt-5 max-w-xl'}>
-      <p className={identityLabelClass(morphusActive)}>Aliases</p>
+      <p className={identityLabelClass(morphusActive)}>
+        {morphusActive ? 'Morphus aliases' : 'Aliases'}
+      </p>
       {compact ? null : (
       <p
         className={`mt-0.5 text-[11px] ${
@@ -828,8 +921,39 @@ export function IdentityHeader({
     setCreationDetailsCollapsed(true)
   }, [compactChrome])
 
-  const profile = normalizeIdentityProfile(character.identityProfile)
-  const patch = (fields: Partial<CharacterIdentityProfile>) => patchIdentityProfile(fields)
+  const formKey = supportsDualForm && morphusActive ? 'morphus' : 'primary'
+  const morphusTraits = useMemo(
+    () => resolveActiveMorphusTraits(character),
+    [character],
+  )
+  const displayProfile = useMemo(
+    () =>
+      resolveIdentityDisplayProfile(
+        character.identityProfile,
+        formKey,
+        morphusTraits,
+      ),
+    [character.identityProfile, formKey, morphusTraits],
+  )
+  const storedProfile = normalizeIdentityProfile(character.identityProfile)
+  const patch = (fields: Partial<CharacterIdentityFormFields>) =>
+    patchIdentityProfile(fields)
+  const formAliases = aliasesForForm(character, formKey)
+  const morphusTraitBreakdown = useMemo(
+    () =>
+      supportsDualForm ? buildLiveMorphusIdentityTraitBreakdown(character) : null,
+    [supportsDualForm, character],
+  )
+  const fillInCallouts = useMemo(
+    () =>
+      supportsDualForm
+        ? listMorphusIdentityFillInCallouts(
+            character.identityProfile,
+            morphusTraits,
+          )
+        : [],
+    [supportsDualForm, character.identityProfile, morphusTraits],
+  )
 
   const raceLabel = activeRace?.name?.trim() ? activeRace.name : '—'
   const occLabel = formatIdentityOccLabel(
@@ -838,15 +962,17 @@ export function IdentityHeader({
     character.occSpecializationId ?? undefined,
     effectiveOcc,
   )
-  const heightFeetError = identityHeightFeetError(profile.heightFeet)
-  const heightInchesError = identityHeightInchesError(profile.heightInches)
-  const weightLbsError = identityWeightLbsError(profile.weightLbs)
+  const heightFeetError = identityHeightFeetError(displayProfile.heightFeet)
+  const heightInchesError = identityHeightInchesError(displayProfile.heightInches)
+  const weightLbsError = identityWeightLbsError(displayProfile.weightLbs)
 
   const formatGenreStamp = (genreId: string) =>
     genreId.replace(/_/g, ' ').toUpperCase()
   const genreStamp = `${formatGenreStamp(creationGenreId)} → HOST ${formatGenreStamp(hostGenreId)}`
+  const alignmentBranch =
+    supportsDualForm && morphusActive ? character.morphus : character.primary
   const alignmentLabel = configuratorAlignmentLabel(
-    effectiveConfiguratorAlignment(character.primary.alignment),
+    effectiveConfiguratorAlignment(alignmentBranch.alignment),
   )
   const toggleButtonClass = identityToggleButtonClass(morphusActive)
 
@@ -923,7 +1049,7 @@ export function IdentityHeader({
             </div>
             <CreationForgeDetailsGrid
               morphusActive={morphusActive}
-              profile={profile}
+              profile={displayProfile}
               onPatch={patch}
               heightError={heightFeetError ?? heightInchesError}
             />
@@ -1075,22 +1201,51 @@ export function IdentityHeader({
 
           {/*
             Identity Expand: left traits + aliases, center freeform Description /
-            Personality (persisted on identityProfile), right Character Image
-            (device picker; Nightbane = independent Facade + Morphus portraits).
+            Personality (per-form on identityProfile; Morphus overlay), right Character
+            Image (+ Morphus traits breakdown when Morphus form is active).
           */}
-          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)]">
+          {fillInCallouts.length > 0 ? (
+            <div
+              className="mt-3 rounded-md border border-amber-400/60 bg-amber-950/30 px-3 py-2"
+              role="status"
+            >
+              <p className="text-[10px] font-black uppercase tracking-wide text-amber-200">
+                Morphus trait fill-ins needed
+              </p>
+              <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11px] text-amber-100/90">
+                {fillInCallouts.map((row) => (
+                  <li key={row.axis}>{row.message}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <div
+            className={`mt-4 grid grid-cols-1 gap-4 ${
+              morphusActive && supportsDualForm
+                ? 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)_minmax(10rem,14rem)]'
+                : 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(8rem,11rem)]'
+            }`}
+          >
             <div className="min-w-0">
               <IdentityProfileDetailFields
-                profile={profile}
+                profile={displayProfile}
                 patch={patch}
                 morphusActive={morphusActive}
                 heightFeetError={heightFeetError}
                 heightInchesError={heightInchesError}
                 weightLbsError={weightLbsError}
                 layout="stack"
+                heightTraitSources={displayProfile.heightTraitSources}
+                weightTraitSources={displayProfile.weightTraitSources}
+                heightNeedsFillIn={displayProfile.heightNeedsFillIn}
+                weightNeedsFillIn={displayProfile.weightNeedsFillIn}
+                heightFillInLabels={displayProfile.heightFillInLabels}
+                weightFillInLabels={displayProfile.weightFillInLabels}
+                heightTraitAltered={displayProfile.heightTraitAltered}
+                weightTraitAltered={displayProfile.weightTraitAltered}
               />
               <IdentityAliasesEditor
-                aliases={normalizeAliases(character.aliases)}
+                aliases={formAliases}
                 aliasDraft={aliasDraft}
                 onAliasDraftChange={setAliasDraft}
                 onAdd={() => {
@@ -1115,14 +1270,14 @@ export function IdentityHeader({
             <div className="flex min-h-[16rem] flex-col gap-3">
               <IdentityFreeformTextBox
                 label="Description"
-                value={profile.description ?? ''}
+                value={displayProfile.description ?? ''}
                 onChange={(description) => patch({ description })}
                 placeholder="Physical appearance — build, features, clothing, distinguishing marks…"
                 morphusActive={morphusActive}
               />
               <IdentityFreeformTextBox
                 label="Personality"
-                value={profile.personality ?? ''}
+                value={displayProfile.personality ?? ''}
                 onChange={(personality) => patch({ personality })}
                 placeholder="Temperament, habits, quirks, how they act at the table…"
                 morphusActive={morphusActive}
@@ -1132,10 +1287,16 @@ export function IdentityHeader({
             <div className="flex min-h-[16rem] flex-col gap-3">
               <IdentityPortraitColumn
                 dualForm={supportsDualForm}
-                portraits={profile.portraits ?? {}}
+                portraits={storedProfile.portraits ?? {}}
                 morphusActive={morphusActive}
-                onSetPortrait={(formKey, dataUrl) =>
-                  patch(identityProfileWithPortrait(profile, formKey, dataUrl))
+                onSetPortrait={(portraitFormKey, dataUrl) =>
+                  patchIdentityProfile(
+                    identityProfileWithPortrait(
+                      storedProfile,
+                      portraitFormKey,
+                      dataUrl,
+                    ),
+                  )
                 }
               />
               {peerShareSeats.length > 0 ? (
@@ -1208,8 +1369,115 @@ export function IdentityHeader({
                 </div>
               ) : null}
             </div>
+
+            {morphusActive && supportsDualForm ? (
+              <MorphusIdentityTraitsColumn
+                breakdown={morphusTraitBreakdown}
+                morphusActive={morphusActive}
+              />
+            ) : null}
           </div>
         </div>
+      )}
+    </div>
+  )
+}
+
+function MorphusIdentityTraitsColumn({
+  breakdown,
+  morphusActive,
+}: {
+  breakdown: ReturnType<typeof buildLiveMorphusIdentityTraitBreakdown> | null
+  morphusActive: boolean
+}) {
+  const rows = breakdown?.rows ?? []
+  return (
+    <div
+      className={`flex min-h-[16rem] flex-col rounded-md border-2 px-2 py-2 ${
+        morphusActive
+          ? 'border-violet-800 bg-slate-950/60'
+          : 'border-slate-300 bg-slate-50'
+      }`}
+      aria-label="Morphus traits from creation"
+    >
+      <p
+        className={`text-[9px] font-bold uppercase tracking-wide ${
+          morphusActive ? 'text-violet-300' : 'text-slate-600'
+        }`}
+      >
+        Morphus traits
+      </p>
+      {breakdown?.sectionTitle || breakdown?.subtitle ? (
+        <p
+          className={`mt-0.5 text-[10px] ${
+            morphusActive ? 'text-violet-200/80' : 'text-slate-500'
+          }`}
+        >
+          {[breakdown.sectionTitle, breakdown.subtitle]
+            .filter(Boolean)
+            .join(' — ')}
+        </p>
+      ) : (
+        <p
+          className={`mt-0.5 text-[10px] ${
+            morphusActive ? 'text-violet-200/80' : 'text-slate-500'
+          }`}
+        >
+          From character creation
+        </p>
+      )}
+      {rows.length === 0 ? (
+        <p
+          className={`mt-3 text-[11px] ${
+            morphusActive ? 'text-violet-300/60' : 'text-slate-400'
+          }`}
+        >
+          No Morphus traits on this character yet.
+        </p>
+      ) : (
+        <ul className="mt-2 space-y-2 overflow-y-auto">
+          {rows.map((row, index) => (
+            <li
+              key={`${row.name}-${index}`}
+              className={`rounded border px-2 py-1.5 ${
+                morphusActive
+                  ? 'border-violet-800/80 bg-slate-950/40'
+                  : 'border-slate-200 bg-white'
+              }`}
+            >
+              <p
+                className={`text-xs font-semibold leading-snug ${
+                  morphusActive ? 'text-violet-50' : 'text-slate-900'
+                }`}
+              >
+                {row.name}
+              </p>
+              {row.tableLabel ? (
+                <p
+                  className={`mt-0.5 text-[9px] uppercase tracking-wide ${
+                    morphusActive ? 'text-violet-300/80' : 'text-slate-500'
+                  }`}
+                >
+                  {row.tableLabel}
+                </p>
+              ) : null}
+              {row.identityHints?.length ? (
+                <ul className="mt-1 space-y-0.5">
+                  {row.identityHints.map((hint) => (
+                    <li
+                      key={hint}
+                      className={`text-[10px] ${
+                        morphusActive ? 'text-amber-200/90' : 'text-amber-800'
+                      }`}
+                    >
+                      {hint}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   )

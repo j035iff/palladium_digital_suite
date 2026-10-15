@@ -12,6 +12,7 @@
  */
 
 import type { CharacterIdentityPortraits } from '../characterPortraits'
+import type { ActiveForm } from '../../types'
 
 export type GmSeatStatus = 'joining' | 'connected' | 'reconnecting'
 
@@ -19,6 +20,8 @@ export type GmSeatStatus = 'joining' | 'connected' | 'reconnecting'
 export type GmSeatPortraitProjection = {
   portraits: CharacterIdentityPortraits
   portraitShareAllowCharacterIds: string[]
+  /** Form the joiner last presented (Save-gated); peers show this form’s image. */
+  presentedForm: ActiveForm
 }
 
 /** Wire `connected` = fully joined at the table (UI maps to green). */

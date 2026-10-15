@@ -305,7 +305,7 @@ export function JoinTablePanel({
     }
     saveCharacterToStorage(next)
     refreshSavedCharacterIndex()
-    setProjectedAliasId(next.tableProjectedAliasId)
+    setProjectedAliasId(next.tableProjectedAliasId ?? TABLE_PROJECTED_REAL_NAME_ID)
     closeAddAliasDialog()
   }
 

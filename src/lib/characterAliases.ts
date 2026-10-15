@@ -1,10 +1,12 @@
 /**
  * Character aliases + join-table projected name (live sheet / Join Table).
  * Pillar 9: one resolver for sheet profile, join picker, and peer-facing seat labels.
- * GM Hub keeps using canonical {@link Character.name} from party.snapshot JSON.
+ * Nightbane: separate Facade (`aliases`) and Morphus (`morphusAliases`) lists;
+ * peers resolve via {@link presentedForm}.
+ * GM Hub keeps using canonical {@link Character.name} from party.snapshot.
  */
 
-import type { Character, CharacterAlias } from '../types'
+import type { ActiveForm, Character, CharacterAlias } from '../types'
 import { isCharacterNameFilled } from './characterIdentity'
 
 /** Sentinel select value — project the real character name at the table. */
@@ -39,6 +41,39 @@ export function normalizeAliases(
   return out
 }
 
+export function normalizePresentedForm(
+  form: ActiveForm | undefined | null,
+  supportsDualForm: boolean,
+): ActiveForm {
+  if (!supportsDualForm) return 'primary'
+  return form === 'morphus' ? 'morphus' : 'primary'
+}
+
+/** Alias list for one form (Morphus list is independent of Facade). */
+export function aliasesForForm(
+  character: Pick<Character, 'aliases' | 'morphusAliases'>,
+  form: ActiveForm,
+): CharacterAlias[] {
+  return normalizeAliases(
+    form === 'morphus' ? character.morphusAliases : character.aliases,
+  )
+}
+
+export function projectedAliasIdForForm(
+  character: Pick<
+    Character,
+    'tableProjectedAliasId' | 'morphusTableProjectedAliasId'
+  >,
+  form: ActiveForm,
+): string | null {
+  if (form === 'morphus') {
+    const id = character.morphusTableProjectedAliasId
+    return typeof id === 'string' && id.trim() ? id.trim() : null
+  }
+  const id = character.tableProjectedAliasId
+  return typeof id === 'string' && id.trim() ? id.trim() : null
+}
+
 export function addCharacterAlias(
   aliases: readonly CharacterAlias[] | undefined,
   name: string,
@@ -68,17 +103,30 @@ export function renameCharacterAlias(
 }
 
 /**
- * Resolve the name peers see at the table.
- * Empty / unknown {@link Character.tableProjectedAliasId} → real character name.
+ * Resolve the name peers see at the table for a form.
+ * Empty / unknown projected alias id → real character name.
  */
 export function resolveTableProjectedName(
-  character: Pick<Character, 'name' | 'aliases' | 'tableProjectedAliasId'>,
-  projectedAliasId: string | null | undefined = character.tableProjectedAliasId,
+  character: Pick<
+    Character,
+    | 'name'
+    | 'aliases'
+    | 'morphusAliases'
+    | 'tableProjectedAliasId'
+    | 'morphusTableProjectedAliasId'
+    | 'presentedForm'
+  >,
+  projectedAliasId?: string | null,
+  form: ActiveForm = normalizePresentedForm(character.presentedForm, true),
 ): string {
   const realName = character.name.trim() || 'Unnamed'
-  const id = (projectedAliasId ?? '').trim()
+  const id = (
+    projectedAliasId !== undefined
+      ? projectedAliasId
+      : projectedAliasIdForForm(character, form)
+  )?.trim()
   if (!id || id === TABLE_PROJECTED_REAL_NAME_ID) return realName
-  const match = normalizeAliases(character.aliases).find((a) => a.id === id)
+  const match = aliasesForForm(character, form).find((a) => a.id === id)
   return match?.name?.trim() || realName
 }
 
@@ -93,7 +141,8 @@ export type TableProjectionOption = {
 
 /** Familiar Surface options for Join Session “Name at the table” picker. */
 export function listTableProjectionOptions(
-  character: Pick<Character, 'name' | 'aliases'>,
+  character: Pick<Character, 'name' | 'aliases' | 'morphusAliases'>,
+  form: ActiveForm = 'primary',
 ): TableProjectionOption[] {
   const real =
     character.name.trim() ||
@@ -105,7 +154,7 @@ export function listTableProjectionOptions(
       isRealName: true,
     },
   ]
-  for (const alias of normalizeAliases(character.aliases)) {
+  for (const alias of aliasesForForm(character, form)) {
     options.push({ id: alias.id, label: alias.name, isRealName: false })
   }
   options.push({
@@ -122,17 +171,41 @@ export function listTableProjectionOptions(
  * Returns null when the draft name is empty after trim.
  */
 export function commitJoinTableNewAlias<
-  T extends Pick<Character, 'aliases' | 'tableProjectedAliasId'>,
->(character: T, aliasName: string, id = newAliasId()): (T & {
+  T extends Pick<
+    Character,
+    | 'aliases'
+    | 'morphusAliases'
+    | 'tableProjectedAliasId'
+    | 'morphusTableProjectedAliasId'
+  >,
+>(
+  character: T,
+  aliasName: string,
+  id = newAliasId(),
+  form: ActiveForm = 'primary',
+): (T & {
   aliases: CharacterAlias[]
-  tableProjectedAliasId: string
+  morphusAliases: CharacterAlias[]
+  tableProjectedAliasId: string | null
+  morphusTableProjectedAliasId: string | null
 }) | null {
   const trimmed = aliasName.trim()
   if (!trimmed) return null
+  if (form === 'morphus') {
+    return {
+      ...character,
+      aliases: normalizeAliases(character.aliases),
+      morphusAliases: addCharacterAlias(character.morphusAliases, trimmed, id),
+      tableProjectedAliasId: character.tableProjectedAliasId ?? null,
+      morphusTableProjectedAliasId: id,
+    }
+  }
   return {
     ...character,
     aliases: addCharacterAlias(character.aliases, trimmed, id),
+    morphusAliases: normalizeAliases(character.morphusAliases),
     tableProjectedAliasId: id,
+    morphusTableProjectedAliasId: character.morphusTableProjectedAliasId ?? null,
   }
 }
 

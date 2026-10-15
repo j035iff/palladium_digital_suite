@@ -85,7 +85,36 @@ describe('characterAliases', () => {
     expect(next).toEqual({
       name: 'Rook',
       aliases: [{ id: 'a-new', name: 'Crow' }],
+      morphusAliases: [],
       tableProjectedAliasId: 'a-new',
+      morphusTableProjectedAliasId: null,
     })
+  })
+
+  it('keeps separate Morphus alias lists and projection', () => {
+    const character = {
+      name: 'Rook',
+      aliases: [{ id: 'a1', name: 'Crow' }],
+      morphusAliases: [{ id: 'm1', name: 'Beak' }],
+      tableProjectedAliasId: 'a1' as string | null,
+      morphusTableProjectedAliasId: 'm1' as string | null,
+      presentedForm: 'morphus' as const,
+    }
+    expect(resolveTableProjectedName(character, undefined, 'primary')).toBe('Crow')
+    expect(resolveTableProjectedName(character, undefined, 'morphus')).toBe('Beak')
+    const morphusJoin = commitJoinTableNewAlias(
+      {
+        aliases: character.aliases,
+        morphusAliases: [],
+        tableProjectedAliasId: null,
+        morphusTableProjectedAliasId: null,
+      },
+      'Shade',
+      'm2',
+      'morphus',
+    )
+    expect(morphusJoin?.morphusAliases).toEqual([{ id: 'm2', name: 'Shade' }])
+    expect(morphusJoin?.morphusTableProjectedAliasId).toBe('m2')
+    expect(morphusJoin?.aliases).toEqual(character.aliases)
   })
 })

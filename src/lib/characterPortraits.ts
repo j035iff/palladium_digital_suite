@@ -248,15 +248,18 @@ export function resolvePeerVisiblePortrait(
 export function extractPeerPortraitProjection(characterJson: unknown): {
   portraits: CharacterIdentityPortraits
   portraitShareAllowCharacterIds: string[]
+  presentedForm: ActiveForm
 } {
   const json = characterJson as {
     identityProfile?: { portraits?: CharacterIdentityPortraits }
     portraitShareAllowCharacterIds?: string[]
+    presentedForm?: ActiveForm
   } | null
   return {
     portraits: normalizeIdentityPortraits(json?.identityProfile?.portraits),
     portraitShareAllowCharacterIds: normalizePortraitShareAllowIds(
       json?.portraitShareAllowCharacterIds,
     ),
+    presentedForm: json?.presentedForm === 'morphus' ? 'morphus' : 'primary',
   }
 }

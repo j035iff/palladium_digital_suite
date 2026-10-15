@@ -450,7 +450,9 @@ export function CampaignsHome({ morphus }: { morphus: boolean }) {
                     seat.portraitProjection?.portraitShareAllowCharacterIds,
                 },
                 viewerCharacterId,
-                'primary',
+                seat.portraitProjection?.presentedForm === 'morphus'
+                  ? 'morphus'
+                  : 'primary',
               )
               return (
                 <li

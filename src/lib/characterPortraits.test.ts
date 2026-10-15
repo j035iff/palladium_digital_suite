@@ -129,6 +129,15 @@ describe('characterPortraits', () => {
     ).toEqual({
       portraits: { primary: 'data:image/jpeg;base64,x' },
       portraitShareAllowCharacterIds: ['peer_1'],
+      presentedForm: 'primary',
     })
+    expect(
+      extractPeerPortraitProjection({
+        presentedForm: 'morphus',
+        identityProfile: {
+          portraits: { morphus: 'data:image/jpeg;base64,m' },
+        },
+      }),
+    ).toMatchObject({ presentedForm: 'morphus' })
   })
 })

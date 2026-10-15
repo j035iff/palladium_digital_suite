@@ -300,17 +300,29 @@ function migrateToVersion1(
   return next
 }
 
-/** Normalize aliases + coerce stale tableProjectedAliasId (identity / Join Table). */
+/** Normalize aliases + coerce stale projected alias ids (identity / Join Table). */
 function normalizeIdentityAliasFields(input: CharacterRootState): CharacterRootState {
   const aliases = normalizeAliases(input.aliases)
+  const morphusAliases = normalizeAliases(input.morphusAliases)
   const tableProjectedAliasId = coerceTableProjectedAliasId(
     aliases,
     input.tableProjectedAliasId,
   )
+  const morphusTableProjectedAliasId = coerceTableProjectedAliasId(
+    morphusAliases,
+    input.morphusTableProjectedAliasId,
+  )
+  const presentedForm =
+    input.presentedForm === 'morphus' || input.presentedForm === 'primary'
+      ? input.presentedForm
+      : undefined
   return {
     ...input,
     aliases,
+    morphusAliases,
     tableProjectedAliasId,
+    morphusTableProjectedAliasId,
+    ...(presentedForm ? { presentedForm } : {}),
   }
 }
 

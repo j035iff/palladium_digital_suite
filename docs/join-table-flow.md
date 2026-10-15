@@ -39,8 +39,9 @@ Player opens a character → live sheet. Persistent Core strip middle shows **TA
    - Drop-down of the real character name (default) plus any **Aliases**, plus **Add alias**
    - **Add alias** opens a text dialog → **Enter table with alias** or **Cancel**
    - Other players see this projected name; the **GM always sees the real character name**
-   - Choice is stored on the character (`tableProjectedAliasId`) and applied on `party.snapshot` → seat `projectedCharacterName`
-   - After join, changing aliases / projected name / other identity on the live sheet does **not** refresh `party.snapshot` until the player presses **Save**
+   - Choice is stored on the character (`tableProjectedAliasId` for Facade; Nightbane Morphus uses `morphusTableProjectedAliasId` + separate `morphusAliases`) and applied on `party.snapshot` → seat `projectedCharacterName` using `presentedForm`
+   - Peers also receive `portraitProjection.presentedForm` so People thumbnails match the joiner’s active form
+   - After join, changing aliases / projected name / form presentation / other identity on the live sheet does **not** refresh `party.snapshot` until the player presses **Save**
 4. **Join Session**
    - Populates any sessions available on the network
    - No session yet → “no session available”
