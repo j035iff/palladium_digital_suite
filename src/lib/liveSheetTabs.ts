@@ -80,6 +80,29 @@ export function isLiveSheetOverlayTabId(id: string): id is LiveSheetOverlayTabId
 }
 
 /**
+ * Adjacent strip overlay tabs with wrap-around
+ * (Identity ← left from Gear; Gear → right from Identity).
+ */
+export function adjacentLiveSheetOverlayTab(
+  tabId: LiveSheetOverlayTabId,
+  direction: 'prev' | 'next',
+): LiveSheetOverlayTabId {
+  const order = LIVE_SHEET_OVERLAY_TAB_ORDER
+  const index = order.indexOf(tabId)
+  if (index < 0) return order[0]
+  const delta = direction === 'next' ? 1 : -1
+  const nextIndex = (index + delta + order.length) % order.length
+  return order[nextIndex]!
+}
+
+/** Uppercase destination label for overlay prev/next chrome (Familiar Surface). */
+export function liveSheetOverlayTabPagingLabel(
+  tabId: LiveSheetOverlayTabId,
+): string {
+  return LIVE_SHEET_TAB_LABELS[tabId].toUpperCase()
+}
+
+/**
  * Strip pills for Identity · Stats · Bonuses · Skills · Abilities · Gear.
  * No Home pill — mode Home is the Campaigns / Combat body under the mode switch.
  */

@@ -289,6 +289,7 @@ export function MainLayout() {
           morphusActive={morphusActive}
           supportsDualForm={supportsDualForm}
           onToggleForm={toggleForm}
+          onSelectTab={setOverlayTabId}
           onClose={() => setOverlayTabId(null)}
         />
       ) : null}

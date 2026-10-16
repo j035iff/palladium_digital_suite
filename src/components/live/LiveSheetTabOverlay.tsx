@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { LiveSheetTabBody } from './LiveSheetTabBody'
 import {
+  adjacentLiveSheetOverlayTab,
   LIVE_SHEET_TAB_LABELS,
+  liveSheetOverlayTabPagingLabel,
   liveSheetTabTitle,
   type LiveSheetMode,
   type LiveSheetOverlayTabId,
@@ -14,13 +16,22 @@ type Props = {
   /** Dual-form only — omit the Facade/Morphus control otherwise (match strip Become Morphus). */
   supportsDualForm?: boolean
   onToggleForm?: () => void
+  /** Page to another strip overlay (same path as clicking a strip pill). */
+  onSelectTab: (id: LiveSheetOverlayTabId) => void
   onClose: () => void
+}
+
+function pagingButtonClass(morphusActive: boolean): string {
+  return morphusActive
+    ? 'shrink-0 rounded-md border-2 border-violet-400 bg-violet-950 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-violet-100 hover:bg-violet-900'
+    : 'shrink-0 rounded-md border-2 border-blue-500 bg-white px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-blue-900 hover:bg-blue-50'
 }
 
 /**
  * Overlay host for shared Identity/Stats/Bonuses/Skills/Abilities/Gear — reuses
  * `LiveSheetTabBody` (Unified Path; no forked panel math).
  * Dual-form: Facade/Morphus toggle next to Close (same active form as strip Become Morphus).
+ * Prev/next destination arrows flank Close and wrap Identity ↔ Gear.
  */
 export function LiveSheetTabOverlay({
   mode,
@@ -28,6 +39,7 @@ export function LiveSheetTabOverlay({
   morphusActive,
   supportsDualForm = false,
   onToggleForm,
+  onSelectTab,
   onClose,
 }: Props) {
   useEffect(() => {
@@ -39,6 +51,10 @@ export function LiveSheetTabOverlay({
   }, [onClose])
 
   const showFormToggle = supportsDualForm && typeof onToggleForm === 'function'
+  const prevTab = adjacentLiveSheetOverlayTab(tabId, 'prev')
+  const nextTab = adjacentLiveSheetOverlayTab(tabId, 'next')
+  const prevLabel = liveSheetOverlayTabPagingLabel(prevTab)
+  const nextLabel = liveSheetOverlayTabPagingLabel(nextTab)
 
   return (
     <div
@@ -122,6 +138,15 @@ export function LiveSheetTabOverlay({
             ) : null}
             <button
               type="button"
+              onClick={() => onSelectTab(prevTab)}
+              className={pagingButtonClass(morphusActive)}
+              aria-label={`Previous overlay: ${LIVE_SHEET_TAB_LABELS[prevTab]}`}
+              title={`Go to ${LIVE_SHEET_TAB_LABELS[prevTab]}`}
+            >
+              ← {prevLabel}
+            </button>
+            <button
+              type="button"
               onClick={onClose}
               className={
                 morphusActive
@@ -130,6 +155,15 @@ export function LiveSheetTabOverlay({
               }
             >
               Close
+            </button>
+            <button
+              type="button"
+              onClick={() => onSelectTab(nextTab)}
+              className={pagingButtonClass(morphusActive)}
+              aria-label={`Next overlay: ${LIVE_SHEET_TAB_LABELS[nextTab]}`}
+              title={`Go to ${LIVE_SHEET_TAB_LABELS[nextTab]}`}
+            >
+              {nextLabel} →
             </button>
           </div>
         </div>

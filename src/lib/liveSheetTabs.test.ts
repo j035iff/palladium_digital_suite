@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import {
+  adjacentLiveSheetOverlayTab,
   buildLiveSheetOverlayTabViews,
   buildLiveSheetTabViews,
   LIVE_SHEET_MODE_LABELS,
   LIVE_SHEET_OVERLAY_TAB_ORDER,
   LIVE_SHEET_TAB_ORDER,
   liveSheetModeLabel,
+  liveSheetOverlayTabPagingLabel,
   liveSheetTabTitle,
 } from './liveSheetTabs'
 
@@ -72,5 +74,15 @@ describe('liveSheetTabs', () => {
     expect(liveSheetTabTitle('combat', 'bonuses')).toBe(
       'Bonuses & saving throws',
     )
+  })
+
+  it('pages adjacent overlay tabs with wrap-around Identity ↔ Gear', () => {
+    expect(adjacentLiveSheetOverlayTab('identity', 'next')).toBe('stats')
+    expect(adjacentLiveSheetOverlayTab('stats', 'prev')).toBe('identity')
+    expect(adjacentLiveSheetOverlayTab('gear', 'next')).toBe('identity')
+    expect(adjacentLiveSheetOverlayTab('identity', 'prev')).toBe('gear')
+    expect(adjacentLiveSheetOverlayTab('abilities', 'next')).toBe('gear')
+    expect(liveSheetOverlayTabPagingLabel('bonuses')).toBe('BONUSES')
+    expect(liveSheetOverlayTabPagingLabel('identity')).toBe('IDENTITY')
   })
 })
