@@ -287,6 +287,8 @@ export function MainLayout() {
           mode={sheetMode}
           tabId={overlayTabId}
           morphusActive={morphusActive}
+          supportsDualForm={supportsDualForm}
+          onToggleForm={toggleForm}
           onClose={() => setOverlayTabId(null)}
         />
       ) : null}

@@ -11,17 +11,23 @@ type Props = {
   mode: LiveSheetMode
   tabId: LiveSheetOverlayTabId
   morphusActive: boolean
+  /** Dual-form only — omit the Facade/Morphus control otherwise (match strip Become Morphus). */
+  supportsDualForm?: boolean
+  onToggleForm?: () => void
   onClose: () => void
 }
 
 /**
  * Overlay host for shared Identity/Stats/Bonuses/Skills/Abilities/Gear — reuses
  * `LiveSheetTabBody` (Unified Path; no forked panel math).
+ * Dual-form: Facade/Morphus toggle next to Close (same active form as strip Become Morphus).
  */
 export function LiveSheetTabOverlay({
   mode,
   tabId,
   morphusActive,
+  supportsDualForm = false,
+  onToggleForm,
   onClose,
 }: Props) {
   useEffect(() => {
@@ -31,6 +37,8 @@ export function LiveSheetTabOverlay({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
+
+  const showFormToggle = supportsDualForm && typeof onToggleForm === 'function'
 
   return (
     <div
@@ -72,17 +80,58 @@ export function LiveSheetTabOverlay({
               {liveSheetTabTitle(mode, tabId)}
             </h2>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className={
-              morphusActive
-                ? 'shrink-0 rounded-md border-2 border-violet-300 bg-violet-800 px-3 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-violet-700'
-                : 'shrink-0 rounded-md border-2 border-blue-600 bg-blue-600 px-3 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
-            }
-          >
-            Close
-          </button>
+          <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
+            {showFormToggle ? (
+              <div
+                className="inline-flex rounded-md border-2 p-0.5"
+                style={{
+                  borderColor: morphusActive ? '#a78bfa' : '#2563eb',
+                }}
+                role="group"
+                aria-label="Active form"
+              >
+                <button
+                  type="button"
+                  aria-pressed={!morphusActive}
+                  onClick={() => {
+                    if (morphusActive) onToggleForm()
+                  }}
+                  className={`rounded px-2.5 py-1 text-[10px] font-black uppercase tracking-wide ${
+                    !morphusActive
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-transparent text-violet-200 hover:bg-violet-900/60'
+                  }`}
+                >
+                  Facade
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={morphusActive}
+                  onClick={() => {
+                    if (!morphusActive) onToggleForm()
+                  }}
+                  className={`rounded px-2.5 py-1 text-[10px] font-black uppercase tracking-wide ${
+                    morphusActive
+                      ? 'bg-violet-700 text-amber-100'
+                      : 'bg-transparent text-blue-800 hover:bg-blue-50'
+                  }`}
+                >
+                  Morphus
+                </button>
+              </div>
+            ) : null}
+            <button
+              type="button"
+              onClick={onClose}
+              className={
+                morphusActive
+                  ? 'shrink-0 rounded-md border-2 border-violet-300 bg-violet-800 px-3 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-violet-700'
+                  : 'shrink-0 rounded-md border-2 border-blue-600 bg-blue-600 px-3 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
+              }
+            >
+              Close
+            </button>
+          </div>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
           <LiveSheetTabBody mode={mode} tabId={tabId} />
