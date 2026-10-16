@@ -1,9 +1,4 @@
-import {
-  LIVE_SHEET_SAVE_LABEL,
-  liveSheetSaveStatus,
-  liveSheetSaveStatusLabel,
-  type LiveSheetSaveStatus,
-} from '../../lib/liveSheetSave'
+import { LIVE_SHEET_SAVE_LABEL } from '../../lib/liveSheetSave'
 
 type LiveSheetSaveControlsProps = {
   dirty: boolean
@@ -11,46 +6,10 @@ type LiveSheetSaveControlsProps = {
   morphusActive?: boolean
 }
 
-function SavedStatusDot({
-  status,
-  morphusActive,
-}: {
-  status: LiveSheetSaveStatus
-  morphusActive: boolean
-}) {
-  const saved = status === 'saved'
-  return (
-    <span
-      className="inline-flex items-center gap-1.5"
-      title={liveSheetSaveStatusLabel(status)}
-      aria-label={liveSheetSaveStatusLabel(status)}
-    >
-      <span
-        className={`inline-block h-2 w-2 rounded-full ${
-          saved ? 'bg-emerald-500' : 'bg-orange-500'
-        }`}
-        aria-hidden
-      />
-      <span
-        className={`text-[10px] font-bold uppercase tracking-wide ${
-          saved
-            ? morphusActive
-              ? 'text-emerald-400'
-              : 'text-emerald-700'
-            : morphusActive
-              ? 'text-orange-300'
-              : 'text-orange-700'
-        }`}
-      >
-        {liveSheetSaveStatusLabel(status)}
-      </span>
-    </span>
-  )
-}
-
 /**
- * Explicit Save + saved/unsaved indicator for the live sheet Persistent Core.
+ * Explicit Save for the live sheet Persistent Core.
  * Dirty → orange Save (enabled); clean → greyed/disabled.
+ * Dirty/clean is carried by the button alone (no separate Saved/Unsaved chip).
  * One control for Story and Combat (Unified Path).
  */
 export function LiveSheetSaveControls({
@@ -58,10 +17,8 @@ export function LiveSheetSaveControls({
   onSave,
   morphusActive = false,
 }: LiveSheetSaveControlsProps) {
-  const status = liveSheetSaveStatus(dirty)
   return (
     <div className="flex items-center gap-2">
-      <SavedStatusDot status={status} morphusActive={morphusActive} />
       <button
         type="button"
         onClick={onSave}

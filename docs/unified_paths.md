@@ -344,7 +344,7 @@ Track work here until promoted to the registry above.
 |-------|--------|----------------|-------|
 | Fingerprint / copy | `src/lib/liveSheetSave.ts` | `liveSheetSaveFingerprint`, `shouldGuardLiveSheetLeave`, `shouldPushJoinedPartySnapshotOnLiveMutation` | One dirty pipeline for Campaigns (`story`) + Combat; joined `party.snapshot` deferred until Save |
 | Context | `src/context/CharacterContext.tsx` | `isLiveSheetDirty`, `saveCharacter`, `discardLiveSheetEdits`, `flushJoinedPartySnapshot` | No auto-persist after `isFinalized`; Save flushes file + table snapshot |
-| Chrome | `LiveSheetSaveControls`, `UnsavedEditsDialog` | Persistent Core next to Portal | Orange **Save** when dirty (enabled); greyed/disabled when clean; leave-dirty dialog kept |
+| Chrome | `LiveSheetSaveControls`, `UnsavedEditsDialog` | Persistent Core next to Portal | Orange **Save** when dirty (enabled); greyed/disabled when clean; no Saved/Unsaved chip; leave-dirty dialog kept |
 
 **Modes / variants:** Offline sheet and joined-at-table sheet share one Save gate. Join Session attach and Review & Spawn finalize still push `party.snapshot` as commit points (not dirty edits).
 
@@ -356,6 +356,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-16 | Header chrome: drop IDENTITY eyebrow + SAVED chip; Save button alone shows dirty/clean |
 | 2026-10-16 | Identity strip tab first (left of Stats); Expand removed; full identity on Identity overlay; orange Save when dirty / greyed when clean |
 | 2026-10-15 | Character Image window: corner-drag resize + aspect-fit on pick; default ≥2× prior (~352×320); persist `identityProfile.portraitWindows` |
 | 2026-10-15 | Dual identity: description/personality independent (no Facade fallback); Character Image slot swaps with active form (not both stacked) |

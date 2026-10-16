@@ -1227,14 +1227,8 @@ export function IdentityHeader({
     <div className="min-w-0 flex-1">
       {collapsed ? (
         <>
-          <div className="flex items-center justify-between gap-2">
-            <p
-              className="text-[10px] font-semibold uppercase tracking-widest"
-              style={{ color: morphusActive ? '#c4b5fd' : '#1d4ed8' }}
-            >
-              Identity
-            </p>
-            {showExpandToggle ? (
+          {showExpandToggle ? (
+            <div className="mb-1 flex items-center justify-end gap-2">
               <button
                 type="button"
                 className={toggleButtonClass}
@@ -1244,11 +1238,11 @@ export function IdentityHeader({
               >
                 Expand
               </button>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
           <div
             id="identity-header-details"
-            className="mt-1 flex min-w-0 flex-nowrap items-baseline gap-x-2 overflow-x-auto pb-0.5"
+            className="flex min-w-0 flex-nowrap items-baseline gap-x-2 overflow-x-auto pb-0.5"
           >
             <input
               type="text"

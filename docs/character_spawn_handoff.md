@@ -78,7 +78,7 @@ Spawn **does not** auto-write to disk until Confirm (then one handoff write so O
 1. Header **Save** (`saveCharacter`) — `serializeCharacterRootForSave(rawCharacter)` strips runtime-only flags (`isHostGenreLocked`, etc.) per [master_flow.md](./master_flow.md) §2; stamps `schemaVersion`. Merges the live gear session (`inventory` block: carried items, equipped armor id, primary/secondary weapon slot ids, ammo reserves) before write.
 2. `saveCharacterToStorage` — writes pristine JSON keyed by character `id`.
 3. Index refresh for launcher **Open Character** list.
-4. Dirty tracking (`src/lib/liveSheetSave.ts`) compares the would-be save fingerprint to the last Save; Persistent Core shows Saved / Unsaved + Save. Portal leave with unsaved edits → dialog (Save / Continue without saving).
+4. Dirty tracking (`src/lib/liveSheetSave.ts`) compares the would-be save fingerprint to the last Save; Persistent Core shows orange/greyed **Save** (no separate Saved/Unsaved chip). Portal leave with unsaved edits → dialog (Save / Continue without saving).
 
 Live-sheet edits (identity, notes, gear, vitality, etc.) stay in memory until Save — **no auto-persist** after `isFinalized`. While joined at a table, the same Save also flushes `party.snapshot` to peers (dirty edits do not live-push the seated snapshot). Creation **Save for Later** remains its own explicit draft write.
 
