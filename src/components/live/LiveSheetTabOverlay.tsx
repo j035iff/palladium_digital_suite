@@ -15,7 +15,7 @@ type Props = {
 }
 
 /**
- * Overlay host for shared Stats/Bonuses/Skills/Abilities/Gear — reuses
+ * Overlay host for shared Identity/Stats/Bonuses/Skills/Abilities/Gear — reuses
  * `LiveSheetTabBody` (Unified Path; no forked panel math).
  */
 export function LiveSheetTabOverlay({
@@ -42,7 +42,9 @@ export function LiveSheetTabOverlay({
         role="dialog"
         aria-modal="true"
         aria-label={LIVE_SHEET_TAB_LABELS[tabId]}
-        className={`flex max-h-[min(92vh,840px)] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border-2 shadow-2xl ${
+        className={`flex max-h-[min(92vh,840px)] w-full flex-col overflow-hidden rounded-2xl border-2 shadow-2xl ${
+          tabId === 'identity' ? 'max-w-6xl' : 'max-w-4xl'
+        } ${
           morphusActive
             ? 'border-violet-400 bg-slate-950 text-violet-50'
             : 'border-blue-500 bg-white text-slate-900'

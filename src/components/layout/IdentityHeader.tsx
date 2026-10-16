@@ -75,8 +75,8 @@ type IdentityHeaderProps = {
   collapsed?: boolean
   onCollapsedChange?: (collapsed: boolean) => void
   /**
-   * When false, Expand/Minimize is owned by the Persistent Core utility cluster
-   * (mockup fidelity — sits with Save / Portal). Default true.
+   * When false, hide Expand/Minimize (live sheet: summary strip only;
+   * full details live on the Identity overlay tab). Default true.
    */
   showExpandToggle?: boolean
   /**
@@ -1349,9 +1349,9 @@ export function IdentityHeader({
           </div>
 
           {/*
-            Identity Expand: left traits + aliases, center freeform Description /
-            Personality (per-form on identityProfile; Morphus overlay), right Character
-            Image (+ Morphus traits breakdown when Morphus form is active).
+            Identity details (overlay tab / expand): left traits + aliases, center
+            freeform Description / Personality (per-form on identityProfile; Morphus
+            overlay), right Character Image (+ Morphus traits when Morphus active).
           */}
           {fillInCallouts.length > 0 ? (
             <div

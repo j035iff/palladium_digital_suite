@@ -11,7 +11,13 @@ type LiveSheetSaveControlsProps = {
   morphusActive?: boolean
 }
 
-function SavedStatusDot({ status }: { status: LiveSheetSaveStatus }) {
+function SavedStatusDot({
+  status,
+  morphusActive,
+}: {
+  status: LiveSheetSaveStatus
+  morphusActive: boolean
+}) {
   const saved = status === 'saved'
   return (
     <span
@@ -21,13 +27,19 @@ function SavedStatusDot({ status }: { status: LiveSheetSaveStatus }) {
     >
       <span
         className={`inline-block h-2 w-2 rounded-full ${
-          saved ? 'bg-emerald-500' : 'bg-amber-500'
+          saved ? 'bg-emerald-500' : 'bg-orange-500'
         }`}
         aria-hidden
       />
       <span
         className={`text-[10px] font-bold uppercase tracking-wide ${
-          saved ? 'text-emerald-700' : 'text-amber-800'
+          saved
+            ? morphusActive
+              ? 'text-emerald-400'
+              : 'text-emerald-700'
+            : morphusActive
+              ? 'text-orange-300'
+              : 'text-orange-700'
         }`}
       >
         {liveSheetSaveStatusLabel(status)}
@@ -38,6 +50,7 @@ function SavedStatusDot({ status }: { status: LiveSheetSaveStatus }) {
 
 /**
  * Explicit Save + saved/unsaved indicator for the live sheet Persistent Core.
+ * Dirty → orange Save (enabled); clean → greyed/disabled.
  * One control for Story and Combat (Unified Path).
  */
 export function LiveSheetSaveControls({
@@ -48,7 +61,7 @@ export function LiveSheetSaveControls({
   const status = liveSheetSaveStatus(dirty)
   return (
     <div className="flex items-center gap-2">
-      <SavedStatusDot status={status} />
+      <SavedStatusDot status={status} morphusActive={morphusActive} />
       <button
         type="button"
         onClick={onSave}
@@ -57,12 +70,10 @@ export function LiveSheetSaveControls({
         aria-label={dirty ? 'Save character' : 'All changes saved'}
         className={`rounded-md border px-3 py-1.5 text-xs font-bold uppercase tracking-wide ${
           dirty
-            ? morphusActive
-              ? 'border-amber-300 bg-violet-900 text-amber-100 hover:border-amber-200'
-              : 'border-slate-800 bg-slate-900 text-white hover:bg-slate-800'
+            ? 'border-orange-600 bg-orange-500 text-white hover:bg-orange-400'
             : morphusActive
-              ? 'cursor-default border-slate-600 bg-slate-900/50 text-slate-500'
-              : 'cursor-default border-slate-200 bg-slate-100 text-slate-400'
+              ? 'cursor-not-allowed border-slate-600 bg-slate-800/60 text-slate-500 opacity-60'
+              : 'cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400 opacity-70'
         }`}
       >
         {LIVE_SHEET_SAVE_LABEL}

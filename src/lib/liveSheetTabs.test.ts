@@ -13,6 +13,7 @@ describe('liveSheetTabs', () => {
   it('keeps Home in the body pipeline and overlays as the strip set', () => {
     expect(LIVE_SHEET_TAB_ORDER).toEqual([
       'home',
+      'identity',
       'stats',
       'bonuses',
       'skills',
@@ -20,6 +21,7 @@ describe('liveSheetTabs', () => {
       'gear',
     ])
     expect(LIVE_SHEET_OVERLAY_TAB_ORDER).toEqual([
+      'identity',
       'stats',
       'bonuses',
       'skills',
@@ -36,6 +38,18 @@ describe('liveSheetTabs', () => {
       buildLiveSheetOverlayTabViews('stats').find((t) => t.id === 'stats')
         ?.visual,
     ).toBe('active')
+  })
+
+  it('places Identity first in the strip, left of Stats', () => {
+    expect(LIVE_SHEET_OVERLAY_TAB_ORDER[0]).toBe('identity')
+    expect(LIVE_SHEET_OVERLAY_TAB_ORDER[1]).toBe('stats')
+    expect(
+      buildLiveSheetOverlayTabViews(null).find((t) => t.id === 'identity')
+        ?.label,
+    ).toBe('Identity')
+    expect(liveSheetTabTitle('story', 'identity')).toBe(
+      'Profile, portraits & aliases',
+    )
   })
 
   it('labels story mode Campaigns (not Story / Narrative)', () => {

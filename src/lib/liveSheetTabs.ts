@@ -9,6 +9,7 @@ export type LiveSheetMode = 'story' | 'combat'
 
 /** Shared drill-down tabs opened as overlays over the active mode Home. */
 export type LiveSheetOverlayTabId =
+  | 'identity'
   | 'stats'
   | 'bonuses'
   | 'skills'
@@ -19,6 +20,7 @@ export type LiveSheetOverlayTabId =
 export type LiveSheetTabId = 'home' | LiveSheetOverlayTabId
 
 export const LIVE_SHEET_OVERLAY_TAB_ORDER: readonly LiveSheetOverlayTabId[] = [
+  'identity',
   'stats',
   'bonuses',
   'skills',
@@ -38,6 +40,7 @@ export const LIVE_SHEET_MODE_LABELS: Record<LiveSheetMode, string> = {
 
 export const LIVE_SHEET_TAB_LABELS: Record<LiveSheetTabId, string> = {
   home: 'Home',
+  identity: 'Identity',
   stats: 'Stats',
   bonuses: 'Bonuses',
   skills: 'Skills',
@@ -46,6 +49,7 @@ export const LIVE_SHEET_TAB_LABELS: Record<LiveSheetTabId, string> = {
 }
 
 const SHARED_TAB_TITLES: Record<LiveSheetOverlayTabId, string> = {
+  identity: 'Profile, portraits & aliases',
   stats: 'Attributes & movement',
   bonuses: 'Bonuses & saving throws',
   skills: 'Skills',
@@ -76,7 +80,7 @@ export function isLiveSheetOverlayTabId(id: string): id is LiveSheetOverlayTabId
 }
 
 /**
- * Strip pills for Stats · Bonuses · Skills · Abilities · Gear.
+ * Strip pills for Identity · Stats · Bonuses · Skills · Abilities · Gear.
  * No Home pill — mode Home is the Campaigns / Combat body under the mode switch.
  */
 export function buildLiveSheetOverlayTabViews(

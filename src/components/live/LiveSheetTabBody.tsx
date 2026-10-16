@@ -3,6 +3,7 @@ import { CampaignsHome } from './CampaignsHome'
 import { CombatHUD } from './CombatHUD'
 import { GearPanel } from './GearPanel'
 import { LiveAbilitiesPanel } from './LiveAbilitiesPanel'
+import { LiveIdentityPanel } from './LiveIdentityPanel'
 import { MorphusCapabilitiesPanel } from './MorphusCapabilitiesPanel'
 import { MorphusTraitsPanel } from './MorphusTraitsPanel'
 import { PsStrengthPanel } from './PsStrengthPanel'
@@ -46,6 +47,10 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
 
   if (tabId === 'home') {
     return <CampaignsHome morphus={morphusActive} />
+  }
+
+  if (tabId === 'identity') {
+    return <LiveIdentityPanel />
   }
 
   if (tabId === 'bonuses') {

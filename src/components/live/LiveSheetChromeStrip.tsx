@@ -34,9 +34,9 @@ type Props = {
 }
 
 /**
- * Persistent Core strip: Stats…Gear (+ optional Become Morphus after Gear) ·
+ * Persistent Core strip: Identity…Gear (+ optional Become Morphus after Gear) ·
  * middle TABLE status / Join table · quick-ref pools · XP.
- * Identity Expand pushes this strip down (Visual Continuity).
+ * Full identity detail opens as the Identity overlay (header strip stays anchored).
  */
 export function LiveSheetChromeStrip({
   morphusActive,
