@@ -356,6 +356,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-16 | Identity overlay: drop Surface dropdown + Natural A.R. line (Alignment stays) |
 | 2026-10-16 | Identity overlay: drop duplicate name/Race/O.C.C. top chrome (Alignment stays); Morphus traits via description-header popover (no static column) |
 | 2026-10-16 | Header chrome: drop IDENTITY eyebrow + SAVED chip; Save button alone shows dirty/clean |
 | 2026-10-16 | Identity strip tab first (left of Stats); Expand removed; full identity on Identity overlay; orange Save when dirty / greyed when clean |
