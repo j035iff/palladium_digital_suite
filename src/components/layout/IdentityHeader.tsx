@@ -799,38 +799,65 @@ function IdentityFreeformTextBox({
   onChange,
   placeholder,
   morphusActive,
+  /** When set, the box header is a Familiar Surface affordance (button), not a plain label. */
+  onHeaderClick,
+  headerExpanded = false,
+  headerHint,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   placeholder: string
   morphusActive: boolean
+  onHeaderClick?: () => void
+  headerExpanded?: boolean
+  headerHint?: string
 }) {
   const fieldId = `identity-${label.toLowerCase().replace(/\s+/g, '-')}`
+  const headerClass = `border-b px-2 py-1 text-left text-[10px] font-black uppercase tracking-wider ${
+    morphusActive
+      ? 'border-violet-800 text-violet-200'
+      : 'border-slate-200 text-slate-700'
+  }`
   return (
     <div
-      className={`flex min-h-[7.5rem] flex-1 flex-col rounded-md border-2 ${
+      className={`relative flex min-h-[7.5rem] flex-1 flex-col rounded-md border-2 ${
         morphusActive
           ? 'border-violet-500 bg-slate-950/50'
           : 'border-slate-700 bg-white'
       }`}
     >
-      <label
-        htmlFor={fieldId}
-        className={`border-b px-2 py-1 text-[10px] font-black uppercase tracking-wider ${
-          morphusActive
-            ? 'border-violet-800 text-violet-200'
-            : 'border-slate-200 text-slate-700'
-        }`}
-      >
-        {label}
-      </label>
+      {onHeaderClick ? (
+        <button
+          type="button"
+          id={`${fieldId}-header`}
+          onClick={onHeaderClick}
+          aria-expanded={headerExpanded}
+          title={headerHint ?? `Open ${label} details`}
+          aria-label={headerHint ?? `Open ${label} details`}
+          className={`${headerClass} w-full cursor-pointer hover:underline focus-visible:outline-none focus-visible:ring-2 ${
+            morphusActive
+              ? 'focus-visible:ring-violet-400'
+              : 'focus-visible:ring-blue-500'
+          }`}
+        >
+          {label}
+          <span className="ml-1.5 font-semibold normal-case tracking-normal opacity-70">
+            {headerExpanded ? '▾' : '▸'}
+          </span>
+        </button>
+      ) : (
+        <label htmlFor={fieldId} className={headerClass}>
+          {label}
+        </label>
+      )}
       <textarea
         id={fieldId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={5}
+        aria-labelledby={onHeaderClick ? `${fieldId}-header` : undefined}
         className={`min-h-[6rem] flex-1 resize-y bg-transparent px-3 py-2 text-sm leading-relaxed outline-none placeholder:italic ${
           morphusActive
             ? 'text-violet-50 placeholder:text-violet-400/70'
@@ -1040,11 +1067,32 @@ export function IdentityHeader({
     renameAlias,
   } = useCharacter()
   const [aliasDraft, setAliasDraft] = useState('')
+  const [morphusTraitsOpen, setMorphusTraitsOpen] = useState(false)
+  const morphusDescriptionBlockRef = useRef<HTMLDivElement | null>(null)
   const joinRuntime = useMemo(() => getSharedGmClientRuntime(), [])
   const [joinState, setJoinState] = useState<GmClientRuntimeState>(() =>
     joinRuntime.getState(),
   )
   useEffect(() => joinRuntime.subscribe(setJoinState), [joinRuntime])
+  useEffect(() => {
+    if (!morphusActive) setMorphusTraitsOpen(false)
+  }, [morphusActive])
+  useEffect(() => {
+    if (!morphusTraitsOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMorphusTraitsOpen(false)
+    }
+    const onPointer = (e: MouseEvent) => {
+      const el = morphusDescriptionBlockRef.current
+      if (el && !el.contains(e.target as Node)) setMorphusTraitsOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('mousedown', onPointer)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('mousedown', onPointer)
+    }
+  }, [morphusTraitsOpen])
   const peerShareSeats =
     joinState.status === 'joined'
       ? joinState.seats.filter(
@@ -1282,52 +1330,16 @@ export function IdentityHeader({
         </>
       ) : (
         <div id="identity-header-details">
-          <div className="flex flex-wrap items-start justify-between gap-2">
-            <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-1">
-              <input
-                type="text"
-                value={character.name}
-                onChange={(e) => setCharacterName(e.target.value)}
-                onFocus={(e) =>
-                  clearPlaceholderNameOnFocus(
-                    e.currentTarget.value,
-                    setCharacterName,
-                  )
-                }
-                placeholder={CHARACTER_NAME_PLACEHOLDER}
-                aria-label="Character name"
-                className={`${nameInputClass} ${nameInputToneClass}`}
+          {/*
+            Overlay details: name / Race / O.C.C. stay on the Persistent Core strip —
+            only Alignment is editable here (Familiar Surface, no duplicate chrome).
+          */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="min-w-[10rem] max-w-xs">
+              <ConfiguratorAlignmentSelect
+                morphus={morphusActive}
+                variant="identity"
               />
-              <span
-                className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
-                aria-hidden
-              >
-                ·
-              </span>
-              <span className={summaryMetaClass} title={raceLabel}>
-                {raceLabel}
-              </span>
-              <span
-                className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
-                aria-hidden
-              >
-                ·
-              </span>
-              <span className={summaryMetaClass} title={occLabel}>
-                {occLabel}
-              </span>
-              <span
-                className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
-                aria-hidden
-              >
-                ·
-              </span>
-              <div className="min-w-[10rem] max-w-xs">
-                <ConfiguratorAlignmentSelect
-                  morphus={morphusActive}
-                  variant="identity"
-                />
-              </div>
             </div>
             {showExpandToggle ? (
               <button
@@ -1343,9 +1355,8 @@ export function IdentityHeader({
           </div>
 
           {/*
-            Identity details (overlay tab / expand): left traits + aliases, center
-            freeform Description / Personality (per-form on identityProfile; Morphus
-            overlay), right Character Image (+ Morphus traits when Morphus active).
+            Identity details: left traits + aliases, center Description / Personality
+            (Morphus description header opens traits popover), right Character Image.
           */}
           {fillInCallouts.length > 0 ? (
             <div
@@ -1362,13 +1373,7 @@ export function IdentityHeader({
               </ul>
             </div>
           ) : null}
-          <div
-            className={`mt-4 grid grid-cols-1 gap-4 ${
-              morphusActive && supportsDualForm
-                ? 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(14rem,max-content)_minmax(10rem,14rem)]'
-                : 'lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(14rem,max-content)]'
-            }`}
-          >
+          <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(12rem,16rem)_minmax(0,1fr)_minmax(14rem,max-content)]">
             <div className="min-w-0">
               <IdentityProfileDetailFields
                 profile={displayProfile}
@@ -1411,23 +1416,41 @@ export function IdentityHeader({
             </div>
 
             <div className="flex min-h-[16rem] flex-col gap-3">
-              <IdentityFreeformTextBox
-                label={
-                  supportsDualForm
-                    ? morphusActive
-                      ? 'Morphus description'
-                      : 'Facade description'
-                    : 'Description'
-                }
-                value={displayProfile.description ?? ''}
-                onChange={(description) => patch({ description })}
-                placeholder={
-                  morphusActive
-                    ? 'Morphus appearance — build, features, clothing, distinguishing marks…'
-                    : 'Physical appearance — build, features, clothing, distinguishing marks…'
-                }
-                morphusActive={morphusActive}
-              />
+              <div ref={morphusDescriptionBlockRef} className="relative flex flex-1 flex-col">
+                <IdentityFreeformTextBox
+                  label={
+                    supportsDualForm
+                      ? morphusActive
+                        ? 'Morphus description'
+                        : 'Facade description'
+                      : 'Description'
+                  }
+                  value={displayProfile.description ?? ''}
+                  onChange={(description) => patch({ description })}
+                  placeholder={
+                    morphusActive
+                      ? 'Morphus appearance — build, features, clothing, distinguishing marks…'
+                      : 'Physical appearance — build, features, clothing, distinguishing marks…'
+                  }
+                  morphusActive={morphusActive}
+                  onHeaderClick={
+                    morphusActive && supportsDualForm
+                      ? () => setMorphusTraitsOpen((open) => !open)
+                      : undefined
+                  }
+                  headerExpanded={morphusTraitsOpen}
+                  headerHint="Show Morphus traits from creation"
+                />
+                {morphusActive && supportsDualForm && morphusTraitsOpen ? (
+                  <div className="absolute left-0 right-0 top-8 z-30 max-h-[min(22rem,50vh)] overflow-hidden shadow-xl sm:left-auto sm:right-0 sm:w-[min(18rem,100%)]">
+                    <MorphusIdentityTraitsColumn
+                      breakdown={morphusTraitBreakdown}
+                      morphusActive={morphusActive}
+                      onClose={() => setMorphusTraitsOpen(false)}
+                    />
+                  </div>
+                ) : null}
+              </div>
               <IdentityFreeformTextBox
                 label={
                   supportsDualForm
@@ -1543,13 +1566,6 @@ export function IdentityHeader({
                 </div>
               ) : null}
             </div>
-
-            {morphusActive && supportsDualForm ? (
-              <MorphusIdentityTraitsColumn
-                breakdown={morphusTraitBreakdown}
-                morphusActive={morphusActive}
-              />
-            ) : null}
           </div>
         </div>
       )}
@@ -1560,27 +1576,45 @@ export function IdentityHeader({
 function MorphusIdentityTraitsColumn({
   breakdown,
   morphusActive,
+  onClose,
 }: {
   breakdown: ReturnType<typeof buildLiveMorphusIdentityTraitBreakdown> | null
   morphusActive: boolean
+  onClose?: () => void
 }) {
   const rows = breakdown?.rows ?? []
   return (
     <div
-      className={`flex min-h-[16rem] flex-col rounded-md border-2 px-2 py-2 ${
+      className={`flex max-h-[min(22rem,50vh)] flex-col rounded-md border-2 px-2 py-2 shadow-lg ${
         morphusActive
-          ? 'border-violet-800 bg-slate-950/60'
+          ? 'border-violet-400 bg-slate-950'
           : 'border-slate-300 bg-slate-50'
       }`}
+      role="dialog"
       aria-label="Morphus traits from creation"
     >
-      <p
-        className={`text-[9px] font-bold uppercase tracking-wide ${
-          morphusActive ? 'text-violet-300' : 'text-slate-600'
-        }`}
-      >
-        Morphus traits
-      </p>
+      <div className="flex items-start justify-between gap-2">
+        <p
+          className={`text-[9px] font-bold uppercase tracking-wide ${
+            morphusActive ? 'text-violet-300' : 'text-slate-600'
+          }`}
+        >
+          Morphus traits
+        </p>
+        {onClose ? (
+          <button
+            type="button"
+            onClick={onClose}
+            className={
+              morphusActive
+                ? 'shrink-0 rounded border border-violet-500 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-violet-200 hover:bg-violet-900'
+                : 'shrink-0 rounded border border-slate-300 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-slate-600 hover:bg-slate-100'
+            }
+          >
+            Close
+          </button>
+        ) : null}
+      </div>
       {breakdown?.sectionTitle || breakdown?.subtitle ? (
         <p
           className={`mt-0.5 text-[10px] ${
