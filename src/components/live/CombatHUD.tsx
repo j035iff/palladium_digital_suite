@@ -32,36 +32,32 @@ function ApmPipRow({
   morphus,
   maxApm,
   actionsUsed,
-  size,
   onSpendOne,
 }: {
   morphus: boolean
   maxApm: number
   actionsUsed: number
-  size: 'compact' | 'full'
   onSpendOne: () => void
 }) {
   if (maxApm <= 0) return null
   const remaining = Math.max(0, maxApm - actionsUsed)
-  const compact = size === 'compact'
-  const box = compact
-    ? 'inline-flex h-6 w-6 items-center justify-center rounded-full border text-[10px] font-bold'
-    : 'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 text-lg font-bold'
+  const box =
+    'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 text-lg font-bold'
 
   return (
     <div
-      className={`flex flex-wrap items-center ${compact ? 'gap-0.5' : 'mb-3 gap-2'}`}
+      className="mb-3 flex flex-wrap items-center gap-2"
       role="group"
       aria-label={`Attacks per melee, ${remaining} of ${maxApm} remaining. Tap a remaining action to spend 1.`}
     >
       {Array.from({ length: maxApm }, (_, i) => {
         const spent = i < actionsUsed
         const spentCls = morphus
-          ? `${box} border-violet-900/80 bg-slate-900 text-violet-400 ${compact ? 'opacity-25' : 'opacity-20'}`
-          : `${box} border-slate-400/80 bg-slate-200/90 text-slate-600 ${compact ? 'opacity-25' : 'opacity-20'}`
+          ? `${box} border-violet-900/80 bg-slate-900 text-violet-400 opacity-20`
+          : `${box} border-slate-400/80 bg-slate-200/90 text-slate-600 opacity-20`
         const liveCls = morphus
-          ? `${box} cursor-pointer border-violet-200 bg-violet-600 text-white hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-950 ${compact ? '' : 'shadow-md'}`
-          : `${box} cursor-pointer border-blue-800 bg-blue-600 text-white hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-1 ${compact ? '' : 'shadow-md'}`
+          ? `${box} cursor-pointer border-violet-200 bg-violet-600 text-white shadow-md hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-950`
+          : `${box} cursor-pointer border-blue-800 bg-blue-600 text-white shadow-md hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-1`
 
         if (spent) {
           return (
@@ -188,7 +184,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   const [resolveOpen, setResolveOpen] = useState(false)
   const [resolveDamage, setResolveDamage] = useState('4')
   const [resolveAttackRollStr, setResolveAttackRollStr] = useState('')
-  const [hudMinimized, setHudMinimized] = useState(false)
   const [expandedBubble, setExpandedBubble] = useState<CombatBubbleId | null>(null)
   const [pickedIds, setPickedIds] = useState<{ ancient: string | null; modern: string | null }>(
     { ancient: null, modern: null },
@@ -235,10 +230,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   const sub = morphus
     ? 'border border-violet-500/70 bg-violet-950/40'
     : 'border border-blue-200 bg-blue-50/80'
-
-  const btnCompact = morphus
-    ? 'shrink-0 rounded-md border-2 border-violet-300 bg-violet-800 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-violet-700'
-    : 'shrink-0 rounded-md border-2 border-blue-600 bg-blue-600 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
 
   const btn = morphus
     ? 'border-2 border-violet-300 bg-violet-800 text-white hover:bg-violet-700'
@@ -387,47 +378,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           </div>
         ) : null}
 
-        {hudMinimized ? (
-          <div
-            className={`flex flex-wrap items-center gap-2 rounded-lg border-2 p-2 ${sub}`}
-            aria-label="Condensed melee A.P.M. and initiative"
-          >
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-              <span
-                className={`text-[9px] font-black uppercase tracking-wide ${
-                  morphus ? 'text-violet-200' : 'text-blue-900'
-                }`}
-              >
-                APM {curApm}/{maxApm}
-              </span>
-              <ApmPipRow
-                morphus={morphus}
-                maxApm={maxApm}
-                actionsUsed={actionsUsed}
-                size="compact"
-                onSpendOne={spendOneAction}
-              />
-            </div>
-            <InitiativeChip detail={sheetCombatDerived.initiative} morphus={morphus} />
-            <button
-              type="button"
-              title="New melee round"
-              onClick={resetMeleeRound}
-              className={`shrink-0 rounded px-2 py-1 text-[10px] font-black uppercase ${btnCompact}`}
-            >
-              ↻
-            </button>
-            <button
-              type="button"
-              className={btnCompact}
-              aria-expanded={false}
-              onClick={() => setHudMinimized(false)}
-            >
-              Expand
-            </button>
-          </div>
-        ) : (
-          <>
         {layout === 'panel' ? (
           <div className="mb-3 space-y-3" aria-label="Combat vitals">
             <div
@@ -509,7 +459,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                 morphus={morphus}
                 maxApm={maxApm}
                 actionsUsed={actionsUsed}
-                size="full"
                 onSpendOne={spendOneAction}
               />
             </div>
@@ -523,14 +472,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                 aria-label="New melee round"
               >
                 ↻ Melee
-              </button>
-              <button
-                type="button"
-                className={btnCompact}
-                aria-expanded
-                onClick={() => setHudMinimized(true)}
-              >
-                Minimize
               </button>
             </div>
           </div>
@@ -898,8 +839,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
             </div>
           </div>
         ) : null}
-          </>
-        )}
       </div>
     </aside>
   )
