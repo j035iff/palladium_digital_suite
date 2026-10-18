@@ -319,25 +319,36 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           </div>
         ) : null}
 
-        {/* Slim APM chrome — unboxed (mockup: no outline around APM). */}
-        <div
-          className="mb-1.5 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 py-0.5"
-          title={apmHint}
-        >
-          <span
-            className={`shrink-0 text-[10px] font-black uppercase tracking-wider ${
-              morphus ? 'text-violet-200' : 'text-slate-800'
+        {/* Slim APM capsule — width hugs pips; centered above tabs (outside scroll). */}
+        <div className="mb-1.5 flex shrink-0 flex-col items-center gap-1">
+          <div
+            className={`inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-full border-2 px-2.5 py-1 ${
+              morphus
+                ? 'border-violet-400/80 bg-violet-950/70'
+                : 'border-sky-400 bg-sky-50'
             }`}
+            title={apmHint}
+            aria-label={`Attacks per melee, ${curApm} of ${maxApm} remaining`}
           >
-            APM {curApm}/{maxApm}
-          </span>
-          <ApmPipRow
-            morphus={morphus}
-            maxApm={maxApm}
-            actionsUsed={actionsUsed}
-            onSpendOne={spendOneAction}
-          />
-          <div className="ml-auto flex flex-wrap items-center gap-1.5">
+            <span
+              className={`shrink-0 text-[10px] font-black uppercase tracking-wider ${
+                morphus ? 'text-violet-200' : 'text-slate-900'
+              }`}
+            >
+              APM
+            </span>
+            <ApmPipRow
+              morphus={morphus}
+              maxApm={maxApm}
+              actionsUsed={actionsUsed}
+              onSpendOne={spendOneAction}
+            />
+            <span
+              className={`mx-0.5 hidden h-5 w-px shrink-0 sm:block ${
+                morphus ? 'bg-violet-500/70' : 'bg-sky-300'
+              }`}
+              aria-hidden
+            />
             <InitiativeChip detail={sheetCombatDerived.initiative} morphus={morphus} />
             <button
               type="button"
@@ -351,7 +362,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           </div>
           {curApm <= 0 && maxApm > 0 ? (
             <p
-              className={`basis-full text-[10px] font-bold leading-tight ${morphus ? 'text-amber-200' : 'text-amber-800'}`}
+              className={`text-center text-[10px] font-bold leading-tight ${morphus ? 'text-amber-200' : 'text-amber-800'}`}
               role="status"
             >
               Out of actions — strike and dodge are spent; parry is still free.

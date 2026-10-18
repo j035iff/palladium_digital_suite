@@ -368,6 +368,7 @@ Track work here until promoted to the registry above.
 | 2026-10-15 | Dual identity: description/personality independent (no Facade fallback); Character Image slot swaps with active form (not both stacked) |
 | 2026-10-15 | Nightbane dual identity: per-form presentation fields + Morphus overlay fallback; trait height/weight auto-apply + dice fill-ins; separate Morphus aliases; `presentedForm` peer projection; Morphus traits breakdown beside Morphus image |
 | 2026-10-15 | Identity Character Image: device picker + Nightbane Facade/Morphus; per-peer People share allowlist (default off); party.snapshot → seat `portraitProjection`; sheet People + GM At-the-table thumbs |
+| 2026-10-18 | Combat APM capsule: content-hugging width from pip count; APM label + pips only (no n/n); centered above tabs |
 | 2026-10-18 | Combat Vitals outline fidelity: APM + tabs unboxed; one outline on scrollable tab body; nested pool + Apply Damage/Heal outlines |
 | 2026-10-18 | Combat Home: slim sticky APM chrome (outside scroll) + tab-body scroll only; Campaigns-style **Vitals \| Physical \| Abilities**; ordered damage pools + direct-to-HP; H.F./Perception removed from Combat |
 | 2026-10-18 | Combat Home: bonus-breakdown tips on HtH/weapon expand + Initiative use shared `ClampedOverlayTooltip` (portal + `clampOverlayTooltipPosition`) so expand `overflow: hidden` never clips |
