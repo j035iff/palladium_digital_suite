@@ -39,7 +39,10 @@ export function LiveSheetTabBody({ mode, tabId }: Props) {
 
   if (tabId === 'home' && mode === 'combat') {
     return (
-      <section aria-label="Combat active zone" className="min-w-0">
+      <section
+        aria-label="Combat active zone"
+        className="flex min-h-0 min-w-0 flex-1 flex-col"
+      >
         <CombatHUD layout="panel" />
       </section>
     )

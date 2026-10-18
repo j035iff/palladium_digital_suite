@@ -35,6 +35,9 @@ import {
 } from '../../lib/combatWeaponSlots'
 import { computeWeaponProfileBonuses } from '../../lib/weaponBonuses'
 
+/** Pip diameter matches Melee reset height — keep the APM bar one control tall. */
+const APM_CONTROL_H = 'h-8'
+
 function ApmPipRow({
   morphus,
   maxApm,
@@ -49,11 +52,11 @@ function ApmPipRow({
   if (maxApm <= 0) return null
   const remaining = Math.max(0, maxApm - actionsUsed)
   const box =
-    'inline-flex h-10 w-10 items-center justify-center rounded-full border-2 text-lg font-bold'
+    `inline-flex ${APM_CONTROL_H} w-8 items-center justify-center rounded-full border-2 text-sm font-bold`
 
   return (
     <div
-      className="mb-3 flex flex-wrap items-center gap-2"
+      className="flex flex-wrap items-center gap-1.5"
       role="group"
       aria-label={`Attacks per melee, ${remaining} of ${maxApm} remaining. Tap a remaining action to spend 1.`}
     >
@@ -63,8 +66,8 @@ function ApmPipRow({
           ? `${box} border-violet-900/80 bg-slate-900 text-violet-400 opacity-20`
           : `${box} border-slate-400/80 bg-slate-200/90 text-slate-600 opacity-20`
         const liveCls = morphus
-          ? `${box} cursor-pointer border-violet-200 bg-violet-600 text-white shadow-md hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-950`
-          : `${box} cursor-pointer border-blue-800 bg-blue-600 text-white shadow-md hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-1`
+          ? `${box} cursor-pointer border-violet-200 bg-violet-600 text-white shadow-sm hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-1 focus-visible:ring-offset-slate-950`
+          : `${box} cursor-pointer border-blue-800 bg-blue-600 text-white shadow-sm hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-800 focus-visible:ring-offset-1`
 
         if (spent) {
           return (
@@ -103,24 +106,24 @@ function InitiativeChip({
       tip={tip}
       morphus={morphus}
       tone="sheet"
-      className={`min-w-[5.5rem] rounded-md border px-2 py-1.5 text-center ${
+      className={`inline-flex ${APM_CONTROL_H} min-w-[4.25rem] items-center justify-center gap-1 rounded-md border px-2 ${
         morphus ? 'border-violet-400/80 bg-slate-950/80' : 'border-blue-200 bg-white'
       }`}
     >
-      <p
-        className={`text-[9px] font-bold uppercase tracking-wide ${
+      <span
+        className={`text-[8px] font-bold uppercase tracking-wide ${
           morphus ? 'text-violet-200' : 'text-slate-700'
         }`}
       >
-        Initiative
-      </p>
-      <p
-        className={`font-mono text-2xl font-black tabular-nums leading-none ${
+        Init
+      </span>
+      <span
+        className={`font-mono text-base font-black tabular-nums leading-none ${
           morphus ? 'text-amber-300' : 'text-blue-800'
         }`}
       >
         {formatBonus(detail.total)}
-      </p>
+      </span>
     </ClampedOverlayTooltip>
   )
 }
@@ -139,8 +142,8 @@ type CombatBubbleId = 'unarmed' | 'ancient' | 'modern'
 
 /**
  * Combat Home tactical HUD (master_flow.md, combat_logic.md, ui_wireframe.md §3).
- * Persistent APM + Initiative + Melee bar; Campaigns-style sub-tabs:
- * Vitals | Physical | Abilities. Strip quick-ref vitals stay on Persistent Core.
+ * Slim sticky APM + Initiative + Melee chrome (outside scroll); Campaigns-style
+ * sub-tabs; only the active tab body scrolls. Strip quick-ref stays on Persistent Core.
  */
 export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   const {
@@ -285,10 +288,15 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   const modernSingle = pickSingleFireMode(modernModes)
   const modernBurst = pickBurstFireMode(modernModes)
 
+  const apmHint =
+    handToHandCombatProfile.attackApmCost > 1
+      ? `Tap a remaining action to spend 1 A.P.M. Untrained attacks cost ${handToHandCombatProfile.attackApmCost} actions.`
+      : 'Tap a remaining action to spend 1 A.P.M.'
+
   const frame =
     layout === 'panel'
-      ? 'w-full backdrop-blur-md'
-      : 'max-md:sticky max-md:bottom-0 max-md:z-40 md:relative md:z-0 md:flex md:h-full md:min-h-0 md:flex-col md:overflow-y-auto shrink-0 backdrop-blur-md'
+      ? 'flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden backdrop-blur-md'
+      : 'max-md:sticky max-md:bottom-0 max-md:z-40 md:relative md:z-0 md:flex md:h-full md:min-h-0 md:flex-col md:overflow-hidden shrink-0 backdrop-blur-md'
 
   return (
     <aside
@@ -300,13 +308,13 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
       <div
         className={
           layout === 'panel'
-            ? 'mx-auto flex w-full max-w-4xl flex-col px-3 py-3'
-            : 'mx-auto flex w-full max-w-4xl flex-col px-3 py-3 md:mx-0 md:max-w-none md:flex-1'
+            ? 'mx-auto flex h-full min-h-0 w-full max-w-4xl flex-1 flex-col px-3 pt-2 pb-0'
+            : 'mx-auto flex h-full min-h-0 w-full max-w-4xl flex-1 flex-col px-3 pt-2 pb-0 md:mx-0 md:max-w-none'
         }
       >
         {durationCheckPulse ? (
           <div
-            className={`mb-3 rounded-md border-2 px-3 py-2 text-center text-xs font-bold uppercase tracking-wide ${
+            className={`mb-2 shrink-0 rounded-md border-2 px-3 py-1.5 text-center text-[10px] font-bold uppercase tracking-wide ${
               morphus
                 ? 'border-amber-400 bg-violet-950 text-amber-100'
                 : 'border-amber-500 bg-amber-50 text-amber-950'
@@ -317,52 +325,39 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           </div>
         ) : null}
 
-        {/* Persistent APM + Initiative + Melee (all Combat sub-tabs). */}
-        <div className={`mb-3 rounded-lg border-2 p-3 ${sub}`}>
-          <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
-              <div>
-                <h3
-                  className={`text-[10px] font-black uppercase tracking-wider ${
-                    morphus ? 'text-violet-200' : 'text-blue-900'
-                  }`}
-                >
-                  APM {curApm}/{maxApm}
-                </h3>
-                <p
-                  className={`mt-0.5 text-[10px] leading-snug ${
-                    morphus ? 'text-violet-300/90' : 'text-slate-600'
-                  }`}
-                >
-                  Tap a remaining action to spend <strong>1</strong> A.P.M.
-                  {handToHandCombatProfile.attackApmCost > 1
-                    ? ` Untrained attacks cost ${handToHandCombatProfile.attackApmCost} actions.`
-                    : null}
-                </p>
-              </div>
-              <ApmPipRow
-                morphus={morphus}
-                maxApm={maxApm}
-                actionsUsed={actionsUsed}
-                onSpendOne={spendOneAction}
-              />
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <InitiativeChip detail={sheetCombatDerived.initiative} morphus={morphus} />
-              <button
-                type="button"
-                title="New melee round"
-                onClick={resetMeleeRound}
-                className={`shrink-0 rounded-full px-4 py-2 text-xs font-black uppercase tracking-wide ${btn}`}
-                aria-label="New melee round"
-              >
-                ↻ Melee
-              </button>
-            </div>
+        {/* Slim sticky chrome: APM + Init + Melee (outside tab scroll). */}
+        <div
+          className={`mb-2 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 rounded-md border-2 px-2 py-1 ${sub}`}
+          title={apmHint}
+        >
+          <span
+            className={`shrink-0 text-[10px] font-black uppercase tracking-wider ${
+              morphus ? 'text-violet-200' : 'text-blue-900'
+            }`}
+          >
+            APM {curApm}/{maxApm}
+          </span>
+          <ApmPipRow
+            morphus={morphus}
+            maxApm={maxApm}
+            actionsUsed={actionsUsed}
+            onSpendOne={spendOneAction}
+          />
+          <div className="ml-auto flex flex-wrap items-center gap-1.5">
+            <InitiativeChip detail={sheetCombatDerived.initiative} morphus={morphus} />
+            <button
+              type="button"
+              title="New melee round"
+              onClick={resetMeleeRound}
+              className={`inline-flex ${APM_CONTROL_H} shrink-0 items-center rounded-full px-3 text-[11px] font-black uppercase tracking-wide ${btn}`}
+              aria-label="New melee round"
+            >
+              ↻ Melee
+            </button>
           </div>
           {curApm <= 0 && maxApm > 0 ? (
             <p
-              className={`text-[10px] font-bold ${morphus ? 'text-amber-200' : 'text-amber-800'}`}
+              className={`basis-full text-[10px] font-bold leading-tight ${morphus ? 'text-amber-200' : 'text-amber-800'}`}
               role="status"
             >
               Out of actions — strike and dodge are spent; parry is still free.
@@ -370,9 +365,9 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           ) : null}
         </div>
 
-        {/* Campaigns-style sub-tabs */}
+        {/* Campaigns-style sub-tabs (outside tab scroll). */}
         <div
-          className={`mb-3 flex flex-wrap items-center gap-1.5 rounded-md px-2 py-2 ${
+          className={`mb-2 flex shrink-0 flex-wrap items-center gap-1.5 rounded-md px-2 py-1.5 ${
             morphus ? 'bg-violet-950' : 'bg-slate-900'
           }`}
           role="tablist"
@@ -387,7 +382,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                 role="tab"
                 aria-selected={active}
                 onClick={() => setSubTab(id)}
-                className={`rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-wide ${
+                className={`rounded-full px-4 py-1 text-[11px] font-bold uppercase tracking-wide ${
                   active
                     ? morphus
                       ? 'bg-violet-200 text-slate-950 shadow-sm'
@@ -403,6 +398,11 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           })}
         </div>
 
+        {/* Only the active tab body scrolls. */}
+        <div
+          className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-3"
+          aria-label={`${COMBAT_SUB_TAB_LABELS[subTab]} tab`}
+        >
         {strikeBanner && subTab === 'physical' ? (
           <div
             className={`pds-hud-strike-banner mb-3 rounded-xl border-4 px-3 py-4 text-center ${
@@ -661,6 +661,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
             ispMax={form.isp.maximum}
           />
         ) : null}
+        </div>
       </div>
     </aside>
   )
