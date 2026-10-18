@@ -29,6 +29,7 @@ const MELEE_SHEET_MODE: FireMode = {
 import { ManualRollField } from '../combat/ManualRollField'
 import { WeaponFireModeSelector } from './WeaponFireModeSelector'
 import { WeaponReloadControl } from './WeaponReloadControl'
+import { ClampedOverlayTooltip } from './ClampedOverlayTooltip'
 
 export type StrikeBannerState =
   | {
@@ -68,8 +69,11 @@ function WeaponStatChip({
   const border = morphus ? 'border-violet-400/45 bg-black/35' : 'border-sky-600/35 bg-white'
   const fg = morphus ? 'text-violet-100' : 'text-sky-950'
   return (
-    <div
-      className={`group relative flex min-w-[4.85rem] flex-1 flex-col rounded-lg border px-2 py-1.5 text-center shadow-sm ${border}`}
+    <ClampedOverlayTooltip
+      tip={tip}
+      morphus={morphus}
+      tone="weapon"
+      className={`flex min-w-[4.85rem] flex-1 flex-col rounded-lg border px-2 py-1.5 text-center shadow-sm ${border}`}
     >
       <span
         className={`text-[8px] font-black uppercase tracking-wider opacity-85 ${morphus ? 'text-violet-200' : 'text-slate-700'}`}
@@ -82,15 +86,7 @@ function WeaponStatChip({
       <span className={`mt-0.5 text-[8px] font-semibold italic opacity-50 max-sm:hidden ${morphus ? 'text-violet-300' : 'text-slate-500'}`}>
         Hover breakdown
       </span>
-      <div
-        role="tooltip"
-        className={`pointer-events-none invisible absolute bottom-full left-1/2 z-30 mb-1 w-[min(100vw-2rem,20rem)] -translate-x-1/2 rounded-md border-2 px-2 py-2 text-left font-mono text-[10px] font-semibold leading-snug opacity-0 shadow-xl transition-opacity group-hover:visible group-hover:opacity-100 md:bottom-auto md:top-full md:mb-0 md:mt-1 ${
-          morphus ? 'border-amber-300/70 bg-black/93 text-amber-50' : 'border-sky-700 bg-white text-slate-900'
-        }`}
-      >
-        {tip}
-      </div>
-    </div>
+    </ClampedOverlayTooltip>
   )
 }
 

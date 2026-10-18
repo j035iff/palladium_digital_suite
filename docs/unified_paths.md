@@ -255,6 +255,7 @@ Copy this block when registering a new unified path:
 | Weapon math | `src/lib/weaponBonuses.ts` | `computeWeaponProfileBonuses` | Same profile as strike cards |
 | Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; Unarmed label = active HtH name |
 | UI | `CombatCategoryBubble` | Collapsed summary + Expand | One shell for all three categories |
+| Bonus-breakdown tooltip | `ClampedOverlayTooltip` + `clampOverlayTooltipPosition` | Portaled fixed tip on HtH tiles / weapon chips / Initiative | Same clamp path as Bonuses/Skills; escapes expand `overflow: hidden` |
 
 **Modes / variants:** Facade/Morphus via existing live stack. Modern bubble is always shown: empty = grayed (Gear explanation); a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand only (`HandToHandStylePicker` — not on Skills); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand.
 
@@ -366,6 +367,7 @@ Track work here until promoted to the registry above.
 | 2026-10-15 | Dual identity: description/personality independent (no Facade fallback); Character Image slot swaps with active form (not both stacked) |
 | 2026-10-15 | Nightbane dual identity: per-form presentation fields + Morphus overlay fallback; trait height/weight auto-apply + dice fill-ins; separate Morphus aliases; `presentedForm` peer projection; Morphus traits breakdown beside Morphus image |
 | 2026-10-15 | Identity Character Image: device picker + Nightbane Facade/Morphus; per-peer People share allowlist (default off); party.snapshot → seat `portraitProjection`; sheet People + GM At-the-table thumbs |
+| 2026-10-18 | Combat Home: bonus-breakdown tips on HtH/weapon expand + Initiative use shared `ClampedOverlayTooltip` (portal + `clampOverlayTooltipPosition`) so expand `overflow: hidden` never clips |
 | 2026-10-09 | Bonuses: Nightbane extras pin **Save vs Becoming** first; overlay tooltips clamp/flip via `clampOverlayTooltipPosition` (no spill) |
 | 2026-10-09 | Bonuses: Nightbane dynamic extras always pin **Save vs Becoming** first (row shows even if alone); non-Nightbane unchanged |
 | 2026-10-09 | Bonuses: Disease TN **14** in SoT + overlay; Mind Control **Immune**; Illusions/Possession omit TN; HF save-bonus only; extras row stays hidden until needed |

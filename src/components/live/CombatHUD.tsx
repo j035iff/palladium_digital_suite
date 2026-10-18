@@ -15,6 +15,7 @@ import type { StrikeBannerState } from './WeaponStrikeCard'
 import { CombatCategoryBubble } from './CombatCategoryBubble'
 import { CombatWeaponSlotExpand } from './CombatWeaponSlotExpand'
 import { UnarmedCombatExpand } from './UnarmedCombatExpand'
+import { ClampedOverlayTooltip } from './ClampedOverlayTooltip'
 import {
   combatWeaponGlyphId,
   defaultSelectedWeaponId,
@@ -92,8 +93,11 @@ function InitiativeChip({
 }) {
   const tip = formatSheetBonusEquation(detail, formatBonus)
   return (
-    <div
-      className={`group relative min-w-[5.5rem] rounded-md border px-2 py-1.5 text-center ${
+    <ClampedOverlayTooltip
+      tip={tip}
+      morphus={morphus}
+      tone="sheet"
+      className={`min-w-[5.5rem] rounded-md border px-2 py-1.5 text-center ${
         morphus ? 'border-violet-400/80 bg-slate-950/80' : 'border-blue-200 bg-white'
       }`}
     >
@@ -111,17 +115,7 @@ function InitiativeChip({
       >
         {formatBonus(detail.total)}
       </p>
-      <div
-        role="tooltip"
-        className={`pointer-events-none invisible absolute bottom-full left-1/2 z-20 mb-1 w-[min(100vw-2rem,20rem)] -translate-x-1/2 rounded-md border-2 px-2 py-1.5 text-left text-[10px] font-semibold leading-snug opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100 ${
-          morphus
-            ? 'border-violet-400/90 bg-black/92 text-violet-50'
-            : 'border-blue-400 bg-white text-slate-900'
-        }`}
-      >
-        {tip}
-      </div>
-    </div>
+    </ClampedOverlayTooltip>
   )
 }
 
