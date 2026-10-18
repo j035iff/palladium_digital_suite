@@ -106,23 +106,16 @@ function InitiativeChip({
       tip={tip}
       morphus={morphus}
       tone="sheet"
-      className={`inline-flex ${APM_CONTROL_H} min-w-[4.25rem] items-center justify-center gap-1 rounded-md border px-2 ${
-        morphus ? 'border-violet-400/80 bg-slate-950/80' : 'border-blue-200 bg-white'
+      className={`inline-flex ${APM_CONTROL_H} items-center justify-center rounded border px-2 ${
+        morphus ? 'border-violet-400/80 bg-slate-950/80' : 'border-slate-300 bg-white'
       }`}
     >
       <span
-        className={`text-[8px] font-bold uppercase tracking-wide ${
-          morphus ? 'text-violet-200' : 'text-slate-700'
+        className={`font-mono text-xs font-black uppercase tracking-wide tabular-nums leading-none ${
+          morphus ? 'text-amber-300' : 'text-slate-800'
         }`}
       >
-        Init
-      </span>
-      <span
-        className={`font-mono text-base font-black tabular-nums leading-none ${
-          morphus ? 'text-amber-300' : 'text-blue-800'
-        }`}
-      >
-        {formatBonus(detail.total)}
+        INIT {formatBonus(detail.total)}
       </span>
     </ClampedOverlayTooltip>
   )
@@ -199,18 +192,19 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
     return () => window.clearTimeout(t)
   }, [strikeBanner])
 
+  /** Panel: APM + tabs stay unboxed; outline lives on the scrollable tab body (mockup). */
   const shell =
     layout === 'panel'
       ? morphus
-        ? 'rounded-xl border-2 border-violet-400 bg-slate-950/96 text-violet-50 shadow-lg'
-        : 'rounded-xl border-2 border-blue-500 bg-white/96 text-slate-900 shadow-lg'
+        ? 'bg-transparent text-violet-50'
+        : 'bg-transparent text-slate-900'
       : morphus
         ? 'border-t-2 border-violet-400 bg-slate-950/96 text-violet-50 max-md:shadow-[0_-10px_40px_rgba(0,0,0,0.55)] md:border-t-0 md:border-l-2 md:border-violet-400 md:shadow-none'
         : 'border-t-2 border-blue-500 bg-white/96 text-slate-900 max-md:shadow-[0_-6px_24px_rgba(30,64,175,0.14)] md:border-t-0 md:border-l-2 md:border-blue-500 md:shadow-none'
 
-  const sub = morphus
-    ? 'border border-violet-500/70 bg-violet-950/40'
-    : 'border border-blue-200 bg-blue-50/80'
+  const tabBodyOutline = morphus
+    ? 'rounded-lg border-2 border-violet-400/80 bg-slate-950/90'
+    : 'rounded-lg border-2 border-sky-300 bg-white'
 
   const btn = morphus
     ? 'border-2 border-violet-300 bg-violet-800 text-white hover:bg-violet-700'
@@ -325,14 +319,14 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           </div>
         ) : null}
 
-        {/* Slim sticky chrome: APM + Init + Melee (outside tab scroll). */}
+        {/* Slim APM chrome — unboxed (mockup: no outline around APM). */}
         <div
-          className={`mb-2 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 rounded-md border-2 px-2 py-1 ${sub}`}
+          className="mb-1.5 flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 py-0.5"
           title={apmHint}
         >
           <span
             className={`shrink-0 text-[10px] font-black uppercase tracking-wider ${
-              morphus ? 'text-violet-200' : 'text-blue-900'
+              morphus ? 'text-violet-200' : 'text-slate-800'
             }`}
           >
             APM {curApm}/{maxApm}
@@ -365,9 +359,9 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           ) : null}
         </div>
 
-        {/* Campaigns-style sub-tabs (outside tab scroll). */}
+        {/* Campaigns-style sub-tabs — unboxed dark strip (mockup). */}
         <div
-          className={`mb-2 flex shrink-0 flex-wrap items-center gap-1.5 rounded-md px-2 py-1.5 ${
+          className={`mb-0 flex shrink-0 flex-wrap items-center gap-1.5 rounded-t-md px-2 py-1.5 ${
             morphus ? 'bg-violet-950' : 'bg-slate-900'
           }`}
           role="tablist"
@@ -398,9 +392,11 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           })}
         </div>
 
-        {/* Only the active tab body scrolls. */}
+        {/* One outline around the scrollable tab body (mockup hierarchy). */}
         <div
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-3"
+          className={`min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 ${tabBodyOutline} ${
+            morphus ? 'rounded-t-none' : 'rounded-t-none'
+          }`}
           aria-label={`${COMBAT_SUB_TAB_LABELS[subTab]} tab`}
         >
         {strikeBanner && subTab === 'physical' ? (

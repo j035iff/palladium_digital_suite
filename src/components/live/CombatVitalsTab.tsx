@@ -78,9 +78,10 @@ export function CombatVitalsTab({
     return () => window.removeEventListener('keydown', onKey)
   }, [resolveOpen])
 
-  const sub = morphus
-    ? 'border border-violet-500/70 bg-violet-950/40'
-    : 'border border-blue-200 bg-blue-50/80'
+  /** Nested light outlines inside the tab-body frame (mockup hierarchy). */
+  const nestedOutline = morphus
+    ? 'rounded-lg border-2 border-violet-500/70 bg-slate-950/50'
+    : 'rounded-lg border-2 border-sky-300 bg-white'
 
   const hudArmor = snapshot.pools.find((p) => p.kind === 'armor') ?? null
 
@@ -137,54 +138,50 @@ export function CombatVitalsTab({
 
   return (
     <div className="space-y-3" aria-label="Combat vitals">
-      <p
-        className={`text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}
-      >
-        Damage pools absorb left → right. Drag cards to reorder. Shields and armor appear only
-        when present.
-      </p>
+      <div className={`space-y-2 p-3 ${nestedOutline}`} aria-label="Damage pools">
+        <p
+          className={`text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}
+        >
+          Damage pools absorb left → right. Drag cards to reorder. Shields and armor appear only
+          when present.
+        </p>
 
-      <div
-        className="flex flex-wrap gap-2"
-        role="list"
-        aria-label="Damage capacity absorb order"
-      >
-        {snapshot.pools.map((pool) => (
-          <DamagePoolCard
-            key={pool.id}
-            pool={pool}
-            morphus={morphus}
-            expandedArmor={expandedArmor && pool.kind === 'armor'}
-            onToggleArmorExpand={
-              pool.kind === 'armor'
-                ? () => setExpandedArmor((o) => !o)
-                : undefined
-            }
-            dragging={dragId === pool.id}
-            onDragStart={() => setDragId(pool.id)}
-            onDragEnd={() => setDragId(null)}
-            onDragOver={(e) => {
-              e.preventDefault()
-            }}
-            onDrop={() => onDropOn(pool.id)}
-          />
-        ))}
+        <div
+          className="flex flex-wrap gap-2"
+          role="list"
+          aria-label="Damage capacity absorb order"
+        >
+          {snapshot.pools.map((pool) => (
+            <DamagePoolCard
+              key={pool.id}
+              pool={pool}
+              morphus={morphus}
+              expandedArmor={expandedArmor && pool.kind === 'armor'}
+              onToggleArmorExpand={
+                pool.kind === 'armor'
+                  ? () => setExpandedArmor((o) => !o)
+                  : undefined
+              }
+              dragging={dragId === pool.id}
+              onDragStart={() => setDragId(pool.id)}
+              onDragEnd={() => setDragId(null)}
+              onDragOver={(e) => {
+                e.preventDefault()
+              }}
+              onDrop={() => onDropOn(pool.id)}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className={`rounded-lg border-2 p-3 ${sub}`}>
+      <div className={`p-3 ${nestedOutline}`}>
         <h3
           className={`mb-2 text-[10px] font-black uppercase tracking-wider ${
-            morphus ? 'text-violet-200' : 'text-blue-900'
+            morphus ? 'text-violet-200' : 'text-blue-800'
           }`}
         >
           Apply damage / heal
         </h3>
-        <p
-          className={`mb-2 text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}
-        >
-          Quick apply follows the card order above. Use <strong>direct to hit points</strong> to
-          bypass left pools, or <strong>Resolve combat</strong> for attack roll vs armor (A.R.).
-        </p>
         <div className="mb-2 flex flex-wrap gap-3 text-xs font-semibold">
           <label className="flex cursor-pointer items-center gap-1.5">
             <input
@@ -224,7 +221,7 @@ export function CombatVitalsTab({
             className={`rounded-md px-3 py-2 text-[10px] font-black uppercase tracking-wide ${
               morphus
                 ? 'border-2 border-violet-400 bg-violet-950 text-violet-100 hover:bg-violet-900'
-                : 'border-2 border-slate-400 bg-slate-100 text-slate-800 hover:bg-slate-200'
+                : 'border-2 border-slate-400 bg-white text-slate-800 hover:bg-slate-50'
             }`}
           >
             Resolve combat
@@ -380,7 +377,7 @@ function DamagePoolCard({
   const pct = pool.maximum > 0 ? Math.min(100, (pool.current / pool.maximum) * 100) : 0
   const shell = morphus
     ? 'border-violet-500/80 bg-slate-950/90'
-    : 'border-blue-300 bg-white'
+    : 'border-slate-300 bg-white'
 
   return (
     <div
