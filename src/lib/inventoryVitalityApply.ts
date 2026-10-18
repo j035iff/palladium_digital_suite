@@ -1,7 +1,6 @@
-import { computeSdcPriorityCascadeDelta } from './combatVitalityApply'
+import { applyOrderedCombatVitality } from './combatDamagePools'
 import type {
   ActiveForm,
-  Armor,
   Character,
   InventoryItem,
   VitalityFlashKind,
@@ -14,6 +13,11 @@ export type InventoryVitalityApplyOpts = {
   useAttackRollVsArmor?: boolean
   /** Strike / attack total to compare against equipped armor A.R. */
   attackRoll?: number
+  /** Skip left pools — apply only to H.P. (or M.D.C. body). */
+  directToHitPoints?: boolean
+  /** Current Vitals absorb order (left → right). */
+  absorbOrder?: readonly string[] | null
+  naturalAr?: number | null
 }
 
 export type InventoryVitalityApplyResult = {
@@ -24,38 +28,8 @@ export type InventoryVitalityApplyResult = {
   sdcDamageRouting?: 'armor' | 'body' | 'split'
 } | null
 
-function patchArmorSdc(
-  items: InventoryItem[],
-  armorId: string,
-  nextCurrent: number,
-): InventoryItem[] {
-  return items.map((it) => {
-    if (it.itemType !== 'armor' || it.id !== armorId) return it
-    const a = it as Armor
-    const clamped = Math.max(0, Math.min(a.maxSdc, Math.round(nextCurrent)))
-    return {
-      ...a,
-      currentSdc: clamped,
-    }
-  })
-}
-
-function getEquippedArmor(
-  items: InventoryItem[],
-  equippedArmorId: string | null,
-): Armor | null {
-  if (!equippedArmorId) return null
-  const found = items.find((i) => i.id === equippedArmorId)
-  return found && found.itemType === 'armor' ? found : null
-}
-
-/** A.R. gate applies only while the suit still has S.D.C. integrity. */
-function armorAcceptsArGate(armor: Armor): boolean {
-  return armor.currentSdc > 0
-}
-
 /**
- * S.D.C.-first vitality plus optional armor routing (strike roll below A.R. depletes armor S.D.C. first).
+ * Inventory-aware vitality — ordered absorb pools (Combat Vitals) + optional A.R. gate.
  */
 export function applyInventoryAwareSdcVitality(
   character: Character,
@@ -64,92 +38,19 @@ export function applyInventoryAwareSdcVitality(
   equippedArmorId: string | null,
   opts: InventoryVitalityApplyOpts,
 ): InventoryVitalityApplyResult | null {
-  const amount = Math.max(0, Math.round(opts.amount))
-  if (amount <= 0) return null
-
-  if (opts.mode === 'heal') {
-    const r = computeSdcPriorityCascadeDelta(character, activeForm, {
-      mode: 'heal',
-      amount,
-    })
-    return r
-      ? {
-          nextCharacter: r.next,
-          nextInventory: inventory,
-          flashKind: r.flashKind,
-        }
-      : null
-  }
-
-  const armor = getEquippedArmor(inventory, equippedArmorId)
-  const armorForGate = armor && armorAcceptsArGate(armor) ? armor : null
-  const useRoll =
-    Boolean(armorForGate) &&
-    opts.useAttackRollVsArmor === true &&
-    typeof opts.attackRoll === 'number' &&
-    Number.isFinite(opts.attackRoll)
-
-  if (useRoll && armorForGate) {
-    const roll = opts.attackRoll as number
-    if (roll < armorForGate.ar) {
-      const absorb = Math.min(amount, armorForGate.currentSdc)
-      const overflow = amount - absorb
-      let nextInv = inventory
-      if (absorb > 0) {
-        nextInv = patchArmorSdc(
-          inventory,
-          armorForGate.id,
-          armorForGate.currentSdc - absorb,
-        )
-      }
-      if (overflow <= 0) {
-        return {
-          nextCharacter: character,
-          nextInventory: nextInv,
-          flashKind: 'damage',
-          sdcDamageRouting: 'armor',
-        }
-      }
-      const body = computeSdcPriorityCascadeDelta(character, activeForm, {
-        mode: 'damage',
-        amount: overflow,
-      })
-      return body
-        ? {
-            nextCharacter: body.next,
-            nextInventory: nextInv,
-            flashKind: 'damage',
-            sdcDamageRouting: 'split',
-          }
-        : {
-            nextCharacter: character,
-            nextInventory: nextInv,
-            flashKind: 'damage',
-            sdcDamageRouting: 'armor',
-          }
-    }
-  }
-
-  const body = computeSdcPriorityCascadeDelta(character, activeForm, {
-    mode: 'damage',
-    amount,
-  })
-  if (!body) return null
-
-  let sdcDamageRouting: 'body' | undefined = undefined
-  if (
-    armorForGate &&
-    useRoll &&
-    typeof opts.attackRoll === 'number' &&
-    opts.attackRoll >= armorForGate.ar
-  ) {
-    sdcDamageRouting = 'body'
-  }
-
-  return {
-    nextCharacter: body.next,
-    nextInventory: inventory,
-    flashKind: body.flashKind,
-    ...(sdcDamageRouting ? { sdcDamageRouting } : {}),
-  }
+  return applyOrderedCombatVitality(
+    character,
+    activeForm,
+    inventory,
+    equippedArmorId,
+    {
+      mode: opts.mode,
+      amount: opts.amount,
+      useAttackRollVsArmor: opts.useAttackRollVsArmor,
+      attackRoll: opts.attackRoll,
+      directToHitPoints: opts.directToHitPoints,
+      absorbOrder: opts.absorbOrder,
+    },
+    opts.naturalAr ?? null,
+  )
 }

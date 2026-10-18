@@ -611,6 +611,10 @@ type CharacterContextValue = {
     amount: number
     useAttackRollVsArmor?: boolean
     attackRoll?: number
+    /** Skip left absorb pools — apply only to H.P. / M.D.C. body. */
+    directToHitPoints?: boolean
+    /** Combat Vitals left→right absorb order. */
+    absorbOrder?: readonly string[] | null
   }) => void
   /** Pillar 5 — true briefly after a new melee round to nudge duration checks. */
   durationCheckPulse: boolean
@@ -1860,6 +1864,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       amount: number
       useAttackRollVsArmor?: boolean
       attackRoll?: number
+      directToHitPoints?: boolean
+      absorbOrder?: readonly string[] | null
     }) => {
       if (!Number.isFinite(opts.amount) || opts.amount <= 0) return
       const r = applyInventoryAwareSdcVitality(
@@ -1867,7 +1873,10 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         sheetActiveForm,
         inventoryItems,
         equippedArmorId,
-        opts,
+        {
+          ...opts,
+          naturalAr: morphusNaturalAr ?? null,
+        },
       )
       if (!r) return
       setRawCharacter(retainCharacterRoot(rawCharacter, r.nextCharacter))
@@ -1896,6 +1905,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       inventoryItems,
       equippedArmorId,
       readyWeaponIds,
+      morphusNaturalAr,
       triggerVitalityFlash,
       triggerCombatHudDamagePulse,
     ],

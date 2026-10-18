@@ -385,8 +385,9 @@ Update this table when closing gaps.
 | UI — creation ledger | `src/components/creation/LiveLedger.tsx` |
 | UI — roll entry | `PendingDiceResolutionPanel.tsx`, `CreationFinalizeDice.tsx` |
 | UI — live saves | `src/components/live/SavingThrowsPanel.tsx` |
-| UI — combat APM | `CombatHUD.tsx` tap remaining pip → `spendCombatAction(1)`; Initiative chip in APM header |
-| UI — combat bubbles | `CombatHUD` + `CombatCategoryBubble` — Unarmed (HtH name) / Ancient / Modern; era via `combatWeaponSlots.ts`; HtH roster `listOwnedHandToHandStyles` |
+| UI — combat APM | `CombatHUD.tsx` persistent bar: tap remaining pip → `spendCombatAction(1)`; Initiative + Melee; sub-tabs via `liveCombatTabs` |
+| UI — combat Vitals | `CombatVitalsTab` + `combatDamagePools.ts` — L→R absorb pools, drag-reorder, direct-to-HP, M.D.C. collapse |
+| UI — combat bubbles | `CombatHUD` Physical tab + `CombatCategoryBubble` — Unarmed (HtH name) / Ancient / Modern; era via `combatWeaponSlots.ts`; HtH roster `listOwnedHandToHandStyles` |
 
 ---
 
