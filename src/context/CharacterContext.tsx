@@ -613,6 +613,8 @@ type CharacterContextValue = {
     attackRoll?: number
     /** Skip left absorb pools — apply only to H.P. / M.D.C. body. */
     directToHitPoints?: boolean
+    /** Skip equipped armor pool only (not Natural A.R.). */
+    bypassArmor?: boolean
     /** Combat Vitals left→right absorb order. */
     absorbOrder?: readonly string[] | null
   }) => void
@@ -1865,6 +1867,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       useAttackRollVsArmor?: boolean
       attackRoll?: number
       directToHitPoints?: boolean
+      bypassArmor?: boolean
       absorbOrder?: readonly string[] | null
     }) => {
       if (!Number.isFinite(opts.amount) || opts.amount <= 0) return

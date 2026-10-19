@@ -15,6 +15,8 @@ export type InventoryVitalityApplyOpts = {
   attackRoll?: number
   /** Skip left pools — apply only to H.P. (or M.D.C. body). */
   directToHitPoints?: boolean
+  /** Skip equipped armor pool only (not Natural A.R.). */
+  bypassArmor?: boolean
   /** Current Vitals absorb order (left → right). */
   absorbOrder?: readonly string[] | null
   naturalAr?: number | null
@@ -49,6 +51,7 @@ export function applyInventoryAwareSdcVitality(
       useAttackRollVsArmor: opts.useAttackRollVsArmor,
       attackRoll: opts.attackRoll,
       directToHitPoints: opts.directToHitPoints,
+      bypassArmor: opts.bypassArmor,
       absorbOrder: opts.absorbOrder,
     },
     opts.naturalAr ?? null,

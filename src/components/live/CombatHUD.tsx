@@ -410,7 +410,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           }`}
           aria-label={`${COMBAT_SUB_TAB_LABELS[subTab]} tab`}
         >
-        {strikeBanner && subTab === 'physical' ? (
+        {strikeBanner && subTab === 'spd' ? (
           <div
             className={`pds-hud-strike-banner mb-3 rounded-xl border-4 px-3 py-4 text-center ${
               morphus
@@ -455,8 +455,8 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           />
         ) : null}
 
-        {subTab === 'physical' ? (
-          <div className="mb-3 space-y-3" aria-label="Combat physical">
+        {subTab === 'spd' ? (
+          <div className="mb-3 space-y-3" aria-label="Combat S/P/D">
             <CombatCategoryBubble
               morphus={morphus}
               categoryLabel={formatHandToHandHeader(handToHandCombatProfile.skillName)}

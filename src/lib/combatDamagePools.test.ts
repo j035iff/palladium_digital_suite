@@ -129,14 +129,24 @@ describe('combatDamagePools', () => {
     expect(snap.pools[0]?.maximum).toBe(280)
   })
 
-  it('normalizes absorb order and supports drag move', () => {
+  it('pins S.D.C.→H.P. after front pools; only front pools drag', () => {
     expect(
       normalizeCombatAbsorbOrder(['hp', 'missing', 'sdc'], ['sdc', 'hp']),
-    ).toEqual(['hp', 'sdc'])
+    ).toEqual(['sdc', 'hp'])
+    expect(
+      normalizeCombatAbsorbOrder(['hp', 'armor', 'sdc'], ['armor', 'sdc', 'hp']),
+    ).toEqual(['armor', 'sdc', 'hp'])
+    // Attempt to drag H.P. — no-op
     expect(moveCombatPoolInOrder(['armor', 'sdc', 'hp'], 'hp', 0)).toEqual([
-      'hp',
       'armor',
       'sdc',
+      'hp',
+    ])
+    // Drag armor past body pools — ignored; SDC/HP stay pinned
+    expect(moveCombatPoolInOrder(['armor', 'sdc', 'hp'], 'armor', 2)).toEqual([
+      'armor',
+      'sdc',
+      'hp',
     ])
   })
 
@@ -173,7 +183,50 @@ describe('combatDamagePools', () => {
     expect(r!.nextCharacter.primary.hitPoints.current).toBe(20)
   })
 
-  it('respects custom absorb order (H.P. before S.D.C.)', () => {
+  it('bypassArmor skips equipped armor only and drains S.D.C. next', () => {
+    const inv: InventoryItem[] = [{ ...sampleArmor }]
+    const r = applyOrderedCombatVitality(
+      baseCharacter(),
+      'primary',
+      inv,
+      sampleArmor.id,
+      { mode: 'damage', amount: 10, bypassArmor: true },
+    )
+    expect(r).not.toBeNull()
+    const armor = r!.nextInventory.find((i) => i.id === sampleArmor.id) as Armor
+    expect(armor.currentSdc).toBe(40)
+    expect(r!.nextCharacter.primary.structuralDamageCapacity.current).toBe(40)
+    expect(r!.nextCharacter.primary.hitPoints.current).toBe(30)
+  })
+
+  it('bypassArmor is a no-op when no equipped armor is present', () => {
+    const r = applyOrderedCombatVitality(
+      baseCharacter(),
+      'primary',
+      [],
+      null,
+      { mode: 'damage', amount: 10, bypassArmor: true },
+    )
+    expect(r!.nextCharacter.primary.structuralDamageCapacity.current).toBe(40)
+    expect(r!.nextCharacter.primary.hitPoints.current).toBe(30)
+  })
+
+  it('directToHitPoints wins over bypassArmor', () => {
+    const inv: InventoryItem[] = [{ ...sampleArmor }]
+    const r = applyOrderedCombatVitality(
+      baseCharacter(),
+      'primary',
+      inv,
+      sampleArmor.id,
+      { mode: 'damage', amount: 5, bypassArmor: true, directToHitPoints: true },
+    )
+    const armor = r!.nextInventory.find((i) => i.id === sampleArmor.id) as Armor
+    expect(armor.currentSdc).toBe(40)
+    expect(r!.nextCharacter.primary.structuralDamageCapacity.current).toBe(50)
+    expect(r!.nextCharacter.primary.hitPoints.current).toBe(25)
+  })
+
+  it('ignores preferred H.P.-before-S.D.C. — body pools stay S.D.C. then H.P.', () => {
     const r = applyOrderedCombatVitality(
       baseCharacter(),
       'primary',
@@ -181,8 +234,8 @@ describe('combatDamagePools', () => {
       null,
       { mode: 'damage', amount: 10, absorbOrder: ['hp', 'sdc'] },
     )
-    expect(r!.nextCharacter.primary.hitPoints.current).toBe(20)
-    expect(r!.nextCharacter.primary.structuralDamageCapacity.current).toBe(50)
+    expect(r!.nextCharacter.primary.structuralDamageCapacity.current).toBe(40)
+    expect(r!.nextCharacter.primary.hitPoints.current).toBe(30)
   })
 
   it('heals S.D.C. then H.P.; directToHitPoints heals H.P. only', () => {

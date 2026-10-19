@@ -96,29 +96,56 @@ function shieldPoolId(shieldId: string): CombatDamagePoolId {
   return `shield:${shieldId}`
 }
 
+/** S.D.C. / H.P. / M.D.C. — pinned after front pools; not drag-reorderable (Joe 2026-10-19). */
+export function isFixedCombatBodyPool(id: CombatDamagePoolId): boolean {
+  return id === 'sdc' || id === 'hp' || id === 'mdc'
+}
+
+export function isFrontCombatAbsorbPool(id: CombatDamagePoolId): boolean {
+  return !isFixedCombatBodyPool(id)
+}
+
+function fixedBodyTail(
+  visibleIds: readonly CombatDamagePoolId[],
+): CombatDamagePoolId[] {
+  const visible = new Set(visibleIds)
+  if (visible.has('mdc')) return ['mdc']
+  const tail: CombatDamagePoolId[] = []
+  if (visible.has('sdc')) tail.push('sdc')
+  if (visible.has('hp')) tail.push('hp')
+  return tail
+}
+
 /**
  * Normalize a persisted / dragged order against pools that exist now.
- * Drops missing ids; appends any new visible pools in default relative order.
+ * Front pools (shields / armor) follow preferred order; S.D.C.→H.P. (or M.D.C.)
+ * always pin at the end in fixed order.
  */
 export function normalizeCombatAbsorbOrder(
   preferred: readonly string[] | null | undefined,
   visibleIds: readonly CombatDamagePoolId[],
 ): CombatDamagePoolId[] {
   const visible = new Set(visibleIds)
+  const frontDefault = visibleIds.filter(isFrontCombatAbsorbPool)
   const out: CombatDamagePoolId[] = []
   const seen = new Set<string>()
 
   for (const raw of preferred ?? []) {
-    if (!visible.has(raw as CombatDamagePoolId)) continue
-    if (seen.has(raw)) continue
-    out.push(raw as CombatDamagePoolId)
-    seen.add(raw)
-  }
-
-  for (const id of visibleIds) {
+    const id = raw as CombatDamagePoolId
+    if (!visible.has(id) || isFixedCombatBodyPool(id)) continue
     if (seen.has(id)) continue
     out.push(id)
     seen.add(id)
+  }
+
+  for (const id of frontDefault) {
+    if (seen.has(id)) continue
+    out.push(id)
+    seen.add(id)
+  }
+
+  for (const id of fixedBodyTail(visibleIds)) {
+    out.push(id)
   }
 
   return out
@@ -287,20 +314,32 @@ export function buildCombatDamagePools(opts: {
 }
 
 /**
- * Reorder helper for drag-and-drop (move `fromId` so it sits at `toIndex` in order).
+ * Reorder helper for drag-and-drop among **front** pools only (shields / armor).
+ * S.D.C. / H.P. / M.D.C. stay pinned at the end — moves involving them are no-ops.
  */
 export function moveCombatPoolInOrder(
   order: readonly CombatDamagePoolId[],
   fromId: CombatDamagePoolId,
   toIndex: number,
 ): CombatDamagePoolId[] {
-  const next = [...order]
-  const from = next.indexOf(fromId)
-  if (from < 0) return next
-  const clamped = Math.max(0, Math.min(toIndex, next.length - 1))
-  next.splice(from, 1)
-  next.splice(clamped, 0, fromId)
-  return next
+  if (isFixedCombatBodyPool(fromId)) return [...order]
+  const targetId = order[toIndex]
+  if (targetId != null && isFixedCombatBodyPool(targetId)) return [...order]
+
+  const front = order.filter(isFrontCombatAbsorbPool)
+  const from = front.indexOf(fromId)
+  if (from < 0) return [...order]
+
+  const targetFrontIndex = targetId != null ? front.indexOf(targetId) : -1
+  const clamped =
+    targetFrontIndex >= 0
+      ? targetFrontIndex
+      : Math.max(0, Math.min(toIndex, front.length - 1))
+
+  const nextFront = [...front]
+  nextFront.splice(from, 1)
+  nextFront.splice(clamped, 0, fromId)
+  return normalizeCombatAbsorbOrder(nextFront, order)
 }
 
 export type OrderedVitalityApplyOpts = {
@@ -308,9 +347,15 @@ export type OrderedVitalityApplyOpts = {
   amount: number
   /**
    * Damage only: skip left pools and apply only to H.P. (or M.D.C. body when MDC).
-   * Heal: restore only H.P. / M.D.C. body.
+   * Heal: restore only H.P. / M.D.C. body. Wins over {@link bypassArmor}.
    */
   directToHitPoints?: boolean
+  /**
+   * Damage only: skip the equipped **artificial** armor pool and start L→R at
+   * whatever is to its right. Does **not** affect Natural A.R. (display-only on
+   * body cards). No-op when no armor card is present.
+   */
+  bypassArmor?: boolean
   /** Preferred absorb order (normalized against live pools). */
   absorbOrder?: readonly string[] | null
   /** When true and armor is equipped, {@link attackRoll} vs armor A.R. (classic gate). */
@@ -438,11 +483,16 @@ export function applyOrderedCombatVitality(
     })
   }
 
-  // Damage: L→R soak (or direct to hit points / M.D.C. body).
+  // Damage: L→R soak (direct-to-HP wins; else optional skip of equipped armor only).
+  const damageOrder =
+    opts.bypassArmor && !opts.directToHitPoints
+      ? snapshot.order.filter((id) => id !== 'armor')
+      : snapshot.order
+
   return applyDamageThroughOrder(character, activeForm, inventory, equippedArmorId, {
     amount,
     directToHitPoints: Boolean(opts.directToHitPoints),
-    order: snapshot.order,
+    order: damageOrder,
     isMdc: snapshot.isMdc,
   })
 }

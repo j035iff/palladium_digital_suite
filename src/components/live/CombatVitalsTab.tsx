@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type DragEvent } from 'react'
 import { ManualRollField } from '../combat/ManualRollField'
 import {
   buildCombatDamagePools,
+  isFrontCombatAbsorbPool,
   moveCombatPoolInOrder,
   type CombatDamagePoolCard,
   type CombatDamagePoolId,
@@ -23,6 +24,7 @@ type Props = {
     useAttackRollVsArmor?: boolean
     attackRoll?: number
     directToHitPoints?: boolean
+    bypassArmor?: boolean
     absorbOrder?: readonly string[] | null
   }) => void
 }
@@ -44,6 +46,7 @@ export function CombatVitalsTab({
   const [amount, setAmount] = useState('4')
   const [mode, setMode] = useState<'damage' | 'heal'>('damage')
   const [directToHp, setDirectToHp] = useState(false)
+  const [bypassArmor, setBypassArmor] = useState(false)
   const [resolveOpen, setResolveOpen] = useState(false)
   const [resolveDamage, setResolveDamage] = useState('4')
   const [resolveAttackRollStr, setResolveAttackRollStr] = useState('')
@@ -100,6 +103,7 @@ export function CombatVitalsTab({
       amount: n,
       useAttackRollVsArmor: false,
       directToHitPoints: directToHp,
+      bypassArmor: mode === 'damage' ? bypassArmor : false,
       absorbOrder: snapshot.order,
     })
   }
@@ -127,6 +131,10 @@ export function CombatVitalsTab({
       setDragId(null)
       return
     }
+    if (!isFrontCombatAbsorbPool(dragId) || !isFrontCombatAbsorbPool(targetId)) {
+      setDragId(null)
+      return
+    }
     const toIndex = snapshot.order.indexOf(targetId)
     if (toIndex < 0) {
       setDragId(null)
@@ -142,8 +150,8 @@ export function CombatVitalsTab({
         <p
           className={`text-[10px] leading-snug ${morphus ? 'text-violet-300/90' : 'text-slate-600'}`}
         >
-          Damage pools absorb left → right. Drag cards to reorder. Shields and armor appear only
-          when present.
+          Damage pools absorb left → right. Drag shields/armor to reorder them; S.D.C. then H.P.
+          stay fixed at the end. Shields and armor appear only when present.
         </p>
 
         <div
@@ -151,26 +159,32 @@ export function CombatVitalsTab({
           role="list"
           aria-label="Damage capacity absorb order"
         >
-          {snapshot.pools.map((pool) => (
-            <DamagePoolCard
-              key={pool.id}
-              pool={pool}
-              morphus={morphus}
-              expandedArmor={expandedArmor && pool.kind === 'armor'}
-              onToggleArmorExpand={
-                pool.kind === 'armor'
-                  ? () => setExpandedArmor((o) => !o)
-                  : undefined
-              }
-              dragging={dragId === pool.id}
-              onDragStart={() => setDragId(pool.id)}
-              onDragEnd={() => setDragId(null)}
-              onDragOver={(e) => {
-                e.preventDefault()
-              }}
-              onDrop={() => onDropOn(pool.id)}
-            />
-          ))}
+          {snapshot.pools.map((pool) => {
+            const reorderable = isFrontCombatAbsorbPool(pool.id)
+            return (
+              <DamagePoolCard
+                key={pool.id}
+                pool={pool}
+                morphus={morphus}
+                reorderable={reorderable}
+                expandedArmor={expandedArmor && pool.kind === 'armor'}
+                onToggleArmorExpand={
+                  pool.kind === 'armor'
+                    ? () => setExpandedArmor((o) => !o)
+                    : undefined
+                }
+                dragging={dragId === pool.id}
+                onDragStart={() => {
+                  if (reorderable) setDragId(pool.id)
+                }}
+                onDragEnd={() => setDragId(null)}
+                onDragOver={(e) => {
+                  if (reorderable) e.preventDefault()
+                }}
+                onDrop={() => onDropOn(pool.id)}
+              />
+            )
+          })}
         </div>
       </div>
 
@@ -209,6 +223,35 @@ export function CombatVitalsTab({
             />
             Direct to hit points
           </label>
+          {mode === 'damage' ? (
+            <label
+              className={`flex items-center gap-1.5 ${
+                hudArmor
+                  ? 'cursor-pointer'
+                  : morphus
+                    ? 'cursor-not-allowed text-violet-400/50'
+                    : 'cursor-not-allowed text-slate-400'
+              }`}
+              title={
+                hudArmor
+                  ? 'Skip equipped armor — damage starts at the next pool to its right. Does not bypass Natural A.R.'
+                  : 'No equipped armor — Bypass A.R. has no effect.'
+              }
+            >
+              <input
+                type="checkbox"
+                checked={bypassArmor && Boolean(hudArmor)}
+                disabled={!hudArmor}
+                onChange={(e) => setBypassArmor(e.target.checked)}
+              />
+              Bypass A.R.
+              {!hudArmor ? (
+                <span className="text-[10px] font-normal normal-case tracking-normal">
+                  (no equipped armor)
+                </span>
+              ) : null}
+            </label>
+          ) : null}
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <button
@@ -356,6 +399,7 @@ export function CombatVitalsTab({
 function DamagePoolCard({
   pool,
   morphus,
+  reorderable,
   expandedArmor,
   onToggleArmorExpand,
   dragging,
@@ -366,6 +410,7 @@ function DamagePoolCard({
 }: {
   pool: CombatDamagePoolCard
   morphus: boolean
+  reorderable: boolean
   expandedArmor?: boolean
   onToggleArmorExpand?: () => void
   dragging: boolean
@@ -382,8 +427,12 @@ function DamagePoolCard({
   return (
     <div
       role="listitem"
-      draggable
+      draggable={reorderable}
       onDragStart={(e) => {
+        if (!reorderable) {
+          e.preventDefault()
+          return
+        }
         e.dataTransfer.effectAllowed = 'move'
         e.dataTransfer.setData('text/plain', pool.id)
         onDragStart()
@@ -394,10 +443,14 @@ function DamagePoolCard({
         e.preventDefault()
         onDrop()
       }}
-      className={`min-w-[9.5rem] flex-1 basis-[9.5rem] cursor-grab rounded-lg border-2 p-3 active:cursor-grabbing ${shell} ${
-        dragging ? 'opacity-60 ring-2 ring-offset-1' : ''
-      }`}
-      aria-label={`${pool.label} ${pool.current} of ${pool.maximum}. Drag to reorder absorb priority.`}
+      className={`min-w-[9.5rem] flex-1 basis-[9.5rem] rounded-lg border-2 p-3 ${shell} ${
+        reorderable ? 'cursor-grab active:cursor-grabbing' : ''
+      } ${dragging ? 'opacity-60 ring-2 ring-offset-1' : ''}`}
+      aria-label={
+        reorderable
+          ? `${pool.label} ${pool.current} of ${pool.maximum}. Drag to reorder absorb priority.`
+          : `${pool.label} ${pool.current} of ${pool.maximum}. Fixed absorb order.`
+      }
     >
       <div className="flex items-start justify-between gap-2">
         <p
