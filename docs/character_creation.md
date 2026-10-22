@@ -41,7 +41,8 @@ App Launch
 | 5 | Roll Pending | Physical dice (Nightbane: Facade only; Morphus on Traits) |
 | 6 | Character trait forges | Morphus Sub-Forge (Nightbane); Black for non-trait races |
 | 7 | Resource-based abilities | Magic, psionics, talents |
-| 8 | Review & Spawn | Alignment required; spawn handoff — no Continue |
+| 8 | Gear | Optional starting gear via Gear Forge (`kind: 'creation'`) |
+| 9 | Review & Spawn | Alignment required; spawn handoff — no Continue |
 
 Full criteria per tab: [forge/character_creation.md](./forge/character_creation.md).
 

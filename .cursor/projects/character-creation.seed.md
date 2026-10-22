@@ -10,9 +10,9 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 1. docs/vision.md — 10 Core Pillars (esp. Mechanical Integrity, Visual Continuity, Radical Visibility, Unified Path, Familiar Surface, Physical Dice Priority, Speed Over Spectacle)
 2. .cursorrules — AI protocol; flag pillar conflicts immediately
 3. docs/character_creation.md — documentation map (launcher → forge → spawn)
-4. docs/forge/character_creation.md — 9-tab sequence, Continue/yellow/red, Identity chrome, Tab 1–8 rules
+4. docs/forge/character_creation.md — 9-tab sequence (Tab 8 Gear, Tab 9 Review & Spawn), Continue/yellow/red, Identity chrome, Tab 1–9 rules
 5. docs/universal_forge_navigation_engine.md — tab colors, Continue, Sub-Forges, top-down repair
-6. docs/character_spawn_handoff.md — Tab 8 spawn modal, `isFinalized`, persistence
+6. docs/character_spawn_handoff.md — Tab 9 spawn modal, `assessTab9SpawnBlockers`, `isFinalized`, persistence
 7. docs/unified_paths.md — “Creation ledger resolution”, “Live Ledger — creation preview rows”, pending dice, stat stack
 8. docs/stat_engine_spec.md — authoritative formulas (cheat sheet: docs/live_ledger.md)
 9. docs/app_viewport_launcher.md — Create Character gate, genre manifest, viewports
@@ -22,7 +22,7 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 ## Non-negotiables
 - Pillar 9: extend creation ledger / Live Ledger / pending dice / forgeNavigation / configuratorMatrix — never fork per-stat, per-form, or parallel ledger math in UI
 - Facade resolves before Morphus when Morphus uses `facade_base`; views are projections only
-- Physical Dice Priority: manual entry flows; Continue never locks data — only Tab 8 spawn confirmation commits
+- Physical Dice Priority: manual entry flows; Continue never locks data — only Tab 9 spawn confirmation commits
 - Radical Visibility: Black/Grey/Yellow/Red and disabled picks stay visible with why-disabled text
 - Business logic in `src/lib/` (+ `forgeNavigation/`); UI in `src/components/creation/` and `src/components/forge/` stays dumb
 - Update docs/forge/character_creation.md, docs/character_creation.md, docs/character_spawn_handoff.md, and docs/unified_paths.md when forge/ledger behavior or pipelines change
@@ -31,7 +31,7 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 - Sophisticated Calculator: friction tool for table play — not a game that plays Palladium
 
 ## First research pass (write into shared Project context)
-Summarize: Identity chrome vs tab1_configurator, Continue/yellow/red/Black rules, Tab 1–8 completion gates, creation ledger resolution bundle vs Live Ledger snapshot, pending dice Facade vs Morphus split, Morphus Sub-Forge status vs Expert Mode backlog, spawn blockers + handoff, key modules (`characterCreationForge.ts`, `creationLiveLedger.ts`, `ledgerRowResolution.ts`, `configuratorMatrix.ts`, `CreationFlowShell.tsx`), and open gaps vs docs/forge/character_creation.md / gemini “Active / in progress”. List exact test files for ledger, forge nav, and spawn.
+Summarize: Identity chrome vs tab1_configurator, Continue/yellow/red/Black rules, Tab 1–9 completion gates (`tab8_gear` then `tab9_review` / `assessTab9SpawnBlockers`), creation ledger resolution bundle vs Live Ledger snapshot, pending dice Facade vs Morphus split, Morphus Sub-Forge status vs Expert Mode backlog, spawn blockers + handoff, key modules (`characterCreationForge.ts`, `creationLiveLedger.ts`, `ledgerRowResolution.ts`, `configuratorMatrix.ts`, `CreationFlowShell.tsx`, `CreationGearForgePanel.tsx` / `creationGearForgeHost.ts`, `CreationReviewFinalize.tsx`), and open gaps vs docs/forge/character_creation.md / gemini “Active / in progress”. List exact test files for ledger, forge nav, gear tab, and spawn.
 
 ## How to work after that
 1. For each feature request: research first (enough to ground the ask) → **rulings gate** → short plan → parallel agents (lib / UI / tests / docs)
