@@ -387,7 +387,7 @@ Update this table when closing gaps.
 | UI — live saves | `src/components/live/SavingThrowsPanel.tsx` |
 | UI — combat APM | `CombatHUD.tsx` content-hugging APM capsule (outside scroll): APM + pips (no n/n) + INIT + Melee; tap pip → `spendCombatAction(1)`; sub-tabs via `liveCombatTabs`; tab body scrolls |
 | UI — combat Vitals | `CombatVitalsTab` + `combatDamagePools.ts` — L→R absorb; front-pool drag; fixed S.D.C.→H.P.; direct-to-HP; Bypass A.R. (equipped armor only); M.D.C. collapse |
-| UI — combat bubbles | `CombatHUD` S/P/D tab + `CombatCategoryBubble` — Unarmed (HtH name) / Ancient / Modern; era via `combatWeaponSlots.ts`; HtH roster `listOwnedHandToHandStyles` |
+| UI — combat bubbles | `CombatHUD` S/P/D tab + `CombatCategoryBubble` (HtH) / `CombatWeaponCategoryPanel` (Ancient / Modern multi-slot); era + dual-wield via `combatWeaponSlots.ts`; HtH roster `listOwnedHandToHandStyles` |
 
 ---
 

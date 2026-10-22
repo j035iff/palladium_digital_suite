@@ -1,9 +1,21 @@
-import type { InventoryItem, Weapon, WeaponProficiencyEra } from '../types'
+import type {
+  ActiveForm,
+  Character,
+  FireMode,
+  InventoryItem,
+  Weapon,
+  WeaponProficiencyEra,
+} from '../types'
 import { getWeaponProficiencyCatalogEntryById, WEAPON_PROFICIENCY_CATALOG } from '../data/library/weaponProficienciesCatalogLoader'
 import { resolveWeaponProficiencySkillId } from '../data/skillLibrary'
 import { weaponProficiencyEraForSkillId } from './creationSkillCatalog'
 import { isWhitelistedForHostGenre } from './genreGating'
-import type { FireMode } from '../types'
+import { collectUnlockedSkillIds } from './combatQuickBonuses'
+import { isRangedWeapon, type WeaponBonusLine, type WeaponProfileBonuses } from './weaponBonuses'
+import {
+  isPairedWeaponsSkillId,
+  WP_PAIRED_WEAPONS_SKILL_ID,
+} from './pairedWeaponSupport'
 
 export type CombatWeaponGlyphId =
   | 'fist'
@@ -22,6 +34,10 @@ export type CombatWeaponGlyphId =
   | 'heavy'
   | 'weapon'
 
+/** Modern two-gun strike penalties (Joe 2026-10-22) — regular hand / off-hand. */
+export const MODERN_TWO_GUN_PRIMARY_STRIKE_PENALTY = -2
+export const MODERN_TWO_GUN_OFFHAND_STRIKE_PENALTY = -6
+
 const MODERN_TEXT =
   /pistol|revolver|rifle|shotgun|smg|sub.?machine|energy|gun|firearm|laser|automatic/
 
@@ -31,6 +47,175 @@ function weaponSearchBlob(weapon: Weapon): string {
 
 function resolveWpId(weapon: Weapon): string | undefined {
   return resolveWeaponProficiencySkillId(weapon.wpCategory, weapon.linkedWpSkillId)
+}
+
+/** Catalog / forge `twoHanded` — indication only on S/P/D (do not lock extra slots). */
+export function isWeaponTwoHanded(weapon: Weapon): boolean {
+  return weapon.twoHanded === true
+}
+
+/**
+ * Pairable = non-two-handed (Joe). Shields count as pairable when not two-handed.
+ * Ancient off-hand penalty math is deferred — this flag is display / paired-skill gating only.
+ */
+export function isWeaponPairable(weapon: Weapon): boolean {
+  return !isWeaponTwoHanded(weapon)
+}
+
+/**
+ * Shield detection for secondary+ dropdowns.
+ * Prefer explicit `isShield`; fall back to name / category / W.P. text
+ * (no dedicated shield SKUs in `weapons/ancient.json` yet — catalog gap).
+ */
+export function isShieldWeapon(weapon: Weapon): boolean {
+  if (weapon.isShield === true) return true
+  return /\bshields?\b/.test(weaponSearchBlob(weapon))
+}
+
+/** Linked W.P. skill id when the weapon is proficiency-eligible. */
+export function resolveWeaponCombatWpSkillId(weapon: Weapon): string | null {
+  if (weapon.weaponProficiencyEligible === false) return null
+  return resolveWpId(weapon) ?? null
+}
+
+export function characterHasWpForWeapon(
+  character: Character,
+  activeForm: ActiveForm,
+  weapon: Weapon,
+): boolean {
+  const wpId = resolveWeaponCombatWpSkillId(weapon)
+  if (!wpId) return true
+  return collectUnlockedSkillIds(character, activeForm).has(wpId)
+}
+
+export function characterHasPairedWeaponsSkill(
+  character: Character,
+  activeForm: ActiveForm,
+): boolean {
+  const unlocked = collectUnlockedSkillIds(character, activeForm)
+  if (unlocked.has(WP_PAIRED_WEAPONS_SKILL_ID)) return true
+  for (const id of unlocked) {
+    if (isPairedWeaponsSkillId(id)) return true
+  }
+  return false
+}
+
+/**
+ * Dropdown options for a combat weapon slot.
+ * Primary: carried weapons of that era **excluding shields**.
+ * Secondary+: same era weapons **plus shields** (shields only in secondary+ lists).
+ */
+export function listSlotWeaponOptions(
+  items: readonly InventoryItem[],
+  era: WeaponProficiencyEra,
+  slotIndex: number,
+): Weapon[] {
+  const eraWeapons = listCarriedWeaponsOfEra(items, era).filter((w) => !isShieldWeapon(w))
+  if (slotIndex <= 0) return eraWeapons
+  const byId = new Map(eraWeapons.map((w) => [w.id, w]))
+  for (const it of items) {
+    if (it.itemType !== 'weapon') continue
+    if (!isShieldWeapon(it)) continue
+    byId.set(it.id, it)
+  }
+  return [...byId.values()]
+}
+
+/** Keep a picked id only when it is still in the dropdown list; else None. */
+export function resolvePickedWeaponId(
+  candidates: readonly Weapon[],
+  pickedId: string | null | undefined,
+): string | null {
+  if (!pickedId) return null
+  return candidates.some((w) => w.id === pickedId) ? pickedId : null
+}
+
+/**
+ * When ≥2 firearms are selected across modern slots: primary firearm −2 strike,
+ * each other firearm −6. Non-firearm slots (empty / shield) get 0.
+ */
+export function modernTwoGunStrikePenalty(
+  selectedWeapons: readonly (Weapon | null | undefined)[],
+  slotIndex: number,
+): number {
+  const firearmIndexes: number[] = []
+  selectedWeapons.forEach((w, i) => {
+    if (w && isRangedWeapon(w) && !isShieldWeapon(w)) firearmIndexes.push(i)
+  })
+  if (firearmIndexes.length < 2) return 0
+  const weapon = selectedWeapons[slotIndex]
+  if (!weapon || !isRangedWeapon(weapon) || isShieldWeapon(weapon)) return 0
+  const primaryFirearmSlot = firearmIndexes[0]!
+  return slotIndex === primaryFirearmSlot
+    ? MODERN_TWO_GUN_PRIMARY_STRIKE_PENALTY
+    : MODERN_TWO_GUN_OFFHAND_STRIKE_PENALTY
+}
+
+export function twoGunPenaltyBonusLine(amount: number): WeaponBonusLine | null {
+  if (!amount) return null
+  return { key: 'two_gun', label: 'Two guns', amount }
+}
+
+/** Merge a modern two-gun strike penalty into an existing weapon profile. */
+export function applyStrikePenaltyToWeaponProfile(
+  profile: WeaponProfileBonuses,
+  penalty: number,
+): WeaponProfileBonuses {
+  const line = twoGunPenaltyBonusLine(penalty)
+  if (!line) return profile
+  return {
+    ...profile,
+    strike: {
+      lines: [...profile.strike.lines, line],
+      total: profile.strike.total + line.amount,
+    },
+  }
+}
+
+export type PairedWeaponsSlotStatus = {
+  /** Both selected weapons pairable, character has Paired Weapons, W.P. on each. */
+  abilitiesActive: boolean
+  /** Short player-facing note when a pair is attempted but abilities do not apply. */
+  blockedReason: string | null
+}
+
+/**
+ * Paired Weapons skill gating for the first two occupied pairable slots.
+ * Does not encode ancient off-hand penalties (deferred).
+ */
+export function resolvePairedWeaponsSlotStatus(
+  selectedWeapons: readonly (Weapon | null | undefined)[],
+  character: Character,
+  activeForm: ActiveForm,
+): PairedWeaponsSlotStatus {
+  const occupied = selectedWeapons.filter((w): w is Weapon => Boolean(w))
+  if (occupied.length < 2) {
+    return { abilitiesActive: false, blockedReason: null }
+  }
+  const a = occupied[0]!
+  const b = occupied[1]!
+  if (!isWeaponPairable(a) || !isWeaponPairable(b)) {
+    return {
+      abilitiesActive: false,
+      blockedReason: 'Paired Weapons needs two pairable (non-two-handed) weapons.',
+    }
+  }
+  const hasSkill = characterHasPairedWeaponsSkill(character, activeForm)
+  if (!hasSkill) {
+    return {
+      abilitiesActive: false,
+      blockedReason: 'No W.P. Paired Weapons — dual wield is fine; paired abilities do not apply.',
+    }
+  }
+  const missingWp = [a, b].filter((w) => !characterHasWpForWeapon(character, activeForm, w))
+  if (missingWp.length > 0) {
+    return {
+      abilitiesActive: false,
+      blockedReason:
+        'Paired Weapons needs W.P. for each weapon in the pair (missing proficiency on at least one).',
+    }
+  }
+  return { abilitiesActive: true, blockedReason: null }
 }
 
 /** True when the host genre catalog includes at least one modern W.P. row. */
@@ -133,13 +318,46 @@ export function pickSingleFireMode(modes: readonly FireMode[]): FireMode | null 
   )
 }
 
-/** "Hand-to-Hand: Expert" → "Hand to Hand: EXPERT" for the Combat Home title. */
-export function formatHandToHandHeader(skillName: string | null): string {
+/** Category title for the Unarmed row (mockup: "Hand to Hand"). */
+export function formatHandToHandCategoryTitle(skillName: string | null): string {
   const raw = skillName?.trim() || 'Hand-to-Hand: None'
   const normalized = raw.replace(/hand-to-hand/gi, 'Hand to Hand')
   const colon = normalized.indexOf(':')
-  if (colon < 0) return normalized
-  const left = normalized.slice(0, colon).trim()
-  const right = normalized.slice(colon + 1).trim().toUpperCase()
-  return `${left}: ${right}`
+  if (colon < 0) {
+    return normalized.replace(/:\s*.*$/, '').trim() || 'Hand to Hand'
+  }
+  return normalized.slice(0, colon).trim() || 'Hand to Hand'
+}
+
+/** Style badge for the Unarmed row (mockup: "EXPERT"). */
+export function formatHandToHandStyleBadge(skillName: string | null): string {
+  const raw = skillName?.trim() || 'Hand-to-Hand: None'
+  const normalized = raw.replace(/hand-to-hand/gi, 'Hand to Hand')
+  const colon = normalized.indexOf(':')
+  if (colon < 0) return 'NONE'
+  return normalized.slice(colon + 1).trim().toUpperCase() || 'NONE'
+}
+
+/** "Hand-to-Hand: Expert" → "Hand to Hand: EXPERT" (combined; prefer title + badge in UI). */
+export function formatHandToHandHeader(skillName: string | null): string {
+  return `${formatHandToHandCategoryTitle(skillName)}: ${formatHandToHandStyleBadge(skillName)}`
+}
+
+/** Ensure at least one primary slot; extras stay until removed. */
+export function normalizeCombatEraSlots(slots: readonly (string | null)[]): (string | null)[] {
+  if (slots.length === 0) return [null]
+  return [...slots]
+}
+
+export function addCombatEraSlot(slots: readonly (string | null)[]): (string | null)[] {
+  return [...normalizeCombatEraSlots(slots), null]
+}
+
+export function removeCombatEraSlot(
+  slots: readonly (string | null)[],
+  slotIndex: number,
+): (string | null)[] {
+  if (slotIndex <= 0) return normalizeCombatEraSlots(slots)
+  if (slots.length <= 1) return [null]
+  return slots.filter((_, i) => i !== slotIndex)
 }

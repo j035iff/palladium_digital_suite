@@ -1,13 +1,29 @@
 import { describe, expect, it } from 'vitest'
 import {
+  addCombatEraSlot,
+  applyStrikePenaltyToWeaponProfile,
+  characterHasWpForWeapon,
   combatWeaponGlyphId,
-  defaultSelectedWeaponId,
+  formatHandToHandCategoryTitle,
   formatHandToHandHeader,
+  formatHandToHandStyleBadge,
   hostGenreOffersModernWeapons,
+  isShieldWeapon,
+  isWeaponPairable,
+  isWeaponTwoHanded,
   listCarriedWeaponsOfEra,
+  listSlotWeaponOptions,
+  modernTwoGunStrikePenalty,
+  MODERN_TWO_GUN_OFFHAND_STRIKE_PENALTY,
+  MODERN_TWO_GUN_PRIMARY_STRIKE_PENALTY,
+  normalizeCombatEraSlots,
+  removeCombatEraSlot,
+  resolvePairedWeaponsSlotStatus,
+  resolvePickedWeaponId,
   resolveWeaponCombatEra,
 } from './combatWeaponSlots'
-import type { Weapon } from '../types'
+import type { Character, Weapon } from '../types'
+import type { WeaponProfileBonuses } from './weaponBonuses'
 
 function weapon(partial: Partial<Weapon> & Pick<Weapon, 'id' | 'name'>): Weapon {
   return {
@@ -19,6 +35,19 @@ function weapon(partial: Partial<Weapon> & Pick<Weapon, 'id' | 'name'>): Weapon 
     isEquipped: false,
     ...partial,
   }
+}
+
+function bareCharacter(skillIds: string[]): Character {
+  const skills = skillIds.map((id) => ({
+    id,
+    name: id,
+    level: 1,
+    restricted: false,
+  }))
+  return {
+    primary: { skills },
+    morphus: { skills: [] },
+  } as unknown as Character
 }
 
 describe('combatWeaponSlots', () => {
@@ -52,7 +81,7 @@ describe('combatWeaponSlots', () => {
     expect(hostGenreOffersModernWeapons('palladium_fantasy')).toBe(false)
   })
 
-  it('lists carried weapons by era and prefers a ready-slot id', () => {
+  it('lists carried weapons by era', () => {
     const sword = weapon({ id: 'a', name: 'A', linkedWpSkillId: 'wp_sword' })
     const knife = weapon({
       id: 'b',
@@ -69,12 +98,121 @@ describe('combatWeaponSlots', () => {
     })
     const ancient = listCarriedWeaponsOfEra([sword, knife, pistol], 'ancient')
     expect(ancient.map((w) => w.id)).toEqual(['a', 'b'])
-    expect(defaultSelectedWeaponId(ancient, [null, 'b'])).toBe('b')
-    expect(defaultSelectedWeaponId(ancient, [null, null])).toBe('a')
   })
 
-  it('formats the Hand-to-Hand header', () => {
+  it('defaults dropdown pick to None when not in list', () => {
+    const sword = weapon({ id: 'a', name: 'A', linkedWpSkillId: 'wp_sword' })
+    expect(resolvePickedWeaponId([sword], null)).toBe(null)
+    expect(resolvePickedWeaponId([sword], 'a')).toBe('a')
+    expect(resolvePickedWeaponId([sword], 'missing')).toBe(null)
+  })
+
+  it('formats the Hand-to-Hand header pieces for the mockup', () => {
+    expect(formatHandToHandCategoryTitle('Hand-to-Hand: Expert')).toBe('Hand to Hand')
+    expect(formatHandToHandStyleBadge('Hand-to-Hand: Expert')).toBe('EXPERT')
     expect(formatHandToHandHeader('Hand-to-Hand: Expert')).toBe('Hand to Hand: EXPERT')
     expect(formatHandToHandHeader(null)).toBe('Hand to Hand: NONE')
+  })
+
+  it('treats non-two-handed weapons as pairable and flags two-handed', () => {
+    const sword = weapon({ id: 's', name: 'Sword', twoHanded: false })
+    const staff = weapon({ id: 't', name: 'Staff', twoHanded: true })
+    expect(isWeaponPairable(sword)).toBe(true)
+    expect(isWeaponTwoHanded(staff)).toBe(true)
+    expect(isWeaponPairable(staff)).toBe(false)
+  })
+
+  it('detects shields via isShield or name/category', () => {
+    expect(isShieldWeapon(weapon({ id: '1', name: 'Buckler', isShield: true }))).toBe(
+      true,
+    )
+    expect(
+      isShieldWeapon(weapon({ id: '2', name: 'Round Shield', category: 'Shields' })),
+    ).toBe(true)
+    expect(isShieldWeapon(weapon({ id: '3', name: 'Long Sword' }))).toBe(false)
+  })
+
+  it('adds shields only to secondary+ dropdown options', () => {
+    const sword = weapon({ id: 's', name: 'Sword', linkedWpSkillId: 'wp_sword' })
+    const shield = weapon({
+      id: 'sh',
+      name: 'Shield',
+      category: 'Shields',
+      isShield: true,
+      linkedWpSkillId: 'wp_shield',
+    })
+    const primary = listSlotWeaponOptions([sword, shield], 'ancient', 0)
+    const secondary = listSlotWeaponOptions([sword, shield], 'ancient', 1)
+    expect(primary.map((w) => w.id)).toEqual(['s'])
+    expect(secondary.map((w) => w.id).sort()).toEqual(['s', 'sh'])
+  })
+
+  it('applies modern two-gun strike penalties −2 / −6', () => {
+    const p1 = weapon({
+      id: 'p1',
+      name: 'Pistol A',
+      payload: { current: 6, max: 6 },
+      linkedWpSkillId: 'wp_automatic_pistol',
+    })
+    const p2 = weapon({
+      id: 'p2',
+      name: 'Pistol B',
+      payload: { current: 6, max: 6 },
+      linkedWpSkillId: 'wp_automatic_pistol',
+    })
+    expect(modernTwoGunStrikePenalty([p1], 0)).toBe(0)
+    expect(modernTwoGunStrikePenalty([p1, p2], 0)).toBe(
+      MODERN_TWO_GUN_PRIMARY_STRIKE_PENALTY,
+    )
+    expect(modernTwoGunStrikePenalty([p1, p2], 1)).toBe(
+      MODERN_TWO_GUN_OFFHAND_STRIKE_PENALTY,
+    )
+    const profile = {
+      weaponId: 'p1',
+      isMeleeWeapon: false,
+      activeWeaponTraits: [],
+      strike: { lines: [{ key: 'pp', label: 'P.P.', amount: 2 }], total: 2 },
+      parry: { lines: [], total: 0 },
+      throw: null,
+      wpSkillDisplayName: null,
+    } satisfies WeaponProfileBonuses
+    const withPen = applyStrikePenaltyToWeaponProfile(profile, -2)
+    expect(withPen.strike.total).toBe(0)
+    expect(withPen.strike.lines.some((l) => l.key === 'two_gun')).toBe(true)
+  })
+
+  it('gates Paired Weapons abilities on pairable + W.P. each', () => {
+    const sword = weapon({
+      id: 's',
+      name: 'Sword',
+      linkedWpSkillId: 'wp_sword',
+      twoHanded: false,
+    })
+    const club = weapon({
+      id: 'c',
+      name: 'Club',
+      linkedWpSkillId: 'wp_blunt',
+      category: 'Blunt',
+      twoHanded: false,
+    })
+    const withSkill = bareCharacter(['wp_paired_weapons', 'wp_sword'])
+    const status = resolvePairedWeaponsSlotStatus([sword, club], withSkill, 'primary')
+    expect(status.abilitiesActive).toBe(false)
+    expect(status.blockedReason).toMatch(/W\.P\. for each/i)
+
+    const bothWp = bareCharacter(['wp_paired_weapons', 'wp_sword', 'wp_blunt'])
+    expect(
+      resolvePairedWeaponsSlotStatus([sword, club], bothWp, 'primary').abilitiesActive,
+    ).toBe(true)
+
+    expect(characterHasWpForWeapon(bothWp, 'primary', sword)).toBe(true)
+    expect(characterHasWpForWeapon(withSkill, 'primary', club)).toBe(false)
+  })
+
+  it('keeps multi-slots until removed; primary cannot be removed', () => {
+    expect(normalizeCombatEraSlots([])).toEqual([null])
+    expect(addCombatEraSlot([null])).toEqual([null, null])
+    expect(removeCombatEraSlot([null, 'a', 'b'], 1)).toEqual([null, 'b'])
+    expect(removeCombatEraSlot([null, 'a'], 0)).toEqual([null, 'a'])
   })
 })

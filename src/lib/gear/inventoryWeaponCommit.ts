@@ -50,6 +50,7 @@ export function createInventoryWeaponFromPiece(
     qualityVariantId: piece.qualityVariantId,
     throwable: piece.throwable,
     twoHanded: piece.twoHanded,
+    isShield: piece.isShield,
     weaponProficiencyEligible: piece.weaponProficiencyEligible,
     weaponSpecificModifiers: piece.weaponSpecificModifiers,
     forgeProperties: piece.forgeProperties,

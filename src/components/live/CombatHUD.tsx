@@ -2,16 +2,13 @@ import { useEffect, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { unarmedDamageLabel } from '../../lib/strikeEngine'
 import { formatBonus } from '../../lib/combatQuickBonuses'
-import {
-  defaultFireModeId,
-  getWeaponFireModes,
-} from '../../lib/fireModes'
+import { getWeaponFireModes } from '../../lib/fireModes'
 import type { SheetCombatStatDetails } from '../../lib/sheetBonuses'
 import { formatSheetBonusEquation } from '../../lib/sheetBonuses'
 import { CombatNarrativeLog } from './CombatNarrativeLog'
 import type { StrikeBannerState } from './WeaponStrikeCard'
 import { CombatCategoryBubble } from './CombatCategoryBubble'
-import { CombatWeaponSlotExpand } from './CombatWeaponSlotExpand'
+import { CombatWeaponCategoryPanel } from './CombatWeaponCategoryPanel'
 import { UnarmedCombatExpand } from './UnarmedCombatExpand'
 import { ClampedOverlayTooltip } from './ClampedOverlayTooltip'
 import { CombatVitalsTab } from './CombatVitalsTab'
@@ -23,14 +20,18 @@ import {
 } from '../../lib/liveCombatTabs'
 import type { CombatDamagePoolId } from '../../lib/combatDamagePools'
 import {
-  combatWeaponGlyphId,
-  defaultSelectedWeaponId,
+  applyStrikePenaltyToWeaponProfile,
   formatFireModeDamageLabel,
-  formatHandToHandHeader,
+  formatHandToHandCategoryTitle,
+  formatHandToHandStyleBadge,
   hostGenreOffersModernWeapons,
   listCarriedWeaponsOfEra,
+  listSlotWeaponOptions,
+  modernTwoGunStrikePenalty,
+  normalizeCombatEraSlots,
   pickBurstFireMode,
   pickSingleFireMode,
+  resolvePickedWeaponId,
   weaponById,
 } from '../../lib/combatWeaponSlots'
 import { computeWeaponProfileBonuses } from '../../lib/weaponBonuses'
@@ -131,7 +132,7 @@ function SummaryLine({ label, value }: { label: string; value: string }) {
 }
 
 type CombatHudLayout = 'sidebar' | 'panel'
-type CombatBubbleId = 'unarmed' | 'ancient' | 'modern'
+type CombatBubbleId = 'unarmed'
 
 /**
  * Combat Home tactical HUD (master_flow.md, combat_logic.md, ui_wireframe.md §3).
@@ -175,9 +176,15 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
     'hp',
   ])
   const [expandedBubble, setExpandedBubble] = useState<CombatBubbleId | null>(null)
-  const [pickedIds, setPickedIds] = useState<{ ancient: string | null; modern: string | null }>(
-    { ancient: null, modern: null },
-  )
+  /** Per-era weapon slots — primary always present; extras stay until removed. Default None. */
+  const [eraSlots, setEraSlots] = useState<{
+    ancient: (string | null)[]
+    modern: (string | null)[]
+  }>({ ancient: [null], modern: [null] })
+  const [expandedWeaponSlot, setExpandedWeaponSlot] = useState<{
+    ancient: number | null
+    modern: number | null
+  }>({ ancient: null, modern: null })
   const [strikeBanner, setStrikeBanner] = useState<StrikeBannerState>(null)
   const [fireModeByWeaponId, setFireModeByWeaponId] = useState<Record<string, string>>(
     {},
@@ -220,28 +227,55 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   )
   const hostOffersModern = hostGenreOffersModernWeapons(hostGenreId)
 
-  const selectedAncient = useMemo(() => {
-    const fallback = defaultSelectedWeaponId(ancientCandidates, readyWeaponIds)
-    const id =
-      pickedIds.ancient && ancientCandidates.some((w) => w.id === pickedIds.ancient)
-        ? pickedIds.ancient
-        : fallback
-    return weaponById(ancientCandidates, id)
-  }, [ancientCandidates, pickedIds.ancient, readyWeaponIds])
+  /** Seed primary slot from Gear ready weapons once when still None. */
+  useEffect(() => {
+    setEraSlots((prev) => {
+      let nextAncient = normalizeCombatEraSlots(prev.ancient)
+      let nextModern = normalizeCombatEraSlots(prev.modern)
+      let changed = false
+      const readyAncient = readyWeaponIds[0]
+      const readyModern = readyWeaponIds[1]
+      if (
+        nextAncient[0] == null &&
+        readyAncient &&
+        ancientCandidates.some((w) => w.id === readyAncient)
+      ) {
+        nextAncient = [...nextAncient]
+        nextAncient[0] = readyAncient
+        changed = true
+      }
+      if (
+        nextModern[0] == null &&
+        readyModern &&
+        modernCandidates.some((w) => w.id === readyModern)
+      ) {
+        nextModern = [...nextModern]
+        nextModern[0] = readyModern
+        changed = true
+      }
+      return changed ? { ancient: nextAncient, modern: nextModern } : prev
+    })
+  }, [ancientCandidates, modernCandidates, readyWeaponIds])
 
-  const selectedModern = useMemo(() => {
-    const fallback = defaultSelectedWeaponId(modernCandidates, readyWeaponIds)
-    const id =
-      pickedIds.modern && modernCandidates.some((w) => w.id === pickedIds.modern)
-        ? pickedIds.modern
-        : fallback
-    return weaponById(modernCandidates, id)
-  }, [modernCandidates, pickedIds.modern, readyWeaponIds])
+  const ancientSlots = normalizeCombatEraSlots(eraSlots.ancient)
+  const modernSlots = normalizeCombatEraSlots(eraSlots.modern)
 
-  const selectEraWeapon = (era: 'ancient' | 'modern', weaponId: string) => {
-    setPickedIds((prev) => ({ ...prev, [era]: weaponId }))
-    setReadyWeapon(era === 'ancient' ? 0 : 1, weaponId)
-  }
+  const selectedAncientWeapons = useMemo(() => {
+    return ancientSlots.map((id, i) => {
+      const opts = listSlotWeaponOptions(inventoryItems, 'ancient', i)
+      return weaponById(opts, resolvePickedWeaponId(opts, id))
+    })
+  }, [ancientSlots, inventoryItems])
+
+  const selectedModernWeapons = useMemo(() => {
+    return modernSlots.map((id, i) => {
+      const opts = listSlotWeaponOptions(inventoryItems, 'modern', i)
+      return weaponById(opts, resolvePickedWeaponId(opts, id))
+    })
+  }, [modernSlots, inventoryItems])
+
+  const selectedAncient = selectedAncientWeapons[0] ?? null
+  const selectedModern = selectedModernWeapons[0] ?? null
 
   const riftedModernNote =
     !hostOffersModern && selectedModern
@@ -270,13 +304,17 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
         handToHandCombatProfile.accumulated,
       )
     : null
-  const modernProfile = selectedModern
+  const modernPrimaryPenalty = modernTwoGunStrikePenalty(selectedModernWeapons, 0)
+  const modernProfileRaw = selectedModern
     ? computeWeaponProfileBonuses(
         character,
         activeForm,
         selectedModern,
         handToHandCombatProfile.accumulated,
       )
+    : null
+  const modernProfile = modernProfileRaw
+    ? applyStrikePenaltyToWeaponProfile(modernProfileRaw, modernPrimaryPenalty)
     : null
   const modernModes = selectedModern ? getWeaponFireModes(selectedModern) : []
   const modernSingle = pickSingleFireMode(modernModes)
@@ -459,7 +497,12 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           <div className="mb-3 space-y-3" aria-label="Combat S/P/D">
             <CombatCategoryBubble
               morphus={morphus}
-              categoryLabel={formatHandToHandHeader(handToHandCombatProfile.skillName)}
+              categoryLabel={formatHandToHandCategoryTitle(
+                handToHandCombatProfile.skillName,
+              )}
+              titleAside={formatHandToHandStyleBadge(
+                handToHandCombatProfile.skillName,
+              )}
               expanded={expandedBubble === 'unarmed'}
               empty={false}
               glyphId="fist"
@@ -497,18 +540,41 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               />
             </CombatCategoryBubble>
 
-            <CombatCategoryBubble
+            <CombatWeaponCategoryPanel
               morphus={morphus}
-              categoryLabel="Ancient Weapon"
-              expanded={expandedBubble === 'ancient'}
-              empty={!selectedAncient}
-              emptyReason="No ancient weapon in Gear — add one on the Gear tab."
-              glyphId={combatWeaponGlyphId(selectedAncient)}
-              onToggle={() => toggleBubble('ancient')}
+              era="ancient"
+              categoryLabel="Ancient Weapons"
+              inventoryItems={inventoryItems}
+              slotWeaponIds={ancientSlots}
+              expandedSlotIndex={expandedWeaponSlot.ancient}
+              character={character}
+              activeForm={activeForm}
+              ammoReserves={ammoReserves}
+              fireModeByWeaponId={fireModeByWeaponId}
+              reloadShakeByWeaponId={reloadShakeByWeaponId}
+              onSlotsChange={(next) =>
+                setEraSlots((prev) => ({ ...prev, ancient: next }))
+              }
+              onExpandedSlotChange={(idx) =>
+                setExpandedWeaponSlot((prev) => ({ ...prev, ancient: idx }))
+              }
+              onPrimaryReadySync={(id) => setReadyWeapon(0, id)}
+              onFireModeChange={(weaponId, modeId) =>
+                setFireModeByWeaponId((prev) => ({ ...prev, [weaponId]: modeId }))
+              }
+              onStrikeResolved={setStrikeBanner}
+              onSpendAmmo={spendWeaponAmmo}
+              onReload={(id) => reloadWeapon(id)}
+              onReloadFailed={(id) => reloadWeapon(id)}
+              onRequestReloadShake={(id) =>
+                setReloadShakeByWeaponId((prev) => ({
+                  ...prev,
+                  [id]: (prev[id] ?? 0) + 1,
+                }))
+              }
               summary={
                 selectedAncient && ancientProfile ? (
                   <>
-                    <p className="font-bold">{selectedAncient.name}</p>
                     <SummaryLine
                       label="Strike"
                       value={formatBonus(ancientProfile.strike.total)}
@@ -519,140 +585,87 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                     />
                     <SummaryLine label="Dam" value={selectedAncient.damage} />
                   </>
-                ) : null
+                ) : (
+                  <>
+                    <SummaryLine label="Strike" value="—" />
+                    <SummaryLine label="Parry" value="—" />
+                    <SummaryLine label="Dam" value="—" />
+                  </>
+                )
               }
-            >
-              <CombatWeaponSlotExpand
-                morphus={morphus}
-                eraLabel="Ancient weapons"
-                candidates={ancientCandidates}
-                selected={selectedAncient}
-                character={character}
-                activeForm={activeForm}
-                ammoReserves={ammoReserves}
-                fireModeId={
-                  selectedAncient
-                    ? (fireModeByWeaponId[selectedAncient.id] ??
-                      defaultFireModeId(selectedAncient))
-                    : ''
-                }
-                reloadShakeTrigger={
-                  selectedAncient ? (reloadShakeByWeaponId[selectedAncient.id] ?? 0) : 0
-                }
-                onSelectWeapon={(id) => selectEraWeapon('ancient', id)}
-                onFireModeChange={(id) => {
-                  if (!selectedAncient) return
-                  setFireModeByWeaponId((prev) => ({
-                    ...prev,
-                    [selectedAncient.id]: id,
-                  }))
-                }}
-                onStrikeResolved={setStrikeBanner}
-                onSpendAmmo={spendWeaponAmmo}
-                onReload={(id) => reloadWeapon(id)}
-                onReloadFailed={(id) => reloadWeapon(id)}
-                onRequestReloadShake={(id) =>
-                  setReloadShakeByWeaponId((prev) => ({
-                    ...prev,
-                    [id]: (prev[id] ?? 0) + 1,
-                  }))
-                }
-              />
-            </CombatCategoryBubble>
+            />
 
-            <CombatCategoryBubble
+            <CombatWeaponCategoryPanel
               morphus={morphus}
-              categoryLabel="Modern Weapon"
-              expanded={expandedBubble === 'modern'}
-              empty={!selectedModern}
-              emptyReason="No modern weapon in Gear — add one on the Gear tab."
-              glyphId={combatWeaponGlyphId(selectedModern)}
-              onToggle={() => toggleBubble('modern')}
+              era="modern"
+              categoryLabel="Modern Weapons"
+              inventoryItems={inventoryItems}
+              slotWeaponIds={modernSlots}
+              expandedSlotIndex={expandedWeaponSlot.modern}
+              character={character}
+              activeForm={activeForm}
+              ammoReserves={ammoReserves}
+              fireModeByWeaponId={fireModeByWeaponId}
+              reloadShakeByWeaponId={reloadShakeByWeaponId}
+              hostNote={riftedModernNote}
+              onSlotsChange={(next) =>
+                setEraSlots((prev) => ({ ...prev, modern: next }))
+              }
+              onExpandedSlotChange={(idx) =>
+                setExpandedWeaponSlot((prev) => ({ ...prev, modern: idx }))
+              }
+              onPrimaryReadySync={(id) => setReadyWeapon(1, id)}
+              onFireModeChange={(weaponId, modeId) =>
+                setFireModeByWeaponId((prev) => ({ ...prev, [weaponId]: modeId }))
+              }
+              onStrikeResolved={setStrikeBanner}
+              onSpendAmmo={spendWeaponAmmo}
+              onReload={(id) => reloadWeapon(id)}
+              onReloadFailed={(id) => reloadWeapon(id)}
+              onRequestReloadShake={(id) =>
+                setReloadShakeByWeaponId((prev) => ({
+                  ...prev,
+                  [id]: (prev[id] ?? 0) + 1,
+                }))
+              }
               summary={
                 selectedModern && modernProfile ? (
                   <>
-                    <p className="font-bold">{selectedModern.name}</p>
                     {riftedModernNote ? (
-                      <p className="mt-0.5 text-[9px] font-semibold opacity-70">
+                      <p className="mb-0.5 text-[9px] font-semibold opacity-70">
                         {riftedModernNote}
                       </p>
                     ) : null}
-                    <div className="mt-1 grid grid-cols-2 gap-x-3">
-                      <div>
-                        <p className="text-[9px] font-black uppercase opacity-70">Single</p>
-                        <SummaryLine
-                          label="Strike"
-                          value={formatBonus(
-                            modernProfile.strike.total + (modernSingle?.strikeModifier ?? 0),
-                          )}
-                        />
-                        <SummaryLine
-                          label="Dam"
-                          value={formatFireModeDamageLabel(selectedModern, modernSingle)}
-                        />
-                      </div>
-                      <div>
-                        <p className="text-[9px] font-black uppercase opacity-70">Burst</p>
-                        {modernBurst ? (
-                          <>
-                            <SummaryLine
-                              label="Strike"
-                              value={formatBonus(
-                                modernProfile.strike.total + modernBurst.strikeModifier,
-                              )}
-                            />
-                            <SummaryLine
-                              label="Dam"
-                              value={formatFireModeDamageLabel(selectedModern, modernBurst)}
-                            />
-                          </>
-                        ) : (
-                          <p className="opacity-55">—</p>
-                        )}
-                      </div>
-                    </div>
+                    <SummaryLine
+                      label="Aimed"
+                      value={formatBonus(
+                        modernProfile.strike.total + (modernSingle?.strikeModifier ?? 0),
+                      )}
+                    />
+                    <SummaryLine
+                      label="Burst"
+                      value={
+                        modernBurst
+                          ? formatBonus(
+                              modernProfile.strike.total + modernBurst.strikeModifier,
+                            )
+                          : '—'
+                      }
+                    />
+                    <SummaryLine
+                      label="Dam"
+                      value={formatFireModeDamageLabel(selectedModern, modernSingle)}
+                    />
                   </>
-                ) : null
+                ) : (
+                  <>
+                    <SummaryLine label="Aimed" value="—" />
+                    <SummaryLine label="Burst" value="—" />
+                    <SummaryLine label="Dam" value="—" />
+                  </>
+                )
               }
-            >
-              <CombatWeaponSlotExpand
-                morphus={morphus}
-                eraLabel="Modern weapons"
-                candidates={modernCandidates}
-                selected={selectedModern}
-                character={character}
-                activeForm={activeForm}
-                ammoReserves={ammoReserves}
-                fireModeId={
-                  selectedModern
-                    ? (fireModeByWeaponId[selectedModern.id] ??
-                      defaultFireModeId(selectedModern))
-                    : ''
-                }
-                reloadShakeTrigger={
-                  selectedModern ? (reloadShakeByWeaponId[selectedModern.id] ?? 0) : 0
-                }
-                hostNote={riftedModernNote}
-                onSelectWeapon={(id) => selectEraWeapon('modern', id)}
-                onFireModeChange={(id) => {
-                  if (!selectedModern) return
-                  setFireModeByWeaponId((prev) => ({
-                    ...prev,
-                    [selectedModern.id]: id,
-                  }))
-                }}
-                onStrikeResolved={setStrikeBanner}
-                onSpendAmmo={spendWeaponAmmo}
-                onReload={(id) => reloadWeapon(id)}
-                onReloadFailed={(id) => reloadWeapon(id)}
-                onRequestReloadShake={(id) =>
-                  setReloadShakeByWeaponId((prev) => ({
-                    ...prev,
-                    [id]: (prev[id] ?? 0) + 1,
-                  }))
-                }
-              />
-            </CombatCategoryBubble>
+            />
 
             <CombatNarrativeLog morphus={morphus} />
           </div>

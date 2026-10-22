@@ -2849,6 +2849,12 @@ export interface Weapon extends Item {
   /** From catalog `genreStats.twoHanded` — Morphus hand-capacity gating. */
   twoHanded?: boolean
   /**
+   * When true, this row is a shield (parry / paired off-hand).
+   * Catalog gap: no shield SKUs in `weapons/ancient.json` yet — set via forge/custom
+   * or inferred from name/category containing "shield" (`isShieldWeapon`).
+   */
+  isShield?: boolean
+  /**
    * When false, W.P. strike/parry do not apply (Nightbane Miscellaneous table).
    * Omit / true = eligible when `linkedWpSkillId` matches an unlocked W.P.
    */

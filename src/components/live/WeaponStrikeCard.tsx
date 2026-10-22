@@ -7,6 +7,7 @@ import {
   prettyWeaponTraitKey,
   type WeaponStatProfile,
 } from '../../lib/weaponBonuses'
+import { applyStrikePenaltyToWeaponProfile } from '../../lib/combatWeaponSlots'
 import { formatBonus } from '../../lib/combatQuickBonuses'
 import { canReloadWeapon, formatAmmoHudLine, type AmmoReservesState } from '../../lib/ammoReserves'
 import {
@@ -48,6 +49,8 @@ type WeaponStrikeCardProps = {
   ammoReserves: AmmoReservesState
   fireModeId: string
   reloadShakeTrigger: number
+  /** Modern two-gun (or other) strike penalty already resolved in lib. */
+  strikePenalty?: number
   onFireModeChange: (modeId: string) => void
   onStrikeResolved: (banner: NonNullable<StrikeBannerState>) => void
   onSpendAmmo: (weaponId: string, rounds: number) => void
@@ -101,6 +104,7 @@ export function WeaponStrikeCard({
   ammoReserves,
   fireModeId,
   reloadShakeTrigger,
+  strikePenalty = 0,
   onFireModeChange,
   onStrikeResolved,
   onSpendAmmo,
@@ -112,7 +116,10 @@ export function WeaponStrikeCard({
   const [damageManual, setDamageManual] = useState('')
 
   const ranged = isRangedWeapon(w)
-  const profile = computeWeaponProfileBonuses(character, activeForm, w)
+  const profile = applyStrikePenaltyToWeaponProfile(
+    computeWeaponProfileBonuses(character, activeForm, w),
+    strikePenalty,
+  )
   const mode: FireMode = ranged
     ? getFireModeById(w, fireModeId) ??
       getFireModeById(w, defaultFireModeId(w)) ??

@@ -18,6 +18,8 @@ export type GearForgeWeaponPiece = {
   qualityVariantId?: string
   throwable?: boolean
   twoHanded?: boolean
+  /** Shield / buckler for combat secondary+ slots (see `Weapon.isShield`). */
+  isShield?: boolean
   weaponProficiencyEligible?: boolean
   weaponSpecificModifiers?: Record<string, number>
   forgeProperties?: WeaponForgeProperties

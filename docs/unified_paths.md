@@ -252,13 +252,16 @@ Copy this block when registering a new unified path:
 
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
-| Era / glyph | `src/lib/combatWeaponSlots.ts` | `resolveWeaponCombatEra`, `hostGenreOffersModernWeapons`, `combatWeaponGlyphId` | One classifier for Unarmed / Ancient / Modern |
-| Weapon math | `src/lib/weaponBonuses.ts` | `computeWeaponProfileBonuses` | Same profile as strike cards |
-| Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; Unarmed label = active HtH name |
-| UI | `CombatCategoryBubble` | Collapsed summary + Expand | One shell for all three categories |
+| Era / glyph / slots | `src/lib/combatWeaponSlots.ts` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `isWeaponPairable`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId` | One classifier + multi-slot dropdown rules for Ancient / Modern |
+| Weapon math | `src/lib/weaponBonuses.ts` + `applyStrikePenaltyToWeaponProfile` | `computeWeaponProfileBonuses` | Same profile as strike cards; two-gun penalties merge as strike lines |
+| Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; title **Hand to Hand** + style badge |
+| UI — Unarmed | `CombatCategoryBubble` | Summary + style aside + Expand | HtH only |
+| UI — weapons | `CombatWeaponCategoryPanel` + `CombatWeaponSlotRow` | Per-slot dropdown / `+` / remove / Expand | Primary always; shields in secondary+ only |
 | Bonus-breakdown tooltip | `ClampedOverlayTooltip` + `clampOverlayTooltipPosition` | Portaled fixed tip on HtH tiles / weapon chips / Initiative | Same clamp path as Bonuses/Skills; escapes expand `overflow: hidden` |
 
-**Modes / variants:** Facade/Morphus via existing live stack. Modern bubble is always shown: empty = grayed (Gear explanation); a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand only (`HandToHandStylePicker` — not on Skills); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand.
+**Modes / variants:** Facade/Morphus via existing live stack. Ancient / Modern always show primary dropdown (default **None**); a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand only (`HandToHandStylePicker` — not on Skills); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand.
+
+**Extension guide:** Add slot rules / penalties in `combatWeaponSlots.ts`; render through `CombatWeaponCategoryPanel` — do not fork Ancient vs Modern shells or a second strike-card path.
 
 ---
 
@@ -368,6 +371,7 @@ Track work here until promoted to the registry above.
 | 2026-10-15 | Dual identity: description/personality independent (no Facade fallback); Character Image slot swaps with active form (not both stacked) |
 | 2026-10-15 | Nightbane dual identity: per-form presentation fields + Morphus overlay fallback; trait height/weight auto-apply + dice fill-ins; separate Morphus aliases; `presentedForm` peer projection; Morphus traits breakdown beside Morphus image |
 | 2026-10-15 | Identity Character Image: device picker + Nightbane Facade/Morphus; per-peer People share allowlist (default off); party.snapshot → seat `portraitProjection`; sheet People + GM At-the-table thumbs |
+| 2026-10-22 | Combat S/P/D: dual-wield / multi-slot weapon dropdowns (`CombatWeaponCategoryPanel`); pairable / 2H / No W.P. badges; modern two-gun −2/−6; shields secondary+ only |
 | 2026-10-19 | Combat: S.D.C./H.P. fixed after front pools; tab Physical→S/P/D; Bypass A.R. skips equipped armor only |
 | 2026-10-18 | Combat APM capsule: content-hugging width from pip count; APM label + pips only (no n/n); centered above tabs |
 | 2026-10-18 | Combat Vitals outline fidelity: APM + tabs unboxed; one outline on scrollable tab body; nested pool + Apply Damage/Heal outlines |

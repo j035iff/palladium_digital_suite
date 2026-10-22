@@ -5,6 +5,8 @@ import { CombatWeaponGlyph } from './CombatWeaponGlyph'
 type Props = {
   morphus: boolean
   categoryLabel: string
+  /** Optional style badge (e.g. Hand to Hand → EXPERT) to the left of Expand. */
+  titleAside?: ReactNode
   expanded: boolean
   empty: boolean
   emptyReason?: string
@@ -16,10 +18,12 @@ type Props = {
 
 /**
  * Combat Home category row — collapsed basics + Expand for full profile (ui_wireframe.md §3).
+ * Used for Unarmed / HtH; Ancient / Modern use {@link CombatWeaponCategoryPanel}.
  */
 export function CombatCategoryBubble({
   morphus,
   categoryLabel,
+  titleAside,
   expanded,
   empty,
   emptyReason,
@@ -62,7 +66,16 @@ export function CombatCategoryBubble({
         >
           {categoryLabel}
         </p>
-        <div className="flex justify-end">
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          {titleAside ? (
+            <span
+              className={`text-sm font-black uppercase tracking-wide ${
+                morphus ? 'text-violet-100' : 'text-slate-900'
+              }`}
+            >
+              {titleAside}
+            </span>
+          ) : null}
           <button
             type="button"
             className={expandBtn}
