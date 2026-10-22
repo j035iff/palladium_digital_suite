@@ -24,6 +24,19 @@ Versioned **first messages** for Cursor [Projects](https://cursor.com/blog/proje
 - Keep git-backed docs/rules as the canonical constraints; update them when conventions change.
 - Subscriptions (PR/CI follow, schedules) — enable on **Gardening** only after the feature/ingest Projects feel trustworthy.
 
+## Feature coordinators — rulings gate
+
+Applies to **Character Creation**, **Live Character Sheet**, **Gear Forge**, and **GM Hub** (not Content Ingest or Gardening).
+
+For every feature request, the coordinator must:
+
+1. Research first (enough to ground the ask).
+2. Before any implementation: scan for edge cases or ambiguities in **Palladium mechanics/rules** and **user-facing behavior**.
+3. If any exist → ask the human for numbered rulings and wait.
+4. If none → send an explicit human-facing message that there are no ambiguities and work will start, then proceed.
+
+Content Ingest keeps its existing mechanics-ruling language in its seed; do not dilute or replace it here.
+
 ## Related
 
 - Pillars / AI protocol: `docs/vision.md`, `.cursorrules`

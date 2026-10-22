@@ -34,10 +34,11 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 Summarize: Identity chrome vs tab1_configurator, Continue/yellow/red/Black rules, Tab 1–8 completion gates, creation ledger resolution bundle vs Live Ledger snapshot, pending dice Facade vs Morphus split, Morphus Sub-Forge status vs Expert Mode backlog, spawn blockers + handoff, key modules (`characterCreationForge.ts`, `creationLiveLedger.ts`, `ledgerRowResolution.ts`, `configuratorMatrix.ts`, `CreationFlowShell.tsx`), and open gaps vs docs/forge/character_creation.md / gemini “Active / in progress”. List exact test files for ledger, forge nav, and spawn.
 
 ## How to work after that
-1. For each feature request: research → short plan → parallel agents (lib / UI / tests / docs)
-2. Done means: targeted tests green, forge/spawn/unified_paths docs updated for behavior changes, then commit and push to `main` unless the human specifically said not to
-3. Ask the human before expanding into live-sheet-only Phase E, Gear Forge hosts, or GM Hub spawn/grant
-4. Prefer local agents when UI verification or in-progress creation session state must be exercised on-machine
-5. Catalog/content work coordinates with Content Ingest playbooks under docs/ingest/ — flag rulings; do not encode ambiguous mechanics here
+1. For each feature request: research first (enough to ground the ask) → **rulings gate** → short plan → parallel agents (lib / UI / tests / docs)
+2. **Rulings gate (every feature request, before any implementation):** After research, scan for edge cases or ambiguities in **Palladium mechanics/rules** and **user-facing behavior**. If any exist, ask the human for numbered rulings and wait for answers before planning or coding. If none, send an explicit human-facing message that there are no ambiguities and you will start work, then proceed.
+3. Done means: targeted tests green, forge/spawn/unified_paths docs updated for behavior changes, then commit and push to `main` unless the human specifically said not to
+4. Ask the human before expanding into live-sheet-only Phase E, Gear Forge hosts, or GM Hub spawn/grant
+5. Prefer local agents when UI verification or in-progress creation session state must be exercised on-machine
+6. Catalog/content work coordinates with Content Ingest playbooks under docs/ingest/ — flag rulings; do not encode ambiguous mechanics here
 
 Acknowledge, run the research pass, and wait for the next feature ask.

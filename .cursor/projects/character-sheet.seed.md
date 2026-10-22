@@ -46,11 +46,12 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 Summarize: Persistent Core vs Story/Combat Home vs shared tabs; `isFinalized` gate + Character-Creation-owned spawn handoff boundary; Phase E modules (`liveStatEngine.ts`, `liveSkillEngine.ts`, `liveSheetTabs.ts`, `liveSheetAbilities.ts`, `sheetCombatDerived` / combat bubbles); CombatHUD APM + Unarmed/Ancient/Modern pipeline; level-up/XP surface; Abilities nesting rules; GearPanel sheet-host contract vs Gear Forge Project; join-table interacting sheet (client runtime through sheet handoff, combat wire, leave via Portal) vs GM Hub host/Party ownership; open gaps vs docs/ui_wireframe.md status blurb + docs/stat_engine_spec.md §8. List exact test files for liveStatEngine, liveSheetTabs, liveSheetAbilities, combat attribution, and related HUD/sheet/join-client tests.
 
 ## How to work after that
-1. For each feature request: research → short plan → parallel agents (lib / UI / tests / docs)
-2. Done means: targeted tests green, ui_wireframe / stat_engine_spec / unified_paths (and combat/join-table docs when touched) updated for behavior changes, then commit and push to `main` unless the human specifically said not to
-3. Ask the human before expanding into Creation Forge tabs/spawn pipeline, Gear Forge non-sheet hosts, or GM Hub host chrome / Party/Cast / LAN transport
-4. Prefer local agents when UI verification, finalized save state, CombatHUD, or joined-sheet client state must be exercised on-machine
-5. Catalog/content work coordinates with Content Ingest playbooks under docs/ingest/ — flag rulings; do not encode ambiguous mechanics here
-6. Verify changed sheet UI in the browser before calling the task done
+1. For each feature request: research first (enough to ground the ask) → **rulings gate** → short plan → parallel agents (lib / UI / tests / docs)
+2. **Rulings gate (every feature request, before any implementation):** After research, scan for edge cases or ambiguities in **Palladium mechanics/rules** and **user-facing behavior**. If any exist, ask the human for numbered rulings and wait for answers before planning or coding. If none, send an explicit human-facing message that there are no ambiguities and you will start work, then proceed.
+3. Done means: targeted tests green, ui_wireframe / stat_engine_spec / unified_paths (and combat/join-table docs when touched) updated for behavior changes, then commit and push to `main` unless the human specifically said not to
+4. Ask the human before expanding into Creation Forge tabs/spawn pipeline, Gear Forge non-sheet hosts, or GM Hub host chrome / Party/Cast / LAN transport
+5. Prefer local agents when UI verification, finalized save state, CombatHUD, or joined-sheet client state must be exercised on-machine
+6. Catalog/content work coordinates with Content Ingest playbooks under docs/ingest/ — flag rulings; do not encode ambiguous mechanics here
+7. Verify changed sheet UI in the browser before calling the task done
 
 Acknowledge, run the research pass, and wait for the next feature ask.

@@ -30,10 +30,11 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 Summarize: campaign vs play session model, Campaign Creation Forge option registry, Narrative/Combat tab navigation (Characters PCs/NPCs; Narrative Home stubs), party observer + combat roster pipelines, conversion policy behavior, combat mutators (APM / initiative / H.F. / melee round), session persistence keys, protocol envelopes vs unwired transport, and open gaps vs docs/gm_hub.md “Not in v1” / Future LAN. List key modules from the implementation map.
 
 ## How to work after that
-1. For each feature request: research → short plan → parallel agents (lib / UI / tests / docs)
-2. Done means: targeted tests green, docs/gm_hub.md (and unified_paths when pipelines change) updated, then commit and push to `main` unless the human specifically said not to
-3. Ask the human before expanding beyond local v1 (LAN, Plot, item push, player devices)
-4. Prefer local agents when UI verification or localStorage session state must be exercised on-machine
-5. Encounter/fodder work coordinates with Content Ingest playbook docs/ingest/encounters.md — do not invent archetype rows here
+1. For each feature request: research first (enough to ground the ask) → **rulings gate** → short plan → parallel agents (lib / UI / tests / docs)
+2. **Rulings gate (every feature request, before any implementation):** After research, scan for edge cases or ambiguities in **Palladium mechanics/rules** and **user-facing behavior**. If any exist, ask the human for numbered rulings and wait for answers before planning or coding. If none, send an explicit human-facing message that there are no ambiguities and you will start work, then proceed.
+3. Done means: targeted tests green, docs/gm_hub.md (and unified_paths when pipelines change) updated, then commit and push to `main` unless the human specifically said not to
+4. Ask the human before expanding beyond local v1 (LAN, Plot, item push, player devices)
+5. Prefer local agents when UI verification or localStorage session state must be exercised on-machine
+6. Encounter/fodder work coordinates with Content Ingest playbook docs/ingest/encounters.md — do not invent archetype rows here
 
 Acknowledge, run the research pass, and wait for the next feature ask.

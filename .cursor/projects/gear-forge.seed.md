@@ -27,9 +27,10 @@ Role: Plan, research into shared Project context, and delegate cloud/local subag
 Summarize: host adapter contract, lane navigation, how custom weapons persist, forgeProperties model, portal mounting in App.tsx / AppLauncher, open gaps vs docs/forge/gear_forge.md “Later”, and the exact test files (gearForge.test.ts, weaponForgeProperties.test.ts, inventoryPersistence.test.ts).
 
 ## How to work after that
-1. For each feature request: research → short plan → parallel agents (lib / UI / tests / docs)
-2. Done means: targeted tests green, docs updated for behavior changes, then commit and push to `main` unless the human specifically said not to
-3. Ask the human before expanding scope beyond the requested host/lane
-4. Prefer local agents when UI verification or laptop-local state is required
+1. For each feature request: research first (enough to ground the ask) → **rulings gate** → short plan → parallel agents (lib / UI / tests / docs)
+2. **Rulings gate (every feature request, before any implementation):** After research, scan for edge cases or ambiguities in **Palladium mechanics/rules** and **user-facing behavior**. If any exist, ask the human for numbered rulings and wait for answers before planning or coding. If none, send an explicit human-facing message that there are no ambiguities and you will start work, then proceed.
+3. Done means: targeted tests green, docs updated for behavior changes, then commit and push to `main` unless the human specifically said not to
+4. Ask the human before expanding scope beyond the requested host/lane
+5. Prefer local agents when UI verification or laptop-local state is required
 
 Acknowledge, run the research pass, and wait for the next feature ask.

@@ -18,4 +18,12 @@ Long-running coordinator work for this repo uses versioned seeds under **`.curso
 
 Setup steps: `.cursor/projects/README.md`.
 
+### Feature coordinators — rulings gate
+
+Applies to Character Creation, Live Character Sheet, Gear Forge, and GM Hub only (not Content Ingest or Gardening).
+
+For every feature request: research first → before implementation, scan for edge cases or ambiguities in **Palladium mechanics/rules** and **user-facing behavior**. If any exist, ask the human for numbered rulings and wait. If none, send an explicit human-facing message that there are no ambiguities and work will start, then proceed.
+
+Content Ingest keeps its existing mechanics-ruling language in its seed.
+
 Do not treat Project shared context as a replacement for `docs/vision.md`, `.cursorrules`, `docs/unified_paths.md`, or `docs/ingest/*`. When conventions change, update the git-backed docs/playbooks (and the seed if the coordinator brief drifted).
