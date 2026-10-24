@@ -136,6 +136,64 @@ export function listSlotWeaponOptions(
   return [...byId.values()]
 }
 
+/** Player-facing slot name for Radical Visibility “why unavailable” copy. */
+export function formatCombatWeaponSlotOccupancyLabel(slotIndex: number): string {
+  if (slotIndex === 0) return 'Primary'
+  if (slotIndex === 1) return 'Secondary'
+  return `Slot ${slotIndex + 1}`
+}
+
+/**
+ * Inventory-instance id already picked in another Action slot (same era list).
+ * Keys by carried item {@link Weapon.id} — two catalog copies with distinct ids stay free.
+ */
+export function findOtherSlotOccupyingWeaponId(
+  weaponId: string,
+  slotIndex: number,
+  slotWeaponIds: readonly (string | null | undefined)[],
+): number | null {
+  for (let i = 0; i < slotWeaponIds.length; i++) {
+    if (i === slotIndex) continue
+    if (slotWeaponIds[i] === weaponId) return i
+  }
+  return null
+}
+
+/** One row in an Action-tab weapon slot `<select>` (Unified Path — Ancient / Modern). */
+export type CombatWeaponSlotSelectOption = {
+  weapon: Weapon
+  disabled: boolean
+  /** Short why when greyed — Radical Visibility. */
+  disabledReason: string | null
+}
+
+/**
+ * Shared dropdown option builder: same candidate list as {@link listSlotWeaponOptions},
+ * with instances already in another slot greyed + why (not hidden).
+ */
+export function buildCombatWeaponSlotSelectOptions(
+  items: readonly InventoryItem[],
+  era: WeaponProficiencyEra,
+  slotIndex: number,
+  slotWeaponIds: readonly (string | null | undefined)[],
+): CombatWeaponSlotSelectOption[] {
+  return listSlotWeaponOptions(items, era, slotIndex).map((weapon) => {
+    const otherSlot = findOtherSlotOccupyingWeaponId(
+      weapon.id,
+      slotIndex,
+      slotWeaponIds,
+    )
+    if (otherSlot == null) {
+      return { weapon, disabled: false, disabledReason: null }
+    }
+    return {
+      weapon,
+      disabled: true,
+      disabledReason: `Already in ${formatCombatWeaponSlotOccupancyLabel(otherSlot)}`,
+    }
+  })
+}
+
 /** Keep a picked id only when it is still in the dropdown list; else None. */
 export function resolvePickedWeaponId(
   candidates: readonly Weapon[],

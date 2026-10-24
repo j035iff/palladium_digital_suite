@@ -14,6 +14,7 @@ import { computeWeaponProfileBonuses } from '../../lib/weaponBonuses'
 import {
   addCombatEraSlot,
   applyStrikePenaltyToWeaponProfile,
+  buildCombatWeaponSlotSelectOptions,
   characterHasWpForWeapon,
   COMBAT_ERA_BASE_SLOT_COUNT,
   combatWeaponGlyphId,
@@ -186,6 +187,16 @@ export function CombatWeaponCategoryPanel({
     : 'absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-800 text-slate-900 hover:bg-slate-100'
 
   const setSlotWeapon = (slotIndex: number, weaponId: string | null) => {
+    if (weaponId) {
+      const options = buildCombatWeaponSlotSelectOptions(
+        inventoryItems,
+        era,
+        slotIndex,
+        slots,
+      )
+      const pick = options.find((o) => o.weapon.id === weaponId)
+      if (pick?.disabled) return
+    }
     const next = [...slots]
     while (next.length <= slotIndex) next.push(null)
     next[slotIndex] = weaponId
@@ -225,9 +236,15 @@ export function CombatWeaponCategoryPanel({
 
         <div className="space-y-2 px-3 pb-3 pt-2">
           {slots.map((pickedId, slotIndex) => {
-            const options = listSlotWeaponOptions(inventoryItems, era, slotIndex)
-            const resolvedId = resolvePickedWeaponId(options, pickedId)
-            const selected = weaponById(options, resolvedId)
+            const selectOptions = buildCombatWeaponSlotSelectOptions(
+              inventoryItems,
+              era,
+              slotIndex,
+              slots,
+            )
+            const candidates = selectOptions.map((o) => o.weapon)
+            const resolvedId = resolvePickedWeaponId(candidates, pickedId)
+            const selected = weaponById(candidates, resolvedId)
             const twoGun =
               era === 'modern'
                 ? modernTwoGunStrikePenalty(selectedWeapons, slotIndex)
@@ -249,7 +266,7 @@ export function CombatWeaponCategoryPanel({
                   slotIndex,
                   hostNote,
                 )}
-                options={options}
+                options={selectOptions}
                 selectedId={resolvedId}
                 selected={selected}
                 character={character}

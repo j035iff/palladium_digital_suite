@@ -11,6 +11,9 @@ import {
   isShieldWeapon,
   isWeaponPairable,
   isWeaponTwoHanded,
+  buildCombatWeaponSlotSelectOptions,
+  findOtherSlotOccupyingWeaponId,
+  formatCombatWeaponSlotOccupancyLabel,
   listCarriedWeaponsOfEra,
   listSlotWeaponOptions,
   modernTwoGunStrikePenalty,
@@ -179,6 +182,52 @@ describe('combatWeaponSlots', () => {
     const secondary = listSlotWeaponOptions([sword, shield], 'ancient', 1)
     expect(primary.map((w) => w.id)).toEqual(['s'])
     expect(secondary.map((w) => w.id).sort()).toEqual(['s', 'sh'])
+  })
+
+  it('greys out a carried instance already in another Action slot (Radical Visibility)', () => {
+    const swordA = weapon({ id: 'inst-a', name: 'Long Sword', linkedWpSkillId: 'wp_sword' })
+    const swordB = weapon({ id: 'inst-b', name: 'Long Sword', linkedWpSkillId: 'wp_sword' })
+    const items = [swordA, swordB]
+    const slots = ['inst-a', null] as const
+
+    expect(findOtherSlotOccupyingWeaponId('inst-a', 1, slots)).toBe(0)
+    expect(findOtherSlotOccupyingWeaponId('inst-b', 1, slots)).toBe(null)
+    expect(formatCombatWeaponSlotOccupancyLabel(0)).toBe('Primary')
+
+    const secondary = buildCombatWeaponSlotSelectOptions(items, 'ancient', 1, slots)
+    expect(secondary).toEqual([
+      {
+        weapon: swordA,
+        disabled: true,
+        disabledReason: 'Already in Primary',
+      },
+      {
+        weapon: swordB,
+        disabled: false,
+        disabledReason: null,
+      },
+    ])
+
+    // Own slot keeps the pick selectable; other copy still free
+    const primary = buildCombatWeaponSlotSelectOptions(items, 'ancient', 0, slots)
+    expect(primary.find((o) => o.weapon.id === 'inst-a')).toEqual({
+      weapon: swordA,
+      disabled: false,
+      disabledReason: null,
+    })
+    expect(primary.find((o) => o.weapon.id === 'inst-b')?.disabled).toBe(false)
+
+    // Slot 3 reason uses Slot N copy
+    const withThird = buildCombatWeaponSlotSelectOptions(
+      items,
+      'ancient',
+      1,
+      ['inst-b', null, 'inst-a'],
+    )
+    expect(withThird.find((o) => o.weapon.id === 'inst-a')).toMatchObject({
+      disabled: true,
+      disabledReason: 'Already in Slot 3',
+    })
   })
 
   it('applies modern two-gun strike penalties −2 / −6', () => {

@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react'
 import type { ActiveForm, Character, Weapon } from '../../types'
-import type { CombatWeaponGlyphId } from '../../lib/combatWeaponSlots'
+import type {
+  CombatWeaponGlyphId,
+  CombatWeaponSlotSelectOption,
+} from '../../lib/combatWeaponSlots'
 import {
   characterHasWpForWeapon,
   formatCombatWeaponSlotLabel,
@@ -19,7 +22,7 @@ type Props = {
   glyphId: CombatWeaponGlyphId
   /** Quick-stats (Strike/Parry/Dam or Aimed/Burst/Dam). */
   summary: ReactNode
-  options: readonly Weapon[]
+  options: readonly CombatWeaponSlotSelectOption[]
   selectedId: string | null
   selected: Weapon | null
   character: Character
@@ -192,11 +195,12 @@ export function CombatWeaponSlotRow({
           }}
         >
           <option value="">None</option>
-          {options.map((w) => (
-            <option key={w.id} value={w.id}>
+          {options.map(({ weapon: w, disabled, disabledReason }) => (
+            <option key={w.id} value={w.id} disabled={disabled}>
               {w.name}
               {isShieldWeapon(w) ? ' (shield)' : ''}
               {isWeaponTwoHanded(w) ? ' (2H)' : ''}
+              {disabled && disabledReason ? ` — ${disabledReason}` : ''}
             </option>
           ))}
         </select>
