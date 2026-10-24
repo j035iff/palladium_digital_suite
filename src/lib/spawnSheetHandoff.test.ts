@@ -108,6 +108,45 @@ describe('spawnSheetHandoff', () => {
     expect(finalized.primary.attributes.ps.score).toBe(beforePs + 2)
   })
 
+  it('projects only the selected Hand-to-Hand upgrade, not the O.C.C. default', () => {
+    const occLib = getLibraryOccById('occ_ex_government_agent')
+    expect(occLib).toBeDefined()
+
+    let root = createBlankCharacterForGenre('nightbane')
+    root = {
+      ...root,
+      occ: snapshotOccForCharacter(occLib!),
+    }
+    root = applyOccStartingSkillPicks(
+      patchCharacterCreationFromOcc(root, occLib!),
+      occLib!,
+    )
+    root = {
+      ...root,
+      creationHandToHandTier: 'martial_arts',
+      // Stale ladder default that must not survive spawn when Martial Arts was chosen.
+      creationOccSkillIds: [
+        ...(root.creationOccSkillIds ?? []),
+        'skill_hand_to_hand_basic',
+      ],
+    }
+
+    const finalized = applySpawnSheetHandoff(root)
+    const hthIds = finalized.primary.skills
+      .map((s) => s.catalogSkillId ?? s.id)
+      .filter((id) => String(id).includes('hand_to_hand') || String(id).startsWith('hth_'))
+    expect(hthIds.some((id) => String(id).includes('martial_arts'))).toBe(true)
+    expect(
+      hthIds.some(
+        (id) =>
+          String(id).includes('hand_to_hand_basic') ||
+          String(id).includes('hand_to_hand_expert') ||
+          id === 'hth_basic' ||
+          id === 'hth_expert',
+      ),
+    ).toBe(false)
+  })
+
   it('halves O.C.C. related skill bonus % for Major psychic on spawn', () => {
     const occLib = getLibraryOccById('occ_ex_government_agent')
     const occView = getOccById('occ_ex_government_agent')

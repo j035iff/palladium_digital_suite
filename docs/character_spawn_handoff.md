@@ -41,6 +41,7 @@ For each form branch (`primary`, `morphus`):
   - Prerequisite checks → `restricted` + `restrictionReason` when unmet.
   - Morphus impossibility flags when applicable.
   - Copy `CreationSkillPick.selectionCategory` → `SheetSkill.selectionCategory` when the player browsed a book category at pick time (multi-category skills on the live Skills list).
+  - Project only the selected Hand-to-Hand tier (`creationHandToHandTier`); O.C.C. ladder defaults superseded by a related upgrade are filtered out (`filterSupersededHandToHandSkillIds`) so Expert+Martial Arts phantoms never land on the sheet.
 
 ### 2. Physical skill modifiers
 
@@ -92,6 +93,7 @@ On every open/hydrate, `migrateCharacterSave()` runs **before** gameplay hydrati
 |---------|----------|
 | Persist-field renames | e.g. `facade` → `primary`, legacy forge tab ids |
 | Catalog ID remaps | `CATALOG_ID_REMAPS` (race / occ / morphusTrait / skill / ability) — always applied (idempotent) |
+| HtH ladder supersession | `stripSupersededOccHandToHandSkills` — drop O.C.C. default/ladder styles replaced by `creationHandToHandTier` (idempotent) |
 | Orphan detection | Unresolvable catalog ids after remap → reported (`console.info`); load continues |
 | Version stamp | `schemaVersion` → `CHARACTER_SAVE_SCHEMA_VERSION` |
 

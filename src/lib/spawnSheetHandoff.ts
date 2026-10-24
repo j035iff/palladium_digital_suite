@@ -29,7 +29,11 @@ import {
   resolveOccCoreSkillPicks,
   resolveOccCoreVoucherSkillBonus,
 } from './occCoreSkillVouchers'
-import { sheetSkillIdForCreationHandToHandTier } from './creationHandToHandChoice'
+import {
+  handToHandCatalogIdForCreationTier,
+  sheetSkillIdForCreationHandToHandTier,
+} from './creationHandToHandChoice'
+import { filterSupersededHandToHandSkillIds } from './handToHandPipeline'
 import {
   creationSkillIdsSet,
   flattenCreationSkillIds,
@@ -91,11 +95,20 @@ export function projectCreationSkillsToSheet(
   )
 
   type PickEntry = { pick: CreationSkillPick; tier: 'occ' | 'related' | 'secondary' }
+  const selectedHthCatalog = hthId
+    ? handToHandCatalogIdForCreationTier(character.creationHandToHandTier)
+    : undefined
   const entries: PickEntry[] = [
     ...occCorePicks.map((pick) => ({ pick, tier: 'occ' as const })),
     ...relatedPicks.map((pick) => ({ pick, tier: 'related' as const })),
     ...secondaryPicks.map((pick) => ({ pick, tier: 'secondary' as const })),
-  ]
+  ].filter((entry) =>
+    filterSupersededHandToHandSkillIds(
+      [entry.pick.skillId],
+      selectedHthCatalog,
+      occ,
+    ).length > 0,
+  )
   if (hthId) {
     entries.push({ pick: migrateSkillIdToPick(hthId), tier: 'occ' })
   }
@@ -103,11 +116,19 @@ export function projectCreationSkillsToSheet(
 
   const relatedSet = new Set(flattenCreationSkillIds(relatedPicks))
   const selectedSet = creationSkillIdsSet(
-    resolvedOccIds,
+    filterSupersededHandToHandSkillIds(resolvedOccIds, selectedHthCatalog, occ),
     relatedPicks,
     secondaryPicks,
   )
   if (hthId) selectedSet.add(hthId)
+  // Drop superseded ladder HtH ids that may still appear in related/secondary sets.
+  for (const id of [...selectedSet]) {
+    if (
+      filterSupersededHandToHandSkillIds([id], selectedHthCatalog, occ).length === 0
+    ) {
+      selectedSet.delete(id)
+    }
+  }
   const tier = psychicTier ?? resolveCreationPsychicTier(character)
 
   const rows: SheetSkill[] = []
@@ -232,24 +253,31 @@ export function applySpawnSheetHandoff(
 ): CharacterRootState {
   const occ = getLibraryOccById(prev.occ.id) ?? undefined
   const tier = opts?.psychicTier ?? resolveCreationPsychicTier(prev)
-  const skillIds = [
-    ...new Set([
-      ...resolveCreationOccSkillIds(
-        occ,
-        prev.occSpecializationId,
-        prev.creationOccSkillIds ?? [],
-        prev.creationOccCoreVoucherPicks ?? {},
-      ),
-      ...flattenCreationSkillIds(getCreationRelatedPicks(prev)),
-      ...flattenCreationSkillIds(getCreationSecondaryPicks(prev)),
-      ...(() => {
-        const id = sheetSkillIdForCreationHandToHandTier(
-          prev.creationHandToHandTier,
-        )
-        return id ? [id] : []
-      })(),
-    ]),
-  ]
+  const selectedHthCatalog = handToHandCatalogIdForCreationTier(
+    prev.creationHandToHandTier,
+  )
+  const skillIds = filterSupersededHandToHandSkillIds(
+    [
+      ...new Set([
+        ...resolveCreationOccSkillIds(
+          occ,
+          prev.occSpecializationId,
+          prev.creationOccSkillIds ?? [],
+          prev.creationOccCoreVoucherPicks ?? {},
+        ),
+        ...flattenCreationSkillIds(getCreationRelatedPicks(prev)),
+        ...flattenCreationSkillIds(getCreationSecondaryPicks(prev)),
+        ...(() => {
+          const id = sheetSkillIdForCreationHandToHandTier(
+            prev.creationHandToHandTier,
+          )
+          return id ? [id] : []
+        })(),
+      ]),
+    ],
+    selectedHthCatalog === 'hth_none' ? undefined : selectedHthCatalog,
+    occ,
+  )
 
   const primarySkills = projectCreationSkillsToSheet(prev, occ, 'primary', tier)
   const morphusSkills = projectCreationSkillsToSheet(prev, occ, 'morphus', tier)

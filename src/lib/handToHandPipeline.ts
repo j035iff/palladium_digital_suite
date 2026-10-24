@@ -187,8 +187,71 @@ function sortOwnedHandToHandIds(ids: Iterable<string>): string[] {
 }
 
 /**
- * Hand-to-Hand styles this form actually has — unlocked sheet/HTH skill ids, creation tier,
- * and a granted O.C.C. default. `hth_none` is listed only when no trained style is owned.
+ * O.C.C. Hand-to-Hand upgrade ladder (granted default + upgrade-path targets).
+ * Selecting one ladder style replaces the others — they are not dual-known.
+ */
+export function occHandToHandUpgradeLadderCatalogIds(
+  occ: PalladiumOcc | undefined,
+): string[] {
+  if (!occ?.handToHandRules) return []
+  const catalogIds = new Set(listHandToHandSkillIds())
+  const out: string[] = []
+  const add = (raw: string | null | undefined) => {
+    if (!raw) return
+    const mapped = mapSheetSkillIdToHandToHandCatalogId(raw)
+    if (!catalogIds.has(mapped) || mapped === HTH_NONE_CATALOG_ID) return
+    if (!out.includes(mapped)) out.push(mapped)
+  }
+  add(occ.handToHandRules.defaultSkillId)
+  for (const path of occ.handToHandRules.upgradePaths ?? []) {
+    add(path.targetSkillId)
+  }
+  return out
+}
+
+/**
+ * Catalog ids superseded when the player selected a different O.C.C. ladder style
+ * (e.g. Martial Arts related upgrade replaces Expert default).
+ */
+export function supersededOccHandToHandCatalogIds(
+  selectedCatalogId: string | null | undefined,
+  occ: PalladiumOcc | undefined,
+): string[] {
+  if (!selectedCatalogId || selectedCatalogId === HTH_NONE_CATALOG_ID) return []
+  const ladder = occHandToHandUpgradeLadderCatalogIds(occ)
+  if (!ladder.includes(selectedCatalogId)) return []
+  return ladder.filter((id) => id !== selectedCatalogId)
+}
+
+export function isHandToHandSkillId(skillId: string | null | undefined): boolean {
+  if (!skillId) return false
+  const mapped = mapSheetSkillIdToHandToHandCatalogId(skillId)
+  if (mapped === HTH_NONE_CATALOG_ID) return true
+  return listHandToHandSkillIds().includes(mapped)
+}
+
+/**
+ * Drop O.C.C. ladder styles replaced by the selected creation tier.
+ * Keeps non-ladder HtH ids (true multi-style, e.g. Ninjas & Superspies).
+ */
+export function filterSupersededHandToHandSkillIds(
+  skillIds: Iterable<string>,
+  selectedCatalogId: string | null | undefined,
+  occ: PalladiumOcc | undefined,
+): string[] {
+  const drop = new Set(supersededOccHandToHandCatalogIds(selectedCatalogId, occ))
+  if (drop.size === 0) return [...skillIds]
+  return [...skillIds].filter((id) => {
+    const mapped = mapSheetSkillIdToHandToHandCatalogId(id)
+    return !drop.has(mapped)
+  })
+}
+
+/**
+ * Hand-to-Hand styles this form actually has — unlocked sheet / creation skill ids
+ * (and creation tier via {@link collectUnlockedSkillIds}). Does **not** phantom-add the
+ * O.C.C. granted default on top of a selected upgrade. Ladder supersession drops replaced
+ * defaults when `creationHandToHandTier` is an upgrade. `hth_none` only when untrained.
  * Same list feeds Combat Home Unarmed expand (Skills overlay has no HtH UI).
  */
 export function listOwnedHandToHandStyles(
@@ -215,16 +278,28 @@ export function listOwnedHandToHandStyles(
     add(id)
   }
 
-  const tier = combatHandToHandTier(character, occ, activeForm)
-  if (tier && tier !== 'none') {
-    add(handToHandCatalogIdForCreationTier(tier))
+  // Explicit player pick on the O.C.C. ladder replaces lower ladder styles (not dual-known).
+  const storedTier = character.creationHandToHandTier
+  if (storedTier && storedTier !== 'none') {
+    const selected = handToHandCatalogIdForCreationTier(storedTier)
+    for (const id of supersededOccHandToHandCatalogIds(selected, occ)) {
+      owned.delete(id)
+    }
+    add(selected)
   }
 
-  if (occ?.handToHandRules?.defaultSkillId != null && occGrantsDefaultHandToHand(occ)) {
+  let trained = [...owned].filter((id) => id !== HTH_NONE_CATALOG_ID)
+
+  // Fallback: O.C.C. granted default only when nothing trained is known yet.
+  if (
+    trained.length === 0 &&
+    occ?.handToHandRules?.defaultSkillId != null &&
+    occGrantsDefaultHandToHand(occ)
+  ) {
     add(occ.handToHandRules.defaultSkillId)
+    trained = [...owned].filter((id) => id !== HTH_NONE_CATALOG_ID)
   }
 
-  const trained = [...owned].filter((id) => id !== HTH_NONE_CATALOG_ID)
   const ids = sortOwnedHandToHandIds(trained.length > 0 ? trained : [HTH_NONE_CATALOG_ID])
   return ids.map((catalogId) => {
     const row = getHandToHandSkillById(catalogId)

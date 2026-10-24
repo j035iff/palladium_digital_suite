@@ -48,7 +48,7 @@ describe('listOwnedHandToHandStyles', () => {
     expect(styles.map((s) => s.catalogId)).toEqual(['hth_basic'])
   })
 
-  it('lists every unlocked style (rare multi-HtH) plus a granted O.C.C. default', () => {
+  it('lists every unlocked style for true multi-HtH without phantom O.C.C. default', () => {
     const styles = listOwnedHandToHandStyles(
       {
         ...characterFixture,
@@ -62,11 +62,51 @@ describe('listOwnedHandToHandStyles', () => {
       'primary',
       grantedBasicOcc,
     )
+    // Granted Basic is superseded as a phantom — only styles actually unlocked.
     expect(styles.map((s) => s.catalogId)).toEqual([
-      'hth_basic',
       'hth_expert',
       'hth_martial_arts',
     ])
+  })
+
+  it('drops O.C.C. default Expert when Martial Arts was the selected upgrade', () => {
+    const styles = listOwnedHandToHandStyles(
+      {
+        ...characterFixture,
+        creationHandToHandTier: 'martial_arts',
+        creationOccSkillIds: [
+          ...(characterFixture.creationOccSkillIds ?? []),
+          'skill_hand_to_hand_expert',
+        ],
+      },
+      'primary',
+      {
+        handToHandRules: {
+          defaultSkillId: 'hth_expert',
+          upgradePaths: [
+            { targetSkillId: 'hth_martial_arts', electiveSlotCost: 3 },
+          ],
+        },
+      } as unknown as PalladiumOcc,
+    )
+    expect(styles.map((s) => s.catalogId)).toEqual(['hth_martial_arts'])
+  })
+
+  it('keeps a single known style without Select/Active dual list', () => {
+    const styles = listOwnedHandToHandStyles(
+      { ...characterFixture, creationHandToHandTier: 'martial_arts' },
+      'primary',
+      {
+        handToHandRules: {
+          defaultSkillId: 'hth_expert',
+          upgradePaths: [
+            { targetSkillId: 'hth_martial_arts', electiveSlotCost: 3 },
+          ],
+        },
+      } as unknown as PalladiumOcc,
+    )
+    expect(styles).toHaveLength(1)
+    expect(styles[0]?.catalogId).toBe('hth_martial_arts')
   })
 })
 

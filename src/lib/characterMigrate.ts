@@ -22,7 +22,15 @@ import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
 } from './creationSkillPicks'
-import { sheetSkillIdForCreationHandToHandTier } from './creationHandToHandChoice'
+import {
+  handToHandCatalogIdForCreationTier,
+  sheetSkillIdForCreationHandToHandTier,
+} from './creationHandToHandChoice'
+import {
+  filterSupersededHandToHandSkillIds,
+  mapSheetSkillIdToHandToHandCatalogId,
+  supersededOccHandToHandCatalogIds,
+} from './handToHandPipeline'
 import type {
   Character,
   CharacterRootState,
@@ -458,6 +466,63 @@ export function backfillSheetSkillSelectionCategories(
   return { ...input, primary, morphus }
 }
 
+function stripSupersededHandToHandFromForm(
+  branch: FormState,
+  dropCatalogIds: ReadonlySet<string>,
+): FormState {
+  if (dropCatalogIds.size === 0) return branch
+  const skills = branch.skills.filter((skill) => {
+    const catalog =
+      skill.catalogSkillId?.trim() ||
+      mapSheetSkillIdToHandToHandCatalogId(skill.id)
+    const mapped = mapSheetSkillIdToHandToHandCatalogId(catalog)
+    return !dropCatalogIds.has(mapped)
+  })
+  return skills.length === branch.skills.length ? branch : { ...branch, skills }
+}
+
+/**
+ * Remove O.C.C. ladder Hand-to-Hand styles superseded by `creationHandToHandTier`
+ * (e.g. Expert default left on the sheet after Martial Arts related upgrade).
+ * Idempotent; keeps non-ladder multi-HtH styles.
+ */
+export function stripSupersededOccHandToHandSkills(
+  input: CharacterRootState,
+): CharacterRootState {
+  const tier = input.creationHandToHandTier
+  if (!tier || tier === 'none') return input
+  const occ = getLibraryOccById(input.occ.id) ?? undefined
+  const selected = handToHandCatalogIdForCreationTier(tier)
+  const drop = new Set(supersededOccHandToHandCatalogIds(selected, occ))
+  if (drop.size === 0) return input
+
+  const primary = stripSupersededHandToHandFromForm(input.primary, drop)
+  const morphus = stripSupersededHandToHandFromForm(input.morphus, drop)
+  const creationOccSkillIds = filterSupersededHandToHandSkillIds(
+    input.creationOccSkillIds ?? [],
+    selected,
+    occ,
+  )
+  const occIdsChanged =
+    creationOccSkillIds.length !== (input.creationOccSkillIds ?? []).length ||
+    creationOccSkillIds.some((id, i) => id !== (input.creationOccSkillIds ?? [])[i])
+
+  if (
+    primary === input.primary &&
+    morphus === input.morphus &&
+    !occIdsChanged
+  ) {
+    return input
+  }
+
+  return {
+    ...input,
+    primary,
+    morphus,
+    ...(occIdsChanged ? { creationOccSkillIds } : {}),
+  }
+}
+
 /**
  * Apply all pending save migrations up to {@link CHARACTER_SAVE_SCHEMA_VERSION}.
  *
@@ -497,6 +562,7 @@ export function migrateCharacterSave(
 
   next = backfillSheetSkillCatalogIds(next)
   next = backfillSheetSkillSelectionCategories(next)
+  next = stripSupersededOccHandToHandSkills(next)
 
   next = {
     ...next,

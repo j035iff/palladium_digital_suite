@@ -128,4 +128,38 @@ describe('migrateCharacterSave', () => {
     expect(character.tableProjectedAliasId).toBeNull()
     expect(report.fieldRenames).toContain('aliases+tableProjectedAliasId')
   })
+
+  it('strips superseded O.C.C. Hand-to-Hand default when Martial Arts was selected', () => {
+    const base = ensureCharacterRoot(characterFixture, {
+      creationGenreId: 'nightbane',
+      hostGenreId: 'nightbane',
+    })
+    const { character } = migrateCharacterSave({
+      ...base,
+      creationHandToHandTier: 'martial_arts',
+      primary: {
+        ...base.primary,
+        skills: [
+          ...base.primary.skills,
+          {
+            id: 'skill_hand_to_hand_basic',
+            catalogSkillId: 'skill_hand_to_hand_basic',
+            name: 'Hand-to-Hand: Basic',
+            restricted: false,
+            basePercent: 0,
+          },
+          {
+            id: 'skill_hand_to_hand_martial_arts',
+            catalogSkillId: 'skill_hand_to_hand_martial_arts',
+            name: 'Hand-to-Hand: Martial Arts',
+            restricted: false,
+            basePercent: 0,
+          },
+        ],
+      },
+    })
+    const ids = character.primary.skills.map((s) => s.catalogSkillId ?? s.id)
+    expect(ids.some((id) => id.includes('martial_arts'))).toBe(true)
+    expect(ids.some((id) => id.includes('hand_to_hand_basic'))).toBe(false)
+  })
 })
