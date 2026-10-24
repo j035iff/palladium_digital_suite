@@ -22,7 +22,11 @@ export function collectUnlockedSkillIds(
   const ids = new Set<string>()
   const branch = getFormState(character, activeForm)
   for (const s of branch.skills) {
-    if (!s.restricted) ids.add(s.id)
+    if (s.restricted) continue
+    // Instance id + catalog id (Pillar 9 — creation UUIDs must still match W.P. links)
+    ids.add(s.id)
+    const catalogId = s.catalogSkillId?.trim()
+    if (catalogId) ids.add(catalogId)
   }
   for (const id of character.creationOccSkillIds ?? []) {
     ids.add(id)

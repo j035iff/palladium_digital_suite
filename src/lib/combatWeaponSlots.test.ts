@@ -22,8 +22,17 @@ import {
   resolvePairedWeaponsSlotStatus,
   resolvePickedWeaponId,
   resolveWeaponCombatEra,
+  resolveWeaponCombatWpSkillId,
   shouldShowPairableBadge,
 } from './combatWeaponSlots'
+import { resolveWeaponProficiencySkillId } from '../data/skillLibrary'
+import {
+  ancientCatalogToInventoryPiece,
+  getAncientWeaponById,
+  listAncientWeaponsForGameSystem,
+} from '../data/library/weaponsAncientCatalogLoader'
+import { createInventoryWeaponFromPiece } from './gear/inventoryWeaponCommit'
+import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
 import type { Character, Weapon } from '../types'
 import type { WeaponProfileBonuses } from './weaponBonuses'
 
@@ -39,13 +48,26 @@ function weapon(partial: Partial<Weapon> & Pick<Weapon, 'id' | 'name'>): Weapon 
   }
 }
 
-function bareCharacter(skillIds: string[]): Character {
-  const skills = skillIds.map((id) => ({
-    id,
-    name: id,
-    level: 1,
-    restricted: false,
-  }))
+function bareCharacter(
+  skillIds: string[],
+  opts?: { instanceCatalog?: { id: string; catalogSkillId: string }[] },
+): Character {
+  const skills = [
+    ...skillIds.map((id) => ({
+      id,
+      catalogSkillId: id,
+      name: id,
+      level: 1,
+      restricted: false,
+    })),
+    ...(opts?.instanceCatalog ?? []).map((row) => ({
+      id: row.id,
+      catalogSkillId: row.catalogSkillId,
+      name: row.catalogSkillId,
+      level: 1,
+      restricted: false,
+    })),
+  ]
   return {
     primary: { skills },
     morphus: { skills: [] },
@@ -234,5 +256,69 @@ describe('combatWeaponSlots', () => {
     expect(formatCombatWeaponSlotLabel(0)).toBe('PRIMARY')
     expect(formatCombatWeaponSlotLabel(1)).toBe('SECONDARY')
     expect(formatCombatWeaponSlotLabel(2)).toBe('SLOT 3')
+  })
+
+  it('detects Archery and Targeting for Short Bow (No W.P. indicator)', () => {
+    expect(
+      resolveWeaponProficiencySkillId('W.P. Archery and Targeting', null),
+    ).toBe('wp_archery_and_targeting')
+    expect(
+      resolveWeaponProficiencySkillId('Archery and Targeting', null),
+    ).toBe('wp_archery_and_targeting')
+
+    const entry = getAncientWeaponById('weapon_ancient_short_bow')
+    expect(entry?.linkedWpSkillId).toBe('wp_archery_and_targeting')
+    const piece = ancientCatalogToInventoryPiece(entry!, 'nightbane')
+    expect(piece?.linkedWpSkillId).toBe('wp_archery_and_targeting')
+    const inv = createInventoryWeaponFromPiece(piece!) as Weapon
+    expect(resolveWeaponCombatWpSkillId(inv)).toBe('wp_archery_and_targeting')
+
+    const withWp = bareCharacter(['wp_archery_and_targeting'])
+    expect(characterHasWpForWeapon(withWp, 'primary', inv)).toBe(true)
+    expect(characterHasWpForWeapon(bareCharacter([]), 'primary', inv)).toBe(
+      false,
+    )
+
+    // Creation instance id ≠ catalog id still counts as owned (Unified Path)
+    const viaCatalogId = bareCharacter([], {
+      instanceCatalog: [
+        {
+          id: 'pick-archery-uuid',
+          catalogSkillId: 'wp_archery_and_targeting',
+        },
+      ],
+    })
+    expect(characterHasWpForWeapon(viaCatalogId, 'primary', inv)).toBe(true)
+  })
+
+  it('resolves linkedWpSkillId for every inventory-eligible ancient weapon', () => {
+    const gaps: string[] = []
+    /** Miscellaneous catalog rows intentionally strip W.P. (Nightbane table note). */
+    const intentionalNoWp: string[] = []
+    for (const entry of listAncientWeaponsForGameSystem('nightbane')) {
+      if ((entry.entryRole ?? 'weapon') !== 'weapon') continue
+      const piece = ancientCatalogToInventoryPiece(entry, 'nightbane')
+      if (!piece) continue
+      if (piece.weaponProficiencyEligible === false) {
+        if (entry.linkedWpSkillId) {
+          intentionalNoWp.push(`${entry.id} (${entry.name})`)
+        }
+        continue
+      }
+      const inv = createInventoryWeaponFromPiece(piece) as Weapon
+      const wpId = resolveWeaponCombatWpSkillId(inv)
+      if (!wpId) {
+        gaps.push(`${entry.id} (${entry.name}): no combat W.P. id`)
+        continue
+      }
+      if (!getWeaponProficiencyCatalogEntryById(wpId)) {
+        gaps.push(
+          `${entry.id} (${entry.name}): linked ${wpId} missing from W.P. catalog`,
+        )
+      }
+    }
+    expect(gaps).toEqual([])
+    // Document intentional misc strip (not a resolver bug)
+    expect(intentionalNoWp.length).toBeGreaterThan(0)
   })
 })

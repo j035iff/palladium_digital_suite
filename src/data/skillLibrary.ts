@@ -1,5 +1,9 @@
 import type { SkillEquationSkill } from '../lib/skillEquation'
 import { getEngineSkillDefFromCatalog } from '../lib/creationSkillCatalog'
+import {
+  getWeaponProficiencyCatalogEntryById,
+  WEAPON_PROFICIENCY_CATALOG,
+} from './library/weaponProficienciesCatalogLoader'
 
 export type SkillCategory =
   | 'Technical'
@@ -267,18 +271,40 @@ function normalizeWpCategoryKey(raw: string): string {
   return raw.toLowerCase().replace(/[^a-z0-9]+/g, '')
 }
 
+function isResolvableWeaponProficiencyId(skillId: string): boolean {
+  if (getWeaponProficiencyCatalogEntryById(skillId)) return true
+  const def = getSkillById(skillId)
+  return def?.category === 'Weapon' || skillId.startsWith('wp_')
+}
+
+/**
+ * Name / id aliases for W.P. resolution — full proficiency catalog + legacy
+ * `SKILL_LIBRARY` Weapon stubs (Unified Path; do not index stubs alone).
+ */
 const WP_LOOKUP_ALIASES: Record<string, string> = (() => {
   const aliases: Record<string, string> = {}
+  const register = (id: string, name: string) => {
+    aliases[normalizeWpCategoryKey(id)] = id
+    aliases[normalizeWpCategoryKey(name)] = id
+    // Soften "W.P. Archery and Targeting" ↔ "Archery and Targeting"
+    const withoutWp = name.replace(/^w\.?\s*p\.?\s*/i, '').trim()
+    if (withoutWp) aliases[normalizeWpCategoryKey(withoutWp)] = id
+  }
+  for (const wp of WEAPON_PROFICIENCY_CATALOG) {
+    register(wp.id, wp.name)
+  }
   for (const def of SKILL_LIBRARY) {
     if (def.category !== 'Weapon') continue
-    aliases[normalizeWpCategoryKey(def.id)] = def.id
-    aliases[normalizeWpCategoryKey(def.name)] = def.id
+    // Prefer catalog ids when a legacy stub shares a display name.
+    const key = normalizeWpCategoryKey(def.name)
+    if (!aliases[key]) register(def.id, def.name)
   }
   return aliases
 })()
 
 /**
- * Map `wpCategory` (e.g. "W.P. Sword") plus optional `linkedWpSkillId` to a Weapon skill row id.
+ * Map `wpCategory` (e.g. "W.P. Sword" / "Archery and Targeting") plus optional
+ * `linkedWpSkillId` to a Weapon proficiency skill row id.
  * Full W.P. ladder / strike rules belong in JSON validated by
  * `src/data/schemas/palladium-weapon-proficiency.schema.json` (`PALLADIUM_WEAPON_PROFICIENCY_SCHEMA_ID`).
  * Shared modern ladders use `src/data/schemas/standard-modern-weapon-progression.schema.json`
@@ -290,12 +316,11 @@ export function resolveWeaponProficiencySkillId(
 ): string | undefined {
   if (linkedWpSkillId?.trim()) {
     const sid = linkedWpSkillId.trim()
-    if (getSkillById(sid)?.category === 'Weapon') return sid
+    if (isResolvableWeaponProficiencyId(sid)) return sid
   }
   if (!wpCategory?.trim()) return undefined
   const raw = wpCategory.trim()
-  const direct = getSkillById(raw)
-  if (direct?.category === 'Weapon') return raw
+  if (isResolvableWeaponProficiencyId(raw)) return raw
   const key = normalizeWpCategoryKey(raw)
   return WP_LOOKUP_ALIASES[key]
 }

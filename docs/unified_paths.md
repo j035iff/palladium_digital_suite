@@ -252,7 +252,7 @@ Copy this block when registering a new unified path:
 
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
-| Era / glyph / slots | `src/lib/combatWeaponSlots.ts` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `isWeaponPairable`, `shouldShowPairableBadge`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId` | One classifier + multi-slot dropdown rules for Ancient / Modern; pairable badge requires Paired Weapons skill |
+| Era / glyph / slots | `src/lib/combatWeaponSlots.ts` + `resolveWeaponProficiencySkillId` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `isWeaponPairable`, `shouldShowPairableBadge`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId`, `characterHasWpForWeapon` | One classifier + multi-slot dropdown rules; W.P. ownership via shared resolver + `collectUnlockedSkillIds` (catalog ids); pairable badge requires Paired Weapons skill |
 | Weapon math | `src/lib/weaponBonuses.ts` + `applyStrikePenaltyToWeaponProfile` | `computeWeaponProfileBonuses` | Same profile as strike cards; two-gun penalties merge as strike lines |
 | Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; title **Hand to Hand** + style badge |
 | UI — Unarmed | `CombatCategoryBubble` + `CombatExpandOverlay` | Summary + centered title + style aside + Expand → overlay | HtH only |
