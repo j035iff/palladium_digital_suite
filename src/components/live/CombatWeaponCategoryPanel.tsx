@@ -47,7 +47,7 @@ type Props = {
 }
 
 /**
- * Ancient / Modern S/P/D category: quick-stats + multi weapon slots (dropdown, + on primary,
+ * Ancient / Modern Action-tab category: quick-stats + multi weapon slots (dropdown, + on primary,
  * Expand per slot). Unified Path — one panel for both eras.
  */
 export function CombatWeaponCategoryPanel({

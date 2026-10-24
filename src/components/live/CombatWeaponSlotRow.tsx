@@ -28,7 +28,7 @@ type Props = {
 }
 
 /**
- * One S/P/D weapon slot: dropdown + indicators + Expand (per slot).
+ * One Action-tab weapon slot: dropdown + indicators + Expand (per slot).
  * `+` lives on primary only; extras have remove.
  */
 export function CombatWeaponSlotRow({

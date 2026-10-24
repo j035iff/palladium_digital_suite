@@ -49,7 +49,7 @@ function resolveWpId(weapon: Weapon): string | undefined {
   return resolveWeaponProficiencySkillId(weapon.wpCategory, weapon.linkedWpSkillId)
 }
 
-/** Catalog / forge `twoHanded` — indication only on S/P/D (do not lock extra slots). */
+/** Catalog / forge `twoHanded` — indication only on Action tab (do not lock extra slots). */
 export function isWeaponTwoHanded(weapon: Weapon): boolean {
   return weapon.twoHanded === true
 }

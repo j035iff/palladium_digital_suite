@@ -16,6 +16,7 @@ import { CombatAbilitiesTab } from './CombatAbilitiesTab'
 import {
   COMBAT_SUB_TAB_LABELS,
   COMBAT_SUB_TAB_ORDER,
+  DEFAULT_COMBAT_SUB_TAB,
   type CombatSubTabId,
 } from '../../lib/liveCombatTabs'
 import type { CombatDamagePoolId } from '../../lib/combatDamagePools'
@@ -169,7 +170,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
 
   const morphus = supportsDualForm && activeForm === 'morphus'
   const showIsp = psychicTier !== 'none' || form.isp.maximum > 0
-  const [subTab, setSubTab] = useState<CombatSubTabId>('vitals')
+  const [subTab, setSubTab] = useState<CombatSubTabId>(DEFAULT_COMBAT_SUB_TAB)
   const [absorbOrder, setAbsorbOrder] = useState<CombatDamagePoolId[]>([
     'armor',
     'sdc',
@@ -448,7 +449,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           }`}
           aria-label={`${COMBAT_SUB_TAB_LABELS[subTab]} tab`}
         >
-        {strikeBanner && subTab === 'spd' ? (
+        {strikeBanner && subTab === 'action' ? (
           <div
             className={`pds-hud-strike-banner mb-3 rounded-xl border-4 px-3 py-4 text-center ${
               morphus
@@ -493,8 +494,8 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           />
         ) : null}
 
-        {subTab === 'spd' ? (
-          <div className="mb-3 space-y-3" aria-label="Combat S/P/D">
+        {subTab === 'action' ? (
+          <div className="mb-3 space-y-3" aria-label="Combat Action">
             <CombatCategoryBubble
               morphus={morphus}
               categoryLabel={formatHandToHandCategoryTitle(

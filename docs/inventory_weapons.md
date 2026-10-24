@@ -33,4 +33,4 @@ Quality Modifiers: Presets write concrete strike/damage fields plus `qualityLabe
 Ability Triggers: Unique items can house sub-abilities with P.P.E./I.S.P. costs — stored and shown; spend flow later.
 See [forge/gear_forge.md](./forge/gear_forge.md).
 4. Visual HUD States
-The Combat HUD S/P/D tab shows **Hand to Hand / Ancient Weapons / Modern Weapons** rows with a W.P. glyph and quick-stats. Each weapon era has a **primary dropdown** (default **None**) plus optional extra slots (`+` on primary); **Expand is per slot**. Secondary+ lists include **shields** (`isShield` / name heuristic). Stowed-but-carried weapons appear in those dropdowns (Destiny one-tap icon strip — still later).
+The Combat HUD Action tab shows **Hand to Hand / Ancient Weapons / Modern Weapons** rows with a W.P. glyph and quick-stats. Each weapon era has a **primary dropdown** (default **None**) plus optional extra slots (`+` on primary); **Expand is per slot**. Secondary+ lists include **shields** (`isShield` / name heuristic). Stowed-but-carried weapons appear in those dropdowns (Destiny one-tap icon strip — still later).
