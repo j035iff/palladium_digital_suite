@@ -252,16 +252,16 @@ Copy this block when registering a new unified path:
 
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
-| Era / glyph / slots | `src/lib/combatWeaponSlots.ts` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `isWeaponPairable`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId` | One classifier + multi-slot dropdown rules for Ancient / Modern |
+| Era / glyph / slots | `src/lib/combatWeaponSlots.ts` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `isWeaponPairable`, `shouldShowPairableBadge`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId` | One classifier + multi-slot dropdown rules for Ancient / Modern; pairable badge requires Paired Weapons skill |
 | Weapon math | `src/lib/weaponBonuses.ts` + `applyStrikePenaltyToWeaponProfile` | `computeWeaponProfileBonuses` | Same profile as strike cards; two-gun penalties merge as strike lines |
 | Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; title **Hand to Hand** + style badge |
-| UI — Unarmed | `CombatCategoryBubble` | Summary + style aside + Expand | HtH only |
-| UI — weapons | `CombatWeaponCategoryPanel` + `CombatWeaponSlotRow` | Per-slot dropdown / `+` / remove / Expand | Primary always; shields in secondary+ only |
+| UI — Unarmed | `CombatCategoryBubble` + `CombatExpandOverlay` | Summary + centered title + style aside + Expand → overlay | HtH only |
+| UI — weapons | `CombatWeaponCategoryPanel` + `CombatWeaponSlotRow` + `CombatExpandOverlay` | Category `+`; Primary+Secondary always; 3rd+ removable; Expand → overlay | Shields in secondary+ only |
 | Bonus-breakdown tooltip | `ClampedOverlayTooltip` + `clampOverlayTooltipPosition` | Portaled fixed tip on HtH tiles / weapon chips / Initiative | Same clamp path as Bonuses/Skills; escapes expand `overflow: hidden` |
 
-**Modes / variants:** Facade/Morphus via existing live stack. Ancient / Modern always show primary dropdown (default **None**); a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand only (`HandToHandStylePicker` — not on Skills); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand.
+**Modes / variants:** Facade/Morphus via existing live stack. Ancient / Modern always show Primary + Secondary (default **None**); category `+` adds 3rd+; a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand overlay only (`HandToHandStylePicker` — not on Skills); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand.
 
-**Extension guide:** Add slot rules / penalties in `combatWeaponSlots.ts`; render through `CombatWeaponCategoryPanel` — do not fork Ancient vs Modern shells or a second strike-card path.
+**Extension guide:** Add slot rules / penalties in `combatWeaponSlots.ts`; render through `CombatWeaponCategoryPanel` / `CombatExpandOverlay` — do not fork Ancient vs Modern shells, a second strike-card path, or a parallel expand host.
 
 ---
 

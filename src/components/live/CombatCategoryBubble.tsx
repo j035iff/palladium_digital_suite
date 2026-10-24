@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { CombatWeaponGlyphId } from '../../lib/combatWeaponSlots'
 import { CombatWeaponGlyph } from './CombatWeaponGlyph'
+import { CombatExpandOverlay } from './CombatExpandOverlay'
 
 type Props = {
   morphus: boolean
@@ -17,8 +18,8 @@ type Props = {
 }
 
 /**
- * Combat Home category row — collapsed basics + Expand for full profile (ui_wireframe.md §3).
- * Used for Unarmed / HtH; Ancient / Modern use {@link CombatWeaponCategoryPanel}.
+ * Combat Home Hand-to-Hand row — stats left · title center · style + Expand right.
+ * Expand opens a Close-able overlay (same content as the former inline expand).
  */
 export function CombatCategoryBubble({
   morphus,
@@ -45,56 +46,63 @@ export function CombatCategoryBubble({
     : 'rounded-full border-2 border-slate-900 bg-blue-600 px-3 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
 
   return (
-    <article className={`overflow-hidden rounded-[1.75rem] border-2 ${shell}`}>
-      <div className="grid grid-cols-1 items-center gap-3 px-4 py-3 sm:grid-cols-[minmax(0,1.15fr)_minmax(7rem,auto)_auto]">
-        <div className={`flex min-w-0 items-start gap-3 ${empty ? 'opacity-55' : ''}`}>
-          <span className={morphus ? 'text-violet-200' : 'text-blue-800'}>
-            <CombatWeaponGlyph id={glyphId} />
-          </span>
-          <div className="min-w-0 text-[11px] font-semibold leading-snug">
-            {empty ? (
-              <p>{emptyReason ?? 'Nothing equipped in this slot.'}</p>
-            ) : (
-              summary
-            )}
+    <>
+      <article className={`overflow-hidden rounded-[1.75rem] border-2 ${shell}`}>
+        <div className="grid grid-cols-1 items-center gap-3 px-4 py-3 sm:grid-cols-[minmax(0,1.15fr)_minmax(7rem,auto)_auto]">
+          <div className={`flex min-w-0 items-start gap-3 ${empty ? 'opacity-55' : ''}`}>
+            <span className={morphus ? 'text-violet-200' : 'text-blue-800'}>
+              <CombatWeaponGlyph id={glyphId} />
+            </span>
+            <div className="min-w-0 text-[11px] font-semibold leading-snug">
+              {empty ? (
+                <p>{emptyReason ?? 'Nothing equipped in this slot.'}</p>
+              ) : (
+                summary
+              )}
+            </div>
+          </div>
+          <p
+            className={`text-center text-base font-semibold leading-tight tracking-tight sm:text-lg ${
+              morphus ? 'text-violet-100' : 'text-slate-900'
+            } ${empty ? 'opacity-50' : ''}`}
+          >
+            {categoryLabel}
+          </p>
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            {titleAside ? (
+              <span
+                className={`text-sm font-black uppercase tracking-wide ${
+                  morphus ? 'text-violet-100' : 'text-slate-900'
+                }`}
+              >
+                {titleAside}
+              </span>
+            ) : null}
+            <button
+              type="button"
+              className={expandBtn}
+              aria-expanded={expanded}
+              onClick={onToggle}
+            >
+              Expand
+            </button>
           </div>
         </div>
-        <p
-          className={`text-center text-base font-semibold leading-tight tracking-tight sm:text-lg ${
-            morphus ? 'text-violet-100' : 'text-slate-900'
-          } ${empty ? 'opacity-50' : ''}`}
-        >
-          {categoryLabel}
-        </p>
-        <div className="flex flex-wrap items-center justify-end gap-2">
-          {titleAside ? (
-            <span
-              className={`text-sm font-black uppercase tracking-wide ${
-                morphus ? 'text-violet-100' : 'text-slate-900'
-              }`}
-            >
-              {titleAside}
-            </span>
-          ) : null}
-          <button
-            type="button"
-            className={expandBtn}
-            aria-expanded={expanded}
-            onClick={onToggle}
-          >
-            {expanded ? 'Collapse' : 'Expand'}
-          </button>
-        </div>
-      </div>
+      </article>
       {expanded ? (
-        <div
-          className={`border-t px-4 py-3 ${
-            morphus ? 'border-violet-700/80 bg-black/35' : 'border-slate-200 bg-slate-50/90'
-          }`}
+        <CombatExpandOverlay
+          morphus={morphus}
+          eyebrow="Action · Hand to Hand"
+          title={
+            titleAside
+              ? `${categoryLabel}: ${String(titleAside)}`
+              : categoryLabel
+          }
+          onClose={onToggle}
         >
           {children}
-        </div>
+        </CombatExpandOverlay>
       ) : null}
-    </article>
+    </>
   )
 }

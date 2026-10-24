@@ -63,6 +63,21 @@ export function isWeaponPairable(weapon: Weapon): boolean {
 }
 
 /**
+ * Action-tab **pairable** badge (Joe 2026-10-23): only when the character has
+ * Paired Weapons **and** the weapon is non-two-handed. No skill → never show.
+ */
+export function shouldShowPairableBadge(
+  character: Character,
+  activeForm: ActiveForm,
+  weapon: Weapon,
+): boolean {
+  return (
+    isWeaponPairable(weapon) &&
+    characterHasPairedWeaponsSkill(character, activeForm)
+  )
+}
+
+/**
  * Shield detection for secondary+ dropdowns.
  * Prefer explicit `isShield`; fall back to name / category / W.P. text
  * (no dedicated shield SKUs in `weapons/ancient.json` yet — catalog gap).
@@ -343,21 +358,34 @@ export function formatHandToHandHeader(skillName: string | null): string {
   return `${formatHandToHandCategoryTitle(skillName)}: ${formatHandToHandStyleBadge(skillName)}`
 }
 
-/** Ensure at least one primary slot; extras stay until removed. */
+/** Primary + Secondary are always present; `+` adds 3rd+ removable slots. */
+export const COMBAT_ERA_BASE_SLOT_COUNT = 2
+
+/** Ensure Primary + Secondary; extras (3rd+) stay until removed. */
 export function normalizeCombatEraSlots(slots: readonly (string | null)[]): (string | null)[] {
-  if (slots.length === 0) return [null]
-  return [...slots]
+  const next = slots.length === 0 ? [] : [...slots]
+  while (next.length < COMBAT_ERA_BASE_SLOT_COUNT) next.push(null)
+  return next
 }
 
 export function addCombatEraSlot(slots: readonly (string | null)[]): (string | null)[] {
   return [...normalizeCombatEraSlots(slots), null]
 }
 
+/**
+ * Remove a 3rd+ slot only. Primary (0) and Secondary (1) are never removable.
+ */
 export function removeCombatEraSlot(
   slots: readonly (string | null)[],
   slotIndex: number,
 ): (string | null)[] {
-  if (slotIndex <= 0) return normalizeCombatEraSlots(slots)
-  if (slots.length <= 1) return [null]
-  return slots.filter((_, i) => i !== slotIndex)
+  if (slotIndex < COMBAT_ERA_BASE_SLOT_COUNT) return normalizeCombatEraSlots(slots)
+  return normalizeCombatEraSlots(slots.filter((_, i) => i !== slotIndex))
+}
+
+/** Mockup slot label: PRIMARY / SECONDARY / SLOT 3… */
+export function formatCombatWeaponSlotLabel(slotIndex: number): string {
+  if (slotIndex === 0) return 'PRIMARY'
+  if (slotIndex === 1) return 'SECONDARY'
+  return `SLOT ${slotIndex + 1}`
 }

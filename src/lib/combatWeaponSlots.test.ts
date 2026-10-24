@@ -16,11 +16,13 @@ import {
   modernTwoGunStrikePenalty,
   MODERN_TWO_GUN_OFFHAND_STRIKE_PENALTY,
   MODERN_TWO_GUN_PRIMARY_STRIKE_PENALTY,
+  formatCombatWeaponSlotLabel,
   normalizeCombatEraSlots,
   removeCombatEraSlot,
   resolvePairedWeaponsSlotStatus,
   resolvePickedWeaponId,
   resolveWeaponCombatEra,
+  shouldShowPairableBadge,
 } from './combatWeaponSlots'
 import type { Character, Weapon } from '../types'
 import type { WeaponProfileBonuses } from './weaponBonuses'
@@ -122,6 +124,16 @@ describe('combatWeaponSlots', () => {
     expect(isWeaponPairable(staff)).toBe(false)
   })
 
+  it('shows pairable badge only with Paired Weapons skill + non-2H weapon', () => {
+    const sword = weapon({ id: 's', name: 'Sword', twoHanded: false })
+    const staff = weapon({ id: 't', name: 'Staff', twoHanded: true })
+    const noSkill = bareCharacter(['wp_sword'])
+    const withSkill = bareCharacter(['wp_paired_weapons', 'wp_sword'])
+    expect(shouldShowPairableBadge(noSkill, 'primary', sword)).toBe(false)
+    expect(shouldShowPairableBadge(withSkill, 'primary', sword)).toBe(true)
+    expect(shouldShowPairableBadge(withSkill, 'primary', staff)).toBe(false)
+  })
+
   it('detects shields via isShield or name/category', () => {
     expect(isShieldWeapon(weapon({ id: '1', name: 'Buckler', isShield: true }))).toBe(
       true,
@@ -209,10 +221,18 @@ describe('combatWeaponSlots', () => {
     expect(characterHasWpForWeapon(withSkill, 'primary', club)).toBe(false)
   })
 
-  it('keeps multi-slots until removed; primary cannot be removed', () => {
-    expect(normalizeCombatEraSlots([])).toEqual([null])
-    expect(addCombatEraSlot([null])).toEqual([null, null])
-    expect(removeCombatEraSlot([null, 'a', 'b'], 1)).toEqual([null, 'b'])
-    expect(removeCombatEraSlot([null, 'a'], 0)).toEqual([null, 'a'])
+  it('keeps Primary+Secondary; only 3rd+ slots are removable', () => {
+    expect(normalizeCombatEraSlots([])).toEqual([null, null])
+    expect(normalizeCombatEraSlots([null])).toEqual([null, null])
+    expect(addCombatEraSlot([null, null])).toEqual([null, null, null])
+    // Secondary (index 1) is not removable
+    expect(removeCombatEraSlot([null, 'a', 'b'], 1)).toEqual([null, 'a', 'b'])
+    // Primary (index 0) is not removable
+    expect(removeCombatEraSlot([null, 'a', 'b'], 0)).toEqual([null, 'a', 'b'])
+    // 3rd slot (index 2) removes
+    expect(removeCombatEraSlot([null, 'a', 'b'], 2)).toEqual([null, 'a'])
+    expect(formatCombatWeaponSlotLabel(0)).toBe('PRIMARY')
+    expect(formatCombatWeaponSlotLabel(1)).toBe('SECONDARY')
+    expect(formatCombatWeaponSlotLabel(2)).toBe('SLOT 3')
   })
 })

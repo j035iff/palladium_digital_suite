@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { unarmedDamageLabel } from '../../lib/strikeEngine'
 import { formatBonus } from '../../lib/combatQuickBonuses'
-import { getWeaponFireModes } from '../../lib/fireModes'
 import type { SheetCombatStatDetails } from '../../lib/sheetBonuses'
 import { formatSheetBonusEquation } from '../../lib/sheetBonuses'
 import { CombatNarrativeLog } from './CombatNarrativeLog'
@@ -21,21 +20,15 @@ import {
 } from '../../lib/liveCombatTabs'
 import type { CombatDamagePoolId } from '../../lib/combatDamagePools'
 import {
-  applyStrikePenaltyToWeaponProfile,
-  formatFireModeDamageLabel,
   formatHandToHandCategoryTitle,
   formatHandToHandStyleBadge,
   hostGenreOffersModernWeapons,
   listCarriedWeaponsOfEra,
   listSlotWeaponOptions,
-  modernTwoGunStrikePenalty,
   normalizeCombatEraSlots,
-  pickBurstFireMode,
-  pickSingleFireMode,
   resolvePickedWeaponId,
   weaponById,
 } from '../../lib/combatWeaponSlots'
-import { computeWeaponProfileBonuses } from '../../lib/weaponBonuses'
 
 /** Pip diameter matches Melee reset height — keep the APM bar one control tall. */
 const APM_CONTROL_H = 'h-8'
@@ -177,11 +170,11 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
     'hp',
   ])
   const [expandedBubble, setExpandedBubble] = useState<CombatBubbleId | null>(null)
-  /** Per-era weapon slots — primary always present; extras stay until removed. Default None. */
+  /** Per-era weapon slots — Primary + Secondary always; 3rd+ via category `+`. Default None. */
   const [eraSlots, setEraSlots] = useState<{
     ancient: (string | null)[]
     modern: (string | null)[]
-  }>({ ancient: [null], modern: [null] })
+  }>({ ancient: [null, null], modern: [null, null] })
   const [expandedWeaponSlot, setExpandedWeaponSlot] = useState<{
     ancient: number | null
     modern: number | null
@@ -261,25 +254,13 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
   const ancientSlots = normalizeCombatEraSlots(eraSlots.ancient)
   const modernSlots = normalizeCombatEraSlots(eraSlots.modern)
 
-  const selectedAncientWeapons = useMemo(() => {
-    return ancientSlots.map((id, i) => {
-      const opts = listSlotWeaponOptions(inventoryItems, 'ancient', i)
-      return weaponById(opts, resolvePickedWeaponId(opts, id))
-    })
-  }, [ancientSlots, inventoryItems])
-
-  const selectedModernWeapons = useMemo(() => {
-    return modernSlots.map((id, i) => {
-      const opts = listSlotWeaponOptions(inventoryItems, 'modern', i)
-      return weaponById(opts, resolvePickedWeaponId(opts, id))
-    })
+  const selectedModernPrimary = useMemo(() => {
+    const opts = listSlotWeaponOptions(inventoryItems, 'modern', 0)
+    return weaponById(opts, resolvePickedWeaponId(opts, modernSlots[0]))
   }, [modernSlots, inventoryItems])
 
-  const selectedAncient = selectedAncientWeapons[0] ?? null
-  const selectedModern = selectedModernWeapons[0] ?? null
-
   const riftedModernNote =
-    !hostOffersModern && selectedModern
+    !hostOffersModern && selectedModernPrimary
       ? 'Brought from another world — still usable here.'
       : undefined
 
@@ -297,29 +278,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
     activeForm,
     handToHandCombatProfile.accumulated.damage,
   )
-  const ancientProfile = selectedAncient
-    ? computeWeaponProfileBonuses(
-        character,
-        activeForm,
-        selectedAncient,
-        handToHandCombatProfile.accumulated,
-      )
-    : null
-  const modernPrimaryPenalty = modernTwoGunStrikePenalty(selectedModernWeapons, 0)
-  const modernProfileRaw = selectedModern
-    ? computeWeaponProfileBonuses(
-        character,
-        activeForm,
-        selectedModern,
-        handToHandCombatProfile.accumulated,
-      )
-    : null
-  const modernProfile = modernProfileRaw
-    ? applyStrikePenaltyToWeaponProfile(modernProfileRaw, modernPrimaryPenalty)
-    : null
-  const modernModes = selectedModern ? getWeaponFireModes(selectedModern) : []
-  const modernSingle = pickSingleFireMode(modernModes)
-  const modernBurst = pickBurstFireMode(modernModes)
 
   const apmHint =
     handToHandCombatProfile.attackApmCost > 1
@@ -550,6 +508,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               expandedSlotIndex={expandedWeaponSlot.ancient}
               character={character}
               activeForm={activeForm}
+              handToHandAccumulated={handToHandCombatProfile.accumulated}
               ammoReserves={ammoReserves}
               fireModeByWeaponId={fireModeByWeaponId}
               reloadShakeByWeaponId={reloadShakeByWeaponId}
@@ -573,27 +532,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                   [id]: (prev[id] ?? 0) + 1,
                 }))
               }
-              summary={
-                selectedAncient && ancientProfile ? (
-                  <>
-                    <SummaryLine
-                      label="Strike"
-                      value={formatBonus(ancientProfile.strike.total)}
-                    />
-                    <SummaryLine
-                      label="Parry"
-                      value={formatBonus(ancientProfile.parry.total)}
-                    />
-                    <SummaryLine label="Dam" value={selectedAncient.damage} />
-                  </>
-                ) : (
-                  <>
-                    <SummaryLine label="Strike" value="—" />
-                    <SummaryLine label="Parry" value="—" />
-                    <SummaryLine label="Dam" value="—" />
-                  </>
-                )
-              }
             />
 
             <CombatWeaponCategoryPanel
@@ -605,6 +543,7 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               expandedSlotIndex={expandedWeaponSlot.modern}
               character={character}
               activeForm={activeForm}
+              handToHandAccumulated={handToHandCombatProfile.accumulated}
               ammoReserves={ammoReserves}
               fireModeByWeaponId={fireModeByWeaponId}
               reloadShakeByWeaponId={reloadShakeByWeaponId}
@@ -628,43 +567,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                   ...prev,
                   [id]: (prev[id] ?? 0) + 1,
                 }))
-              }
-              summary={
-                selectedModern && modernProfile ? (
-                  <>
-                    {riftedModernNote ? (
-                      <p className="mb-0.5 text-[9px] font-semibold opacity-70">
-                        {riftedModernNote}
-                      </p>
-                    ) : null}
-                    <SummaryLine
-                      label="Aimed"
-                      value={formatBonus(
-                        modernProfile.strike.total + (modernSingle?.strikeModifier ?? 0),
-                      )}
-                    />
-                    <SummaryLine
-                      label="Burst"
-                      value={
-                        modernBurst
-                          ? formatBonus(
-                              modernProfile.strike.total + modernBurst.strikeModifier,
-                            )
-                          : '—'
-                      }
-                    />
-                    <SummaryLine
-                      label="Dam"
-                      value={formatFireModeDamageLabel(selectedModern, modernSingle)}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <SummaryLine label="Aimed" value="—" />
-                    <SummaryLine label="Burst" value="—" />
-                    <SummaryLine label="Dam" value="—" />
-                  </>
-                )
               }
             />
 
