@@ -20,7 +20,9 @@ import {
   combatWeaponGlyphId,
   formatCombatWeaponSlotLabel,
   formatFireModeDamageLabel,
+  formatMissingWpRequirementTooltip,
   listSlotWeaponOptions,
+  MISSING_WP_BADGE_LABEL,
   modernTwoGunStrikePenalty,
   normalizeCombatEraSlots,
   pickBurstFireMode,
@@ -324,12 +326,14 @@ export function CombatWeaponCategoryPanel({
             <>
               {!characterHasWpForWeapon(character, activeForm, expandedSelected) ? (
                 <p
-                  className={`mb-2 rounded-md px-2 py-1.5 text-[11px] font-black uppercase tracking-wide ${
+                  className={`mb-2 rounded-md px-2 py-1.5 text-[11px] font-black tracking-wide ${
                     morphus ? 'bg-red-700 text-white' : 'bg-red-600 text-white'
                   }`}
                   role="status"
+                  title={formatMissingWpRequirementTooltip(expandedSelected)}
                 >
-                  Missing W.P. — strike/parry do not include proficiency bonuses
+                  {MISSING_WP_BADGE_LABEL} — strike/parry do not include proficiency
+                  bonuses
                 </p>
               ) : null}
               <ul className="list-none p-0">

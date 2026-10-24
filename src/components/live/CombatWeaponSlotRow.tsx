@@ -7,9 +7,10 @@ import type {
 import {
   characterHasWpForWeapon,
   formatCombatWeaponSlotLabel,
+  formatMissingWpRequirementTooltip,
   isShieldWeapon,
   isWeaponTwoHanded,
-  resolveWeaponCombatWpSkillId,
+  MISSING_WP_BADGE_LABEL,
   shouldShowPairableBadge,
 } from '../../lib/combatWeaponSlots'
 import { CombatWeaponGlyph } from './CombatWeaponGlyph'
@@ -54,7 +55,6 @@ export function CombatWeaponSlotRow({
   onExpand,
 }: Props) {
   const hasWp = selected ? characterHasWpForWeapon(character, activeForm, selected) : true
-  const wpId = selected ? resolveWeaponCombatWpSkillId(selected) : null
   const pairable = selected
     ? shouldShowPairableBadge(character, activeForm, selected)
     : false
@@ -140,19 +140,15 @@ export function CombatWeaponSlotRow({
             ) : null}
             {!hasWp ? (
               <span
-                className={`rounded-md px-2 py-1 text-[10px] font-black uppercase tracking-wide shadow-sm ${
+                className={`rounded-md px-2 py-1 text-[10px] font-black tracking-wide shadow-sm ${
                   morphus
                     ? 'bg-red-600 text-white ring-2 ring-red-300'
                     : 'bg-red-600 text-white ring-2 ring-red-900'
                 }`}
                 role="status"
-                title={
-                  wpId
-                    ? `Missing weapon proficiency (${wpId})`
-                    : 'Missing weapon proficiency for this weapon'
-                }
+                title={formatMissingWpRequirementTooltip(selected)}
               >
-                No W.P. — {selected.wpCategory ?? 'proficiency missing'}
+                {MISSING_WP_BADGE_LABEL}
               </span>
             ) : null}
           </div>

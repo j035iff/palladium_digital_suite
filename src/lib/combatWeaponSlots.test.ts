@@ -20,10 +20,13 @@ import {
   MODERN_TWO_GUN_OFFHAND_STRIKE_PENALTY,
   MODERN_TWO_GUN_PRIMARY_STRIKE_PENALTY,
   formatCombatWeaponSlotLabel,
+  formatMissingWpRequirementTooltip,
+  MISSING_WP_BADGE_LABEL,
   normalizeCombatEraSlots,
   removeCombatEraSlot,
   resolvePairedWeaponsSlotStatus,
   resolvePickedWeaponId,
+  resolveRequiredWpDisplayName,
   resolveWeaponCombatEra,
   resolveWeaponCombatWpSkillId,
   shouldShowPairableBadge,
@@ -305,6 +308,37 @@ describe('combatWeaponSlots', () => {
     expect(formatCombatWeaponSlotLabel(0)).toBe('PRIMARY')
     expect(formatCombatWeaponSlotLabel(1)).toBe('SECONDARY')
     expect(formatCombatWeaponSlotLabel(2)).toBe('SLOT 3')
+  })
+
+  it('formats missing-W.P. badge label and Requires tooltip from catalog name', () => {
+    expect(MISSING_WP_BADGE_LABEL).toBe('No W.P.')
+
+    const sword = weapon({
+      id: 'sword-missing-wp',
+      name: 'Long sword',
+      wpCategory: 'W.P. Sword',
+      linkedWpSkillId: 'wp_sword',
+    })
+    expect(resolveRequiredWpDisplayName(sword)).toBe('W.P. Sword')
+    expect(formatMissingWpRequirementTooltip(sword)).toBe('Requires W.P. Sword')
+
+    const entry = getAncientWeaponById('weapon_ancient_short_bow')
+    const piece = ancientCatalogToInventoryPiece(entry!, 'nightbane')
+    const bow = createInventoryWeaponFromPiece(piece!) as Weapon
+    expect(resolveRequiredWpDisplayName(bow)).toBe('W.P. Archery and Targeting')
+    expect(formatMissingWpRequirementTooltip(bow)).toBe(
+      'Requires W.P. Archery and Targeting',
+    )
+
+    const orphan = weapon({
+      id: 'orphan-blade',
+      name: 'Mystery blade',
+      weaponProficiencyEligible: false,
+    })
+    expect(resolveRequiredWpDisplayName(orphan)).toBeNull()
+    expect(formatMissingWpRequirementTooltip(orphan)).toBe(
+      'Missing weapon proficiency for this weapon',
+    )
   })
 
   it('detects Archery and Targeting for Short Bow (No W.P. indicator)', () => {

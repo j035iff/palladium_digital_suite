@@ -252,7 +252,7 @@ Copy this block when registering a new unified path:
 
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
-| Era / glyph / slots | `src/lib/combatWeaponSlots.ts` + `resolveWeaponProficiencySkillId` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `buildCombatWeaponSlotSelectOptions`, `isWeaponPairable`, `shouldShowPairableBadge`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId`, `characterHasWpForWeapon` | One classifier + multi-slot dropdown rules; shared select builder greys instances already in another slot (Radical Visibility); W.P. ownership via shared resolver + `collectUnlockedSkillIds` (catalog ids); pairable badge requires Paired Weapons skill |
+| Era / glyph / slots | `src/lib/combatWeaponSlots.ts` + `resolveWeaponProficiencySkillId` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `buildCombatWeaponSlotSelectOptions`, `isWeaponPairable`, `shouldShowPairableBadge`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId`, `characterHasWpForWeapon`, `MISSING_WP_BADGE_LABEL`, `formatMissingWpRequirementTooltip` | One classifier + multi-slot dropdown rules; shared select builder greys instances already in another slot (Radical Visibility); W.P. ownership via shared resolver + `collectUnlockedSkillIds` (catalog ids); pairable badge requires Paired Weapons skill; missing-W.P. badge copy is shared (`No W.P.` + Requires tooltip) |
 | Weapon math | `src/lib/weaponBonuses.ts` + `applyStrikePenaltyToWeaponProfile` | `computeWeaponProfileBonuses` | Same profile as strike cards; two-gun penalties merge as strike lines |
 | Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; title **Hand to Hand** + style badge |
 | UI — Unarmed | `CombatCategoryBubble` + `CombatExpandOverlay` + `UnarmedCombatExpand` | Summary + centered title + style aside + Expand → overlay | Bonuses / maneuvers only — no Physical die / Record Strike |
@@ -361,6 +361,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-24 | Missing-W.P. Action badge: visible `No W.P.` only; rollover `Requires …` via shared `formatMissingWpRequirementTooltip` |
 | 2026-10-24 | Action Expand overlays: remove Pillar 5 Physical die / Record Strike chrome; keep strike/damage bonus + notation detail |
 | 2026-10-16 | Strip overlays: labeled prev/next tab paging flanking Close (wrap Identity ↔ Gear) |
 | 2026-10-16 | Strip overlays: dual-form Facade\|Morphus toggle next to Close (shared chrome; same active form as Become Morphus) |

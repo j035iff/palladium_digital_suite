@@ -447,3 +447,34 @@ export function formatCombatWeaponSlotLabel(slotIndex: number): string {
   if (slotIndex === 1) return 'SECONDARY'
   return `SLOT ${slotIndex + 1}`
 }
+
+/**
+ * Visible missing-proficiency Action badge (Joe 2026-10-24).
+ * Keep casing — do not CSS-uppercase this label.
+ */
+export const MISSING_WP_BADGE_LABEL = 'No W.P.'
+
+/**
+ * Catalog proficiency display name for a weapon's linked W.P.
+ * Prefer catalog `name`; fall back to `wpCategory`.
+ */
+export function resolveRequiredWpDisplayName(weapon: Weapon): string | null {
+  const wpId = resolveWeaponCombatWpSkillId(weapon)
+  if (wpId) {
+    const entry = getWeaponProficiencyCatalogEntryById(wpId)
+    const catalogName = entry?.name?.trim()
+    if (catalogName) return catalogName
+  }
+  const category = weapon.wpCategory?.trim()
+  return category || null
+}
+
+/**
+ * Rollover / tooltip for the missing-W.P. Action badge — names the required proficiency.
+ * e.g. `Requires W.P. Sword`, `Requires W.P. Archery and Targeting`.
+ */
+export function formatMissingWpRequirementTooltip(weapon: Weapon): string {
+  const name = resolveRequiredWpDisplayName(weapon)
+  if (name) return `Requires ${name}`
+  return 'Missing weapon proficiency for this weapon'
+}
