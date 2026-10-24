@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { ActiveForm, Character, FireMode, Weapon } from '../../types'
 import {
   computeWeaponProfileBonuses,
@@ -14,12 +13,14 @@ import {
   canAffordFireMode,
   DEFAULT_RANGED_FIRE_MODES,
   defaultFireModeId,
-  formatFireModeStrikeDetail,
   getFireModeById,
   getWeaponFireModes,
   getWildBurstWarning,
   resolveFireModeAmmoCost,
 } from '../../lib/fireModes'
+import { WeaponFireModeSelector } from './WeaponFireModeSelector'
+import { WeaponReloadControl } from './WeaponReloadControl'
+import { ClampedOverlayTooltip } from './ClampedOverlayTooltip'
 
 const MELEE_SHEET_MODE: FireMode = {
   id: 'melee_sheet',
@@ -27,19 +28,6 @@ const MELEE_SHEET_MODE: FireMode = {
   ammoCost: 0,
   strikeModifier: 0,
 }
-import { ManualRollField } from '../combat/ManualRollField'
-import { WeaponFireModeSelector } from './WeaponFireModeSelector'
-import { WeaponReloadControl } from './WeaponReloadControl'
-import { ClampedOverlayTooltip } from './ClampedOverlayTooltip'
-
-export type StrikeBannerState =
-  | {
-      key: string
-      title: string
-      detail: string
-      total: number
-    }
-  | null
 
 type WeaponStrikeCardProps = {
   weapon: Weapon
@@ -52,11 +40,8 @@ type WeaponStrikeCardProps = {
   /** Modern two-gun (or other) strike penalty already resolved in lib. */
   strikePenalty?: number
   onFireModeChange: (modeId: string) => void
-  onStrikeResolved: (banner: NonNullable<StrikeBannerState>) => void
-  onSpendAmmo: (weaponId: string, rounds: number) => void
   onReload: () => void
   onReloadFailed: () => void
-  onRequestReloadShake: () => void
 }
 
 function WeaponStatChip({
@@ -94,7 +79,8 @@ function WeaponStatChip({
 }
 
 /**
- * Weapon profile — aggregated sheet bonuses plus Pillar 5 manual strike/damage controls.
+ * Weapon profile — aggregated sheet bonuses, fire modes, ammo, and damage notation.
+ * Physical die entry / Record Strike live elsewhere (not on Action Expand).
  */
 export function WeaponStrikeCard({
   weapon: w,
@@ -106,15 +92,9 @@ export function WeaponStrikeCard({
   reloadShakeTrigger,
   strikePenalty = 0,
   onFireModeChange,
-  onStrikeResolved,
-  onSpendAmmo,
   onReload,
   onReloadFailed,
-  onRequestReloadShake,
 }: WeaponStrikeCardProps) {
-  const [strikeManual, setStrikeManual] = useState('')
-  const [damageManual, setDamageManual] = useState('')
-
   const ranged = isRangedWeapon(w)
   const profile = applyStrikePenaltyToWeaponProfile(
     computeWeaponProfileBonuses(character, activeForm, w),
@@ -128,27 +108,8 @@ export function WeaponStrikeCard({
     : MELEE_SHEET_MODE
   const ammoCost = mode ? resolveFireModeAmmoCost(w, mode) : 0
   const canAfford = mode ? canAffordFireMode(w, mode) : true
-  const magEmpty = ranged && (w.payload?.current ?? 0) <= 0
   const wildWarn = mode ? getWildBurstWarning(w, mode) : { kind: 'none' as const }
   const strikeBonus = profile.strike.total + mode.strikeModifier
-
-  const recordStrike = () => {
-    if (ranged && magEmpty) {
-      onRequestReloadShake()
-      return
-    }
-    if (!canAfford) return
-    const d = Number(strikeManual.trim())
-    if (!Number.isFinite(d)) return
-    const total = d + strikeBonus
-    onStrikeResolved({
-      key: w.id,
-      title: `${w.name} — ${mode.name}`,
-      detail: formatFireModeStrikeDetail(d, profile.strike.total, mode),
-      total,
-    })
-    if (ranged && ammoCost > 0) onSpendAmmo(w.id, ammoCost)
-  }
 
   const wpSubtitle = w.wpCategory ?? profile.wpSkillDisplayName ?? w.category
 
@@ -161,6 +122,13 @@ export function WeaponStrikeCard({
   const cardBg = morphus
     ? 'border-violet-500/85 bg-gradient-to-br from-violet-950/95 via-slate-950/92 to-black/92'
     : 'border-orange-400/95 bg-gradient-to-br from-orange-50/96 via-white to-sky-50/90'
+
+  const detailBox = morphus
+    ? 'border-violet-700/65 bg-violet-950/40'
+    : 'border-slate-300/80 bg-slate-100/95'
+  const detailLabel = morphus ? 'text-violet-200' : 'text-slate-700'
+  const detailMuted = morphus ? 'text-violet-400' : 'text-slate-500'
+  const detailValue = morphus ? 'text-amber-300' : 'text-blue-800'
 
   return (
     <li className={`rounded-xl border-2 border-l-[6px] pl-2 pr-3 py-3 shadow-md ${accent} ${cardBg}`}>
@@ -224,6 +192,8 @@ export function WeaponStrikeCard({
           <div className="space-y-1">
             <p className={`font-mono text-[10px] ${morphus ? 'text-violet-300' : 'text-slate-700'}`}>
               Mag {w.payload.current}/{w.payload.max} · {formatAmmoHudLine(w, ammoReserves)}
+              {ammoCost > 0 ? ` · mode costs ${ammoCost}` : ''}
+              {!canAfford ? ' · not enough ammo for mode' : ''}
             </p>
             {mode ? (
               <WeaponFireModeSelector
@@ -236,44 +206,35 @@ export function WeaponStrikeCard({
           </div>
         ) : null}
 
-        <p className={`text-[9px] font-semibold italic ${morphus ? 'text-violet-600/95' : 'text-teal-800/95'}`}>
-          Final totals are for manual play at the table. Use Tactical “Resolve combat” when you need the A.R. drawer.
-        </p>
-
         {wildWarn.kind === 'short_burst' ? (
           <p className="text-[10px] font-bold text-amber-600" role="status">
             {wildWarn.message}
           </p>
         ) : null}
 
-        <div
-          className={`rounded-lg border p-2 ${
-            morphus ? 'border-violet-700/65 bg-violet-950/40' : 'border-slate-300/80 bg-slate-100/95'
-          }`}
-        >
-          <p className={`mb-2 text-[9px] font-black uppercase tracking-wider ${morphus ? 'text-violet-200' : 'text-slate-700'}`}>
-            Pillar 5 — dice
-          </p>
+        <div className={`rounded-lg border p-2 ${detailBox}`}>
           <div className="grid gap-3 sm:grid-cols-2">
-            <ManualRollField
-              label="Strike (d20)"
-              morphus={morphus}
-              manualValue={strikeManual}
-              onManualValueChange={setStrikeManual}
-              calculatedBonus={strikeBonus}
-              hint="Bonus includes selected fire mode (ranged)."
-              onRecord={recordStrike}
-              recordLabel="Record strike"
-              recordDisabled={magEmpty || (ranged && !canAfford)}
-            />
-            <ManualRollField
-              label="Damage"
-              morphus={morphus}
-              manualValue={damageManual}
-              onManualValueChange={setDamageManual}
-              calculatedBonus={0}
-              hint={`Notation ${w.damage}`}
-            />
+            <div>
+              <p className={`mb-1 text-[10px] font-black uppercase tracking-wide ${detailLabel}`}>
+                Strike (d20)
+              </p>
+              {ranged ? (
+                <p className={`mb-1 text-[9px] leading-snug ${detailMuted}`}>
+                  Bonus includes selected fire mode (ranged).
+                </p>
+              ) : null}
+              <p className={`font-mono text-2xl font-black tabular-nums ${detailValue}`}>
+                {formatBonus(strikeBonus)}
+              </p>
+            </div>
+            <div>
+              <p className={`mb-1 text-[10px] font-black uppercase tracking-wide ${detailLabel}`}>
+                Damage
+              </p>
+              <p className={`mb-1 text-[9px] leading-snug ${detailMuted}`}>
+                Notation {w.damage}
+              </p>
+            </div>
           </div>
         </div>
 

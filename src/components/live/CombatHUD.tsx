@@ -5,7 +5,6 @@ import { formatBonus } from '../../lib/combatQuickBonuses'
 import type { SheetCombatStatDetails } from '../../lib/sheetBonuses'
 import { formatSheetBonusEquation } from '../../lib/sheetBonuses'
 import { CombatNarrativeLog } from './CombatNarrativeLog'
-import type { StrikeBannerState } from './WeaponStrikeCard'
 import { CombatCategoryBubble } from './CombatCategoryBubble'
 import { CombatWeaponCategoryPanel } from './CombatWeaponCategoryPanel'
 import { UnarmedCombatExpand } from './UnarmedCombatExpand'
@@ -154,7 +153,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
     readyWeaponIds,
     setReadyWeapon,
     strengthCapacities,
-    spendWeaponAmmo,
     reloadWeapon,
     ammoReserves,
     morphusNaturalAr,
@@ -179,19 +177,9 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
     ancient: number | null
     modern: number | null
   }>({ ancient: null, modern: null })
-  const [strikeBanner, setStrikeBanner] = useState<StrikeBannerState>(null)
   const [fireModeByWeaponId, setFireModeByWeaponId] = useState<Record<string, string>>(
     {},
   )
-  const [reloadShakeByWeaponId, setReloadShakeByWeaponId] = useState<
-    Record<string, number>
-  >({})
-
-  useEffect(() => {
-    if (!strikeBanner) return
-    const t = window.setTimeout(() => setStrikeBanner(null), 2800)
-    return () => window.clearTimeout(t)
-  }, [strikeBanner])
 
   /** Panel: APM + tabs stay unboxed; outline lives on the scrollable tab body (mockup). */
   const shell =
@@ -407,37 +395,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
           }`}
           aria-label={`${COMBAT_SUB_TAB_LABELS[subTab]} tab`}
         >
-        {strikeBanner && subTab === 'action' ? (
-          <div
-            className={`pds-hud-strike-banner mb-3 rounded-xl border-4 px-3 py-4 text-center ${
-              morphus
-                ? 'border-amber-400 bg-black/85 text-amber-100'
-                : 'border-orange-600 bg-amber-50 text-orange-950'
-            }`}
-            role="status"
-            aria-live="polite"
-          >
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-90">
-              Strike resolved
-            </p>
-            <p className={`mt-1 text-sm font-bold ${morphus ? 'text-violet-200' : 'text-slate-800'}`}>
-              {strikeBanner.title}
-            </p>
-            <p
-              className={`mt-2 font-mono text-4xl font-black tabular-nums leading-none ${
-                morphus ? 'text-amber-300' : 'text-orange-700'
-              }`}
-            >
-              {strikeBanner.total}
-            </p>
-            <p
-              className={`mt-2 font-mono text-sm font-semibold ${morphus ? 'text-violet-100' : 'text-slate-800'}`}
-            >
-              {strikeBanner.detail}
-            </p>
-          </div>
-        ) : null}
-
         {subTab === 'vitals' ? (
           <CombatVitalsTab
             morphus={morphus}
@@ -493,9 +450,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
                 ownedStyles={ownedHandToHandStyles}
                 onSelectStyle={setActiveCombatHandToHandSkillId}
                 strengthCapacities={strengthCapacities}
-                onStrikeResolved={(payload) =>
-                  setStrikeBanner({ key: 'unarmed', ...payload })
-                }
               />
             </CombatCategoryBubble>
 
@@ -511,7 +465,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               handToHandAccumulated={handToHandCombatProfile.accumulated}
               ammoReserves={ammoReserves}
               fireModeByWeaponId={fireModeByWeaponId}
-              reloadShakeByWeaponId={reloadShakeByWeaponId}
               onSlotsChange={(next) =>
                 setEraSlots((prev) => ({ ...prev, ancient: next }))
               }
@@ -522,16 +475,8 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               onFireModeChange={(weaponId, modeId) =>
                 setFireModeByWeaponId((prev) => ({ ...prev, [weaponId]: modeId }))
               }
-              onStrikeResolved={setStrikeBanner}
-              onSpendAmmo={spendWeaponAmmo}
               onReload={(id) => reloadWeapon(id)}
               onReloadFailed={(id) => reloadWeapon(id)}
-              onRequestReloadShake={(id) =>
-                setReloadShakeByWeaponId((prev) => ({
-                  ...prev,
-                  [id]: (prev[id] ?? 0) + 1,
-                }))
-              }
             />
 
             <CombatWeaponCategoryPanel
@@ -546,7 +491,6 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               handToHandAccumulated={handToHandCombatProfile.accumulated}
               ammoReserves={ammoReserves}
               fireModeByWeaponId={fireModeByWeaponId}
-              reloadShakeByWeaponId={reloadShakeByWeaponId}
               hostNote={riftedModernNote}
               onSlotsChange={(next) =>
                 setEraSlots((prev) => ({ ...prev, modern: next }))
@@ -558,16 +502,8 @@ export function CombatHUD({ layout = 'panel' }: { layout?: CombatHudLayout }) {
               onFireModeChange={(weaponId, modeId) =>
                 setFireModeByWeaponId((prev) => ({ ...prev, [weaponId]: modeId }))
               }
-              onStrikeResolved={setStrikeBanner}
-              onSpendAmmo={spendWeaponAmmo}
               onReload={(id) => reloadWeapon(id)}
               onReloadFailed={(id) => reloadWeapon(id)}
-              onRequestReloadShake={(id) =>
-                setReloadShakeByWeaponId((prev) => ({
-                  ...prev,
-                  [id]: (prev[id] ?? 0) + 1,
-                }))
-              }
             />
 
             <CombatNarrativeLog morphus={morphus} />

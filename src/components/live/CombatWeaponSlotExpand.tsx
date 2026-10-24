@@ -1,6 +1,6 @@
 import type { ActiveForm, Character, Weapon } from '../../types'
 import type { AmmoReservesState } from '../../lib/ammoReserves'
-import { WeaponStrikeCard, type StrikeBannerState } from './WeaponStrikeCard'
+import { WeaponStrikeCard } from './WeaponStrikeCard'
 import { defaultFireModeId } from '../../lib/fireModes'
 
 type Props = {
@@ -16,11 +16,8 @@ type Props = {
   hostNote?: string
   onSelectWeapon: (weaponId: string) => void
   onFireModeChange: (modeId: string) => void
-  onStrikeResolved: (banner: NonNullable<StrikeBannerState>) => void
-  onSpendAmmo: (weaponId: string, rounds: number) => void
   onReload: (weaponId: string) => void
   onReloadFailed: (weaponId: string) => void
-  onRequestReloadShake: (weaponId: string) => void
 }
 
 /** Expanded ancient/modern bubble: Gear picker + full weapon profile. */
@@ -37,11 +34,8 @@ export function CombatWeaponSlotExpand({
   hostNote,
   onSelectWeapon,
   onFireModeChange,
-  onStrikeResolved,
-  onSpendAmmo,
   onReload,
   onReloadFailed,
-  onRequestReloadShake,
 }: Props) {
   const muted = morphus ? 'text-violet-300/90' : 'text-slate-600'
   const listBox = morphus
@@ -105,11 +99,8 @@ export function CombatWeaponSlotExpand({
             fireModeId={fireModeId || defaultFireModeId(selected)}
             reloadShakeTrigger={reloadShakeTrigger}
             onFireModeChange={onFireModeChange}
-            onStrikeResolved={onStrikeResolved}
-            onSpendAmmo={onSpendAmmo}
             onReload={() => onReload(selected.id)}
             onReloadFailed={() => onReloadFailed(selected.id)}
-            onRequestReloadShake={() => onRequestReloadShake(selected.id)}
           />
         </ul>
       ) : null}

@@ -1,14 +1,9 @@
-import { useState } from 'react'
 import type { ActiveForm, Character } from '../../types'
 import type { HandToHandCombatProfile } from '../../lib/handToHandPipeline'
 import type { SheetCombatDerived } from '../../lib/sheetBonuses'
 import { formatSheetBonusEquation } from '../../lib/sheetBonuses'
 import { formatBonus } from '../../lib/combatQuickBonuses'
-import { ManualRollField } from '../combat/ManualRollField'
-import {
-  computeUnarmedStrikeBreakdown,
-  unarmedDamageLabel,
-} from '../../lib/strikeEngine'
+import { unarmedDamageLabel } from '../../lib/strikeEngine'
 import { getHandToHandSkillById } from '../../data/library/handToHandCatalogLoader'
 import type { HandToHandSkill } from '../../types'
 import type { StrengthCapacities } from '../../types'
@@ -103,11 +98,11 @@ type Props = {
   ownedStyles: readonly { catalogId: string; name: string }[]
   onSelectStyle: (catalogId: string) => void
   strengthCapacities: StrengthCapacities
-  onStrikeResolved: (payload: { title: string; detail: string; total: number }) => void
 }
 
 /**
- * Unarmed expand — remaining combat-sheet bonuses + HtH maneuvers + dice (not Initiative).
+ * Unarmed expand — remaining combat-sheet bonuses + HtH maneuvers (not Initiative).
+ * Physical die entry is not on Action Expand overlays.
  */
 export function UnarmedCombatExpand({
   morphus,
@@ -118,17 +113,10 @@ export function UnarmedCombatExpand({
   ownedStyles,
   onSelectStyle,
   strengthCapacities,
-  onStrikeResolved,
 }: Props) {
-  const [strikeManual, setStrikeManual] = useState('')
-  const [damageManual, setDamageManual] = useState('')
   const acc = hth.accumulated
   const catalog = hth.skillId ? getHandToHandSkillById(hth.skillId) : undefined
   const locked = upcomingUnlocks(catalog, character.level)
-  const strike = computeUnarmedStrikeBreakdown(character, activeForm, {
-    skillName: hth.skillName,
-    accumulated: acc,
-  })
   const punchHint = unarmedDamageLabel(character, activeForm, acc.damage)
   const crit = formatWindow(acc.criticalStrikeWindow)
   const ko = formatWindow(acc.knockoutStunWindow)
@@ -234,35 +222,6 @@ export function UnarmedCombatExpand({
           </p>
         ) : null}
       </section>
-
-      <div className="grid gap-3 sm:grid-cols-2">
-        <ManualRollField
-          label="Strike (d20)"
-          morphus={morphus}
-          manualValue={strikeManual}
-          onManualValueChange={setStrikeManual}
-          calculatedBonus={strike.total}
-          onRecord={() => {
-            const d = Number(strikeManual.trim())
-            if (!Number.isFinite(d)) return
-            const t = d + strike.total
-            onStrikeResolved({
-              title: 'Unarmed strike',
-              detail: `Manual (${d}) + bonus (${strike.total}) = ${t}`,
-              total: t,
-            })
-          }}
-          recordLabel="Record strike"
-        />
-        <ManualRollField
-          label="Damage"
-          morphus={morphus}
-          manualValue={damageManual}
-          onManualValueChange={setDamageManual}
-          calculatedBonus={0}
-          hint={punchHint}
-        />
-      </div>
     </div>
   )
 }

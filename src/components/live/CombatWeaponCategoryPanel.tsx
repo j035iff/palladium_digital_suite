@@ -31,7 +31,7 @@ import {
 } from '../../lib/combatWeaponSlots'
 import { CombatWeaponSlotRow } from './CombatWeaponSlotRow'
 import { CombatExpandOverlay } from './CombatExpandOverlay'
-import { WeaponStrikeCard, type StrikeBannerState } from './WeaponStrikeCard'
+import { WeaponStrikeCard } from './WeaponStrikeCard'
 import { defaultFireModeId } from '../../lib/fireModes'
 
 type Props = {
@@ -47,17 +47,13 @@ type Props = {
   handToHandAccumulated: AccumulatedHandToHandBonuses
   ammoReserves: AmmoReservesState
   fireModeByWeaponId: Record<string, string>
-  reloadShakeByWeaponId: Record<string, number>
   hostNote?: string
   onSlotsChange: (next: (string | null)[]) => void
   onExpandedSlotChange: (slotIndex: number | null) => void
   onPrimaryReadySync?: (weaponId: string | null) => void
   onFireModeChange: (weaponId: string, modeId: string) => void
-  onStrikeResolved: (banner: NonNullable<StrikeBannerState>) => void
-  onSpendAmmo: (weaponId: string, rounds: number) => void
   onReload: (weaponId: string) => void
   onReloadFailed: (weaponId: string) => void
-  onRequestReloadShake: (weaponId: string) => void
 }
 
 function SummaryLine({ label, value }: { label: string; value: string }) {
@@ -163,17 +159,13 @@ export function CombatWeaponCategoryPanel({
   handToHandAccumulated,
   ammoReserves,
   fireModeByWeaponId,
-  reloadShakeByWeaponId,
   hostNote,
   onSlotsChange,
   onExpandedSlotChange,
   onPrimaryReadySync,
   onFireModeChange,
-  onStrikeResolved,
-  onSpendAmmo,
   onReload,
   onReloadFailed,
-  onRequestReloadShake,
 }: Props) {
   const slots = normalizeCombatEraSlots(slotWeaponIds)
   const selectedWeapons: (Weapon | null)[] = slots.map((id, i) => {
@@ -334,20 +326,13 @@ export function CombatWeaponCategoryPanel({
                     fireModeByWeaponId[expandedSelected.id] ??
                     defaultFireModeId(expandedSelected)
                   }
-                  reloadShakeTrigger={
-                    reloadShakeByWeaponId[expandedSelected.id] ?? 0
-                  }
+                  reloadShakeTrigger={0}
                   strikePenalty={expandedTwoGun}
                   onFireModeChange={(modeId) =>
                     onFireModeChange(expandedSelected.id, modeId)
                   }
-                  onStrikeResolved={onStrikeResolved}
-                  onSpendAmmo={onSpendAmmo}
                   onReload={() => onReload(expandedSelected.id)}
                   onReloadFailed={() => onReloadFailed(expandedSelected.id)}
-                  onRequestReloadShake={() =>
-                    onRequestReloadShake(expandedSelected.id)
-                  }
                 />
               </ul>
             </>

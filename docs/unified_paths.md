@@ -255,11 +255,11 @@ Copy this block when registering a new unified path:
 | Era / glyph / slots | `src/lib/combatWeaponSlots.ts` + `resolveWeaponProficiencySkillId` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `isWeaponPairable`, `shouldShowPairableBadge`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId`, `characterHasWpForWeapon` | One classifier + multi-slot dropdown rules; W.P. ownership via shared resolver + `collectUnlockedSkillIds` (catalog ids); pairable badge requires Paired Weapons skill |
 | Weapon math | `src/lib/weaponBonuses.ts` + `applyStrikePenaltyToWeaponProfile` | `computeWeaponProfileBonuses` | Same profile as strike cards; two-gun penalties merge as strike lines |
 | Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; title **Hand to Hand** + style badge |
-| UI — Unarmed | `CombatCategoryBubble` + `CombatExpandOverlay` | Summary + centered title + style aside + Expand → overlay | HtH only |
-| UI — weapons | `CombatWeaponCategoryPanel` + `CombatWeaponSlotRow` + `CombatExpandOverlay` | Category `+`; Primary+Secondary always; 3rd+ removable; Expand → overlay | Shields in secondary+ only |
+| UI — Unarmed | `CombatCategoryBubble` + `CombatExpandOverlay` + `UnarmedCombatExpand` | Summary + centered title + style aside + Expand → overlay | Bonuses / maneuvers only — no Physical die / Record Strike |
+| UI — weapons | `CombatWeaponCategoryPanel` + `CombatWeaponSlotRow` + `CombatExpandOverlay` + `WeaponStrikeCard` | Category `+`; Primary+Secondary always; 3rd+ removable; Expand → overlay | Strike/damage **bonus + notation** detail; no Pillar 5 die-entry block |
 | Bonus-breakdown tooltip | `ClampedOverlayTooltip` + `clampOverlayTooltipPosition` | Portaled fixed tip on HtH tiles / weapon chips / Initiative | Same clamp path as Bonuses/Skills; escapes expand `overflow: hidden` |
 
-**Modes / variants:** Facade/Morphus via existing live stack. Ancient / Modern always show Primary + Secondary (default **None**); category `+` adds 3rd+; a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand overlay only (`HandToHandStylePicker` — not on Skills); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand.
+**Modes / variants:** Facade/Morphus via existing live stack. Ancient / Modern always show Primary + Secondary (default **None**); category `+` adds 3rd+; a carried firearm remains usable even when `hostGenreOffersModernWeapons` is false. Owned HtH styles: `listOwnedHandToHandStyles` → Combat Unarmed expand overlay only (`HandToHandStylePicker` — not on Skills); `activeCombatHandToHandSkillId` selects among them on **Facade only**. Nightbane **Morphus** always resolves innate `hth_martial_arts` from `nightbane_base_morphus.json` — independent of Facade O.C.C. Hand-to-Hand. Action Expand overlays print bonuses for table dice — they do not host Physical die fields or Record Strike.
 
 **Extension guide:** Add slot rules / penalties in `combatWeaponSlots.ts`; render through `CombatWeaponCategoryPanel` / `CombatExpandOverlay` — do not fork Ancient vs Modern shells, a second strike-card path, or a parallel expand host.
 
@@ -361,6 +361,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-10-24 | Action Expand overlays: remove Pillar 5 Physical die / Record Strike chrome; keep strike/damage bonus + notation detail |
 | 2026-10-16 | Strip overlays: labeled prev/next tab paging flanking Close (wrap Identity ↔ Gear) |
 | 2026-10-16 | Strip overlays: dual-form Facade\|Morphus toggle next to Close (shared chrome; same active form as Become Morphus) |
 | 2026-10-16 | Identity overlay: drop Surface dropdown + Natural A.R. line (Alignment stays) |
