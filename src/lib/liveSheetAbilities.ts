@@ -5,6 +5,7 @@ import {
   getFeatureById,
   getPalladiumMagicSpellById,
   getPalladiumPsionicById,
+  getPalladiumTalentById,
 } from '../data/library/registry'
 import type {
   ActiveForm,
@@ -15,6 +16,9 @@ import type {
 } from '../types'
 import { featureAppliesToForm } from './featureEngine'
 import { stackNightvisionRangeFlatBonus } from './morphusCharacteristicAggregation'
+import { isRccRace } from './raceComposition'
+import { psionicCategoryFilterLabel } from './psionicCategoryLabels'
+import { talentCatalogTier } from './talentSelectionGates'
 
 export type LiveSheetAbilityCategoryId =
   | 'natural'
@@ -22,6 +26,15 @@ export type LiveSheetAbilityCategoryId =
   | 'magic'
   | 'psionics'
   | 'talents'
+
+/** Empty-category policy for live Abilities lists (strip vs Combat). */
+export type LiveSheetAbilityEmptyPolicy = 'omit' | 'show-if-available'
+
+export type LiveSheetAbilityBudgetHint = {
+  spellSlots: number
+  psionicSlots: number
+  talentSlots: number
+}
 
 export type LiveNaturalAbilityRow = {
   id: string
@@ -45,6 +58,11 @@ export type LiveCatalogAbilityRow = {
   metaLine?: string
   morphusOnly?: boolean
   formRestricted?: boolean
+  /**
+   * Type-filter keys for this row (magic level / psionic pool / talent tier).
+   * Natural / OCC rows omit these — no filter UI when none present.
+   */
+  typeFilterKeys?: readonly string[]
 }
 
 export type LiveSheetAbilitySection = {
@@ -55,13 +73,36 @@ export type LiveSheetAbilitySection = {
   catalogRows?: LiveCatalogAbilityRow[]
 }
 
-const CATEGORY_ORDER: readonly LiveSheetAbilityCategoryId[] = [
-  'natural',
-  'occ',
-  'magic',
-  'psionics',
-  'talents',
-]
+/** Familiar Surface “All” sentinel for ability type filters (Skills-style). */
+export const LIVE_ABILITY_FILTER_ALL_TYPES = ''
+
+export type LiveSheetAbilityListFilter = {
+  /** Empty / {@link LIVE_ABILITY_FILTER_ALL_TYPES} = no type filter. */
+  typeKey?: string
+  nameQuery?: string
+}
+
+export type LiveSheetAbilityTypeFilterOption = {
+  value: string
+  label: string
+}
+
+export const LIVE_SHEET_ABILITY_CATEGORY_ORDER: readonly LiveSheetAbilityCategoryId[] =
+  ['natural', 'occ', 'magic', 'psionics', 'talents'] as const
+
+/** Sub-tab pill labels — strip Abilities + Combat Abilities (Unified Path). */
+export const LIVE_SHEET_ABILITY_CATEGORY_PILL_LABELS: Record<
+  LiveSheetAbilityCategoryId,
+  string
+> = {
+  natural: 'Natural',
+  occ: 'OCC',
+  magic: 'Magic',
+  psionics: 'Psionics',
+  talents: 'Talents',
+}
+
+const CATEGORY_ORDER = LIVE_SHEET_ABILITY_CATEGORY_ORDER
 
 const CATEGORY_LABELS: Record<LiveSheetAbilityCategoryId, string> = {
   natural: 'Natural abilities',
@@ -491,6 +532,204 @@ export function listLiveSheetOccAbilities(input: {
   return rows
 }
 
+/**
+ * Shadow R.C.C. O.C.C. class abilities projected onto Natural (Joe: RCC ≈ Natural).
+ * OCC tab stays O.C.C.-only for character-composition builds.
+ */
+export function listLiveSheetRccAbilitiesAsNatural(input: {
+  race: Race | undefined
+  occ: PalladiumOcc | undefined
+  characterLevel: number
+}): LiveNaturalAbilityRow[] {
+  if (!isRccRace(input.race) || !input.occ) return []
+  const label = input.race?.name?.trim() || 'R.C.C.'
+  return listLiveSheetOccAbilities({
+    occ: input.occ,
+    characterLevel: input.characterLevel,
+  }).map((row) => ({
+    ...row,
+    id: row.id.replace(/^occ:/, 'rcc:'),
+    source: 'race' as const,
+    sourceLabel: label,
+  }))
+}
+
+/**
+ * Whether a category applies to this build even when the list is empty.
+ * Possessed rows always show; hide only when not possessed and not available.
+ */
+export function isLiveSheetAbilityCategoryAvailable(input: {
+  categoryId: LiveSheetAbilityCategoryId
+  race: Race | undefined
+  occ: PalladiumOcc | undefined
+  morphusTraits?: readonly MorphusCharacteristic[]
+  abilityBudget?: LiveSheetAbilityBudgetHint | null
+}): boolean {
+  const budget = input.abilityBudget
+  switch (input.categoryId) {
+    case 'natural':
+      return (
+        Boolean(input.race) ||
+        (input.morphusTraits?.length ?? 0) > 0 ||
+        (isRccRace(input.race) && Boolean(input.occ))
+      )
+    case 'occ':
+      return Boolean(input.occ) && !isRccRace(input.race)
+    case 'magic':
+      return (budget?.spellSlots ?? 0) > 0 || Boolean(input.occ?.ppeEngine)
+    case 'psionics':
+      return (budget?.psionicSlots ?? 0) > 0 || Boolean(input.occ?.ispEngine)
+    case 'talents':
+      return (budget?.talentSlots ?? 0) > 0
+    default:
+      return false
+  }
+}
+
+function sectionHasRows(section: LiveSheetAbilitySection): boolean {
+  return (
+    (section.naturalRows?.length ?? 0) > 0 ||
+    (section.catalogRows?.length ?? 0) > 0
+  )
+}
+
+function compareAbilityName(a: string, b: string): number {
+  return a.localeCompare(b, undefined, { sensitivity: 'base' })
+}
+
+export function sortLiveNaturalAbilityRows(
+  rows: readonly LiveNaturalAbilityRow[],
+): LiveNaturalAbilityRow[] {
+  return [...rows].sort((a, b) => compareAbilityName(a.name, b.name))
+}
+
+export function sortLiveCatalogAbilityRows(
+  rows: readonly LiveCatalogAbilityRow[],
+): LiveCatalogAbilityRow[] {
+  return [...rows].sort((a, b) => compareAbilityName(a.name, b.name))
+}
+
+function magicLevelTypeKey(level: number): string {
+  return `level:${level}`
+}
+
+function magicLevelTypeLabel(level: number): string {
+  return `Level ${level}`
+}
+
+function talentTierTypeLabel(tier: string): string {
+  if (tier === 'elite') return 'Elite'
+  if (tier === 'common') return 'Common'
+  return tier
+}
+
+/**
+ * Type-filter options present on this section’s rows (Skills-style Radical Visibility:
+ * options come from owned rows, not from the post-search subset). Natural/OCC return [].
+ */
+export function listLiveSheetAbilityTypeFilterOptions(
+  section: LiveSheetAbilitySection,
+  genreId: string,
+): readonly LiveSheetAbilityTypeFilterOption[] {
+  if (section.id === 'natural' || section.id === 'occ') return []
+
+  const seen = new Set<string>()
+  const options: LiveSheetAbilityTypeFilterOption[] = [
+    { value: LIVE_ABILITY_FILTER_ALL_TYPES, label: 'All types' },
+  ]
+
+  const push = (value: string, label: string) => {
+    if (seen.has(value)) return
+    seen.add(value)
+    options.push({ value, label })
+  }
+
+  for (const row of section.catalogRows ?? []) {
+    for (const key of row.typeFilterKeys ?? []) {
+      if (section.id === 'magic' && key.startsWith('level:')) {
+        const level = Number(key.slice('level:'.length))
+        if (Number.isFinite(level)) push(key, magicLevelTypeLabel(level))
+        continue
+      }
+      if (section.id === 'psionics') {
+        push(key, psionicCategoryFilterLabel(genreId, key))
+        continue
+      }
+      if (section.id === 'talents') {
+        push(key, talentTierTypeLabel(key))
+      }
+    }
+  }
+
+  if (section.id === 'magic') {
+    const levels = options
+      .filter((o) => o.value.startsWith('level:'))
+      .sort(
+        (a, b) =>
+          Number(a.value.slice('level:'.length)) -
+          Number(b.value.slice('level:'.length)),
+      )
+    return [
+      options[0]!,
+      ...levels,
+      ...options.filter(
+        (o) => o.value !== LIVE_ABILITY_FILTER_ALL_TYPES && !o.value.startsWith('level:'),
+      ),
+    ]
+  }
+
+  if (section.id === 'talents') {
+    const ordered = ['common', 'elite']
+    const rest = options.filter(
+      (o) =>
+        o.value !== LIVE_ABILITY_FILTER_ALL_TYPES && !ordered.includes(o.value),
+    )
+    return [
+      options[0]!,
+      ...ordered
+        .filter((id) => seen.has(id))
+        .map((id) => ({ value: id, label: talentTierTypeLabel(id) })),
+      ...rest,
+    ]
+  }
+
+  // Only All + no owned type keys → no filter UI.
+  return options.length <= 1 ? [] : options
+}
+
+/**
+ * Filter one ability section by type key and/or name query (AND when both set).
+ * Empty filter = unchanged section. Type filter applies to catalog rows only.
+ */
+export function filterLiveSheetAbilitySection(
+  section: LiveSheetAbilitySection,
+  filter: LiveSheetAbilityListFilter = {},
+): LiveSheetAbilitySection {
+  const typeKey = filter.typeKey?.trim() ?? LIVE_ABILITY_FILTER_ALL_TYPES
+  const query = filter.nameQuery?.trim().toLowerCase() ?? ''
+
+  const naturalRows = (section.naturalRows ?? []).filter((row) => {
+    if (!query) return true
+    return row.name.toLowerCase().includes(query)
+  })
+  const catalogRows = (section.catalogRows ?? []).filter((row) => {
+    if (
+      typeKey !== LIVE_ABILITY_FILTER_ALL_TYPES &&
+      !(row.typeFilterKeys ?? []).includes(typeKey)
+    ) {
+      return false
+    }
+    if (query && !row.name.toLowerCase().includes(query)) return false
+    return true
+  })
+
+  return {
+    ...section,
+    naturalRows: section.naturalRows ? naturalRows : undefined,
+    catalogRows: section.catalogRows ? catalogRows : undefined,
+  }
+}
+
 export function listLiveSheetCatalogAbilities(input: {
   selectedAbilityIds: readonly string[]
   activeForm: ActiveForm
@@ -507,6 +746,8 @@ export function listLiveSheetCatalogAbilities(input: {
     psionics: [],
     talents: [],
   }
+
+  const genreLower = input.genreId.toLowerCase()
 
   for (const id of input.selectedAbilityIds) {
     const ability = getAbilityById(id)
@@ -526,15 +767,45 @@ export function listLiveSheetCatalogAbilities(input: {
         : ability.description.trim()
 
     const metaParts: string[] = []
+    const typeFilterKeys: string[] = []
     if (ability.category === 'Spell') {
       const spell = getPalladiumMagicSpellById(id)
       if (spell) metaParts.push(formatMagicPpeCost(spell))
       else if (ability.baseCost > 0) metaParts.push(`${ability.baseCost} P.P.E.`)
-      if (ability.spellLevel != null) metaParts.push(`Level ${ability.spellLevel}`)
+      const level =
+        ability.spellLevel ??
+        (typeof spell?.level === 'number' ? spell.level : undefined)
+      if (level != null) {
+        metaParts.push(`Level ${level}`)
+        typeFilterKeys.push(magicLevelTypeKey(level))
+      }
     } else if (ability.category === 'Psionic') {
       const psi = getPalladiumPsionicById(id)
       if (psi) metaParts.push(formatPsionicIspCost(psi, input.genreId))
       else if (ability.baseCost > 0) metaParts.push(`${ability.baseCost} I.S.P.`)
+      if (psi) {
+        for (const placement of psi.genrePlacements) {
+          if (placement.genreId.toLowerCase() !== genreLower) continue
+          if (!typeFilterKeys.includes(placement.category)) {
+            typeFilterKeys.push(placement.category)
+          }
+        }
+      }
+    } else if (ability.category === 'Talent') {
+      const talent = getPalladiumTalentById(id)
+      if (talent) {
+        typeFilterKeys.push(talentCatalogTier(talent))
+      } else {
+        typeFilterKeys.push('common')
+      }
+      if (ability.activationCost) metaParts.push(ability.activationCost)
+      else if (ability.ppeCost != null) {
+        metaParts.push(
+          typeof ability.ppeCost === 'number'
+            ? `${ability.ppeCost} P.P.E.`
+            : String(ability.ppeCost),
+        )
+      }
     } else if (ability.activationCost) {
       metaParts.push(ability.activationCost)
     } else if (ability.ppeCost != null) {
@@ -553,14 +824,22 @@ export function listLiveSheetCatalogAbilities(input: {
       metaLine: metaParts.filter(Boolean).join(' · ') || undefined,
       morphusOnly: ability.morphusOnly === true,
       formRestricted: !formOk,
+      typeFilterKeys: typeFilterKeys.length > 0 ? typeFilterKeys : undefined,
     })
   }
 
-  return out
+  return {
+    magic: sortLiveCatalogAbilityRows(out.magic),
+    psionics: sortLiveCatalogAbilityRows(out.psionics),
+    talents: sortLiveCatalogAbilityRows(out.talents),
+  }
 }
 
 /**
- * Live sheet Abilities tab sections — empty categories are omitted.
+ * Live sheet Abilities category sections (Unified Path).
+ * - `emptyPolicy: 'omit'` (default) — strip Abilities: empty categories hidden.
+ * - `emptyPolicy: 'show-if-available'` — Combat Abilities: empty available tabs still show.
+ * R.C.C. shadow O.C.C. gameplay abilities land under Natural; OCC tab is O.C.C.-only.
  */
 export function buildLiveSheetAbilitySections(input: {
   race: Race | undefined
@@ -570,50 +849,84 @@ export function buildLiveSheetAbilitySections(input: {
   activeForm: ActiveForm
   genreId: string
   morphusTraits?: readonly MorphusCharacteristic[]
+  abilityBudget?: LiveSheetAbilityBudgetHint | null
+  emptyPolicy?: LiveSheetAbilityEmptyPolicy
 }): LiveSheetAbilitySection[] {
-  const naturalRows = listLiveSheetNaturalAbilities({
+  const emptyPolicy = input.emptyPolicy ?? 'omit'
+  const rcc = isRccRace(input.race)
+  const raceNaturalRows = listLiveSheetNaturalAbilities({
     race: input.race,
     characterLevel: input.characterLevel,
     activeForm: input.activeForm,
     morphusTraits: input.morphusTraits,
   })
-  const occRows = listLiveSheetOccAbilities({
+  const rccNaturalRows = listLiveSheetRccAbilitiesAsNatural({
+    race: input.race,
     occ: input.occ,
     characterLevel: input.characterLevel,
   })
+  const naturalRows = sortLiveNaturalAbilityRows([
+    ...raceNaturalRows,
+    ...rccNaturalRows,
+  ])
+  const occRows = rcc
+    ? []
+    : sortLiveNaturalAbilityRows(
+        listLiveSheetOccAbilities({
+          occ: input.occ,
+          characterLevel: input.characterLevel,
+        }),
+      )
   const catalog = listLiveSheetCatalogAbilities({
     selectedAbilityIds: input.selectedAbilityIds,
     activeForm: input.activeForm,
     genreId: input.genreId,
   })
 
+  const availabilityInput = {
+    race: input.race,
+    occ: input.occ,
+    morphusTraits: input.morphusTraits,
+    abilityBudget: input.abilityBudget,
+  }
+
   const sections: LiveSheetAbilitySection[] = []
   for (const id of CATEGORY_ORDER) {
+    let section: LiveSheetAbilitySection
     if (id === 'natural') {
-      if (naturalRows.length === 0) continue
-      sections.push({
+      section = {
         id,
         label: CATEGORY_LABELS[id],
         naturalRows,
-      })
-      continue
-    }
-    if (id === 'occ') {
-      if (occRows.length === 0) continue
-      sections.push({
+      }
+    } else if (id === 'occ') {
+      section = {
         id,
         label: CATEGORY_LABELS[id],
         naturalRows: occRows,
-      })
+      }
+    } else {
+      section = {
+        id,
+        label: CATEGORY_LABELS[id],
+        catalogRows: catalog[id],
+      }
+    }
+
+    const possessed = sectionHasRows(section)
+    if (possessed) {
+      sections.push(section)
       continue
     }
-    const catalogRows = catalog[id]
-    if (catalogRows.length === 0) continue
-    sections.push({
-      id,
-      label: CATEGORY_LABELS[id],
-      catalogRows,
-    })
+    if (
+      emptyPolicy === 'show-if-available' &&
+      isLiveSheetAbilityCategoryAvailable({
+        categoryId: id,
+        ...availabilityInput,
+      })
+    ) {
+      sections.push(section)
+    }
   }
   return sections
 }

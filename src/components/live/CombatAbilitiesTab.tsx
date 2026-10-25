@@ -1,6 +1,20 @@
 /**
- * Combat → Abilities (interim): P.P.E. / I.S.P. at top; body placeholder until full mockup.
+ * Combat → Abilities: P.P.E. / I.S.P. above category sub-tabs
+ * (Natural | OCC | Magic | Psionics | Talents). v1 = lists only; cast UX next.
  */
+
+import { useEffect, useMemo, useState } from 'react'
+import { useCharacter } from '../../context/CharacterContext'
+import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
+import type { ForgeTabView } from '../../lib/forgeNavigation/types'
+import { resolveActiveMorphusTraits } from '../../lib/morphusPassiveBridge'
+import { resolveEffectiveCreationAbilityBudget } from '../../lib/creationAbilityBudget'
+import {
+  buildLiveSheetAbilitySections,
+  LIVE_SHEET_ABILITY_CATEGORY_PILL_LABELS,
+  type LiveSheetAbilityCategoryId,
+} from '../../lib/liveSheetAbilities'
+import { LiveAbilityCategoryList } from './LiveAbilityCategoryList'
 
 type Props = {
   morphus: boolean
@@ -19,9 +33,105 @@ export function CombatAbilitiesTab({
   ispCurrent,
   ispMax,
 }: Props) {
+  const {
+    character,
+    activeRace,
+    effectiveOcc,
+    activeForm,
+    creationGenreId,
+    hostGenreId,
+    psychicTier,
+  } = useCharacter()
+
+  const genreId = creationGenreId ?? hostGenreId ?? 'nightbane'
+  const morphusTraits = useMemo(
+    () => resolveActiveMorphusTraits(character),
+    [character],
+  )
+
+  const abilityBudget = useMemo(
+    () =>
+      resolveEffectiveCreationAbilityBudget({
+        occ: effectiveOcc,
+        raceId: activeRace?.id,
+        psychicTier,
+        storedBudget: character.creationAbilityBudget,
+        creationGenreId: creationGenreId ?? undefined,
+        hostGenreId: hostGenreId ?? undefined,
+      }),
+    [
+      effectiveOcc,
+      activeRace?.id,
+      psychicTier,
+      character.creationAbilityBudget,
+      creationGenreId,
+      hostGenreId,
+    ],
+  )
+
+  const sections = useMemo(
+    () =>
+      buildLiveSheetAbilitySections({
+        race: activeRace,
+        occ: effectiveOcc,
+        characterLevel: character.level,
+        selectedAbilityIds: character.selectedAbilities ?? [],
+        activeForm,
+        genreId,
+        morphusTraits,
+        abilityBudget,
+        emptyPolicy: 'show-if-available',
+      }),
+    [
+      activeRace,
+      effectiveOcc,
+      character.level,
+      character.selectedAbilities,
+      activeForm,
+      genreId,
+      morphusTraits,
+      abilityBudget,
+    ],
+  )
+
+  const [activeCategoryId, setActiveCategoryId] = useState<LiveSheetAbilityCategoryId | null>(
+    null,
+  )
+
+  useEffect(() => {
+    if (sections.length === 0) {
+      setActiveCategoryId(null)
+      return
+    }
+    setActiveCategoryId((current) => {
+      if (current && sections.some((s) => s.id === current)) return current
+      return sections[0]!.id
+    })
+  }, [sections])
+
   const card = morphus
     ? 'border-violet-500/80 bg-slate-950/90'
     : 'border-blue-300 bg-white'
+  const muted = morphus ? 'text-violet-300/90' : 'text-slate-600'
+
+  const activeSection =
+    sections.find((s) => s.id === activeCategoryId) ?? sections[0] ?? null
+
+  const subTabs: ForgeTabView[] = useMemo(
+    () =>
+      sections.map((section) => ({
+        id: section.id,
+        label: LIVE_SHEET_ABILITY_CATEGORY_PILL_LABELS[section.id],
+        visual:
+          section.id === (activeSection?.id ?? activeCategoryId)
+            ? 'active'
+            : 'available',
+        clickable: true,
+        blockers: [],
+        isViewing: section.id === (activeSection?.id ?? activeCategoryId),
+      })),
+    [sections, activeSection?.id, activeCategoryId],
+  )
 
   return (
     <div className="space-y-3" aria-label="Combat abilities">
@@ -45,20 +155,30 @@ export function CombatAbilitiesTab({
           />
         ) : null}
       </div>
-      <div
-        className={`rounded-lg border-2 border-dashed px-4 py-8 text-center ${
-          morphus
-            ? 'border-violet-600/60 bg-slate-950/50 text-violet-200'
-            : 'border-blue-300 bg-blue-50/40 text-slate-600'
-        }`}
-        role="status"
-      >
-        <p className="text-xs font-black uppercase tracking-wide">Abilities — coming next</p>
-        <p className="mt-2 text-[11px] leading-snug opacity-80">
-          Cast, duration, and pumped targets will live here. Use the strip Abilities overlay for
-          the full list until this mockup lands.
+
+      {sections.length === 0 ? (
+        <p className={`text-xs ${muted}`} role="status">
+          No ability categories available for this character.
         </p>
-      </div>
+      ) : (
+        <>
+          <ForgeNavigationBar
+            tabs={subTabs}
+            activeTabId={activeSection?.id ?? sections[0]!.id}
+            onSelectTab={(id) => setActiveCategoryId(id as LiveSheetAbilityCategoryId)}
+            singleRow
+            onDarkSurface={morphus}
+          />
+          {activeSection ? (
+            <LiveAbilityCategoryList
+              section={activeSection}
+              morphus={morphus}
+              genreId={genreId}
+              emptyMessage={`No ${LIVE_SHEET_ABILITY_CATEGORY_PILL_LABELS[activeSection.id].toLowerCase()} abilities yet.`}
+            />
+          ) : null}
+        </>
+      )}
     </div>
   )
 }

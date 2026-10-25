@@ -3,24 +3,17 @@ import { useCharacter } from '../../context/CharacterContext'
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
 import type { ForgeTabView } from '../../lib/forgeNavigation/types'
 import { resolveActiveMorphusTraits } from '../../lib/morphusPassiveBridge'
+import { resolveEffectiveCreationAbilityBudget } from '../../lib/creationAbilityBudget'
 import {
   buildLiveSheetAbilitySections,
-  type LiveCatalogAbilityRow,
-  type LiveNaturalAbilityRow,
+  LIVE_SHEET_ABILITY_CATEGORY_PILL_LABELS,
   type LiveSheetAbilityCategoryId,
 } from '../../lib/liveSheetAbilities'
-
-const SUB_TAB_PILL_LABELS: Record<LiveSheetAbilityCategoryId, string> = {
-  natural: 'Natural',
-  occ: 'O.C.C.',
-  magic: 'Magic',
-  psionics: 'Psionics',
-  talents: 'Talents',
-}
+import { LiveAbilityCategoryList } from './LiveAbilityCategoryList'
 
 /**
- * Live sheet Abilities tab — nested Natural / O.C.C. / Magic / Psionics / Talents pills.
- * Empty categories are omitted (Radical Visibility).
+ * Live sheet Abilities tab — nested Natural / OCC / Magic / Psionics / Talents pills.
+ * Empty categories are omitted (strip policy). Combat uses show-if-available.
  */
 export function LiveAbilitiesPanel() {
   const {
@@ -31,6 +24,7 @@ export function LiveAbilitiesPanel() {
     supportsDualForm,
     creationGenreId,
     hostGenreId,
+    psychicTier,
   } = useCharacter()
 
   const morphus = supportsDualForm && activeForm === 'morphus'
@@ -39,6 +33,26 @@ export function LiveAbilitiesPanel() {
   const morphusTraits = useMemo(
     () => resolveActiveMorphusTraits(character),
     [character],
+  )
+
+  const abilityBudget = useMemo(
+    () =>
+      resolveEffectiveCreationAbilityBudget({
+        occ: effectiveOcc,
+        raceId: activeRace?.id,
+        psychicTier,
+        storedBudget: character.creationAbilityBudget,
+        creationGenreId: creationGenreId ?? undefined,
+        hostGenreId: hostGenreId ?? undefined,
+      }),
+    [
+      effectiveOcc,
+      activeRace?.id,
+      psychicTier,
+      character.creationAbilityBudget,
+      creationGenreId,
+      hostGenreId,
+    ],
   )
 
   const sections = useMemo(
@@ -51,6 +65,8 @@ export function LiveAbilitiesPanel() {
         activeForm,
         genreId,
         morphusTraits,
+        abilityBudget,
+        emptyPolicy: 'omit',
       }),
     [
       activeRace,
@@ -60,6 +76,7 @@ export function LiveAbilitiesPanel() {
       activeForm,
       genreId,
       morphusTraits,
+      abilityBudget,
     ],
   )
 
@@ -80,9 +97,6 @@ export function LiveAbilitiesPanel() {
 
   const headingColor = morphus ? 'text-violet-200' : 'text-blue-900'
   const muted = morphus ? 'text-violet-300/90' : 'text-slate-600'
-  const card = morphus
-    ? 'rounded-lg border-2 border-violet-700 bg-slate-950/80 text-violet-50'
-    : 'rounded-lg border-2 border-slate-200 bg-white text-slate-900'
 
   const activeSection =
     sections.find((s) => s.id === activeCategoryId) ?? sections[0] ?? null
@@ -91,7 +105,7 @@ export function LiveAbilitiesPanel() {
     () =>
       sections.map((section) => ({
         id: section.id,
-        label: SUB_TAB_PILL_LABELS[section.id],
+        label: LIVE_SHEET_ABILITY_CATEGORY_PILL_LABELS[section.id],
         visual:
           section.id === (activeSection?.id ?? activeCategoryId)
             ? 'active'
@@ -129,7 +143,7 @@ export function LiveAbilitiesPanel() {
           Abilities
         </h2>
         <p className={`mt-1 text-xs ${muted}`}>
-          Only categories this character has are shown. Morphus trait powers appear under
+          Only categories this character has are shown. R.C.C. powers appear under
           Natural. Cast / duration workflow is still target UX.
         </p>
       </div>
@@ -142,146 +156,12 @@ export function LiveAbilitiesPanel() {
       />
 
       {activeSection ? (
-        <div className="space-y-2" role="tabpanel" aria-label={activeSection.label}>
-          <ul className="space-y-2">
-            {activeSection.naturalRows?.map((row) => (
-              <li key={row.id}>
-                <NaturalAbilityCard
-                  row={row}
-                  cardClass={card}
-                  muted={muted}
-                  morphus={morphus}
-                />
-              </li>
-            ))}
-            {activeSection.catalogRows?.map((row) => (
-              <li key={row.id}>
-                <CatalogAbilityCard
-                  row={row}
-                  cardClass={card}
-                  muted={muted}
-                  morphus={morphus}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
+        <LiveAbilityCategoryList
+          section={activeSection}
+          morphus={morphus}
+          genreId={genreId}
+        />
       ) : null}
     </section>
-  )
-}
-
-function NaturalAbilityCard({
-  row,
-  cardClass,
-  muted,
-  morphus,
-}: {
-  row: LiveNaturalAbilityRow
-  cardClass: string
-  muted: string
-  morphus: boolean
-}) {
-  return (
-    <article
-      className={`px-3 py-2.5 ${cardClass} ${row.formRestricted ? 'opacity-55' : ''}`}
-    >
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h4 className="text-sm font-bold leading-snug">{row.name}</h4>
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-          {row.metaLine ? (
-            <span className={`font-mono text-[11px] font-semibold ${muted}`}>
-              {row.metaLine}
-            </span>
-          ) : null}
-          <span className={`text-[10px] font-semibold uppercase tracking-wide ${muted}`}>
-            {row.sourceLabel}
-          </span>
-        </div>
-      </div>
-      {row.morphusOnly ? (
-        <p
-          className={`mt-1 text-[10px] font-black uppercase tracking-wide ${
-            morphus ? 'text-amber-300' : 'text-amber-800'
-          }`}
-        >
-          Morphus only
-        </p>
-      ) : null}
-      {row.formRestricted ? (
-        <p
-          className={`mt-1 text-[10px] font-semibold uppercase tracking-wide ${
-            morphus ? 'text-amber-200/90' : 'text-amber-900'
-          }`}
-        >
-          Not available in the active form
-        </p>
-      ) : null}
-      {row.percentileLine ? (
-        <p className={`mt-1 font-mono text-[11px] font-semibold ${muted}`}>
-          {row.percentileLine}
-        </p>
-      ) : null}
-      {row.detailLines && row.detailLines.length > 0 ? (
-        <ul className={`mt-1.5 list-disc space-y-0.5 pl-4 text-xs leading-relaxed ${muted}`}>
-          {row.detailLines.map((line) => (
-            <li key={line}>{line}</li>
-          ))}
-        </ul>
-      ) : null}
-      {row.description ? (
-        <p className={`mt-1.5 text-xs leading-relaxed ${muted}`}>{row.description}</p>
-      ) : null}
-    </article>
-  )
-}
-
-function CatalogAbilityCard({
-  row,
-  cardClass,
-  muted,
-  morphus,
-}: {
-  row: LiveCatalogAbilityRow
-  cardClass: string
-  muted: string
-  morphus: boolean
-}) {
-  return (
-    <article
-      className={`px-3 py-2.5 ${cardClass} ${
-        row.formRestricted ? 'opacity-55' : ''
-      }`}
-    >
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h4 className="text-sm font-bold leading-snug">{row.name}</h4>
-        {row.metaLine ? (
-          <span className={`font-mono text-[11px] font-semibold ${muted}`}>
-            {row.metaLine}
-          </span>
-        ) : null}
-      </div>
-      {row.morphusOnly ? (
-        <p
-          className={`mt-1 text-[10px] font-black uppercase tracking-wide ${
-            morphus ? 'text-amber-300' : 'text-amber-800'
-          }`}
-        >
-          Morphus only
-        </p>
-      ) : null}
-      {row.formRestricted ? (
-        <p
-          className={`mt-1 text-[10px] font-semibold uppercase tracking-wide ${
-            morphus ? 'text-amber-200/90' : 'text-amber-900'
-          }`}
-        >
-          Not available in the active form
-        </p>
-      ) : null}
-      {row.description ? (
-        <p className={`mt-1.5 text-xs leading-relaxed ${muted}`}>{row.description}</p>
-      ) : null}
-    </article>
   )
 }

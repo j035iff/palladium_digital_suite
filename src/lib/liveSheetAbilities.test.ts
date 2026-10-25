@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import {
   buildLiveSheetAbilitySections,
+  filterLiveSheetAbilitySection,
+  isLiveSheetAbilityCategoryAvailable,
   isLiveSheetOccAbility,
   isLiveSheetRaceNaturalAbility,
+  listLiveSheetAbilityTypeFilterOptions,
   listLiveSheetMorphusNaturalAbilities,
   listLiveSheetNaturalAbilities,
   listLiveSheetOccAbilities,
+  listLiveSheetRccAbilitiesAsNatural,
 } from './liveSheetAbilities'
 import type { MorphusCharacteristic, OccClassAbility, PalladiumOcc, Race } from '../types'
 import { createBlankCharacterForGenre } from './characterRoot'
@@ -186,6 +190,102 @@ describe('liveSheetAbilities', () => {
     ).toEqual(['Special Anti-Supernatural Bonuses'])
   })
 
+  it('routes R.C.C. shadow O.C.C. abilities under Natural, not OCC', () => {
+    const race = {
+      id: 'race_guardian',
+      name: 'Guardian',
+      raceComposition: 'rcc',
+      forcedOccId: 'occ_guardian_rcc',
+      classAbilities: [],
+    } as unknown as Race
+    const occ = {
+      id: 'occ_guardian_rcc',
+      name: 'Guardian (R.C.C.)',
+      occType: 'standard',
+      classAbilities: [
+        {
+          name: 'Supernatural Strength',
+          description: 'Lift tons.',
+          sheetUsage: 'gameplay',
+        },
+        {
+          name: 'Related skill picks',
+          description: 'Choose related skills.',
+        },
+      ],
+    } as unknown as PalladiumOcc
+
+    const rccRows = listLiveSheetRccAbilitiesAsNatural({
+      race,
+      occ,
+      characterLevel: 1,
+    })
+    expect(rccRows.map((r) => r.name)).toEqual(['Supernatural Strength'])
+    expect(rccRows[0]?.source).toBe('race')
+    expect(rccRows[0]?.sourceLabel).toBe('Guardian')
+
+    const sections = buildLiveSheetAbilitySections({
+      race,
+      occ,
+      characterLevel: 1,
+      selectedAbilityIds: [],
+      activeForm: 'primary',
+      genreId: 'nightbane',
+    })
+    expect(sections.map((s) => s.id)).toEqual(['natural'])
+    expect(sections[0]?.naturalRows?.map((r) => r.name)).toEqual([
+      'Supernatural Strength',
+    ])
+    expect(
+      isLiveSheetAbilityCategoryAvailable({
+        categoryId: 'occ',
+        race,
+        occ,
+      }),
+    ).toBe(false)
+  })
+
+  it('shows empty available categories when emptyPolicy is show-if-available', () => {
+    const race = {
+      id: 'race_human',
+      name: 'Human',
+      raceComposition: 'character',
+      classAbilities: [],
+    } as unknown as Race
+    const occ = {
+      id: 'occ_mage',
+      name: 'Mage',
+      occType: 'standard',
+      ppeEngine: { magicSchools: ['invocation'] },
+      classAbilities: [],
+    } as unknown as PalladiumOcc
+
+    const omitted = buildLiveSheetAbilitySections({
+      race,
+      occ,
+      characterLevel: 1,
+      selectedAbilityIds: [],
+      activeForm: 'primary',
+      genreId: 'nightbane',
+      abilityBudget: { spellSlots: 2, psionicSlots: 0, talentSlots: 0 },
+      emptyPolicy: 'omit',
+    })
+    expect(omitted).toEqual([])
+
+    const combat = buildLiveSheetAbilitySections({
+      race,
+      occ,
+      characterLevel: 1,
+      selectedAbilityIds: [],
+      activeForm: 'primary',
+      genreId: 'nightbane',
+      abilityBudget: { spellSlots: 2, psionicSlots: 0, talentSlots: 0 },
+      emptyPolicy: 'show-if-available',
+    })
+    expect(combat.map((s) => s.id)).toEqual(['natural', 'occ', 'magic'])
+    expect(combat.find((s) => s.id === 'magic')?.catalogRows).toEqual([])
+  })
+
   it('filters O.C.C. skill-program boilerplate from O.C.C. abilities', () => {
     const occ = {
       id: 'occ_test',
@@ -219,5 +319,75 @@ describe('liveSheetAbilities', () => {
     expect(
       isLiveSheetOccAbility(occ.classAbilities![3] as OccClassAbility, occ),
     ).toBe(true)
+  })
+
+  it('sorts ability lists alphabetically by name', () => {
+    const race = {
+      id: 'race_test',
+      name: 'Test Race',
+      classAbilities: [
+        { name: 'Zebra Sense', description: 'Z.', sheetUsage: 'gameplay' },
+        { name: 'Alpha Sight', description: 'A.', sheetUsage: 'gameplay' },
+      ],
+    } as unknown as Race
+
+    const sections = buildLiveSheetAbilitySections({
+      race,
+      occ: undefined,
+      characterLevel: 1,
+      selectedAbilityIds: [],
+      activeForm: 'primary',
+      genreId: 'nightbane',
+    })
+    expect(sections[0]?.naturalRows?.map((r) => r.name)).toEqual([
+      'Alpha Sight',
+      'Zebra Sense',
+    ])
+  })
+
+  it('filters catalog abilities by type and name (AND)', () => {
+    const sections = buildLiveSheetAbilitySections({
+      race: undefined,
+      occ: undefined,
+      characterLevel: 1,
+      selectedAbilityIds: [
+        'magic_wizard_energy_bolt',
+        'talent_all_nighter',
+      ],
+      activeForm: 'primary',
+      genreId: 'nightbane',
+    })
+    const magic = sections.find((s) => s.id === 'magic')
+    expect(magic).toBeDefined()
+    const typeOpts = listLiveSheetAbilityTypeFilterOptions(magic!, 'nightbane')
+    expect(typeOpts.some((o) => o.value.startsWith('level:'))).toBe(true)
+
+    const levelKey = magic!.catalogRows?.[0]?.typeFilterKeys?.[0]
+    expect(levelKey).toMatch(/^level:/)
+    const byLevel = filterLiveSheetAbilitySection(magic!, {
+      typeKey: levelKey,
+      nameQuery: 'energy',
+    })
+    expect(byLevel.catalogRows?.some((r) => /energy/i.test(r.name))).toBe(true)
+    expect(
+      filterLiveSheetAbilitySection(magic!, {
+        typeKey: levelKey,
+        nameQuery: 'zzzz-no-match',
+      }).catalogRows,
+    ).toEqual([])
+
+    const talents = sections.find((s) => s.id === 'talents')
+    expect(talents).toBeDefined()
+    const talentOpts = listLiveSheetAbilityTypeFilterOptions(
+      talents!,
+      'nightbane',
+    )
+    expect(talentOpts.map((o) => o.value)).toContain('common')
+    expect(
+      listLiveSheetAbilityTypeFilterOptions(
+        { id: 'natural', label: 'Natural', naturalRows: [] },
+        'nightbane',
+      ),
+    ).toEqual([])
   })
 })
