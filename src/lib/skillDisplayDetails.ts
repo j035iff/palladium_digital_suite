@@ -1,6 +1,7 @@
 import type { EngineSkillDef } from '../data/skillLibrary'
 import { getPalladiumSkillCatalogEntryById } from '../data/library/skillsCatalogLoader'
 import { getWeaponProficiencyCatalogEntryById } from '../data/library/weaponProficienciesCatalogLoader'
+import { accumulateWeaponProficiencyBonuses } from './weaponProficiencyBonuses'
 
 export type SkillSubPercentLine = {
   name: string
@@ -212,24 +213,11 @@ export function resolveCreationLibrarySkillPreview(
 }
 
 function formatWpBonusesAtLevel(
-  wp: {
-    levelTiers?: readonly Record<string, unknown>[]
-  },
+  wp: Parameters<typeof accumulateWeaponProficiencyBonuses>[0],
   characterLevel: number,
 ): string | null {
   const parts: string[] = []
-  const totals: Record<string, number> = {}
-
-  for (const tier of wp.levelTiers ?? []) {
-    const at = tier.atCharacterLevel
-    if (typeof at !== 'number' || at > characterLevel) continue
-    for (const key of COMBAT_KEYS) {
-      const val = tier[key]
-      if (typeof val === 'number' && Number.isFinite(val)) {
-        totals[key] = (totals[key] ?? 0) + val
-      }
-    }
-  }
+  const totals = accumulateWeaponProficiencyBonuses(wp, characterLevel)
 
   const parry = totals.parry
   const dodge = totals.dodge
@@ -244,6 +232,13 @@ function formatWpBonusesAtLevel(
     if (key === 'parry' || key === 'dodge') continue
     const val = totals[key]
     if (val) parts.push(`+${val} ${COMBAT_LABELS[key]}`)
+  }
+
+  if (totals.aimedStrikeBonus) {
+    parts.push(`+${totals.aimedStrikeBonus} aimed strike`)
+  }
+  if (totals.burstStrikeBonus) {
+    parts.push(`+${totals.burstStrikeBonus} burst strike`)
   }
 
   return parts.length > 0 ? parts.join(', ') : null
@@ -265,10 +260,7 @@ export function resolveSkillCatalogDisplayDetails(
       isWeaponProficiency: true,
       physicalBonusSummary: null,
       weaponBonusSummary: wp
-        ? formatWpBonusesAtLevel(
-            wp as { levelTiers?: readonly Record<string, unknown>[] },
-            characterLevel,
-          )
+        ? formatWpBonusesAtLevel(wp, characterLevel)
         : null,
       subPercentLines: [],
       subSkillNames: [],

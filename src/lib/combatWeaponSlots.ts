@@ -236,12 +236,14 @@ export function applyStrikePenaltyToWeaponProfile(
 ): WeaponProfileBonuses {
   const line = twoGunPenaltyBonusLine(penalty)
   if (!line) return profile
+  const apply = (stat: typeof profile.strike) => ({
+    lines: [...stat.lines, line],
+    total: stat.total + line.amount,
+  })
   return {
     ...profile,
-    strike: {
-      lines: [...profile.strike.lines, line],
-      total: profile.strike.total + line.amount,
-    },
+    strike: apply(profile.strike),
+    burstStrike: profile.burstStrike ? apply(profile.burstStrike) : null,
   }
 }
 

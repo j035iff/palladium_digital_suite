@@ -254,7 +254,7 @@ Copy this block when registering a new unified path:
 | Stage | Module | Entry point(s) | Notes |
 |-------|--------|----------------|-------|
 | Era / glyph / slots | `src/lib/combatWeaponSlots.ts` + `resolveWeaponProficiencySkillId` | `resolveWeaponCombatEra`, `listSlotWeaponOptions`, `buildCombatWeaponSlotSelectOptions`, `isWeaponPairable`, `shouldShowPairableBadge`, `isShieldWeapon`, `modernTwoGunStrikePenalty`, `resolvePairedWeaponsSlotStatus`, `combatWeaponGlyphId`, `characterHasWpForWeapon`, `MISSING_WP_BADGE_LABEL`, `formatMissingWpRequirementTooltip` | One classifier + multi-slot dropdown rules; shared select builder greys instances already in another slot (Radical Visibility); W.P. ownership via shared resolver + `collectUnlockedSkillIds` (catalog ids); pairable badge requires Paired Weapons skill; missing-W.P. badge copy is shared (`No W.P.` + Requires tooltip) |
-| Weapon math | `src/lib/weaponBonuses.ts` + `applyStrikePenaltyToWeaponProfile` | `computeWeaponProfileBonuses` | Same profile as strike cards; two-gun penalties merge as strike lines |
+| Weapon math | `src/lib/weaponBonuses.ts` + `weaponProficiencyBonuses.ts` + `applyStrikePenaltyToWeaponProfile` | `computeWeaponProfileBonuses`, `accumulateWeaponProficiencyBonuses`, `selectWeaponStrikeProfileForFireMode` | Same profile as strike cards; W.P. from catalog `levelTiers` / standard modern bundle (aimed vs burst); two-gun penalties merge as strike (+ burst) lines |
 | Unarmed math | `sheetCombatDerived` + `handToHandCombatProfile` | Live stack totals + HtH accumulation | Initiative in APM header; title **Hand to Hand** + style badge |
 | UI — Unarmed | `CombatCategoryBubble` + `CombatExpandOverlay` + `UnarmedCombatExpand` | Summary + centered title + style aside + Expand → overlay | Bonuses / maneuvers only — no Physical die / Record Strike |
 | UI — weapons | `CombatWeaponCategoryPanel` + `CombatWeaponSlotRow` + `CombatExpandOverlay` + `WeaponStrikeCard` | Category `+`; Primary+Secondary always; 3rd+ removable; Expand → overlay | Strike/damage **bonus + notation** detail; no Pillar 5 die-entry block |
@@ -362,6 +362,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-11-13 | Equipped-weapon W.P. mods: `weaponProficiencyBonuses` accumulates catalog `levelTiers` / modern bundle into `computeWeaponProfileBonuses` (aimed vs burst; throw uses `strikeWhenThrown`) |
 | 2026-10-24 | Missing-W.P. Action badge: visible `No W.P.` only; rollover `Requires …` via shared `formatMissingWpRequirementTooltip` |
 | 2026-10-24 | Action Expand overlays: remove Pillar 5 Physical die / Record Strike chrome; keep strike/damage bonus + notation detail |
 | 2026-10-16 | Strip overlays: labeled prev/next tab paging flanking Close (wrap Identity ↔ Gear) |

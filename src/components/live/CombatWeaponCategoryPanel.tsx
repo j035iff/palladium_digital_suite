@@ -111,20 +111,19 @@ function slotQuickStats(
     const modes = getWeaponFireModes(selected)
     const single = pickSingleFireMode(modes)
     const burst = pickBurstFireMode(modes)
+    const aimedTotal = profile.strike.total + (single?.strikeModifier ?? 0)
+    const burstProfile = profile.burstStrike ?? profile.strike
     return (
       <>
         {hostNote && slotIndex === 0 ? (
           <p className="mb-0.5 text-[9px] font-semibold opacity-70">{hostNote}</p>
         ) : null}
-        <SummaryLine
-          label="Aimed"
-          value={formatBonus(profile.strike.total + (single?.strikeModifier ?? 0))}
-        />
+        <SummaryLine label="Aimed" value={formatBonus(aimedTotal)} />
         <SummaryLine
           label="Burst"
           value={
             burst
-              ? formatBonus(profile.strike.total + burst.strikeModifier)
+              ? formatBonus(burstProfile.total + burst.strikeModifier)
               : '—'
           }
         />
@@ -349,6 +348,7 @@ export function CombatWeaponCategoryPanel({
                   }
                   reloadShakeTrigger={0}
                   strikePenalty={expandedTwoGun}
+                  handToHandAccumulated={handToHandAccumulated}
                   onFireModeChange={(modeId) =>
                     onFireModeChange(expandedSelected.id, modeId)
                   }

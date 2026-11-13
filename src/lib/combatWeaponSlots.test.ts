@@ -260,11 +260,16 @@ describe('combatWeaponSlots', () => {
       strike: { lines: [{ key: 'pp', label: 'P.P.', amount: 2 }], total: 2 },
       parry: { lines: [], total: 0 },
       throw: null,
+      burstStrike: {
+        lines: [{ key: 'pp', label: 'P.P.', amount: 2 }],
+        total: 2,
+      },
       wpSkillDisplayName: null,
     } satisfies WeaponProfileBonuses
     const withPen = applyStrikePenaltyToWeaponProfile(profile, -2)
     expect(withPen.strike.total).toBe(0)
     expect(withPen.strike.lines.some((l) => l.key === 'two_gun')).toBe(true)
+    expect(withPen.burstStrike?.total).toBe(0)
   })
 
   it('gates Paired Weapons abilities on pairable + W.P. each', () => {

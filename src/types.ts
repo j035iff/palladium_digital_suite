@@ -2835,7 +2835,7 @@ export interface Weapon extends Item {
   ammoCategory?: string
   /** @deprecated Use {@link ammoCategory}. */
   ammoPoolKey?: string
-  /** If set and unlocked on the sheet, W.P. skill % feeds the strike engine. */
+  /** If set and unlocked on the sheet, W.P. catalog level tiers feed the strike engine. */
   linkedWpSkillId?: string
   /**
    * Stable hardware catalog id when spawned from `weapons/ancient.json`

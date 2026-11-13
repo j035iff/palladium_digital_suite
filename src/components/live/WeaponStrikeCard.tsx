@@ -1,9 +1,16 @@
-import type { ActiveForm, Character, FireMode, Weapon } from '../../types'
+import type {
+  AccumulatedHandToHandBonuses,
+  ActiveForm,
+  Character,
+  FireMode,
+  Weapon,
+} from '../../types'
 import {
   computeWeaponProfileBonuses,
   formatWeaponStatEquation,
   isRangedWeapon,
   prettyWeaponTraitKey,
+  selectWeaponStrikeProfileForFireMode,
   type WeaponStatProfile,
 } from '../../lib/weaponBonuses'
 import { applyStrikePenaltyToWeaponProfile } from '../../lib/combatWeaponSlots'
@@ -39,6 +46,7 @@ type WeaponStrikeCardProps = {
   reloadShakeTrigger: number
   /** Modern two-gun (or other) strike penalty already resolved in lib. */
   strikePenalty?: number
+  handToHandAccumulated?: AccumulatedHandToHandBonuses
   onFireModeChange: (modeId: string) => void
   onReload: () => void
   onReloadFailed: () => void
@@ -91,13 +99,14 @@ export function WeaponStrikeCard({
   fireModeId,
   reloadShakeTrigger,
   strikePenalty = 0,
+  handToHandAccumulated,
   onFireModeChange,
   onReload,
   onReloadFailed,
 }: WeaponStrikeCardProps) {
   const ranged = isRangedWeapon(w)
   const profile = applyStrikePenaltyToWeaponProfile(
-    computeWeaponProfileBonuses(character, activeForm, w),
+    computeWeaponProfileBonuses(character, activeForm, w, handToHandAccumulated),
     strikePenalty,
   )
   const mode: FireMode = ranged
@@ -109,7 +118,8 @@ export function WeaponStrikeCard({
   const ammoCost = mode ? resolveFireModeAmmoCost(w, mode) : 0
   const canAfford = mode ? canAffordFireMode(w, mode) : true
   const wildWarn = mode ? getWildBurstWarning(w, mode) : { kind: 'none' as const }
-  const strikeBonus = profile.strike.total + mode.strikeModifier
+  const strikeProfile = selectWeaponStrikeProfileForFireMode(profile, mode)
+  const strikeBonus = strikeProfile.total + mode.strikeModifier
 
   const wpSubtitle = w.wpCategory ?? profile.wpSkillDisplayName ?? w.category
 
@@ -172,7 +182,7 @@ export function WeaponStrikeCard({
         </div>
 
         <dl className="flex flex-wrap gap-2 md:gap-3">
-          <WeaponStatChip label="Strike" profile={profile.strike} morphus={morphus} />
+          <WeaponStatChip label="Strike" profile={strikeProfile} morphus={morphus} />
           <WeaponStatChip label="Parry" profile={profile.parry} morphus={morphus} />
           {profile.throw ? (
             <WeaponStatChip label="Throw" profile={profile.throw} morphus={morphus} />

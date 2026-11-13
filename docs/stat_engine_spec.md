@@ -316,7 +316,7 @@ Final % = [Base + (PerLevel × (EffLevel − 1))] + OCC + IQ% + synergies + attr
 | **Live/creation adapter** | `liveSkillEngine.ts` — I.Q. via `resolveLiveIqSkillBonus()`; per-skill M.A./P.B. via catalog `skillPercentAttributeModifiers`; Skills tab sections via `buildLiveSkillSections` (stats-only Physical last); list % / tooltip via `buildLiveSkillPercentDetail` (Temporary last; list % blue/green/red) |
 | **Spawn projection** | `spawnSheetHandoff.ts` → `projectCreationSkillsToSheet()` |
 | **Creation UI** | `skillCreationDisplay.ts`, `SkillEngine.tsx` |
-| **Live sheet** | `SkillList.tsx`, `weaponBonuses.ts` (W.P. dice bonus), `levelUpSkillSummary.ts` |
+| **Live sheet** | `SkillList.tsx`, `weaponBonuses.ts` + `weaponProficiencyBonuses.ts` (W.P. `levelTiers` / modern progression), `levelUpSkillSummary.ts` |
 
 **Status:** ✅ Creation · ✅ Spawn · ✅ Live quick roll & Morphus modifiers · Level-up summary via `resolveLiveSkillRollTarget()`
 

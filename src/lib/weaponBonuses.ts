@@ -1,15 +1,11 @@
 import type { ActiveForm, Character, InventoryItem, Weapon } from '../types'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
-import { resolveLiveSkillPercent } from './liveSkillEngine'
 import { resolveLivePpMeleeNatural } from './liveStatEngine'
-import { getSkillById, resolveWeaponProficiencySkillId } from '../data/skillLibrary'
+import { resolveWeaponProficiencySkillId } from '../data/skillLibrary'
 import type { StrikeBreakdown } from './strikeEngine'
 import type { AccumulatedHandToHandBonuses } from '../types'
-
-function wpDiceBonusFromSkillPercent(skillTotalPercent: number): number {
-  if (!Number.isFinite(skillTotalPercent) || skillTotalPercent <= 0) return 0
-  return Math.min(10, Math.max(0, Math.floor(skillTotalPercent / 10) - 2))
-}
+import { isWildFireMode, type FireMode } from './fireModes'
+import { resolveOwnedWeaponProficiencyBonuses } from './weaponProficiencyBonuses'
 
 /** Human-readable modifier keys unique to {@link Weapon.weaponSpecificModifiers}. */
 export function prettyWeaponTraitKey(raw: string): string {
@@ -37,23 +33,21 @@ export type WeaponProfileBonuses = {
   isMeleeWeapon: boolean
   /** Non-zero weapon-specific modifier keys (for HUD highlight). */
   activeWeaponTraits: readonly string[]
+  /**
+   * Melee strike, or modern **aimed** / combined strike ladder.
+   * Modern burst uses {@link burstStrike} when present.
+   */
   strike: WeaponStatProfile
   parry: WeaponStatProfile
   /** Defined when thrown attacks apply for this weapon. */
   throw: WeaponStatProfile | null
+  /**
+   * Modern **burst** strike profile when the W.P. burst ladder differs (or mirrors
+   * aimed when only a combined `strike` column exists). Null for melee.
+   */
+  burstStrike: WeaponStatProfile | null
   /** Linked W.P. display name when a skill contributes. */
   wpSkillDisplayName: string | null
-}
-
-function wpPercentBonusForSkill(skillId: string, character: Character, activeForm: ActiveForm): number {
-  const def = getSkillById(skillId)
-  if (!def) return 0
-  const resolved = resolveLiveSkillPercent(
-    { ...def, id: def.id },
-    character,
-    activeForm,
-  )
-  return wpDiceBonusFromSkillPercent(resolved.total)
 }
 
 function hthMeleeBonuses(
@@ -125,9 +119,38 @@ function mergeStatProfile(coreLines: WeaponBonusLine[], weaponLines: WeaponBonus
   return { lines, total }
 }
 
+function stripWpLines(profile: WeaponStatProfile): WeaponStatProfile {
+  const lines = profile.lines.filter((l) => l.key !== 'wp')
+  return {
+    lines,
+    total: lines.reduce((s, l) => s + l.amount, 0),
+  }
+}
+
+function isBurstFireMode(mode: FireMode): boolean {
+  return /burst/i.test(mode.id) || /burst/i.test(mode.name)
+}
+
+/**
+ * Pick the strike profile for a fire mode: aimed/default {@link WeaponProfileBonuses.strike},
+ * burst {@link WeaponProfileBonuses.burstStrike}, wild → same core lines without W.P.
+ */
+export function selectWeaponStrikeProfileForFireMode(
+  profile: WeaponProfileBonuses,
+  mode: FireMode | null | undefined,
+): WeaponStatProfile {
+  if (mode && isWildFireMode(mode)) {
+    return stripWpLines(profile.strike)
+  }
+  if (mode && isBurstFireMode(mode) && profile.burstStrike) {
+    return profile.burstStrike
+  }
+  return profile.strike
+}
+
 /**
  * Aggregate sheet-first weapon bonuses: display P.P. natural, Hand-to-Hand (melee firearms excluded),
- * matching W.P. from `wpCategory` / `linkedWpSkillId`, weapon intrinsics +
+ * matching W.P. from catalog `levelTiers` / modern progression bundle, weapon intrinsics +
  * `weaponSpecificModifiers`.
  */
 export function computeWeaponProfileBonuses(
@@ -146,23 +169,43 @@ export function computeWeaponProfileBonuses(
     ? resolveWeaponProficiencySkillId(weapon.wpCategory, weapon.linkedWpSkillId)
     : undefined
   const unlocked = collectUnlockedSkillIds(character, activeForm)
+  const owned = resolveOwnedWeaponProficiencyBonuses(
+    wpSkillId,
+    unlocked,
+    character.level ?? 1,
+  )
+
   let wpStrike = 0
   let wpParry = 0
+  let wpThrow = 0
+  let wpAimed = 0
+  let wpBurst = 0
   let wpLabel: string | null = null
-  if (wpSkillId && unlocked.has(wpSkillId)) {
-    const def = getSkillById(wpSkillId)
-    if (def) {
-      wpLabel = def.name
-      const b = wpPercentBonusForSkill(wpSkillId, character, activeForm)
-      wpStrike = b
-      wpParry = b
-    }
+
+  if (owned) {
+    wpLabel = owned.entry.name
+    const b = owned.bonuses
+    wpStrike = b.strike
+    wpParry = b.parry
+    wpThrow = b.strikeWhenThrown
+    wpAimed = b.aimedStrikeBonus
+    wpBurst = b.burstStrikeBonus
   }
+
+  /** Modern aimed column, else combined strike (e.g. shotgun). */
+  const rangedWpStrike = wpAimed !== 0 ? wpAimed : wpStrike
+  /** Burst column when present; else same as aimed/combined for modes that still roll burst. */
+  const rangedWpBurst = wpBurst !== 0 ? wpBurst : rangedWpStrike
+
+  const strikeWpAmount = ranged ? rangedWpStrike : wpStrike
+  const burstWpAmount = ranged ? rangedWpBurst : 0
 
   const strikeCore: WeaponBonusLine[] = [
     { key: 'pp', label: 'P.P.', amount: ppNat },
     ...(ranged || hth.strike === 0 ? [] : [{ key: 'hth', label: 'HtH', amount: hth.strike }]),
-    ...(wpStrike === 0 ? [] : [{ key: 'wp', label: wpLabel ?? 'W.P.', amount: wpStrike }]),
+    ...(strikeWpAmount === 0
+      ? []
+      : [{ key: 'wp', label: wpLabel ?? 'W.P.', amount: strikeWpAmount }]),
   ]
 
   const parryCore: WeaponBonusLine[] = [
@@ -178,7 +221,7 @@ export function computeWeaponProfileBonuses(
   if (weaponShowsThrowBonus(weapon)) {
     throwLines.push({ key: 'pp', label: 'P.P.', amount: ppNat })
     if (!ranged && hth.strike !== 0) throwLines.push({ key: 'hth', label: 'HtH', amount: hth.strike })
-    if (wpStrike !== 0) throwLines.push({ key: 'wp', label: wpLabel ?? 'W.P.', amount: wpStrike })
+    if (wpThrow !== 0) throwLines.push({ key: 'wp', label: wpLabel ?? 'W.P.', amount: wpThrow })
     throwLines.push(...weaponThrowTraitLines(weapon))
     if (weapon.strikeBonus)
       throwLines.push({ key: 'weapon_base_throw', label: 'Weapon (throw use)', amount: weapon.strikeBonus })
@@ -192,15 +235,29 @@ export function computeWeaponProfileBonuses(
         }
       : null
 
+  const strike = mergeStatProfile(strikeCore, strikeWeaponLines)
+
+  let burstStrike: WeaponStatProfile | null = null
+  if (ranged) {
+    const burstCore: WeaponBonusLine[] = [
+      { key: 'pp', label: 'P.P.', amount: ppNat },
+      ...(burstWpAmount === 0
+        ? []
+        : [{ key: 'wp', label: wpLabel ?? 'W.P.', amount: burstWpAmount }]),
+    ]
+    burstStrike = mergeStatProfile(burstCore, strikeWeaponLines)
+  }
+
   const mods = weapon.weaponSpecificModifiers
 
   return {
     weaponId: weapon.id,
     isMeleeWeapon: !ranged,
     activeWeaponTraits: activeTraitKeys(mods),
-    strike: mergeStatProfile(strikeCore, strikeWeaponLines),
+    strike,
     parry: mergeStatProfile(parryCore, parryWeaponLines),
     throw: throwProfile,
+    burstStrike,
     wpSkillDisplayName: wpLabel,
   }
 }
