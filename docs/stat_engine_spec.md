@@ -9,6 +9,7 @@ This document is the **canonical reference for how character statistics are calc
 | Product pillars & GM override philosophy | `docs/vision.md` |
 | Unified path registry (Pillar 9) | `docs/unified_paths.md` |
 | M.D.C. scaling, P.S. tiers, APM tracker UX | `docs/combat_logic.md` |
+| Ancient Flat P.S. / S.N. punch Dam by weapon type (**Mechanical Integrity SoT** image) | [`docs/ancient-weapon-ps-sn-damage-chart.png`](ancient-weapon-ps-sn-damage-chart.png) — narrative in `docs/combat_logic.md` §2.1 |
 | Modern firearm W.P. modes, burst table, untrained penalties | `docs/combat_logic.md` §6 |
 | Skill **percent** Master Equation | `docs/skill_selection.md` |
 | Ground / swim / fly / leap from Spd | `docs/movement_engine_spec.md` |
@@ -353,7 +354,7 @@ Update this table when closing gaps.
 | P.P.E. `+20` flat | ✅ Flat column | Commit uses dice+PE+flat | `parseVitalFormulaFlatIntegerTerm()` |
 | Level-up stat bumps | — | Partial | Not creation ledger scope |
 | Live saves / HF | ✅ Creation ledger | ✅ `computeSaveProfile()` + `horror_factor_flat` stack | Attribute-only saves via engine |
-| Weapon / unarmed strike | ✅ Creation ledger | ✅ `weaponBonuses` / `strikeEngine` via `liveStatEngine` | Strike/parry via `computeWeaponProfileBonuses`; Dam via `computeWeaponDamageProfile` (P.S. + HtH style + W.P. flat) |
+| Weapon / unarmed strike | ✅ Creation ledger | ✅ `weaponBonuses` / `weaponPsDamageChart` / `strikeEngine` via `liveStatEngine` | Strike/parry via `computeWeaponProfileBonuses`; Dam via `computeWeaponDamageProfile` (Flat P.S. and/or S.N. punch per chart + HtH style + W.P. flat). **Mechanical Integrity SoT:** [`docs/ancient-weapon-ps-sn-damage-chart.png`](ancient-weapon-ps-sn-damage-chart.png) (`combat_logic.md` §2.1) |
 | Live attribute display (physical skills) | ✅ `skillAttributeFlatBonusTotal` / staging | ✅ `computeDisplayScalars()` + spawn bake | Catalog `physicalSkillBonuses` → `getSkillById().modifiers`; Stats tab uses `sheetDisplayScalars`; `physicalSkillModsApplied` avoids double-count after spawn |
 | Dual-form identity height/weight | — | ✅ `resolveFormIdentityHeight` / `Weight` | Morphus overlay + deterministic trait mods; dice mods are fill-ins (Pillar 5), never auto-rolled |
 
@@ -380,6 +381,7 @@ Update this table when closing gaps.
 | APM core + live stack | `meleeCombat.ts` → `resolveAttacksPerMelee()`, `resolveCharacterMaxApm()` |
 | Hand-to-Hand accumulation | `utils/combatCalculator.ts` |
 | Unarmed punch damage (P.S.) | `utils/strengthCalculator.ts` → `getHandToHandDamageProfile` / `formatUnarmedDamageHint`; UI via `strikeEngine.unarmedDamageLabel` | Standard/extraordinary base **1D4** (+ exceptional P.S.); supernatural table (restrained/full/power) — see `docs/combat_logic.md` §2 |
+| Equipped weapon Dam (Flat P.S. / S.N. punch) | `weaponPsDamageChart.ts` → `resolveWeaponPsChartEligibility`; `weaponBonuses.ts` → `computeWeaponDamageProfile` | By ancient weapon type + delivery; **Mechanical Integrity SoT** image [`docs/ancient-weapon-ps-sn-damage-chart.png`](ancient-weapon-ps-sn-damage-chart.png) (`combat_logic.md` §2.1). Do not invent rows beyond the chart + Joe prefs. |
 | Saves display & additive UI | `saveProfile.ts`, `saveRollDisplay.ts`, `attributeSaves.ts`, `nightbaneBecomingSave.ts`, `opposedRollRules.ts`, `buildCreationSavesBlock()` |
 | Skill physical mods | `skillPhysicalBonuses.ts`, `ledgerStatBonuses.ts` |
 | Live passive merge | `featureEngine.ts` |
