@@ -1,9 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { nextLevelThresholdXp } from '../../data/xpTables'
 
+/** Vite DEV-only — never bundled into production play (`import.meta.env.DEV`). */
+const DevGrantXpControls = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevGrantXpControls').then((m) => ({
+        default: m.DevGrantXpControls,
+      })),
+    )
+  : null
+
 /**
  * Identity header XP strip + history popover (Pillar 6 — consistent vitals).
+ * DEV builds: Experience popover also hosts debug Add XP (`grantXp` unified path).
  */
 export function IdentityXpBar() {
   const {
@@ -124,6 +134,11 @@ export function IdentityXpBar() {
           >
             {progressionTitle}
           </p>
+          {import.meta.env.DEV && DevGrantXpControls ? (
+            <Suspense fallback={null}>
+              <DevGrantXpControls morphus={morphus} />
+            </Suspense>
+          ) : null}
           <p
             className={`mb-2 text-[10px] font-black uppercase tracking-wide ${
               morphus ? 'text-violet-300' : 'text-blue-900'

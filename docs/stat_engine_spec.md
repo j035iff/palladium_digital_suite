@@ -388,6 +388,7 @@ Update this table when closing gaps.
 | UI — combat APM | `CombatHUD.tsx` content-hugging APM capsule (outside scroll): APM + pips (no n/n) + INIT + Melee; tap pip → `spendCombatAction(1)`; sub-tabs via `liveCombatTabs`; tab body scrolls |
 | UI — combat Vitals | `CombatVitalsTab` + `combatDamagePools.ts` — L→R absorb; front-pool drag; fixed S.D.C.→H.P.; direct-to-HP; Bypass A.R. (equipped armor only); M.D.C. collapse |
 | UI — combat bubbles | `CombatHUD` Action tab + `CombatCategoryBubble` (HtH) / `CombatWeaponCategoryPanel` (Ancient / Modern Primary+Secondary + 3rd+) / `CombatExpandOverlay`; era + dual-wield + instance-unique slot greying via `combatWeaponSlots.ts` (`buildCombatWeaponSlotSelectOptions`); HtH roster `listOwnedHandToHandStyles` (unlocked styles only; O.C.C. ladder supersession; Select UI when 2+) |
+| XP / level-up | `xpTables.ts` + `CharacterContext.grantXp` / `resolveLevelUpRitual`; UI `IdentityXpBar` + `LevelUpModal`; **DEV-only** Add XP via `DevGrantXpControls` (`import.meta.env.DEV`) |
 
 ---
 
