@@ -11,6 +11,21 @@ import {
   getHandToHandDamageProfile,
   resolveStrengthCategory,
 } from '../utils/strengthCalculator'
+import {
+  resolveDefaultWeaponDamageDelivery,
+  resolveWeaponPsChartEligibility,
+  type WeaponDamageDelivery,
+  type WeaponPsChartFamily,
+} from './weaponPsDamageChart'
+
+export type { WeaponDamageDelivery, WeaponPsChartFamily }
+export {
+  resolveDefaultWeaponDamageDelivery,
+  resolveWeaponPsChartEligibility,
+  resolveWeaponPsChartFamily,
+  isThrownDiscOrStarWeapon,
+  weaponHasSolidEnchantedPsException,
+} from './weaponPsDamageChart'
 
 /** Human-readable modifier keys unique to {@link Weapon.weaponSpecificModifiers}. */
 export function prettyWeaponTraitKey(raw: string): string {
@@ -76,33 +91,35 @@ export function weaponForgeAllowsPsDamageBonus(weapon: Weapon): boolean {
 }
 
 /**
- * Thrown-category / missile / firearms never receive the P.S. damage bonus
- * (Joe CS-17). Throwable melee (knife, spear) still qualify when held.
+ * @deprecated Prefer {@link resolveWeaponPsChartEligibility} (Joe chart SoT).
+ * Kept for callers that only need a coarse “thrown/missile-ish” category check.
  */
 export function isThrownOrMissileWeaponCategory(weapon: Weapon): boolean {
-  const c = weapon.category.trim().toLowerCase()
-  if (/\bthrown\b|\bthrowing\b/.test(c)) return true
-  if (/\bmissile\b/.test(c)) return true
-  if (/\bbow\b|\bcrossbow\b|\bsling\b/.test(c)) return true
-  return false
+  const delivery = resolveDefaultWeaponDamageDelivery(weapon)
+  return delivery === 'thrown' || delivery === 'projectile'
 }
 
 /**
- * Held melee (not firearm / thrown / missile). HtH style damage flats apply here;
- * P.S. further requires {@link weaponForgeAllowsPsDamageBonus}.
+ * Whether HtH style damage flats apply at the default Dam delivery.
  */
 export function isHeldMeleeWeaponForDamage(weapon: Weapon): boolean {
-  if (isRangedWeapon(weapon)) return false
-  if (isThrownOrMissileWeaponCategory(weapon)) return false
-  return true
+  const elig = resolveWeaponPsChartEligibility(
+    weapon,
+    resolveDefaultWeaponDamageDelivery(weapon),
+  )
+  return elig.hthStyleFlat
 }
 
 /**
- * Whether this weapon’s Dam string may include P.S. damage.
- * Firearms, thrown/missile categories, and explicit forge OFF are excluded.
+ * Whether default Dam may include Flat P.S. and/or S.N. punch (forge gate + chart).
  */
 export function weaponReceivesMeleePsDamageBonus(weapon: Weapon): boolean {
-  return isHeldMeleeWeaponForDamage(weapon) && weaponForgeAllowsPsDamageBonus(weapon)
+  if (!weaponForgeAllowsPsDamageBonus(weapon)) return false
+  const elig = resolveWeaponPsChartEligibility(
+    weapon,
+    resolveDefaultWeaponDamageDelivery(weapon),
+  )
+  return elig.flatPs || elig.supernaturalPunch
 }
 
 export type WeaponDamageLine = {
@@ -119,8 +136,12 @@ export type WeaponDamageProfile = {
   lines: readonly WeaponDamageLine[]
   /** Full table-play damage string (weapon + P.S. / HtH / W.P. flats). */
   notation: string
-  /** True when P.S. (standard flat or supernaturals full-punch string) was eligible. */
+  /** True when Flat P.S. and/or S.N. punch was eligible (forge + chart). */
   appliesPsDamageBonus: boolean
+  appliesFlatPs: boolean
+  appliesSupernaturalPunch: boolean
+  delivery: WeaponDamageDelivery
+  chartFamily: WeaponPsChartFamily
 }
 
 function appendDamageSegment(base: string, segment: string): string {
@@ -133,26 +154,29 @@ function appendDamageSegment(base: string, segment: string): string {
 }
 
 /**
- * Aggregate weapon Dam: base notation + optional P.S. (melee) + HtH style flat +
- * W.P. `damageBonusFlat`. Supernatural P.S. appends the full-punch table string
- * (e.g. knife `1D8` + SN 24 → `1D8+3D6+9`).
+ * Aggregate weapon Dam from Joe’s ancient-weapon Flat/S.N. chart + HtH style +
+ * W.P. `damageBonusFlat`. Pass `delivery: 'thrown'` for thrown Dam on axes/knives/
+ * spears/shields (Flat only; no S.N. punch).
  */
 export function computeWeaponDamageProfile(
   character: Character,
   activeForm: ActiveForm,
   weapon: Weapon,
   handToHandAccumulated?: AccumulatedHandToHandBonuses,
+  delivery: WeaponDamageDelivery = resolveDefaultWeaponDamageDelivery(weapon),
 ): WeaponDamageProfile {
   const baseNotation = weapon.damage.trim() || '—'
   const lines: WeaponDamageLine[] = []
-  const heldMelee = isHeldMeleeWeaponForDamage(weapon)
-  const appliesPs = weaponReceivesMeleePsDamageBonus(weapon)
+  const chart = resolveWeaponPsChartEligibility(weapon, delivery)
+  const forgeAllows = weaponForgeAllowsPsDamageBonus(weapon)
+  const flatPs = forgeAllows && chart.flatPs
+  const snPunch = forgeAllows && chart.supernaturalPunch
 
-  if (appliesPs) {
+  if (flatPs || snPunch) {
     const ps = getFormState(character, activeForm).attributes.ps
     const category = resolveStrengthCategory(ps.score, ps.tier)
     const profile = getHandToHandDamageProfile(ps.score, category)
-    if (profile.kind === 'supernatural') {
+    if (snPunch && profile.kind === 'supernatural') {
       const seg = profile.fullStrengthPunch.trim()
       if (seg) {
         lines.push({
@@ -161,7 +185,8 @@ export function computeWeaponDamageProfile(
           segment: seg,
         })
       }
-    } else if (profile.attributeDamageBonus > 0) {
+    } else if (flatPs && profile.attributeDamageBonus > 0) {
+      // Flat only (bows / thrown / SN-without-punch): exceptional P.S. flat alone.
       lines.push({
         key: 'ps',
         label: 'P.S.',
@@ -170,7 +195,7 @@ export function computeWeaponDamageProfile(
     }
   }
 
-  if (heldMelee) {
+  if (chart.hthStyleFlat) {
     const hthFlat = handToHandAccumulated?.damage ?? 0
     if (hthFlat !== 0) {
       lines.push({
@@ -210,7 +235,11 @@ export function computeWeaponDamageProfile(
     baseNotation,
     lines,
     notation,
-    appliesPsDamageBonus: appliesPs,
+    appliesPsDamageBonus: flatPs || snPunch,
+    appliesFlatPs: flatPs,
+    appliesSupernaturalPunch: snPunch,
+    delivery,
+    chartFamily: chart.family,
   }
 }
 

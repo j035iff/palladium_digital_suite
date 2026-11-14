@@ -128,7 +128,20 @@ export function WeaponStrikeCard({
     w,
     handToHandAccumulated,
   )
+  const thrownDamageProfile =
+    w.throwable === true && damageProfile.delivery === 'melee'
+      ? computeWeaponDamageProfile(
+          character,
+          activeForm,
+          w,
+          handToHandAccumulated,
+          'thrown',
+        )
+      : null
   const damageTip = formatWeaponDamageEquation(damageProfile)
+  const thrownDamageTip = thrownDamageProfile
+    ? formatWeaponDamageEquation(thrownDamageProfile)
+    : null
 
   const wpSubtitle = w.wpCategory ?? profile.wpSkillDisplayName ?? w.category
 
@@ -259,6 +272,26 @@ export function WeaponStrikeCard({
               <p className={`font-mono text-2xl font-black tabular-nums ${detailValue}`}>
                 {damageProfile.notation}
               </p>
+              {thrownDamageProfile ? (
+                <div className="mt-2">
+                  <p
+                    className={`mb-0.5 text-[9px] font-black uppercase tracking-wide ${detailMuted}`}
+                  >
+                    Thrown Dam
+                  </p>
+                  <p
+                    className={`mb-0.5 text-[9px] leading-snug ${detailMuted}`}
+                    title={thrownDamageTip ?? undefined}
+                  >
+                    Flat P.S. only (no S.N. punch)
+                  </p>
+                  <p
+                    className={`font-mono text-lg font-black tabular-nums ${detailValue}`}
+                  >
+                    {thrownDamageProfile.notation}
+                  </p>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

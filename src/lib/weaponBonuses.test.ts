@@ -252,7 +252,7 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
     expect(profile.appliesPsDamageBonus).toBe(false)
   })
 
-  it('does not add P.S. to firearms or thrown-category weapons', () => {
+  it('does not add P.S. to firearms', () => {
     const pistol = weapon({
       id: 'pistol-1',
       name: '9mm',
@@ -260,24 +260,14 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
       category: 'Handguns',
       payload: { current: 12, max: 12 },
     })
-    const dart = weapon({
-      id: 'dart-1',
-      name: 'Dart',
-      damage: '1D4',
-      category: 'Thrown',
-      throwable: true,
-    })
     const char = characterWithWp([], 1, 10, { psScore: 20 })
     const hth = { ...createEmptyAccumulatedHandToHandBonuses(), damage: 2 }
     expect(computeWeaponDamageProfile(char, 'primary', pistol, hth).notation).toBe(
       '3D6',
     )
-    expect(computeWeaponDamageProfile(char, 'primary', dart, hth).notation).toBe(
-      '1D4',
-    )
   })
 
-  it('does not add P.S. to missile (bow) weapons', () => {
+  it('bows get Flat P.S. only (no S.N. punch)', () => {
     const bow = weapon({
       id: 'bow-1',
       name: 'Short Bow',
@@ -285,18 +275,45 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
       category: 'Missile',
       linkedWpSkillId: 'wp_archery',
     })
-    const char = characterWithWp([], 1, 10, { psScore: 20 })
-    const profile = computeWeaponDamageProfile(
-      char,
-      'primary',
-      bow,
-      createEmptyAccumulatedHandToHandBonuses(),
-    )
-    expect(profile.notation).toBe('1D6')
-    expect(profile.appliesPsDamageBonus).toBe(false)
+    const std = characterWithWp([], 1, 10, { psScore: 20 })
+    const sn = characterWithWp([], 1, 10, {
+      psScore: 24,
+      psTier: 'supernatural',
+    })
+    const hth = createEmptyAccumulatedHandToHandBonuses()
+    const stdProfile = computeWeaponDamageProfile(std, 'primary', bow, hth)
+    expect(stdProfile.notation).toBe('1D6+5')
+    expect(stdProfile.appliesFlatPs).toBe(true)
+    expect(stdProfile.appliesSupernaturalPunch).toBe(false)
+    const snProfile = computeWeaponDamageProfile(sn, 'primary', bow, hth)
+    expect(snProfile.notation).toBe('1D6+9')
+    expect(snProfile.appliesSupernaturalPunch).toBe(false)
   })
 
-  it('applies P.S. to all clear held-melee categories (CS-19 coverage)', () => {
+  it('whips and crossbows get neither Flat nor S.N.', () => {
+    const whip = weapon({
+      id: 'whip-1',
+      name: 'Bull Whip',
+      damage: '1D6',
+      category: 'Whips',
+    })
+    const xbow = weapon({
+      id: 'xbow-1',
+      name: 'Cross Bow',
+      damage: '2D6',
+      category: 'Missile',
+    })
+    const char = characterWithWp([], 1, 10, { psScore: 20 })
+    const hth = createEmptyAccumulatedHandToHandBonuses()
+    expect(computeWeaponDamageProfile(char, 'primary', whip, hth).notation).toBe(
+      '1D6',
+    )
+    expect(computeWeaponDamageProfile(char, 'primary', xbow, hth).notation).toBe(
+      '2D6',
+    )
+  })
+
+  it('applies Flat+SN-eligible melee categories (chart SoT)', () => {
     const char = characterWithWp([], 1, 10, { psScore: 20 })
     const hth = createEmptyAccumulatedHandToHandBonuses()
     const cases: Array<{ name: string; category: string; damage: string }> = [
@@ -308,6 +325,7 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
       { name: 'Bo Staff', category: 'Staves', damage: '1D8' },
       { name: 'Spear', category: 'Spears', damage: '1D6' },
       { name: 'Knife', category: 'Knives', damage: '1D6' },
+      { name: 'Halberd', category: 'Pole Arms', damage: '3D6' },
     ]
     for (const c of cases) {
       const w = weapon({
@@ -318,27 +336,77 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
       })
       const profile = computeWeaponDamageProfile(char, 'primary', w, hth)
       expect(profile.appliesPsDamageBonus, c.category).toBe(true)
+      expect(profile.appliesFlatPs, c.category).toBe(true)
+      expect(profile.appliesSupernaturalPunch, c.category).toBe(true)
       expect(profile.notation, c.category).toBe(`${c.damage}+5`)
       expect(weaponReceivesMeleePsDamageBonus(w), c.category).toBe(true)
     }
   })
 
-  it('held throwable axe still receives P.S. (category Axes, not Thrown)', () => {
+  it('thrown axe/knife: melee gets Flat+SN; thrown delivery Flat only', () => {
     const axe = weapon({
-      id: 'throwing-axe-held',
+      id: 'throwing-axe',
       name: 'Axe, Throwing',
       category: 'Axes',
       damage: '1D6',
       throwable: true,
     })
-    const char = characterWithWp([], 1, 10, { psScore: 20 })
+    const sn = characterWithWp([], 1, 10, {
+      psScore: 24,
+      psTier: 'supernatural',
+    })
+    const hth = createEmptyAccumulatedHandToHandBonuses()
+    const melee = computeWeaponDamageProfile(sn, 'primary', axe, hth, 'melee')
+    expect(melee.notation).toBe('1D6+3D6+9')
+    expect(melee.appliesSupernaturalPunch).toBe(true)
+    const thrown = computeWeaponDamageProfile(sn, 'primary', axe, hth, 'thrown')
+    expect(thrown.notation).toBe('1D6+9')
+    expect(thrown.appliesFlatPs).toBe(true)
+    expect(thrown.appliesSupernaturalPunch).toBe(false)
+  })
+
+  it('shuriken: Flat P.S. only (never S.N. punch)', () => {
+    const star = weapon({
+      id: 'shuriken-1',
+      name: 'Shuriken',
+      category: 'Thrown',
+      damage: '1D4',
+      throwable: true,
+    })
+    const sn = characterWithWp([], 1, 10, {
+      psScore: 24,
+      psTier: 'supernatural',
+    })
     const profile = computeWeaponDamageProfile(
-      char,
+      sn,
       'primary',
-      axe,
+      star,
       createEmptyAccumulatedHandToHandBonuses(),
     )
-    expect(profile.notation).toBe('1D6+5')
-    expect(profile.appliesPsDamageBonus).toBe(true)
+    expect(profile.delivery).toBe('thrown')
+    expect(profile.notation).toBe('1D4+9')
+    expect(profile.appliesSupernaturalPunch).toBe(false)
+  })
+
+  it('shield bash Flat+SN; thrown shield Flat only', () => {
+    const shield = weapon({
+      id: 'shield-1',
+      name: 'Round Shield',
+      category: 'Shields',
+      damage: '1D4',
+      isShield: true,
+      throwable: true,
+    })
+    const sn = characterWithWp([], 1, 10, {
+      psScore: 24,
+      psTier: 'supernatural',
+    })
+    const hth = createEmptyAccumulatedHandToHandBonuses()
+    expect(
+      computeWeaponDamageProfile(sn, 'primary', shield, hth, 'melee').notation,
+    ).toBe('1D4+3D6+9')
+    expect(
+      computeWeaponDamageProfile(sn, 'primary', shield, hth, 'thrown').notation,
+    ).toBe('1D4+9')
   })
 })

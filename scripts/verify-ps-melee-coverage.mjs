@@ -1,5 +1,5 @@
 /**
- * Browser verify: P.S. Dam on clear melee categories (CS-19).
+ * Browser verify: Joe ancient Flat/S.N. Dam chart (Action Dam).
  * Requires: npm run dev on 127.0.0.1:5173
  *
  * Usage: node scripts/verify-ps-melee-coverage.mjs
@@ -15,51 +15,62 @@ const VERIFY = path.join(OUT_DIR, 'verify.json')
 
 fs.mkdirSync(OUT_DIR, { recursive: true })
 
-const CHAR_ID = 'char_ps_melee_coverage'
-const WEAPONS = [
+const CHAR_ID = 'char_ps_chart_verify'
+
+const CASES = [
   {
-    id: 'wpn_short_sword_cov',
+    id: 'wpn_short_sword',
     name: 'Short Sword',
     category: 'Short Swords',
     damage: '2D4',
     linkedWpSkillId: 'wp_sword',
-    wpCategory: 'W.P. Sword',
-    // Simulate pre-CS-19 forge stamp; hydrate migrate should clear it.
-    forgeProperties: { editorDraft: { addsPsDamageBonus: false } },
     expect: /2D4\+\d/,
+    shot: 'combat-action-short-swords-ps.png',
   },
   {
-    id: 'wpn_battle_axe_cov',
-    name: 'Battle Axe',
+    id: 'wpn_halberd',
+    name: 'Halberd',
+    category: 'Pole Arms',
+    damage: '3D6',
+    linkedWpSkillId: 'wp_polearm',
+    expect: /3D6\+\d/,
+    shot: 'combat-action-polearms-ps.png',
+  },
+  {
+    id: 'wpn_whip',
+    name: 'Bull Whip',
+    category: 'Whips',
+    damage: '1D6',
+    linkedWpSkillId: 'wp_whip',
+    // Neither Flat nor S.N. — bare dice (no +PS)
+    expect: /^1D6$/,
+    shot: 'combat-action-whips-no-ps.png',
+    exactDam: '1D6',
+  },
+  {
+    id: 'wpn_short_bow',
+    name: 'Short Bow',
+    category: 'Missile',
+    damage: '1D6',
+    linkedWpSkillId: 'wp_archery_and_targeting',
+    expect: /1D6\+\d/,
+    shot: 'combat-action-bows-flat-ps.png',
+  },
+  {
+    id: 'wpn_throwing_axe',
+    name: 'Axe, Throwing',
     category: 'Axes',
-    damage: '2D6',
-    linkedWpSkillId: 'wp_axe',
-    wpCategory: 'W.P. Axe',
-    forgeProperties: { editorDraft: { addsPsDamageBonus: false } },
-    expect: /2D6\+\d/,
-  },
-  {
-    id: 'wpn_mace_cov',
-    name: 'Mace',
-    category: 'Blunt',
-    damage: '1D8',
-    linkedWpSkillId: 'wp_blunt',
-    wpCategory: 'W.P. Blunt',
-    forgeProperties: { editorDraft: { addsPsDamageBonus: false } },
-    expect: /1D8\+\d/,
-  },
-  {
-    id: 'wpn_long_sword_cov',
-    name: 'Long Sword',
-    category: 'Large Swords',
-    damage: '2D6',
-    linkedWpSkillId: 'wp_sword',
-    wpCategory: 'W.P. Sword',
-    expect: /2D6\+\d/,
+    damage: '1D6',
+    throwable: true,
+    linkedWpSkillId: 'wp_battle_axe',
+    // Default Dam = melee → Flat+eligible
+    expect: /1D6\+\d/,
+    shot: 'combat-action-axes-melee-ps.png',
+    expandThrown: true,
   },
 ]
 
-function formState(psScore = 20) {
+function formState(psScore = 20, psTier = 'standard') {
   return {
     alignment: 'Scrupulous',
     hitPoints: { current: 20, maximum: 20, scaling: 'sdc_hp' },
@@ -73,7 +84,7 @@ function formState(psScore = 20) {
       iq: 12,
       me: 10,
       ma: 10,
-      ps: { score: psScore, tier: 'standard' },
+      ps: { score: psScore, tier: psTier },
       pp: 12,
       pe: 12,
       pb: 10,
@@ -88,16 +99,30 @@ function formState(psScore = 20) {
         restricted: false,
       },
       {
-        id: 'wp_axe',
-        catalogSkillId: 'wp_axe',
-        name: 'W.P. Axe',
+        id: 'wp_polearm',
+        catalogSkillId: 'wp_polearm',
+        name: 'W.P. Polearm',
         level: 1,
         restricted: false,
       },
       {
-        id: 'wp_blunt',
-        catalogSkillId: 'wp_blunt',
-        name: 'W.P. Blunt',
+        id: 'wp_whip',
+        catalogSkillId: 'wp_whip',
+        name: 'W.P. Whip',
+        level: 1,
+        restricted: false,
+      },
+      {
+        id: 'wp_archery_and_targeting',
+        catalogSkillId: 'wp_archery_and_targeting',
+        name: 'W.P. Archery and Targeting',
+        level: 1,
+        restricted: false,
+      },
+      {
+        id: 'wp_battle_axe',
+        catalogSkillId: 'wp_battle_axe',
+        name: 'W.P. Battle Axe',
         level: 1,
         restricted: false,
       },
@@ -115,11 +140,10 @@ function formState(psScore = 20) {
 function buildSave(weapon) {
   return {
     id: CHAR_ID,
-    name: `PS Coverage ${weapon.name}`,
+    name: `PS Chart ${weapon.name}`,
     creationGenreId: 'nightbane',
     hostGenreId: 'nightbane',
-    // v2 so migrate clears stamped addsPsDamageBonus:false
-    schemaVersion: 2,
+    schemaVersion: 3,
     isFinalized: true,
     level: 3,
     xp: 5000,
@@ -199,35 +223,72 @@ async function seedAndOpen(save) {
 }
 
 try {
-  for (const w of WEAPONS) {
+  for (const w of CASES) {
     const save = buildSave(w)
     await seedAndOpen(save)
+
+    // Ancient Primary Dam value (first Dam label in Ancient Weapons block).
+    const ancientBox = page.locator('text=Ancient').first()
+    await ancientBox.waitFor({ timeout: 15_000 })
     const damText = await page
-      .locator('text=/' + w.expect.source + '/')
+      .locator('xpath=//*[normalize-space()="Dam"]/following-sibling::*[1]')
       .first()
       .innerText()
       .catch(async () => {
-        return page
-          .locator('xpath=//*[normalize-space()="Dam"]/following-sibling::*[1]')
-          .first()
-          .innerText()
+        if (w.expect) {
+          return page.locator('text=/' + w.expect.source + '/').first().innerText()
+        }
+        return ''
       })
-    const shot = path.join(
-      OUT_DIR,
-      `combat-action-${w.category.toLowerCase().replace(/\s+/g, '-')}-ps.png`,
-    )
+
+    const shot = path.join(OUT_DIR, w.shot)
     await page.screenshot({ path: shot, fullPage: false })
     result.screenshots.push(shot)
-    const ok = w.expect.test(damText.trim())
-    result.cases.push({
+
+    const trimmed = damText.trim()
+    const ok = w.exactDam
+      ? trimmed === w.exactDam || new RegExp(`^${w.damage}$`).test(trimmed)
+      : w.expect.test(trimmed)
+
+    const caseRow = {
       name: w.name,
       category: w.category,
-      dam: damText.trim(),
+      dam: trimmed,
       ok,
-    })
-    if (!ok) result.notes.push(`${w.name}: unexpected Dam ${damText}`)
+    }
+
+    if (w.expandThrown) {
+      // Weapon-row Expand (not Hand to Hand) — last Expand in Ancient section.
+      const expandBtn = page
+        .locator('button', { hasText: /^Expand$/i })
+        .nth(1)
+      if (await expandBtn.isVisible().catch(() => false)) {
+        await expandBtn.click()
+        await page.waitForTimeout(600)
+        const thrownLabel = await page
+          .locator('text=/Thrown Dam/i')
+          .first()
+          .isVisible()
+          .catch(() => false)
+        const thrownShot = path.join(OUT_DIR, 'combat-action-axes-thrown-expand.png')
+        await page.screenshot({ path: thrownShot, fullPage: false })
+        result.screenshots.push(thrownShot)
+        caseRow.thrownDamVisible = thrownLabel
+        if (!thrownLabel) {
+          caseRow.ok = false
+          result.notes.push(`${w.name}: Thrown Dam missing in Expand`)
+        }
+        const closeBtn = page.locator('button', { hasText: /^Close$/i }).first()
+        if (await closeBtn.isVisible().catch(() => false)) await closeBtn.click()
+      }
+    }
+
+    result.cases.push(caseRow)
+    if (!ok) result.notes.push(`${w.name}: unexpected Dam ${trimmed}`)
   }
-  result.pass = result.cases.every((c) => c.ok) && result.screenshots.every((p) => fs.existsSync(p))
+  result.pass =
+    result.cases.every((c) => c.ok) &&
+    result.screenshots.every((p) => fs.existsSync(p))
 } catch (err) {
   result.notes.push(String(err?.message ?? err))
   await page
