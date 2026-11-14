@@ -95,7 +95,7 @@ export type WeaponThrowRangeEntry = {
   rangeFeet: number
 }
 
-/** Standard / extraordinary: additive P.S. bonus on 1D3 unarmed. */
+/** Standard / extraordinary: additive P.S. bonus on 1D4 unarmed. */
 export type StandardHandToHandDamageProfile = {
   kind: 'standard'
   attributeDamageBonus: number

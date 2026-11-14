@@ -379,6 +379,7 @@ Update this table when closing gaps.
 | Exceptional attributes | `attributeBonuses.ts` |
 | APM core + live stack | `meleeCombat.ts` → `resolveAttacksPerMelee()`, `resolveCharacterMaxApm()` |
 | Hand-to-Hand accumulation | `utils/combatCalculator.ts` |
+| Unarmed punch damage (P.S.) | `utils/strengthCalculator.ts` → `getHandToHandDamageProfile` / `formatUnarmedDamageHint`; UI via `strikeEngine.unarmedDamageLabel` | Standard/extraordinary base **1D4** (+ exceptional P.S.); supernatural table (restrained/full/power) — see `docs/combat_logic.md` §2 |
 | Saves display & additive UI | `saveProfile.ts`, `saveRollDisplay.ts`, `attributeSaves.ts`, `nightbaneBecomingSave.ts`, `opposedRollRules.ts`, `buildCreationSavesBlock()` |
 | Skill physical mods | `skillPhysicalBonuses.ts`, `ledgerStatBonuses.ts` |
 | Live passive merge | `featureEngine.ts` |

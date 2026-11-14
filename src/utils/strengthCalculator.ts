@@ -138,8 +138,9 @@ export function getHandToHandDamageProfile(
   return {
     kind: 'standard',
     attributeDamageBonus,
+    // Book default for normal / extraordinary (non-supernatural) punch is 1D4 S.D.C.
     unarmedDamageNotation:
-      attributeDamageBonus > 0 ? `1D3+${attributeDamageBonus}` : '1D3',
+      attributeDamageBonus > 0 ? `1D4+${attributeDamageBonus}` : '1D4',
   }
 }
 

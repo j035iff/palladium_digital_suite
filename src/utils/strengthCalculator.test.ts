@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   appendPsAttributeDamageBonus,
+  formatUnarmedDamageHint,
   getHandToHandDamageProfile,
   psAttributeDamageBonus,
 } from './strengthCalculator'
@@ -10,6 +11,31 @@ describe('psAttributeDamageBonus', () => {
     expect(psAttributeDamageBonus(16)).toBe(0)
     expect(psAttributeDamageBonus(17)).toBe(2)
     expect(psAttributeDamageBonus(30)).toBe(15)
+  })
+})
+
+describe('getHandToHandDamageProfile standard', () => {
+  it('defaults punch damage to 1D4 with no exceptional P.S. bonus', () => {
+    const profile = getHandToHandDamageProfile(12, 'standard')
+    expect(profile.kind).toBe('standard')
+    if (profile.kind !== 'standard') return
+    expect(profile.attributeDamageBonus).toBe(0)
+    expect(profile.unarmedDamageNotation).toBe('1D4')
+  })
+
+  it('appends exceptional P.S. damage bonus to the 1D4 punch', () => {
+    const profile = getHandToHandDamageProfile(17, 'standard')
+    expect(profile.kind).toBe('standard')
+    if (profile.kind !== 'standard') return
+    expect(profile.attributeDamageBonus).toBe(2)
+    expect(profile.unarmedDamageNotation).toBe('1D4+2')
+  })
+
+  it('uses the same 1D4 base for extraordinary (non-supernatural) punches', () => {
+    const profile = getHandToHandDamageProfile(20, 'extraordinary')
+    expect(profile.kind).toBe('standard')
+    if (profile.kind !== 'standard') return
+    expect(profile.unarmedDamageNotation).toBe('1D4+5')
   })
 })
 
@@ -39,5 +65,13 @@ describe('appendPsAttributeDamageBonus', () => {
   it('appends only when bonus is positive', () => {
     expect(appendPsAttributeDamageBonus('3D6', 0)).toBe('3D6')
     expect(appendPsAttributeDamageBonus('3D6', 5)).toBe('3D6+5')
+  })
+})
+
+describe('formatUnarmedDamageHint', () => {
+  it('prints standard 1D4 and optional HtH style damage bonus', () => {
+    const profile = getHandToHandDamageProfile(10, 'standard')
+    expect(formatUnarmedDamageHint(profile)).toBe('1D4')
+    expect(formatUnarmedDamageHint(profile, 2)).toBe('1D4+2 (HtH)')
   })
 })

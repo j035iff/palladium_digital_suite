@@ -23,10 +23,12 @@ To satisfy the "Megaversal Bridge," P.S. is not just a number; it has a **Power 
 
 | P.S. Tier | Damage Logic | Lifting/Carrying Logic |
 | :--- | :--- | :--- |
-| **Standard** | Standard P.S. damage bonuses. | P.S. x 10 lbs (Carry). |
-| **Augmented** | Enhanced bonuses; can damage M.D.C. | P.S. x 20 lbs (Carry). |
-| **Robotic** | Fixed damage dice based on P.S. | P.S. x 25 lbs (Carry). |
-| **Supernatural** | Table dice by P.S. band (restrained / full / power). Exceptional P.S. damage bonus (score − 15 at 17+) applies to **full** and **power** punches only — not restrained. | P.S. x 50 lbs (Carry) ≤17; x 100 above. |
+| **Standard** | Unarmed punch base **1D4** S.D.C. (book default). Exceptional P.S. damage bonus (score − 15 at 17+) appends to that die (`1D4+n`). | P.S. x 10 lbs (Carry). |
+| **Augmented** | Same **1D4** punch base + exceptional P.S. bonus (sheet maps to extraordinary category). Enhanced lift; can damage M.D.C. | P.S. x 20 lbs (Carry). |
+| **Robotic** | Sheet maps to extraordinary category for punch notation (**1D4** + bonus) until a dedicated robotic punch table is wired. Fixed damage dice based on P.S. | P.S. x 25 lbs (Carry). |
+| **Supernatural** | Table dice by P.S. band (restrained / full / power) — **not** the 1D4 standard punch. Exceptional P.S. damage bonus (score − 15 at 17+) applies to **full** and **power** punches only — not restrained. | P.S. x 50 lbs (Carry) ≤17; x 100 above. |
+
+**Implementation:** `getHandToHandDamageProfile` / `formatUnarmedDamageHint` in `src/utils/strengthCalculator.ts`; Combat Action / HtH overlays via `unarmedDamageLabel` (`strikeEngine`). Unified Path — one profile builder for all non-supernatural forms.
 
 ---
 
