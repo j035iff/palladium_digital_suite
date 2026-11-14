@@ -94,8 +94,9 @@ On every open/hydrate, `migrateCharacterSave()` runs **before** gameplay hydrati
 | Persist-field renames | e.g. `facade` → `primary`, legacy forge tab ids |
 | Catalog ID remaps | `CATALOG_ID_REMAPS` (race / occ / morphusTrait / skill / ability) — always applied (idempotent) |
 | HtH ladder supersession | `stripSupersededOccHandToHandSkills` — drop O.C.C. default/ladder styles replaced by `creationHandToHandTier` (idempotent) |
+| v3 weapon P.S. stamp | `clearStampedPsDamageBonusOff` — drop forge-stamped `addsPsDamageBonus: false` so melee Dam defaults ON (Joe CS-19; intentional OFF must be re-unchecked) |
 | Orphan detection | Unresolvable catalog ids after remap → reported (`console.info`); load continues |
-| Version stamp | `schemaVersion` → `CHARACTER_SAVE_SCHEMA_VERSION` |
+| Version stamp | `schemaVersion` → `CHARACTER_SAVE_SCHEMA_VERSION` (currently **3**) |
 
 **When renaming a catalog id:** add an entry to `CATALOG_ID_REMAPS` (map to new id, or `null` to drop list/slot refs).  
 **When renaming a persisted Character field:** add a versioned step and bump `CHARACTER_SAVE_SCHEMA_VERSION`.  

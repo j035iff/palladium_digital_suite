@@ -98,7 +98,7 @@ describe('weaponsAncientCatalogLoader', () => {
       strikeWhenThrownDisplay: '+0',
       linkedWpSkillId: 'wp_blunt',
       weaponProficiencyEligible: true,
-      addsPsDamageBonus: false,
+      addsPsDamageBonus: true,
       material: '',
     })
     expect(draft?.description).toMatch(/entangle/i)
@@ -120,7 +120,7 @@ describe('weaponsAncientCatalogLoader', () => {
       rateOfFireDisplay: '+0',
       rangeDisplay: '',
       material: '',
-      addsPsDamageBonus: false,
+      addsPsDamageBonus: true,
     })
   })
 

@@ -123,10 +123,69 @@ describe('migrateCharacterSave', () => {
       aliases: [{ id: 'a1', name: '  Crow  ' }],
       tableProjectedAliasId: 'missing',
     })
-    expect(character.schemaVersion).toBe(2)
+    expect(character.schemaVersion).toBe(CHARACTER_SAVE_SCHEMA_VERSION)
     expect(character.aliases).toEqual([{ id: 'a1', name: 'Crow' }])
     expect(character.tableProjectedAliasId).toBeNull()
     expect(report.fieldRenames).toContain('aliases+tableProjectedAliasId')
+  })
+
+  it('clears forge-stamped addsPsDamageBonus:false so melee Dam defaults ON (CS-19)', () => {
+    const base = ensureCharacterRoot(characterFixture, {
+      creationGenreId: 'nightbane',
+      hostGenreId: 'nightbane',
+    })
+    const { character, report } = migrateCharacterSave({
+      ...base,
+      schemaVersion: 2,
+      inventory: {
+        items: [
+          {
+            id: 'wpn_short_sword',
+            itemType: 'weapon',
+            name: 'Short Sword',
+            category: 'Short Swords',
+            damage: '2D4',
+            strikeBonus: 0,
+            weightLbs: 2,
+            isEquipped: true,
+            forgeProperties: {
+              editorDraft: {
+                addsPsDamageBonus: false,
+                material: 'steel',
+              },
+            },
+          },
+          {
+            id: 'wpn_axe',
+            itemType: 'weapon',
+            name: 'Battle Axe',
+            category: 'Axes',
+            damage: '2D6',
+            strikeBonus: 0,
+            weightLbs: 5,
+            isEquipped: false,
+            forgeProperties: {
+              editorDraft: { addsPsDamageBonus: false },
+            },
+          },
+        ],
+        equippedArmorId: null,
+        readyWeaponIds: [null, null],
+        ammoReserves: {},
+      },
+    })
+    expect(character.schemaVersion).toBe(3)
+    const short = character.inventory?.items.find((i) => i.id === 'wpn_short_sword')
+    const axe = character.inventory?.items.find((i) => i.id === 'wpn_axe')
+    expect(short && short.itemType === 'weapon' && short.forgeProperties?.editorDraft).toEqual({
+      material: 'steel',
+    })
+    expect(
+      axe && axe.itemType === 'weapon' ? axe.forgeProperties : 'missing',
+    ).toBeUndefined()
+    expect(report.fieldRenames).toContain(
+      'weapon.forgeProperties.editorDraft.addsPsDamageBonus:false→absent',
+    )
   })
 
   it('strips superseded O.C.C. Hand-to-Hand default when Martial Arts was selected', () => {

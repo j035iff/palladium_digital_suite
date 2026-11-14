@@ -295,4 +295,50 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
     expect(profile.notation).toBe('1D6')
     expect(profile.appliesPsDamageBonus).toBe(false)
   })
+
+  it('applies P.S. to all clear held-melee categories (CS-19 coverage)', () => {
+    const char = characterWithWp([], 1, 10, { psScore: 20 })
+    const hth = createEmptyAccumulatedHandToHandBonuses()
+    const cases: Array<{ name: string; category: string; damage: string }> = [
+      { name: 'Short Sword', category: 'Short Swords', damage: '2D4' },
+      { name: 'Long Sword', category: 'Large Swords', damage: '2D6' },
+      { name: 'Battle Axe', category: 'Axes', damage: '2D6' },
+      { name: 'Mace', category: 'Blunt', damage: '1D8' },
+      { name: 'Nunchaku', category: 'Chain', damage: '1D8' },
+      { name: 'Bo Staff', category: 'Staves', damage: '1D8' },
+      { name: 'Spear', category: 'Spears', damage: '1D6' },
+      { name: 'Knife', category: 'Knives', damage: '1D6' },
+    ]
+    for (const c of cases) {
+      const w = weapon({
+        id: `cov-${c.category}`,
+        name: c.name,
+        category: c.category,
+        damage: c.damage,
+      })
+      const profile = computeWeaponDamageProfile(char, 'primary', w, hth)
+      expect(profile.appliesPsDamageBonus, c.category).toBe(true)
+      expect(profile.notation, c.category).toBe(`${c.damage}+5`)
+      expect(weaponReceivesMeleePsDamageBonus(w), c.category).toBe(true)
+    }
+  })
+
+  it('held throwable axe still receives P.S. (category Axes, not Thrown)', () => {
+    const axe = weapon({
+      id: 'throwing-axe-held',
+      name: 'Axe, Throwing',
+      category: 'Axes',
+      damage: '1D6',
+      throwable: true,
+    })
+    const char = characterWithWp([], 1, 10, { psScore: 20 })
+    const profile = computeWeaponDamageProfile(
+      char,
+      'primary',
+      axe,
+      createEmptyAccumulatedHandToHandBonuses(),
+    )
+    expect(profile.notation).toBe('1D6+5')
+    expect(profile.appliesPsDamageBonus).toBe(true)
+  })
 })

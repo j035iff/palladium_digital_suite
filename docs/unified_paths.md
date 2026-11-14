@@ -363,6 +363,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-11-14 | CS-19: Gear Forge defaults Adds PS ON (persist only explicit OFF); save v3 clears prior false stamps so short swords / axes / blunt / etc. receive P.S. |
 | 2026-11-14 | Melee Dam: `computeWeaponDamageProfile` appends P.S. (standard flat / supernaturals full-punch string) + HtH style + W.P. `damageBonusFlat`; forge `addsPsDamageBonus` default ON; firearms/thrown/missile excluded (Joe CS-17) |
 | 2026-11-14 | DEV-only sheet Add XP (`DevGrantXpControls` in Experience history; `import.meta.env.DEV`) → shared `grantXp` / level-up queue |
 | 2026-11-13 | Equipped-weapon W.P. mods: `weaponProficiencyBonuses` accumulates catalog `levelTiers` / modern bundle into `computeWeaponProfileBonuses` (aimed vs burst; throw uses `strikeWhenThrown`) |

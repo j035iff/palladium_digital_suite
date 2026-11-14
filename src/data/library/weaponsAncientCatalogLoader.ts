@@ -300,8 +300,9 @@ export type AncientWeaponCustomArchetypeDraft = {
   throwable: boolean
   twoHanded: boolean
   /**
-   * Catalog has no P.S. damage-bonus flag.
-   * Default **false** (Joe ruling) until schema carries source of truth.
+   * Catalog has no per-row P.S. damage-bonus flag.
+   * Default **true** (Joe CS-17 / CS-19) — forge checkbox ON; combat treats
+   * absent `addsPsDamageBonus` as ON and only honors explicit `false`.
    */
   addsPsDamageBonus: boolean
   /** Honest gaps vs custom-form combat slots that catalog rows do not fill. */
@@ -377,7 +378,7 @@ export function ancientCatalogToCustomArchetypeDraft(
     'Intrinsic strike / parry / entangle / disarm bonuses (not in genreStats) — form shows +0 for now',
     'Material (not in catalog — left blank)',
     'Rate of fire (ancient catalog has none) — form shows +0 until applicability schema',
-    'Adds P.S. damage bonus (no catalog flag — defaults off)',
+    'Adds P.S. damage bonus (no catalog flag — defaults on per Joe CS-17)',
     'Future: N/A only when schema marks a combat slot inapplicable to the weapon type',
   ]
 
@@ -406,7 +407,7 @@ export function ancientCatalogToCustomArchetypeDraft(
     weaponProficiencyEligible: piece.weaponProficiencyEligible,
     throwable: piece.throwable,
     twoHanded: piece.twoHanded,
-    addsPsDamageBonus: false,
+    addsPsDamageBonus: true,
     catalogGaps,
   }
 }

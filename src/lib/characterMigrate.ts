@@ -36,12 +36,16 @@ import type {
   CharacterRootState,
   CreationSkillPick,
   FormState,
+  InventoryItem,
   MorphusTraitSlotResolution,
   SheetSkill,
+  Weapon,
+  WeaponForgeEditorDraft,
+  WeaponForgeProperties,
 } from '../types'
 
 /** Current save schema version stamped on migrate + serialize. */
-export const CHARACTER_SAVE_SCHEMA_VERSION = 2
+export const CHARACTER_SAVE_SCHEMA_VERSION = 3
 
 type LegacyCharacterFields = {
   facade?: Character['primary']
@@ -482,6 +486,62 @@ function stripSupersededHandToHandFromForm(
 }
 
 /**
+ * CS-19: forge previously defaulted `addsPsDamageBonus` to false and stamped it
+ * on every catalog/custom add, which hid P.S. on short swords / axes / blunt.
+ * Clear explicit false so combat’s absent=ON default (CS-17) applies again.
+ * Intentional OFF after this migrate must be re-unchecked in Gear Forge.
+ */
+export function clearStampedPsDamageBonusOff(
+  input: CharacterRootState,
+): CharacterRootState {
+  const items = input.inventory?.items
+  if (!items?.length) return input
+
+  let changed = false
+  const nextItems: InventoryItem[] = items.map((item) => {
+    if (item.itemType !== 'weapon') return item
+    const weapon = item as Weapon
+    const draft = weapon.forgeProperties?.editorDraft
+    if (!draft || draft.addsPsDamageBonus !== false) return item
+
+    changed = true
+    const { addsPsDamageBonus: _drop, ...restDraft } = draft
+    void _drop
+    const nextDraft: WeaponForgeEditorDraft | undefined =
+      Object.keys(restDraft).length > 0 ? restDraft : undefined
+
+    const prevFp = weapon.forgeProperties ?? {}
+    const nextFp: WeaponForgeProperties = { ...prevFp }
+    if (nextDraft) nextFp.editorDraft = nextDraft
+    else delete nextFp.editorDraft
+
+    const fpEmpty =
+      !nextFp.indestructible &&
+      !nextFp.qualityLabel &&
+      !nextFp.notes &&
+      !nextFp.editorDraft &&
+      !(nextFp.damageMultipliers?.length) &&
+      !(nextFp.abilityTriggers?.length)
+
+    if (fpEmpty) {
+      const { forgeProperties: _fp, ...restWeapon } = weapon
+      void _fp
+      return restWeapon as Weapon
+    }
+    return { ...weapon, forgeProperties: nextFp }
+  })
+
+  if (!changed) return input
+  return {
+    ...input,
+    inventory: {
+      ...input.inventory!,
+      items: nextItems,
+    },
+  }
+}
+
+/**
  * Remove O.C.C. ladder Hand-to-Hand styles superseded by `creationHandToHandTier`
  * (e.g. Expert default left on the sheet after Martial Arts related upgrade).
  * Idempotent; keeps non-ladder multi-HtH styles.
@@ -558,6 +618,14 @@ export function migrateCharacterSave(
   } else {
     // Keep aliases/projection coerce idempotent on current saves.
     next = normalizeIdentityAliasFields(next)
+  }
+
+  if (fromVersion < 3) {
+    const before = next
+    next = clearStampedPsDamageBonusOff(next)
+    if (next !== before) {
+      report.fieldRenames.push('weapon.forgeProperties.editorDraft.addsPsDamageBonus:false→absent')
+    }
   }
 
   next = backfillSheetSkillCatalogIds(next)

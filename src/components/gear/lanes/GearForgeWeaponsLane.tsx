@@ -132,7 +132,8 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
   const [customDescription, setCustomDescription] = useState('')
   const [customThrowable, setCustomThrowable] = useState(false)
   const [customTwoHanded, setCustomTwoHanded] = useState(false)
-  const [customAddsPsDamageBonus, setCustomAddsPsDamageBonus] = useState(false)
+  /** Joe CS-17 / CS-19: default ON; OFF only when the player unchecks. */
+  const [customAddsPsDamageBonus, setCustomAddsPsDamageBonus] = useState(true)
   const [customWpEligible, setCustomWpEligible] = useState(true)
   const [customRanged, setCustomRanged] = useState(false)
   const [customMagCurrent, setCustomMagCurrent] = useState('15')
@@ -297,7 +298,10 @@ export function GearForgeWeaponsLane({ adapter, morphus = false }: Props) {
     if (customStrikeWhenThrown.trim()) {
       editorDraft.strikeWhenThrown = customStrikeWhenThrown.trim()
     }
-    editorDraft.addsPsDamageBonus = customAddsPsDamageBonus
+    // Absent = ON (CS-17). Persist only explicit OFF so combat default stays ON.
+    if (customAddsPsDamageBonus === false) {
+      editorDraft.addsPsDamageBonus = false
+    }
     if (customCategory.trim()) editorDraft.category = customCategory.trim()
     if (Object.keys(editorDraft).length) fp.editorDraft = editorDraft
 
