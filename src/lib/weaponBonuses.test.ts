@@ -252,7 +252,7 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
     expect(profile.appliesPsDamageBonus).toBe(false)
   })
 
-  it('does not add P.S. to firearms', () => {
+  it('does not add P.S. to firearms, thrown darts, or arrow/bolt ammo', () => {
     const pistol = weapon({
       id: 'pistol-1',
       name: '9mm',
@@ -260,11 +260,30 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
       category: 'Handguns',
       payload: { current: 12, max: 12 },
     })
+    const dart = weapon({
+      id: 'dart-1',
+      name: 'Dart',
+      damage: '1D4',
+      category: 'Thrown',
+      throwable: true,
+    })
+    const arrows = weapon({
+      id: 'arrows-1',
+      name: 'Arrows (Short Bow)',
+      damage: '1D6',
+      category: 'Missile',
+    })
     const char = characterWithWp([], 1, 10, { psScore: 20 })
     const hth = { ...createEmptyAccumulatedHandToHandBonuses(), damage: 2 }
     expect(computeWeaponDamageProfile(char, 'primary', pistol, hth).notation).toBe(
       '3D6',
     )
+    expect(computeWeaponDamageProfile(char, 'primary', dart, hth).notation).toBe(
+      '1D4',
+    )
+    expect(
+      computeWeaponDamageProfile(char, 'primary', arrows, hth).notation,
+    ).toBe('1D6')
   })
 
   it('bows get Flat P.S. only (no S.N. punch)', () => {

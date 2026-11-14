@@ -24,7 +24,8 @@ export {
   resolveWeaponPsChartEligibility,
   resolveWeaponPsChartFamily,
   isThrownDiscOrStarWeapon,
-  weaponHasSolidEnchantedPsException,
+  isThrownDartWeapon,
+  isArrowOrBoltAmmoWeapon,
 } from './weaponPsDamageChart'
 
 /** Human-readable modifier keys unique to {@link Weapon.weaponSpecificModifiers}. */

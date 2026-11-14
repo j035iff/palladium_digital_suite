@@ -67,7 +67,7 @@ describe('resolveWeaponPsChartFamily', () => {
     ).toBe('whips')
   })
 
-  it('leaves Misc / Dart uncharted (Misc out of scope; Dart open)', () => {
+  it('leaves Misc uncharted; Dart and Arrows/Bolts are explicit neither families', () => {
     expect(
       resolveWeaponPsChartFamily(
         weapon({ id: 'm', name: 'Frying Pan', category: 'Miscellaneous' }),
@@ -77,7 +77,21 @@ describe('resolveWeaponPsChartFamily', () => {
       resolveWeaponPsChartFamily(
         weapon({ id: 'd', name: 'Dart', category: 'Thrown', throwable: true }),
       ),
-    ).toBe('uncharted')
+    ).toBe('thrown_dart')
+    expect(
+      resolveWeaponPsChartFamily(
+        weapon({
+          id: 'a',
+          name: 'Arrows (Short Bow)',
+          category: 'Missile',
+        }),
+      ),
+    ).toBe('arrow_bolt_ammo')
+    expect(
+      resolveWeaponPsChartFamily(
+        weapon({ id: 'b', name: 'Bolts', category: 'Missile' }),
+      ),
+    ).toBe('arrow_bolt_ammo')
   })
 })
 
@@ -109,23 +123,43 @@ describe('resolveWeaponPsChartEligibility', () => {
     })
   })
 
-  it('rune/TW exception grants Flat+SN for energy blades', () => {
+  it('Dart and Arrows/Bolts get neither Flat nor S.N. (Joe rulings)', () => {
+    const dart = weapon({
+      id: 'd',
+      name: 'Dart',
+      category: 'Thrown',
+      throwable: true,
+    })
+    const arrows = weapon({
+      id: 'a',
+      name: 'Arrows (Short Bow)',
+      category: 'Missile',
+    })
+    expect(resolveWeaponPsChartEligibility(dart)).toMatchObject({
+      family: 'thrown_dart',
+      flatPs: false,
+      supernaturalPunch: false,
+    })
+    expect(resolveWeaponPsChartEligibility(arrows)).toMatchObject({
+      family: 'arrow_bolt_ammo',
+      flatPs: false,
+      supernaturalPunch: false,
+    })
+  })
+
+  it('pure energy blades are neither; Rune/TW exception deferred', () => {
     const plain = weapon({ id: 'p1', name: 'Psi-Sword', category: 'Misc' })
-    const rune = weapon({
+    const labeled = weapon({
       id: 'p2',
       name: 'Psi-Sword',
       category: 'Misc',
       forgeProperties: { qualityLabel: 'Rune' },
     })
     expect(resolveWeaponPsChartFamily(plain)).toBe('pure_energy_psi')
-    expect(resolveWeaponPsChartEligibility(plain, 'melee')).toMatchObject({
+    expect(resolveWeaponPsChartFamily(labeled)).toBe('pure_energy_psi')
+    expect(resolveWeaponPsChartEligibility(labeled, 'melee')).toMatchObject({
       flatPs: false,
       supernaturalPunch: false,
-    })
-    expect(resolveWeaponPsChartFamily(rune)).toBe('solid_enchanted_energy')
-    expect(resolveWeaponPsChartEligibility(rune, 'melee')).toMatchObject({
-      flatPs: true,
-      supernaturalPunch: true,
     })
   })
 })

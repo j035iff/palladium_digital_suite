@@ -3,8 +3,11 @@
  * (store docs/ancient-weapon-ps-sn-damage-chart.png). Mechanical Integrity —
  * encode the chart; do not invent unlisted rows.
  *
- * Miscellaneous / improvised catalog rows are **out of scope** (Joe CS-19 follow-up):
+ * Miscellaneous / improvised catalog rows are **out of scope** (Joe):
  * no Misc P.S. chart row — they remain `uncharted` with neither Flat nor S.N.
+ *
+ * Catalog rulings (Joe 2026-11-14): Thrown Dart → neither; Arrows/Bolts → neither.
+ * Rune/TW/solid-enchanted energy-blade exception: **unimplemented** until later.
  */
 import type { Weapon } from '../types'
 
@@ -13,7 +16,7 @@ export type WeaponDamageDelivery = 'melee' | 'thrown' | 'projectile'
 
 /**
  * Chart family id (stable for tests / tooltips).
- * `uncharted` = no chart mapping (Misc out of scope; other gaps = open rulings).
+ * `uncharted` = no chart mapping (Misc out of scope).
  */
 export type WeaponPsChartFamily =
   | 'swords'
@@ -29,13 +32,13 @@ export type WeaponPsChartFamily =
   | 'bows'
   | 'slings_bolas'
   | 'thrown_discs_stars'
+  | 'thrown_dart'
+  | 'arrow_bolt_ammo'
   | 'whips'
   | 'crossbows'
   | 'blowguns'
   | 'siege'
   | 'pure_energy_psi'
-  /** Chart exception: Rune / TW / solid enchanted energy blades — Flat + S.N. */
-  | 'solid_enchanted_energy'
   | 'firearms'
   | 'uncharted'
 
@@ -64,25 +67,6 @@ function weaponLooksLikeShield(weapon: Weapon): boolean {
   return /\bshields?\b/.test(blob(weapon))
 }
 
-/** Rune / Techno-Wizard / solid enchanted exception for pure-energy blades (chart). */
-export function weaponHasSolidEnchantedPsException(weapon: Weapon): boolean {
-  const fp = weapon.forgeProperties
-  const text = [
-    weapon.name,
-    fp?.qualityLabel ?? '',
-    fp?.notes ?? '',
-    fp?.editorDraft?.material ?? '',
-  ]
-    .join(' ')
-    .toLowerCase()
-  return (
-    /\brune\b/.test(text) ||
-    /\btechno[-\s]?wizard\b/.test(text) ||
-    /\btw\b/.test(text) ||
-    /\bsolid\s+enchanted\b/.test(text)
-  )
-}
-
 function isPureEnergyOrPsiBladeName(weapon: Weapon): boolean {
   const b = blob(weapon)
   return (
@@ -108,13 +92,34 @@ function isBlowgun(weapon: Weapon): boolean {
   return /\bblow\s*gun\b|\bblowgun\b/.test(blob(weapon))
 }
 
+/** Joe: Arrows/Bolts inventory rows — neither Flat nor S.N. */
+export function isArrowOrBoltAmmoWeapon(weapon: Weapon): boolean {
+  const name = weapon.name.trim().toLowerCase()
+  const b = blob(weapon)
+  // Name-led ammo SKUs (e.g. "Arrows (Short Bow)", "Bolts").
+  if (/^arrows?\b/.test(name) || /^bolts?\b/.test(name)) return true
+  if (/\barrows?\b/.test(b) || /\bbolts?\b/.test(b)) {
+    // Exclude actual bows / crossbows that mention ammo in notes.
+    if (/\bbow\b/.test(name) || isCrossbow(weapon)) return false
+    return true
+  }
+  return false
+}
+
+/** Joe: Thrown Dart — neither (distinct from Thrown Discs & Stars). */
+export function isThrownDartWeapon(weapon: Weapon): boolean {
+  const name = weapon.name.trim().toLowerCase()
+  const cat = categorySlug(weapon)
+  if (isBlowgun(weapon)) return false
+  if (/^darts?\b/.test(name)) return true
+  if (/\bthrown\b/.test(cat) && /\bdarts?\b/.test(blob(weapon))) return true
+  return false
+}
+
 function isBow(weapon: Weapon): boolean {
   const b = blob(weapon)
   if (isCrossbow(weapon)) return false
-  // Ammo rows are not bows.
-  if (/\barrows?\b|\bbolts?\b/.test(b) && !/\bbow\b/.test(weapon.name.toLowerCase())) {
-    return false
-  }
+  if (isArrowOrBoltAmmoWeapon(weapon)) return false
   return /\bbow\b/.test(b)
 }
 
@@ -124,6 +129,7 @@ function isSlingOrBola(weapon: Weapon): boolean {
 
 /** Chart: Thrown Discs & Stars (shuriken, chakram, boomerang, throwing stars). */
 export function isThrownDiscOrStarWeapon(weapon: Weapon): boolean {
+  if (isThrownDartWeapon(weapon)) return false
   const b = blob(weapon)
   return (
     /\bshuriken\b/.test(b) ||
@@ -151,11 +157,12 @@ function isForkedPairedName(weapon: Weapon): boolean {
 export function resolveWeaponPsChartFamily(weapon: Weapon): WeaponPsChartFamily {
   if (weapon.payload) return 'firearms'
 
-  if (isPureEnergyOrPsiBladeName(weapon)) {
-    return weaponHasSolidEnchantedPsException(weapon)
-      ? 'solid_enchanted_energy'
-      : 'pure_energy_psi'
-  }
+  // Joe rulings before broader missile/thrown matching.
+  if (isThrownDartWeapon(weapon)) return 'thrown_dart'
+  if (isArrowOrBoltAmmoWeapon(weapon)) return 'arrow_bolt_ammo'
+
+  // Pure energy / psi blades: neither for now (Rune/TW exception deferred).
+  if (isPureEnergyOrPsiBladeName(weapon)) return 'pure_energy_psi'
   if (isSiegeEngine(weapon)) return 'siege'
   if (isBlowgun(weapon)) return 'blowguns'
   if (isCrossbow(weapon)) return 'crossbows'
@@ -178,7 +185,7 @@ export function resolveWeaponPsChartFamily(weapon: Weapon): WeaponPsChartFamily 
   if (/blunt/.test(cat)) return 'blunt'
   if (/sword/.test(cat)) return 'swords'
 
-  // Thrown Dart, Missile ammo, Miscellaneous improvised, etc. — uncharted.
+  // Miscellaneous improvised, etc. — uncharted / out of scope.
   return 'uncharted'
 }
 
@@ -198,8 +205,10 @@ export function resolveDefaultWeaponDamageDelivery(
     case 'blowguns':
     case 'slings_bolas':
     case 'siege':
+    case 'arrow_bolt_ammo':
       return 'projectile'
     case 'thrown_discs_stars':
+    case 'thrown_dart':
       return 'thrown'
     default:
       return 'melee'
@@ -240,6 +249,8 @@ export function resolveWeaponPsChartEligibility(
     case 'blowguns':
     case 'siege':
     case 'pure_energy_psi':
+    case 'thrown_dart':
+    case 'arrow_bolt_ammo':
       return {
         ...neither(),
         // Whips are melee hand weapons — HtH style flat still applies (chart only bars P.S.).
@@ -261,8 +272,7 @@ export function resolveWeaponPsChartEligibility(
     case 'blunt':
     case 'polearms':
     case 'staves':
-    case 'chain':
-    case 'solid_enchanted_energy': {
+    case 'chain': {
       const bits =
         delivery === 'melee'
           ? { flatPs: true, supernaturalPunch: true }
@@ -290,7 +300,7 @@ export function resolveWeaponPsChartEligibility(
     }
 
     case 'uncharted':
-      // Misc out of scope; other unmapped rows await Joe — neither Flat nor S.N.
+      // Misc out of scope — neither Flat nor S.N.
       return {
         family,
         delivery,

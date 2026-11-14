@@ -363,6 +363,7 @@ Track work here until promoted to the registry above.
 
 | Date | Change |
 |------|--------|
+| 2026-11-14 | Chart catalog rulings: Thrown Dart + Arrows/Bolts → neither; Rune/TW energy exception deferred |
 | 2026-11-14 | Ancient Dam chart SoT: `weaponPsDamageChart` Flat vs S.N. by type/delivery (thrown axes/knives Flat only; bows Flat only; whips/crossbows neither; Misc out of scope) |
 | 2026-11-14 | CS-19: Gear Forge defaults Adds PS ON (persist only explicit OFF); save v3 clears prior false stamps so short swords / axes / blunt / etc. receive P.S. |
 | 2026-11-14 | Melee Dam: `computeWeaponDamageProfile` appends P.S. (standard flat / supernaturals full-punch string) + HtH style + W.P. `damageBonusFlat`; forge `addsPsDamageBonus` default ON; firearms/thrown/missile excluded (Joe CS-17) |
