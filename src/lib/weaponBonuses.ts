@@ -155,6 +155,71 @@ function appendDamageSegment(base: string, segment: string): string {
 }
 
 /**
+ * Display-only Dam combine (Joe CS-21): merge plain NdM terms that share a die
+ * type (`1D6+3D6+7` → `4D6+7`) and sum flat addends (`2D6+5+2` → `2D6+7`).
+ * Different faces stay separate (`1D8+3D6+9`). Multiplied dice (`1D6x10`) are
+ * left as-is — no invented Palladium math beyond like-dice + flats.
+ */
+export function combineLikeDamageDiceDisplay(raw: string): string {
+  const trimmed = raw.trim()
+  if (!trimmed || trimmed === '—') return trimmed || '—'
+
+  const compact = trimmed.replace(/\s+/g, '')
+  const termRe = /([+-]?)(\d+[dD]\d+(?:[xX*]\d+)?|\d+)/g
+  const matches = [...compact.matchAll(termRe)]
+  if (matches.length === 0) return trimmed
+
+  const consumed = matches.map((m) => m[0]).join('')
+  if (consumed.toLowerCase() !== compact.toLowerCase()) return trimmed
+
+  const diceCounts = new Map<number, number>()
+  const faceOrder: number[] = []
+  const specials: string[] = []
+  let flat = 0
+
+  for (const m of matches) {
+    const sign = m[1] === '-' ? -1 : 1
+    const body = m[2]!
+    const simple = /^(\d+)[dD](\d+)$/.exec(body)
+    if (simple) {
+      const count = sign * Number(simple[1])
+      const faces = Number(simple[2])
+      if (!diceCounts.has(faces)) faceOrder.push(faces)
+      diceCounts.set(faces, (diceCounts.get(faces) ?? 0) + count)
+      continue
+    }
+    if (/^\d+$/.test(body)) {
+      flat += sign * Number(body)
+      continue
+    }
+    const norm = body
+      .toUpperCase()
+      .replace(/\*(\d+)/g, 'x$1')
+      .replace(/X(\d+)/g, 'x$1')
+    specials.push(sign < 0 ? `-${norm}` : norm)
+  }
+
+  const segments: string[] = []
+  for (const faces of faceOrder) {
+    const count = diceCounts.get(faces) ?? 0
+    if (count > 0) segments.push(`${count}D${faces}`)
+    else if (count < 0) segments.push(`-${Math.abs(count)}D${faces}`)
+  }
+  for (const sp of specials) segments.push(sp)
+  if (flat > 0) segments.push(String(flat))
+  else if (flat < 0) segments.push(String(flat))
+
+  if (segments.length === 0) return trimmed
+
+  let out = segments[0]!
+  for (let i = 1; i < segments.length; i++) {
+    const seg = segments[i]!
+    out += seg.startsWith('-') ? seg : `+${seg}`
+  }
+  return out
+}
+
+/**
  * Aggregate weapon Dam from Joe’s ancient-weapon Flat/S.N. chart + HtH style +
  * W.P. `damageBonusFlat`. Pass `delivery: 'thrown'` for thrown Dam on axes/knives/
  * spears/shields (Flat only; no S.N. punch).
@@ -230,6 +295,7 @@ export function computeWeaponDamageProfile(
   for (const line of lines) {
     notation = appendDamageSegment(notation, line.segment)
   }
+  notation = combineLikeDamageDiceDisplay(notation)
 
   return {
     weaponId: weapon.id,

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Character, Weapon } from '../types'
 import {
+  combineLikeDamageDiceDisplay,
   computeWeaponDamageProfile,
   computeWeaponProfileBonuses,
   selectWeaponStrikeProfileForFireMode,
@@ -191,7 +192,7 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
     const char = characterWithWp([], 3, 10, { psScore: 20 })
     const hth = { ...createEmptyAccumulatedHandToHandBonuses(), damage: 2 }
     const profile = computeWeaponDamageProfile(char, 'primary', sword, hth)
-    expect(profile.notation).toBe('2D6+5+2')
+    expect(profile.notation).toBe('2D6+7')
     expect(profile.appliesPsDamageBonus).toBe(true)
     expect(weaponReceivesMeleePsDamageBonus(sword)).toBe(true)
   })
@@ -376,7 +377,7 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
     })
     const hth = createEmptyAccumulatedHandToHandBonuses()
     const melee = computeWeaponDamageProfile(sn, 'primary', axe, hth, 'melee')
-    expect(melee.notation).toBe('1D6+3D6+9')
+    expect(melee.notation).toBe('4D6+9')
     expect(melee.appliesSupernaturalPunch).toBe(true)
     const thrown = computeWeaponDamageProfile(sn, 'primary', axe, hth, 'thrown')
     expect(thrown.notation).toBe('1D6+9')
@@ -427,5 +428,63 @@ describe('computeWeaponDamageProfile — P.S. / HtH / W.P. flats', () => {
     expect(
       computeWeaponDamageProfile(sn, 'primary', shield, hth, 'thrown').notation,
     ).toBe('1D4+9')
+  })
+
+  it('merges same-die weapon + S.N. punch (Joe: 1D6+3D6+7 → 4D6+7)', () => {
+    const club = weapon({
+      id: 'club-1',
+      name: 'Club',
+      damage: '1D6',
+      category: 'Blunt',
+    })
+    // SN 22 → full 3D6, attr bonus +7 → raw 1D6+3D6+7 → display 4D6+7
+    const char = characterWithWp([], 1, 10, {
+      psScore: 22,
+      psTier: 'supernatural',
+    })
+    const profile = computeWeaponDamageProfile(
+      char,
+      'primary',
+      club,
+      createEmptyAccumulatedHandToHandBonuses(),
+    )
+    expect(profile.notation).toBe('4D6+7')
+  })
+
+  it('keeps different die types separate (Joe: 1D8+3D6+9)', () => {
+    const mace = weapon({
+      id: 'mace-1',
+      name: 'Mace',
+      damage: '1D8',
+      category: 'Blunt',
+    })
+    const char = characterWithWp([], 1, 10, {
+      psScore: 24,
+      psTier: 'supernatural',
+    })
+    const profile = computeWeaponDamageProfile(
+      char,
+      'primary',
+      mace,
+      createEmptyAccumulatedHandToHandBonuses(),
+    )
+    expect(profile.notation).toBe('1D8+3D6+9')
+  })
+})
+
+describe('combineLikeDamageDiceDisplay', () => {
+  it('merges like dice and flats', () => {
+    expect(combineLikeDamageDiceDisplay('1D6+3D6+7')).toBe('4D6+7')
+    expect(combineLikeDamageDiceDisplay('2D6+5+2')).toBe('2D6+7')
+    expect(combineLikeDamageDiceDisplay('1D4+2D4+1')).toBe('3D4+1')
+  })
+
+  it('does not merge different die types', () => {
+    expect(combineLikeDamageDiceDisplay('1D8+3D6+9')).toBe('1D8+3D6+9')
+    expect(combineLikeDamageDiceDisplay('2D6+1D4+3')).toBe('2D6+1D4+3')
+  })
+
+  it('leaves multiplied dice unmerged with plain NdM', () => {
+    expect(combineLikeDamageDiceDisplay('1D6+1D6x10+2')).toBe('1D6+1D6x10+2')
   })
 })
