@@ -10,7 +10,11 @@ import type {
 import type { AmmoReservesState } from '../../lib/ammoReserves'
 import { formatBonus } from '../../lib/combatQuickBonuses'
 import { getWeaponFireModes } from '../../lib/fireModes'
-import { computeWeaponProfileBonuses } from '../../lib/weaponBonuses'
+import {
+  computeWeaponDamageProfile,
+  computeWeaponProfileBonuses,
+  formatWeaponDamageLabel,
+} from '../../lib/weaponBonuses'
 import {
   addCombatEraSlot,
   applyStrikePenaltyToWeaponProfile,
@@ -19,7 +23,6 @@ import {
   COMBAT_ERA_BASE_SLOT_COUNT,
   combatWeaponGlyphId,
   formatCombatWeaponSlotLabel,
-  formatFireModeDamageLabel,
   formatMissingWpRequirementTooltip,
   listSlotWeaponOptions,
   MISSING_WP_BADGE_LABEL,
@@ -107,6 +110,13 @@ function slotQuickStats(
     era === 'modern' ? modernTwoGunStrikePenalty(selectedWeapons, slotIndex) : 0
   const profile = applyStrikePenaltyToWeaponProfile(raw, penalty)
 
+  const damage = computeWeaponDamageProfile(
+    character,
+    activeForm,
+    selected,
+    handToHandAccumulated,
+  )
+
   if (era === 'modern') {
     const modes = getWeaponFireModes(selected)
     const single = pickSingleFireMode(modes)
@@ -129,7 +139,7 @@ function slotQuickStats(
         />
         <SummaryLine
           label="Dam"
-          value={formatFireModeDamageLabel(selected, single)}
+          value={formatWeaponDamageLabel(damage, single)}
         />
       </>
     )
@@ -139,7 +149,7 @@ function slotQuickStats(
     <>
       <SummaryLine label="Strike" value={formatBonus(profile.strike.total)} />
       <SummaryLine label="Parry" value={formatBonus(profile.parry.total)} />
-      <SummaryLine label="Dam" value={selected.damage} />
+      <SummaryLine label="Dam" value={damage.notation} />
     </>
   )
 }

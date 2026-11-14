@@ -353,7 +353,7 @@ Update this table when closing gaps.
 | P.P.E. `+20` flat | ✅ Flat column | Commit uses dice+PE+flat | `parseVitalFormulaFlatIntegerTerm()` |
 | Level-up stat bumps | — | Partial | Not creation ledger scope |
 | Live saves / HF | ✅ Creation ledger | ✅ `computeSaveProfile()` + `horror_factor_flat` stack | Attribute-only saves via engine |
-| Weapon / unarmed strike | ✅ Creation ledger | ✅ `weaponBonuses` / `strikeEngine` via `liveStatEngine` | |
+| Weapon / unarmed strike | ✅ Creation ledger | ✅ `weaponBonuses` / `strikeEngine` via `liveStatEngine` | Strike/parry via `computeWeaponProfileBonuses`; Dam via `computeWeaponDamageProfile` (P.S. + HtH style + W.P. flat) |
 | Live attribute display (physical skills) | ✅ `skillAttributeFlatBonusTotal` / staging | ✅ `computeDisplayScalars()` + spawn bake | Catalog `physicalSkillBonuses` → `getSkillById().modifiers`; Stats tab uses `sheetDisplayScalars`; `physicalSkillModsApplied` avoids double-count after spawn |
 | Dual-form identity height/weight | — | ✅ `resolveFormIdentityHeight` / `Weight` | Morphus overlay + deterministic trait mods; dice mods are fill-ins (Pillar 5), never auto-rolled |
 

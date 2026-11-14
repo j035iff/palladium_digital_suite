@@ -1,4 +1,5 @@
 import type { ActiveForm, Character, InventoryItem, Weapon } from '../types'
+import { getFormState } from '../types'
 import { collectUnlockedSkillIds } from './combatQuickBonuses'
 import { resolveLivePpMeleeNatural } from './liveStatEngine'
 import { resolveWeaponProficiencySkillId } from '../data/skillLibrary'
@@ -6,6 +7,10 @@ import type { StrikeBreakdown } from './strikeEngine'
 import type { AccumulatedHandToHandBonuses } from '../types'
 import { isWildFireMode, type FireMode } from './fireModes'
 import { resolveOwnedWeaponProficiencyBonuses } from './weaponProficiencyBonuses'
+import {
+  getHandToHandDamageProfile,
+  resolveStrengthCategory,
+} from '../utils/strengthCalculator'
 
 /** Human-readable modifier keys unique to {@link Weapon.weaponSpecificModifiers}. */
 export function prettyWeaponTraitKey(raw: string): string {
@@ -60,6 +65,173 @@ function hthMeleeBonuses(
 /** Ranged weapon: energy slug / ballistic. */
 export function isRangedWeapon(weapon: Weapon): boolean {
   return Boolean(weapon.payload)
+}
+
+/**
+ * Joe ruling (CS-17): forge `addsPsDamageBonus` defaults **ON** when absent;
+ * **OFF** only when explicitly `false`.
+ */
+export function weaponForgeAllowsPsDamageBonus(weapon: Weapon): boolean {
+  return weapon.forgeProperties?.editorDraft?.addsPsDamageBonus !== false
+}
+
+/**
+ * Thrown-category / missile / firearms never receive the P.S. damage bonus
+ * (Joe CS-17). Throwable melee (knife, spear) still qualify when held.
+ */
+export function isThrownOrMissileWeaponCategory(weapon: Weapon): boolean {
+  const c = weapon.category.trim().toLowerCase()
+  if (/\bthrown\b|\bthrowing\b/.test(c)) return true
+  if (/\bmissile\b/.test(c)) return true
+  if (/\bbow\b|\bcrossbow\b|\bsling\b/.test(c)) return true
+  return false
+}
+
+/**
+ * Held melee (not firearm / thrown / missile). HtH style damage flats apply here;
+ * P.S. further requires {@link weaponForgeAllowsPsDamageBonus}.
+ */
+export function isHeldMeleeWeaponForDamage(weapon: Weapon): boolean {
+  if (isRangedWeapon(weapon)) return false
+  if (isThrownOrMissileWeaponCategory(weapon)) return false
+  return true
+}
+
+/**
+ * Whether this weapon’s Dam string may include P.S. damage.
+ * Firearms, thrown/missile categories, and explicit forge OFF are excluded.
+ */
+export function weaponReceivesMeleePsDamageBonus(weapon: Weapon): boolean {
+  return isHeldMeleeWeaponForDamage(weapon) && weaponForgeAllowsPsDamageBonus(weapon)
+}
+
+export type WeaponDamageLine = {
+  key: string
+  label: string
+  /** Notation segment joined after the weapon base (e.g. `+5`, `3D6+9`). */
+  segment: string
+}
+
+/** Assembled Dam notation for Action Dam / Expand (Unified Path with strike profile). */
+export type WeaponDamageProfile = {
+  weaponId: string
+  baseNotation: string
+  lines: readonly WeaponDamageLine[]
+  /** Full table-play damage string (weapon + P.S. / HtH / W.P. flats). */
+  notation: string
+  /** True when P.S. (standard flat or supernaturals full-punch string) was eligible. */
+  appliesPsDamageBonus: boolean
+}
+
+function appendDamageSegment(base: string, segment: string): string {
+  const b = base.trim()
+  const s = segment.trim()
+  if (!s) return b || '—'
+  if (!b || b === '—') return s
+  if (s.startsWith('+')) return `${b}${s}`
+  return `${b}+${s}`
+}
+
+/**
+ * Aggregate weapon Dam: base notation + optional P.S. (melee) + HtH style flat +
+ * W.P. `damageBonusFlat`. Supernatural P.S. appends the full-punch table string
+ * (e.g. knife `1D8` + SN 24 → `1D8+3D6+9`).
+ */
+export function computeWeaponDamageProfile(
+  character: Character,
+  activeForm: ActiveForm,
+  weapon: Weapon,
+  handToHandAccumulated?: AccumulatedHandToHandBonuses,
+): WeaponDamageProfile {
+  const baseNotation = weapon.damage.trim() || '—'
+  const lines: WeaponDamageLine[] = []
+  const heldMelee = isHeldMeleeWeaponForDamage(weapon)
+  const appliesPs = weaponReceivesMeleePsDamageBonus(weapon)
+
+  if (appliesPs) {
+    const ps = getFormState(character, activeForm).attributes.ps
+    const category = resolveStrengthCategory(ps.score, ps.tier)
+    const profile = getHandToHandDamageProfile(ps.score, category)
+    if (profile.kind === 'supernatural') {
+      const seg = profile.fullStrengthPunch.trim()
+      if (seg) {
+        lines.push({
+          key: 'ps_supernatural',
+          label: 'P.S. (supernatural full)',
+          segment: seg,
+        })
+      }
+    } else if (profile.attributeDamageBonus > 0) {
+      lines.push({
+        key: 'ps',
+        label: 'P.S.',
+        segment: `+${profile.attributeDamageBonus}`,
+      })
+    }
+  }
+
+  if (heldMelee) {
+    const hthFlat = handToHandAccumulated?.damage ?? 0
+    if (hthFlat !== 0) {
+      lines.push({
+        key: 'hth',
+        label: 'HtH',
+        segment: hthFlat > 0 ? `+${hthFlat}` : `${hthFlat}`,
+      })
+    }
+  }
+
+  const wpEligible = weapon.weaponProficiencyEligible !== false
+  const wpSkillId = wpEligible
+    ? resolveWeaponProficiencySkillId(weapon.wpCategory, weapon.linkedWpSkillId)
+    : undefined
+  const unlocked = collectUnlockedSkillIds(character, activeForm)
+  const owned = resolveOwnedWeaponProficiencyBonuses(
+    wpSkillId,
+    unlocked,
+    character.level ?? 1,
+  )
+  const wpFlat = owned?.bonuses.damageBonusFlat ?? 0
+  if (wpFlat !== 0) {
+    lines.push({
+      key: 'wp',
+      label: owned?.entry.name ?? 'W.P.',
+      segment: wpFlat > 0 ? `+${wpFlat}` : `${wpFlat}`,
+    })
+  }
+
+  let notation = baseNotation
+  for (const line of lines) {
+    notation = appendDamageSegment(notation, line.segment)
+  }
+
+  return {
+    weaponId: weapon.id,
+    baseNotation,
+    lines,
+    notation,
+    appliesPsDamageBonus: appliesPs,
+  }
+}
+
+/** Apply fire-mode damage multiplier on top of {@link computeWeaponDamageProfile}. */
+export function formatWeaponDamageLabel(
+  profile: WeaponDamageProfile,
+  mode?: FireMode | null,
+): string {
+  const base = profile.notation.trim() || '—'
+  if (!mode?.damageMultiplier || mode.damageMultiplier === 1) return base
+  return `${mode.damageMultiplier}× ${base}`
+}
+
+/** Tooltip equation for damage lines (Intuitive Depth). */
+export function formatWeaponDamageEquation(profile: WeaponDamageProfile): string {
+  if (profile.lines.length === 0) return profile.notation
+  const parts = [
+    `[Weapon: ${profile.baseNotation}]`,
+    ...profile.lines.map((l) => `[${l.label}: ${l.segment}]`),
+  ]
+  return `${parts.join(' + ')} = ${profile.notation}`
 }
 
 function weaponShowsThrowBonus(weapon: Weapon): boolean {

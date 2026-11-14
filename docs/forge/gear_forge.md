@@ -26,7 +26,7 @@ Shared inventory forge shell: **Weapons / Armor / Artifacts / Other** lanes on o
 - Cast inventory / fodder gear bags; LAN item push
 - Artifacts lane deep editor; armor/other catalogs
 - Combat auto-apply of multipliers; P.P.E./I.S.P. spend for ability triggers
-- **Weapon schema** — promote Custom Weapon combat/other-stat fields off `forgeProperties.editorDraft` into first-class inventory + combat consumption
+- **Weapon schema** — promote remaining Custom Weapon combat/other-stat fields off `forgeProperties.editorDraft` into first-class inventory + combat consumption (`addsPsDamageBonus` already consumed by Action Dam — Joe CS-17)
 - Broader catalog dual-measure backfill (see [`../ingest/units.md`](../ingest/units.md)); identity height/weight metric entry polish
 
 **Shipped:** app-wide Standard/Metric preference (`docs/units_preference.md`) — Gear Forge weight/length labels + convert-on-edit.

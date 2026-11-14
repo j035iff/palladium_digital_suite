@@ -373,6 +373,10 @@ export function weaponById(
   return candidates.find((w) => w.id === id) ?? null
 }
 
+/**
+ * @deprecated Prefer {@link formatWeaponDamageLabel} with
+ * {@link computeWeaponDamageProfile} so P.S. / HtH / W.P. flats are included.
+ */
 export function formatFireModeDamageLabel(weapon: Weapon, mode: FireMode | null): string {
   const base = weapon.damage.trim() || '—'
   if (!mode?.damageMultiplier || mode.damageMultiplier === 1) return base

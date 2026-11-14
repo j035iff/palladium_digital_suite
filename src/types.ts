@@ -2776,8 +2776,9 @@ export type WeaponForgeAbilityTrigger = {
  *
  * `editorDraft` holds Custom Weapon form slots that are not yet first-class on
  * {@link Weapon} (material, length, N/A combat cells, etc.) so saves do not lie
- * by dropping user input. Combat engines do **not** consume `editorDraft` yet —
- * see deferred schema/units note in docs/forge/gear_forge.md.
+ * by dropping user input. Combat consumes **`addsPsDamageBonus` only**
+ * (default ON when absent; OFF when explicitly false — Joe CS-17); other draft
+ * fields remain round-trip until a later schema pass — see docs/forge/gear_forge.md.
  */
 export type WeaponForgeEditorDraft = {
   material?: string

@@ -6,7 +6,9 @@ import type {
   Weapon,
 } from '../../types'
 import {
+  computeWeaponDamageProfile,
   computeWeaponProfileBonuses,
+  formatWeaponDamageEquation,
   formatWeaponStatEquation,
   isRangedWeapon,
   prettyWeaponTraitKey,
@@ -120,6 +122,13 @@ export function WeaponStrikeCard({
   const wildWarn = mode ? getWildBurstWarning(w, mode) : { kind: 'none' as const }
   const strikeProfile = selectWeaponStrikeProfileForFireMode(profile, mode)
   const strikeBonus = strikeProfile.total + mode.strikeModifier
+  const damageProfile = computeWeaponDamageProfile(
+    character,
+    activeForm,
+    w,
+    handToHandAccumulated,
+  )
+  const damageTip = formatWeaponDamageEquation(damageProfile)
 
   const wpSubtitle = w.wpCategory ?? profile.wpSkillDisplayName ?? w.category
 
@@ -241,8 +250,14 @@ export function WeaponStrikeCard({
               <p className={`mb-1 text-[10px] font-black uppercase tracking-wide ${detailLabel}`}>
                 Damage
               </p>
-              <p className={`mb-1 text-[9px] leading-snug ${detailMuted}`}>
-                Notation {w.damage}
+              <p className={`mb-1 text-[9px] leading-snug ${detailMuted}`} title={damageTip}>
+                Notation {damageProfile.baseNotation}
+                {damageProfile.lines.length > 0
+                  ? ` → ${damageProfile.notation}`
+                  : ''}
+              </p>
+              <p className={`font-mono text-2xl font-black tabular-nums ${detailValue}`}>
+                {damageProfile.notation}
               </p>
             </div>
           </div>
