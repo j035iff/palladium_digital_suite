@@ -1,4 +1,6 @@
-/** Shared SVG glyphs for portal chrome (return + settings). Unified Path — one pair. */
+/** Shared SVG glyphs for portal chrome (return + settings + join). Unified Path. */
+
+export { JoinTableIcon } from './JoinTableIcon'
 
 export function ReturnToLauncherIcon({ className = 'h-4 w-4' }: { className?: string }) {
   return (

@@ -74,14 +74,14 @@ Level-up queue and XP rituals activate when `isFinalized` and O.C.C. XP table fl
 
 ## Persistence & Save Loop
 
-Spawn **does not** auto-write to disk until Confirm (then one handoff write so Open Character can find the sheet). After that, the live sheet uses **explicit Save** only:
+Spawn **does not** auto-write to disk until Confirm (then one handoff write so Open Character can find the sheet). After that, the live sheet **auto-saves**:
 
-1. Header **Save** (`saveCharacter`) — `serializeCharacterRootForSave(rawCharacter)` strips runtime-only flags (`isHostGenreLocked`, etc.) per [master_flow.md](./master_flow.md) §2; stamps `schemaVersion`. Merges the live gear session (`inventory` block: carried items, equipped armor id, primary/secondary weapon slot ids, ammo reserves) before write.
+1. Background persist (`CharacterContext` finalized effect / `saveCharacter`) — `serializeCharacterRootForSave(rawCharacter)` strips runtime-only flags (`isHostGenreLocked`, etc.) per [master_flow.md](./master_flow.md) §2; stamps `schemaVersion`. Merges the live gear session (`inventory` block: carried items, equipped armor id, primary/secondary weapon slot ids, ammo reserves) before write.
 2. `saveCharacterToStorage` — writes pristine JSON keyed by character `id`.
 3. Index refresh for launcher **Open Character** list.
-4. Dirty tracking (`src/lib/liveSheetSave.ts`) compares the would-be save fingerprint to the last Save; Persistent Core shows orange/greyed **Save** (no separate Saved/Unsaved chip). Portal leave with unsaved edits → dialog (Save / Continue without saving).
+4. Fingerprint tracking (`src/lib/liveSheetSave.ts`) skips redundant writes; Persistent Core has **no Save button** (auto-save). Portal tooltip notes changes will be saved; no leave-dirty dialog.
 
-Live-sheet edits (identity, notes, gear, vitality, etc.) stay in memory until Save — **no auto-persist** after `isFinalized`. While joined at a table, the same Save also flushes `party.snapshot` to peers (dirty edits do not live-push the seated snapshot). Creation **Save for Later** remains its own explicit draft write.
+Live-sheet edits (identity, notes, gear, vitality, etc.) auto-persist after `isFinalized`. While joined at a table, the same flush also pushes `party.snapshot` to peers. Creation **Save for Later** remains its own explicit draft write.
 
 **Rule:** The save file stores the character in **`creationGenreId` native layout** without host-derived transforms. Reloading applies `transformCharacterToHostEnvironment` for display.
 

@@ -4,20 +4,21 @@ import { LevelUpModal } from '../live/LevelUpModal'
 import { LiveSheetTabBody } from '../live/LiveSheetTabBody'
 import { LiveSheetChromeStrip } from '../live/LiveSheetChromeStrip'
 import { LiveSheetTabOverlay } from '../live/LiveSheetTabOverlay'
-import { LiveSheetSaveControls } from '../live/LiveSheetSaveControls'
+import { LiveSheetToolCluster } from '../live/LiveSheetToolCluster'
+import { LiveSheetLevelBadge } from '../live/LiveSheetLevelBadge'
+import { LiveSheetLevelOverlay } from '../live/LiveSheetLevelOverlay'
+import { LiveSheetStatusEffectsOverlay } from '../live/LiveSheetStatusEffectsOverlay'
 import { SheetJoinTableDrawer } from '../live/SheetJoinTableDrawer'
-import { UnsavedEditsDialog } from '../live/UnsavedEditsDialog'
 import { useCharacter } from '../../context/CharacterContext'
 import { PLAYER_RETURN_LEAVES_TABLE_CONFIRM } from '../../lib/gm/joinTableLeave'
 import { getSharedGmClientRuntime } from '../../lib/gm/sessionClientHandle'
 import type { GmClientRuntimeState } from '../../lib/gm/sessionClientRuntime'
-import { shouldGuardLiveSheetLeave } from '../../lib/liveSheetSave'
+import { resolveEffectiveCreationAbilityBudget } from '../../lib/creationAbilityBudget'
+import { resolveLiveSheetVitalsChromeFlags } from '../../lib/liveSheetVitalsChrome'
 import {
-  liveSheetModeLabel,
   type LiveSheetMode,
   type LiveSheetOverlayTabId,
 } from '../../lib/liveSheetTabs'
-import { PortalChromeActions } from '../chrome/PortalChromeActions'
 import { IdentityHeader } from './IdentityHeader'
 import { GmPlayerDmTray } from '../gm/GmPlayerDmTray'
 import { JoinedTablePeerRoster } from '../live/JoinedTablePeerRoster'
@@ -29,7 +30,8 @@ export function MainLayout() {
   const [overlayTabId, setOverlayTabId] = useState<LiveSheetOverlayTabId | null>(
     null,
   )
-  const [unsavedLeaveOpen, setUnsavedLeaveOpen] = useState(false)
+  const [levelOverlayOpen, setLevelOverlayOpen] = useState(false)
+  const [statusEffectsOpen, setStatusEffectsOpen] = useState(false)
   const [joinDrawerOpen, setJoinDrawerOpen] = useState(false)
   const gmClientRuntime = useMemo(() => getSharedGmClientRuntime(), [])
   const [gmClientState, setGmClientState] = useState<GmClientRuntimeState>(() =>
@@ -40,9 +42,6 @@ export function MainLayout() {
     creationGenreId,
     hostGenreId,
     returnToLauncher,
-    isLiveSheetDirty,
-    saveCharacter,
-    discardLiveSheetEdits,
     activeForm,
     activeFormState: form,
     activeStats,
@@ -52,11 +51,41 @@ export function MainLayout() {
     levelUpQueue,
     resolveLevelUpRitual,
     psychicTier,
+    activeRace,
+    effectiveOcc,
   } = useCharacter()
 
   const morphusActive = supportsDualForm && activeForm === 'morphus'
   const showCreation = character.isFinalized !== true
-  const showIsp = psychicTier !== 'none' || form.isp.maximum > 0
+
+  const abilityBudget = useMemo(
+    () =>
+      resolveEffectiveCreationAbilityBudget({
+        occ: effectiveOcc,
+        raceId: activeRace?.id,
+        psychicTier,
+        storedBudget: character.creationAbilityBudget,
+        creationGenreId: creationGenreId ?? undefined,
+        hostGenreId: hostGenreId ?? undefined,
+      }),
+    [
+      effectiveOcc,
+      activeRace?.id,
+      psychicTier,
+      character.creationAbilityBudget,
+      creationGenreId,
+      hostGenreId,
+    ],
+  )
+  const vitalsFlags = useMemo(
+    () =>
+      resolveLiveSheetVitalsChromeFlags({
+        race: activeRace,
+        occ: effectiveOcc,
+        abilityBudget,
+      }),
+    [activeRace, effectiveOcc, abilityBudget],
+  )
 
   useEffect(() => gmClientRuntime.subscribe(setGmClientState), [gmClientRuntime])
 
@@ -71,51 +100,27 @@ export function MainLayout() {
     if (seatedTableName) setJoinDrawerOpen(false)
   }, [seatedTableName])
 
-  useEffect(() => {
-    if (!shouldGuardLiveSheetLeave(character.isFinalized === true, isLiveSheetDirty)) {
-      return
-    }
-    const onBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault()
-      event.returnValue = ''
-    }
-    window.addEventListener('beforeunload', onBeforeUnload)
-    return () => window.removeEventListener('beforeunload', onBeforeUnload)
-  }, [character.isFinalized, isLiveSheetDirty])
-
-  const leaveSheetToLauncher = (opts?: {
-    saveFirst?: boolean
-    discardFirst?: boolean
-  }) => {
-    if (opts?.saveFirst) saveCharacter()
+  const leaveSheetToLauncher = () => {
     const runtime = getSharedGmClientRuntime()
     const joined = runtime.getState().status === 'joined'
     if (joined && !window.confirm(PLAYER_RETURN_LEAVES_TABLE_CONFIRM)) {
       return
     }
-    if (opts?.discardFirst) discardLiveSheetEdits()
     if (joined) runtime.leave()
     returnToLauncher()
   }
 
-  const requestReturnToLauncher = () => {
+  const leaveTableStayOnSheet = () => {
+    const runtime = getSharedGmClientRuntime()
+    if (runtime.getState().status !== 'joined') return
     if (
-      shouldGuardLiveSheetLeave(character.isFinalized === true, isLiveSheetDirty)
+      !window.confirm(
+        `Leave ${seatedTableName ?? 'this table'}? You will stay on this character sheet.`,
+      )
     ) {
-      setUnsavedLeaveOpen(true)
       return
     }
-    leaveSheetToLauncher()
-  }
-
-  const handleUnsavedSaveAndLeave = () => {
-    setUnsavedLeaveOpen(false)
-    leaveSheetToLauncher({ saveFirst: true })
-  }
-
-  const handleUnsavedContinueWithoutSaving = () => {
-    setUnsavedLeaveOpen(false)
-    leaveSheetToLauncher({ discardFirst: true })
+    runtime.leave()
   }
 
   return (
@@ -143,6 +148,7 @@ export function MainLayout() {
           className="sticky top-0 z-20 shrink-0 backdrop-blur-sm"
           aria-label="Persistent character core"
         >
+          {/* Layer 1 — Level · identity stack · Join/Portal/Settings */}
           <header
             className="border-b-2 px-4 py-3"
             style={{
@@ -153,28 +159,42 @@ export function MainLayout() {
             }}
           >
             <div className="mx-auto flex w-full max-w-6xl flex-wrap items-start justify-between gap-3">
-              <div className="min-w-0 flex-1 text-left">
-                <IdentityHeader
+              <div className="flex min-w-0 flex-1 items-start gap-3 text-left">
+                <LiveSheetLevelBadge
+                  level={character.level}
                   morphusActive={morphusActive}
-                  creationGenreId={creationGenreId}
-                  hostGenreId={hostGenreId}
-                  collapsed
-                  onCollapsedChange={() => {
-                    /* Live sheet: summary strip only; details are the Identity tab. */
+                  open={levelOverlayOpen}
+                  onToggle={() => {
+                    setStatusEffectsOpen(false)
+                    setLevelOverlayOpen((v) => !v)
                   }}
-                  showExpandToggle={false}
                 />
+                <div className="min-w-0 flex-1">
+                  <IdentityHeader
+                    morphusActive={morphusActive}
+                    creationGenreId={creationGenreId}
+                    hostGenreId={hostGenreId}
+                    collapsed
+                    onCollapsedChange={() => {
+                      /* Live sheet: summary strip only; details are the Identity tab. */
+                    }}
+                    showExpandToggle={false}
+                  />
+                </div>
               </div>
 
               <div className="flex shrink-0 flex-wrap items-center gap-2">
-                <LiveSheetSaveControls
-                  dirty={isLiveSheetDirty}
-                  onSave={saveCharacter}
-                  morphusActive={morphusActive}
-                />
-                <PortalChromeActions
+                <LiveSheetToolCluster
                   tone={morphusActive ? 'morphus' : 'sheet'}
-                  onReturnToLauncher={requestReturnToLauncher}
+                  seatedTableName={seatedTableName}
+                  onJoinTable={() => {
+                    setOverlayTabId(null)
+                    setLevelOverlayOpen(false)
+                    setStatusEffectsOpen(false)
+                    setJoinDrawerOpen(true)
+                  }}
+                  onLeaveTable={leaveTableStayOnSheet}
+                  onReturnToLauncher={leaveSheetToLauncher}
                 />
               </div>
             </div>
@@ -186,14 +206,24 @@ export function MainLayout() {
             onToggleForm={toggleForm}
             activeOverlayTabId={overlayTabId}
             onSelectOverlayTab={(id) => {
+              setLevelOverlayOpen(false)
+              setStatusEffectsOpen(false)
               setOverlayTabId((cur) => (cur === id ? null : id))
             }}
-            vitalityFlash={vitalityFlash}
-            tableName={seatedTableName}
-            onJoinTable={() => {
+            sheetMode={sheetMode}
+            onSelectSheetMode={(mode) => {
+              setSheetMode(mode)
               setOverlayTabId(null)
-              setJoinDrawerOpen(true)
+              setLevelOverlayOpen(false)
+              setStatusEffectsOpen(false)
             }}
+            statusEffectsOpen={statusEffectsOpen}
+            onToggleStatusEffects={() => {
+              setOverlayTabId(null)
+              setLevelOverlayOpen(false)
+              setStatusEffectsOpen((v) => !v)
+            }}
+            vitalityFlash={vitalityFlash}
             quickRef={{
               hpCurrent: activeStats.hitPoints.current,
               hpMax: activeStats.hitPoints.maximum,
@@ -201,54 +231,12 @@ export function MainLayout() {
               sdcMax: activeStats.structuralDamageCapacity.maximum,
               ppeCurrent: character.ppe.current,
               ppeMax: character.ppe.maximum,
-              showIsp,
+              showPpe: vitalsFlags.showPpe,
+              showIsp: vitalsFlags.showIsp,
               ispCurrent: form.isp.current,
               ispMax: form.isp.maximum,
             }}
           />
-
-          <div
-            className={`border-b-2 px-4 py-2 ${
-              morphusActive
-                ? 'border-violet-700/80 bg-slate-950/95'
-                : 'border-blue-200 bg-white/95'
-            }`}
-            aria-label="Live sheet mode"
-          >
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-2">
-              <div
-                className="flex flex-wrap items-center gap-2"
-                role="group"
-                aria-label="Character sheet mode"
-              >
-                {(['story', 'combat'] as const).map((mode) => {
-                  const active = sheetMode === mode
-                  return (
-                    <button
-                      key={mode}
-                      type="button"
-                      aria-pressed={active}
-                      onClick={() => {
-                        setSheetMode(mode)
-                        setOverlayTabId(null)
-                      }}
-                      className={`rounded-full px-5 py-1.5 text-xs font-black uppercase tracking-wide transition ${
-                        active
-                          ? morphusActive
-                            ? 'bg-violet-700 text-white shadow'
-                            : 'bg-blue-700 text-white shadow'
-                          : morphusActive
-                            ? 'border-2 border-violet-500 bg-transparent text-violet-200 hover:bg-violet-900/50'
-                            : 'border-2 border-blue-500 bg-white text-blue-800 hover:bg-blue-50'
-                      }`}
-                    >
-                      {liveSheetModeLabel(mode)}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
         </div>
       ) : null}
 
@@ -297,6 +285,18 @@ export function MainLayout() {
           onClose={() => setOverlayTabId(null)}
         />
       ) : null}
+      {levelOverlayOpen && !showCreation ? (
+        <LiveSheetLevelOverlay
+          morphusActive={morphusActive}
+          onClose={() => setLevelOverlayOpen(false)}
+        />
+      ) : null}
+      {statusEffectsOpen && !showCreation ? (
+        <LiveSheetStatusEffectsOverlay
+          morphusActive={morphusActive}
+          onClose={() => setStatusEffectsOpen(false)}
+        />
+      ) : null}
       {!showCreation ? (
         <SheetJoinTableDrawer
           open={joinDrawerOpen}
@@ -307,13 +307,6 @@ export function MainLayout() {
       ) : null}
       <JoinedTablePeerRoster />
       <GmPlayerDmTray />
-      <UnsavedEditsDialog
-        open={unsavedLeaveOpen}
-        onSave={handleUnsavedSaveAndLeave}
-        onContinueWithoutSaving={handleUnsavedContinueWithoutSaving}
-        onStay={() => setUnsavedLeaveOpen(false)}
-      />
     </div>
   )
 }
-

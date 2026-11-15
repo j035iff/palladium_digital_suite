@@ -95,6 +95,7 @@ import {
 import {
   liveSheetIsDirty,
   liveSheetSaveFingerprint,
+  shouldPushJoinedPartySnapshotOnLiveMutation,
 } from '../lib/liveSheetSave'
 import {
   applyInventoryWeaponPatch,
@@ -943,23 +944,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     )
   }, [rawCharacter, inventorySession])
 
-  // Creation drafts only: mirror gear session onto the root for yellow detection.
-  // Finalized live sheets do NOT auto-persist — explicit Save only.
-  useEffect(() => {
-    if (rawCharacter.isFinalized === true) return
-    setRawCharacter((prev) => {
-      const merged = mergeCharacterWithInventory(prev, inventorySession)
-      const prevKey = JSON.stringify(prev.inventory ?? null)
-      const nextKey = JSON.stringify(merged.inventory ?? null)
-      return prevKey === nextKey ? prev : merged
-    })
-    // Gear session only — rawCharacter is read from the render that produced the inventory change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inventoryItems, equippedArmorId, readyWeaponIds, ammoReserves])
-
   /**
-   * Push `party.snapshot` when joined. Only call from Save / spawn finalize —
-   * never from dirty live mutations (Unified Path with `liveSheetSave`).
+   * Push `party.snapshot` when joined (auto-save + spawn/join commit points).
    */
   const flushJoinedPartySnapshot = useCallback((next: CharacterRootState) => {
     try {
@@ -972,10 +958,43 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  // Auto-save finalized live sheets (restored 2026-11-15 — Joe mockup rulings).
+  // One path for Story + Combat; joined party.snapshot follows the same flush.
+  useEffect(() => {
+    if (rawCharacter.isFinalized !== true) return
+    const current = liveSheetSaveFingerprint(rawCharacter, inventorySession)
+    if (current === lastSavedFingerprintRef.current) return
+    persistCharacterSave(rawCharacter)
+    lastSavedFingerprintRef.current = current
+    setIsLiveSheetDirty(false)
+    if (shouldPushJoinedPartySnapshotOnLiveMutation()) {
+      flushJoinedPartySnapshot(
+        mergeCharacterWithInventory(rawCharacter, inventorySession),
+      )
+    }
+  }, [
+    rawCharacter,
+    inventorySession,
+    persistCharacterSave,
+    flushJoinedPartySnapshot,
+  ])
+
+  // Creation drafts only: mirror gear session onto the root for yellow detection.
+  useEffect(() => {
+    if (rawCharacter.isFinalized === true) return
+    setRawCharacter((prev) => {
+      const merged = mergeCharacterWithInventory(prev, inventorySession)
+      const prevKey = JSON.stringify(prev.inventory ?? null)
+      const nextKey = JSON.stringify(merged.inventory ?? null)
+      return prevKey === nextKey ? prev : merged
+    })
+    // Gear session only — rawCharacter is read from the render that produced the inventory change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inventoryItems, equippedArmorId, readyWeaponIds, ammoReserves])
+
   const saveCharacter = useCallback(() => {
     persistCharacterSave(rawCharacter)
     markLiveSheetBaseline(rawCharacter, inventorySession)
-    // Explicit Save flushes file + joined-table peer snapshot together.
     flushJoinedPartySnapshot(
       mergeCharacterWithInventory(rawCharacter, inventorySession),
     )
@@ -2945,9 +2964,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     [psychicTier],
   )
 
-  // Identity / notes / aliases: in-memory only until Save. Never push
-  // party.snapshot on dirty edits — same gate as the character file
-  // (`shouldPushJoinedPartySnapshotOnLiveMutation` in liveSheetSave).
+  // Identity / notes / aliases: auto-persist via finalized live-sheet effect
+  // (party.snapshot follows `shouldPushJoinedPartySnapshotOnLiveMutation`).
 
   const setAlignment = useCallback(
     (alignment: string) => {
@@ -3164,7 +3182,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         }
       }
       // Spawn handoff writes once so Open Character can find the sheet; further
-      // live edits require explicit Save (Character Sheet Project owns post-spawn).
+      // live edits auto-persist (Character Sheet Project owns post-spawn).
       persistCharacterSave(next)
       markLiveSheetBaseline(next, inventorySession)
       // Review & Spawn while joined: commit snapshot so campaign history upserts.

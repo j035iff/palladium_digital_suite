@@ -1,10 +1,12 @@
 import { ForgeNavigationBar } from '../forge/ForgeNavigationBar'
-import { IdentityXpBar } from './IdentityXpBar'
 import {
   buildLiveSheetOverlayTabViews,
   isLiveSheetOverlayTabId,
+  liveSheetModeLabel,
+  type LiveSheetMode,
   type LiveSheetOverlayTabId,
 } from '../../lib/liveSheetTabs'
+import { formatLiveSheetVitalsChipParts } from '../../lib/liveSheetVitalsChrome'
 
 type QuickRef = {
   hpCurrent: number
@@ -13,6 +15,7 @@ type QuickRef = {
   sdcMax: number
   ppeCurrent: number
   ppeMax: number
+  showPpe: boolean
   showIsp: boolean
   ispCurrent: number
   ispMax: number
@@ -25,18 +28,19 @@ type Props = {
   onToggleForm?: () => void
   activeOverlayTabId: LiveSheetOverlayTabId | null
   onSelectOverlayTab: (id: LiveSheetOverlayTabId) => void
+  sheetMode: LiveSheetMode
+  onSelectSheetMode: (mode: LiveSheetMode) => void
+  statusEffectsOpen: boolean
+  onToggleStatusEffects: () => void
   quickRef: QuickRef
   vitalityFlash: 'damage' | 'heal' | 'none' | null
-  /** When seated: table/campaign name shown under TABLE. */
-  tableName: string | null
-  /** Opens in-sheet Join drawer when not seated. */
-  onJoinTable: () => void
 }
 
 /**
- * Persistent Core strip: Identity…Gear (+ optional Become Morphus after Gear) ·
- * middle TABLE status / Join table · quick-ref pools · XP.
- * Full identity detail opens as the Identity overlay (header strip stays anchored).
+ * Persistent Core Layers 1b–2:
+ * - Tab row: optional Become Morphus (far left) · Identity…Gear
+ * - Layer 2: Campaigns | Combat · Status Effects stub · vitals chip
+ * TABLE/Join and XP moved to Layer 1 tools / Level badge.
  */
 export function LiveSheetChromeStrip({
   morphusActive,
@@ -44,44 +48,36 @@ export function LiveSheetChromeStrip({
   onToggleForm,
   activeOverlayTabId,
   onSelectOverlayTab,
+  sheetMode,
+  onSelectSheetMode,
+  statusEffectsOpen,
+  onToggleStatusEffects,
   quickRef,
   vitalityFlash,
-  tableName,
-  onJoinTable,
 }: Props) {
   const tabs = buildLiveSheetOverlayTabViews(activeOverlayTabId)
-  const seated = Boolean(tableName?.trim())
+  const vitalsParts = formatLiveSheetVitalsChipParts(quickRef)
 
   return (
     <div
-      className={`border-b-2 px-4 py-2 ${
+      className={`${
         vitalityFlash === 'damage'
           ? 'pds-vitality-flash-damage'
           : vitalityFlash === 'heal'
             ? 'pds-vitality-flash-heal'
             : ''
-      } ${
-        morphusActive
-          ? 'border-violet-700/80 bg-slate-950/95'
-          : 'border-blue-200 bg-white/95'
       }`}
       aria-label="Sheet tools and quick reference"
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-3 gap-y-2">
-        {/* Shrink-wrap overlays + Morphus so TABLE stays centered (Pillar 6). */}
-        <div className="flex min-w-0 shrink-0 flex-nowrap items-center gap-2">
-          <div className="min-w-0">
-            <ForgeNavigationBar
-              tabs={tabs}
-              activeTabId={activeOverlayTabId ?? ''}
-              singleRow
-              ariaLabel="Character sheet overlays"
-              onDarkSurface={morphusActive}
-              onSelectTab={(id) => {
-                if (isLiveSheetOverlayTabId(id)) onSelectOverlayTab(id)
-              }}
-            />
-          </div>
+      {/* Layer 1b — overlay tabs under identity */}
+      <div
+        className={`border-b-2 px-4 py-2 ${
+          morphusActive
+            ? 'border-violet-700/80 bg-slate-950/95'
+            : 'border-blue-200 bg-white/95'
+        }`}
+      >
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-2">
           {supportsDualForm && onToggleForm ? (
             <button
               type="button"
@@ -102,68 +98,90 @@ export function LiveSheetChromeStrip({
               Become {morphusActive ? 'Facade' : 'Morphus'}
             </button>
           ) : null}
+          <div className="min-w-0">
+            <ForgeNavigationBar
+              tabs={tabs}
+              activeTabId={activeOverlayTabId ?? ''}
+              singleRow
+              ariaLabel="Character sheet overlays"
+              onDarkSurface={morphusActive}
+              onSelectTab={(id) => {
+                if (isLiveSheetOverlayTabId(id)) onSelectOverlayTab(id)
+              }}
+            />
+          </div>
         </div>
+      </div>
 
-        <div
-          className="flex min-w-[8rem] flex-1 basis-[8rem] flex-col items-center justify-center px-2 text-center"
-          aria-label={seated ? 'Current table' : 'Join table'}
-        >
-          <span
-            className={`text-[10px] font-black uppercase tracking-[0.22em] ${
-              morphusActive ? 'text-violet-400' : 'text-blue-600'
+      {/* Layer 2 — Campaigns/Combat · Status Effects · vitals */}
+      <div
+        className={`border-b-2 px-4 py-2 ${
+          morphusActive
+            ? 'border-violet-700/80 bg-slate-950/95'
+            : 'border-blue-200 bg-white/95'
+        }`}
+        aria-label="Live sheet mode and vitals"
+      >
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-3 gap-y-2">
+          <div
+            className="flex flex-wrap items-center gap-2"
+            role="group"
+            aria-label="Character sheet mode"
+          >
+            {(['story', 'combat'] as const).map((mode) => {
+              const active = sheetMode === mode
+              return (
+                <button
+                  key={mode}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => onSelectSheetMode(mode)}
+                  className={`rounded-full px-5 py-1.5 text-xs font-black uppercase tracking-wide transition ${
+                    active
+                      ? morphusActive
+                        ? 'bg-violet-700 text-white shadow'
+                        : 'bg-blue-700 text-white shadow'
+                      : morphusActive
+                        ? 'border-2 border-violet-500 bg-transparent text-violet-200 hover:bg-violet-900/50'
+                        : 'border-2 border-blue-500 bg-white text-blue-800 hover:bg-blue-50'
+                  }`}
+                >
+                  {liveSheetModeLabel(mode)}
+                </button>
+              )
+            })}
+          </div>
+
+          <button
+            type="button"
+            onClick={onToggleStatusEffects}
+            aria-expanded={statusEffectsOpen}
+            aria-haspopup="dialog"
+            className={`mx-auto rounded-full border-2 border-dashed px-4 py-1.5 text-[11px] font-black uppercase tracking-wide transition ${
+              statusEffectsOpen
+                ? morphusActive
+                  ? 'border-violet-300 bg-violet-900/60 text-violet-50'
+                  : 'border-blue-500 bg-blue-50 text-blue-900'
+                : morphusActive
+                  ? 'border-violet-400/70 bg-transparent text-violet-200 hover:bg-violet-900/40'
+                  : 'border-blue-300 bg-transparent text-blue-800 hover:bg-blue-50'
             }`}
           >
-            Table
-          </span>
-          {seated ? (
-            <span
-              className={`mt-0.5 max-w-[14rem] truncate text-sm font-black uppercase tracking-wide sm:max-w-xs sm:text-base ${
-                morphusActive ? 'text-violet-50' : 'text-slate-900'
-              }`}
-              title={tableName ?? undefined}
-            >
-              {tableName}
-            </span>
-          ) : (
-            <button
-              type="button"
-              onClick={onJoinTable}
-              className={`mt-0.5 rounded-full border-2 px-3 py-0.5 text-[11px] font-black uppercase tracking-wide transition ${
-                morphusActive
-                  ? 'border-violet-400 bg-violet-900/50 text-violet-50 hover:bg-violet-800'
-                  : 'border-blue-600 bg-blue-50 text-blue-900 hover:bg-blue-100'
-              }`}
-            >
-              Join table
-            </button>
-          )}
-        </div>
+            Status Effects
+          </button>
 
-        <div
-          className={`flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border-2 px-3 py-1.5 font-mono text-xs font-bold tabular-nums ${
-            morphusActive
-              ? 'border-violet-500 bg-violet-950 text-violet-50'
-              : 'border-blue-600 bg-blue-600 text-white'
-          }`}
-          aria-label="Quick reference pools"
-        >
-          <span title="Hit Points">
-            HP {quickRef.hpCurrent}/{quickRef.hpMax}
-          </span>
-          <span title="Structural Damage Capacity">
-            SDC {quickRef.sdcCurrent}/{quickRef.sdcMax}
-          </span>
-          <span title="P.P.E.">
-            PPE {quickRef.ppeCurrent}/{quickRef.ppeMax}
-          </span>
-          {quickRef.showIsp ? (
-            <span title="I.S.P.">
-              ISP {quickRef.ispCurrent}/{quickRef.ispMax}
-            </span>
-          ) : null}
-        </div>
-        <div className="w-full min-w-[12rem] sm:w-auto sm:max-w-xs">
-          <IdentityXpBar />
+          <div
+            className={`ml-auto flex flex-wrap items-center gap-x-3 gap-y-1 rounded-full border-2 px-3 py-1.5 font-mono text-xs font-bold tabular-nums ${
+              morphusActive
+                ? 'border-violet-500 bg-violet-950 text-violet-50'
+                : 'border-blue-600 bg-blue-600 text-white'
+            }`}
+            aria-label="Quick reference pools"
+          >
+            {vitalsParts.map((part) => (
+              <span key={part}>{part}</span>
+            ))}
+          </div>
         </div>
       </div>
     </div>
