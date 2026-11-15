@@ -27,7 +27,7 @@ They land on the Launcher Landing Page.
 
 #### 1b. Player — Join Table (in-sheet only)
 
-Player opens a character → live sheet. Persistent Core strip middle shows **TABLE**. When not seated: **Join table** opens an in-sheet drawer (`SheetJoinTableDrawer` + `JoinTablePanel`). When seated: TABLE shows the campaign/table name.
+Player opens a character → live sheet. Persistent Core tools include a **Join** icon (Join · Portal · Settings). When not seated: Join opens an in-sheet drawer (`SheetJoinTableDrawer` + `JoinTablePanel`); grey + “No table available” when discovery finds none. When seated: Join icon is green (tooltip shows table name; click confirms leave-table while staying on the sheet); Campaigns pill still shows the seated table name.
 
 1. **Player Name (placeholder)**
    - No editable Player Name field on the sheet join UI
@@ -41,7 +41,7 @@ Player opens a character → live sheet. Persistent Core strip middle shows **TA
    - Other players see this projected name; the **GM always sees the real character name**
    - Choice is stored on the character (`tableProjectedAliasId` for Facade; Nightbane Morphus uses `morphusTableProjectedAliasId` + separate `morphusAliases`) and applied on `party.snapshot` → seat `projectedCharacterName` using `presentedForm`
    - Peers also receive `portraitProjection.presentedForm` so People thumbnails match the joiner’s active form
-   - After join, changing aliases / projected name / form presentation / other identity on the live sheet does **not** refresh `party.snapshot` until the player presses **Save**
+   - After join, changing aliases / projected name / form presentation / other identity on the live sheet refreshes `party.snapshot` on the same auto-save flush as the character file
 4. **Join Session**
    - Populates any sessions available on the network
    - No session yet → “no session available”
@@ -64,7 +64,7 @@ Player opens a character → live sheet. Persistent Core strip middle shows **TA
 
 - Session appears as a button on Join Session (campaign name only — **no date/time**)
 - Player clicks → dialog **“Joining Session”**
-- On success, drawer closes; sheet stays open with TABLE showing the campaign name (same shared client runtime / `party.snapshot` path)
+- On success, drawer closes; sheet stays open with Join icon seated + Campaigns pill showing the campaign name (same shared client runtime / `party.snapshot` path)
 - Joined peers can open **At this table** on the sheet chrome to see each seat’s player name + **projected** character name
 - **Campaigns Home:** joining stamps / reuses a forever campaign tab keyed by the table’s **campaign name** (`ensureSheetCampaignForJoin`) and sets that row’s `lastAtTableMs` on **this character’s** `sheetCampaigns` (rejoin updates the stamp). Campaign pills sort left→right by that per-character timestamp (most recent / currently seated first; oldest last) — not creation order and not a device-wide order across characters. The seated table’s campaign pill is **green**. Same name on a later session/day reuses that tab and its People/Places/Things/Notes; a different name creates a new tab. **Delete** / **Merge** on the seated campaign are greyed with tooltip (*cannot delete or merge a campaign if you’re currently at that table*); other campaigns stay deletable and can be merged **into** the current-table campaign. Player journal content is never synced to GM Hub.
 
@@ -86,6 +86,6 @@ Player opens a character → live sheet. Persistent Core strip middle shows **TA
 
 - GM **Return to launcher** with a table open → confirm → **Close Table** (unpublish + stop listen) → launcher
 - Joined player **Return to launcher** (live-sheet Portal exit) → confirm → detach (`session.leave`) → launcher
-- Live sheet with **unsaved edits**: Portal leave opens Save / Continue without saving first (then the join-leave confirm if still joined) — same dirty guard as offline sheet (`liveSheetSave`)
-- Joined dirty edits (including identity / Name at the table / character image / per-peer portrait share toggles) stay local until **Save**; Save writes the character file and flushes `party.snapshot` together. Discard / Continue without saving reloads the last saved snapshot peers already see. Portrait data + `portraitShareAllowCharacterIds` project onto the seat (`portraitProjection`); other players’ Campaigns → People list shows a thumbnail only when allowlisted (default **off**). GM Hub At-the-table always shows the active-form portrait from the joiner cache (Total GM Agency).
+- Live sheet auto-saves; Portal leave confirms leave-table when joined (no leave-dirty dialog). Tooltip notes changes will be saved.
+- Joined edits (including identity / Name at the table / character image / per-peer portrait share toggles) auto-flush the character file and `party.snapshot` together. Portrait data + `portraitShareAllowCharacterIds` project onto the seat (`portraitProjection`); other players’ Campaigns → People list shows a thumbnail only when allowlisted (default **off**). GM Hub At-the-table always shows the active-form portrait from the joiner cache (Total GM Agency).
 - Leave/kick removes the seat and clears that character from PCs / joiner cache (no phantom Missing saves)

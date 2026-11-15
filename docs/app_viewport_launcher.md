@@ -19,7 +19,7 @@ The shell uses a viewport switch (`CharacterContext.viewport`):
 | Viewport | UI | Entry |
 |----------|-----|--------|
 | `launcher` | `AppLauncher` (`src/components/dashboard/AppLauncher.tsx`) | App boot; **Return to launcher** icon from sheet header, GM Hub, Campaign Creation Forge, or Gear Forge |
-| `sheet` | `MainLayout` — live sheet + optional creation chrome; in-sheet **Join table** drawer | **Open Character** or **Create Character**; join only from sheet TABLE strip |
+| `sheet` | `MainLayout` — live sheet + optional creation chrome; in-sheet **Join** drawer | **Open Character** or **Create Character**; join only from sheet Join icon |
 | `campaign_forge` | `CampaignCreationForge` — Identity options + confirm | **New Campaign** on the launcher |
 | `gear_forge` | `GearForgeViewport` — shared Gear Forge → custom gear library | **Gear Forge** or **My Custom Gear** on the launcher |
 | `gm` | `GmHubShell` — Narrative / Combat lane tabs (Story Beats·People·Places·Things·Notes / Melee·Prefabs) | **Campaigns** on the launcher, or **Yes** after Campaign Creation Forge |
@@ -63,7 +63,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
    - Viewport → `sheet`; creation chrome visible (`MainLayout` shows `CreationFlowShell` while `isFinalized !== true`).
 3. **Downstream** — User completes the [Character Creation Forge](./forge/character_creation.md); spawn is specified in [character_spawn_handoff.md](./character_spawn_handoff.md).
 
-**Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists. Finalized characters store gear in the save file's `inventory` block; live-sheet edits (including gear) stay dirty until the player presses **Save** on the Persistent Core.
+**Bootstrap:** While the launcher is showing, `CharacterContext` holds a blank Nightbane placeholder root (`createBlankCharacterForGenre`) — not a seeded demo sheet. Inventory/ammo start empty until the player adds gear (Armory) or equipment handoff exists. Finalized characters store gear in the save file's `inventory` block; live-sheet edits (including gear) auto-save on the Persistent Core.
 
 ### Genre manifest flags
 
@@ -90,7 +90,7 @@ GM Hub sessions are a separate local record (not a character save). Spec: [gm_hu
 
 - **Radical visibility:** Roadmap genres remain visible but clearly non-selectable.
 - **Megaversal bridge:** `creationGenreId` is stamped at creation and preserved in saves; `hostGenreId` may diverge for cross-setting play.
-- **No hidden launcher paths:** My Characters, Create Character, Campaigns, New Campaign, **Gear Forge**, and **My Custom Gear** are all on the portal. **Join table** is not on the launcher — it lives on the live sheet TABLE strip only. Roadmap genres stay visible but non-selectable.
+- **No hidden launcher paths:** My Characters, Create Character, Campaigns, New Campaign, **Gear Forge**, and **My Custom Gear** are all on the portal. **Join table** is not on the launcher — it lives on the live sheet Join icon only. Roadmap genres stay visible but non-selectable.
 
 ---
 

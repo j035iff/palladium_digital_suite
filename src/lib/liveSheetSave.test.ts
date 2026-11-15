@@ -3,10 +3,8 @@ import { characterFixture } from '../data/characterFixture'
 import { ensureCharacterRoot } from './characterRoot'
 import { EMPTY_INVENTORY_SESSION } from './inventoryPersistence'
 import {
-  LIVE_SHEET_CONTINUE_WITHOUT_SAVING_LABEL,
-  LIVE_SHEET_SAVE_LABEL,
-  LIVE_SHEET_UNSAVED_BODY,
-  LIVE_SHEET_UNSAVED_TITLE,
+  LIVE_SHEET_JOIN_NO_TABLE_TOOLTIP,
+  LIVE_SHEET_RETURN_TO_LAUNCHER_LABEL,
   liveSheetIsDirty,
   liveSheetSaveFingerprint,
   liveSheetSaveStatus,
@@ -43,22 +41,20 @@ describe('liveSheetSave', () => {
     expect(liveSheetSaveStatusLabel('unsaved')).toBe('Unsaved')
   })
 
-  it('guards leave only for finalized dirty sheets', () => {
-    expect(shouldGuardLiveSheetLeave(true, true)).toBe(true)
+  it('does not guard leave under auto-save', () => {
+    expect(shouldGuardLiveSheetLeave(true, true)).toBe(false)
     expect(shouldGuardLiveSheetLeave(true, false)).toBe(false)
     expect(shouldGuardLiveSheetLeave(false, true)).toBe(false)
   })
 
-  it('exposes unsaved-dialog copy for Save / Continue without saving', () => {
-    expect(LIVE_SHEET_UNSAVED_TITLE.length).toBeGreaterThan(0)
-    expect(LIVE_SHEET_UNSAVED_BODY.toLowerCase()).toContain('unsaved')
-    expect(LIVE_SHEET_SAVE_LABEL).toBe('Save')
-    expect(LIVE_SHEET_CONTINUE_WITHOUT_SAVING_LABEL.toLowerCase()).toContain(
-      'without saving',
-    )
+  it('pushes joined party.snapshot on live mutations (auto-save)', () => {
+    expect(shouldPushJoinedPartySnapshotOnLiveMutation()).toBe(true)
   })
 
-  it('defers joined party.snapshot until explicit Save (not per dirty edit)', () => {
-    expect(shouldPushJoinedPartySnapshotOnLiveMutation()).toBe(false)
+  it('exposes Portal / Join tooltips for auto-save chrome', () => {
+    expect(LIVE_SHEET_RETURN_TO_LAUNCHER_LABEL.toLowerCase()).toContain(
+      'changes will be saved',
+    )
+    expect(LIVE_SHEET_JOIN_NO_TABLE_TOOLTIP).toBe('No table available')
   })
 })

@@ -44,6 +44,11 @@ import {
 import type { CharacterPortraitWindowSize } from '../../types'
 import { aliasesForForm } from '../../lib/characterAliases'
 import { buildLiveMorphusIdentityTraitBreakdown } from '../../lib/liveMorphusIdentityTraits'
+import {
+  buildLiveSheetIdentityHeaderLines,
+  buildLiveSheetIdentityRolloverBlocks,
+} from '../../lib/liveSheetIdentityHeader'
+import { IdentityHeaderRollover } from '../live/IdentityHeaderRollover'
 import { resolveActiveMorphusTraits } from '../../lib/morphusPassiveBridge'
 import {
   identityHeightFromMetricDisplay,
@@ -90,10 +95,6 @@ function identityToggleButtonClass(morphusActive: boolean): string {
   return morphusActive
     ? 'shrink-0 rounded-md border-2 border-violet-300 bg-violet-800 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-violet-700'
     : 'shrink-0 rounded-md border-2 border-blue-600 bg-blue-600 px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-white hover:bg-blue-500'
-}
-
-function identitySummarySeparatorClass(morphusActive: boolean): string {
-  return morphusActive ? 'text-violet-400/60' : 'text-slate-400'
 }
 
 function identityFieldClass(morphusActive: boolean): string {
@@ -1159,6 +1160,8 @@ export function IdentityHeader({
     character.occSpecializationId ?? undefined,
     effectiveOcc,
   )
+  // Live strip uses shared header builder (3-line + race-hide + rollover).
+  // Specialization stays out of Line 2 (rollover only).
   const heightFeetError = identityHeightFeetError(displayProfile.heightFeet)
   const heightInchesError = identityHeightInchesError(displayProfile.heightInches)
   const weightLbsError = identityWeightLbsError(displayProfile.weightLbs)
@@ -1171,6 +1174,25 @@ export function IdentityHeader({
   const alignmentLabel = configuratorAlignmentLabel(
     effectiveConfiguratorAlignment(alignmentBranch.alignment),
   )
+  // Strip Line 3: specific alignment only (mockup — not “Selfish - Unprincipled”).
+  const stripAlignmentLabel =
+    effectiveConfiguratorAlignment(alignmentBranch.alignment) || alignmentLabel
+  const stripHeaderLines = buildLiveSheetIdentityHeaderLines({
+    name: character.name,
+    alignmentLabel: stripAlignmentLabel,
+    race: activeRace,
+    occ: effectiveOcc,
+    occDisplayName: character.occ.name,
+    occSpecializationId: character.occSpecializationId,
+  })
+  const stripRolloverBlocks = buildLiveSheetIdentityRolloverBlocks({
+    name: character.name,
+    alignmentLabel: stripAlignmentLabel,
+    race: activeRace,
+    occ: effectiveOcc,
+    occDisplayName: character.occ.name,
+    occSpecializationId: character.occSpecializationId,
+  })
   const toggleButtonClass = identityToggleButtonClass(morphusActive)
 
   if (isCreation) {
@@ -1256,20 +1278,11 @@ export function IdentityHeader({
     )
   }
 
-  const nameInputClass = collapsed
-    ? 'max-w-[12rem] shrink-0 border-0 bg-transparent text-lg font-bold tracking-tight outline-none sm:max-w-[16rem] sm:text-xl'
-    : 'mt-0.5 w-full max-w-xl border-0 border-b-2 bg-transparent text-2xl font-bold tracking-tight outline-none transition-colors sm:text-3xl'
+  const nameInputClass =
+    'mt-0.5 w-full max-w-xl border-0 border-b-2 bg-transparent text-2xl font-bold tracking-tight outline-none transition-colors sm:text-3xl'
   const nameInputToneClass = morphusActive
-    ? collapsed
-      ? 'text-violet-50 placeholder:font-normal placeholder:text-violet-300/45 focus:underline focus:decoration-violet-400'
-      : 'border-transparent text-violet-50 placeholder:font-normal placeholder:text-violet-300/45 focus:border-violet-400'
-    : collapsed
-      ? 'text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:underline focus:decoration-blue-600'
-      : 'border-transparent text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-600'
-
-  const summaryMetaClass = morphusActive
-    ? 'shrink-0 text-[11px] font-semibold uppercase tracking-wide text-violet-200/90 sm:text-xs'
-    : 'shrink-0 text-[11px] font-semibold uppercase tracking-wide text-slate-500 sm:text-xs'
+    ? 'border-transparent text-violet-50 placeholder:font-normal placeholder:text-violet-300/45 focus:border-violet-400'
+    : 'border-transparent text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:border-blue-600'
 
   return (
     <div className="min-w-0 flex-1">
@@ -1290,51 +1303,68 @@ export function IdentityHeader({
           ) : null}
           <div
             id="identity-header-details"
-            className="flex min-w-0 flex-nowrap items-baseline gap-x-2 overflow-x-auto pb-0.5"
+            className="min-w-0 text-left"
+            aria-label="Character identity summary"
           >
-            <input
-              type="text"
-              value={character.name}
-              onChange={(e) => setCharacterName(e.target.value)}
-              onFocus={(e) =>
-                clearPlaceholderNameOnFocus(e.currentTarget.value, setCharacterName)
-              }
-              placeholder={CHARACTER_NAME_PLACEHOLDER}
-              aria-label="Character name"
-              className={`${nameInputClass} ${nameInputToneClass}`}
-            />
-            <span
-              className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
-              aria-hidden
+            <p
+              className={`truncate text-xl font-black tracking-tight sm:text-2xl ${
+                morphusActive ? 'text-violet-50' : 'text-slate-900'
+              }`}
+              title={stripHeaderLines.name || undefined}
             >
-              ·
-            </span>
-            <span className={summaryMetaClass}>{raceLabel}</span>
-            <span
-              className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
-              aria-hidden
+              {stripHeaderLines.name.trim() || CHARACTER_NAME_PLACEHOLDER}
+            </p>
+            <IdentityHeaderRollover
+              blocks={stripRolloverBlocks}
+              morphusActive={morphusActive}
             >
-              ·
-            </span>
-            <span className={`${summaryMetaClass} max-w-[14rem] truncate`} title={occLabel}>
-              {occLabel}
-            </span>
-            <span
-              className={`hidden text-xs sm:inline ${identitySummarySeparatorClass(morphusActive)}`}
-              aria-hidden
+              <span
+                className={`block truncate text-base font-bold sm:text-lg ${
+                  morphusActive ? 'text-violet-100' : 'text-slate-800'
+                }`}
+              >
+                {stripHeaderLines.classLine}
+              </span>
+            </IdentityHeaderRollover>
+            <p
+              className={`mt-0.5 truncate text-[11px] font-semibold uppercase tracking-wide sm:text-xs ${
+                morphusActive ? 'text-violet-300/90' : 'text-slate-500'
+              }`}
             >
-              ·
-            </span>
-            <span className={summaryMetaClass}>{alignmentLabel}</span>
+              {stripHeaderLines.raceAlignmentLine}
+            </p>
           </div>
         </>
       ) : (
         <div id="identity-header-details">
           {/*
-            Overlay details: name / Race / O.C.C. stay on the Persistent Core strip —
-            only Alignment is editable here (Familiar Surface, no duplicate chrome).
+            Identity tab: name edit lives here (ruling #3). Alignment stays
+            beside name; Race / O.C.C. remain strip summary + rollover.
           */}
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div className="min-w-[12rem] max-w-xl flex-1">
+              <label
+                className={`block text-[10px] font-black uppercase tracking-wide ${
+                  morphusActive ? 'text-violet-300' : 'text-slate-500'
+                }`}
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                value={character.name}
+                onChange={(e) => setCharacterName(e.target.value)}
+                onFocus={(e) =>
+                  clearPlaceholderNameOnFocus(
+                    e.currentTarget.value,
+                    setCharacterName,
+                  )
+                }
+                placeholder={CHARACTER_NAME_PLACEHOLDER}
+                aria-label="Character name"
+                className={`${nameInputClass} ${nameInputToneClass}`}
+              />
+            </div>
             <div className="min-w-[10rem] max-w-xs">
               <ConfiguratorAlignmentSelect
                 morphus={morphusActive}
