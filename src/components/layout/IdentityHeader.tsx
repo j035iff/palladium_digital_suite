@@ -525,6 +525,11 @@ function clearPlaceholderNameOnFocus(
   }
 }
 
+/** Pointer-drag chrome — keep outside components so react-hooks/immutability is happy. */
+function setDocumentUserSelect(value: string) {
+  document.body.style.userSelect = value
+}
+
 const PORTRAIT_CORNERS: {
   corner: PortraitCorner
   className: string
@@ -638,7 +643,7 @@ function IdentityPortraitSlot({
     }
     const target = e.currentTarget
     target.setPointerCapture(e.pointerId)
-    document.body.style.userSelect = 'none'
+    setDocumentUserSelect('none')
 
     const onMove = (ev: PointerEvent) => {
       const drag = dragRef.current
@@ -655,7 +660,7 @@ function IdentityPortraitSlot({
     const onUp = (ev: PointerEvent) => {
       const drag = dragRef.current
       dragRef.current = null
-      document.body.style.userSelect = ''
+      setDocumentUserSelect('')
       target.releasePointerCapture(ev.pointerId)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)

@@ -5,7 +5,8 @@ import { resolveLivePpMeleeNatural } from './liveStatEngine'
 import { resolveWeaponProficiencySkillId } from '../data/skillLibrary'
 import type { StrikeBreakdown } from './strikeEngine'
 import type { AccumulatedHandToHandBonuses } from '../types'
-import { isWildFireMode, type FireMode } from './fireModes'
+import type { FireMode } from '../types'
+import { isWildFireMode } from './fireModes'
 import { resolveOwnedWeaponProficiencyBonuses } from './weaponProficiencyBonuses'
 import {
   getHandToHandDamageProfile,

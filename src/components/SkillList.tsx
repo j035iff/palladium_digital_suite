@@ -63,7 +63,7 @@ export function SkillList({
   morphusActive,
   characterLevel,
 }: SkillListProps) {
-  const { character, activeForm, morphusSurfaceType } = useCharacter()
+  const { character } = useCharacter()
   const muted = morphusActive ? '#64748b' : '#94a3b8'
   const text = morphusActive ? '#e2e8f0' : '#0f172a'
   const heading = morphusActive ? '#c4b5fd' : '#1e40af'
