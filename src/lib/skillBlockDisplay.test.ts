@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { PalladiumOcc } from '../types'
 import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
 import {
+  buildSkillPrerequisiteDisplay,
   formatSkillPrerequisiteSummary,
   formatSynergyHintLine,
   listSkillSynergyHints,
@@ -74,6 +75,49 @@ describe('skillBlockDisplay', () => {
       skillIds: ['skill_math_advanced'],
     })
     expect(summary).toBe('Requires Math: Advanced')
+  })
+
+  it('marks each AND prerequisite skill owned or missing', () => {
+    const def = getEngineSkillDefFromCatalog('skill_navigation')
+    expect(def?.prerequisite).toBeDefined()
+    const parts = buildSkillPrerequisiteDisplay(
+      def?.prerequisite,
+      new Set(['skill_math_basic', 'skill_literacy']),
+    )
+    expect(parts).not.toBeNull()
+    const skills = (parts ?? []).filter((p) => p.kind === 'skill')
+    expect(skills.map((p) => (p.kind === 'skill' ? p.name : ''))).toEqual([
+      'Math: Basic',
+      'Read Sensory Equipment',
+      'Literacy',
+    ])
+    expect(skills.map((p) => (p.kind === 'skill' ? p.owned : false))).toEqual([
+      true,
+      false,
+      true,
+    ])
+  })
+
+  it('marks each OR prerequisite skill owned or missing individually', () => {
+    const def = getEngineSkillDefFromCatalog('skill_surveillance_systems')
+    const parts = buildSkillPrerequisiteDisplay(
+      def?.prerequisite,
+      new Set(['skill_computer_operation']),
+    )
+    expect(parts).not.toBeNull()
+    const skills = (parts ?? []).filter((p) => p.kind === 'skill')
+    expect(skills.length).toBeGreaterThanOrEqual(2)
+    const computer = skills.find(
+      (p) => p.kind === 'skill' && p.name === 'Computer Operation',
+    )
+    expect(computer && computer.kind === 'skill' && computer.owned).toBe(true)
+    const missingElectronics = skills.find(
+      (p) =>
+        p.kind === 'skill' &&
+        /Electronics|Electrical/i.test(p.name) &&
+        !p.owned,
+    )
+    expect(missingElectronics).toBeDefined()
   })
 
   it('shows incoming synergies on the receiving skill', () => {

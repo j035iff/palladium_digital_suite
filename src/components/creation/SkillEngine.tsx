@@ -87,7 +87,7 @@ import {
 } from '../../lib/skillCreationDisplay'
 
 import {
-  formatSkillPrerequisiteSummary,
+  buildSkillPrerequisiteDisplay,
   listSkillSynergyHints,
   skillPickRowSurfaceClass,
 } from '../../lib/skillBlockDisplay'
@@ -946,7 +946,10 @@ export function SkillEngine() {
           ? 'Not enough skill slots (professional quality costs 1 additional slot)'
           : 'Not enough skill slots (professional quality costs 1 additional slot)'
 
-    const prerequisiteSummary = formatSkillPrerequisiteSummary(def.prerequisite)
+    const prerequisiteParts = buildSkillPrerequisiteDisplay(
+      def.prerequisite,
+      allSelected,
+    )
     const synergyHints = listSkillSynergyHints(def, synergyAvailability)
     const displayedSynergyHints = synergyHints.filter((hint) => {
       if (hint.direction === 'outgoing') return true
@@ -1074,11 +1077,8 @@ export function SkillEngine() {
             </p>
           ) : null}
 
-          {prerequisiteSummary ? (
-            <SkillPrerequisiteMeta
-              summary={prerequisiteSummary}
-              satisfied={!bad}
-            />
+          {prerequisiteParts ? (
+            <SkillPrerequisiteMeta parts={prerequisiteParts} />
           ) : null}
 
           <SkillSynergyMeta
@@ -1640,8 +1640,8 @@ export function SkillEngine() {
       showSecondaryButton
 
     const showMeta = !unconditionallyExcluded
-    const prerequisiteSummary = showMeta
-      ? formatSkillPrerequisiteSummary(s.prerequisite)
+    const prerequisiteParts = showMeta
+      ? buildSkillPrerequisiteDisplay(s.prerequisite, allSelected)
       : null
     const synergyHints = showMeta
       ? listSkillSynergyHints(s, synergyAvailability)
@@ -1720,11 +1720,8 @@ export function SkillEngine() {
             </span>
           ) : null}
         </div>
-        {prerequisiteSummary ? (
-          <SkillPrerequisiteMeta
-            summary={prerequisiteSummary}
-            satisfied={prereqOk}
-          />
+        {prerequisiteParts ? (
+          <SkillPrerequisiteMeta parts={prerequisiteParts} />
         ) : null}
         <SkillSynergyMeta hints={synergyHints} />
         {physicalBonusSummary ? (

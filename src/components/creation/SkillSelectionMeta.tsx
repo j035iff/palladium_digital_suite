@@ -1,24 +1,35 @@
-import type { SkillSynergyHint } from '../../lib/skillBlockDisplay'
+import type {
+  SkillPrerequisiteDisplayPart,
+  SkillSynergyHint,
+} from '../../lib/skillBlockDisplay'
 import { formatActiveSynergyLine, formatSynergyHintLine } from '../../lib/skillBlockDisplay'
 
+function prerequisiteSkillClass(owned: boolean): string {
+  return owned
+    ? 'font-medium text-emerald-700 dark:text-emerald-400'
+    : 'font-medium text-red-800 dark:text-red-300'
+}
+
+/** Shared Tab 4 prerequisite coloring — owned green, missing red (per skill name). */
 export function SkillPrerequisiteMeta({
-  summary,
-  satisfied,
+  parts,
 }: {
-  summary: string
-  satisfied?: boolean
+  parts: readonly SkillPrerequisiteDisplayPart[]
 }) {
   return (
-    <p
-      className={`mt-1 text-xs leading-snug ${
-        satisfied === false
-          ? 'font-medium text-red-800 dark:text-red-300'
-          : satisfied === true
-            ? 'text-emerald-700 dark:text-emerald-400'
-            : 'text-slate-600 dark:text-slate-300'
-      }`}
-    >
-      {summary}
+    <p className="mt-1 text-xs leading-snug text-slate-600 dark:text-slate-300">
+      {parts.map((part, index) =>
+        part.kind === 'text' ? (
+          <span key={`t-${index}`}>{part.text}</span>
+        ) : (
+          <span
+            key={`s-${part.skillId}-${index}`}
+            className={prerequisiteSkillClass(part.owned)}
+          >
+            {part.name}
+          </span>
+        ),
+      )}
     </p>
   )
 }

@@ -6,7 +6,7 @@ This document defines skill synergies, attribute scaling, prerequisites, and the
 
 **Master equation authority:** `docs/stat_engine_spec.md` §6 cross-links here for percent formulas.
 
-**Tab 4 selection UX (Joe 2026-11):** Vocational focus, vouchers, related, and secondary fill **in parallel** (no progressive browse locks). Left **Selected skills** shows **names only** (no %). The skill library leaves already-selected rows in normal list order, labeled **Already selected**.
+**Tab 4 selection UX (Joe 2026-11):** Vocational focus, vouchers, related, and secondary fill **in parallel** (no progressive browse locks). Left **Selected skills** shows **names only** (no %). The skill library leaves already-selected rows in normal list order, labeled **Already selected**. When a skill lists prerequisites, each prerequisite **skill name** is colored **green** if the character already has it and **red** if missing (AND/OR groups color each referenced name individually; conjunction words stay neutral). Shared path: library browse + Selected skills (`buildSkillPrerequisiteDisplay` → `SkillPrerequisiteMeta`).
 
 ---
 

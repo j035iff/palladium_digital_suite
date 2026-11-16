@@ -3,6 +3,7 @@ import type { EngineSkillDef } from '../data/skillLibrary'
 import {
   PALLADIUM_SKILL_CATALOG,
   getPalladiumSkillCatalogEntryById,
+  prerequisiteSkillIdSatisfied,
 } from '../data/library/skillsCatalogLoader'
 import type { CreationSkillAvailabilityContext } from './creationSkillPicks'
 import { isCreationSkillExcludedFromOccOrRace } from './creationSkillPicks'
@@ -20,58 +21,125 @@ export type SkillSynergyHint = {
   bonusPercent: number
 }
 
+/** Structured prerequisite summary for Tab 4 owned/missing coloring. */
+export type SkillPrerequisiteDisplayPart =
+  | { kind: 'text'; text: string }
+  | { kind: 'skill'; skillId: string; name: string; owned: boolean }
+
 function skillDisplayName(skillId: string): string {
   return resolveSkillDisplayName(skillId)
 }
 
-function formatNameList(names: readonly string[], gate: 'and' | 'or'): string {
-  if (names.length === 0) return ''
-  if (names.length === 1) return names[0]!
-  if (names.length === 2) {
-    return gate === 'or' ? `${names[0]} or ${names[1]}` : `${names[0]} and ${names[1]}`
+function skillPart(
+  skillId: string,
+  selectedIds: ReadonlySet<string>,
+): SkillPrerequisiteDisplayPart {
+  return {
+    kind: 'skill',
+    skillId,
+    name: skillDisplayName(skillId),
+    owned: prerequisiteSkillIdSatisfied(skillId, selectedIds),
   }
-  const last = names[names.length - 1]!
-  const rest = names.slice(0, -1).join(', ')
-  return gate === 'or' ? `${rest}, or ${last}` : `${rest}, and ${last}`
 }
 
-function formatPrerequisiteSegment(prereq: SkillPrerequisite): string | null {
+function formatNameListParts(
+  skillIds: readonly string[],
+  gate: 'and' | 'or',
+  selectedIds: ReadonlySet<string>,
+): SkillPrerequisiteDisplayPart[] {
+  if (skillIds.length === 0) return []
+  if (skillIds.length === 1) return [skillPart(skillIds[0]!, selectedIds)]
+  if (skillIds.length === 2) {
+    return [
+      skillPart(skillIds[0]!, selectedIds),
+      { kind: 'text', text: gate === 'or' ? ' or ' : ' and ' },
+      skillPart(skillIds[1]!, selectedIds),
+    ]
+  }
+  const parts: SkillPrerequisiteDisplayPart[] = []
+  for (let i = 0; i < skillIds.length; i++) {
+    if (i > 0) {
+      parts.push({
+        kind: 'text',
+        text: i === skillIds.length - 1 ? (gate === 'or' ? ', or ' : ', and ') : ', ',
+      })
+    }
+    parts.push(skillPart(skillIds[i]!, selectedIds))
+  }
+  return parts
+}
+
+function appendParts(
+  target: SkillPrerequisiteDisplayPart[],
+  next: readonly SkillPrerequisiteDisplayPart[],
+): void {
+  for (const part of next) target.push(part)
+}
+
+function joinPartSegments(
+  segments: readonly SkillPrerequisiteDisplayPart[][],
+  separator: string,
+): SkillPrerequisiteDisplayPart[] {
+  const out: SkillPrerequisiteDisplayPart[] = []
+  for (let i = 0; i < segments.length; i++) {
+    if (i > 0) out.push({ kind: 'text', text: separator })
+    appendParts(out, segments[i]!)
+  }
+  return out
+}
+
+function buildPrerequisiteSegmentParts(
+  prereq: SkillPrerequisite,
+  selectedIds: ReadonlySet<string>,
+): SkillPrerequisiteDisplayPart[] | null {
   if ('allOf' in prereq) {
-    const andNames: string[] = []
-    const segments: string[] = []
+    const andIds: string[] = []
+    const segments: SkillPrerequisiteDisplayPart[][] = []
 
     for (const part of prereq.allOf) {
       if ('allOf' in part) {
-        const nested = formatPrerequisiteSegment(part)
-        if (nested) segments.push(nested)
+        const nested = buildPrerequisiteSegmentParts(part, selectedIds)
+        if (nested?.length) segments.push(nested)
         continue
       }
       if (part.gate === 'or') {
-        segments.push(formatNameList(part.skillIds.map(skillDisplayName), 'or'))
+        const orParts = formatNameListParts(part.skillIds, 'or', selectedIds)
+        if (orParts.length) segments.push(orParts)
       } else if (part.skillIds.length === 1) {
-        andNames.push(skillDisplayName(part.skillIds[0]!))
+        andIds.push(part.skillIds[0]!)
       } else {
-        andNames.push(...part.skillIds.map(skillDisplayName))
+        andIds.push(...part.skillIds)
       }
     }
 
-    if (andNames.length > 0) {
-      segments.unshift(formatNameList(andNames, 'and'))
+    if (andIds.length > 0) {
+      segments.unshift(formatNameListParts(andIds, 'and', selectedIds))
     }
 
-    return segments.length ? segments.join('; ') : null
+    return segments.length ? joinPartSegments(segments, '; ') : null
   }
 
-  const names = prereq.skillIds.map(skillDisplayName)
-  return formatNameList(names, prereq.gate)
+  const parts = formatNameListParts(prereq.skillIds, prereq.gate, selectedIds)
+  return parts.length ? parts : null
+}
+
+/** Owned/missing-aware prerequisite parts for Tab 4 (library + selected). */
+export function buildSkillPrerequisiteDisplay(
+  prereq: SkillPrerequisite | undefined,
+  selectedIds: ReadonlySet<string>,
+): SkillPrerequisiteDisplayPart[] | null {
+  if (!prereq) return null
+  const segment = buildPrerequisiteSegmentParts(prereq, selectedIds)
+  if (!segment?.length) return null
+  return [{ kind: 'text', text: 'Requires ' }, ...segment]
 }
 
 export function formatSkillPrerequisiteSummary(
   prereq: SkillPrerequisite | undefined,
 ): string | null {
-  if (!prereq) return null
-  const segment = formatPrerequisiteSegment(prereq)
-  return segment ? `Requires ${segment}` : null
+  const parts = buildSkillPrerequisiteDisplay(prereq, new Set())
+  if (!parts) return null
+  return parts.map((part) => (part.kind === 'text' ? part.text : part.name)).join('')
 }
 
 let incomingCatalogSynergyIndex: Map<string, SkillSynergyHint[]> | null = null
