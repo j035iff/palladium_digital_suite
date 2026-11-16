@@ -123,15 +123,92 @@ function buildPrerequisiteSegmentParts(
   return parts.length ? parts : null
 }
 
+export type BuildSkillPrerequisiteDisplayOptions = {
+  /** Leading label before the skill list. Default `Requires `. */
+  requiresLabel?: string
+}
+
 /** Owned/missing-aware prerequisite parts for Tab 4 (library + selected). */
 export function buildSkillPrerequisiteDisplay(
   prereq: SkillPrerequisite | undefined,
   selectedIds: ReadonlySet<string>,
+  options?: BuildSkillPrerequisiteDisplayOptions,
 ): SkillPrerequisiteDisplayPart[] | null {
   if (!prereq) return null
   const segment = buildPrerequisiteSegmentParts(prereq, selectedIds)
   if (!segment?.length) return null
-  return [{ kind: 'text', text: 'Requires ' }, ...segment]
+  const requiresLabel = options?.requiresLabel ?? 'Requires '
+  return [{ kind: 'text', text: requiresLabel }, ...segment]
+}
+
+/**
+ * Library list-row prerequisite chips: only unmet skills/groups (red),
+ * no leading Requires label. Satisfied OR groups and owned AND members omit.
+ */
+export function buildSkillUnmetPrerequisiteDisplay(
+  prereq: SkillPrerequisite | undefined,
+  selectedIds: ReadonlySet<string>,
+): SkillPrerequisiteDisplayPart[] | null {
+  if (!prereq) return null
+  const segment = buildUnmetPrerequisiteSegmentParts(prereq, selectedIds)
+  return segment?.length ? segment : null
+}
+
+function buildUnmetPrerequisiteSegmentParts(
+  prereq: SkillPrerequisite,
+  selectedIds: ReadonlySet<string>,
+): SkillPrerequisiteDisplayPart[] | null {
+  if ('allOf' in prereq) {
+    const andIds: string[] = []
+    const segments: SkillPrerequisiteDisplayPart[][] = []
+
+    for (const part of prereq.allOf) {
+      if ('allOf' in part) {
+        const nested = buildUnmetPrerequisiteSegmentParts(part, selectedIds)
+        if (nested?.length) segments.push(nested)
+        continue
+      }
+      if (part.gate === 'or') {
+        const unmetOr = unmetGateParts(part.skillIds, 'or', selectedIds)
+        if (unmetOr?.length) segments.push(unmetOr)
+      } else if (part.skillIds.length === 1) {
+        andIds.push(part.skillIds[0]!)
+      } else {
+        andIds.push(...part.skillIds)
+      }
+    }
+
+    if (andIds.length > 0) {
+      const unmetAnd = unmetGateParts(andIds, 'and', selectedIds)
+      if (unmetAnd?.length) segments.unshift(unmetAnd)
+    }
+
+    return segments.length ? joinPartSegments(segments, '; ') : null
+  }
+
+  return unmetGateParts(prereq.skillIds, prereq.gate, selectedIds)
+}
+
+function unmetGateParts(
+  skillIds: readonly string[],
+  gate: 'and' | 'or',
+  selectedIds: ReadonlySet<string>,
+): SkillPrerequisiteDisplayPart[] | null {
+  if (skillIds.length === 0) return null
+
+  if (gate === 'or') {
+    const anyOwned = skillIds.some((id) =>
+      prerequisiteSkillIdSatisfied(id, selectedIds),
+    )
+    if (anyOwned) return null
+    return formatNameListParts(skillIds, 'or', selectedIds)
+  }
+
+  const missing = skillIds.filter(
+    (id) => !prerequisiteSkillIdSatisfied(id, selectedIds),
+  )
+  if (missing.length === 0) return null
+  return formatNameListParts(missing, 'and', selectedIds)
 }
 
 export function formatSkillPrerequisiteSummary(
@@ -302,6 +379,129 @@ export function formatSynergyHintLine(hint: SkillSynergyHint): string {
 export function formatActiveSynergyLine(label: string, value: number): string {
   const sign = value > 0 ? '+' : ''
   return `${sign}${value}% from ${label}`
+}
+
+export type SkillSynergyStatus = 'active' | 'available'
+
+/** Partner skill that gates whether a synergy hint is active vs available. */
+export function synergyHintPartnerSkillId(hint: SkillSynergyHint): string {
+  return hint.direction === 'incoming'
+    ? hint.sourceSkillId
+    : (hint.targetSkillId ?? hint.sourceSkillId)
+}
+
+export function synergyHintPartnerOwned(
+  hint: SkillSynergyHint,
+  selectedIds: ReadonlySet<string>,
+): boolean {
+  return prerequisiteSkillIdSatisfied(
+    synergyHintPartnerSkillId(hint),
+    selectedIds,
+  )
+}
+
+export function partitionSkillSynergyHints(
+  hints: readonly SkillSynergyHint[],
+  selectedIds: ReadonlySet<string>,
+): { active: SkillSynergyHint[]; available: SkillSynergyHint[] } {
+  const active: SkillSynergyHint[] = []
+  const available: SkillSynergyHint[] = []
+  for (const hint of hints) {
+    if (synergyHintPartnerOwned(hint, selectedIds)) active.push(hint)
+    else available.push(hint)
+  }
+  return { active, available }
+}
+
+/** Description-panel synergy line (active drops “if” on incoming). */
+export function formatSynergyStatusLine(
+  hint: SkillSynergyHint,
+  status: SkillSynergyStatus,
+): string {
+  if (hint.direction === 'outgoing' && hint.targetName) {
+    return `+${hint.bonusPercent}% to ${hint.targetName}`
+  }
+  if (status === 'active') {
+    return `+${hint.bonusPercent}% ${hint.sourceName} is known`
+  }
+  return `+${hint.bonusPercent}% if ${hint.sourceName} is known`
+}
+
+type PrerequisiteDescriptionUnit = {
+  satisfied: boolean
+  parts: SkillPrerequisiteDisplayPart[]
+}
+
+/**
+ * Description-panel REQUIRES: unmet units first (red), met last (green).
+ * OR groups wrapped in parentheses; AND skills are individual units.
+ */
+export function buildSkillPrerequisiteDescriptionDisplay(
+  prereq: SkillPrerequisite | undefined,
+  selectedIds: ReadonlySet<string>,
+  options?: BuildSkillPrerequisiteDisplayOptions,
+): SkillPrerequisiteDisplayPart[] | null {
+  if (!prereq) return null
+  const units = collectPrerequisiteDescriptionUnits(prereq, selectedIds)
+  if (units.length === 0) return null
+
+  const unmet = units.filter((unit) => !unit.satisfied)
+  const met = units.filter((unit) => unit.satisfied)
+  const ordered = [...unmet, ...met]
+  const body = joinPartSegments(
+    ordered.map((unit) => unit.parts),
+    '; ',
+  )
+  const requiresLabel = options?.requiresLabel ?? 'REQUIRES '
+  return [{ kind: 'text', text: requiresLabel }, ...body]
+}
+
+function collectPrerequisiteDescriptionUnits(
+  prereq: SkillPrerequisite,
+  selectedIds: ReadonlySet<string>,
+): PrerequisiteDescriptionUnit[] {
+  if ('allOf' in prereq) {
+    const units: PrerequisiteDescriptionUnit[] = []
+    for (const part of prereq.allOf) {
+      if ('allOf' in part) {
+        units.push(...collectPrerequisiteDescriptionUnits(part, selectedIds))
+        continue
+      }
+      units.push(...gateToDescriptionUnits(part.skillIds, part.gate, selectedIds))
+    }
+    return units
+  }
+  return gateToDescriptionUnits(prereq.skillIds, prereq.gate, selectedIds)
+}
+
+function gateToDescriptionUnits(
+  skillIds: readonly string[],
+  gate: 'and' | 'or',
+  selectedIds: ReadonlySet<string>,
+): PrerequisiteDescriptionUnit[] {
+  if (skillIds.length === 0) return []
+
+  if (gate === 'or') {
+    const inner = formatNameListParts(skillIds, 'or', selectedIds)
+    const satisfied = skillIds.some((id) =>
+      prerequisiteSkillIdSatisfied(id, selectedIds),
+    )
+    return [
+      {
+        satisfied,
+        parts: [
+          { kind: 'text', text: '(' },
+          ...inner,
+          { kind: 'text', text: ')' },
+        ],
+      },
+    ]
+  }
+
+  return skillIds.map((skillId) => ({
+    satisfied: prerequisiteSkillIdSatisfied(skillId, selectedIds),
+    parts: [skillPart(skillId, selectedIds)],
+  }))
 }
 
 export function skillPickRowSurfaceClass(

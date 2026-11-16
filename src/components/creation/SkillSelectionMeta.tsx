@@ -2,36 +2,50 @@ import type {
   SkillPrerequisiteDisplayPart,
   SkillSynergyHint,
 } from '../../lib/skillBlockDisplay'
-import { formatActiveSynergyLine, formatSynergyHintLine } from '../../lib/skillBlockDisplay'
+import {
+  formatActiveSynergyLine,
+  formatSynergyHintLine,
+  formatSynergyStatusLine,
+} from '../../lib/skillBlockDisplay'
+import { SkillSynergyLinkIcon } from './SkillSynergyLinkIcon'
 
 function prerequisiteSkillClass(owned: boolean): string {
   return owned
-    ? 'font-medium text-emerald-700 dark:text-emerald-400'
-    : 'font-medium text-red-800 dark:text-red-300'
+    ? 'font-medium normal-case text-emerald-700 dark:text-emerald-400'
+    : 'font-medium normal-case text-red-800 dark:text-red-300'
 }
 
 /** Shared Tab 4 prerequisite coloring — owned green, missing red (per skill name). */
 export function SkillPrerequisiteMeta({
   parts,
+  className = 'mt-1 text-xs leading-snug text-slate-600 dark:text-slate-300',
+  inline = false,
 }: {
   parts: readonly SkillPrerequisiteDisplayPart[]
+  className?: string
+  /** Render as a span for compact library-row chips. */
+  inline?: boolean
 }) {
-  return (
-    <p className="mt-1 text-xs leading-snug text-slate-600 dark:text-slate-300">
-      {parts.map((part, index) =>
-        part.kind === 'text' ? (
-          <span key={`t-${index}`}>{part.text}</span>
-        ) : (
-          <span
-            key={`s-${part.skillId}-${index}`}
-            className={prerequisiteSkillClass(part.owned)}
-          >
-            {part.name}
-          </span>
-        ),
-      )}
-    </p>
+  const content = parts.map((part, index) =>
+    part.kind === 'text' ? (
+      <span key={`t-${index}`} className="normal-case">
+        {part.text}
+      </span>
+    ) : (
+      <span
+        key={`s-${part.skillId}-${index}`}
+        className={prerequisiteSkillClass(part.owned)}
+      >
+        {part.name}
+      </span>
+    ),
   )
+
+  if (inline) {
+    return <span className={className}>{content}</span>
+  }
+
+  return <p className={className}>{content}</p>
 }
 
 export function SkillSynergyMeta({
@@ -81,5 +95,39 @@ export function SkillSynergyMeta({
         </div>
       ) : null}
     </div>
+  )
+}
+
+/** Library description panel: active (green) above available (orange). */
+export function SkillLibrarySynergyLines({
+  active,
+  available,
+}: {
+  active: readonly SkillSynergyHint[]
+  available: readonly SkillSynergyHint[]
+}) {
+  if (active.length === 0 && available.length === 0) return null
+
+  return (
+    <ul className="space-y-1 text-xs leading-snug">
+      {active.map((hint) => (
+        <li
+          key={`active-${hint.direction}-${hint.sourceSkillId}-${hint.targetSkillId ?? ''}-${hint.bonusPercent}`}
+          className="flex items-start gap-1.5 font-medium text-emerald-700 dark:text-emerald-300"
+        >
+          <SkillSynergyLinkIcon status="active" className="mt-0.5" />
+          <span>{formatSynergyStatusLine(hint, 'active')}</span>
+        </li>
+      ))}
+      {available.map((hint) => (
+        <li
+          key={`available-${hint.direction}-${hint.sourceSkillId}-${hint.targetSkillId ?? ''}-${hint.bonusPercent}`}
+          className="flex items-start gap-1.5 font-medium text-orange-600 dark:text-orange-300"
+        >
+          <SkillSynergyLinkIcon status="available" className="mt-0.5" />
+          <span>{formatSynergyStatusLine(hint, 'available')}</span>
+        </li>
+      ))}
+    </ul>
   )
 }

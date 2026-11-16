@@ -2,10 +2,14 @@ import { describe, expect, it } from 'vitest'
 import type { PalladiumOcc } from '../types'
 import { getEngineSkillDefFromCatalog } from './creationSkillCatalog'
 import {
+  buildSkillPrerequisiteDescriptionDisplay,
   buildSkillPrerequisiteDisplay,
+  buildSkillUnmetPrerequisiteDisplay,
   formatSkillPrerequisiteSummary,
   formatSynergyHintLine,
+  formatSynergyStatusLine,
   listSkillSynergyHints,
+  partitionSkillSynergyHints,
 } from './skillBlockDisplay'
 
 const occWithWildernessBlocked: PalladiumOcc = {
@@ -157,5 +161,76 @@ describe('skillBlockDisplay', () => {
         (h) => h.direction === 'outgoing' && h.targetName === 'T.V./Video',
       ),
     ).toBe(true)
+  })
+
+  it('library row unmet display keeps only missing OR group', () => {
+    const def = getEngineSkillDefFromCatalog('skill_surveillance_systems')
+    const parts = buildSkillUnmetPrerequisiteDisplay(
+      def?.prerequisite,
+      new Set(['skill_computer_operation', 'skill_literacy']),
+    )
+    expect(parts).not.toBeNull()
+    const text = (parts ?? [])
+      .map((p) => (p.kind === 'text' ? p.text : p.name))
+      .join('')
+    expect(text).toMatch(/Electronics|Electrical/i)
+    expect(text).not.toContain('Computer Operation')
+    expect(text).not.toContain('Literacy')
+    expect(text).not.toMatch(/^Requires/i)
+    expect((parts ?? []).every((p) => p.kind === 'text' || !p.owned)).toBe(true)
+  })
+
+  it('description REQUIRES lists unmet first with OR parentheses, then met', () => {
+    const def = getEngineSkillDefFromCatalog('skill_surveillance_systems')
+    const parts = buildSkillPrerequisiteDescriptionDisplay(
+      def?.prerequisite,
+      new Set(['skill_computer_operation', 'skill_literacy']),
+    )
+    expect(parts).not.toBeNull()
+    const text = (parts ?? [])
+      .map((p) => (p.kind === 'text' ? p.text : p.name))
+      .join('')
+    expect(text.startsWith('REQUIRES ')).toBe(true)
+    expect(text).toMatch(/\(.*Electronics|Electrical.*\)/i)
+    const skillNames = (parts ?? [])
+      .filter((p) => p.kind === 'skill')
+      .map((p) => (p.kind === 'skill' ? p.name : ''))
+    const electronicsIndex = skillNames.findIndex((n) =>
+      /Electronics|Electrical/i.test(n),
+    )
+    const computerIndex = skillNames.indexOf('Computer Operation')
+    const literacyIndex = skillNames.indexOf('Literacy')
+    expect(electronicsIndex).toBeGreaterThanOrEqual(0)
+    expect(computerIndex).toBeGreaterThan(electronicsIndex)
+    expect(literacyIndex).toBeGreaterThan(electronicsIndex)
+  })
+
+  it('partitions surveillance synergies into active vs available', () => {
+    const def = getEngineSkillDefFromCatalog('skill_surveillance_systems')
+    expect(def).toBeDefined()
+    if (!def) return
+    const hints = listSkillSynergyHints(def)
+    const { active, available } = partitionSkillSynergyHints(
+      hints,
+      new Set(['skill_computer_hacking']),
+    )
+    expect(
+      active.some((h) => h.sourceSkillId === 'skill_computer_hacking'),
+    ).toBe(true)
+    expect(
+      available.some((h) => h.sourceSkillId === 'skill_mechanical_engineer'),
+    ).toBe(true)
+    const hacking = active.find(
+      (h) => h.sourceSkillId === 'skill_computer_hacking',
+    )
+    expect(formatSynergyStatusLine(hacking!, 'active')).toBe(
+      '+5% Computer Hacking is known',
+    )
+    const mech = available.find(
+      (h) => h.sourceSkillId === 'skill_mechanical_engineer',
+    )
+    expect(formatSynergyStatusLine(mech!, 'available')).toBe(
+      '+5% if Mechanical Engineer is known',
+    )
   })
 })

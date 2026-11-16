@@ -15,7 +15,12 @@ import {
   resolveCreationPickSelectionCategory,
 } from '../../lib/creationSkillCatalog'
 
-import { resolveCreationLibrarySkillPreview } from '../../lib/skillDisplayDetails'
+import {
+  resolveCreationLibrarySkillPreview,
+  resolveSkillCatalogDescription,
+} from '../../lib/skillDisplayDetails'
+import { buildLiveSkillContext } from '../../lib/liveSkillEngine'
+import { getPalladiumSkillCatalogEntryById } from '../../data/library/skillsCatalogLoader'
 
 import {
   appendCreationSkillPickWithConditionalGrants,
@@ -80,15 +85,20 @@ import {
 
 import {
   resolveActiveSynergyBonusLines,
+  resolveSkillCreationDisplay,
   type SkillPickDisplayTier,
 } from '../../lib/skillCreationDisplay'
 
 import {
+  buildSkillPrerequisiteDescriptionDisplay,
   buildSkillPrerequisiteDisplay,
+  buildSkillUnmetPrerequisiteDisplay,
   listSkillSynergyHints,
+  partitionSkillSynergyHints,
   skillPickRowSurfaceClass,
 } from '../../lib/skillBlockDisplay'
 import { SkillPrerequisiteMeta, SkillSynergyMeta } from './SkillSelectionMeta'
+import { CreationLibrarySkillRow } from './CreationLibrarySkillRow'
 
 import {
   buildCreationSkillPick,
@@ -175,6 +185,8 @@ export function SkillEngine() {
     setCreationHandToHandTier,
 
     hostGenreId,
+
+    psychicTier,
 
   } = useCharacter()
 
@@ -539,6 +551,25 @@ export function SkillEngine() {
     }),
     [effectiveOcc, character.occSpecializationId],
   )
+
+  const skillPercentCtx = useMemo(
+    () => buildLiveSkillContext(character, activeForm),
+    [character, activeForm],
+  )
+
+  const relatedIdsForDisplay = useMemo(() => {
+    const ids = new Set<string>()
+    for (const pick of relatedSelected) ids.add(pick.skillId)
+    for (const picks of Object.values(relatedVoucherPicks)) {
+      if (!Array.isArray(picks)) continue
+      for (const pick of picks) {
+        if (pick && typeof pick === 'object' && 'skillId' in pick) {
+          ids.add(String((pick as { skillId: string }).skillId))
+        }
+      }
+    }
+    return ids
+  }, [relatedSelected, relatedVoucherPicks])
 
   const skillLibrary = useMemo(
 
@@ -1648,12 +1679,17 @@ export function SkillEngine() {
       showSecondaryButton
 
     const showMeta = !unconditionallyExcluded
-    const prerequisiteParts = showMeta
-      ? buildSkillPrerequisiteDisplay(s.prerequisite, allSelected)
+    const unmetPrerequisiteParts = showMeta
+      ? buildSkillUnmetPrerequisiteDisplay(s.prerequisite, allSelected)
+      : null
+    const requiresParts = showMeta
+      ? buildSkillPrerequisiteDescriptionDisplay(s.prerequisite, allSelected)
       : null
     const synergyHints = showMeta
       ? listSkillSynergyHints(s, synergyAvailability)
       : []
+    const { active: activeSynergyHints, available: availableSynergyHints } =
+      partitionSkillSynergyHints(synergyHints, allSelected)
 
     let statusLabel = ''
     if (unconditionallyExcluded) {
@@ -1692,48 +1728,90 @@ export function SkillEngine() {
           )
         : subStyle
 
-    const { physicalBonusSummary, subSkillNames, grantedSkillNames } = showAddButtons
-      ? resolveCreationLibrarySkillPreview(s)
-      : {
-          physicalBonusSummary: undefined as string | undefined,
-          subSkillNames: [] as string[],
-          grantedSkillNames: [] as string[],
-        }
+    const libraryPreview = resolveCreationLibrarySkillPreview(s)
+    const physicalBonusSummary = libraryPreview.physicalBonusSummary
+    const subSkillNames = showAddButtons ? libraryPreview.subSkillNames : []
+    const grantedSkillNames = showAddButtons
+      ? libraryPreview.grantedSkillNames
+      : []
+
+    const previewTier: SkillPickDisplayTier = selectionTier
+      ? selectionTier === 'voucher'
+        ? 'voucher'
+        : selectionTier === 'specialization'
+          ? 'specialization'
+          : selectionTier
+      : category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY &&
+          showVocationalFocusButton
+        ? 'preview_specialization'
+        : category === CREATION_VOUCHERS_LIBRARY_CATEGORY && showVoucherButton
+          ? 'preview_voucher'
+          : showRelatedButton
+            ? 'preview_related'
+            : showVocationalFocusButton
+              ? 'preview_specialization'
+              : showVoucherButton
+                ? 'preview_voucher'
+                : 'preview_secondary'
+
+    const percentDisplay = showMeta
+      ? resolveSkillCreationDisplay(s, previewTier, {
+          occ: effectiveOcc ?? undefined,
+          relatedIds: relatedIdsForDisplay,
+          allSelectedIds: allSelected,
+          psychicTier,
+          specializationId: character.occSpecializationId,
+          voucherPicks,
+          relatedVoucherPicks,
+          skillPercentCtx,
+          iqBonus: skillPercentCtx.iqBonus,
+          allPicks: allCreationPicks,
+          synergyAvailability,
+          genreId: hostGenreId,
+        })
+      : null
+
+    const catalogEntry = getPalladiumSkillCatalogEntryById(s.id) as
+      | { description?: string }
+      | undefined
+    const descriptionResolved = resolveSkillCatalogDescription(
+      catalogEntry?.description,
+    )
+
+    const warningTitle = prereqBlocked
+      ? resolveCreationLibrarySkillVoucherBlockReason(s, voucherLibraryOpts) ||
+        missingPrerequisiteMessage(s.prerequisite, allSelected) ||
+        undefined
+      : undefined
 
     return (
-      <li key={s.id} className={`rounded-md border p-2 ${rowSurface}`}>
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-          <span className="font-medium">{s.name}</span>
-          {prereqBlocked ? (
-            <span
-              className="text-red-800 dark:text-red-300"
-              title={
-                resolveCreationLibrarySkillVoucherBlockReason(s, voucherLibraryOpts) ||
-                missingPrerequisiteMessage(s.prerequisite, allSelected) ||
-                ''
-              }
-            >
-              ⚠
-            </span>
-          ) : null}
-          {statusLabel ? (
-            <span
-              className={`text-xs font-semibold ${
-                alreadyChosen || picked
-                  ? 'text-slate-500 dark:text-slate-400'
-                  : 'text-red-500'
-              }`}
-            >
-              {statusLabel}
-            </span>
-          ) : null}
-        </div>
-        {prerequisiteParts ? (
-          <SkillPrerequisiteMeta parts={prerequisiteParts} />
-        ) : null}
-        <SkillSynergyMeta hints={synergyHints} />
-        {physicalBonusSummary ? (
-          <p className="mt-1 font-mono text-xs opacity-80">{physicalBonusSummary}</p>
+      <CreationLibrarySkillRow
+        key={s.id}
+        skillName={s.name}
+        warningTitle={warningTitle}
+        unmetPrerequisiteParts={unmetPrerequisiteParts}
+        hasAvailableSynergies={availableSynergyHints.length > 0}
+        hasActiveSynergies={activeSynergyHints.length > 0}
+        description={descriptionResolved.text}
+        descriptionIsPlaceholder={descriptionResolved.isPlaceholder}
+        percentSummary={percentDisplay?.percentSummary}
+        requiresParts={requiresParts}
+        activeSynergyHints={activeSynergyHints}
+        availableSynergyHints={availableSynergyHints}
+        physicalBonusSummary={physicalBonusSummary}
+        surfaceClassName={rowSurface}
+        morphus={morphus}
+      >
+        {statusLabel ? (
+          <p
+            className={`mt-1 text-xs font-semibold ${
+              alreadyChosen || picked
+                ? 'text-slate-500 dark:text-slate-400'
+                : 'text-red-500'
+            }`}
+          >
+            {statusLabel}
+          </p>
         ) : null}
         {subSkillNames.length > 0 ? (
           <p className="mt-1 text-xs opacity-80">{subSkillNames.join(', ')}</p>
@@ -1794,7 +1872,7 @@ export function SkillEngine() {
             ) : null}
           </div>
         ) : null}
-      </li>
+      </CreationLibrarySkillRow>
     )
   }
 
