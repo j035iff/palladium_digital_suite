@@ -53,6 +53,8 @@ type SelectedOccCoreSkillsProps = {
     voucherId: string,
     category: string,
   ) => void
+  /** Category sorter — hide grants/stubs/voucher chrome that do not match. */
+  pickVisible?: (pick: CreationSkillPick) => boolean
 }
 
 export function SelectedOccCoreSkills({
@@ -67,6 +69,7 @@ export function SelectedOccCoreSkills({
   relatedVoucherClusters = {},
   onRelatedVoucherClearSlot,
   onRelatedVoucherClusterChange,
+  pickVisible,
 }: SelectedOccCoreSkillsProps) {
   const { character, effectiveOcc, setCreationOccCoreVoucherPick } =
     useCharacter()
@@ -131,6 +134,7 @@ export function SelectedOccCoreSkills({
         {fixedGrantIds.map((skillId) => {
           const pick =
             grantDetails[skillId] ?? migrateSkillIdToPick(skillId)
+          if (pickVisible && !pickVisible(pick)) return null
           return (
             <Fragment key={`fixed-${skillId}`}>
               {renderOccSkillRow(pick)}
@@ -146,6 +150,7 @@ export function SelectedOccCoreSkills({
             validateSpecializationInput(locked.specialization ?? '')
 
           if (isComplete && locked) {
+            if (pickVisible && !pickVisible(locked)) return null
             return renderOccSkillRow(locked)
           }
 
@@ -153,6 +158,7 @@ export function SelectedOccCoreSkills({
             instanceId: skillId,
             skillId,
           }
+          if (pickVisible && !pickVisible(stubPick)) return null
           const placeholder = occGrantSelectionPlaceholder(skillId)
 
           return (
@@ -219,6 +225,7 @@ export function SelectedOccCoreSkills({
             onClearSlot={(slot) =>
               handleVoucherClear(task.id, slot, task.entry.choiceCount)
             }
+            pickVisible={pickVisible}
           />
         )
       })}
@@ -271,6 +278,7 @@ export function SelectedOccCoreSkills({
             onClusterChange={(voucherId, category) =>
               onRelatedVoucherClusterChange?.(voucherId, category)
             }
+            pickVisible={pickVisible}
           />
         )
       })}

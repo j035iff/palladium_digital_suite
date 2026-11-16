@@ -15,6 +15,7 @@ export function OccCoreVoucherGroupPanel({
   libraryHint,
   renderOccSkillRow,
   onClearSlot,
+  pickVisible,
 }: {
   task: OccCoreVoucherTask
   voucherPicks: Readonly<Record<string, unknown>>
@@ -27,6 +28,8 @@ export function OccCoreVoucherGroupPanel({
     onClear?: () => void,
   ) => ReactNode
   onClearSlot: (slot: number) => void
+  /** When set (category filter), hide chrome if no filled pick matches. */
+  pickVisible?: (pick: CreationSkillPick) => boolean
 }) {
   const slots = getOccCoreVoucherSlotPicks(
     voucherPicks,
@@ -34,7 +37,12 @@ export function OccCoreVoucherGroupPanel({
     task.entry.choiceCount,
   )
   const filled = slots.filter((pick): pick is CreationSkillPick => pick != null)
+  const visibleFilled = pickVisible
+    ? filled.filter((pick) => pickVisible(pick))
+    : filled
   const filledCount = countFilledOccCoreVoucherSlots(task, voucherPicks)
+
+  if (pickVisible && visibleFilled.length === 0) return null
 
   return (
     <li
@@ -92,10 +100,10 @@ export function OccCoreVoucherGroupPanel({
         ) : null}
       </div>
 
-      {filled.length > 0 ? (
+      {visibleFilled.length > 0 ? (
         <ul className="space-y-1 p-2">
           {slots.map((pick, slot) =>
-            pick ? (
+            pick && (!pickVisible || pickVisible(pick)) ? (
               <li key={`${task.id}-${slot}`} className="list-none">
                 {renderOccSkillRow(pick, () => onClearSlot(slot))}
               </li>

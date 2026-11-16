@@ -25,6 +25,7 @@ export function OccRelatedVoucherGroupPanel({
   renderSpecializationSkillRow,
   onClearSlot,
   onClusterChange,
+  pickVisible,
 }: {
   task: OccRelatedVoucherTask
   voucherPicks: Readonly<Record<string, unknown>>
@@ -41,6 +42,8 @@ export function OccRelatedVoucherGroupPanel({
   ) => ReactNode
   onClearSlot: (slot: number) => void
   onClusterChange: (voucherId: string, category: string) => void
+  /** When set (category filter), hide chrome if no filled pick matches. */
+  pickVisible?: (pick: CreationSkillPick) => boolean
 }) {
   const { entry } = task
   const slots = getRelatedVoucherSlotPicks(
@@ -48,6 +51,10 @@ export function OccRelatedVoucherGroupPanel({
     task.id,
     entry.choiceCount,
   )
+  const filled = slots.filter((pick): pick is CreationSkillPick => pick != null)
+  const visibleFilled = pickVisible
+    ? filled.filter((pick) => pickVisible(pick))
+    : filled
   const filledCount = countFilledRelatedVoucherSlots(task, voucherPicks)
   const selectedCluster = clusterSelections[task.id]
   const needsCluster = relatedVoucherNeedsClusterSelection(
@@ -59,6 +66,8 @@ export function OccRelatedVoucherGroupPanel({
     scopeWithProgress ??
     formatRelatedVoucherHeader(entry, filledCount, selectedCluster)
   const isCreationVoucher = variant === 'creation_voucher'
+
+  if (pickVisible && visibleFilled.length === 0) return null
   const borderTone = isCreationVoucher
     ? morphus
       ? 'border-amber-800'
@@ -161,10 +170,10 @@ export function OccRelatedVoucherGroupPanel({
         </div>
       ) : null}
 
-      {slots.some((pick) => pick != null) ? (
+      {visibleFilled.length > 0 ? (
         <ul className="space-y-1 p-2">
           {slots.map((pick, slot) =>
-            pick ? (
+            pick && (!pickVisible || pickVisible(pick)) ? (
               <li key={`${task.id}-${slot}`} className="list-none">
                 {renderSpecializationSkillRow(pick, () => onClearSlot(slot))}
               </li>

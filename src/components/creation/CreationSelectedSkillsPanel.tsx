@@ -1,6 +1,11 @@
-import type { ReactNode } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 
 import type { CreationSkillPick } from '../../types'
+import {
+  CREATION_SELECTED_SKILLS_SORTER_ALL,
+  creationSelectedSkillMatchesSorter,
+  listCreationSelectedSkillSorterOptions,
+} from '../../lib/creationSelectedSkillsSorter'
 
 import { SelectedOccCoreSkills } from './SelectedOccCoreSkills'
 import { OccRelatedVoucherGroupPanel } from './OccRelatedVoucherGroupPanel'
@@ -28,6 +33,8 @@ export type CreationSelectedSkillsPanelProps = {
   secondaryPickSlots: number
   relatedSelected: readonly CreationSkillPick[]
   secondarySelected: readonly CreationSkillPick[]
+  /** All creation picks (OCC grants, vouchers, related, secondary) for sorter options. */
+  allSelectedPicks: readonly CreationSkillPick[]
   specializationVoucherTasks?: readonly OccRelatedVoucherTask[]
   creationVoucherRelatedTasks?: readonly OccRelatedVoucherTask[]
   showVouchersSection?: boolean
@@ -77,6 +84,7 @@ export function CreationSelectedSkillsPanel({
   secondaryPickSlots,
   relatedSelected,
   secondarySelected,
+  allSelectedPicks,
   specializationVoucherTasks = [],
   creationVoucherRelatedTasks = [],
   showVouchersSection = false,
@@ -95,6 +103,47 @@ export function CreationSelectedSkillsPanel({
   shellMode = false,
 }: CreationSelectedSkillsPanelProps) {
   const Wrapper = shellMode ? 'div' : 'aside'
+  const [categoryFilter, setCategoryFilter] = useState(
+    CREATION_SELECTED_SKILLS_SORTER_ALL,
+  )
+
+  const sorterOptions = useMemo(
+    () => listCreationSelectedSkillSorterOptions(allSelectedPicks),
+    [allSelectedPicks],
+  )
+
+  const activeFilter = sorterOptions.some((o) => o.value === categoryFilter)
+    ? categoryFilter
+    : CREATION_SELECTED_SKILLS_SORTER_ALL
+
+  const filtering =
+    activeFilter !== CREATION_SELECTED_SKILLS_SORTER_ALL
+
+  const pickVisible = useMemo(() => {
+    if (!filtering) return undefined
+    return (pick: CreationSkillPick) =>
+      creationSelectedSkillMatchesSorter(pick, activeFilter)
+  }, [filtering, activeFilter])
+
+  const relatedVisible = filtering
+    ? relatedSelected.filter((pick) =>
+        creationSelectedSkillMatchesSorter(pick, activeFilter),
+      )
+    : relatedSelected
+  const secondaryVisible = filtering
+    ? secondarySelected.filter((pick) =>
+        creationSelectedSkillMatchesSorter(pick, activeFilter),
+      )
+    : secondarySelected
+
+  const showHandToHand = hasHandToHandOptions && !filtering
+  const showRelatedSection = !filtering || relatedVisible.length > 0 || showHandToHand
+  const showSecondarySection =
+    !filtering || secondaryVisible.length > 0
+
+  const selectClass = morphus
+    ? 'w-full rounded border border-violet-700 bg-slate-900 px-2 py-1 text-xs text-violet-100'
+    : 'w-full rounded border border-slate-300 bg-white px-2 py-1 text-xs text-slate-900'
 
   return (
     <Wrapper
@@ -113,13 +162,28 @@ export function CreationSelectedSkillsPanel({
         className={`flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border ${panelStyle}`}
       >
         <div
-          className={`shrink-0 border-b px-3 py-2 ${
+          className={`shrink-0 space-y-2 border-b px-3 py-2 ${
             morphus ? 'border-violet-800' : 'border-slate-200'
           }`}
         >
           <h3 className="text-xs font-bold uppercase tracking-wide opacity-80">
             Selected skills
           </h3>
+          <label className="block">
+            <span className="sr-only">Filter by category</span>
+            <select
+              value={activeFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className={selectClass}
+              aria-label="Filter selected skills by category"
+            >
+              {sorterOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
         <div className="min-h-0 min-w-0 flex-1 space-y-3 overflow-x-hidden overflow-y-auto overscroll-contain break-words p-3">
@@ -134,6 +198,7 @@ export function CreationSelectedSkillsPanel({
                 morphus={morphus}
                 onEditPick={onEditOccPick}
                 renderOccSkillRow={renderOccSkillRow}
+                pickVisible={pickVisible}
               />
             </ul>
           </div>
@@ -173,6 +238,7 @@ export function CreationSelectedSkillsPanel({
                         category,
                       )
                     }
+                    pickVisible={pickVisible}
                   />
                 ))}
               </ul>
@@ -199,45 +265,50 @@ export function CreationSelectedSkillsPanel({
                   onRelatedVoucherClusterChange={
                     onSpecializationVoucherClusterChange
                   }
+                  pickVisible={pickVisible}
                 />
               </ul>
             </div>
           ) : null}
 
-          <div>
-            <p className={`mb-1 text-sm font-bold ${relatedSectionClass}`}>
-              O.C.C. Related{' '}
-              {relatedCap > 0 ? (
-                <span className="tabular-nums">
-                  {relatedSlotsUsed}/{relatedCap}
-                </span>
-              ) : null}
-            </p>
-            <ul className="space-y-1">
-              {renderHandToHandRow()}
-              {relatedSelected.map((pick) => renderRelatedRow(pick))}
-              {relatedSelected.length === 0 && !hasHandToHandOptions ? (
-                <li className="text-xs opacity-50">None selected.</li>
-              ) : null}
-            </ul>
-          </div>
+          {showRelatedSection ? (
+            <div>
+              <p className={`mb-1 text-sm font-bold ${relatedSectionClass}`}>
+                O.C.C. Related{' '}
+                {relatedCap > 0 ? (
+                  <span className="tabular-nums">
+                    {relatedSlotsUsed}/{relatedCap}
+                  </span>
+                ) : null}
+              </p>
+              <ul className="space-y-1">
+                {showHandToHand ? renderHandToHandRow() : null}
+                {relatedVisible.map((pick) => renderRelatedRow(pick))}
+                {relatedVisible.length === 0 && !showHandToHand ? (
+                  <li className="text-xs opacity-50">None selected.</li>
+                ) : null}
+              </ul>
+            </div>
+          ) : null}
 
-          <div>
-            <p className={`mb-1 text-sm font-bold ${secondarySectionClass}`}>
-              Secondary{' '}
-              {secondaryCap > 0 ? (
-                <span className="tabular-nums">
-                  {secondaryPickSlots}/{secondaryCap}
-                </span>
-              ) : null}
-            </p>
-            <ul className="space-y-1">
-              {secondarySelected.map((pick) => renderSecondaryRow(pick))}
-              {secondarySelected.length === 0 ? (
-                <li className="text-xs opacity-50">None selected.</li>
-              ) : null}
-            </ul>
-          </div>
+          {showSecondarySection ? (
+            <div>
+              <p className={`mb-1 text-sm font-bold ${secondarySectionClass}`}>
+                Secondary{' '}
+                {secondaryCap > 0 ? (
+                  <span className="tabular-nums">
+                    {secondaryPickSlots}/{secondaryCap}
+                  </span>
+                ) : null}
+              </p>
+              <ul className="space-y-1">
+                {secondaryVisible.map((pick) => renderSecondaryRow(pick))}
+                {secondaryVisible.length === 0 ? (
+                  <li className="text-xs opacity-50">None selected.</li>
+                ) : null}
+              </ul>
+            </div>
+          ) : null}
         </div>
       </div>
     </Wrapper>

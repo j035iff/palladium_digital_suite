@@ -109,7 +109,6 @@ import {
   getOccCoreVoucherSlotPicks,
   isCreationLibrarySkillUnconditionallyExcluded,
   isCreationSkillIdentityTaken,
-  professionalQualityLabel,
   resolveCreationLibrarySkillBlockReason,
   skillNeedsPickDialog,
   skillNeedsVoucherPickDialog,
@@ -122,6 +121,7 @@ import {
 } from '../../lib/creationSkillPicks'
 
 import { CreationSelectedSkillsPanel } from './CreationSelectedSkillsPanel'
+import { CreationSelectedSkillRow } from './CreationSelectedSkillRow'
 import { useCreationForgeLeftSlotRegistrar } from './CreationForgeLeftSlotContext'
 
 import { SkillPickAddDialog, type SkillPickAddDialogState } from './SkillPickAddDialog'
@@ -950,134 +950,58 @@ export function SkillEngine() {
       pick,
       synergyAvailability,
     )
+    const hasExpandedMeta =
+      Boolean(prerequisiteParts) ||
+      displayedSynergyHints.length > 0 ||
+      activeSynergyLines.some((line) => line.label !== 'Professional quality')
 
     return (
-
-      <li
-
+      <CreationSelectedSkillRow
         key={`${tier}-${pick.instanceId}`}
-
-        className={`rounded border px-2 py-1.5 text-sm ${skillPickRowSurfaceClass(tier, morphus)} ${
-
+        label={formatCreationSkillPickLabel(pick, def.name)}
+        warningTitle={
+          bad
+            ? (missingPrerequisiteMessage(def.prerequisite, allSelected) ??
+              undefined)
+            : undefined
+        }
+        grantSource={grantSource}
+        surfaceClassName={`${skillPickRowSurfaceClass(tier, morphus)} ${
           bad ? 'border-amber-500/60' : ''
-
         }`}
-
-      >
-
-        <div className="flex flex-col gap-1.5">
-
-          <div className="flex items-start justify-between gap-2">
-
-            <p className="min-w-0 flex-1 break-words font-bold text-slate-900">
-
-              {formatCreationSkillPickLabel(pick, def.name)}
-
-              {bad ? (
-
-                <span
-
-                  className="ml-1 text-red-800 dark:text-red-300"
-
-                  title={
-
-                    missingPrerequisiteMessage(def.prerequisite, allSelected) ?? ''
-
-                  }
-
-                >
-
-                  ⚠
-
-                </span>
-
+        professionalQuality={
+          canTogglePro
+            ? {
+                isProfessional: Boolean(pick.professionalQuality),
+                disabled: !pick.professionalQuality && !canUpgradeToPro,
+                disabledTitle: canUpgradeToPro
+                  ? undefined
+                  : proUpgradeBlockedTitle,
+                onToggle: () => togglePickProfessionalQuality(pick, tier),
+              }
+            : undefined
+        }
+        onEdit={canEdit ? () => setEditPick({ pick, tier }) : undefined}
+        onRemove={
+          onRemove && !pick.grantedBySkillId
+            ? () => onRemove(pick.instanceId)
+            : undefined
+        }
+        removeLabel={removeLabel}
+        expandedDetail={
+          hasExpandedMeta ? (
+            <>
+              {prerequisiteParts ? (
+                <SkillPrerequisiteMeta parts={prerequisiteParts} />
               ) : null}
-
-            </p>
-
-            <div className="flex shrink-0 flex-col items-end gap-1">
-
-              {canEdit ? (
-
-                <button
-
-                  type="button"
-
-                  className="text-xs text-violet-500 hover:underline"
-
-                  onClick={() => setEditPick({ pick, tier })}
-
-                >
-
-                  Edit
-
-                </button>
-
-              ) : null}
-
-              {canTogglePro ? (
-                pick.professionalQuality ? (
-                  <button
-                    type="button"
-                    className="text-xs text-sky-500 hover:underline"
-                    onClick={() => togglePickProfessionalQuality(pick, tier)}
-                  >
-                    Set to standard quality
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    disabled={!canUpgradeToPro}
-                    title={canUpgradeToPro ? undefined : proUpgradeBlockedTitle}
-                    className="text-xs text-sky-500 hover:underline disabled:cursor-not-allowed disabled:opacity-40 disabled:no-underline"
-                    onClick={() => togglePickProfessionalQuality(pick, tier)}
-                  >
-                    Set to {professionalQualityLabel(pick.skillId).toLowerCase()}
-                  </button>
-                )
-              ) : null}
-
-              {onRemove && !pick.grantedBySkillId ? (
-
-                <button
-
-                  type="button"
-
-                  className="text-xs text-rose-400 hover:underline"
-
-                  onClick={() => onRemove(pick.instanceId)}
-
-                >
-
-                  {removeLabel}
-
-                </button>
-
-              ) : null}
-
-            </div>
-
-          </div>
-
-          {grantSource ? (
-            <p className="text-xs italic text-slate-500">
-              Provided by {grantSource}
-            </p>
-          ) : null}
-
-          {prerequisiteParts ? (
-            <SkillPrerequisiteMeta parts={prerequisiteParts} />
-          ) : null}
-
-          <SkillSynergyMeta
-            hints={displayedSynergyHints}
-            activeLines={activeSynergyLines}
-          />
-
-        </div>
-
-      </li>
-
+              <SkillSynergyMeta
+                hints={displayedSynergyHints}
+                activeLines={activeSynergyLines}
+              />
+            </>
+          ) : undefined
+        }
+      />
     )
 
   }
@@ -1808,6 +1732,7 @@ export function SkillEngine() {
         secondaryPickSlots={secondaryPickSlots}
         relatedSelected={relatedSelected}
         secondarySelected={secondarySelected}
+        allSelectedPicks={allCreationPicks}
         showVouchersSection={showVouchersSection}
         hasHandToHandOptions={handToHandOptions.length > 0}
         onEditOccPick={(pick) => setEditPick({ pick, tier: 'occ' })}
@@ -1932,6 +1857,7 @@ export function SkillEngine() {
       secondaryPickSlots,
       relatedSelected,
       secondarySelected,
+      allCreationPicks,
       showVouchersSection,
       handToHandOptions.length,
       effectiveOcc,
