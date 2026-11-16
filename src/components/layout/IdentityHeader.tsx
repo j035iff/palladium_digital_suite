@@ -89,6 +89,11 @@ type IdentityHeaderProps = {
    * tighter summary typography. Expand remains available.
    */
   compactChrome?: boolean
+  /**
+   * Collapsed live-sheet strip alignment. `center` = mockup Layer 1
+   * (name / O.C.C. / race–align under page center).
+   */
+  align?: 'left' | 'center'
 }
 
 function identityToggleButtonClass(morphusActive: boolean): string {
@@ -1059,6 +1064,7 @@ export function IdentityHeader({
   onCollapsedChange,
   showExpandToggle = true,
   compactChrome = false,
+  align = 'left',
 }: IdentityHeaderProps) {
   const {
     character,
@@ -1308,12 +1314,12 @@ export function IdentityHeader({
           ) : null}
           <div
             id="identity-header-details"
-            className="min-w-0 text-left"
+            className={`min-w-0 ${align === 'center' ? 'text-center' : 'text-left'}`}
             aria-label="Character identity summary"
           >
             <p
-              className={`truncate text-xl font-black tracking-tight sm:text-2xl ${
-                morphusActive ? 'text-violet-50' : 'text-slate-900'
+              className={`truncate text-2xl font-black leading-tight tracking-tight sm:text-3xl ${
+                morphusActive ? 'text-violet-50' : 'text-slate-950'
               }`}
               title={stripHeaderLines.name || undefined}
             >
@@ -1322,18 +1328,19 @@ export function IdentityHeader({
             <IdentityHeaderRollover
               blocks={stripRolloverBlocks}
               morphusActive={morphusActive}
+              align={align}
             >
               <span
-                className={`block truncate text-base font-bold sm:text-lg ${
-                  morphusActive ? 'text-violet-100' : 'text-slate-800'
+                className={`mt-0.5 block truncate text-[15px] font-medium leading-snug sm:text-base ${
+                  morphusActive ? 'text-violet-100' : 'text-slate-600'
                 }`}
               >
                 {stripHeaderLines.classLine}
               </span>
             </IdentityHeaderRollover>
             <p
-              className={`mt-0.5 truncate text-[11px] font-semibold uppercase tracking-wide sm:text-xs ${
-                morphusActive ? 'text-violet-300/90' : 'text-slate-500'
+              className={`mt-1 truncate text-[10px] font-medium uppercase tracking-[0.08em] sm:text-[11px] ${
+                morphusActive ? 'text-violet-300/90' : 'text-slate-400'
               }`}
             >
               {stripHeaderLines.raceAlignmentLine}

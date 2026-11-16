@@ -13,6 +13,8 @@ type Props = {
   blocks: readonly LiveSheetIdentityRolloverBlock[]
   morphusActive: boolean
   children: ReactNode
+  /** Match identity strip alignment (mockup Layer 1 centers the class line). */
+  align?: 'left' | 'center'
 }
 
 /**
@@ -23,6 +25,7 @@ export function IdentityHeaderRollover({
   blocks,
   morphusActive,
   children,
+  align = 'left',
 }: Props) {
   const anchorRef = useRef<HTMLDivElement>(null)
   const tipRef = useRef<HTMLDivElement>(null)
@@ -88,13 +91,13 @@ export function IdentityHeaderRollover({
   return (
     <div
       ref={anchorRef}
-      className="min-w-0 max-w-full"
+      className={`min-w-0 max-w-full ${align === 'center' ? 'mx-auto' : ''}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <button
         type="button"
-        className="max-w-full truncate text-left"
+        className={`max-w-full truncate ${align === 'center' ? 'text-center' : 'text-left'}`}
         aria-expanded={open}
         aria-haspopup="dialog"
         title="Book sources — hover or tap to pin"

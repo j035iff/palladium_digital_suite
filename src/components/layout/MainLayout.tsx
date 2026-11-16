@@ -3,6 +3,7 @@ import { CreationFlowShell } from '../creation/CreationFlowShell'
 import { LevelUpModal } from '../live/LevelUpModal'
 import { LiveSheetTabBody } from '../live/LiveSheetTabBody'
 import { LiveSheetChromeStrip } from '../live/LiveSheetChromeStrip'
+import { LiveSheetOverlayTabRow } from '../live/LiveSheetOverlayTabRow'
 import { LiveSheetTabOverlay } from '../live/LiveSheetTabOverlay'
 import { LiveSheetToolCluster } from '../live/LiveSheetToolCluster'
 import { LiveSheetLevelBadge } from '../live/LiveSheetLevelBadge'
@@ -148,33 +149,54 @@ export function MainLayout() {
           className="sticky top-0 z-20 shrink-0 backdrop-blur-sm"
           aria-label="Persistent character core"
         >
-          {/* Layer 1 — Level · identity stack · Join/Portal/Settings */}
+          {/*
+            Layer 1 — Level (left) · centered identity + overlay tabs · tools (right).
+            No rule between identity and tabs; one border under the tab row (mockup 01).
+          */}
           <header
-            className="border-b-2 px-4 py-3"
+            className={`border-b px-4 pb-2.5 pt-3 ${
+              morphusActive ? 'border-violet-700/80' : 'border-slate-200'
+            }`}
             style={{
-              borderColor: morphusActive ? 'rgb(139 92 246)' : 'rgb(59 130 246)',
               backgroundColor: morphusActive
                 ? 'rgba(15, 23, 42, 0.92)'
-                : 'rgba(255, 255, 255, 0.92)',
+                : 'rgba(255, 255, 255, 0.96)',
             }}
           >
-            <div className="mx-auto flex w-full max-w-6xl flex-wrap items-start justify-between gap-3">
-              <div className="flex min-w-0 flex-1 items-start gap-3 text-left">
-                <LiveSheetLevelBadge
-                  level={character.level}
-                  morphusActive={morphusActive}
-                  open={levelOverlayOpen}
-                  onToggle={() => {
-                    setStatusEffectsOpen(false)
-                    setLevelOverlayOpen((v) => !v)
-                  }}
-                />
-                <div className="min-w-0 flex-1">
+            <div className="relative mx-auto w-full max-w-6xl">
+              <div className="relative">
+                <div className="absolute left-0 top-1/2 z-10 -translate-y-1/2">
+                  <LiveSheetLevelBadge
+                    level={character.level}
+                    morphusActive={morphusActive}
+                    open={levelOverlayOpen}
+                    onToggle={() => {
+                      setStatusEffectsOpen(false)
+                      setLevelOverlayOpen((v) => !v)
+                    }}
+                  />
+                </div>
+                <div className="absolute right-0 top-1/2 z-10 -translate-y-1/2">
+                  <LiveSheetToolCluster
+                    tone={morphusActive ? 'morphus' : 'sheet'}
+                    seatedTableName={seatedTableName}
+                    onJoinTable={() => {
+                      setOverlayTabId(null)
+                      setLevelOverlayOpen(false)
+                      setStatusEffectsOpen(false)
+                      setJoinDrawerOpen(true)
+                    }}
+                    onLeaveTable={leaveTableStayOnSheet}
+                    onReturnToLauncher={leaveSheetToLauncher}
+                  />
+                </div>
+                <div className="mx-auto max-w-2xl px-14 text-center sm:px-16">
                   <IdentityHeader
                     morphusActive={morphusActive}
                     creationGenreId={creationGenreId}
                     hostGenreId={hostGenreId}
                     collapsed
+                    align="center"
                     onCollapsedChange={() => {
                       /* Live sheet: summary strip only; details are the Identity tab. */
                     }}
@@ -183,33 +205,22 @@ export function MainLayout() {
                 </div>
               </div>
 
-              <div className="flex shrink-0 flex-wrap items-center gap-2">
-                <LiveSheetToolCluster
-                  tone={morphusActive ? 'morphus' : 'sheet'}
-                  seatedTableName={seatedTableName}
-                  onJoinTable={() => {
-                    setOverlayTabId(null)
-                    setLevelOverlayOpen(false)
-                    setStatusEffectsOpen(false)
-                    setJoinDrawerOpen(true)
-                  }}
-                  onLeaveTable={leaveTableStayOnSheet}
-                  onReturnToLauncher={leaveSheetToLauncher}
-                />
-              </div>
+              <LiveSheetOverlayTabRow
+                morphusActive={morphusActive}
+                supportsDualForm={supportsDualForm}
+                onToggleForm={toggleForm}
+                activeOverlayTabId={overlayTabId}
+                onSelectOverlayTab={(id) => {
+                  setLevelOverlayOpen(false)
+                  setStatusEffectsOpen(false)
+                  setOverlayTabId((cur) => (cur === id ? null : id))
+                }}
+              />
             </div>
           </header>
 
           <LiveSheetChromeStrip
             morphusActive={morphusActive}
-            supportsDualForm={supportsDualForm}
-            onToggleForm={toggleForm}
-            activeOverlayTabId={overlayTabId}
-            onSelectOverlayTab={(id) => {
-              setLevelOverlayOpen(false)
-              setStatusEffectsOpen(false)
-              setOverlayTabId((cur) => (cur === id ? null : id))
-            }}
             sheetMode={sheetMode}
             onSelectSheetMode={(mode) => {
               setSheetMode(mode)

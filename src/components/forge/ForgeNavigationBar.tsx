@@ -14,6 +14,10 @@ const VIEWING_RING_ON_DARK =
 const AVAILABLE_PILL_ON_DARK =
   'bg-slate-800 text-slate-200 ring-1 ring-slate-600 hover:bg-slate-700'
 
+/** Live sheet strip — navy available pills (Joe mockup 01-main-header). */
+const AVAILABLE_PILL_NAVY =
+  'bg-slate-900 text-white ring-1 ring-slate-800 hover:bg-slate-800'
+
 function NaTabWatermark() {
   return (
     <span
@@ -51,11 +55,18 @@ export function ForgeNavigationBar({
   continueTooltip,
   /** Keep pills on one row; overflow scrolls horizontally (Phase 2 short-viewport chrome). */
   singleRow = false,
+  /** Horizontal alignment of the pill row (sheet strip centers under identity). */
+  align = 'start',
   /** Exposes the Continue control for banner→tab collapse targeting. */
   continueTargetRef,
   ariaLabel = 'Forge steps',
   /** When the bar sits on dark chrome (e.g. Gear Forge library), force dark inactive pills. */
   onDarkSurface = false,
+  /**
+   * Available/inactive pill tone. `navy` = live sheet strip (mockup dark pills).
+   * Ignored for non-available visuals; `onDarkSurface` still wins on dark chrome.
+   */
+  availableTone = 'default',
 }: {
   tabs: ForgeTabView[]
   activeTabId: string
@@ -65,9 +76,11 @@ export function ForgeNavigationBar({
   continueEnabled?: boolean
   continueTooltip?: string
   singleRow?: boolean
+  align?: 'start' | 'center'
   continueTargetRef?: RefObject<HTMLButtonElement | null>
   ariaLabel?: string
   onDarkSurface?: boolean
+  availableTone?: 'default' | 'navy'
 }) {
   const activeRef = useRef<HTMLButtonElement>(null)
 
@@ -80,13 +93,15 @@ export function ForgeNavigationBar({
     })
   }, [activeTabId, singleRow, tabs])
 
+  const alignClass = align === 'center' ? 'justify-center' : 'justify-start'
+
   return (
     <nav
       aria-label={ariaLabel}
       className={
         singleRow
-          ? 'flex min-w-0 flex-nowrap items-center gap-1.5 overflow-x-auto overscroll-x-contain pb-0.5 [-ms-overflow-style:none] [scrollbar-width:thin]'
-          : 'flex flex-wrap items-center gap-2'
+          ? `flex min-w-0 flex-nowrap items-center ${alignClass} gap-1.5 overflow-x-auto overscroll-x-contain pb-0.5 [-ms-overflow-style:none] [scrollbar-width:thin]`
+          : `flex flex-wrap items-center ${alignClass} gap-2`
       }
     >
       {tabs.map((tab) => {
@@ -98,8 +113,12 @@ export function ForgeNavigationBar({
           onContinueTab != null
         const theme = forgeTabVisualTheme(tab.visual)
         const pillTheme =
-          onDarkSurface && tab.visual === 'available'
-            ? AVAILABLE_PILL_ON_DARK
+          tab.visual === 'available'
+            ? onDarkSurface
+              ? AVAILABLE_PILL_ON_DARK
+              : availableTone === 'navy'
+                ? AVAILABLE_PILL_NAVY
+                : theme.pill
             : theme.pill
         const viewingRing = onDarkSurface ? VIEWING_RING_ON_DARK : VIEWING_RING
         const title = isContinuePill
@@ -138,7 +157,7 @@ export function ForgeNavigationBar({
             className={
               isContinuePill
                 ? 'pds-forge-continue shrink-0'
-                : `relative shrink-0 overflow-hidden rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide transition ${pillTheme} ${
+                : `relative shrink-0 overflow-hidden rounded-full px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wide transition ${pillTheme} ${
                     tab.visual === 'na' ? 'cursor-pointer' : ''
                   } ${
                     !tab.clickable ? 'cursor-not-allowed opacity-95' : ''
