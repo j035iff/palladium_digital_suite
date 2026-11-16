@@ -13,25 +13,26 @@ import { listLanSessions } from '../../lib/gm/sessionDiscovery'
 
 type Tone = 'sheet' | 'morphus'
 
+/** Mockup 01: small square-rounded white tool buttons, tight cluster. */
 const BUTTON_CLASS: Record<Tone, string> = {
   sheet:
-    'inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:text-slate-900',
+    'inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:text-slate-900',
   morphus:
-    'inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400 hover:text-white',
+    'inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-600 bg-slate-900/80 text-slate-300 hover:border-slate-400 hover:text-white',
 }
 
 const BUTTON_DISABLED: Record<Tone, string> = {
   sheet:
-    'inline-flex h-9 w-9 cursor-not-allowed items-center justify-center rounded-md border border-slate-200 bg-slate-100 text-slate-400 opacity-70',
+    'inline-flex h-8 w-8 cursor-not-allowed items-center justify-center rounded-md border border-slate-200 bg-slate-100 text-slate-400 opacity-70',
   morphus:
-    'inline-flex h-9 w-9 cursor-not-allowed items-center justify-center rounded-md border border-slate-700 bg-slate-900/40 text-slate-600 opacity-70',
+    'inline-flex h-8 w-8 cursor-not-allowed items-center justify-center rounded-md border border-slate-700 bg-slate-900/40 text-slate-600 opacity-70',
 }
 
 const BUTTON_SEATED: Record<Tone, string> = {
   sheet:
-    'inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-600 bg-emerald-50 text-emerald-800 hover:border-emerald-700',
+    'inline-flex h-8 w-8 items-center justify-center rounded-md border border-emerald-600 bg-emerald-50 text-emerald-800 hover:border-emerald-700',
   morphus:
-    'inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-400 bg-emerald-950/60 text-emerald-200 hover:border-emerald-300',
+    'inline-flex h-8 w-8 items-center justify-center rounded-md border border-emerald-400 bg-emerald-950/60 text-emerald-200 hover:border-emerald-300',
 }
 
 type Props = {
@@ -101,7 +102,7 @@ export function LiveSheetToolCluster({
   return (
     <>
       <div
-        className="flex items-center gap-1.5"
+        className="flex items-center gap-1"
         role="group"
         aria-label="Sheet tools"
       >

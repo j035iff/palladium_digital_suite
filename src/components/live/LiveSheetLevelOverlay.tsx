@@ -21,9 +21,9 @@ type Props = {
 }
 
 /**
- * Level / XP overlay — vertical vial + 1–15 chart + book cite.
+ * Level / XP overlay — vertical vial + 1–15 chart + book cite (mockup 04).
  * Read-only except DEV Add XP at bottom (ruling #17–20).
- * Same overlay chrome pattern as strip overlays (Escape / backdrop).
+ * Same overlay chrome pattern as strip overlays (Escape / backdrop / Close).
  */
 export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
   const { character, activeRace, effectiveOcc, xpHistory } = useCharacter()
@@ -48,13 +48,14 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
   })
 
   const fillColor = morphusActive ? '#7c3aed' : '#1e3a8a'
-  const trackBorder = morphusActive ? 'border-violet-400/70' : 'border-blue-300'
+  const trackBorder = morphusActive ? 'border-violet-400/70' : 'border-blue-200'
   const currentXpLabel = formatLiveSheetXpAmount(model.currentXp)
   const floorLabel = formatLiveSheetXpAmount(model.floorXp)
   const nextLabel =
     model.nextThresholdXp != null
       ? formatLiveSheetXpAmount(model.nextThresholdXp)
       : null
+  const axisText = morphusActive ? 'text-slate-950' : 'text-black'
 
   return (
     <div
@@ -74,11 +75,11 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <div
-          className={`flex shrink-0 items-start justify-between gap-3 border-b-2 px-4 py-3 ${
-            morphusActive ? 'border-violet-700' : 'border-blue-200'
+          className={`relative flex shrink-0 items-center justify-center border-b px-4 py-3 ${
+            morphusActive ? 'border-violet-700' : 'border-slate-200'
           }`}
         >
-          <h2 className="text-xl font-black tracking-tight">
+          <h2 className="text-center text-2xl font-black tracking-tight">
             LEVEL {model.level}
           </h2>
           <button
@@ -86,29 +87,25 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
             onClick={onClose}
             className={
               morphusActive
-                ? 'rounded-md border-2 border-violet-400 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-violet-100'
-                : 'rounded-md border-2 border-blue-500 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-blue-900'
+                ? 'absolute right-4 top-1/2 -translate-y-1/2 rounded-md border-2 border-violet-400 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-violet-100'
+                : 'absolute right-4 top-1/2 -translate-y-1/2 rounded-md border-2 border-blue-500 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-blue-900'
             }
           >
             Close
           </button>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-          <div className="flex items-start gap-6">
-            <div className="flex shrink-0 flex-col items-center">
-              {nextLabel ? (
-                <span
-                  className={`mb-1 font-mono text-xs font-bold tabular-nums ${
-                    morphusActive ? 'text-violet-300' : 'text-slate-500'
-                  }`}
-                >
-                  {nextLabel}
-                </span>
-              ) : null}
+        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
+          <div className="flex items-start gap-8">
+            <div className="flex shrink-0 flex-col items-center pt-1">
+              {/*
+                Mockup 04: next (top) + floor (bottom) black inside the vial;
+                current XP white rides the fill line. At exact floor the white
+                current replaces the black min (same number).
+              */}
               <div
-                className={`relative h-56 w-14 overflow-hidden rounded-full border-2 ${trackBorder} ${
-                  morphusActive ? 'bg-violet-950/40' : 'bg-blue-50'
+                className={`relative h-64 w-16 overflow-hidden rounded-full border-2 ${trackBorder} ${
+                  morphusActive ? 'bg-violet-950/40' : 'bg-sky-50'
                 }`}
                 role="progressbar"
                 aria-valuenow={model.fillPct}
@@ -123,24 +120,35 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
                     backgroundColor: fillColor,
                   }}
                 />
-                {!model.atExactFloor ? (
+                {nextLabel ? (
                   <span
-                    className="absolute left-1/2 z-10 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums text-white drop-shadow"
-                    style={{
-                      bottom: `calc(${Math.min(92, Math.max(12, model.fillPct))}% - 0.55rem)`,
-                    }}
+                    className={`absolute left-1/2 top-2.5 z-10 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums ${axisText}`}
                   >
-                    {currentXpLabel}
+                    {nextLabel}
                   </span>
                 ) : null}
-                <span className="absolute bottom-2 left-1/2 z-10 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums text-white drop-shadow">
-                  {floorLabel}
+                <span
+                  className="absolute left-1/2 z-20 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums text-white"
+                  style={{
+                    bottom: model.atExactFloor
+                      ? '0.55rem'
+                      : `calc(${Math.min(88, Math.max(16, model.fillPct))}% - 0.55rem)`,
+                  }}
+                >
+                  {currentXpLabel}
                 </span>
+                {!model.atExactFloor ? (
+                  <span
+                    className={`absolute bottom-2.5 left-1/2 z-10 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums ${axisText}`}
+                  >
+                    {floorLabel}
+                  </span>
+                ) : null}
               </div>
             </div>
 
-            <div className="min-w-0 flex-1">
-              <ul className="space-y-0.5 font-mono text-xs tabular-nums">
+            <div className="min-w-0 flex-1 pt-1">
+              <ul className="space-y-1 font-mono text-[13px] leading-snug tabular-nums">
                 {model.chartRows.map((row) => (
                   <li
                     key={row.level}
@@ -158,16 +166,13 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
                             : 'text-slate-600'
                     }
                   >
-                    <span className="inline-block w-16">
-                      Level {row.level}:
-                    </span>{' '}
-                    {formatLiveSheetXpChartRange(row)}
+                    {row.level}: {formatLiveSheetXpChartRange(row)}
                   </li>
                 ))}
               </ul>
               {model.citation ? (
                 <p
-                  className={`mt-3 text-[11px] font-semibold ${
+                  className={`mt-4 text-[12px] font-medium ${
                     morphusActive ? 'text-violet-300' : 'text-slate-500'
                   }`}
                 >
@@ -175,7 +180,7 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
                 </p>
               ) : (
                 <p
-                  className={`mt-3 text-[11px] font-semibold ${
+                  className={`mt-4 text-[12px] font-medium ${
                     morphusActive ? 'text-violet-400' : 'text-slate-400'
                   }`}
                 >
