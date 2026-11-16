@@ -16,7 +16,7 @@ import {
   getCreationSecondaryPicks,
 } from './creationSkillPicks'
 import { resolveCreationOccSkillIds } from './occCoreSkillVouchers'
-import { occStartingOccSkillIds } from './occCatalogEngine'
+import { listEffectiveOccCoreGrantSkillIds } from './modernGenreSkillBase'
 import type { PalladiumOcc } from '../types'
 import {
   buildMorphusPassiveBundle,
@@ -58,7 +58,11 @@ function creationLedgerOccSkillIds(
     stored.length > 0
       ? stored
       : occ
-        ? occStartingOccSkillIds(occ, character.occSpecializationId)
+        ? listEffectiveOccCoreGrantSkillIds(
+            occ,
+            character.occSpecializationId,
+            character.creationGenreId,
+          )
         : []
   return occ
     ? resolveCreationOccSkillIds(
@@ -66,6 +70,7 @@ function creationLedgerOccSkillIds(
         character.occSpecializationId,
         occIds,
         character.creationOccCoreVoucherPicks ?? {},
+        character.creationGenreId,
       )
     : occIds
 }

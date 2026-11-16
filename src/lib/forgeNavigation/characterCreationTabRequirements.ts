@@ -54,7 +54,7 @@ import {
   resolveOccCoreSkillPicks,
 } from '../occCoreSkillVouchers'
 import { resolveEffectivePalladiumOcc } from '../occComposition'
-import { occStartingOccSkillIds } from '../occCatalogEngine'
+import { listEffectiveOccCoreGrantSkillIds } from '../modernGenreSkillBase'
 import { skillRequiresSpecialization } from '../creationSkillPicks'
 import {
   creationFreeRelatedSkillCap,
@@ -228,6 +228,7 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     character.occSpecializationId,
     voucherPicks,
     grantDetails,
+    character.creationGenreId,
   )
   const relatedCap = creationRelatedSkillCap(
     relatedBase,
@@ -270,9 +271,10 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
     })
   }
 
-  const parameterizedGrants = occStartingOccSkillIds(
+  const parameterizedGrants = listEffectiveOccCoreGrantSkillIds(
     occ,
     character.occSpecializationId,
+    character.creationGenreId,
   ).filter(skillRequiresSpecialization)
   if (parameterizedGrants.length > 0) {
     requirements.push({
@@ -282,6 +284,7 @@ function tab4Requirements(ctx: CharacterCreationForgeContext): ForgeTabRequireme
         occ,
         character.occSpecializationId,
         grantDetails,
+        character.creationGenreId,
       ),
     })
   }

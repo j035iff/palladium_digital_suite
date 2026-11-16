@@ -1,6 +1,9 @@
 /** Canonical setting / genre slugs (Setting-First Paradigm). */
 export type GenreId = 'nightbane' | 'rifts' | 'palladium_fantasy'
 
+/** Shared chargen skill baseline package keyed from genre (Pillar 9 — one path). */
+export type GenreDefaultSkillBase = 'modern' | 'none'
+
 export type GenreManifestEntry = {
   id: GenreId
   label: string
@@ -14,6 +17,12 @@ export type GenreManifestEntry = {
    * O.C.C.s and ability picks (mundane-only campaigns).
    */
   genreSupernaturalAbilitiesDisallowed?: boolean
+  /**
+   * Default Language / Literacy / Math package for the genre.
+   * `modern` = native Language 98%, Literacy Native +30%, Math: Basic +10%
+   * (stacks with O.C.C. Literacy / Math bonuses). Omit / `none` = no genre baseline.
+   */
+  defaultSkillBase?: GenreDefaultSkillBase
 }
 
 /** Playable settings for new character creation (Setting-First gate). */
@@ -25,6 +34,7 @@ export const GENRE_MANIFEST: readonly GenreManifestEntry[] = [
     playable: true,
     icon: '🌙',
     genreSupernaturalAbilitiesDisallowed: false,
+    defaultSkillBase: 'modern',
   },
   {
     id: 'rifts',
@@ -33,6 +43,7 @@ export const GENRE_MANIFEST: readonly GenreManifestEntry[] = [
     playable: true,
     icon: '🎲',
     genreSupernaturalAbilitiesDisallowed: false,
+    defaultSkillBase: 'none',
   },
   {
     id: 'palladium_fantasy',
@@ -41,8 +52,15 @@ export const GENRE_MANIFEST: readonly GenreManifestEntry[] = [
     playable: true,
     icon: '🐉',
     genreSupernaturalAbilitiesDisallowed: false,
+    defaultSkillBase: 'none',
   },
 ] as const
+
+/** Whether this genre applies the modern Language / Literacy / Math default base. */
+export function genreUsesModernDefaultSkillBase(genreId: string | null | undefined): boolean {
+  if (!genreId?.trim()) return false
+  return getGenreManifest(genreId)?.defaultSkillBase === 'modern'
+}
 
 /** Extended launcher menu (includes roadmap rows — deduped, no repeats). */
 export const LAUNCHER_CREATE_OPTIONS: readonly {

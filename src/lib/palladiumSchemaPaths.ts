@@ -213,6 +213,10 @@ export const SKILL_TRAIT_REGISTRY_JSON_PATH =
 export const SKILL_GLOBAL_RULES_JSON_PATH =
   `${PALLADIUM_SKILLS_UTILS_DIR}/skill_global_rules.json` as const
 
+/** Modern-genre default Language / Literacy / Math: Basic baseline (Nightbane et al.). */
+export const MODERN_GENRE_DEFAULT_SKILL_BASE_JSON_PATH =
+  `${PALLADIUM_SKILLS_UTILS_DIR}/modern_genre_default_skill_base.json` as const
+
 export const MAGIC_SCHOOLS_JSON_PATH =
   `${PALLADIUM_MAGIC_UTILS_DIR}/magic_schools.json` as const
 

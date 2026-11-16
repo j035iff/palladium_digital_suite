@@ -80,7 +80,7 @@ import {
   creationHandToHandTierLabel,
   sheetSkillIdForCreationHandToHandTier,
 } from './creationHandToHandChoice'
-import { occStartingOccSkillIds } from './occCatalogEngine'
+import { listEffectiveOccCoreGrantSkillIds } from './modernGenreSkillBase'
 import { occStaticNumericBonus } from './creationOccBonuses'
 import { getSkillById } from '../data/skillLibrary'
 import {
@@ -257,7 +257,11 @@ function resolveCreationSkillIds(
     storedOccSkills.length > 0
       ? storedOccSkills
       : occ
-        ? occStartingOccSkillIds(occ, character.occSpecializationId)
+        ? listEffectiveOccCoreGrantSkillIds(
+            occ,
+            character.occSpecializationId,
+            character.creationGenreId,
+          )
         : []
   return [
     ...resolveCreationOccSkillIds(
@@ -265,6 +269,7 @@ function resolveCreationSkillIds(
       character.occSpecializationId,
       occSkillSeed,
       character.creationOccCoreVoucherPicks ?? {},
+      character.creationGenreId,
     ),
     ...flattenCreationSkillIds(getCreationRelatedPicks(character)),
     ...flattenCreationSkillIds(getCreationSecondaryPicks(character)),

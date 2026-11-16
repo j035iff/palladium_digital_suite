@@ -28,6 +28,7 @@ import {
   isOccCoreSkillChoiceVoucher,
   resolveEffectivePalladiumOcc,
 } from './occComposition'
+import { listEffectiveOccCoreGrantSkillIds } from './modernGenreSkillBase'
 import type { OccRelatedVoucherTask } from './occRelatedSkillVouchers'
 import {
   findRelatedVoucherPickForSkillId,
@@ -414,11 +415,14 @@ export function occCoreGrantSpecializationsComplete(
   occ: PalladiumOcc | undefined,
   specializationId: string | null | undefined,
   grantDetails: Readonly<Record<string, CreationSkillPick>> | undefined,
+  genreId?: string | null,
 ): boolean {
   if (!occ) return true
-  const grants = occStartingOccSkillIds(occ, specializationId).filter(
-    skillRequiresSpecialization,
-  )
+  const grants = listEffectiveOccCoreGrantSkillIds(
+    occ,
+    specializationId,
+    genreId,
+  ).filter(skillRequiresSpecialization)
   return grants.every((skillId) =>
     occGrantPickComplete(grantDetails?.[skillId] ?? migrateSkillIdToPick(skillId)),
   )
@@ -453,7 +457,17 @@ export function assessOccCoreVoucherBlockers(
       `Resolve voucher skill choices (${pending.length} voucher${pending.length === 1 ? '' : 's'} remaining).`,
     )
   }
-  if (!occCoreGrantSpecializationsComplete(occ, specializationId, grantDetails)) {
+  const genreId =
+    (character as { creationGenreId?: string } | undefined)?.creationGenreId ??
+    undefined
+  if (
+    !occCoreGrantSpecializationsComplete(
+      occ,
+      specializationId,
+      grantDetails,
+      genreId,
+    )
+  ) {
     blockers.push(
       'Specify written language / type for parameterized O.C.C. core skills (e.g. Literacy).',
     )
@@ -467,7 +481,13 @@ export function assessOccCoreVoucherBlockers(
         },
         occ,
       )
-    : resolveOccCoreSkillPicks(occ, specializationId, picks, grantDetails)
+    : resolveOccCoreSkillPicks(
+        occ,
+        specializationId,
+        picks,
+        grantDetails,
+        genreId,
+      )
   if (findDuplicateSkillIdentityKeys(allPicks).length > 0) {
     blockers.push(
       'Remove duplicate skill selections (same skill and type chosen more than once).',
@@ -476,15 +496,20 @@ export function assessOccCoreVoucherBlockers(
   return blockers
 }
 
-/** Fixed grants + voucher slots as picks (for display and spawn). */
+/** Fixed grants (+ modern-genre baseline) + voucher slots as picks (for display and spawn). */
 export function resolveOccCoreSkillPicks(
   occ: PalladiumOcc | undefined,
   specializationId: string | null | undefined,
   voucherPicks: Readonly<Record<string, unknown>> | undefined,
   grantDetails: Readonly<Record<string, CreationSkillPick>> | undefined,
+  genreId?: string | null,
 ): CreationSkillPick[] {
   if (!occ) return []
-  const grantIds = occStartingOccSkillIds(occ, specializationId)
+  const grantIds = listEffectiveOccCoreGrantSkillIds(
+    occ,
+    specializationId,
+    genreId,
+  )
   const grantPicks = grantIds.map((skillId) => {
     const detail = grantDetails?.[skillId]
     if (detail) return detail
@@ -500,9 +525,14 @@ export function isOccCoreGrantSkillPick(
   pick: CreationSkillPick,
   occ: PalladiumOcc | undefined,
   specializationId: string | null | undefined,
+  genreId?: string | null,
 ): boolean {
   if (!occ || pick.instanceId !== pick.skillId) return false
-  return occStartingOccSkillIds(occ, specializationId).includes(pick.skillId)
+  return listEffectiveOccCoreGrantSkillIds(
+    occ,
+    specializationId,
+    genreId,
+  ).includes(pick.skillId)
 }
 
 export function findOccCoreVoucherSlotForPick(
@@ -537,6 +567,7 @@ export function collectAllCreationSkillPicks(
     | 'creationSecondarySkillPicks'
     | 'creationSecondarySkillIds'
     | 'occSpecializationId'
+    | 'creationGenreId'
   >,
   occ?: PalladiumOcc,
 ): CreationSkillPick[] {
@@ -545,6 +576,7 @@ export function collectAllCreationSkillPicks(
     character.occSpecializationId,
     character.creationOccCoreVoucherPicks,
     character.creationOccGrantPickDetails,
+    character.creationGenreId,
   )
   const relatedVoucherPicks = flattenRelatedVoucherPicks(
     listOccRelatedVoucherTasks(occ, character.occSpecializationId),
@@ -564,12 +596,14 @@ export function resolveCreationOccSkillIds(
   specializationId: string | null | undefined,
   creationOccSkillIds: readonly string[],
   voucherPicks: Readonly<Record<string, unknown>>,
+  genreId?: string | null,
 ): string[] {
   const corePicks = resolveOccCoreSkillPicks(
     occ,
     specializationId,
     voucherPicks,
     undefined,
+    genreId,
   )
   const coreIds = corePicks.map((p) => p.skillId)
   const coreSet = new Set(coreIds)
@@ -582,12 +616,14 @@ export function mergeOccSkillIdsWithVouchers(
   specializationId: string | null | undefined,
   currentOccSkillIds: readonly string[],
   voucherPicks: Readonly<Record<string, unknown>>,
+  genreId?: string | null,
 ): string[] {
   return resolveCreationOccSkillIds(
     occ,
     specializationId,
     currentOccSkillIds,
     voucherPicks,
+    genreId,
   )
 }
 

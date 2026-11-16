@@ -15,7 +15,7 @@ import {
   resolveCreationVoucherDisplayNumber,
 } from '../../lib/creationVoucherSlots'
 
-import { occStartingOccSkillIds } from '../../lib/occCatalogEngine'
+import { listEffectiveOccCoreGrantSkillIds } from '../../lib/modernGenreSkillBase'
 
 import {
   migrateSkillIdToPick,
@@ -86,17 +86,21 @@ export function SelectedOccCoreSkills({
 
   const fixedGrantIds = useMemo(() => {
     if (!effectiveOcc) return []
-    return occStartingOccSkillIds(effectiveOcc, character.occSpecializationId).filter(
-      (id) => !skillRequiresSpecialization(id),
-    )
-  }, [effectiveOcc, character.occSpecializationId])
+    return listEffectiveOccCoreGrantSkillIds(
+      effectiveOcc,
+      character.occSpecializationId,
+      character.creationGenreId,
+    ).filter((id) => !skillRequiresSpecialization(id))
+  }, [effectiveOcc, character.occSpecializationId, character.creationGenreId])
 
   const parameterizedGrantIds = useMemo(() => {
     if (!effectiveOcc) return []
-    return occStartingOccSkillIds(effectiveOcc, character.occSpecializationId).filter(
-      skillRequiresSpecialization,
-    )
-  }, [effectiveOcc, character.occSpecializationId])
+    return listEffectiveOccCoreGrantSkillIds(
+      effectiveOcc,
+      character.occSpecializationId,
+      character.creationGenreId,
+    ).filter(skillRequiresSpecialization)
+  }, [effectiveOcc, character.occSpecializationId, character.creationGenreId])
 
   function handleVoucherClear(
     taskId: string,

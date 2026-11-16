@@ -25,6 +25,7 @@ import {
   resolveOccSkillBonusPercent,
 } from './creationPsychicSkills'
 import { resolveOccCoreVoucherSkillBonus } from './occCoreSkillVouchers'
+import { resolveSkillEquationBasePercent } from './modernGenreSkillBase'
 import {
   resolveSkillCatalogDisplayDetails,
   type SkillCatalogDisplayDetails,
@@ -264,6 +265,7 @@ function buildEquationInput(
   allPicks: readonly CreationSkillPick[] = [],
   characterLevel = 1,
   availability?: CreationSkillAvailabilityContext,
+  resolvedBasePercent?: number,
 ) {
   const synergyLines = resolveActiveSynergyBonusLines(
     def,
@@ -273,11 +275,17 @@ function buildEquationInput(
     availability,
   )
   const synergy = sumSynergyBonuses(synergyLines)
-  const baseAtLevel = resolvePickBasePercentAtLevel(def, pick, characterLevel)
+  const catalogBase =
+    resolvedBasePercent != null ? { ...def, basePercent: resolvedBasePercent } : def
+  const baseAtLevel = resolvePickBasePercentAtLevel(
+    catalogBase,
+    pick,
+    characterLevel,
+  )
   const basePercentForEquation =
     pick?.conditionalGrantStartingPercent != null
       ? pick.conditionalGrantStartingPercent
-      : def.basePercent
+      : (resolvedBasePercent ?? def.basePercent)
   const perLevel =
     pick?.grantedBySkillId != null
       ? resolveGrantPerLevel(pick.grantedBySkillId, def.id, def.perLevel)
@@ -368,6 +376,7 @@ function resolveOccBonusForTier(
   specializationId: string | null | undefined,
   voucherPicks: Readonly<Record<string, unknown>> | undefined,
   relatedVoucherPicks?: Readonly<Record<string, unknown>>,
+  genreId?: string | null,
 ): number {
   if (tier === 'secondary' || tier === 'preview_secondary') return 0
   if (tier === 'occ' || tier === 'voucher' || tier === 'preview_voucher') {
@@ -378,6 +387,7 @@ function resolveOccBonusForTier(
       psychicTier,
       specializationId,
       relatedVoucherPicks,
+      genreId,
     )
     if (grantBonus !== 0) return grantBonus
     return resolveVoucherOccBonus(
@@ -405,6 +415,7 @@ function resolveOccBonusForTier(
       psychicTier,
       specializationId,
       relatedVoucherPicks,
+      genreId,
     )
   }
   return 0
@@ -426,6 +437,7 @@ export function resolveSkillCreationDisplay(
     pick?: CreationSkillPick
     allPicks?: readonly CreationSkillPick[]
     synergyAvailability?: CreationSkillAvailabilityContext
+    genreId?: string | null
   },
 ): SkillCreationDisplayInfo {
   const allPicks = opts.allPicks ?? (opts.pick ? [opts.pick] : [])
@@ -438,6 +450,7 @@ export function resolveSkillCreationDisplay(
     opts.specializationId,
     opts.voucherPicks,
     opts.relatedVoucherPicks,
+    opts.genreId,
   )
   const { synergyLines, input, baseAtLevel, perLevel } = buildEquationInput(
     def,
@@ -447,6 +460,11 @@ export function resolveSkillCreationDisplay(
     allPicks,
     opts.skillPercentCtx.characterLevel,
     opts.synergyAvailability,
+    resolveSkillEquationBasePercent(def.id, def.basePercent, {
+      genreId: opts.genreId,
+      occ: opts.occ,
+      specializationId: opts.specializationId,
+    }),
   )
   const resolved = resolveSkillPercent({ ...input, id: def.id }, opts.skillPercentCtx)
   const equationBonuses = collectEquationBonusLines(

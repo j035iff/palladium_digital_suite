@@ -29,6 +29,7 @@ import {
   resolveOccCoreSkillPicks,
   resolveOccCoreVoucherSkillBonus,
 } from './occCoreSkillVouchers'
+import { resolveSkillEquationBasePercent } from './modernGenreSkillBase'
 import {
   handToHandCatalogIdForCreationTier,
   sheetSkillIdForCreationHandToHandTier,
@@ -49,6 +50,7 @@ function buildSkillEquationInput(
   selectedIds: ReadonlySet<string>,
   occBonus: number,
   pick?: CreationSkillPick,
+  basePercentOverride?: number,
 ): SkillEquationSkill {
   let synergy = def.synergyBonuses ?? 0
   if (def.id === 'skill_astronomy' && selectedIds.has('skill_math_advanced')) {
@@ -56,7 +58,7 @@ function buildSkillEquationInput(
   }
   synergy += resolveProfessionalPercentBonus(def.id, pick)
   return {
-    basePercent: def.basePercent,
+    basePercent: basePercentOverride ?? def.basePercent,
     perLevel: def.perLevel,
     acquisitionLevel: def.acquisitionLevel,
     occBonus,
@@ -82,6 +84,7 @@ export function projectCreationSkillsToSheet(
     character.occSpecializationId,
     occIds,
     voucherPicks,
+    character.creationGenreId,
   )
   const hthId = sheetSkillIdForCreationHandToHandTier(
     character.creationHandToHandTier,
@@ -92,6 +95,7 @@ export function projectCreationSkillsToSheet(
     character.occSpecializationId,
     voucherPicks,
     character.creationOccGrantPickDetails,
+    character.creationGenreId,
   )
 
   type PickEntry = { pick: CreationSkillPick; tier: 'occ' | 'related' | 'secondary' }
@@ -146,6 +150,8 @@ export function projectCreationSkillsToSheet(
       relatedForBonus,
       tier,
       character.occSpecializationId,
+      character.creationOccRelatedVoucherPicks,
+      character.creationGenreId,
     )
     if (pickTier === 'occ' && occBonus === 0) {
       occBonus = resolveOccCoreVoucherSkillBonus(
@@ -156,7 +162,17 @@ export function projectCreationSkillsToSheet(
         tier,
       )
     }
-    const equation = buildSkillEquationInput(def, selectedSet, occBonus, pick)
+    const equation = buildSkillEquationInput(
+      def,
+      selectedSet,
+      occBonus,
+      pick,
+      resolveSkillEquationBasePercent(def.id, def.basePercent, {
+        genreId: character.creationGenreId,
+        occ,
+        specializationId: character.occSpecializationId,
+      }),
+    )
     const resolved = resolveLiveSkillPercent(
       { ...equation, id: def.id },
       character,
@@ -264,6 +280,7 @@ export function applySpawnSheetHandoff(
           prev.occSpecializationId,
           prev.creationOccSkillIds ?? [],
           prev.creationOccCoreVoucherPicks ?? {},
+          prev.creationGenreId,
         ),
         ...flattenCreationSkillIds(getCreationRelatedPicks(prev)),
         ...flattenCreationSkillIds(getCreationSecondaryPicks(prev)),

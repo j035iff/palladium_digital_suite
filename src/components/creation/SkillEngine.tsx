@@ -257,49 +257,37 @@ export function SkillEngine() {
     () =>
 
       resolveCreationOccSkillIds(
-
         effectiveOcc,
-
         character.occSpecializationId,
-
         occSkillIds,
-
         voucherPicks,
-
+        character.creationGenreId,
       ),
-
-    [effectiveOcc, character.occSpecializationId, occSkillIds, voucherPicks],
-
+    [
+      effectiveOcc,
+      character.occSpecializationId,
+      occSkillIds,
+      voucherPicks,
+      character.creationGenreId,
+    ],
   )
 
   const resolvedOccPicks = useMemo(
-
     () =>
-
       resolveOccCoreSkillPicks(
-
         effectiveOcc,
-
         character.occSpecializationId,
-
         voucherPicks,
-
         character.creationOccGrantPickDetails,
-
+        character.creationGenreId,
       ),
-
     [
-
       effectiveOcc,
-
       character.occSpecializationId,
-
       voucherPicks,
-
       character.creationOccGrantPickDetails,
-
+      character.creationGenreId,
     ],
-
   )
 
   const allCreationPicks = useMemo(

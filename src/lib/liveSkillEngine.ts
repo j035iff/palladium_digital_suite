@@ -383,6 +383,7 @@ export function resolveLiveSkillOccBonusPortion(
     psychicTier,
     character.occSpecializationId,
     character.creationOccRelatedVoucherPicks,
+    character.creationGenreId,
   )
   if (
     occBonus === 0 &&

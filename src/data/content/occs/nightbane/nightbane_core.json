@@ -60,6 +60,10 @@
         "bonusPercent": 10
       },
       {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
+      {
         "choiceCount": 1,
         "bonusPercent": 15,
         "allowedCategories": [
@@ -299,8 +303,12 @@
     "id": "occ_nightbane_resistance_spook_squad",
     "name": "Nightbane — Resistance / Spook Squad",
     "description": "Militant or guerrilla faction training — or a character who was serving in the military at the Becoming. Includes basic military skills and Facade Hand to Hand: Basic.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -319,7 +327,14 @@
       }
     ],
     "occType": "nightbane_rcc",
-    "tags": ["nightbane", "resistance", "spook_squad", "military", "guerrilla", "tactical"],
+    "tags": [
+      "nightbane",
+      "resistance",
+      "spook_squad",
+      "military",
+      "guerrilla",
+      "tactical"
+    ],
     "packageNotes": [
       "Resistance/Spook Squad-trained Nightbane — joined a militaristic/guerrilla Faction, or was serving in the military at the Becoming (p. 89). Basic military skills and Facade Hand to Hand: Basic included.",
       "Shared Nightbane R.C.C. rules (pp. 88–89): skill packages are guidelines — G.M. may allow related skills outside groupings for convincing backgrounds; not obligated to do so.",
@@ -329,55 +344,160 @@
       "Related W.P. selections: any weapon proficiency (military arms such as assault rifles and heavy weapons allowed).",
       "Starting cash 3D6×100 (p. 90); faction members may receive additional mission funds. Militant affiliation likely includes access to firearms, tactical radios, surveillance gear, and survival equipment (see startingEquipment)."
     ],
-    "raceRestrictions": { "allowed": ["race_nightbane"] },
+    "raceRestrictions": {
+      "allowed": [
+        "race_nightbane"
+      ]
+    },
     "occSkillsCore": [
-      { "skillId": "skill_math_basic", "bonusPercent": 10 },
-      { "skillId": "skill_radio_basic", "bonusPercent": 15 },
-      { "skillId": "skill_language", "bonusPercent": 25 },
-      { "skillId": "skill_literacy", "bonusPercent": 25 },
-      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_radio_basic",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 25
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 25
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 15,
-        "allowedCategories": ["Pilot"],
+        "allowedCategories": [
+          "Pilot"
+        ],
         "label": "Pilot (vehicle of choice)"
       },
-      { "skillId": "skill_first_aid", "bonusPercent": 10 },
+      {
+        "skillId": "skill_first_aid",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 0,
-        "allowedCategories": ["Weapon Proficiencies"],
+        "allowedCategories": [
+          "Weapon Proficiencies"
+        ],
         "label": "One W.P. of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 8,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 5
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_assassin", "electiveSlotCost": 2 }
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 2
+        }
       ]
     },
     "classAbilities": [
@@ -414,7 +534,11 @@
         "description": "Typical starting cash 3D6×100. Resistance, gang, or other militant members likely own or have access to handguns, rifles, military small arms, radios, surveillance gear, survival equipment, and computerized databases — case-by-case (pp. 89–90). Faction affiliation may provide additional mission funds."
       }
     ],
-    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6", "progressionRoadmap": [] },
+    "ppeEngine": {
+      "baseFormula": "PE + 3D6*10+20",
+      "perLevelFormula": "3D6",
+      "progressionRoadmap": []
+    },
     "startingEquipment": {
       "miscellaneous": [
         "Likely access to handguns, rifles, and military small arms (owned or faction-supplied)",
@@ -424,23 +548,55 @@
         "Nightbane depend on abilities rather than hardware — gear varies with affiliation and background"
       ]
     },
-    "finances": { "startingCashFormula": "3D6*100" },
-    "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
+    "finances": {
+      "startingCashFormula": "3D6*100"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_nightbane_guardian"
+    },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 4, "quantity": 2, "poolSource": "secondary" },
-      { "levelUnlocked": 6, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 2, "poolSource": "secondary" },
-      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 4,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_nightbane_nocturne_seeker_lightbringer",
     "name": "Nightbane — Nocturne / Seeker / Lightbringer",
     "description": "Scholastic and magically oriented faction training — broad technical and scientific knowledge, Nightbane Lore, and two foreign languages.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -459,7 +615,14 @@
       }
     ],
     "occType": "nightbane_rcc",
-    "tags": ["nightbane", "nocturne", "seeker", "lightbringer", "scholastic", "scientific"],
+    "tags": [
+      "nightbane",
+      "nocturne",
+      "seeker",
+      "lightbringer",
+      "scholastic",
+      "scientific"
+    ],
     "packageNotes": [
       "Nocturne/Seeker/Lightbringer-trained Nightbane — member of a magic- and scholastically oriented Faction, or a graduate student in a scholastic/scientific field at the Becoming (pp. 90–91). Broad technical and scientific knowledge; Nightbane Lore included in core skills.",
       "Shared Nightbane R.C.C. rules (pp. 88–89): skill packages are guidelines — G.M. may allow related skills outside groupings for convincing backgrounds; not obligated to do so.",
@@ -470,26 +633,58 @@
       "Pilot Related: book lists Navigation and Sensor Operation — catalog maps Sensor Operation to Read Sensory Equipment (`skill_read_sensory_equipment`).",
       "Starting cash 3D6×100 (p. 90); faction members may receive additional mission funds. Educated characters often own computers, books, and research materials (see startingEquipment)."
     ],
-    "raceRestrictions": { "allowed": ["race_nightbane"] },
+    "raceRestrictions": {
+      "allowed": [
+        "race_nightbane"
+      ]
+    },
     "occSkillsCore": [
-      { "skillId": "skill_math_basic", "bonusPercent": 20 },
-      { "skillId": "skill_math_advanced", "bonusPercent": 10 },
-      { "skillId": "skill_language", "bonusPercent": 30 },
-      { "skillId": "skill_literacy", "bonusPercent": 30 },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_math_advanced",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 30
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 30
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "allowedSkillIds": [
+          "skill_language",
+          "skill_literacy"
+        ],
         "label": "Two languages of choice (spoken and literacy)"
       },
-      { "skillId": "skill_computer_operation", "bonusPercent": 20 },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 20
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedCategories": ["Science", "Technical"],
+        "allowedCategories": [
+          "Science",
+          "Technical"
+        ],
         "label": "Two Science or Technical skills of choice"
       },
-      { "skillId": "skill_lore_nightbane", "bonusPercent": 15 }
+      {
+        "skillId": "skill_lore_nightbane",
+        "bonusPercent": 15
+      }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 8,
@@ -497,44 +692,123 @@
         {
           "categoryName": "Communications",
           "accessType": "only",
-          "exceptions": ["skill_radio_basic", "skill_cryptography", "skill_tv_video"],
+          "exceptions": [
+            "skill_radio_basic",
+            "skill_cryptography",
+            "skill_tv_video"
+          ],
           "bonusPercent": 5
         },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "exceptions": [
+            "skill_intelligence",
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Pilot Related",
           "accessType": "only",
-          "exceptions": ["skill_navigation", "skill_read_sensory_equipment"],
+          "exceptions": [
+            "skill_navigation",
+            "skill_read_sensory_equipment"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Rogue", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Rogue",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": ["wp_heavy", "wp_automatic_and_semiautomatic_rifles"] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": [
+        "wp_heavy",
+        "wp_automatic_and_semiautomatic_rifles"
+      ]
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
-        { "targetSkillId": "hth_assassin", "electiveSlotCost": 3 }
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 3
+        }
       ]
     },
     "classAbilities": [
@@ -575,7 +849,11 @@
         "description": "Typical starting cash 3D6×100. Educated Nightbane often own home computers, laptops, books, and research materials; may operate as specialists or consultants using education and skills for income (pp. 89–90). Faction affiliation may provide additional mission funds or research access."
       }
     ],
-    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6", "progressionRoadmap": [] },
+    "ppeEngine": {
+      "baseFormula": "PE + 3D6*10+20",
+      "perLevelFormula": "3D6",
+      "progressionRoadmap": []
+    },
     "startingEquipment": {
       "miscellaneous": [
         "Home computer, laptop, or handheld computer (typical for scholastic characters)",
@@ -585,23 +863,55 @@
         "Faction affiliation may provide library access, computerized databases, or research support — case-by-case"
       ]
     },
-    "finances": { "startingCashFormula": "3D6*100" },
-    "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
+    "finances": {
+      "startingCashFormula": "3D6*100"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_nightbane_guardian"
+    },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 4, "quantity": 2, "poolSource": "secondary" },
-      { "levelUnlocked": 6, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 2, "poolSource": "secondary" },
-      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 4,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_nightbane_warlord",
     "name": "Nightbane — Warlord",
     "description": "Street-survival training for Nightbane Warlords or gang members at the Becoming — locks, prowling, streetwise, and brawling over advanced education.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -620,7 +930,13 @@
       }
     ],
     "occType": "nightbane_rcc",
-    "tags": ["nightbane", "warlord", "gang", "street", "rogue"],
+    "tags": [
+      "nightbane",
+      "warlord",
+      "gang",
+      "street",
+      "rogue"
+    ],
     "packageNotes": [
       "Warlord Nightbane — member of Nightbane-controlled Warlords, or was a gang member before the Becoming (pp. 90–91). Street-survival skills with little advanced education.",
       "Shared Nightbane R.C.C. rules (pp. 88–89): skill packages are guidelines — G.M. may allow related skills outside groupings for convincing backgrounds; not obligated to do so.",
@@ -632,18 +948,50 @@
       "Espionage: any except Disguise, Tracking, Sniper, and Wilderness Survival (+5%). Physical: +5% when applicable. Rogue: +10%.",
       "Starting cash 3D6×100 (p. 90); gang or militant affiliation may include access to firearms and street gear (see startingEquipment)."
     ],
-    "raceRestrictions": { "allowed": ["race_nightbane"] },
+    "raceRestrictions": {
+      "allowed": [
+        "race_nightbane"
+      ]
+    },
     "occSkillsCore": [
-      { "skillId": "skill_math_basic", "bonusPercent": 5 },
-      { "skillId": "skill_language", "bonusPercent": 10 },
-      { "skillId": "skill_streetwise", "bonusPercent": 15 },
-      { "skillId": "skill_prowl", "bonusPercent": 10 },
-      { "skillId": "skill_pick_locks", "bonusPercent": 15 },
-      { "skillId": "skill_running", "bonusPercent": 0 },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_streetwise",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_prowl",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_pick_locks",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_running",
+        "bonusPercent": 0
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 0
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 0,
-        "allowedCategories": ["Weapon Proficiencies"],
+        "allowedCategories": [
+          "Weapon Proficiencies"
+        ],
         "label": "Two W.P.s of choice"
       }
     ],
@@ -653,11 +1001,21 @@
         {
           "categoryName": "Communications",
           "accessType": "only",
-          "exceptions": ["skill_radio_basic"],
+          "exceptions": [
+            "skill_radio_basic"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "except",
@@ -669,15 +1027,29 @@
           ],
           "bonusPercent": 5
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_first_aid"],
+          "exceptions": [
+            "skill_first_aid"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
         {
           "categoryName": "Pilot",
           "accessType": "only",
@@ -689,22 +1061,61 @@
           ],
           "bonusPercent": 5
         },
-        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "none", "bonusPercent": 0 }
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "none",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_assassin", "electiveSlotCost": 2 }
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_assassin",
+          "electiveSlotCost": 2
+        }
       ]
     },
     "classAbilities": [
@@ -749,7 +1160,11 @@
         "description": "Typical starting cash 3D6×100. Gang or militant members likely own or have access to handguns, rifles, and street gear; may operate as thugs for hire or soldiers of fortune (pp. 89–90). Faction affiliation may provide additional mission funds."
       }
     ],
-    "ppeEngine": { "baseFormula": "PE + 3D6*10+20", "perLevelFormula": "3D6", "progressionRoadmap": [] },
+    "ppeEngine": {
+      "baseFormula": "PE + 3D6*10+20",
+      "perLevelFormula": "3D6",
+      "progressionRoadmap": []
+    },
     "startingEquipment": {
       "miscellaneous": [
         "Likely access to handguns and street weapons (owned or gang-supplied)",
@@ -759,15 +1174,43 @@
         "Nightbane depend on abilities rather than hardware — gear varies with affiliation"
       ]
     },
-    "finances": { "startingCashFormula": "3D6*100" },
-    "progression": { "xpTableId": "nightbane_core_nightbane_guardian" },
+    "finances": {
+      "startingCashFormula": "3D6*100"
+    },
+    "progression": {
+      "xpTableId": "nightbane_core_nightbane_guardian"
+    },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 2, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 4, "quantity": 2, "poolSource": "secondary" },
-      { "levelUnlocked": 5, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 2, "poolSource": "secondary" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 2,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 4,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 2,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
@@ -1081,7 +1524,10 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["sensitive", "healer"]
+          "categories": [
+            "sensitive",
+            "healer"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -1418,7 +1864,11 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["sensitive", "physical", "healer"]
+          "categories": [
+            "sensitive",
+            "physical",
+            "healer"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -1629,7 +2079,11 @@
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -2054,21 +2508,81 @@
     "occRelatedSkills": {
       "initialSlotsCount": 8,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 10 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 10
+        }
       ]
     },
     "secondarySkills": {
@@ -2230,21 +2744,81 @@
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 10 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 10
+        }
       ]
     },
     "secondarySkills": {
@@ -2402,21 +2976,81 @@
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 10 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 10
+        }
       ]
     },
     "secondarySkills": {
@@ -2696,8 +3330,12 @@
     "id": "occ_sorcerer",
     "name": "Sorcerer O.C.C.",
     "description": "Bookish arcane scholar — meticulous study of formulas, rituals, and incantations. Sorcerers sense ley lines and nexus points, may learn spells of any level through study (Pursuit of Magic), and wield wizard magic with strong saves versus the supernatural.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -2716,7 +3354,12 @@
       }
     ],
     "occType": "magic_user",
-    "tags": ["occult", "scholar", "arcane", "ley_line"],
+    "tags": [
+      "occult",
+      "scholar",
+      "arcane",
+      "ley_line"
+    ],
     "packageNotes": [
       "Civilized arcane tradition — learned wizardry rooted in ancient Egypt, Greece, and Persia; modern recruits from colleges and universities (history, archaeology, occult sciences) (pp. 115–116).",
       "Attribute requirements: I.Q. 12, M.E. 10, P.E. 12 (p. 116).",
@@ -2735,11 +3378,32 @@
       "pe": 12
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_math_basic", "bonusPercent": 25 },
-      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
-      { "skillId": "skill_research", "bonusPercent": 25 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 25
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_research",
+        "bonusPercent": 25
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 20,
@@ -2763,13 +3427,18 @@
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "allowedSkillIds": [
+          "skill_language",
+          "skill_literacy"
+        ],
         "label": "Two languages of choice"
       },
       {
         "choiceCount": 1,
         "bonusPercent": 15,
-        "allowedCategories": ["Technical"],
+        "allowedCategories": [
+          "Technical"
+        ],
         "label": "One additional Technical skill of choice"
       }
     ],
@@ -2783,41 +3452,119 @@
         }
       ],
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "exceptions": [
+            "skill_intelligence",
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -2826,7 +3573,10 @@
       {
         "name": "Understand the Principles of Magic",
         "description": "Know and understand rituals, symbols, incantations, and paraphernalia — distinguish authentic occult materials from forgeries, determine general purpose of items, and identify supernatural forces involved. Base 70% +2% per level. A failed roll means the character dismisses evidence as fake or mistakes a charlatan's work for the real thing (pp. 115–116).",
-        "percentileProfile": { "basePercent": 70, "perLevelPercent": 2 }
+        "percentileProfile": {
+          "basePercent": 70,
+          "perLevelPercent": 2
+        }
       },
       {
         "name": "Sense Ley Lines and Nexus Points",
@@ -2880,24 +3630,116 @@
     "ppeEngine": {
       "baseFormula": "1D6*10+PE",
       "perLevelFormula": "2D6",
-      "magicSchools": ["wizard"],
+      "magicSchools": [
+        "wizard"
+      ],
       "spellAcquisition": "open",
       "progressionRoadmap": [
-        { "level": 1, "selectionsGained": 12, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 2 Spells Only"] },
-        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 3 Spells Only"] },
-        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
-        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
-        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
-        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
-        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
-        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
-        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
-        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
-        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
-        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+        {
+          "level": 1,
+          "selectionsGained": 12,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 15 Spells Only"
+          ]
+        }
       ]
     },
     "startingEquipment": {
@@ -2923,18 +3765,38 @@
       "startingSpellLevelCap": 4
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_mystic",
     "name": "Mystic O.C.C.",
     "description": "Shamanistic intuitive magic-user and major psionic — rainmakers, medicine men, and spiritual paths from cultures worldwide. Spell knowledge is gained through inner revelation; cannot learn spells independently outside the O.C.C. roadmap.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -2953,7 +3815,12 @@
       }
     ],
     "occType": "magic_user",
-    "tags": ["occult", "shaman", "intuitive", "psionic"],
+    "tags": [
+      "occult",
+      "shaman",
+      "intuitive",
+      "psionic"
+    ],
     "packageNotes": [
       "Shamanistic intuitive magic — rainmakers, medicine men, spiritual paths (Native American, Voudoun/Santería, Romani, neo-pagan, Taoist, etc.); magic granted from within rather than studied (pp. 117–118).",
       "Attribute requirements: I.Q. 9, M.E. 9, M.A. 9 or higher (p. 119).",
@@ -2988,11 +3855,22 @@
       "ma": 9
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 15,
-        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "allowedSkillIds": [
+          "skill_language",
+          "skill_literacy"
+        ],
         "label": "One additional language of choice"
       },
       {
@@ -3015,11 +3893,16 @@
         ],
         "label": "One Lore skill of choice"
       },
-      { "skillId": "skill_dance", "bonusPercent": 10 },
+      {
+        "skillId": "skill_dance",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "One Domestic skill of choice"
       }
     ],
@@ -3033,46 +3916,121 @@
         }
       ],
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_wilderness_survival"],
+          "exceptions": [
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 10
         },
-        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_holistic_medicine"],
+          "exceptions": [
+            "skill_holistic_medicine"
+          ],
           "bonusPercent": 10
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 5
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -3133,13 +4091,20 @@
         "save_horror": 3
       },
       "levelGatedSaves": {
-        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+        "save_magic": {
+          "3": 1,
+          "6": 1,
+          "9": 1,
+          "12": 1
+        }
       }
     },
     "ppeEngine": {
       "baseFormula": "1D4*10+PE",
       "perLevelFormula": "1D6+1",
-      "magicSchools": ["wizard"],
+      "magicSchools": [
+        "wizard"
+      ],
       "spellAcquisition": "roadmap_only",
       "spellStrengthProgression": {
         "1": 12,
@@ -3148,21 +4113,111 @@
         "12": 15
       },
       "progressionRoadmap": [
-        { "level": 1, "selectionsGained": 6, "categoryRestrictions": ["Level 2 Spells Only"] },
-        { "level": 2, "selectionsGained": 3, "categoryRestrictions": ["Level 3 Spells Only"] },
-        { "level": 3, "selectionsGained": 3, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 4, "selectionsGained": 2, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 5, "selectionsGained": 2, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 6, "selectionsGained": 2, "categoryRestrictions": ["Level 6 Spells Only"] },
-        { "level": 7, "selectionsGained": 2, "categoryRestrictions": ["Level 7 Spells Only"] },
-        { "level": 8, "selectionsGained": 2, "categoryRestrictions": ["Level 8 Spells Only"] },
-        { "level": 9, "selectionsGained": 2, "categoryRestrictions": ["Level 9 Spells Only"] },
-        { "level": 10, "selectionsGained": 2, "categoryRestrictions": ["Level 10 Spells Only"] },
-        { "level": 11, "selectionsGained": 2, "categoryRestrictions": ["Level 11 Spells Only"] },
-        { "level": 12, "selectionsGained": 2, "categoryRestrictions": ["Level 12 Spells Only"] },
-        { "level": 13, "selectionsGained": 2, "categoryRestrictions": ["Level 13 Spells Only"] },
-        { "level": 14, "selectionsGained": 2, "categoryRestrictions": ["Level 14 Spells Only"] },
-        { "level": 15, "selectionsGained": 2, "categoryRestrictions": ["Level 15 Spells Only"] }
+        {
+          "level": 1,
+          "selectionsGained": 6,
+          "categoryRestrictions": [
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 3,
+          "categoryRestrictions": [
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 3,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 15 Spells Only"
+          ]
+        }
       ]
     },
     "ispEngine": {
@@ -3179,27 +4234,42 @@
         {
           "level": 1,
           "selectionsGained": 5,
-          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+          "categoryRestrictions": [
+            "Sensitive Only",
+            "Healer Only"
+          ]
         },
         {
           "level": 3,
           "selectionsGained": 1,
-          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+          "categoryRestrictions": [
+            "Sensitive Only",
+            "Healer Only"
+          ]
         },
         {
           "level": 5,
           "selectionsGained": 1,
-          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+          "categoryRestrictions": [
+            "Sensitive Only",
+            "Healer Only"
+          ]
         },
         {
           "level": 7,
           "selectionsGained": 1,
-          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+          "categoryRestrictions": [
+            "Sensitive Only",
+            "Healer Only"
+          ]
         },
         {
           "level": 10,
           "selectionsGained": 1,
-          "categoryRestrictions": ["Sensitive Only", "Healer Only"]
+          "categoryRestrictions": [
+            "Sensitive Only",
+            "Healer Only"
+          ]
         }
       ]
     },
@@ -3244,18 +4314,38 @@
       "startingSpellLevelCap": 2
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_nightbane_sorcerer",
     "name": "Nightbane Sorcerer O.C.C.",
     "description": "Rare Nightbane trained in arcane scholarship — draws on both wizard magic and a single Nightbane Talent, with full Nightbane R.C.C. powers. P.P.E. is often spent acquiring additional Talents at the cost of spell flexibility.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -3274,7 +4364,12 @@
       }
     ],
     "occType": "magic_user",
-    "tags": ["nightbane", "occult", "arcane", "ley_line"],
+    "tags": [
+      "nightbane",
+      "occult",
+      "arcane",
+      "ley_line"
+    ],
     "packageNotes": [
       "Race restriction: `race_nightbane` only — retains all Nightbane R.C.C. powers (Becoming, Morphus, Mirror Walk, etc.) on `race_nightbane` (pp. 118–119).",
       "Very rare — Nightbane trained in arcane arts, usually by a human sorcerer; ~half were apprentices who did not know their nature until the Becoming; ancient Nightbane sorcerers in the Underground Railroad also teach worthy students (pp. 118–119).",
@@ -3290,17 +4385,42 @@
       "Secondary skills: four at creation — no O.C.C. percentage bonus; category access matches Related Skills (p. 120).",
       "Starting cash 3D4×100 + 200; property 2D4×1,000 (p. 120)."
     ],
-    "raceRestrictions": { "allowed": ["race_nightbane"] },
+    "raceRestrictions": {
+      "allowed": [
+        "race_nightbane"
+      ]
+    },
     "attributeRequirements": {
       "iq": 12,
       "me": 12
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_math_basic", "bonusPercent": 25 },
-      { "skillId": "skill_computer_operation", "bonusPercent": 10 },
-      { "skillId": "skill_research", "bonusPercent": 20 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 25
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_research",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 15,
@@ -3324,13 +4444,18 @@
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "allowedSkillIds": [
+          "skill_language",
+          "skill_literacy"
+        ],
         "label": "Two languages of choice"
       },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedCategories": ["Technical"],
+        "allowedCategories": [
+          "Technical"
+        ],
         "label": "One additional Technical skill of choice"
       }
     ],
@@ -3344,41 +4469,119 @@
         }
       ],
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "exceptions": [
+            "skill_intelligence",
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 4, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 4,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -3387,7 +4590,10 @@
       {
         "name": "Understand the Principles of Magic",
         "description": "Same as human Sorcerer O.C.C. — know rituals, symbols, incantations, and paraphernalia; distinguish authentic occult materials from forgeries; determine general purpose and supernatural forces involved. Base 70% +2% per level; failed roll may dismiss real evidence or accept forgeries (pp. 115–116, 119).",
-        "percentileProfile": { "basePercent": 70, "perLevelPercent": 2 }
+        "percentileProfile": {
+          "basePercent": 70,
+          "perLevelPercent": 2
+        }
       },
       {
         "name": "Sense Ley Lines and Nexus Points",
@@ -3452,31 +4658,128 @@
     "ppeEngine": {
       "baseFormula": "3D6*10+20+PE",
       "perLevelFormula": "2D6+6",
-      "magicSchools": ["wizard"],
+      "magicSchools": [
+        "wizard"
+      ],
       "spellAcquisition": "open",
       "progressionRoadmap": [
-        { "level": 1, "selectionsGained": 12, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 2 Spells Only"] },
-        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 3 Spells Only"] },
-        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
-        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
-        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
-        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
-        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
-        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
-        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
-        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
-        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
-        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+        {
+          "level": 1,
+          "selectionsGained": 12,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 15 Spells Only"
+          ]
+        }
       ]
     },
     "customAbilityEngines": [
       {
         "engineId": "nightbane_talents",
         "label": "Nightbane Talents",
-        "progressionRoadmap": [{ "level": 1, "selectionsGained": 1 }]
+        "progressionRoadmap": [
+          {
+            "level": 1,
+            "selectionsGained": 1
+          }
+        ]
       }
     ],
     "startingEquipment": {
@@ -3498,18 +4801,38 @@
       "startingSpellLevelCap": 4
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_nightbane_mystic",
     "name": "Nightbane Mystic O.C.C.",
     "description": "The most common magic-practicing Nightbane — intuitive shaman of Nightlands energies with no psionic potential, relying on Talents and a restrictive spell roadmap. Retains full Nightbane R.C.C. powers.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -3518,7 +4841,12 @@
       }
     ],
     "occType": "magic_user",
-    "tags": ["nightbane", "occult", "shaman", "intuitive"],
+    "tags": [
+      "nightbane",
+      "occult",
+      "shaman",
+      "intuitive"
+    ],
     "packageNotes": [
       "Race restriction: Nightbane only. No psionic potential — relies on Talents instead of I.S.P. Retains all Nightbane R.C.C. powers; Facade Hand to Hand only.",
       "Attribute requirements: I.Q. 10, M.E. 9, M.A. 9 or higher.",
@@ -3528,18 +4856,33 @@
       "Secondary skills: four at creation — no O.C.C. percentage bonus; category access matches Related Skills.",
       "Wealth-oriented variant: optional specialization (2D4×1000 cash, 4D6×10000 possessions) — rare and high visibility after Dark Day."
     ],
-    "raceRestrictions": { "allowed": ["race_nightbane"] },
+    "raceRestrictions": {
+      "allowed": [
+        "race_nightbane"
+      ]
+    },
     "attributeRequirements": {
       "iq": 10,
       "me": 9,
       "ma": 9
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedSkillIds": ["skill_language", "skill_literacy"],
+        "allowedSkillIds": [
+          "skill_language",
+          "skill_literacy"
+        ],
         "label": "One additional language of choice"
       },
       {
@@ -3562,7 +4905,10 @@
         ],
         "label": "One Lore skill of choice"
       },
-      { "skillId": "skill_dance", "bonusPercent": 10 }
+      {
+        "skillId": "skill_dance",
+        "bonusPercent": 10
+      }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 7,
@@ -3574,46 +4920,121 @@
         }
       ],
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_wilderness_survival"],
+          "exceptions": [
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 10
         },
-        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_holistic_medicine"],
+          "exceptions": [
+            "skill_holistic_medicine"
+          ],
           "bonusPercent": 10
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 5
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 4, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 4,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -3646,13 +5067,20 @@
         "save_horror": 2
       },
       "levelGatedSaves": {
-        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+        "save_magic": {
+          "3": 1,
+          "6": 1,
+          "9": 1,
+          "12": 1
+        }
       }
     },
     "ppeEngine": {
       "baseFormula": "3D6*10+20+PE",
       "perLevelFormula": "2D6+6",
-      "magicSchools": ["wizard"],
+      "magicSchools": [
+        "wizard"
+      ],
       "spellAcquisition": "roadmap_only",
       "spellStrengthProgression": {
         "1": 12,
@@ -3661,21 +5089,111 @@
         "12": 15
       },
       "progressionRoadmap": [
-        { "level": 1, "selectionsGained": 5, "categoryRestrictions": ["Level 2 Spells Only"] },
-        { "level": 2, "selectionsGained": 4, "categoryRestrictions": ["Level 3 Spells Only"] },
-        { "level": 3, "selectionsGained": 2, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
-        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
-        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
-        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
-        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
-        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
-        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
-        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
-        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
-        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+        {
+          "level": 1,
+          "selectionsGained": 5,
+          "categoryRestrictions": [
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 4,
+          "categoryRestrictions": [
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 15 Spells Only"
+          ]
+        }
       ]
     },
     "customAbilityEngines": [
@@ -3683,11 +5201,26 @@
         "engineId": "nightbane_talents",
         "label": "Nightbane Talents",
         "progressionRoadmap": [
-          { "level": 1, "selectionsGained": 1 },
-          { "level": 3, "selectionsGained": 1 },
-          { "level": 7, "selectionsGained": 1 },
-          { "level": 11, "selectionsGained": 1 },
-          { "level": 15, "selectionsGained": 1 }
+          {
+            "level": 1,
+            "selectionsGained": 1
+          },
+          {
+            "level": 3,
+            "selectionsGained": 1
+          },
+          {
+            "level": 7,
+            "selectionsGained": 1
+          },
+          {
+            "level": 11,
+            "selectionsGained": 1
+          },
+          {
+            "level": 15,
+            "selectionsGained": 1
+          }
         ]
       }
     ],
@@ -3720,18 +5253,38 @@
       "startingSpellLevelCap": 2
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_psychic_pcc",
     "name": "Psychic P.C.C.",
     "description": "Human whose latent psychic gifts surged after Dark Day — sensing the supernatural, manipulating the world with the mind, and healing wounds. Persecuted by the monster-controlled government; many join Nightbane, secret societies, Spook Squad, or fight back as mercenaries and adventurers.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -3745,7 +5298,11 @@
       }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "master_psionic", "civilian"],
+    "tags": [
+      "psychic",
+      "master_psionic",
+      "civilian"
+    ],
     "packageNotes": [
       "Attribute requirements: only psionic-capable races — no minimum attributes; high I.Q. and M.E. strongly recommended (p. 69).",
       "Master psionic: save vs psionic attack on d20 10+ (plus M.E. and other bonuses) — p. 67.",
@@ -3775,34 +5332,72 @@
       }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 0
+      },
       {
         "choiceCount": 4,
         "bonusPercent": 15,
-        "allowedSkillTraits": ["work_education_related"],
+        "allowedSkillTraits": [
+          "work_education_related"
+        ],
         "label": "Four work-related or educational skills of choice"
       },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "One Domestic skill of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_wilderness_survival"],
+          "exceptions": [
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
         {
           "categoryName": "Medical",
           "accessType": "any",
@@ -3814,30 +5409,85 @@
             "skill_paramedic": 1
           }
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 5
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -3917,7 +5567,11 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["sensitive", "physical", "healer"]
+          "categories": [
+            "sensitive",
+            "physical",
+            "healer"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -3937,11 +5591,31 @@
       "characterOccCategory": "psychic"
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
@@ -3991,33 +5665,101 @@
       ]
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_lore_nightlands", "bonusPercent": 20 },
-      { "skillId": "skill_dance", "bonusPercent": 15 }
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_lore_nightlands",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_dance",
+        "bonusPercent": 15
+      }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_first_aid"],
+          "exceptions": [
+            "skill_first_aid"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
     "secondarySkills": {
@@ -4025,19 +5767,30 @@
       "forbiddenCategories": []
     },
     "wpRules": {
-      "coreWps": ["wp_knife"],
+      "coreWps": [
+        "wp_knife"
+      ],
       "forbiddenWps": []
     },
     "handToHandRules": {
       "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 2
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 2,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -4143,24 +5896,116 @@
     "ppeEngine": {
       "baseFormula": "1D6*10+PE",
       "perLevelFormula": "2D6",
-      "magicSchools": ["wizard"],
+      "magicSchools": [
+        "wizard"
+      ],
       "spellAcquisition": "roadmap_only",
       "progressionRoadmap": [
-        { "level": 1, "selectionsGained": 8, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
-        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
-        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
-        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
-        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
-        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
-        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
-        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
-        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
-        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+        {
+          "level": 1,
+          "selectionsGained": 8,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 15 Spells Only"
+          ]
+        }
       ]
     },
     "progression": {
@@ -4169,10 +6014,26 @@
       "startingSpellLevelCap": 4
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 9, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
@@ -4246,21 +6107,81 @@
     "occRelatedSkills": {
       "initialSlotsCount": 0,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Medical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
     "secondarySkills": {
@@ -4458,21 +6379,81 @@
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Medical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
     "secondarySkills": {
@@ -4606,11 +6587,31 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 9, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 11, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 13, "quantity": 2, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 9,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 2,
+        "poolSource": "related"
+      }
     ]
   },
   {
@@ -4681,21 +6682,81 @@
     "occRelatedSkills": {
       "initialSlotsCount": 6,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Medical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
     "secondarySkills": {
@@ -4834,12 +6895,36 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 2, "quantity": 1, "poolSource": "secondary" },
-      { "levelUnlocked": 4, "quantity": 1, "poolSource": "secondary" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "secondary" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "secondary" },
-      { "levelUnlocked": 11, "quantity": 1, "poolSource": "secondary" },
-      { "levelUnlocked": 14, "quantity": 1, "poolSource": "secondary" }
+      {
+        "levelUnlocked": 2,
+        "quantity": 1,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 4,
+        "quantity": 1,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 14,
+        "quantity": 1,
+        "poolSource": "secondary"
+      }
     ]
   },
   {
@@ -5002,7 +7087,12 @@
     ],
     "staticBonuses": {
       "levelGatedSaves": {
-        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+        "save_magic": {
+          "3": 1,
+          "6": 1,
+          "9": 1,
+          "12": 1
+        }
       }
     },
     "ppeEngine": {
@@ -5299,21 +7389,81 @@
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 20 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 20 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 20
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 20
+        }
       ]
     },
     "secondarySkills": {
@@ -5331,7 +7481,11 @@
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 0,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]

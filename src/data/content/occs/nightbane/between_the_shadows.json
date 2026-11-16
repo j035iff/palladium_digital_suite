@@ -37,11 +37,10 @@
       },
       {
         "skillId": "skill_literacy",
-        "bonusPercent": 0,
-        "basePercent": 98
+        "bonusPercent": 0
       },
       {
-        "skillId": "skill_basic_math",
+        "skillId": "skill_math_basic",
         "bonusPercent": 20
       },
       {
@@ -63,6 +62,10 @@
       {
         "skillId": "skill_intelligence",
         "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
       },
       {
         "choiceCount": 1,
@@ -201,7 +204,11 @@
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -308,6 +315,10 @@
       "Secondary skills use the same category access limits as O.C.C. Related Skills (no category bonuses unless noted on the related list)."
     ],
     "occSkillsCore": [
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 15,
@@ -491,7 +502,11 @@
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 1,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -667,6 +682,10 @@
     ],
     "occSkillsCore": [
       {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
+      {
         "choiceCount": 1,
         "bonusPercent": 15,
         "allowedSkillIds": [
@@ -807,7 +826,11 @@
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 2,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -837,6 +860,10 @@
         "name": "Spy Specialist",
         "description": "Information gathering and espionage — infiltration, intelligence, and covert operations.",
         "occSkillsCore": [
+          {
+            "skillId": "skill_bicycling",
+            "bonusPercent": 10
+          },
           {
             "choiceCount": 1,
             "bonusPercent": 15,
@@ -916,6 +943,10 @@
         "description": "Silent death and termination — sniper training and combat-focused field work.",
         "occSkillsCore": [
           {
+            "skillId": "skill_bicycling",
+            "bonusPercent": 10
+          },
+          {
             "choiceCount": 1,
             "bonusPercent": 15,
             "allowedSkillIds": [
@@ -973,7 +1004,11 @@
               "targetSkillId": "hth_assassin",
               "electiveSlotCost": 2,
               "alignmentRestrictions": {
-                "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+                "allowed": [
+                  "Miscreant",
+                  "Aberrant",
+                  "Diabolic"
+                ]
               }
             }
           ]
@@ -1007,6 +1042,10 @@
         "name": "Dual-Trained Agent",
         "description": "Trained in both espionage and assassination — more flexible but less specialized than either single-focus agent.",
         "occSkillsCore": [
+          {
+            "skillId": "skill_bicycling",
+            "bonusPercent": 10
+          },
           {
             "choiceCount": 1,
             "bonusPercent": 15,
@@ -1146,6 +1185,10 @@
       {
         "skillId": "skill_math_advanced",
         "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
       },
       {
         "choiceCount": 1,
@@ -1294,7 +1337,11 @@
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -1446,6 +1493,10 @@
       {
         "skillId": "skill_automobile",
         "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
       },
       {
         "choiceCount": 1,
@@ -1709,6 +1760,10 @@
       {
         "skillId": "skill_automobile",
         "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
       }
     ],
     "occRelatedSkills": {
@@ -1951,8 +2006,12 @@
     "id": "occ_mind_master_pcc",
     "name": "Mind Master P.C.C.",
     "description": "Pre–Dark Day elite psychics who lived in the shadows — wealthy, reclusive, or quietly helpful until the Nightlords' invasion exposed and targeted them. Among the first to sense the Ba'al takeover; many now warn other psychics, join Spook Squad or resistance factions, or fight as vigilantes. A tiny fraction serve the Nightlords.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
       {
         "gameSystem": "nightbane",
@@ -1966,7 +2025,12 @@
       }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "master_psionic", "civilian", "bts_pcc"],
+    "tags": [
+      "psychic",
+      "master_psionic",
+      "civilian",
+      "bts_pcc"
+    ],
     "attributeRequirements": {
       "me": 11,
       "iq": 11
@@ -1998,70 +2062,179 @@
       }
     },
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_math_basic", "bonusPercent": 20 },
-      { "skillId": "skill_lore_psychic", "bonusPercent": 20 },
-      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_lore_psychic",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "Two Domestic skills of choice"
       },
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedCategories": ["Technical", "Science"],
+        "allowedCategories": [
+          "Technical",
+          "Science"
+        ],
         "label": "Two Technical or Science skills of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 12,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_intelligence", "skill_wilderness_survival"],
+          "exceptions": [
+            "skill_intelligence",
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Physical",
           "accessType": "any",
           "bonusPercent": 0
         },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
@@ -2088,7 +2261,9 @@
           "selectionMode": {
             "kind": "pool",
             "selections": 2,
-            "categories": ["super"]
+            "categories": [
+              "super"
+            ]
           }
         },
         {
@@ -2097,7 +2272,9 @@
           "selectionMode": {
             "kind": "pool",
             "selections": 3,
-            "categories": ["sensitive"]
+            "categories": [
+              "sensitive"
+            ]
           }
         }
       ],
@@ -2109,7 +2286,11 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["super", "sensitive", "healer"]
+          "categories": [
+            "super",
+            "sensitive",
+            "healer"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -2132,18 +2313,45 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 15, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 15,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ],
     "classAbilities": [
       {
         "name": "Supernatural Senses",
         "description": "Sense supernatural beings within 60 feet (18.3 m) +5 feet (1.5 m) per level — no I.S.P. cost; alerts when a supernatural creature enters or leaves range (does not pinpoint location). When observing an individual supernatural creature, detect its true nature at 30% +5% per level; Alter Aura and Nightbane Facade reduce this chance by 30% (p. 119).",
-        "percentileProfile": { "basePercent": 30, "perLevelPercent": 5 }
+        "percentileProfile": {
+          "basePercent": 30,
+          "perLevelPercent": 5
+        }
       },
       {
         "name": "Master Psionic Program",
@@ -2175,16 +2383,39 @@
     "id": "occ_kinetic_pcc",
     "name": "'Kinetic P.C.C.",
     "description": "Teens and young adults whose psychokinetic gifts erupted violently — many were hunted, imprisoned, or killed by the PAB and Pandora Project before Dark Day. The invasion awakened thousands more. Spook Squad recruitment forces a bitter choice between former captors and fighting the Ba'al alone; many join, while others band with psychics, Nightbane factions, militias, or operate solo.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 120 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 121 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 122 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 120
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 121
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 122
+      }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "major_psionic", "civilian", "bts_pcc"],
-    "attributeRequirements": { "me": 12 },
+    "tags": [
+      "psychic",
+      "major_psionic",
+      "civilian",
+      "bts_pcc"
+    ],
+    "attributeRequirements": {
+      "me": 12
+    },
     "packageNotes": [
       "Major psychokinetic power: select one specialization at creation — Electrokinesis, Hydrokinesis, Pyrokinesis, or Telekinesis (pp. 120–121).",
       "Other psionics: three Physical powers at 1st level; one Physical or Healing power per additional level (p. 121).",
@@ -2206,66 +2437,178 @@
       }
     },
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_math_basic", "bonusPercent": 5 },
-      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 5
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "Two Domestic skills of choice"
       },
-      { "skillId": "skill_automobile", "bonusPercent": 15 },
+      {
+        "skillId": "skill_automobile",
+        "bonusPercent": 15
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedSkillTraits": ["work_education_related"],
+        "allowedSkillTraits": [
+          "work_education_related"
+        ],
         "label": "Two background skills of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 7,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_first_aid", "skill_paramedic"],
+          "exceptions": [
+            "skill_first_aid",
+            "skill_paramedic"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 3 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 3
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
@@ -2280,7 +2623,9 @@
           "selectionMode": {
             "kind": "single_category",
             "selections": 3,
-            "categories": ["physical"]
+            "categories": [
+              "physical"
+            ]
           }
         }
       ],
@@ -2292,7 +2637,10 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["physical", "healer"]
+          "categories": [
+            "physical",
+            "healer"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -2426,25 +2774,62 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 4, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 14, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 4,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 14,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_natural_genius_pcc",
     "name": "Natural & Genius P.C.C.",
     "description": "Latent psychics who unconsciously channel energy into mundane excellence — Olympic-tier athletes, master hackers, and effortless savants overlooked in the psychic arms race. Many now serve Spook Squad, the Seekers, or corporations; their gifts make them quicker to spot plots, subterfuge, and the supernatural.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 122 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 123 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 124 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 122
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 123
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 124
+      }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "minor_psionic", "civilian", "bts_pcc"],
+    "tags": [
+      "psychic",
+      "minor_psionic",
+      "civilian",
+      "bts_pcc"
+    ],
     "packageNotes": [
       "No attribute requirements — all attributes +1 at creation (3D6+1 each; roll extra 1D6 if total 16+ before bonuses) (p. 123).",
       "Subconscious psionics: Mind Block and Total Recall (p. 122).",
@@ -2457,60 +2842,173 @@
       "Open related-skill access — GM approves unlikely skills by background (p. 124)."
     ],
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_math_basic", "bonusPercent": 25 },
-      { "skillId": "skill_computer_operation", "bonusPercent": 15 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 25
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedCategories": ["Technical", "Science"],
+        "allowedCategories": [
+          "Technical",
+          "Science"
+        ],
         "label": "Two Technical or Science skills of choice"
       },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Electrical", "Mechanical", "Medical"],
+        "allowedCategories": [
+          "Electrical",
+          "Mechanical",
+          "Medical"
+        ],
         "label": "Two Electrical, Mechanical, or Medical skills of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 12,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 3, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 3,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
@@ -2523,7 +3021,10 @@
       "baseFormula": "3D6+ME",
       "perLevelFormula": "1D4",
       "savingThrowClass": "minor",
-      "grantedAbilityIds": ["psionic_mind_block", "psionic_total_recall"],
+      "grantedAbilityIds": [
+        "psionic_mind_block",
+        "psionic_total_recall"
+      ],
       "progressionRoadmap": []
     },
     "classAbilities": [
@@ -2554,7 +3055,10 @@
       {
         "name": "Specialty: Electrical Genius (16 P.P.E.)",
         "description": "Intuitive electronics sense — Basic Electronics at 65% +5% per level (not equivalent to full engineering training). One-time +15% to all Electrical skills learned through formal education; half penalties on extremely advanced or alien technology. Electrical Hot-wiring 66% +2% per level (most systems; GM may apply −5% to −25% under stress, speed, or alien complexity) (pp. 122–123).",
-        "percentileProfile": { "basePercent": 65, "perLevelPercent": 5 }
+        "percentileProfile": {
+          "basePercent": 65,
+          "perLevelPercent": 5
+        }
       },
       {
         "name": "Specialty: Computer Genius (15 P.P.E.)",
@@ -2567,22 +3071,34 @@
       {
         "name": "Specialty: Weapons Expert (16 P.P.E.)",
         "description": "Three bonus Weapon Proficiencies beyond O.C.C. picks. Make/modify any weapon with a W.P. at 72% +2%/level (materials/tools required; GM penalties −5% to −65% by complexity). Maintain weapons and recognize quality at 50% +5%/level. +1 parry with ancient weapons and +1 strike with ranged weapons (W.P. only). Select one favorite weapon (specific make/model) for +2 strike and +2 parry when applicable (pp. 123–124).",
-        "percentileProfile": { "basePercent": 72, "perLevelPercent": 2 }
+        "percentileProfile": {
+          "basePercent": 72,
+          "perLevelPercent": 2
+        }
       },
       {
         "name": "Specialty: Bio-Feedback — Death Trance (20 P.P.E.)",
         "description": "Death Trance cancels drug/poison effects temporarily; maintain 24 hours per level while antidote sought or self-cleansing attempted. Base 88% +2% per level (p. 123).",
-        "percentileProfile": { "basePercent": 88, "perLevelPercent": 2 }
+        "percentileProfile": {
+          "basePercent": 88,
+          "perLevelPercent": 2
+        }
       },
       {
         "name": "Specialty: Bio-Feedback — Cleansing Trance",
         "description": "While in trance, 24-hour meditative cleansing at 66% +2%/level restores 1D6 S.D.C. or H.P. per hour and flushes/negates poisons, drugs, and toxins (p. 123).",
-        "percentileProfile": { "basePercent": 66, "perLevelPercent": 2 }
+        "percentileProfile": {
+          "basePercent": 66,
+          "perLevelPercent": 2
+        }
       },
       {
         "name": "Specialty: Bio-Feedback — Positive Chi Channel",
         "description": "Channel positive energy at 70% +2%/level: energy attacks (heat, fire, electricity, lasers) and gases/poisons/drugs do half damage/duration; +1 save vs magic, +2 vs psionics, +4 vs possession, +4 vs dream manipulation/combat, +5 vs horror factor. Benefits last 20 minutes per hour of prior positive-chi meditation (p. 123).",
-        "percentileProfile": { "basePercent": 70, "perLevelPercent": 2 }
+        "percentileProfile": {
+          "basePercent": 70,
+          "perLevelPercent": 2
+        }
       },
       {
         "name": "Specialty: Exceptional Physical Prowess (18 P.P.E.)",
@@ -2625,30 +3141,87 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 3, "quantity": 3, "poolSource": "secondary" },
-      { "levelUnlocked": 6, "quantity": 3, "poolSource": "secondary" },
-      { "levelUnlocked": 10, "quantity": 3, "poolSource": "secondary" },
-      { "levelUnlocked": 14, "quantity": 3, "poolSource": "secondary" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 3,
+        "quantity": 3,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 3,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 3,
+        "poolSource": "secondary"
+      },
+      {
+        "levelUnlocked": 14,
+        "quantity": 3,
+        "poolSource": "secondary"
+      }
     ]
   },
   {
     "id": "occ_psi_mechanic_pcc",
     "name": "Psi-Mechanic P.C.C.",
     "description": "Psychics who imprint powers into pseudo-scientific gadgets — machines useless to most people unless another psychic channels I.S.P. through them. A centerpiece of Pandora Project research at Detroit Metallurgical Laboratories until Dark Day scattered survivors and their impossible devices.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 124 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 125 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 124
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 125
+      }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "major_psionic", "civilian", "bts_pcc", "pandora"],
-    "attributeRequirements": { "me": 10, "iq": 10 },
+    "tags": [
+      "psychic",
+      "major_psionic",
+      "civilian",
+      "bts_pcc",
+      "pandora"
+    ],
+    "attributeRequirements": {
+      "me": 10,
+      "iq": 10
+    },
     "packageNotes": [
       "Device powers: six picks at 1st level — two each from Physical, Sensitive, and Healing; usable only through self-built psi-devices (pp. 124–125).",
       "Independent psionics (no device): Telemechanics, Total Recall, Object Read (p. 125).",
@@ -2661,60 +3234,173 @@
       "Starting gear includes psi-devices equal to invested P.P.E. plus workshop tools (p. 125)."
     ],
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_math_basic", "bonusPercent": 20 },
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_computer_operation", "bonusPercent": 20 },
+      {
+        "skillId": "skill_math_basic",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 3,
         "bonusPercent": 15,
-        "allowedCategories": ["Mechanical", "Electrical", "Technical"],
+        "allowedCategories": [
+          "Mechanical",
+          "Electrical",
+          "Technical"
+        ],
         "label": "Three Mechanical, Electrical, or Technical skills of choice"
       },
       {
         "choiceCount": 2,
         "bonusPercent": 15,
-        "allowedCategories": ["Science", "Domestic"],
+        "allowedCategories": [
+          "Science",
+          "Domestic"
+        ],
         "label": "Two Science or Domestic skills of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Espionage", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Medical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Military", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
@@ -2738,7 +3424,11 @@
           "label": "1st level device-imprinted psionics (two per category)",
           "selectionMode": {
             "kind": "per_category",
-            "buckets": { "physical": 2, "sensitive": 2, "healer": 2 }
+            "buckets": {
+              "physical": 2,
+              "sensitive": 2,
+              "healer": 2
+            }
           }
         },
         {
@@ -2747,7 +3437,9 @@
           "selectionMode": {
             "kind": "pool",
             "selections": 1,
-            "categories": ["super"]
+            "categories": [
+              "super"
+            ]
           }
         }
       ],
@@ -2759,7 +3451,11 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 2,
-          "categories": ["physical", "sensitive", "healer"]
+          "categories": [
+            "physical",
+            "sensitive",
+            "healer"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -2780,7 +3476,10 @@
       {
         "name": "Operating Another Psi-Mechanic's Device",
         "description": "Psi-Mechanic: 20% base chance to use a found device without creator instructions. Other psychics: 12%. Under careful instruction from the creator, any psychic learns at 55%. Object Read adds +5%; Telemechanics adds +10% (+15% if both used) (p. 125).",
-        "percentileProfile": { "basePercent": 20, "perLevelPercent": 0 }
+        "percentileProfile": {
+          "basePercent": 20,
+          "perLevelPercent": 0
+        }
       },
       {
         "name": "P.P.E. for Device Construction",
@@ -2830,26 +3529,65 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 7, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 12, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 7,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 12,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
     "id": "occ_arcane_detective",
     "name": "Arcane Detective O.C.C.",
     "description": "Mystically trained investigators — often tied to the Aurora Investigation Agency or the Seekers — who blend detective tradecraft with investigative spells. Fewer than a hundred existed before the war; Spook Squad and allied groups now train more as supernatural crime and Nightlord plots draw them into the resistance.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 126 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 127 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 126
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 127
+      }
     ],
     "occType": "magic_user",
-    "tags": ["occult", "investigator", "arcane", "bts_occ"],
-    "attributeRequirements": { "iq": 11 },
+    "tags": [
+      "occult",
+      "investigator",
+      "arcane",
+      "bts_occ"
+    ],
+    "attributeRequirements": {
+      "iq": 11
+    },
     "packageNotes": [
       "Initial spells: See Aura, See the Invisible, Sense Evil, Sense Magic, Detect Concealment, Astral Projection — plus 1D4+2 more from levels 1–4 (9–12 total) (p. 126).",
       "Each additional level: one new spell equal to character level (p. 126).",
@@ -2863,52 +3601,127 @@
       "Informant network built during play with GM (p. 126)."
     ],
     "staticBonuses": {
-      "combat": { "initiative": 1, "perception": 2 },
+      "combat": {
+        "initiative": 1,
+        "perception": 2
+      },
       "saves": {
         "save_horror": 4,
         "save_possession": 2,
         "save_dream": 1
       },
       "levelGatedSaves": {
-        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+        "save_magic": {
+          "3": 1,
+          "6": 1,
+          "9": 1,
+          "12": 1
+        }
       }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_literacy", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_streetwise", "bonusPercent": 16 },
-      { "skillId": "skill_intelligence", "bonusPercent": 10 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_literacy",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_streetwise",
+        "bonusPercent": 16
+      },
+      {
+        "skillId": "skill_intelligence",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_basic_electronics",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 0
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedSkillIds": ["skill_lore_demons_and_monsters", "skill_lore_geomancy"],
+        "allowedSkillIds": [
+          "skill_lore_demons_and_monsters",
+          "skill_lore_geomancy"
+        ],
         "label": "Lore: Demon and Monster OR Geomancy"
       },
-      { "skillId": "skill_pick_locks", "bonusPercent": 10 },
-      { "skillId": "skill_surveillance_systems", "bonusPercent": 15 },
-      { "skillId": "skill_automobile", "bonusPercent": 10 },
+      {
+        "skillId": "skill_pick_locks",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_surveillance_systems",
+        "bonusPercent": 15
+      },
+      {
+        "skillId": "skill_automobile",
+        "bonusPercent": 10
+      },
       {
         "choiceCount": 1,
         "bonusPercent": 0,
-        "allowedCategories": ["Weapon Proficiencies"],
+        "allowedCategories": [
+          "Weapon Proficiencies"
+        ],
         "label": "One W.P. of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 8,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_first_aid", "skill_criminal_sciences_and_forensics"],
+          "exceptions": [
+            "skill_first_aid",
+            "skill_criminal_sciences_and_forensics"
+          ],
           "bonusPercent": 5
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Physical",
           "accessType": "any",
@@ -2918,33 +3731,81 @@
             "skill_climbing": 5
           }
         },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 2
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 2,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
     "ppeEngine": {
       "baseFormula": "1D4*10+PE",
       "perLevelFormula": "2D6",
-      "magicSchools": ["wizard"],
+      "magicSchools": [
+        "wizard"
+      ],
       "spellAcquisition": "open",
       "spellStrengthProgression": {
         "1": 12,
@@ -2964,22 +3825,108 @@
         {
           "level": 1,
           "selectionsGained": 3,
-          "categoryRestrictions": ["Level 4 Spells Only"]
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
         },
-        { "level": 2, "selectionsGained": 1, "categoryRestrictions": ["Level 2 Spells Only"] },
-        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Level 3 Spells Only"] },
-        { "level": 4, "selectionsGained": 1, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 5, "selectionsGained": 1, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Level 6 Spells Only"] },
-        { "level": 7, "selectionsGained": 1, "categoryRestrictions": ["Level 7 Spells Only"] },
-        { "level": 8, "selectionsGained": 1, "categoryRestrictions": ["Level 8 Spells Only"] },
-        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Level 9 Spells Only"] },
-        { "level": 10, "selectionsGained": 1, "categoryRestrictions": ["Level 10 Spells Only"] },
-        { "level": 11, "selectionsGained": 1, "categoryRestrictions": ["Level 11 Spells Only"] },
-        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Level 12 Spells Only"] },
-        { "level": 13, "selectionsGained": 1, "categoryRestrictions": ["Level 13 Spells Only"] },
-        { "level": 14, "selectionsGained": 1, "categoryRestrictions": ["Level 14 Spells Only"] },
-        { "level": 15, "selectionsGained": 1, "categoryRestrictions": ["Level 15 Spells Only"] }
+        {
+          "level": 2,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Level 15 Spells Only"
+          ]
+        }
       ]
     },
     "classAbilities": [
@@ -3056,11 +4003,31 @@
       "startingSpellLevelCap": 4
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 2, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 14, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 2,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 14,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ]
   },
   {
@@ -3166,21 +4133,94 @@
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "only", "exceptions": ["skill_detect_concealment"], "bonusPercent": 5 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Medical", "accessType": "only", "exceptions": ["skill_holistic_medicine"], "bonusPercent": 10 },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot", "accessType": "only", "exceptions": ["skill_horsemanship", "skill_boats_paddle_types"], "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "only", "exceptions": ["skill_navigation"], "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Communications",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "only",
+          "exceptions": [
+            "skill_detect_concealment"
+          ],
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Medical",
+          "accessType": "only",
+          "exceptions": [
+            "skill_holistic_medicine"
+          ],
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "only",
+          "exceptions": [
+            "skill_horsemanship",
+            "skill_boats_paddle_types"
+          ],
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "only",
+          "exceptions": [
+            "skill_navigation"
+          ],
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
     "secondarySkills": {
@@ -3188,7 +4228,9 @@
       "forbiddenCategories": []
     },
     "wpRules": {
-      "coreWps": ["wp_blunt"],
+      "coreWps": [
+        "wp_blunt"
+      ],
       "forbiddenWps": []
     },
     "handToHandRules": {
@@ -3206,7 +4248,9 @@
           "selectionMode": {
             "kind": "pool",
             "selections": 8,
-            "categories": ["sensitive"]
+            "categories": [
+              "sensitive"
+            ]
           }
         }
       ],
@@ -3218,7 +4262,12 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["sensitive", "physical", "healer", "super"]
+          "categories": [
+            "sensitive",
+            "physical",
+            "healer",
+            "super"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -3236,10 +4285,26 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ],
     "classAbilities": [
       {
@@ -3397,7 +4462,11 @@
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 2,
           "alignmentRestrictions": {
-            "allowed": ["Miscreant", "Aberrant", "Diabolic"]
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
           }
         }
       ]
@@ -3644,7 +4713,12 @@
     },
     "staticBonuses": {
       "levelGatedSaves": {
-        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+        "save_magic": {
+          "3": 1,
+          "6": 1,
+          "9": 1,
+          "12": 1
+        }
       }
     },
     "progression": {
@@ -4101,8 +5175,19 @@
     },
     "staticBonuses": {
       "levelGatedSaves": {
-        "save_dream_manipulation": { "1": 2, "4": 1, "7": 1, "10": 1, "13": 1 },
-        "save_magic": { "3": 1, "6": 1, "9": 1, "12": 1 }
+        "save_dream_manipulation": {
+          "1": 2,
+          "4": 1,
+          "7": 1,
+          "10": 1,
+          "13": 1
+        },
+        "save_magic": {
+          "3": 1,
+          "6": 1,
+          "9": 1,
+          "12": 1
+        }
       }
     },
     "startingEquipment": {
@@ -4170,16 +5255,38 @@
     "id": "occ_astral_lord_pcc",
     "name": "Astral Lord P.C.C.",
     "description": "Humans with an innate affinity for the Astral Plane — enter at will, navigate all three regions, and reshape ectoplasm into personal astral domains. Most awaken in childhood; the First Foray is deadly. Long residence in astral space slows aging; some lords are centuries old yet appear middle-aged. After Dark Day, many oppose Nightlords or exploit their gifts for greed or crime.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 50 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 51 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 52 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 50
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 51
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 52
+      }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "astral", "bts_pcc"],
-    "attributeRequirements": { "me": 13 },
+    "tags": [
+      "psychic",
+      "astral",
+      "bts_pcc"
+    ],
+    "attributeRequirements": {
+      "me": 13
+    },
     "packageNotes": [
       "M.E. 13 or higher required (p. 52).",
       "P.C.C. skills: Native language (98%), Lore: Astral (+20%), two Technical (+10%), one Pilot (+10%), two Domestic (+10%); Hand to Hand purchased from Related skills — Basic 1 slot, Expert 2, Martial Arts or Assassin 3 (evil only) (pp. 51–52).",
@@ -4192,74 +5299,179 @@
       "Background should explain skill picks — teens/early adults rarely have higher education; archaic characters avoid high-tech skills (p. 52)."
     ],
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_lore_astral", "bonusPercent": 20 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_lore_astral",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 0
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Technical"],
+        "allowedCategories": [
+          "Technical"
+        ],
         "label": "Two Technical skills of choice"
       },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedCategories": ["Pilot"],
+        "allowedCategories": [
+          "Pilot"
+        ],
         "label": "One piloting/driving/riding skill of choice"
       },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "Two Domestic skills of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_wilderness_survival"],
+          "exceptions": [
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "any",
           "bonusPercent": 0,
-          "skillSpecificOverrides": { "skill_first_aid": 5 }
+          "skillSpecificOverrides": {
+            "skill_first_aid": 5
+          }
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
@@ -4272,14 +5484,19 @@
       "baseFormula": "1D4*10+ME",
       "perLevelFormula": "1D4",
       "savingThrowClass": "major",
-      "grantedAbilityIds": ["psionic_astral_transference"],
+      "grantedAbilityIds": [
+        "psionic_astral_transference"
+      ],
       "creationSelectionPlan": [
         {
           "selectionsGained": 4,
           "label": "1st level — two Sensitive and two Physical psionics",
           "selectionMode": {
             "kind": "per_category",
-            "buckets": { "sensitive": 2, "physical": 2 }
+            "buckets": {
+              "sensitive": 2,
+              "physical": 2
+            }
           }
         }
       ],
@@ -4291,7 +5508,10 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["sensitive", "physical"]
+          "categories": [
+            "sensitive",
+            "physical"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -4312,11 +5532,31 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ],
     "classAbilities": [
       {
@@ -4369,16 +5609,39 @@
     "id": "occ_astral_mage",
     "name": "Astral Mage O.C.C.",
     "description": "Sorcerers mystically linked to the Astral Plane — magic and innate psionics drawn from the Outer Layer's ectoplasmic energy. Many sense a living \"Great Spirit\" permeating the Plane. Domains tend to be smaller than psychic Astral Lords because spellcasting competes for P.P.E. After Dark Day they treat Nightlords as a universal threat and defend astral politics, Earth, and allied realms.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 52 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 53 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 54 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 52
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 53
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 54
+      }
     ],
     "occType": "magic_user",
-    "tags": ["occult", "astral", "magic_user", "bts_occ"],
-    "attributeRequirements": { "iq": 10 },
+    "tags": [
+      "occult",
+      "astral",
+      "magic_user",
+      "bts_occ"
+    ],
+    "attributeRequirements": {
+      "iq": 10
+    },
     "packageNotes": [
       "I.Q. 10 or higher; high M.E. desirable (p. 54).",
       "O.C.C. skills: Native language (98%), Lore: Astral (+20%), two Technical (+10%), one Electrical or Mechanical (+10%), one Pilot (+10%), two Domestic (+10%); Hand to Hand from Related — Basic 1, Expert 2, Martial Arts or Assassin 3 (evil) (p. 54).",
@@ -4391,99 +5654,301 @@
       "Finances: disinterested in Earth — 1D6×100 or less; materially active — 1D4×1000 cash and 2D4×1000 possessions (G.M. adjusts) (p. 54)."
     ],
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_lore_astral", "bonusPercent": 20 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_lore_astral",
+        "bonusPercent": 20
+      },
+      {
+        "skillId": "skill_bicycling",
+        "bonusPercent": 10
+      },
+      {
+        "skillId": "skill_computer_operation",
+        "bonusPercent": 0
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Technical"],
+        "allowedCategories": [
+          "Technical"
+        ],
         "label": "Two Technical skills of choice"
       },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedCategories": ["Electrical", "Mechanical"],
+        "allowedCategories": [
+          "Electrical",
+          "Mechanical"
+        ],
         "label": "One Electrical or Mechanical skill of choice"
       },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedCategories": ["Pilot"],
+        "allowedCategories": [
+          "Pilot"
+        ],
         "label": "One piloting skill of choice"
       },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "Two Domestic skills of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 11,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Espionage", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Espionage",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "any",
           "bonusPercent": 0,
-          "skillSpecificOverrides": { "skill_first_aid": 5 }
+          "skillSpecificOverrides": {
+            "skill_first_aid": 5
+          }
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 0 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 0
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
     "ppeEngine": {
       "baseFormula": "3D6*10+PE",
       "perLevelFormula": "2D4",
-      "magicSchools": ["wizard"],
+      "magicSchools": [
+        "wizard"
+      ],
       "spellAcquisition": "roadmap_only",
       "progressionRoadmap": [
-        { "level": 1, "selectionsGained": 4, "categoryRestrictions": ["Level 3 Spells Only"] },
-        { "level": 2, "selectionsGained": 2, "categoryRestrictions": ["Level 2 Spells Only"] },
-        { "level": 3, "selectionsGained": 2, "categoryRestrictions": ["Level 3 Spells Only"] },
-        { "level": 4, "selectionsGained": 2, "categoryRestrictions": ["Level 4 Spells Only"] },
-        { "level": 5, "selectionsGained": 2, "categoryRestrictions": ["Level 5 Spells Only"] },
-        { "level": 6, "selectionsGained": 2, "categoryRestrictions": ["Level 6 Spells Only"] },
-        { "level": 7, "selectionsGained": 2, "categoryRestrictions": ["Level 7 Spells Only"] },
-        { "level": 8, "selectionsGained": 2, "categoryRestrictions": ["Level 8 Spells Only"] },
-        { "level": 9, "selectionsGained": 2, "categoryRestrictions": ["Level 9 Spells Only"] },
-        { "level": 10, "selectionsGained": 2, "categoryRestrictions": ["Level 10 Spells Only"] },
-        { "level": 11, "selectionsGained": 2, "categoryRestrictions": ["Level 11 Spells Only"] },
-        { "level": 12, "selectionsGained": 2, "categoryRestrictions": ["Level 12 Spells Only"] },
-        { "level": 13, "selectionsGained": 2, "categoryRestrictions": ["Level 13 Spells Only"] },
-        { "level": 14, "selectionsGained": 2, "categoryRestrictions": ["Level 14 Spells Only"] },
-        { "level": 15, "selectionsGained": 2, "categoryRestrictions": ["Level 15 Spells Only"] }
+        {
+          "level": 1,
+          "selectionsGained": 4,
+          "categoryRestrictions": [
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 2,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 2 Spells Only"
+          ]
+        },
+        {
+          "level": 3,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 3 Spells Only"
+          ]
+        },
+        {
+          "level": 4,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 4 Spells Only"
+          ]
+        },
+        {
+          "level": 5,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 5 Spells Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 6 Spells Only"
+          ]
+        },
+        {
+          "level": 7,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 7 Spells Only"
+          ]
+        },
+        {
+          "level": 8,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 8 Spells Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 9 Spells Only"
+          ]
+        },
+        {
+          "level": 10,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 10 Spells Only"
+          ]
+        },
+        {
+          "level": 11,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 11 Spells Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 12 Spells Only"
+          ]
+        },
+        {
+          "level": 13,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 13 Spells Only"
+          ]
+        },
+        {
+          "level": 14,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 14 Spells Only"
+          ]
+        },
+        {
+          "level": 15,
+          "selectionsGained": 2,
+          "categoryRestrictions": [
+            "Level 15 Spells Only"
+          ]
+        }
       ]
     },
     "ispEngine": {
@@ -4515,11 +5980,31 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 6, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 10, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 6,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 10,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ],
     "classAbilities": [
       {
@@ -4564,16 +6049,38 @@
     "id": "occ_dream_maker_pcc",
     "name": "Dream Maker P.C.C.",
     "description": "Psychics who reshape the Dreamstream — enter asleep or bodily from 2nd level, manipulate dreams, create dream objects, open rifts between worlds, and Dreamkill. Many abandon Earth for personal dream domains; madness is an occupational hazard. Since Dark Day, many oppose Nightlord invasion of the Dreamstream.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 94 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 95 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 96 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 94
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 95
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 96
+      }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "dreamstream", "bts_pcc"],
-    "attributeRequirements": { "me": 14 },
+    "tags": [
+      "psychic",
+      "dreamstream",
+      "bts_pcc"
+    ],
+    "attributeRequirements": {
+      "me": 14
+    },
     "packageNotes": [
       "M.E. 14 or higher; humans only (p. 96).",
       "Dream travel: Dreamdance (Minor) at 1st; Dreamdance (Superior) from 2nd level — innate, no I.S.P. (pp. 94–95).",
@@ -4587,72 +6094,177 @@
     ],
     "staticBonuses": {
       "levelGatedSaves": {
-        "save_dream_manipulation": { "1": 2, "2": 1, "4": 1, "7": 1, "10": 1, "13": 1, "15": 1 }
+        "save_dream_manipulation": {
+          "1": 2,
+          "2": 1,
+          "4": 1,
+          "7": 1,
+          "10": 1,
+          "13": 1,
+          "15": 1
+        }
       }
     },
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_lore_dreamstream", "bonusPercent": 25 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_lore_dreamstream",
+        "bonusPercent": 25
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Technical"],
+        "allowedCategories": [
+          "Technical"
+        ],
         "label": "Two Technical skills of choice"
       },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "Two Domestic skills of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 10,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 10 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 10
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_wilderness_survival"],
+          "exceptions": [
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_first_aid", "skill_paramedic", "skill_holistic_medicine"],
+          "exceptions": [
+            "skill_first_aid",
+            "skill_paramedic",
+            "skill_holistic_medicine"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 5
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 5, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 5,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_none",
       "upgradePaths": [
-        { "targetSkillId": "hth_basic", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 2 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 3 },
+        {
+          "targetSkillId": "hth_basic",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 2
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 3
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 3,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
@@ -4660,7 +6272,9 @@
       "baseFormula": "ME*5+2D6",
       "perLevelFormula": "2D6",
       "savingThrowClass": "major",
-      "grantedAbilityIds": ["psionic_dreamdance_minor"],
+      "grantedAbilityIds": [
+        "psionic_dreamdance_minor"
+      ],
       "creationSelectionPlan": [
         {
           "selectionsGained": 2,
@@ -4668,15 +6282,41 @@
           "selectionMode": {
             "kind": "pool",
             "selections": 2,
-            "categories": ["sensitive"]
+            "categories": [
+              "sensitive"
+            ]
           }
         }
       ],
       "progressionRoadmap": [
-        { "level": 3, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] },
-        { "level": 6, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] },
-        { "level": 9, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] },
-        { "level": 12, "selectionsGained": 1, "categoryRestrictions": ["Sensitive Only"] }
+        {
+          "level": 3,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Sensitive Only"
+          ]
+        },
+        {
+          "level": 6,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Sensitive Only"
+          ]
+        },
+        {
+          "level": 9,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Sensitive Only"
+          ]
+        },
+        {
+          "level": 12,
+          "selectionsGained": 1,
+          "categoryRestrictions": [
+            "Sensitive Only"
+          ]
+        }
       ]
     },
     "startingEquipment": {
@@ -4695,11 +6335,31 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ],
     "classAbilities": [
       {
@@ -4760,15 +6420,33 @@
     "id": "occ_dream_dancer_pcc",
     "name": "Dream Dancer P.C.C.",
     "description": "Dreamstream explorers with Dreamdance travel, self-shaping, and strong resistance to dream manipulation — but without Dreamkill, dream domains, or rift windows. Wider psionic variety and lower insanity risk than Dream Makers; rivalry between the two groups is mostly social, not violent.",
-    "genresAvailable": ["nightbane"],
-    "gameSystems": ["nightbane"],
+    "genresAvailable": [
+      "nightbane"
+    ],
+    "gameSystems": [
+      "nightbane"
+    ],
     "sources": [
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 97 },
-      { "gameSystem": "nightbane", "reference": "Between the Shadows", "pageNumber": 99 }
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 97
+      },
+      {
+        "gameSystem": "nightbane",
+        "reference": "Between the Shadows",
+        "pageNumber": 99
+      }
     ],
     "occType": "psychic",
-    "tags": ["psychic", "dreamstream", "bts_pcc"],
-    "attributeRequirements": { "me": 12 },
+    "tags": [
+      "psychic",
+      "dreamstream",
+      "bts_pcc"
+    ],
+    "attributeRequirements": {
+      "me": 12
+    },
     "packageNotes": [
       "M.E. 12 or higher (p. 99).",
       "Dream travel: Dreamdance (Minor) and (Superior) innate; indefinite duration; may exit at start point or within 100 ft (30.5 m) of a sleeper whose Dream Pool was visited (pp. 97–99).",
@@ -4781,77 +6459,180 @@
     ],
     "staticBonuses": {
       "levelGatedSaves": {
-        "save_dream_manipulation": { "1": 2, "3": 1, "6": 1, "9": 1, "12": 1, "15": 1 }
+        "save_dream_manipulation": {
+          "1": 2,
+          "3": 1,
+          "6": 1,
+          "9": 1,
+          "12": 1,
+          "15": 1
+        }
       }
     },
     "supernaturalRuleOverrides": {
-      "leyLine": { "useGlobalDefault": true },
-      "meditation": { "useGlobalDefault": true },
-      "psychicApm": { "useGlobalDefault": true, "linkedToHandToHand": true }
+      "leyLine": {
+        "useGlobalDefault": true
+      },
+      "meditation": {
+        "useGlobalDefault": true
+      },
+      "psychicApm": {
+        "useGlobalDefault": true,
+        "linkedToHandToHand": true
+      }
     },
     "occSkillsCore": [
-      { "skillId": "skill_language", "bonusPercent": 0, "basePercent": 98 },
-      { "skillId": "skill_lore_dreamstream", "bonusPercent": 20 },
+      {
+        "skillId": "skill_language",
+        "bonusPercent": 0,
+        "basePercent": 98
+      },
+      {
+        "skillId": "skill_lore_dreamstream",
+        "bonusPercent": 20
+      },
       {
         "choiceCount": 2,
         "bonusPercent": 10,
-        "allowedCategories": ["Technical"],
+        "allowedCategories": [
+          "Technical"
+        ],
         "label": "Two Technical skills of choice"
       },
       {
         "choiceCount": 2,
         "bonusPercent": 5,
-        "allowedCategories": ["Domestic"],
+        "allowedCategories": [
+          "Domestic"
+        ],
         "label": "Two Domestic skills of choice"
       },
       {
         "choiceCount": 1,
         "bonusPercent": 10,
-        "allowedCategories": ["Rogue"],
+        "allowedCategories": [
+          "Rogue"
+        ],
         "label": "One Rogue skill of choice"
       }
     ],
     "occRelatedSkills": {
       "initialSlotsCount": 8,
       "categoryRules": [
-        { "categoryName": "Communications", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Domestic", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Electrical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Communications",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Domestic",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Electrical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Espionage",
           "accessType": "only",
-          "exceptions": ["skill_wilderness_survival"],
+          "exceptions": [
+            "skill_wilderness_survival"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Mechanical", "accessType": "any", "bonusPercent": 0 },
+        {
+          "categoryName": "Mechanical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
         {
           "categoryName": "Medical",
           "accessType": "only",
-          "exceptions": ["skill_first_aid", "skill_paramedic", "skill_holistic_medicine"],
+          "exceptions": [
+            "skill_first_aid",
+            "skill_paramedic",
+            "skill_holistic_medicine"
+          ],
           "bonusPercent": 0
         },
-        { "categoryName": "Military", "accessType": "none", "bonusPercent": 0 },
-        { "categoryName": "Physical", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Pilot Related", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Rogue", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Science", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Technical", "accessType": "any", "bonusPercent": 5 },
-        { "categoryName": "Weapon Proficiencies", "accessType": "any", "bonusPercent": 0 },
-        { "categoryName": "Wilderness", "accessType": "any", "bonusPercent": 5 }
+        {
+          "categoryName": "Military",
+          "accessType": "none",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Physical",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Pilot Related",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Rogue",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Science",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Technical",
+          "accessType": "any",
+          "bonusPercent": 5
+        },
+        {
+          "categoryName": "Weapon Proficiencies",
+          "accessType": "any",
+          "bonusPercent": 0
+        },
+        {
+          "categoryName": "Wilderness",
+          "accessType": "any",
+          "bonusPercent": 5
+        }
       ]
     },
-    "secondarySkills": { "initialSlotsCount": 6, "forbiddenCategories": [] },
-    "wpRules": { "coreWps": [], "forbiddenWps": [] },
+    "secondarySkills": {
+      "initialSlotsCount": 6,
+      "forbiddenCategories": []
+    },
+    "wpRules": {
+      "coreWps": [],
+      "forbiddenWps": []
+    },
     "handToHandRules": {
       "defaultSkillId": "hth_basic",
       "upgradePaths": [
-        { "targetSkillId": "hth_expert", "electiveSlotCost": 1 },
-        { "targetSkillId": "hth_martial_arts", "electiveSlotCost": 2 },
+        {
+          "targetSkillId": "hth_expert",
+          "electiveSlotCost": 1
+        },
+        {
+          "targetSkillId": "hth_martial_arts",
+          "electiveSlotCost": 2
+        },
         {
           "targetSkillId": "hth_assassin",
           "electiveSlotCost": 2,
-          "alignmentRestrictions": { "allowed": ["Miscreant", "Aberrant", "Diabolic"] }
+          "alignmentRestrictions": {
+            "allowed": [
+              "Miscreant",
+              "Aberrant",
+              "Diabolic"
+            ]
+          }
         }
       ]
     },
@@ -4859,14 +6640,21 @@
       "baseFormula": "ME*3+2D6",
       "perLevelFormula": "2D6",
       "savingThrowClass": "major",
-      "grantedAbilityIds": ["psionic_dreamdance_minor", "psionic_dreamdance_superior"],
+      "grantedAbilityIds": [
+        "psionic_dreamdance_minor",
+        "psionic_dreamdance_superior"
+      ],
       "creationSelectionPlan": [
         {
           "selectionsGained": 3,
           "label": "One Sensitive, one Healing, and one Physical psionic at 1st level",
           "selectionMode": {
             "kind": "per_category",
-            "buckets": { "sensitive": 1, "healer": 1, "physical": 1 }
+            "buckets": {
+              "sensitive": 1,
+              "healer": 1,
+              "physical": 1
+            }
           }
         }
       ],
@@ -4878,7 +6666,11 @@
         "selectionMode": {
           "kind": "pool",
           "selections": 1,
-          "categories": ["physical", "sensitive", "healer"]
+          "categories": [
+            "physical",
+            "sensitive",
+            "healer"
+          ]
         }
       },
       "progressionRoadmap": []
@@ -4898,11 +6690,31 @@
       "psychicGateBypassed": true
     },
     "levelUpSkillChoices": [
-      { "levelUnlocked": 3, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 5, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 8, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 11, "quantity": 1, "poolSource": "related" },
-      { "levelUnlocked": 13, "quantity": 1, "poolSource": "related" }
+      {
+        "levelUnlocked": 3,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 5,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 8,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 11,
+        "quantity": 1,
+        "poolSource": "related"
+      },
+      {
+        "levelUnlocked": 13,
+        "quantity": 1,
+        "poolSource": "related"
+      }
     ],
     "classAbilities": [
       {

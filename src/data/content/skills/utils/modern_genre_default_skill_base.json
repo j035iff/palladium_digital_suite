@@ -1,0 +1,27 @@
+{
+  "id": "modern_genre_default_skill_base",
+  "label": "Modern genre default skill base",
+  "description": "Shared chargen baseline for modern Palladium genres (Nightbane; Heroes Unlimited / Beyond the Supernatural / Dead Reign when those genres are wired). Language Native is a flat 98% proficiency; Literacy Native and Math: Basic contribute additive educational bonuses that stack with any O.C.C. bonusPercent for the same skill id.",
+  "appliesToDefaultSkillBase": "modern",
+  "skills": [
+    {
+      "skillId": "skill_language",
+      "role": "native_language",
+      "flatBasePercent": 98,
+      "bonusPercent": 0,
+      "notes": "Select native tongue via Literacy/Language specialization. Flat proficiency — not catalog Language base 50%."
+    },
+    {
+      "skillId": "skill_literacy",
+      "role": "native_literacy",
+      "bonusPercent": 30,
+      "notes": "Same written language as native Language. Maps to skill_literacy for prerequisite ownership (e.g. Computer Operation)."
+    },
+    {
+      "skillId": "skill_math_basic",
+      "role": "math_basic",
+      "bonusPercent": 10,
+      "notes": "Stacks with O.C.C. Math: Basic bonusPercent when the package also grants the skill."
+    }
+  ]
+}

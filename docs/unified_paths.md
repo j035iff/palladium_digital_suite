@@ -432,4 +432,5 @@ Track work here until promoted to the registry above.
 | 2026-07-05 | Vitality pending blocks projected from `ResolvedLedgerRow`; `refreshMorphusAttributeRowsInContext` avoids full bundle rebuild on Morphus ledger |
 | 2026-07-05 | Creation ledger resolution layer: `ResolvedLedgerRow` + projections; vitality rows from pending blocks; `buildCreationLedgerResolutionBundle` |
 | 2026-07-05 | Tooltip path consolidation: removed parallel `valueTooltip` / `valueTooltipOverride` bypasses; all live-ledger tooltips route through `formatLedgerTooltip` |
+| 2026-11-16 | Modern genre default skill base: `modernGenreSkillBase.ts` + `skills/utils/modern_genre_default_skill_base.json` + genre `defaultSkillBase: 'modern'` — Language 98% / Literacy +30% / Math +10% stack with OCC educational bonuses on one ownership + % path |
 | 2026-07-05 | Initial registry: Live Ledger full parity (Pillar 9), stat stack, pending dice, middleware, movement |

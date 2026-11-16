@@ -173,6 +173,30 @@ Every `skillId` in `occSkillsCore`, related picks, and prerequisites must resolv
 
 W.P. ids use `wp_*` / hand-to-hand ids use `hth_*` per existing catalog conventions. Ingest new styles via [`hth.md`](hth.md) and new W.P. rows via [`weapon_proficiencies.md`](weapon_proficiencies.md). XP floor transcription: [`xp_tables.md`](xp_tables.md).
 
+### O.C.C. fixed grants ↔ skill prerequisites (AND closure)
+
+Pass A fixed `occSkillsCore` grants must include **unconditional** skill prerequisites (`type: "skill"` without `condition`) of every fixed grant — including transitive AND edges. Prefer matching the dependent skill’s OCC `bonusPercent` for inserted prereqs unless a ruling says otherwise.
+
+| Do not auto-insert | Handle how |
+|--------------------|------------|
+| `skill_any_of` / OR groups | Flag ruling (which branch, or leave for related) |
+| Conditional skill prereqs (`condition` set) | Flag ruling |
+| `narrative_gate` / attribute / non-skill | Ignore for skill-list closure unless Joe rules otherwise |
+
+**Modern-genre Literacy:** Genres with `defaultSkillBase: 'modern'` (Nightbane) already own `skill_literacy` via the shared modern baseline — do **not** duplicate Literacy as an OCC grant solely to satisfy Computer Operation’s Literacy prereq. Only OCC-grant Literacy when the book gives a distinct literacy bonus (then **stack** with the modern +30%).
+
+### Modern genre default skill base (stacking)
+
+Registry: `skills/utils/modern_genre_default_skill_base.json` · runtime: `src/lib/modernGenreSkillBase.ts` · genre flag: `GENRE_MANIFEST[].defaultSkillBase`.
+
+| Skill | Baseline |
+|-------|----------|
+| Language Native | Flat **98%** (`skill_language`, specialization = native tongue) |
+| Literacy Native | **+30%** (`skill_literacy`, same language) |
+| Math: Basic | **+10%** (`skill_math_basic`) |
+
+If the OCC also grants Literacy or Math: Basic, **add** the OCC `bonusPercent` to this base (do not replace). Example: OCC Math +20% → total educational Math bonus **+30%** before psychic tier tax.
+
 ---
 
 ## Agent workflow (checklist)
@@ -206,6 +230,9 @@ No `audit:occs` script yet.
 
 | O.C.C. / topic | Issue | Ruling |
 |----------------|-------|--------|
+| Modern genre default base (Joe 2026-11) | Language / Literacy / Math | Nightbane (modern) PCs get Language Native 98%, Literacy +30%, Math Basic +10%; OCC Literacy/Math bonuses **stack**; A1 Computer Operation packages do not OCC-duplicate Literacy |
+| OCC prereq closure (Joe 2026-11) | Missing AND prereqs / OR / narrative | Encode unconditional AND gaps; ignore Lore/Roadwise `narrative_gate`; Arcane Detective gets Basic Electronics @ Surveillance +15% and Computer Operation @ **+0%** |
+| Pilot: Bicycling / Computer Operation (Joe 2026-11) | Fixed grants | Bicycling **+10%** on listed PC packages; Computer Operation **+0%** on Astral Lord/Mage, Arcane Detective, Psychic, all Nightbane skill packages (add only if missing — do not overwrite existing Computer bonuses) |
 | File layout | Genre vs book | **`<genre>/<book>.json`** — books grouped by `gameSystems` slug folder |
 | Shadow O.C.C. default | Race ingest pairing | **Same session by default** — add Shadow O.C.C. + `forcedOccId` + XP link unless batch says race-only |
 | Nightbane core skill packages | Secondary skills (p. 89) | **Shared rule for all four packages** — 6 at creation, +2 at levels 4 and 8; no O.C.C. % bonus; same category limits as Related Skills (engine: `isSecondarySkillAllowed` mirrors related access) |

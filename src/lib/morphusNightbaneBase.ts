@@ -63,6 +63,7 @@ function resolveSkillIdsForMorphusBase(
       prev.occSpecializationId,
       prev.creationOccSkillIds ?? [],
       prev.creationOccCoreVoucherPicks ?? {},
+      prev.creationGenreId,
     ),
     ...picked,
   ]

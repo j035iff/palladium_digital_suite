@@ -11,9 +11,9 @@ import { mapFilterCategoryToOccCategory } from './occCategoryRuleDisplay'
 import { normalizeCatalogSkillId } from '../data/library/skillsCatalogLoader'
 import {
   occCoreSkillSlotWeight,
-  occStartingOccSkillIds,
   occStartingRelatedSkillIds,
 } from './occCatalogEngine'
+import { listEffectiveOccCoreGrantSkillIds } from './modernGenreSkillBase'
 import {
   resolvePsychicGateBypassed,
 } from './creationPhases'
@@ -583,7 +583,11 @@ export function applyOccStartingSkillPicks(
   return {
     ...prev,
     creationOccCoreVoucherPicks: initialOccCoreVoucherPicks(prev, occ),
-    creationOccSkillIds: occStartingOccSkillIds(occ, specId),
+    creationOccSkillIds: listEffectiveOccCoreGrantSkillIds(
+      occ,
+      specId,
+      prev.creationGenreId,
+    ),
     creationRelatedSkillPicks: occStartingRelatedSkillIds(effective).map((id) => ({
       instanceId: id,
       skillId: id,

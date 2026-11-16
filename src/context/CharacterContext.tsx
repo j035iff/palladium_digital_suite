@@ -2909,6 +2909,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
             prev.occSpecializationId,
             prev.creationOccSkillIds ?? [],
             voucherPicks,
+            prev.creationGenreId,
           ),
         }
       })

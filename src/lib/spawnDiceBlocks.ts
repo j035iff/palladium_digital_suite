@@ -195,6 +195,7 @@ function resolveCreationSkillIds(character: Character, occ?: PalladiumOcc): stri
     character.occSpecializationId,
     character.creationOccSkillIds ?? [],
     character.creationOccCoreVoucherPicks ?? {},
+    character.creationGenreId,
   )
     .concat(flattenCreationSkillIds(getCreationRelatedPicks(character)))
     .concat(flattenCreationSkillIds(getCreationSecondaryPicks(character)))

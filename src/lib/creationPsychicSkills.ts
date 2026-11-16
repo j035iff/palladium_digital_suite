@@ -10,6 +10,7 @@ import {
 import { resolveRelatedVoucherSkillBonus } from './occRelatedSkillVouchers'
 import { occSkillSlotPolicy } from './occCatalogEngine'
 import { skillSlotMultiplierForTier } from './psychicGate'
+import { stackModernGenreEducationalBonus } from './modernGenreSkillBase'
 
 /** Major psychic: halve O.C.C. skill bonus % (floor fractions; psychic_gate.md §2). */
 export function occSkillBonusMultiplierForTier(tier: PsychicTier): number {
@@ -24,7 +25,7 @@ export function applyPsychicOccSkillBonusPercent(
   return Math.floor(rawBonus * occSkillBonusMultiplierForTier(tier))
 }
 
-/** Book O.C.C. bonus % before Major psychic halving. */
+/** Book O.C.C. bonus % before Major psychic halving (excludes modern-genre base). */
 export function rawOccSkillBonusPercent(
   occ: PalladiumOcc | undefined,
   skillId: string,
@@ -57,7 +58,29 @@ export function rawOccSkillBonusPercent(
   return 0
 }
 
-/** O.C.C. bonus % after psychic tier tax (creation preview + spawn handoff). */
+/**
+ * Educational % before psychic tax: O.C.C. (or related) bonus **plus** modern-genre
+ * Literacy/Math base when the genre uses that package (stacks; does not replace).
+ */
+export function rawEducationalSkillBonusPercent(
+  occ: PalladiumOcc | undefined,
+  skillId: string,
+  relatedIds: ReadonlySet<string>,
+  specializationId?: string | null,
+  relatedVoucherPicks?: Readonly<Record<string, unknown>>,
+  genreId?: string | null,
+): number {
+  const occRaw = rawOccSkillBonusPercent(
+    occ,
+    skillId,
+    relatedIds,
+    specializationId,
+    relatedVoucherPicks,
+  )
+  return stackModernGenreEducationalBonus(genreId, skillId, occRaw)
+}
+
+/** Educational bonus % after psychic tier tax (creation preview + spawn handoff). */
 export function resolveOccSkillBonusPercent(
   occ: PalladiumOcc | undefined,
   skillId: string,
@@ -65,13 +88,15 @@ export function resolveOccSkillBonusPercent(
   psychicTier: PsychicTier,
   specializationId?: string | null,
   relatedVoucherPicks?: Readonly<Record<string, unknown>>,
+  genreId?: string | null,
 ): number {
-  const raw = rawOccSkillBonusPercent(
+  const raw = rawEducationalSkillBonusPercent(
     occ,
     skillId,
     relatedIds,
     specializationId,
     relatedVoucherPicks,
+    genreId,
   )
   return applyPsychicOccSkillBonusPercent(raw, psychicTier)
 }

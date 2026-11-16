@@ -8,6 +8,8 @@ This document defines skill synergies, attribute scaling, prerequisites, and the
 
 **Tab 4 selection UX (Joe 2026-11):** Vocational focus, vouchers, related, and secondary fill **in parallel** (no progressive browse locks). Left **Selected skills** shows **names only** (no %). The skill library leaves already-selected rows in normal list order, labeled **Already selected**. When a skill lists prerequisites, each prerequisite **skill name** is colored **green** if the character already has it and **red** if missing (AND/OR groups color each referenced name individually; conjunction words stay neutral). Shared path: library browse + Selected skills (`buildSkillPrerequisiteDisplay` → `SkillPrerequisiteMeta`).
 
+**Modern genre default base (Joe 2026-11):** Nightbane (and future modern genres with `defaultSkillBase: 'modern'`) always own Language Native (98% flat), Literacy Native (+30%), and Math: Basic (+10%). OCC Literacy/Math `bonusPercent` **stacks** on this base. Literacy ownership from this baseline satisfies Computer Operation’s Literacy prereq without duplicating Literacy on the OCC row. Shared path: `modernGenreSkillBase.ts` + `skills/utils/modern_genre_default_skill_base.json`.
+
 ---
 
 ## 1. Skill acquisition & leveling
