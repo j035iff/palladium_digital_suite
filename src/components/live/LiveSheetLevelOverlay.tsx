@@ -99,9 +99,10 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
           <div className="flex items-start gap-8">
             <div className="flex shrink-0 flex-col items-center pt-1">
               {/*
-                Mockup 04: next (top) + floor (bottom) black inside the vial;
-                current XP white rides the fill line. At exact floor the white
-                current replaces the black min (same number).
+                Mockup 07: pale vial, dark fill from bottom with flat top;
+                black next (top) + black min (bottom) always; white current
+                rides just under the fill line when XP > floor (hidden at
+                exact floor — only min + next visible).
               */}
               <div
                 className={`relative h-64 w-16 overflow-hidden rounded-full border-2 ${trackBorder} ${
@@ -127,23 +128,21 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
                     {nextLabel}
                   </span>
                 ) : null}
-                <span
-                  className="absolute left-1/2 z-20 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums text-white"
-                  style={{
-                    bottom: model.atExactFloor
-                      ? '0.55rem'
-                      : `calc(${Math.min(88, Math.max(16, model.fillPct))}% - 0.55rem)`,
-                  }}
-                >
-                  {currentXpLabel}
-                </span>
-                {!model.atExactFloor ? (
+                {model.showCurrentXp ? (
                   <span
-                    className={`absolute bottom-2.5 left-1/2 z-10 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums ${axisText}`}
+                    className="absolute left-1/2 z-20 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums text-white"
+                    style={{
+                      bottom: `calc(${model.fillPct}% - 0.7rem)`,
+                    }}
                   >
-                    {floorLabel}
+                    {currentXpLabel}
                   </span>
                 ) : null}
+                <span
+                  className={`absolute bottom-2.5 left-1/2 z-10 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums ${axisText}`}
+                >
+                  {floorLabel}
+                </span>
               </div>
             </div>
 

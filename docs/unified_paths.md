@@ -367,6 +367,7 @@ Track work here until promoted to the registry above.
 |------|--------|
 | 2026-11-15 | Persistent Core Layer 1–2 refactor (Joe mockups): 3-line identity + rollover; auto-save; Join·Portal·Settings; Level vial overlay; Layer 2 Status Effects stub + SDC→HP→PPE/ISP vitals; Become Morphus far left |
 | 2026-11-15 | Header fidelity: centered identity+navy tabs under stack (no inter-rule); XP vial black min/next + white current; chart `N:`; vitals ` \| `; Level overlay title centered |
+| 2026-11-15 | XP vial fill (mockup 07): capsule band bottom-cap→top-band; exact floor = min+next only; current rides under flat fill line (`liveSheetXpOverlay` fillPct) |
 | 2026-11-14 | Dam display: `combineLikeDamageDiceDisplay` merges like NdM + flats (`1D6+3D6+7` → `4D6+7`; `1D8+3D6+9` stays) — Joe CS-21 |
 | 2026-11-14 | Repo docs embed Mechanical Integrity SoT chart image [`docs/ancient-weapon-ps-sn-damage-chart.png`](ancient-weapon-ps-sn-damage-chart.png); linked from combat_logic §2.1, this registry, and `stat_engine_spec` |
 | 2026-11-14 | Chart catalog rulings: Thrown Dart + Arrows/Bolts → neither; Rune/TW energy exception deferred |

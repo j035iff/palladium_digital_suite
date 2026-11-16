@@ -32,16 +32,28 @@ export type LiveSheetXpChartRow = {
   tone: 'passed' | 'current' | 'future'
 }
 
+/**
+ * Capsule geometry for the Level overlay vial (`h-64 w-16` → radius/height).
+ * Fill at exact floor covers only the bottom rounded cap; at next−1 the flat
+ * fill line sits just under the top cap (Joe mockup 07 states 1 + 5).
+ */
+export const XP_VIAL_BOTTOM_CAP_PCT = 12.5
+export const XP_VIAL_TOP_BAND_PCT = 87.5
+/** Visible rise once XP exceeds the level floor (mockup state 2). */
+export const XP_VIAL_ABOVE_FLOOR_MIN_PCT = 15.5
+
 export type LiveSheetXpVialModel = {
   level: number
   currentXp: number
   floorXp: number
   /** Next level threshold, or null at cap. */
   nextThresholdXp: number | null
-  /** 0..100 fill within current level span (edge cases match mockup). */
+  /** Visual fill % (capsule band; mockup states 1–5). */
   fillPct: number
-  /** At exact floor: show only bottom label inside the tip fill. */
+  /** XP at/below current-level floor — black min + next only, no white current. */
   atExactFloor: boolean
+  /** White current XP label rides just under the fill line when past floor. */
+  showCurrentXp: boolean
   chartRows: LiveSheetXpChartRow[]
   /** Book citation for the XP table when catalog has sources. */
   citation: string
@@ -103,8 +115,10 @@ export function formatLiveSheetXpTableCitation(
 }
 
 /**
- * Vial fill = progress from current-level floor → next-level floor.
- * Edge cases: exact floor → tiny tip fill; near max → almost full.
+ * Vial fill = capsule band from bottom rounded cap → just under top cap.
+ * Joe mockup 07: (1) exact floor → bottom cap only, no white current;
+ * (2) floor+1 → slight rise + white current under fill line;
+ * (3–4) mid progress; (5) next−1 → nearly full, current near black next.
  */
 export function buildLiveSheetXpVialModel(input: {
   level: number
@@ -117,14 +131,26 @@ export function buildLiveSheetXpVialModel(input: {
   const floorXp = progress.floorXp
   const nextThresholdXp = progress.nextThresholdXp
   const atExactFloor = input.totalXp <= floorXp
-  // Keep a visible tip at exact floor (mockup edge case 1).
-  let fillPct = progress.pct
+  const atNearMax =
+    nextThresholdXp != null && input.totalXp >= nextThresholdXp - 1
+
+  let fillPct: number
   if (nextThresholdXp == null) {
     fillPct = 100
   } else if (atExactFloor) {
-    fillPct = Math.max(fillPct, 4)
-  } else if (input.totalXp >= nextThresholdXp - 1) {
-    fillPct = Math.min(98, Math.max(fillPct, 96))
+    fillPct = XP_VIAL_BOTTOM_CAP_PCT
+  } else if (atNearMax) {
+    fillPct = XP_VIAL_TOP_BAND_PCT
+  } else {
+    // Map (floor, next−1] into [above-floor min, top band].
+    const spanToMax = Math.max(1, nextThresholdXp - 1 - floorXp)
+    const t = Math.min(
+      1,
+      Math.max(0, (input.totalXp - floorXp) / spanToMax),
+    )
+    fillPct =
+      XP_VIAL_ABOVE_FLOOR_MIN_PCT +
+      t * (XP_VIAL_TOP_BAND_PCT - XP_VIAL_ABOVE_FLOOR_MIN_PCT)
   }
 
   return {
@@ -132,8 +158,9 @@ export function buildLiveSheetXpVialModel(input: {
     currentXp: input.totalXp,
     floorXp,
     nextThresholdXp,
-    fillPct,
+    fillPct: Math.round(fillPct * 10) / 10,
     atExactFloor,
+    showCurrentXp: !atExactFloor,
     chartRows: buildLiveSheetXpChartRows(level, input.table),
     citation: formatLiveSheetXpTableCitation(input.catalog),
     tableName: input.catalog?.name?.trim() || 'Experience table',
