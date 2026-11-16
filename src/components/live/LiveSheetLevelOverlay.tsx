@@ -130,9 +130,12 @@ export function LiveSheetLevelOverlay({ morphusActive, onClose }: Props) {
                 ) : null}
                 {model.showCurrentXp ? (
                   <span
-                    className="absolute left-1/2 z-20 -translate-x-1/2 font-mono text-[11px] font-bold tabular-nums text-white"
+                    className="absolute left-1/2 z-20 -translate-x-1/2 font-mono text-[11px] font-bold leading-none tabular-nums text-white"
                     style={{
-                      bottom: `calc(${model.fillPct}% - 0.7rem)`,
+                      // Anchor the *top* of the glyph just under the flat fill
+                      // edge so the whole white current stays inside the blue
+                      // (Joe mockup 07 — never straddles the fill line).
+                      top: `calc(${100 - model.fillPct}% + 0.15rem)`,
                     }}
                   >
                     {currentXpLabel}
