@@ -16,6 +16,17 @@ import {
   getCreationRelatedPicks,
   getCreationSecondaryPicks,
 } from '../../lib/creationSkillPicks'
+import {
+  CHARACTER_NAME_PLACEHOLDER,
+  creationForgeDisplayName,
+  identityHeightFeetError,
+  identityHeightInchesError,
+  isLegacyCreationNameValue,
+  resolveIdentityDisplayProfile,
+} from '../../lib/characterIdentity'
+import { resolveActiveMorphusTraits } from '../../lib/morphusPassiveBridge'
+import { CreationForgeDetailsGrid } from './CreationForgeSettingCell'
+import type { CharacterIdentityFormFields } from '../../types'
 
 function tierLabel(t: string): string {
   if (t === 'none') return 'None'
@@ -87,6 +98,10 @@ export function CreationReviewFinalize({
     psychicTier,
     finalizeCharacter,
     setAlignment,
+    setCharacterName,
+    patchIdentityProfile,
+    activeForm,
+    supportsDualForm,
   } = useCharacter()
 
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -106,6 +121,27 @@ export function CreationReviewFinalize({
     () => assessTab9SpawnBlockers(forgeCtx),
     [forgeCtx],
   )
+
+  const morphusActive = supportsDualForm && activeForm === 'morphus'
+  const formKey = morphusActive ? 'morphus' : 'primary'
+  const morphusTraits = useMemo(
+    () => resolveActiveMorphusTraits(character),
+    [character],
+  )
+  const displayProfile = useMemo(
+    () =>
+      resolveIdentityDisplayProfile(
+        character.identityProfile,
+        formKey,
+        morphusTraits,
+      ),
+    [character.identityProfile, formKey, morphusTraits],
+  )
+  const heightFeetError = identityHeightFeetError(displayProfile.heightFeet)
+  const heightInchesError = identityHeightInchesError(displayProfile.heightInches)
+  const displayName = creationForgeDisplayName(character.name)
+  const patch = (fields: Partial<CharacterIdentityFormFields>) =>
+    patchIdentityProfile(fields)
 
   const currentAlignment = effectiveConfiguratorAlignment(character.primary.alignment)
 
@@ -127,9 +163,44 @@ export function CreationReviewFinalize({
   return (
     <section aria-labelledby="forge-tab-page-heading">
       <p className="mb-4 max-w-3xl text-sm leading-snug text-slate-600">
-        Confirm your build summary, choose alignment, then spawn to lock the record.
-        All physical dice must already be entered on the Roll Pending and Traits tabs.
+        Confirm your build summary, fill character details, choose alignment, then spawn
+        to lock the record. All physical dice must already be entered on the Roll Pending
+        and Traits tabs.
       </p>
+
+      <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">
+        <h3 className="mb-2 text-xs font-bold uppercase opacity-80">
+          Character details
+        </h3>
+        <p className="mb-3 text-xs text-slate-600">
+          Name and identity fields required to spawn. Same fields as Identity Expand —
+          edit here without opening the header.
+        </p>
+        <label className="mb-3 block max-w-md">
+          <span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+            Name
+          </span>
+          <input
+            type="text"
+            value={displayName}
+            onChange={(e) => setCharacterName(e.target.value)}
+            onFocus={(e) => {
+              if (isLegacyCreationNameValue(e.currentTarget.value)) {
+                setCharacterName('')
+              }
+            }}
+            placeholder={CHARACTER_NAME_PLACEHOLDER}
+            aria-label="Character name"
+            className="w-full border-0 border-b border-slate-500 bg-transparent px-0 py-1 text-base font-semibold text-slate-900 outline-none placeholder:font-normal placeholder:text-slate-400 focus:border-blue-600"
+          />
+        </label>
+        <CreationForgeDetailsGrid
+          morphusActive={morphusActive}
+          profile={displayProfile}
+          onPatch={patch}
+          heightError={heightFeetError ?? heightInchesError}
+        />
+      </div>
 
       <div className="mb-4 rounded-lg border border-blue-200 bg-white p-4">
         <h3 className="mb-2 text-xs font-bold uppercase opacity-80">

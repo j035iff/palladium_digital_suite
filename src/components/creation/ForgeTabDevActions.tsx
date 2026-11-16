@@ -65,6 +65,14 @@ const DevAutoFillMorphusTraitsButton = import.meta.env.DEV
     )
   : null
 
+const DevAutoFillIdentityButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevAutoFillIdentityButton').then((m) => ({
+        default: m.DevAutoFillIdentityButton,
+      })),
+    )
+  : null
+
 function DevAction({ children }: { children: ReactNode }) {
   return <Suspense fallback={null}>{children}</Suspense>
 }
@@ -129,6 +137,12 @@ export function ForgeTabDevActions({
       return DevAutoFillAbilitiesButton ? (
         <DevAction>
           <DevAutoFillAbilitiesButton variant="header" />
+        </DevAction>
+      ) : null
+    case 'tab9_review':
+      return DevAutoFillIdentityButton ? (
+        <DevAction>
+          <DevAutoFillIdentityButton variant="header" />
         </DevAction>
       ) : null
     default:

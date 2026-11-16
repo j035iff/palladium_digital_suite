@@ -8,7 +8,7 @@ The Character Creation flow is an implementation of the [Universal Forge Navigat
 
 **Compact forge chrome (vertical space):** The creation frame defaults to a short stack so the center column owns the viewport:
 
-1. **Identity summary** — one-line header (name · race · O.C.C.) with **Expand** / **Minimize** and **Session** on the same row. The character name uses prominent summary typography (~25% larger than race/O.C.C.). Expanded mode is a single layer: Alignment above Sex/Eyes/Height/Hair/Weight. Race and O.C.C. stay on the summary row. New characters **default to Human** (`race_human`) until the player changes race on Tab 1.
+1. **Identity summary** — one-line header (name · race · O.C.C.) with **Expand** / **Minimize** and **Session** on the same row. The character name uses prominent summary typography (~25% larger than race/O.C.C.). Expanded mode is a single layer: Alignment above Sex/Eyes/Height/Hair/Weight. Race and O.C.C. stay on the summary row. New characters **default to Human** (`race_human`) until the player changes race on Tab 1. **Tab 9** also shows name + those identity detail fields **always visible in the Review & Spawn tab body** (same `name` / `identityProfile` source of truth — no second form). Other tabs keep collapsed-by-default Expand behavior.
 2. **Tab row** — primary tab pills on the left (**single row**, horizontal overflow scroll when needed); tab-local dev actions on the right. When the viewing tab is ready to advance, that pill’s label becomes **Continue** (click validates, turns green, and opens the next step). The active pill auto-scrolls into view.
 3. **Contextual banner** — `ForgeTabPageHeader` only when needed: Continue/spawn requirement checkboxes (no “To continue” heading), Tab 7 ability lanes, or N/A state. As each requirement is met its checkbox fills; when all are satisfied the banner collapses **into the Continue tab bubble** (measured target). That bubble uses the **yellow (conflict) tab treatment** and pulses. The duplicate tab title is hidden (the active pill already shows it).
 
@@ -125,13 +125,15 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 ### Tab 9: Review and Spawn (The Terminal Gate)
 
-- **Engine Action:** Build **summary only**, **alignment selection (required)**, then spawn. No dice entry on this tab.
+- **Engine Action:** **Character details** (name + Sex/Age/Eyes/Height/Hair/Weight — always visible; shared Identity chrome fields), build **summary**, **alignment selection (required)**, then spawn. No dice entry on this tab. Players do **not** need to Expand the Identity header to complete spawn prep.
 - **Black (N/A) Condition:** Never.
 - **Availability Gate:** **Grey (Locked)** until Tabs 1–8 are each **Green** or **Black**. Any upstream **Red** or **Yellow** blocks access. Pending dice must already be finalized on Tabs 5 and 6.
 - **No Continue pill** on this tab.
+- **DEV only:** Tab-row **Auto-fill details** fills missing name / identity profile / alignment via `withDevSpawnIdentity` (same debug pattern as other forge auto-fills; not a player control).
 - **Terminal completion:**
+  - **Fill Character details** on the tab body (name + identity profile fields required by `assessIdentitySpawnBlockers`).
   - **Select alignment** (required here even if skipped on Tab 1).
-  - **Spawn Character** enables only when `assessTab9SpawnBlockers` is empty (alignment, dice-finalized flags, and other spawn checks).
+  - **Spawn Character** enables only when `assessTab9SpawnBlockers` is empty (identity, alignment, dice-finalized flags, and other spawn checks).
   - Confirmation modal → [spawn handoff](../character_spawn_handoff.md) → live sheet; creation UI hidden.
 
 ---
@@ -149,5 +151,5 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 | Tab 5 Roll Pending | `src/components/creation/CreationFinalizeDice.tsx` |
 | Tab 6 Traits / Morphus Sub-Forge | `src/components/creation/MorphusForge.tsx` |
 | Tab 8 Gear | `src/components/creation/CreationGearForgePanel.tsx`, `src/lib/gear/creationGearForgeHost.ts` |
-| Tab 9 spawn + alignment | `src/components/creation/CreationReviewFinalize.tsx` |
+| Tab 9 spawn + character details + alignment | `src/components/creation/CreationReviewFinalize.tsx` (`CreationForgeDetailsGrid`), DEV auto-fill `src/lib/dev/devSpawnIdentity.ts` |
 | Morphus Sub-Forge spec | [morphus_creation.md](morphus_creation.md) |

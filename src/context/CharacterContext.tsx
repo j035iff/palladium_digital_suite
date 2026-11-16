@@ -498,6 +498,8 @@ type CharacterContextValue = {
   devAutoFillAllAbilitySelections?: () => void
   /** Dev-only — Path 1 Morphus: random archetype + random legal category picks. */
   devAutoFillMorphusTraits?: () => void
+  /** Dev-only — fills name, identity profile, and alignment when missing (Tab 9). */
+  devAutoFillIdentityDetails?: () => void
   /** Dev-only — rolls every pending spawn dice field on Review & Spawn. */
   devAutoRollAllPendingDice?: () => void
   /** Dev-only — Nightbane Basic through facade dice, then open Morphus Sub-Forge. */
@@ -2793,6 +2795,13 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     )
   }, [])
 
+  const devAutoFillIdentityDetails = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devSpawnIdentity').then(({ withDevSpawnIdentity }) => {
+      setRawCharacter((prev) => withDevSpawnIdentity(prev))
+    })
+  }, [])
+
   const devAutoRollAllPendingDice = useCallback(() => {
     if (!import.meta.env.DEV) return
     void import('../lib/dev/devAutoRollPendingDice').then(
@@ -3465,6 +3474,9 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoFillMorphusTraits: import.meta.env.DEV
         ? devAutoFillMorphusTraits
         : undefined,
+      devAutoFillIdentityDetails: import.meta.env.DEV
+        ? devAutoFillIdentityDetails
+        : undefined,
       devAutoRollAllPendingDice: import.meta.env.DEV
         ? devAutoRollAllPendingDice
         : undefined,
@@ -3632,6 +3644,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoFillAllSkillSelections,
       devAutoFillAllAbilitySelections,
       devAutoFillMorphusTraits,
+      devAutoFillIdentityDetails,
       devAutoRollAllPendingDice,
       devSkipToMorphusCreation,
       devSkipToReviewFromMorphus,

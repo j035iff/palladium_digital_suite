@@ -681,27 +681,29 @@ export function assessIdentitySpawnBlockers(
   const blockers: string[] = []
 
   if (!isCharacterNameFilled(name)) {
-    blockers.push('Enter a character name in the character header.')
+    blockers.push('Enter a character name in Character details on Review & Spawn.')
   }
   if (!hasTextField(p.sex)) {
-    blockers.push('Enter sex in the character header Details section.')
+    blockers.push('Enter sex in Character details on Review & Spawn.')
   }
   if (!hasTextField(p.age)) {
-    blockers.push('Enter age in the character header Details section.')
+    blockers.push('Enter age in Character details on Review & Spawn.')
   }
   if (!hasValidIdentityHeight(p)) {
     blockers.push(
-      'Enter height (feet and inches as numbers) in the character header Details section.',
+      'Enter height (feet and inches as numbers) in Character details on Review & Spawn.',
     )
   }
   if (!hasValidIdentityWeight(p)) {
-    blockers.push('Enter weight in pounds (numeric) in the character header Details section.')
+    blockers.push(
+      'Enter weight in pounds (numeric) in Character details on Review & Spawn.',
+    )
   }
   if (!hasTextField(p.eyes)) {
-    blockers.push('Enter eye color in the character header Details section.')
+    blockers.push('Enter eye color in Character details on Review & Spawn.')
   }
   if (!hasTextField(p.hair)) {
-    blockers.push('Enter hair in the character header Details section.')
+    blockers.push('Enter hair in Character details on Review & Spawn.')
   }
 
   return blockers

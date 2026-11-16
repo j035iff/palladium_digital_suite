@@ -12,7 +12,7 @@ This specification covers **what happens when the player commits a new character
 - **Tab 6 — Traits (Nightbane):** Morphus vitality dice and Sub-Forge finalize when applicable.
 - **Tab 7 — Abilities:** Mandatory magic / psionic / talent budget satisfied.
 - **Tab 8 — Gear:** Optional starting gear via Gear Forge (`kind: 'creation'`).
-- **Tab 9 — Review & Spawn:** **Select alignment** (required for spawn even if skipped on Tab 1). **Spawn Character** enabled when `assessTab9SpawnBlockers` returns no blockers.
+- **Tab 9 — Review & Spawn:** **Character details** (name + identity profile fields) are **always editable on the tab body** — Expand on the Identity header is not required. **Select alignment** (required for spawn even if skipped on Tab 1). **Spawn Character** enabled when `assessTab9SpawnBlockers` returns no blockers.
 
 **Irreversible step:** Confirming the spawn modal calls `finalizeCharacter()` → `applySpawnSheetHandoff()`.
 
@@ -110,9 +110,9 @@ Additive catalog fields (e.g. new `naturalAr`) do not need a save migrator — t
 
 - `assessCreationSpawnBlockers` — dice completeness, vitality commit, and related readiness checks.
 - **Alignment** — non-empty `character.primary.alignment` after trim.
-- **Identity** — name / identity profile requirements when applicable.
+- **Identity** — name / identity profile requirements when applicable (blocker copy points at **Character details on Review & Spawn**).
 
-Blockers render on Tab 9; spawn button stays disabled until resolved.
+Blockers render on Tab 9; spawn button stays disabled until resolved. Character details and alignment are edited on the Tab 9 body (shared Identity state with the header).
 
 (`assessTab8SpawnBlockers` / `assessTab7SpawnBlockers` are deprecated aliases for `assessTab9SpawnBlockers`.)
 
@@ -132,7 +132,7 @@ Blockers render on Tab 9; spawn button stays disabled until resolved.
 
 | Concern | Location |
 |---------|----------|
-| Tab 9 UI & modal | `src/components/creation/CreationReviewFinalize.tsx` |
+| Tab 9 UI & modal | `src/components/creation/CreationReviewFinalize.tsx` (character details + alignment + spawn) |
 | Spawn blockers | `src/lib/forgeNavigation/characterCreationForge.ts` — `assessTab9SpawnBlockers` |
 | Readiness checks | `src/lib/creationReadiness.ts` |
 | Handoff engine | `src/lib/spawnSheetHandoff.ts` |
