@@ -2,9 +2,11 @@
 
 This document defines skill synergies, attribute scaling, prerequisites, and the commitment workflow. All modifiers are **signed integers** (positive or negative).
 
-**Forge placement:** Skill picks on [Tab 4](./forge/character_creation.md). Physical dice and vitality commit on **Tab 5**. Spawn projection on **Tab 8** ([spawn handoff](./character_spawn_handoff.md)).
+**Forge placement:** Skill picks on [Tab 4](./forge/character_creation.md). Physical dice and vitality commit on **Tab 5**. Spawn projection on **Tab 9** ([spawn handoff](./character_spawn_handoff.md)).
 
 **Master equation authority:** `docs/stat_engine_spec.md` §6 cross-links here for percent formulas.
+
+**Tab 4 selection UX (Joe 2026-11):** Vocational focus, vouchers, related, and secondary fill **in parallel** (no progressive browse locks). Left **Selected skills** shows **names only** (no %). The skill library leaves already-selected rows in normal list order, labeled **Already selected**.
 
 ---
 
@@ -51,7 +53,7 @@ Physical skill bonuses (S.D.C., attributes) are staged, then committed in phases
 | **Stage** | Tab 4 — Skills | Skills selected; physical bonuses shown as pending in Live Ledger preview. |
 | **Dice entry** | Tab 5 — Roll Pending | User enters manual dice for H.P., S.D.C., P.P.E., I.S.P., OCC/skill attribute dice, and skill S.D.C. groups. **Continue** commits primary vitality. |
 | **Morphus dice** | Tab 6 — Traits (Nightbane) | Morphus H.P./S.D.C. and trait-driven dice when applicable. |
-| **Commit to sheet** | Tab 8 — Spawn | `applySpawnSheetHandoff()` projects skill %, applies physical skill attribute/SDC deltas to `primary` / `morphus` branches, sets `isFinalized: true`. |
+| **Commit to sheet** | Tab 9 — Spawn | `applySpawnSheetHandoff()` projects skill %, applies physical skill attribute/SDC deltas to `primary` / `morphus` branches, sets `isFinalized: true`. |
 
 **Rule:** Phase A ledger preview must match post-spawn sheet values for the same inputs (`stat_engine_spec.md` §2).
 

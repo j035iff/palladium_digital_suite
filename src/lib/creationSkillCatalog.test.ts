@@ -98,7 +98,7 @@ describe('creationSkillCatalog library sort', () => {
     expect(sorted.map((s) => s.id)).toEqual(['skill_cook', 'skill_pick_locks'])
   })
 
-  it('partitions chosen skills into the pinned selected bucket', () => {
+  it('leaves already-selected skills in normal browse order (no pinned stack)', () => {
     const cook = getEngineSkillDefFromCatalog('skill_cook')!
     const carpentry = getEngineSkillDefFromCatalog('skill_carpentry')!
     const ctx = libraryContext({
@@ -115,11 +115,11 @@ describe('creationSkillCatalog library sort', () => {
       isChosen,
       tier,
     )
-    expect(selected.map((s) => s.id)).toEqual(['skill_carpentry'])
-    expect(browse.map((s) => s.id)).toEqual(['skill_cook'])
+    expect(selected).toEqual([])
+    expect(browse.map((s) => s.id)).toEqual(['skill_carpentry', 'skill_cook'])
   })
 
-  it('orders chosen skills related before secondary in the pinned bucket', () => {
+  it('keeps mixed related and secondary picks interleaved by name, not by tier pin', () => {
     const cook = getEngineSkillDefFromCatalog('skill_cook')!
     const carpentry = getEngineSkillDefFromCatalog('skill_carpentry')!
     const ctx = libraryContext({
@@ -129,14 +129,15 @@ describe('creationSkillCatalog library sort', () => {
     })
     const tier = (skillId: string) =>
       resolveCreationLibrarySkillSelectionTier(skillId, ctx)
-    const { selected } = partitionCreationSkillLibrary(
+    const { selected, browse } = partitionCreationSkillLibrary(
       [cook, carpentry],
       'Wilderness',
       (skill) => isCreationLibrarySkillUnconditionallyExcluded(skill, ctx),
       (skill) => tier(skill.id) != null,
       tier,
     )
-    expect(selected.map((s) => s.id)).toEqual([
+    expect(selected).toEqual([])
+    expect(browse.map((s) => s.id)).toEqual([
       'skill_carpentry',
       'skill_cook',
     ])

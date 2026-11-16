@@ -387,72 +387,48 @@ export function sortCreationSkillLibraryResults(
 }
 
 export type CreationSkillLibraryPartitions = {
-  /** Already chosen in this category — pinned above the scrollable browse list. */
+  /**
+   * Always empty — Joe 2026-11: already-selected skills stay in normal browse
+   * order (marked in UI), not pinned above the list.
+   */
   selected: EngineSkillDef[]
-  /** Remaining rows; unconditionally excluded skills sink to the bottom. */
+  /** Browse rows in natural catalog order; unconditionally excluded sink last. */
   browse: EngineSkillDef[]
 }
 
-function compareLibrarySelectedSkills(
-  a: EngineSkillDef,
-  b: EngineSkillDef,
-  selectionTier: (
-    skillId: string,
-  ) => 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
-): number {
-  const tierRank = (
-    tier: 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
-  ) =>
-    tier === 'occ'
-      ? 0
-      : tier === 'related'
-        ? 1
-        : tier === 'secondary'
-          ? 2
-          : tier === 'voucher' || tier === 'specialization'
-            ? 3
-            : 4
-  const tierDelta =
-    tierRank(selectionTier(a.id)) - tierRank(selectionTier(b.id))
-  if (tierDelta !== 0) return tierDelta
-  return a.name.localeCompare(b.name)
-}
-
-/** Split chosen skills (top/pinned) from the scrollable browse list. */
+/**
+ * Partition the creation skill library for display.
+ * Chosen skills remain in their normal sorted place inside `browse`
+ * (no pinned selected stack).
+ */
 export function partitionCreationSkillLibrary(
   skills: readonly EngineSkillDef[],
   filterCategory: string,
   isUnconditionallyExcluded: (def: EngineSkillDef) => boolean,
-  isChosen: (def: EngineSkillDef) => boolean,
-  selectionTier?: (
+  _isChosen?: (def: EngineSkillDef) => boolean,
+  _selectionTier?: (
     skillId: string,
   ) => 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
 ): CreationSkillLibraryPartitions {
   const sorted = sortCreationSkillLibraryResults(skills, filterCategory)
-  const selected: EngineSkillDef[] = []
   const main: EngineSkillDef[] = []
   const excluded: EngineSkillDef[] = []
 
   for (const skill of sorted) {
-    if (isChosen(skill)) {
-      selected.push(skill)
-    } else if (isUnconditionallyExcluded(skill)) {
+    if (isUnconditionallyExcluded(skill)) {
       excluded.push(skill)
     } else {
       main.push(skill)
     }
   }
 
-  if (selectionTier) {
-    selected.sort((a, b) => compareLibrarySelectedSkills(a, b, selectionTier))
-  } else {
-    selected.sort((a, b) => a.name.localeCompare(b.name))
-  }
-
-  return { selected, browse: [...main, ...excluded] }
+  return { selected: [], browse: [...main, ...excluded] }
 }
 
-/** Flat list: chosen first, then browse rows (excluded last). */
+/**
+ * Flat library list in natural category order; unconditionally excluded sink last.
+ * Name kept for callers — no longer pins already-selected skills first.
+ */
 export function sortCreationSkillLibraryWithSelectableFirst(
   skills: readonly EngineSkillDef[],
   filterCategory: string,
@@ -462,14 +438,14 @@ export function sortCreationSkillLibraryWithSelectableFirst(
     skillId: string,
   ) => 'occ' | 'related' | 'secondary' | 'voucher' | 'specialization' | undefined,
 ): EngineSkillDef[] {
-  const { selected, browse } = partitionCreationSkillLibrary(
+  const { browse } = partitionCreationSkillLibrary(
     skills,
     filterCategory,
     isUnconditionallyExcluded,
     isChosen ?? (() => false),
     selectionTier,
   )
-  return [...selected, ...browse]
+  return browse
 }
 
 /** Ordered filter categories for creation skill browsing (fixed book taxonomy). */
