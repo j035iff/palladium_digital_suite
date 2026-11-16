@@ -1,6 +1,9 @@
 import { createContext } from 'react'
 import type { useCharacter } from '../../../context/CharacterContext'
-import type { SupernaturalAbilityForgeLane } from '../../../lib/forgeNavigation/supernaturalAbilitiesForge'
+import type {
+  SupernaturalAbilityForgeLane,
+  SupernaturalAbilityLaneChromeOpts,
+} from '../../../lib/forgeNavigation/supernaturalAbilitiesForge'
 import type { OccCreationAbilityBudget } from '../../../lib/occCreationDerivation'
 
 export type SupernaturalAbilitiesForgeContextValue = {
@@ -22,6 +25,7 @@ export type SupernaturalAbilitiesForgeContextValue = {
   counts: { spell: number; psionic: number; talent: number }
   selectedIds: readonly string[]
   activeLaneAllowed: boolean
+  laneChrome: SupernaturalAbilityLaneChromeOpts
 }
 
 export const SupernaturalAbilitiesForgeContext =

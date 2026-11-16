@@ -18,6 +18,7 @@
   ],
   "canPickOcc": true,
   "lineage": "megaversal",
+  "talentsAvailable": false,
   "attributes": {
     "iq": "3D6",
     "me": "3D6",

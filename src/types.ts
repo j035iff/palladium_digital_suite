@@ -308,6 +308,11 @@ export type Race = {
   lineage?: 'nightbane' | 'megaversal'
   /** When set, master forge Tab 6 hosts this sub-forge manifest (e.g. `morphus_forge_manifest`). */
   creationSubForgeId?: string
+  /**
+   * When true, creation Abilities forge may show the Talents lane (OR with O.C.C. flag).
+   * Default false when omitted.
+   */
+  talentsAvailable?: boolean
   defaultTraitIds?: readonly string[]
   attributes: RaceAttributeFormulas
   strengthCategory: RaceStrengthCategory
@@ -2279,6 +2284,11 @@ export type PalladiumOcc = {
   baseStats?: OccBaseStatsDice
   /** When set, master forge Tab 6 hosts this sub-forge manifest (overrides race default). */
   creationSubForgeId?: string
+  /**
+   * When true, creation Abilities forge may show the Talents lane (OR with race flag).
+   * Default false when omitted.
+   */
+  talentsAvailable?: boolean
   /** Configurator package summary notes (recommended attributes, prerequisites, etc.). */
   packageNotes?: readonly string[]
   /** O.C.C.-specific overrides to global psionic rules (ley line, meditation, psychic APM). */

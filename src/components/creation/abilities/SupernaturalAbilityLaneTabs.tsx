@@ -1,9 +1,10 @@
 import {
-  SUPERNATURAL_ABILITY_FORGE_LANES,
   SUPERNATURAL_ABILITY_LANE_LABELS,
   isSupernaturalAbilityLaneAllowed,
   supernaturalAbilityLaneNaReason,
+  visibleSupernaturalAbilityLanes,
   type SupernaturalAbilityForgeLane,
+  type SupernaturalAbilityLaneChromeOpts,
 } from '../../../lib/forgeNavigation/supernaturalAbilitiesForge'
 import type { OccCreationAbilityBudget } from '../../../lib/occCreationDerivation'
 import { forgeTabVisualTheme } from '../../../lib/forgeNavigation/forgeTabVisual'
@@ -27,6 +28,7 @@ type SupernaturalAbilityLaneTabsProps = {
   onSelectLane: (lane: SupernaturalAbilityForgeLane) => void
   occName?: string
   morphus: boolean
+  laneChrome?: SupernaturalAbilityLaneChromeOpts
 }
 
 export function SupernaturalAbilityLaneTabs({
@@ -35,11 +37,13 @@ export function SupernaturalAbilityLaneTabs({
   onSelectLane,
   occName,
   morphus,
+  laneChrome,
 }: SupernaturalAbilityLaneTabsProps) {
   const naTheme = forgeTabVisualTheme('na')
+  const chromeLanes = visibleSupernaturalAbilityLanes(laneChrome)
 
   const laneTabStyle = (lane: SupernaturalAbilityForgeLane, selected: boolean) => {
-    if (!isSupernaturalAbilityLaneAllowed(budget, lane)) {
+    if (!isSupernaturalAbilityLaneAllowed(budget, lane, laneChrome)) {
       return naTheme.pill
     }
     if (selected) {
@@ -58,8 +62,8 @@ export function SupernaturalAbilityLaneTabs({
       role="tablist"
       aria-label="Supernatural ability forge lane"
     >
-      {SUPERNATURAL_ABILITY_FORGE_LANES.map((lane) => {
-        const allowed = isSupernaturalAbilityLaneAllowed(budget, lane)
+      {chromeLanes.map((lane) => {
+        const allowed = isSupernaturalAbilityLaneAllowed(budget, lane, laneChrome)
         const selected = activeLane === lane
         const title = allowed
           ? SUPERNATURAL_ABILITY_LANE_LABELS[lane]

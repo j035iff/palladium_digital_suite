@@ -247,6 +247,7 @@ Flag when you see:
 - **Vitals** — `conditional_by_occ_tags` vs flat formulas; align `tags` with O.C.C. `tags`
 - **Strength category** — normal vs supernatural vs augmented
 - **`lineage`** — `nightbane` vs `megaversal`; `creationSubForgeId` for Morphus Tab 6
+- **`talentsAvailable`** — optional boolean (default `false`); set `true` only on Nightbane race rows that offer Talents chrome
 - **Multi-genre races** — one row with multiple `gameSystems` vs duplicate rows per line
 - **Innate skills** — catalog `skill_*` ids vs percent grants
 

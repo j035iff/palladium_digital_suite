@@ -397,19 +397,21 @@ export function CreationFlowShell({
 
 
 
-  const activeTabId = resolveActiveForgeTab(rawCharacter)
-
-
+  const storedTabId = resolveActiveForgeTab(rawCharacter)
 
   const nav = useMemo(
-
-    () => deriveCharacterCreationForgeNavigation(forgeCtx, activeTabId),
-
-    [forgeCtx, activeTabId],
-
+    () => deriveCharacterCreationForgeNavigation(forgeCtx, storedTabId),
+    [forgeCtx, storedTabId],
   )
 
+  const activeTabId = nav.activeTabId
 
+  // Clamp persisted tab when chrome hides Traits / psychic Random Psionics.
+  useEffect(() => {
+    if (activeTabId !== storedTabId) {
+      setCreationForgeTab(activeTabId)
+    }
+  }, [activeTabId, storedTabId, setCreationForgeTab])
 
   const activeView = nav.tabs.find((t) => t.id === activeTabId)
 
@@ -424,8 +426,6 @@ export function CreationFlowShell({
         : [],
     [nav.showContinue, activeTabId, forgeCtx],
   )
-
-
 
   const handleContinue = () => {
     if (!nav.continueEnabled) return

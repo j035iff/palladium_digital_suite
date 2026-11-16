@@ -8,6 +8,7 @@ import { useCharacter } from '../../../context/CharacterContext'
 import {
   allowedSupernaturalAbilityLanes,
   isSupernaturalAbilityLaneAllowed,
+  supernaturalAbilityLaneChromeOpts,
   type SupernaturalAbilityForgeLane,
 } from '../../../lib/forgeNavigation/supernaturalAbilitiesForge'
 import { countSelectedAbilitiesByBudgetCategory } from '../../../lib/creationAbilityBudget'
@@ -25,6 +26,7 @@ export function SupernaturalAbilitiesForgeProvider({
   const {
     character,
     activeOcc,
+    activeRace,
     activeForm,
     occCreationDerived,
     supportsDualForm,
@@ -35,6 +37,10 @@ export function SupernaturalAbilitiesForgeProvider({
   const isNightbane = character.lineage === 'nightbane'
   const genreId = character.creationGenreId ?? character.hostGenreId ?? 'nightbane'
   const occName = activeOcc?.name
+  const laneChrome = useMemo(
+    () => supernaturalAbilityLaneChromeOpts(activeRace, activeOcc),
+    [activeRace, activeOcc],
+  )
 
   const budget = useMemo(
     () =>
@@ -67,16 +73,25 @@ export function SupernaturalAbilitiesForgeProvider({
     4
 
   const [activeLane, setActiveLane] = useState<SupernaturalAbilityForgeLane>(
-    () => allowedSupernaturalAbilityLanes(budget)[0] ?? 'magic',
+    () => allowedSupernaturalAbilityLanes(budget, laneChrome)[0] ?? 'magic',
   )
 
   useEffect(() => {
-    const allowed = allowedSupernaturalAbilityLanes(budget)
-    if (allowed.length === 0) return
+    const allowed = allowedSupernaturalAbilityLanes(budget, laneChrome)
+    if (allowed.length === 0) {
+      setActiveLane((lane) =>
+        lane === 'talents' && laneChrome.talentsAvailable !== true
+          ? 'magic'
+          : lane,
+      )
+      return
+    }
     setActiveLane((lane) =>
-      isSupernaturalAbilityLaneAllowed(budget, lane) ? lane : allowed[0],
+      isSupernaturalAbilityLaneAllowed(budget, lane, laneChrome)
+        ? lane
+        : (allowed[0] ?? 'magic'),
     )
-  }, [budget])
+  }, [budget, laneChrome])
 
   const selectedIds = useMemo(
     () => character.selectedAbilities ?? [],
@@ -90,7 +105,11 @@ export function SupernaturalAbilitiesForgeProvider({
     return countSelectedAbilitiesByBudgetCategory(selectedIds, grantedIds)
   }, [selectedIds, activeOcc, character.occSpecializationId])
 
-  const activeLaneAllowed = isSupernaturalAbilityLaneAllowed(budget, activeLane)
+  const activeLaneAllowed = isSupernaturalAbilityLaneAllowed(
+    budget,
+    activeLane,
+    laneChrome,
+  )
 
   const value = useMemo(
     () => ({
@@ -110,6 +129,7 @@ export function SupernaturalAbilitiesForgeProvider({
       counts,
       selectedIds,
       activeLaneAllowed,
+      laneChrome,
     }),
     [
       morphus,
@@ -127,6 +147,7 @@ export function SupernaturalAbilitiesForgeProvider({
       counts,
       selectedIds,
       activeLaneAllowed,
+      laneChrome,
     ],
   )
 

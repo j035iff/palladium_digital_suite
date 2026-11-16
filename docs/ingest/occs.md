@@ -153,6 +153,7 @@ Flag when you see:
 | Psychic | `ispEngine`, psychic gate flags |
 | Combat / civilian | `staticBonuses`, gear/finances when book lists them |
 | All | `progression.xpTableId` when not using default |
+| Talents chrome | Optional `talentsAvailable: true` (default false) — set only on Shadow Warlock (and similar) OCC rows that offer Talents; OR with race flag |
 
 Use `[]` / empty objects where the book grants nothing in a block — schema still requires the top-level keys.
 

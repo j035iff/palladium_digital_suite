@@ -494,6 +494,10 @@ type CharacterContextValue = {
   devMakeAttributeExceptional?: (attr: ForgeAttrKey) => void
   /** Dev-only — fills vouchers, related, secondary, and Hand-to-Hand picks. */
   devAutoFillAllSkillSelections?: () => void
+  /** Dev-only — randomly fills legal spell / psionic / talent picks. */
+  devAutoFillAllAbilitySelections?: () => void
+  /** Dev-only — Path 1 Morphus: random archetype + random legal category picks. */
+  devAutoFillMorphusTraits?: () => void
   /** Dev-only — rolls every pending spawn dice field on Review & Spawn. */
   devAutoRollAllPendingDice?: () => void
   /** Dev-only — Nightbane Basic through facade dice, then open Morphus Sub-Forge. */
@@ -2771,6 +2775,24 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     )
   }, [psychicTier])
 
+  const devAutoFillAllAbilitySelections = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devAutoFillCreationAbilities').then(
+      ({ buildDevAutoFillCreationAbilitiesState }) => {
+        setRawCharacter((prev) => buildDevAutoFillCreationAbilitiesState(prev))
+      },
+    )
+  }, [])
+
+  const devAutoFillMorphusTraits = useCallback(() => {
+    if (!import.meta.env.DEV) return
+    void import('../lib/dev/devAutoFillMorphusTraits').then(
+      ({ buildDevAutoFillMorphusTraitsState }) => {
+        setRawCharacter((prev) => buildDevAutoFillMorphusTraitsState(prev))
+      },
+    )
+  }, [])
+
   const devAutoRollAllPendingDice = useCallback(() => {
     if (!import.meta.env.DEV) return
     void import('../lib/dev/devAutoRollPendingDice').then(
@@ -3437,6 +3459,12 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoFillAllSkillSelections: import.meta.env.DEV
         ? devAutoFillAllSkillSelections
         : undefined,
+      devAutoFillAllAbilitySelections: import.meta.env.DEV
+        ? devAutoFillAllAbilitySelections
+        : undefined,
+      devAutoFillMorphusTraits: import.meta.env.DEV
+        ? devAutoFillMorphusTraits
+        : undefined,
       devAutoRollAllPendingDice: import.meta.env.DEV
         ? devAutoRollAllPendingDice
         : undefined,
@@ -3602,6 +3630,8 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
       devAutoRollAndAssignAllAttributes,
       devMakeAttributeExceptional,
       devAutoFillAllSkillSelections,
+      devAutoFillAllAbilitySelections,
+      devAutoFillMorphusTraits,
       devAutoRollAllPendingDice,
       devSkipToMorphusCreation,
       devSkipToReviewFromMorphus,

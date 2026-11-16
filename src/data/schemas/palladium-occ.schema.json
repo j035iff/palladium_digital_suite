@@ -157,6 +157,11 @@
       "pattern": "^[a-z][a-z0-9_]*$",
       "description": "When set, master character creation Tab 6 hosts this sub-forge manifest (overrides race default)."
     },
+    "talentsAvailable": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, Character Creation Abilities forge may show the Talents lane for this O.C.C. (OR with race talentsAvailable). Default false — set only on Shadow Warlock (and similar) OCC rows that offer Talents."
+    },
     "packageNotes": {
       "type": "array",
       "description": "Player-facing O.C.C. package summary notes (e.g. recommended attributes, race prerequisites) shown in the configurator detail panel.",

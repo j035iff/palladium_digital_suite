@@ -12,6 +12,7 @@ The Forge Engine emphasizes complete transparency of the generation pipeline.
 
 - **Permanent Rendering:** Every potential tab within a specific Forge (e.g., all 7 steps of Character Creation) is permanently rendered in the navigation header from the moment the sequence initializes.
 - **No Hidden Steps:** The engine is strictly prohibited from conditionally hiding or removing tabs from the layout. If a specific tab is irrelevant to the current build (e.g., a "Magic Spells" tab for a strictly martial character), the tab remains visible in the sequence but its state is altered to explicitly communicate its irrelevance.
+- **Character Creation exceptions (Joe):** Master forge may **completely hide** (not Black) (1) **Traits** when no trait sub-forge applies (Nightbane Morphus only — not `lineage` alone), and (2) **Random Psionics** for psychic O.C.C./R.C.C. (`occIsNaturalPsychicClass`). Documented in `docs/forge/character_creation.md`. Nested Abilities **Talents** lane is likewise omitted unless catalog `talentsAvailable` is true.
 
 ---
 

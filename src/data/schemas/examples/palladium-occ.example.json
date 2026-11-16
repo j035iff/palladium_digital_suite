@@ -218,6 +218,7 @@
       }
     }
   ],
+  "talentsAvailable": false,
   "progression": {
     "xpTableId": "standard",
     "characterOccCategory": "psychic",

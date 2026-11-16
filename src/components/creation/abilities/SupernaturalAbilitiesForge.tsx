@@ -22,7 +22,7 @@ import { TalentsForgePanel } from './TalentsForgePanel'
 
 export function SupernaturalAbilitiesForgeLaneTabs() {
 
-  const { budget, activeLane, setActiveLane, occName, morphus } =
+  const { budget, activeLane, setActiveLane, occName, morphus, laneChrome } =
 
     useSupernaturalAbilitiesForge()
 
@@ -39,6 +39,8 @@ export function SupernaturalAbilitiesForgeLaneTabs() {
       occName={occName}
 
       morphus={morphus}
+
+      laneChrome={laneChrome}
 
     />
 

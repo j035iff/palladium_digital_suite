@@ -1,4 +1,5 @@
 import { useCharacter } from '../../../context/CharacterContext'
+import { creationDevSkipToMorphusVisible } from '../../../lib/creationChromeGates'
 import { DevForgeShortcutButton } from './DevForgeShortcutButton'
 
 export function DevSkipToMorphusButton({
@@ -6,9 +7,13 @@ export function DevSkipToMorphusButton({
 }: {
   variant?: 'panel' | 'header'
 }) {
-  const { devSkipToMorphusCreation } = useCharacter()
+  const { character, devSkipToMorphusCreation } = useCharacter()
 
-  if (!import.meta.env.DEV || !devSkipToMorphusCreation) {
+  if (
+    !import.meta.env.DEV ||
+    !devSkipToMorphusCreation ||
+    !creationDevSkipToMorphusVisible(character.raceId)
+  ) {
     return null
   }
 

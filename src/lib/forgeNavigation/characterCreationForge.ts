@@ -52,6 +52,10 @@ import {
   occRelatedSkillSlotBudget,
   occSecondarySkillSlots,
 } from '../occCreationDerivation'
+import {
+  creationRandomPsionicsTabHiddenForPsychicClass,
+  creationTraitsTabVisible,
+} from '../creationChromeGates'
 import { traitForgeTabApplicable, traitForgeTabLabel } from '../creationSubForge'
 import { isMorphusForgeComplete } from '../morphusForgeNavigation'
 import { raceLineageFromDefinition } from '../raceEngine'
@@ -542,8 +546,16 @@ function buildTabDefinitions(
   ctx: CharacterCreationForgeContext,
 ): ForgeTabDefinition<CharacterCreationForgeTabId>[] {
   const { character, race, occ } = ctx
+  const hideTraits = !creationTraitsTabVisible(race, occ)
+  const hideRandomPsionics = creationRandomPsionicsTabHiddenForPsychicClass(occ)
 
-  return CHARACTER_CREATION_TAB_ORDER.map((id) => {
+  return CHARACTER_CREATION_TAB_ORDER.filter((id) => {
+    // Joe complete-hide exceptions (not Black/N/A): Traits for non–trait-forge races;
+    // Random Psionics for psychic O.C.C./R.C.C.
+    if (id === 'tab6_traits' && hideTraits) return false
+    if (id === 'tab3_psionic' && hideRandomPsionics) return false
+    return true
+  }).map((id) => {
     const label = CHARACTER_CREATION_TAB_LABELS[id]
     switch (id) {
       case 'tab1_configurator':
@@ -677,20 +689,31 @@ function buildTabDefinitions(
   })
 }
 
+function clampActiveCreationForgeTab(
+  tabDefs: readonly ForgeTabDefinition<CharacterCreationForgeTabId>[],
+  activeTabId: CharacterCreationForgeTabId,
+): CharacterCreationForgeTabId {
+  if (tabDefs.some((t) => t.id === activeTabId)) return activeTabId
+  // Hidden chrome (Traits / psychic Random Psionics) — land on Roll Pending when present.
+  if (tabDefs.some((t) => t.id === 'tab5_finalize')) return 'tab5_finalize'
+  return tabDefs[0]?.id ?? 'tab1_configurator'
+}
+
 export function deriveCharacterCreationForgeNavigation(
   ctx: CharacterCreationForgeContext,
   activeTabId: CharacterCreationForgeTabId,
 ): ForgeNavigationDerived & { activeTabId: CharacterCreationForgeTabId } {
   const completion = readForgeCompletion(ctx.character)
   const tabDefs = buildTabDefinitions(ctx)
+  const resolvedActive = clampActiveCreationForgeTab(tabDefs, activeTabId)
 
-  const nav = deriveForgeNavigation(tabDefs, activeTabId, completion, {
+  const nav = deriveForgeNavigation(tabDefs, resolvedActive, completion, {
     terminalTabId: 'tab9_review',
   })
 
   return {
     ...nav,
-    activeTabId,
+    activeTabId: resolvedActive,
   }
 }
 

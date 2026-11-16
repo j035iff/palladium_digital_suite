@@ -113,7 +113,7 @@ describe('morphusForgeNavigation', () => {
 })
 
 describe('creationSubForge', () => {
-  it('applies morphus forge from nightbane lineage or race id', () => {
+  it('applies morphus forge from Nightbane id or creationSubForgeId, not lineage alone', () => {
     expect(
       traitForgeTabApplicable(
         { id: 'race_nightbane', lineage: 'nightbane' } as Race,
@@ -126,6 +126,12 @@ describe('creationSubForge', () => {
         undefined,
       ),
     ).toBe(true)
+    expect(
+      traitForgeTabApplicable(
+        { id: 'race_guardian', lineage: 'nightbane' } as Race,
+        undefined,
+      ),
+    ).toBe(false)
     expect(traitForgeTabApplicable({ id: 'race_human' } as Race, undefined)).toBe(
       false,
     )

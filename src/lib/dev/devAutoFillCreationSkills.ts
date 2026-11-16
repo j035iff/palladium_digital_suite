@@ -46,6 +46,7 @@ import {
 } from '../occRelatedSkillVouchers'
 import { getPalladiumSkillCatalogEntryById } from '../../data/library/skillsCatalogLoader'
 import { mapFilterCategoryToOccCategory } from '../occCategoryRuleDisplay'
+import { pickRandom, shuffledCopy } from './devRandomPick'
 
 const DEV_SPEC = 'Dev Autofill'
 
@@ -82,13 +83,13 @@ function buildDevSkillPickAvoidingIdentity(
     if (isCreationSkillIdentityTaken(existingPicks, skillId)) return null
     return buildCreationSkillPick(skillId, {})
   }
-  for (const specialization of devSpecializationCandidates(skillId)) {
-    if (isCreationSkillIdentityTaken(existingPicks, skillId, specialization)) {
-      continue
-    }
-    return buildCreationSkillPick(skillId, { specialization })
-  }
-  return null
+  const legal = shuffledCopy([...devSpecializationCandidates(skillId)]).filter(
+    (specialization) =>
+      !isCreationSkillIdentityTaken(existingPicks, skillId, specialization),
+  )
+  const specialization = pickRandom(legal)
+  if (!specialization) return null
+  return buildCreationSkillPick(skillId, { specialization })
 }
 
 function resolveHandToHandTier(
@@ -97,42 +98,20 @@ function resolveHandToHandTier(
   relatedSkillOnlyCount: number,
 ): CreationHandToHandTier {
   const effective = resolveEffectivePalladiumOcc(occ)
-  const current = occStartingHandToHandTier(effective)
   const options = listOccHandToHandOptions(effective)
   if (options.length === 0) return 'none'
 
-  const preferred =
-    options.find((o) => o.tier === current && !o.disabled) ??
-    options.find((o) => !o.disabled) ??
-    options[0]
-  if (
-    preferred &&
-    !preferred.disabled &&
-    canAffordHandToHandTier(
-      effective,
-      preferred.tier,
-      relatedCap,
-      relatedSkillOnlyCount,
-    )
-  ) {
-    return preferred.tier
-  }
-
-  for (const opt of options) {
-    if (opt.disabled) continue
-    if (
+  const affordable = options.filter(
+    (opt) =>
+      !opt.disabled &&
       canAffordHandToHandTier(
         effective,
         opt.tier,
         relatedCap,
         relatedSkillOnlyCount,
-      )
-    ) {
-      return opt.tier
-    }
-  }
-
-  return options[0]?.tier ?? 'none'
+      ),
+  )
+  return pickRandom(affordable)?.tier ?? options[0]?.tier ?? 'none'
 }
 
 function skillMatchesRelatedCategory(skillId: string, categoryName: string): boolean {
@@ -177,7 +156,13 @@ function tryAddRelatedSkill(
     secondaryPicks: secondary,
   })
   if (!state.canAddRelated) return null
-  const pick = buildDevSkillPick(def.id)
+  const pick = buildDevSkillPickAvoidingIdentity(def.id, [
+    ...occPicks,
+    ...related,
+    ...secondary,
+    ...extraIdentityPicks,
+  ])
+  if (!pick) return null
   const occSkillIds = occStartingOccSkillIds(occ, specializationId)
   const selectedBefore = creationSkillIdsSet(occSkillIds, related, secondary)
   return appendCreationSkillPickWithConditionalGrants(
@@ -217,7 +202,7 @@ function fillRelatedCategoryMinimums(
   for (const rule of minimums) {
     while (countRelatedPicksInCategory(related, rule.categoryName) < rule.minimumCount) {
       let added = false
-      for (const def of library) {
+      for (const def of shuffledCopy(library)) {
         if (!skillMatchesRelatedCategory(def.id, rule.categoryName)) continue
         const next = tryAddRelatedSkill(
           def,
@@ -267,7 +252,7 @@ function fillTierPicks(
     const relatedSlotsUsed = sumRelatedPoolSlotUsage(related, occPicks, handToHandReserved)
     const secondarySlotsUsed = sumCreationSkillPickSlots(secondary)
 
-    for (const def of library) {
+    for (const def of shuffledCopy(library)) {
       if (
         isCreationSkillIdentityTaken(
           [...occPicks, ...related, ...secondary, ...extraIdentityPicks],
@@ -291,7 +276,14 @@ function fillTierPicks(
       const canAdd = tier === 'related' ? state.canAddRelated : state.canAddSecondary
       if (!canAdd) continue
 
-      const pick = buildDevSkillPick(def.id)
+      const identityPool = [
+        ...occPicks,
+        ...related,
+        ...secondary,
+        ...extraIdentityPicks,
+      ]
+      const pick = buildDevSkillPickAvoidingIdentity(def.id, identityPool)
+      if (!pick) continue
       const selectedBefore = creationSkillIdsSet(occSkillIds, related, secondary)
       const next = appendCreationSkillPickWithConditionalGrants(
         pick,
@@ -356,7 +348,7 @@ function fillRelatedVoucherPicks(
         }),
       ]
       let pick: CreationSkillPick | null = null
-      for (const def of library) {
+      for (const def of shuffledCopy(library)) {
         if (
           !isSkillEligibleForRelatedVoucher(
             def.id,
@@ -441,7 +433,7 @@ export function buildDevAutoFillCreationSkillsState(
         ...slots.filter((p): p is CreationSkillPick => p != null),
       ]
       let pick: CreationSkillPick | null = null
-      for (const skillId of eligible) {
+      for (const skillId of shuffledCopy(eligible)) {
         pick = buildDevSkillPickAvoidingIdentity(skillId, existingForIdentity)
         if (pick) break
       }

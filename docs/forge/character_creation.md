@@ -77,7 +77,8 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 ### Tab 3: Psionic Determination
 
 - **Engine Action:** Psychic Gate — explicit tier choice. Major tier stages the 50% related-skill penalty applied in Tab 4.
-- **Black (N/A) Condition:** Tab is **Black** when the Psychic Gate is bypassed (genre disallows supernatural abilities, or Race/O.C.C. rules bypass the gate). Black tabs are treated as complete for linear unlock.
+- **Hidden (Joe exception):** Completely **hidden** (not Black) when the selected O.C.C./R.C.C. is a **psychic class** (`occIsNaturalPsychicClass` / `characterOccCategory === 'psychic'`). Radical Visibility exception — Familiar Surface for psychic builds that never use Random Psionics.
+- **Black (N/A) Condition:** Tab is **Black** when the Psychic Gate is bypassed for other reasons (genre disallows supernatural abilities, or Race/O.C.C. `psychicGateBypassed` / race capability none|innate). Black tabs are treated as complete for linear unlock.
 - **Completion Criteria (Turns Green):** The player **explicitly** confirms a tier: **None**, **Minor**, or **Major** (or **Master** when the O.C.C. locks psychic class — still requires an explicit tier click, not only a default seed). Changing Race or O.C.C. resets the “tier chosen” flag; Tab 3 must be re-confirmed via **Continue**.
 
 ### Tab 4: Skill Selection
@@ -96,7 +97,8 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 ### Tab 6: Character Trait Forges (Sub-Forge Container)
 
 - **Engine Action:** Host for nested Sub-Forges. **Nightbane** hosts the [Morphus Creation Engine](morphus_creation.md) — a 3-step Sub-Forge with progressive slot resolution and Morphus Live Ledger compilation. **Guided / basic flow** is the active implementation focus; **Expert Mode** (dual-panel index + trait cart) is spec-only — no pass yet.
-- **Black (N/A) Condition:** **Black** when the selected Race line does not use a trait sub-system (e.g., non–Nightbane builds).
+- **Hidden (Joe exception):** Completely **hidden** unless the race/O.C.C. binds a trait sub-forge (`creationSubForgeId` / dual-form `race_nightbane`). **Not** inferred from `lineage: nightbane` alone (e.g. Guardian). Radical Visibility / Universal Forge “No Hidden Steps” exception — correct genre chrome.
+- **Dev:** **Skip → Morphus** appears only when the character is Nightbane (`race_nightbane`). **Auto-fill Traits** (on this tab) always uses **Path 1**, picks a **random** appearance archetype, then **random legal** category/slot picks (skips duplicates / blocked / unmet gates — same helpers as manual Morphus picks).
 - **Nightbane completion:**
   - Tab 5 (Roll Pending) must be Green first.
   - Morphus vitality dice entered on this tab (Sub-Forge Review).
@@ -108,6 +110,8 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 - **Engine Action:** Spells, psionics, talents, etc., from O.C.C. / genre ability budgets.
 - **Black (N/A) Condition:** **Black** when no ability pick budget applies.
+- **Talents lane:** Completely **hidden** unless catalog `talentsAvailable === true` on the selected **race and/or O.C.C.** (boolean sole gate — no hard-coded race/OCC name checks in UI). Default `false`; set `true` on Nightbane race rows and Shadow Warlock OCC rows when present.
+- **Dev:** **Auto-fill abilities** randomly fills legal spell/psionic/talent picks (existing eligibility / prereq / mutex helpers; no alphabetical first-pick).
 - **Completion Criteria (Turns Green):** **Full** mandatory budget satisfied (all required spell, psionic, and talent slots filled per effective budget, including Psychic Gate pool rules). User clicks **Continue**.
 - **Optional picks UX:** When minimum mandatory picks are met but optional budget remains, the **Continue** tooltip may note optional spend; the selection UI shows remaining budget clearly.
 

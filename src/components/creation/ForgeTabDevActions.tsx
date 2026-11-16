@@ -49,6 +49,22 @@ const DevSkipToReviewFromMorphusButton = import.meta.env.DEV
     )
   : null
 
+const DevAutoFillAbilitiesButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevAutoFillAbilitiesButton').then((m) => ({
+        default: m.DevAutoFillAbilitiesButton,
+      })),
+    )
+  : null
+
+const DevAutoFillMorphusTraitsButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('./dev/DevAutoFillMorphusTraitsButton').then((m) => ({
+        default: m.DevAutoFillMorphusTraitsButton,
+      })),
+    )
+  : null
+
 function DevAction({ children }: { children: ReactNode }) {
   return <Suspense fallback={null}>{children}</Suspense>
 }
@@ -95,9 +111,24 @@ export function ForgeTabDevActions({
         </DevAction>
       ) : null
     case 'tab6_traits':
-      return DevSkipToReviewFromMorphusButton ? (
+      return (
+        <>
+          {DevAutoFillMorphusTraitsButton ? (
+            <DevAction>
+              <DevAutoFillMorphusTraitsButton variant="header" />
+            </DevAction>
+          ) : null}
+          {DevSkipToReviewFromMorphusButton ? (
+            <DevAction>
+              <DevSkipToReviewFromMorphusButton variant="header" />
+            </DevAction>
+          ) : null}
+        </>
+      )
+    case 'tab7_abilities':
+      return DevAutoFillAbilitiesButton ? (
         <DevAction>
-          <DevSkipToReviewFromMorphusButton variant="header" />
+          <DevAutoFillAbilitiesButton variant="header" />
         </DevAction>
       ) : null
     default:
