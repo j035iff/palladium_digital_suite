@@ -51,6 +51,62 @@ function maxSpellLevelFromRestriction(restriction: string): number | undefined {
   return Number.isFinite(n) ? n : undefined
 }
 
+/**
+ * Highest spell level the player may pick at creation from O.C.C. spell strength
+ * cap + roadmap categoryRestrictions (e.g. "Level 1 Spells Only").
+ */
+export function creationSpellPickMaxLevel(
+  occ: PalladiumOcc | undefined,
+  spellCap: number,
+  characterLevel = 1,
+): number {
+  let max = Math.max(0, spellCap)
+  if (!occ) return max
+  for (const r of flattenSpellRestrictions(
+    occ.ppeEngine?.progressionRoadmap,
+    characterLevel,
+  )) {
+    const fromRestriction = maxSpellLevelFromRestriction(r)
+    if (fromRestriction != null) {
+      max = Math.min(max, fromRestriction)
+    }
+  }
+  return max
+}
+
+/** True when the spell's printed level is within the creation pick max. */
+export function spellWithinCreationPickLevel(
+  spellLevel: number | undefined,
+  maxLevel: number,
+): boolean {
+  if (spellLevel == null) return true
+  return spellLevel <= maxLevel
+}
+
+/** Rows shown in the Magic forge picker (level-restricted listing). */
+export function filterSpellsForCreationLevelPick<
+  T extends { spell: Pick<PalladiumMagicSpell, 'spellLevel'> },
+>(rows: readonly T[], maxLevel: number): T[] {
+  return rows.filter((row) =>
+    spellWithinCreationPickLevel(row.spell.spellLevel, maxLevel),
+  )
+}
+
+/**
+ * Banner copy when higher spell levels exist beyond the creation pick max.
+ * Returns null when the cap does not exclude any higher band (cap ≥ 15).
+ */
+export function formatCreationSpellLevelUnavailableNote(
+  maxLevel: number,
+): string | null {
+  if (maxLevel < 1 || maxLevel >= 15) return null
+  const next = maxLevel + 1
+  if (next === 15) {
+    return `Level 15 spells cannot be selected (creation spell level limit: ${maxLevel}).`
+  }
+  return `Level ${next}–15 spells cannot be selected (creation spell level limit: ${maxLevel}).`
+}
+
 function restrictionMatches(
   restriction: string,
   ctx: {

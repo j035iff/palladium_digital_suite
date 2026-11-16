@@ -10,6 +10,9 @@ import { useCharacter } from '../../../context/CharacterContext'
 import { magicSchoolFilterLabel } from '../../../lib/magicSchoolLabels'
 import {
   browseMagicSchoolsForOcc,
+  creationSpellPickMaxLevel,
+  filterSpellsForCreationLevelPick,
+  formatCreationSpellLevelUnavailableNote,
   formatSpellCaveatLine,
   resolveSpellsForOcc,
   resolvedSpellSchoolTabs,
@@ -54,15 +57,27 @@ export function MagicForgePanel({
     [genreId],
   )
 
+  const pickMaxLevel = useMemo(
+    () => creationSpellPickMaxLevel(activeOcc, spellCap, 1),
+    [activeOcc, spellCap],
+  )
+
+  const levelCapNote = useMemo(
+    () => formatCreationSpellLevelUnavailableNote(pickMaxLevel),
+    [pickMaxLevel],
+  )
+
   const occSpellAccess = useMemo(() => {
     if (!activeOcc) return null
-    return resolveSpellsForOcc(activeOcc, {
+    const all = resolveSpellsForOcc(activeOcc, {
       gameSystem: genreId,
       characterLevel: 1,
       spellCap,
       genreId,
     })
-  }, [activeOcc, genreId, spellCap])
+    // Joe: list only spells within the creation level restriction (cap / roadmap).
+    return filterSpellsForCreationLevelPick(all, pickMaxLevel)
+  }, [activeOcc, genreId, spellCap, pickMaxLevel])
 
   const availableSchools = useMemo(() => {
     if (occSpellAccess) return resolvedSpellSchoolTabs(occSpellAccess)
@@ -120,7 +135,9 @@ export function MagicForgePanel({
   const legacyRows = useMemo(() => {
     if (occSpellAccess) return []
     const q = search.trim().toLowerCase()
-    let rows = listPalladiumMagicForGameSystem(genreId)
+    let rows = listPalladiumMagicForGameSystem(genreId).filter((row) =>
+      row.spellLevel <= pickMaxLevel,
+    )
     if (q) {
       rows = rows.filter(
         (row) =>
@@ -133,7 +150,7 @@ export function MagicForgePanel({
     return [...rows].sort(
       (a, b) => a.spellLevel - b.spellLevel || a.name.localeCompare(b.name),
     )
-  }, [occSpellAccess, genreId, search])
+  }, [occSpellAccess, genreId, search, pickMaxLevel])
 
   const panelStyle = morphus
     ? 'border-violet-700 bg-slate-950/80 text-violet-50'
@@ -254,6 +271,18 @@ export function MagicForgePanel({
         <p className="mb-2 text-xs font-bold uppercase tracking-wide opacity-80">
           Spell library
         </p>
+        {levelCapNote ? (
+          <p
+            className={`mb-2 rounded-md border px-2.5 py-1.5 text-[11px] leading-snug ${
+              morphus
+                ? 'border-amber-700/70 bg-amber-950/50 text-amber-100'
+                : 'border-amber-300 bg-amber-50 text-amber-950'
+            }`}
+            role="status"
+          >
+            Showing levels 1–{pickMaxLevel} only. {levelCapNote}
+          </p>
+        ) : null}
         <input
           type="search"
           value={search}

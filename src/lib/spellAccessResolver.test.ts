@@ -6,6 +6,9 @@ import {
   spellAccessibleToOcc,
 } from './spellAccessPath'
 import {
+  creationSpellPickMaxLevel,
+  filterSpellsForCreationLevelPick,
+  formatCreationSpellLevelUnavailableNote,
   formatSpellCaveatLine,
   resolveSpellsForOcc,
 } from './spellAccessResolver'
@@ -96,6 +99,34 @@ describe('resolveSpellsForOcc visibility', () => {
     expect(teleport).toBeDefined()
     expect(teleport?.pickGate.allowed).toBe(false)
     expect(teleport?.pickGate.reason).toMatch(/level/i)
+  })
+})
+
+describe('creation spell level pick listing', () => {
+  it('takes the tighter of spellCap and roadmap Level N restrictions', () => {
+    expect(creationSpellPickMaxLevel(wizardOcc, 4, 1)).toBe(1)
+    expect(creationSpellPickMaxLevel(wizardOcc, 15, 1)).toBe(1)
+    expect(creationSpellPickMaxLevel(mirrormageOcc, 2, 1)).toBe(2)
+  })
+
+  it('filters picker rows to allowed levels only', () => {
+    const rows = resolveSpellsForOcc(wizardOcc, {
+      gameSystem: 'nightbane',
+      spellCap: 15,
+    })
+    const maxLevel = creationSpellPickMaxLevel(wizardOcc, 15, 1)
+    const listed = filterSpellsForCreationLevelPick(rows, maxLevel)
+    expect(listed.length).toBeGreaterThan(0)
+    expect(listed.every((r) => r.spell.spellLevel <= maxLevel)).toBe(true)
+    expect(
+      listed.some((r) => r.spell.id === 'magic_wizard_teleport_lesser'),
+    ).toBe(false)
+  })
+
+  it('formats an unavailable-higher-levels note', () => {
+    expect(formatCreationSpellLevelUnavailableNote(2)).toMatch(/Level 3–15/)
+    expect(formatCreationSpellLevelUnavailableNote(2)).toMatch(/limit: 2/)
+    expect(formatCreationSpellLevelUnavailableNote(15)).toBeNull()
   })
 })
 

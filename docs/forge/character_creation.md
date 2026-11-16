@@ -111,6 +111,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 - **Engine Action:** Spells, psionics, talents, etc., from O.C.C. / genre ability budgets.
 - **Black (N/A) Condition:** **Black** when no ability pick budget applies.
 - **Talents lane:** Completely **hidden** unless catalog `talentsAvailable === true` on the selected **race and/or O.C.C.** (boolean sole gate — no hard-coded race/OCC name checks in UI). Default `false`; set `true` on Nightbane race rows and Shadow Warlock OCC rows when present.
+- **Spell level listing:** When a creation level restriction applies (`startingSpellLevelCap` / roadmap “Level N Spells Only”), the Magic forge **lists only spells within the allowed levels** and shows a status note that higher levels cannot be selected (uses existing `creationSpellPickMaxLevel` / pick-gate signals — no invented Palladium caps).
 - **Dev:** **Auto-fill abilities** randomly fills legal spell/psionic/talent picks (existing eligibility / prereq / mutex helpers; no alphabetical first-pick).
 - **Completion Criteria (Turns Green):** **Full** mandatory budget satisfied (all required spell, psionic, and talent slots filled per effective budget, including Psychic Gate pool rules). User clicks **Continue**.
 - **Optional picks UX:** When minimum mandatory picks are met but optional budget remains, the **Continue** tooltip may note optional spend; the selection UI shows remaining budget clearly.
