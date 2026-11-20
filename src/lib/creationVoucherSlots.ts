@@ -4,6 +4,7 @@ import {
   countFilledOccCoreVoucherSlots,
   findOpenOccCoreVoucherSlot,
   formatOccCoreVoucherCategoryScope,
+  isSkillInVouchersLibraryScope,
   listOccCoreVoucherTasks,
   listEligibleVoucherSkillIds,
   resolveOccCoreVoucherLibraryBookCategories,
@@ -62,12 +63,88 @@ export function creationVoucherDisplayName(displayNumber: number): string {
   return `Voucher ${displayNumber}`
 }
 
+/** Library Category dropdown value for a numbered creation voucher lane. */
+export function creationVoucherLibraryCategory(displayNumber: number): string {
+  return creationVoucherDisplayName(displayNumber)
+}
+
+const CREATION_VOUCHER_LIBRARY_CATEGORY_RE = /^Voucher (\d+)$/
+
+/** True when `category` is a per-lane library option (`Voucher 1`, `Voucher 2`, …). */
+export function isCreationVoucherLibraryCategory(category: string): boolean {
+  return CREATION_VOUCHER_LIBRARY_CATEGORY_RE.test(category)
+}
+
+/**
+ * Resolve a `Voucher N` library Category value to its task ref.
+ * Returns undefined when the label is not a voucher category or N is out of range.
+ */
+export function resolveCreationVoucherLibraryCategoryRef(
+  category: string,
+  refs: readonly CreationVoucherTaskRef[],
+): CreationVoucherTaskRef | undefined {
+  const match = CREATION_VOUCHER_LIBRARY_CATEGORY_RE.exec(category)
+  if (!match) return undefined
+  const displayNumber = Number(match[1])
+  if (
+    !Number.isInteger(displayNumber) ||
+    displayNumber < 1 ||
+    displayNumber > refs.length
+  ) {
+    return undefined
+  }
+  return refs[displayNumber - 1]
+}
+
 export function resolveCreationVoucherDisplayNumber(
   taskId: string,
   refs: readonly CreationVoucherTaskRef[],
 ): number | undefined {
   const index = refs.findIndex((ref) => ref.task.id === taskId)
   return index >= 0 ? index + 1 : undefined
+}
+
+/** Skills already on or eligible for a single creation voucher lane. */
+export function isSkillInCreationVoucherRefScope(
+  skillId: string,
+  ref: CreationVoucherTaskRef,
+  occ: PalladiumOcc,
+  specializationId: string | null | undefined,
+  occCoreVoucherPicks: Readonly<Record<string, unknown>> | undefined,
+  relatedVoucherPicks: Readonly<Record<string, unknown>> | undefined,
+  relatedVoucherClusters: Readonly<Record<string, string>> | undefined,
+  hostGenreId: string,
+  catalogSkillIds: readonly string[],
+  forbiddenWpIds: readonly string[] = [],
+): boolean {
+  if (ref.kind === 'occ_core') {
+    return isSkillInVouchersLibraryScope(
+      skillId,
+      occ,
+      specializationId,
+      [ref.task],
+      occCoreVoucherPicks,
+      [],
+      relatedVoucherPicks,
+      relatedVoucherClusters,
+      hostGenreId,
+      catalogSkillIds,
+      forbiddenWpIds,
+    )
+  }
+  return isSkillInVouchersLibraryScope(
+    skillId,
+    occ,
+    specializationId,
+    [],
+    occCoreVoucherPicks,
+    [ref.task],
+    relatedVoucherPicks,
+    relatedVoucherClusters,
+    hostGenreId,
+    catalogSkillIds,
+    forbiddenWpIds,
+  )
 }
 
 export function formatCreationVoucherScopeLabel(ref: CreationVoucherTaskRef): string {
@@ -241,11 +318,14 @@ export function listOpenCreationVoucherAddTargets(
   catalogSkillIds: readonly string[],
   forbiddenWpIds: readonly string[] = [],
   activeFilterCategory?: string,
+  /** When set, only open slots on this voucher task are returned (display numbers stay global). */
+  restrictToTaskId?: string,
 ): CreationVoucherAddTarget[] {
   const targets: CreationVoucherAddTarget[] = []
 
   refs.forEach((ref, index) => {
     const displayNumber = index + 1
+    if (restrictToTaskId && ref.task.id !== restrictToTaskId) return
     if (ref.kind === 'occ_core') {
       const slot = findOpenOccCoreVoucherSlot(
         skillId,

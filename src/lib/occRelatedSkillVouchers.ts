@@ -462,7 +462,11 @@ export function listCreationVoucherRelatedTasks(
   return tasks.filter((task) => !isVocationalFocusVoucherTask(task))
 }
 
-/** Pseudo library category for O.C.C. core + non-vocational related voucher picks. */
+/**
+ * Selected-skills section header for numbered creation vouchers.
+ * Library Category dropdown uses per-lane `Voucher N` values
+ * (`creationVoucherSlots.creationVoucherLibraryCategory`) — not this constant.
+ */
 export const CREATION_VOUCHERS_LIBRARY_CATEGORY = 'Vouchers'
 
 /** Pseudo library category for vocational-focus voucher picks (cluster / OR minimums). */

@@ -14,11 +14,16 @@ export type CreationSkillLibraryProgressChip = {
   labelClassName?: string
 }
 
-export type CreationSkillLibraryVoucherFilterLane = {
+/** Tone-lane filters (e.g. Vocational Focus) — never voucher lanes. */
+export type CreationSkillLibraryToneFilterLane = {
   key: string
   label: string
   filter: CreationCategoryAvailabilityFilter
 }
+
+/** @deprecated Use {@link CreationSkillLibraryToneFilterLane}. */
+export type CreationSkillLibraryVoucherFilterLane =
+  CreationSkillLibraryToneFilterLane
 
 export type CreationSkillLibraryHeaderProps = {
   morphus: boolean
@@ -28,8 +33,9 @@ export type CreationSkillLibraryHeaderProps = {
     kind: CreationCategoryAvailabilityKind,
     enabled: boolean,
   ) => void
-  voucherFilterLanes: readonly CreationSkillLibraryVoucherFilterLane[]
-  onVoucherFilterChange: (
+  /** OCC category-tone lanes only (e.g. Vocational Focus). Voucher 1…N never appear here. */
+  toneFilterLanes: readonly CreationSkillLibraryToneFilterLane[]
+  onToneFilterChange: (
     laneKey: string,
     kind: CreationCategoryAvailabilityKind,
     enabled: boolean,
@@ -85,8 +91,8 @@ export function CreationSkillLibraryHeader({
   progressChips,
   globalFilter,
   onGlobalFilterChange,
-  voucherFilterLanes,
-  onVoucherFilterChange,
+  toneFilterLanes,
+  onToneFilterChange,
 }: CreationSkillLibraryHeaderProps) {
   return (
     <div className="mb-4 space-y-3">
@@ -126,31 +132,31 @@ export function CreationSkillLibraryHeader({
         />
       </div>
 
-      {voucherFilterLanes.length > 0 ? (
+      {toneFilterLanes.length > 0 ? (
         <div className="space-y-2">
           <p
             className={`text-xs font-semibold uppercase tracking-wide opacity-70 ${
               morphus ? 'text-violet-200' : 'text-slate-600'
             }`}
           >
-            Voucher category filters
+            Lane category filters
           </p>
           <ul className="space-y-2">
-            {voucherFilterLanes.map((lane) => (
+            {toneFilterLanes.map((lane) => (
               <li key={lane.key} className="space-y-1">
                 <p
                   className={`text-xs font-semibold ${
-                    morphus ? 'text-amber-300' : 'text-amber-950'
+                    morphus ? 'text-sky-300' : 'text-sky-900'
                   }`}
                 >
                   {lane.label}
                 </p>
                 <AvailabilityCheckboxRow
-                  idPrefix={`voucher-availability-${lane.key}`}
+                  idPrefix={`lane-availability-${lane.key}`}
                   morphus={morphus}
                   filter={lane.filter}
                   onChange={(kind, enabled) =>
-                    onVoucherFilterChange(lane.key, kind, enabled)
+                    onToneFilterChange(lane.key, kind, enabled)
                   }
                   ariaLabelPrefix={lane.label}
                 />

@@ -42,7 +42,6 @@ import {
   findOccCoreVoucherSlotForPick,
   findOpenOccCoreVoucherSlot,
   isOccCoreGrantSkillPick,
-  isSkillInVouchersLibraryScope,
   listOccCoreVoucherTasks,
   resolveCreationLibrarySkillTier,
   resolveCreationOccSkillIds,
@@ -54,7 +53,6 @@ import {
   countAllFilledRelatedVoucherSlots,
   countFilledRelatedVoucherSlots,
   CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
-  CREATION_VOUCHERS_LIBRARY_CATEGORY,
   collectVocationalFocusBookCategories,
   findOpenRelatedVoucherSlot,
   findRelatedVoucherSlotForPick,
@@ -70,8 +68,12 @@ import { resolveCreationSkillBrowseLock } from '../../lib/creationSkillBrowseLoc
 
 import {
   creationVoucherDisplayName,
+  creationVoucherLibraryCategory,
+  isCreationVoucherLibraryCategory,
+  isSkillInCreationVoucherRefScope,
   listLibraryCreationVoucherTaskRefs,
   listOpenCreationVoucherAddTargets,
+  resolveCreationVoucherLibraryCategoryRef,
   type CreationVoucherAddTarget,
 } from '../../lib/creationVoucherSlots'
 
@@ -203,7 +205,8 @@ export function SkillEngine() {
   const [libraryAvailabilityFilter, setLibraryAvailabilityFilter] =
     useState(createDefaultCreationCategoryAvailabilityFilter)
 
-  const [voucherAvailabilityFilters, setVoucherAvailabilityFilters] = useState<
+  /** Tone-lane filters only (e.g. Vocational Focus). Voucher 1…N never get these. */
+  const [laneAvailabilityFilters, setLaneAvailabilityFilters] = useState<
     Record<string, CreationCategoryAvailabilityFilter>
   >({})
 
@@ -481,10 +484,10 @@ export function SkillEngine() {
     [selectedCategoryRule],
   )
 
-  const resolveVoucherAvailabilityFilter = (
+  const resolveLaneAvailabilityFilter = (
     laneKey: string,
   ): CreationCategoryAvailabilityFilter =>
-    voucherAvailabilityFilters[laneKey] ??
+    laneAvailabilityFilters[laneKey] ??
     createDefaultCreationCategoryAvailabilityFilter()
 
   const filteredBookCategories = useMemo(
@@ -502,7 +505,7 @@ export function SkillEngine() {
       category !== '' &&
       category !== 'All' &&
       category !== CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY &&
-      category !== CREATION_VOUCHERS_LIBRARY_CATEGORY &&
+      !isCreationVoucherLibraryCategory(category) &&
       !filteredBookCategories.includes(category)
     ) {
       setCategory('')
@@ -516,12 +519,12 @@ export function SkillEngine() {
     setLibraryAvailabilityFilter((prev) => ({ ...prev, [kind]: enabled }))
   }
 
-  const handleVoucherAvailabilityChange = (
+  const handleLaneAvailabilityChange = (
     laneKey: string,
     kind: CreationCategoryAvailabilityKind,
     enabled: boolean,
   ) => {
-    setVoucherAvailabilityFilters((prev) => {
+    setLaneAvailabilityFilters((prev) => {
       const current =
         prev[laneKey] ?? createDefaultCreationCategoryAvailabilityFilter()
       return { ...prev, [laneKey]: { ...current, [kind]: enabled } }
@@ -593,8 +596,19 @@ export function SkillEngine() {
     [effectiveOcc, character.occSpecializationId],
   )
 
-  const voucherBrowseCategory =
-    category === CREATION_VOUCHERS_LIBRARY_CATEGORY ? undefined : category
+  const activeCreationVoucherRef = useMemo(
+    () =>
+      resolveCreationVoucherLibraryCategoryRef(
+        category,
+        libraryCreationVoucherRefs,
+      ),
+    [category, libraryCreationVoucherRefs],
+  )
+
+  /** Book-category filter for related voucher eligibility; voucher lanes pass undefined. */
+  const voucherBrowseCategory = isCreationVoucherLibraryCategory(category)
+    ? undefined
+    : category
 
   const voucherTasks = useMemo(
     () => listOccCoreVoucherTasks(effectiveOcc, character.occSpecializationId),
@@ -608,7 +622,7 @@ export function SkillEngine() {
 
   const libraryPopulated =
     category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY ||
-    category === CREATION_VOUCHERS_LIBRARY_CATEGORY ||
+    isCreationVoucherLibraryCategory(category) ||
     (category === 'All' ? search.trim().length > 0 : category !== '')
 
   const libraryContext = useMemo(
@@ -686,7 +700,7 @@ export function SkillEngine() {
           !skillBookCategoriesPassAvailabilityFilter(
             getSkillBookCategories(s.id),
             occCategoryRules,
-            resolveVoucherAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
+            resolveLaneAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
           )
         ) {
           return false
@@ -694,16 +708,15 @@ export function SkillEngine() {
         return nameOk
       }
 
-      if (category === CREATION_VOUCHERS_LIBRARY_CATEGORY) {
-        if (!effectiveOcc) return false
+      if (isCreationVoucherLibraryCategory(category)) {
+        if (!effectiveOcc || !activeCreationVoucherRef) return false
         if (
-          !isSkillInVouchersLibraryScope(
+          !isSkillInCreationVoucherRefScope(
             s.id,
+            activeCreationVoucherRef,
             effectiveOcc,
             character.occSpecializationId,
-            voucherTasks,
             voucherPicks,
-            creationVoucherRelatedTasks,
             relatedVoucherPicks,
             relatedVoucherClusters,
             hostGenreId,
@@ -713,15 +726,6 @@ export function SkillEngine() {
         ) {
           return false
         }
-        const bookCats = getSkillBookCategories(s.id)
-        const anyVoucherLaneAllows = libraryCreationVoucherRefs.some((ref) =>
-          skillBookCategoriesPassAvailabilityFilter(
-            bookCats,
-            occCategoryRules,
-            resolveVoucherAvailabilityFilter(ref.task.id),
-          ),
-        )
-        if (!anyVoucherLaneAllows) return false
         return nameOk
       }
 
@@ -758,8 +762,9 @@ export function SkillEngine() {
     hostGenreId,
     catalogSkillIds,
     libraryCreationVoucherRefs,
+    activeCreationVoucherRef,
     occCategoryRules,
-    voucherAvailabilityFilters,
+    laneAvailabilityFilters,
   ])
 
 
@@ -1381,9 +1386,7 @@ export function SkillEngine() {
       effectiveOcc,
       character.occSpecializationId,
       relatedVoucherClusters,
-      voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
-        ? undefined
-        : voucherBrowseCategory,
+      voucherBrowseCategory,
     )
     if (!relatedOpenSlot) return
 
@@ -1545,9 +1548,7 @@ export function SkillEngine() {
           character.occSpecializationId,
           relatedVoucherClusters,
           allCreationPicks,
-          voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
-            ? undefined
-            : voucherBrowseCategory,
+          voucherBrowseCategory,
         ))
     const hasOpenVocationalFocusSlot =
       effectiveOcc != null &&
@@ -1597,11 +1598,9 @@ export function SkillEngine() {
           character.occSpecializationId,
           relatedVoucherClusters,
           allCreationPicks,
-          voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
-            ? undefined
-            : voucherBrowseCategory,
+          voucherBrowseCategory,
         ))
-    const voucherAddTargetsRaw =
+    const voucherAddTargets =
       !skillBrowseLock.blocksCreationVoucherWhileVocationalIncomplete &&
       hasLibraryCreationVouchers &&
       voucherLibraryAllowed &&
@@ -1618,26 +1617,18 @@ export function SkillEngine() {
             hostGenreId,
             catalogSkillIds,
             effectiveOcc.wpRules?.forbiddenWps ?? [],
-            voucherBrowseCategory === CREATION_VOUCHERS_LIBRARY_CATEGORY
-              ? undefined
-              : voucherBrowseCategory,
+            voucherBrowseCategory,
+            activeCreationVoucherRef?.task.id,
           )
         : []
     const skillBookCats = getSkillBookCategories(s.id)
-    const voucherAddTargets = voucherAddTargetsRaw.filter((target) =>
-      skillBookCategoriesPassAvailabilityFilter(
-        skillBookCats,
-        occCategoryRules,
-        resolveVoucherAvailabilityFilter(target.taskId),
-      ),
-    )
     const canAddViaVocationalFocusVoucher =
       effectiveOcc != null &&
       voucherLibraryAllowed &&
       skillBookCategoriesPassAvailabilityFilter(
         skillBookCats,
         occCategoryRules,
-        resolveVoucherAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
+        resolveLaneAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
       ) &&
       canAddSkillViaRelatedVoucher(
         s.id,
@@ -1659,7 +1650,9 @@ export function SkillEngine() {
         ((hasOpenCreationVoucherSlot || hasOpenVocationalFocusSlot) &&
           !voucherLibraryAllowed))
 
-    const showVoucherButton = voucherAddTargets.length > 0 || canAddViaCreationVoucher
+    const showVoucherButton =
+      voucherAddTargets.length > 0 ||
+      (!activeCreationVoucherRef && canAddViaCreationVoucher)
     const showVocationalFocusButton =
       canAddViaVocationalFocusVoucher && !identityTaken
     const showRelatedButton =
@@ -1744,7 +1737,7 @@ export function SkillEngine() {
       : category === CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY &&
           showVocationalFocusButton
         ? 'preview_specialization'
-        : category === CREATION_VOUCHERS_LIBRARY_CATEGORY && showVoucherButton
+        : isCreationVoucherLibraryCategory(category) && showVoucherButton
           ? 'preview_voucher'
           : showRelatedButton
             ? 'preview_related'
@@ -1952,7 +1945,7 @@ export function SkillEngine() {
     secondarySectionClass,
   ])
 
-  const libraryVoucherFilterLanes = useMemo(() => {
+  const libraryToneFilterLanes = useMemo(() => {
     const lanes: {
       key: string
       label: string
@@ -1962,22 +1955,11 @@ export function SkillEngine() {
       lanes.push({
         key: VOCATIONAL_FOCUS_FILTER_KEY,
         label: CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY,
-        filter: resolveVoucherAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
+        filter: resolveLaneAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
       })
     }
-    libraryCreationVoucherRefs.forEach((ref, index) => {
-      lanes.push({
-        key: ref.task.id,
-        label: creationVoucherDisplayName(index + 1),
-        filter: resolveVoucherAvailabilityFilter(ref.task.id),
-      })
-    })
     return lanes
-  }, [
-    vocationalFocusTasks.length,
-    libraryCreationVoucherRefs,
-    voucherAvailabilityFilters,
-  ])
+  }, [vocationalFocusTasks.length, laneAvailabilityFilters])
 
   const selectedSkillsPanel = useMemo(
     () => (
@@ -2163,8 +2145,8 @@ export function SkillEngine() {
         progressChips={libraryProgressChips}
         globalFilter={libraryAvailabilityFilter}
         onGlobalFilterChange={handleLibraryAvailabilityChange}
-        voucherFilterLanes={libraryVoucherFilterLanes}
-        onVoucherFilterChange={handleVoucherAvailabilityChange}
+        toneFilterLanes={libraryToneFilterLanes}
+        onToneFilterChange={handleLaneAvailabilityChange}
       />
 
 
@@ -2212,11 +2194,7 @@ export function SkillEngine() {
 
                       ? CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
 
-                      : category === CREATION_VOUCHERS_LIBRARY_CATEGORY
-
-                        ? CREATION_VOUCHERS_LIBRARY_CATEGORY
-
-                        : category}
+                      : category}
 
               </span>
 
@@ -2270,23 +2248,15 @@ export function SkillEngine() {
 
                     : []),
 
-                  ...(showVouchersSection
+                  ...libraryCreationVoucherRefs.map((_, index) => ({
 
-                    ? [
+                    value: creationVoucherLibraryCategory(index + 1),
 
-                        {
+                    label: creationVoucherLibraryCategory(index + 1),
 
-                          value: CREATION_VOUCHERS_LIBRARY_CATEGORY,
+                    rule: null,
 
-                          label: CREATION_VOUCHERS_LIBRARY_CATEGORY,
-
-                          rule: null,
-
-                        },
-
-                      ]
-
-                    : []),
+                  })),
 
                   ...filteredBookCategories.map((c) => ({
 
@@ -2396,11 +2366,7 @@ export function SkillEngine() {
 
                 ? CREATION_VOCATIONAL_FOCUS_LIBRARY_CATEGORY
 
-                : category === CREATION_VOUCHERS_LIBRARY_CATEGORY
-
-                  ? CREATION_VOUCHERS_LIBRARY_CATEGORY
-
-                  : category}
+                : category}
 
             </h3>
 
@@ -2411,12 +2377,12 @@ export function SkillEngine() {
                 {filterCreationBookCategoriesByAvailability(
                   vocationalFocusBookCategories,
                   occCategoryRules,
-                  resolveVoucherAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
+                  resolveLaneAvailabilityFilter(VOCATIONAL_FOCUS_FILTER_KEY),
                 ).join(', ') || 'Choose a vocational focus category'}
 
               </span>
 
-            ) : category === CREATION_VOUCHERS_LIBRARY_CATEGORY ? null : (
+            ) : isCreationVoucherLibraryCategory(category) ? null : (
 
               <span
 
