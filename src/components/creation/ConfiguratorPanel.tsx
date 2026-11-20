@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { useCharacter } from '../../context/CharacterContext'
 import { listPalladiumOccsForCreation } from '../../data/library/occCatalogLoader'
 import {
@@ -34,7 +34,10 @@ import {
   type ConfiguratorFilterExpression,
 } from '../../lib/configuratorFilterExpression'
 import { ConfiguratorFilterBuilder } from './ConfiguratorFilterBuilder'
-import { ConfiguratorListItem } from './ConfiguratorListItem'
+import {
+  ConfiguratorDescriptionPanel,
+  ConfiguratorListItem,
+} from './ConfiguratorListItem'
 import { ConfiguratorPinScrollColumn } from './ConfiguratorPinScrollColumn'
 
 /**
@@ -700,33 +703,16 @@ export function ConfiguratorPanel() {
           >
             {activeOcc?.name ?? 'O.C.C.'} — specialization
           </p>
-          {specializationBranches.map((spec) => {
-            const selected = character.occSpecializationId === spec.id
-            return (
-              <button
-                key={spec.id}
-                type="button"
-                onClick={() => setOccSpecializationId(spec.id)}
-                className={`rounded-lg border-2 px-3 py-2 text-left transition-[box-shadow,transform] ${
-                  selected
-                    ? morphus
-                      ? 'border-amber-400 bg-violet-950/80 shadow-[0_0_0_2px_rgba(251,191,36,0.35)]'
-                      : 'border-blue-600 bg-blue-50 shadow-[0_0_0_2px_rgba(37,99,235,0.25)]'
-                    : morphus
-                      ? 'border-violet-800 bg-slate-900/60 hover:border-violet-500'
-                      : 'border-slate-200 bg-slate-50 hover:border-blue-400'
-                }`}
-                aria-pressed={selected}
-              >
-                <span className="text-sm font-semibold">{spec.name}</span>
-                {spec.description ? (
-                  <span className="mt-1 block text-[11px] leading-snug opacity-85">
-                    {spec.description}
-                  </span>
-                ) : null}
-              </button>
-            )
-          })}
+          {specializationBranches.map((spec) => (
+            <SpecializationRow
+              key={spec.id}
+              name={spec.name}
+              description={spec.description}
+              morphus={morphus}
+              selected={character.occSpecializationId === spec.id}
+              onSelect={() => setOccSpecializationId(spec.id)}
+            />
+          ))}
         </div>
       ) : null}
         </div>
@@ -772,6 +758,24 @@ export function ConfiguratorPanel() {
   )
 }
 
+function useConfiguratorRowExpand(selected: boolean, onSelect: () => void) {
+  // Seed from `selected` so pin/scroll remount after pick keeps DESCRIPTION open.
+  const [expanded, setExpanded] = useState(selected)
+
+  const activate = () => {
+    if (selected) {
+      setExpanded((open) => !open)
+      return
+    }
+    onSelect()
+    setExpanded(true)
+  }
+
+  const inspect = () => setExpanded((open) => !open)
+
+  return { expanded, activate, inspect }
+}
+
 function RaceRow({
   race,
   morphus,
@@ -787,15 +791,27 @@ function RaceRow({
   filterMismatch?: boolean
   onSelect: () => void
 }) {
+  const { expanded, activate, inspect } = useConfiguratorRowExpand(selected, onSelect)
   const alignmentNote = selected ? formatRaceAlignmentRestrictionNote(race) : null
+  const description = race.description?.trim() ?? ''
+  const expandedDetail: ReactNode = (
+    <ConfiguratorDescriptionPanel
+      description={description}
+      note={alignmentNote}
+      noteClassName={morphus ? 'text-amber-200' : 'text-amber-900'}
+    />
+  )
+
   return (
     <ConfiguratorListItem
       morphus={morphus}
       selected={selected}
       tierResult={tierResult}
       filterMismatch={filterMismatch}
-      onSelect={onSelect}
-      className="p-3"
+      onSelect={activate}
+      onInspect={inspect}
+      expanded={expanded}
+      expandedDetail={expandedDetail}
     >
       <span className="flex flex-wrap items-center gap-1.5 text-sm font-semibold">
         {race.name}
@@ -809,18 +825,6 @@ function RaceRow({
           </span>
         ) : null}
       </span>
-      {race.description?.trim() ? (
-        <p className="mt-1 text-[11px] leading-snug opacity-85">{race.description}</p>
-      ) : null}
-      {selected && alignmentNote ? (
-        <p
-          className={`mt-1.5 text-[10px] font-semibold leading-snug ${
-            morphus ? 'text-amber-200' : 'text-amber-900'
-          }`}
-        >
-          {alignmentNote}
-        </p>
-      ) : null}
     </ConfiguratorListItem>
   )
 }
@@ -840,8 +844,18 @@ function OccRow({
   filterMismatch?: boolean
   onSelect: () => void
 }) {
+  const { expanded, activate, inspect } = useConfiguratorRowExpand(selected, onSelect)
   const occCat = occCharacterCategory(def)
   const alignmentNote = selected ? formatOccAlignmentRestrictionNote(def) : null
+  const description = def.description?.trim() ?? ''
+  const expandedDetail: ReactNode = (
+    <ConfiguratorDescriptionPanel
+      description={description}
+      eyebrow={occCat === 'psychic' ? 'Psychic O.C.C.' : 'O.C.C.'}
+      note={alignmentNote}
+      noteClassName={morphus ? 'text-amber-200' : 'text-amber-900'}
+    />
+  )
 
   return (
     <ConfiguratorListItem
@@ -849,28 +863,46 @@ function OccRow({
       selected={selected}
       tierResult={tierResult}
       filterMismatch={filterMismatch}
-      onSelect={onSelect}
-      className="p-3"
+      onSelect={activate}
+      onInspect={inspect}
+      expanded={expanded}
+      expandedDetail={expandedDetail}
     >
-      <p
-        className="text-xs font-black uppercase tracking-wide opacity-70"
-        style={{ color: morphus ? '#c4b5fd' : '#1e3a8a' }}
-      >
-        {occCat === 'psychic' ? 'Psychic O.C.C.' : 'O.C.C.'}
-      </p>
-      <p className="mt-1 text-base font-bold">{def.name}</p>
-      {def.description?.trim() ? (
-        <p className="mt-1 text-[11px] leading-snug opacity-85">{def.description}</p>
-      ) : null}
-      {selected && alignmentNote ? (
-        <p
-          className={`mt-1.5 text-[10px] font-semibold leading-snug ${
-            morphus ? 'text-amber-200' : 'text-amber-900'
-          }`}
-        >
-          {alignmentNote}
-        </p>
-      ) : null}
+      <p className="text-base font-bold">{def.name}</p>
+    </ConfiguratorListItem>
+  )
+}
+
+function SpecializationRow({
+  name,
+  description,
+  morphus,
+  selected,
+  onSelect,
+}: {
+  name: string
+  description?: string | null
+  morphus: boolean
+  selected: boolean
+  onSelect: () => void
+}) {
+  const { expanded, activate, inspect } = useConfiguratorRowExpand(selected, onSelect)
+  const body = description?.trim() ?? ''
+  const expandedDetail: ReactNode = (
+    <ConfiguratorDescriptionPanel description={body} />
+  )
+
+  return (
+    <ConfiguratorListItem
+      morphus={morphus}
+      selected={selected}
+      tierResult={{ tier: 1 }}
+      onSelect={activate}
+      onInspect={inspect}
+      expanded={expanded}
+      expandedDetail={expandedDetail}
+    >
+      <span className="text-sm font-semibold">{name}</span>
     </ConfiguratorListItem>
   )
 }

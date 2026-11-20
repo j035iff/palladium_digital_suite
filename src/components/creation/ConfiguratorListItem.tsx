@@ -54,18 +54,25 @@ export function ConfiguratorListItem({
   selected,
   tierResult,
   onSelect,
+  onInspect,
   children,
   className = '',
   filterMismatch = false,
+  expanded = false,
+  expandedDetail,
 }: {
   morphus: boolean
   selected: boolean
   tierResult: ConfiguratorTierResult
   onSelect: () => void
+  /** When the row is not selectable, click still runs this (read-only expand). */
+  onInspect?: () => void
   children: ReactNode
   className?: string
   /** Selected row pinned while active filters / matrix disagree (amber). */
   filterMismatch?: boolean
+  expanded?: boolean
+  expandedDetail?: ReactNode
 }) {
   const selectable = isConfiguratorSelectable(tierResult) || filterMismatch
   const theme = morphus ? 'morphus' : 'light'
@@ -79,34 +86,90 @@ export function ConfiguratorListItem({
     filterMismatch && selected
       ? 'Current selection does not match active filters or matrix constraints.'
       : configuratorTierTooltip(tierResult)
+  const hasExpand = expandedDetail != null
+  const expandTitle = expanded ? 'Hide description' : 'Show description'
 
   return (
-    <button
-      type="button"
-      aria-disabled={!selectable}
-      aria-pressed={selected}
-      title={tooltip || undefined}
-      onClick={() => {
-        if (selectable) onSelect()
-      }}
-      className={`w-full rounded-lg border-2 px-3 py-2 text-left transition-[box-shadow,transform] ${TIER_STYLES[key][theme]} ${className}`}
+    <div
+      className={`w-full rounded-lg border-2 transition-[box-shadow,transform] ${TIER_STYLES[key][theme]} ${className}`}
     >
-      {tierResult.tier === 2 && tierResult.conflictReason ? (
-        <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-rose-600 dark:text-rose-300">
-          {tierResult.conflictReason}
+      <button
+        type="button"
+        aria-disabled={!selectable && !onInspect}
+        aria-pressed={selected}
+        aria-expanded={hasExpand ? expanded : undefined}
+        title={hasExpand ? expandTitle : tooltip || undefined}
+        onClick={() => {
+          if (selectable) onSelect()
+          else onInspect?.()
+        }}
+        className={`w-full px-3 py-2 text-left ${
+          selectable || onInspect ? '' : 'cursor-not-allowed'
+        }`}
+      >
+        {tierResult.tier === 2 && tierResult.conflictReason ? (
+          <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-rose-600 dark:text-rose-300">
+            {tierResult.conflictReason}
+          </p>
+        ) : null}
+        {filterMismatch && selected ? (
+          <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-amber-700 dark:text-amber-200">
+            Does not match current filters
+          </p>
+        ) : null}
+        {tierResult.tier === 3 && tierResult.tagMismatchReason ? (
+          <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide opacity-70">
+            {tierResult.tagMismatchReason}
+          </p>
+        ) : null}
+        {children}
+      </button>
+      {expanded && expandedDetail ? (
+        <div className="mx-3 mb-2.5 rounded-md border border-sky-400/80 bg-white p-2.5 dark:border-sky-600 dark:bg-slate-950">
+          {expandedDetail}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+/** Shared DESCRIPTION panel body for race / O.C.C. expand-in-place. */
+export function ConfiguratorDescriptionPanel({
+  description,
+  eyebrow,
+  note,
+  noteClassName,
+}: {
+  description?: string | null
+  eyebrow?: string | null
+  note?: string | null
+  noteClassName?: string
+}) {
+  const body = description?.trim() ?? ''
+  return (
+    <>
+      <p className="text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-slate-100">
+        Description
+      </p>
+      {eyebrow ? (
+        <p className="mt-1 text-[10px] font-black uppercase tracking-wide opacity-70">
+          {eyebrow}
         </p>
       ) : null}
-      {filterMismatch && selected ? (
-        <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-amber-700 dark:text-amber-200">
-          Does not match current filters
+      {body ? (
+        <p className="mt-1.5 text-xs leading-relaxed text-slate-800 dark:text-slate-200">
+          {body}
+        </p>
+      ) : (
+        <p className="mt-1.5 text-xs italic leading-relaxed text-slate-500 dark:text-slate-400">
+          No description in catalog.
+        </p>
+      )}
+      {note ? (
+        <p className={`mt-1.5 text-[10px] font-semibold leading-snug ${noteClassName ?? ''}`}>
+          {note}
         </p>
       ) : null}
-      {tierResult.tier === 3 && tierResult.tagMismatchReason ? (
-        <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide opacity-70">
-          {tierResult.tagMismatchReason}
-        </p>
-      ) : null}
-      {children}
-    </button>
+    </>
   )
 }

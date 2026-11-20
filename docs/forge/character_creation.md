@@ -61,6 +61,7 @@ When more than one tab is Yellow or Red, the engine designates the **first** suc
 
 - **Default race:** **Human** (`race_human`) for the active creation genre. O.C.C. remains unset until the player picks one.
 - **Engine Action:** Tri-Directional Configuration Matrix (Race / O.C.C.). Global identity chrome (`IdentityHeader` `variant="creation"`, collapsed by default) sits above the tab row. **Package details** (racial/O.C.C. grants summary) render in the **left** summary column; matrix pickers in the **center**.
+- **List rows:** Race and O.C.C. (and specialization) pickers show **name only** when closed (plus the R.C.C. badge when applicable). Click selects and expands a **Description** panel in place (catalog text + selected alignment notes); click the selected row again to collapse. Matches Tab 4 library expand-in-place Familiar Surface.
 - **Black (N/A) Condition:** Never.
 - **Completion Criteria (Turns Green):** A valid, non-conflicting Race and O.C.C. pair is actively selected. **Identity profile fields and alignment are not required** for Continue. The user clicks the **Continue** pill.
 - **Upstream Reactivity:** Changing Race or O.C.C. after downstream tabs were completed flags those tabs **Yellow** or **Red** without erasing stored picks. The user repairs top-down.
